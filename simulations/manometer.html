@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How a Manometer Works | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Fluid Mechanics</span>
+        </div>
+
+        <h1>&#9878; How a Manometer Works</h1>
+        <p class="subtitle">Grade XI - Fluid Mechanics</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Gas Pressure: <span id="pressureValue">1.00</span> atm</label>
+                    <input type="range" id="pressureSlider" min="0.5" max="2.0" value="1.0" step="0.05">
+                </div>
+                <div class="control-group">
+                    <label>Fluid Type</label>
+                    <select id="fluidSelect">
+                        <option value="13600">Mercury (ρ = 13600 kg/m³)</option>
+                        <option value="1000" selected>Water (ρ = 1000 kg/m³)</option>
+                        <option value="800">Oil (ρ = 800 kg/m³)</option>
+                    </select>
+                </div>
+                <div id="stats" class="stats-panel"></div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>A manometer measures gas pressure by comparing it to atmospheric pressure. The height difference of the fluid in the two arms directly tells us the pressure difference.</p>
+            <div class="formula-box">
+                <strong>Key Formulas:</strong><br>
+                P_gas = P_atm + ρgh<br>
+                h = (P_gas - P_atm)/(ρg)<br>
+                1 atm = 101325 Pa<br>
+                g = 9.8 m/s²
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const pressureSlider = document.getElementById('pressureSlider');
+        const pressureValue = document.getElementById('pressureValue');
+        const fluidSelect = document.getElementById('fluidSelect');
+
+        let gasPressure = 1.0; // atm
+        let fluidDensity = 1000; // kg/m³
+        const atmPressure = 1.0; // atm
+        const g = 9.8; // m/s²
+
+        let targetLeftLevel = 200;
+        let targetRightLevel = 200;
+        let currentLeftLevel = 200;
+        let currentRightLevel = 200;
+
+        const tubeWidth = 40;
+        const tubeBottomY = 350;
+        const leftTubeX = 300;
+        const rightTubeX = 450;
+
+        pressureSlider.oninput = function() {
+            gasPressure = parseFloat(this.value);
+            pressureValue.textContent = this.value;
+            calculateLevels();
+            draw();
+        };
+
+        fluidSelect.onchange = function() {
+            fluidDensity = parseFloat(this.value);
+            calculateLevels();
+            draw();
+        };
+
+        function calculateLevels() {
+            // P_gas = P_atm + ρgh
+            // h = (P_gas - P_atm) / (ρg)
+            // 1 atm = 101325 Pa
+
+            const pressureDiff = (gasPressure - atmPressure) * 101325; // Pa
+            const heightDiff = pressureDiff / (fluidDensity * g); // meters
+            const heightDiffPixels = heightDiff * 1000; // convert to pixels (1m = 1000px scale)
+
+            // Base level when pressures are equal
+            const baseLevel = 200;
+
+            // When gas pressure > atm: left goes down, right goes up
+            targetLeftLevel = baseLevel + heightDiffPixels / 2;
+            targetRightLevel = baseLevel - heightDiffPixels / 2;
+
+            // Clamp levels
+            targetLeftLevel = Math.max(50, Math.min(tubeBottomY - 20, targetLeftLevel));
+            targetRightLevel = Math.max(50, Math.min(tubeBottomY - 20, targetRightLevel));
+        }
+
+        function getFluidColor() {
+            switch (fluidDensity) {
+                case 13600: return '#7c3aed'; // mercury - purple
+                case 1000: return '#00d4ff'; // water - cyan
+                case 800: return '#f59e0b'; // oil - amber
+                default: return '#00d4ff';
+            }
+        }
+
+        function getFluidName() {
+            switch (fluidDensity) {
+                case 13600: return 'Mercury';
+                case 1000: return 'Water';
+                case 800: return 'Oil';
+                default: return 'Unknown';
+            }
+        }
+
+        function drawManometer() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            // Animate levels smoothly
+            const speed = 0.1;
+            if (Math.abs(currentLeftLevel - targetLeftLevel) > 0.5) {
+                currentLeftLevel += (targetLeftLevel - currentLeftLevel) * speed;
+                currentRightLevel += (targetRightLevel - currentRightLevel) * speed;
+                requestAnimationFrame(draw);
+            } else {
+                currentLeftLevel = targetLeftLevel;
+                currentRightLevel = targetRightLevel;
+            }
+
+            // Gas container
+            ctx.fillStyle = 'rgba(255,255,255,0.05)';
+            ctx.fillRect(180, 80, 100, 80);
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(180, 80, 100, 80);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('Gas', 230, 125);
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText(`${gasPressure.toFixed(2)} atm`, 230, 145);
+
+            // Connection tube from gas to left arm
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(280, 120);
+            ctx.lineTo(leftTubeX + tubeWidth / 2, 120);
+            ctx.lineTo(leftTubeX + tubeWidth / 2, currentLeftLevel);
+            ctx.stroke();
+
+            // Draw U-tube structure
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 3;
+
+            // Left tube
+            ctx.beginPath();
+            ctx.moveTo(leftTubeX, 100);
+            ctx.lineTo(leftTubeX, tubeBottomY);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(leftTubeX + tubeWidth, 100);
+            ctx.lineTo(leftTubeX + tubeWidth, tubeBottomY);
+            ctx.stroke();
+
+            // Bottom connection
+            ctx.beginPath();
+            ctx.arc(leftTubeX + tubeWidth, tubeBottomY, tubeWidth, 0, Math.PI / 2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(rightTubeX, tubeBottomY, tubeWidth, Math.PI / 2, Math.PI);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(leftTubeX + tubeWidth, tubeBottomY + tubeWidth);
+            ctx.lineTo(rightTubeX, tubeBottomY + tubeWidth);
+            ctx.stroke();
+
+            // Right tube
+            ctx.beginPath();
+            ctx.moveTo(rightTubeX, 100);
+            ctx.lineTo(rightTubeX, tubeBottomY);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(rightTubeX + tubeWidth, 100);
+            ctx.lineTo(rightTubeX + tubeWidth, tubeBottomY);
+            ctx.stroke();
+
+            // Atmospheric pressure label
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('Open to', rightTubeX + tubeWidth / 2, 80);
+            ctx.fillText('Atmosphere', rightTubeX + tubeWidth / 2, 95);
+
+            // Draw fluid
+            const fluidColor = getFluidColor();
+            ctx.fillStyle = fluidColor;
+
+            // Left arm fluid
+            ctx.fillRect(leftTubeX + 2, currentLeftLevel, tubeWidth - 4, tubeBottomY - currentLeftLevel);
+
+            // Right arm fluid
+            ctx.fillRect(rightTubeX + 2, currentRightLevel, tubeWidth - 4, tubeBottomY - currentRightLevel);
+
+            // Bottom fluid connection
+            const bottomFluidLevel = tubeBottomY;
+            ctx.fillRect(leftTubeX + tubeWidth, bottomFluidLevel, rightTubeX - leftTubeX - tubeWidth, tubeWidth);
+
+            // Fluid surface lines
+            ctx.strokeStyle = fluidColor;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(leftTubeX, currentLeftLevel);
+            ctx.lineTo(leftTubeX + tubeWidth, currentLeftLevel);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(rightTubeX, currentRightLevel);
+            ctx.lineTo(rightTubeX + tubeWidth, currentRightLevel);
+            ctx.stroke();
+
+            // Height difference measurement
+            if (Math.abs(currentLeftLevel - currentRightLevel) > 2) {
+                const midX = rightTubeX + tubeWidth + 40;
+                const h = Math.abs(currentLeftLevel - currentRightLevel);
+
+                ctx.strokeStyle = '#ff2d75';
+                ctx.lineWidth = 2;
+
+                // Vertical line
+                ctx.beginPath();
+                ctx.moveTo(midX, currentLeftLevel);
+                ctx.lineTo(midX, currentRightLevel);
+                ctx.stroke();
+
+                // Arrow heads
+                ctx.fillStyle = '#ff2d75';
+                const headSize = 6;
+
+                ctx.beginPath();
+                ctx.moveTo(midX, currentLeftLevel);
+                ctx.lineTo(midX - headSize / 2, currentLeftLevel + headSize);
+                ctx.lineTo(midX + headSize / 2, currentLeftLevel + headSize);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.moveTo(midX, currentRightLevel);
+                ctx.lineTo(midX - headSize / 2, currentRightLevel - headSize);
+                ctx.lineTo(midX + headSize / 2, currentRightLevel - headSize);
+                ctx.closePath();
+                ctx.fill();
+
+                // Label
+                ctx.fillStyle = '#ff2d75';
+                ctx.font = '14px JetBrains Mono, monospace';
+                ctx.textAlign = 'left';
+                const hMeters = (h / 1000).toFixed(3);
+                ctx.fillText(`h = ${hMeters} m`, midX + 10, (currentLeftLevel + currentRightLevel) / 2);
+            }
+        }
+
+        function updateStats() {
+            const h = Math.abs(targetLeftLevel - targetRightLevel) / 1000; // convert to meters
+            const gasPa = gasPressure * 101325;
+
+            document.getElementById('stats').innerHTML = `
+                <div><strong>Gas Pressure:</strong> ${gasPressure.toFixed(2)} atm</div>
+                <div><strong>Gas Pressure:</strong> ${gasPa.toFixed(0)} Pa</div>
+                <div><strong>Atmospheric:</strong> ${atmPressure.toFixed(2)} atm</div>
+                <div><strong>Fluid:</strong> ${getFluidName()}</div>
+                <div><strong>Density (ρ):</strong> ${fluidDensity} kg/m³</div>
+                <div><strong>Height Diff (h):</strong> ${h.toFixed(3)} m</div>
+            `;
+        }
+
+        function draw() {
+            drawManometer();
+            updateStats();
+        }
+
+        calculateLevels();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

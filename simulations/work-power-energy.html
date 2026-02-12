@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Power Energy Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Work Power Energy</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">&#9889; Energy Conservation</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Work, Power &amp; Energy</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Height: <input type="range" id="height" min="50" max="200" value="150"> <span id="hVal">150</span></label>
+        <button onclick="dropBall()">&#9654; Drop Ball</button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>Watch a ball fall under gravity and observe the real-time conversion between potential energy (PE) and kinetic energy (KE). The total mechanical energy remains constant, demonstrating the conservation of energy principle.</p>
+      <div class="formula-box" style="margin-top: 16px;">KE = &frac12;mv&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; PE = mgh &nbsp;&nbsp;|&nbsp;&nbsp; KE + PE = constant</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    const g = 9.8, m = 2;
+    let ballY, ballV, animId, running = false;
+    const groundY = 400, startX = 200;
+    const hSlider = document.getElementById('height');
+    hSlider.oninput = () => { document.getElementById('hVal').textContent = hSlider.value; if (!running) { ballY = groundY - parseInt(hSlider.value); draw(); } };
+
+    function draw() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+      for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+      ctx.fillStyle = 'rgba(0,255,170,0.08)';
+      ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
+      ctx.strokeStyle = 'rgba(0,255,170,0.4)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, groundY); ctx.lineTo(canvas.width, groundY); ctx.stroke();
+
+      // Ball
+      ctx.beginPath(); ctx.arc(startX, ballY, 15, 0, Math.PI * 2);
+      const grad = ctx.createRadialGradient(startX, ballY, 0, startX, ballY, 15);
+      grad.addColorStop(0, '#00ffaa'); grad.addColorStop(1, '#00d4ff');
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 20; ctx.fill(); ctx.shadowBlur = 0;
+
+      // Energy calculations
+      const h = (groundY - ballY) / 2;
+      const v = ballV || 0;
+      const KE = 0.5 * m * v * v;
+      const PE = m * g * h;
+      const TE = m * g * (parseInt(hSlider.value) / 2);
+
+      // Energy bars
+      const barX = 500, barW = 40, barH = 250, barY = 80;
+      ctx.fillStyle = 'rgba(10,10,30,0.8)'; ctx.fillRect(barX - 20, barY - 30, 320, barH + 70);
+      ctx.strokeStyle = 'rgba(0,212,255,0.15)'; ctx.strokeRect(barX - 20, barY - 30, 320, barH + 70);
+
+      ctx.fillStyle = '#00d4ff'; ctx.font = 'bold 12px JetBrains Mono'; ctx.textAlign = 'center';
+      ctx.fillText('KE', barX + barW / 2, barY - 10);
+      ctx.fillText('PE', barX + 100 + barW / 2, barY - 10);
+      ctx.fillText('Total', barX + 200 + barW / 2, barY - 10);
+
+      // KE bar
+      const keH = TE > 0 ? (KE / TE) * barH : 0;
+      ctx.fillStyle = 'rgba(0,212,255,0.15)'; ctx.fillRect(barX, barY, barW, barH);
+      ctx.fillStyle = '#00d4ff'; ctx.fillRect(barX, barY + barH - keH, barW, keH);
+
+      // PE bar
+      const peH = TE > 0 ? (PE / TE) * barH : 0;
+      ctx.fillStyle = 'rgba(0,255,170,0.15)'; ctx.fillRect(barX + 100, barY, barW, barH);
+      ctx.fillStyle = '#00ffaa'; ctx.fillRect(barX + 100, barY + barH - peH, barW, peH);
+
+      // Total bar
+      ctx.fillStyle = 'rgba(124,58,237,0.15)'; ctx.fillRect(barX + 200, barY, barW, barH);
+      ctx.fillStyle = '#7c3aed'; ctx.fillRect(barX + 200, barY, barW, barH);
+
+      ctx.fillStyle = '#a0a0b8'; ctx.font = '11px JetBrains Mono';
+      ctx.fillText(KE.toFixed(0) + 'J', barX + barW / 2, barY + barH + 18);
+      ctx.fillText(PE.toFixed(0) + 'J', barX + 100 + barW / 2, barY + barH + 18);
+      ctx.fillText(TE.toFixed(0) + 'J', barX + 200 + barW / 2, barY + barH + 18);
+
+      // Height indicator
+      ctx.strokeStyle = 'rgba(0,212,255,0.3)'; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(startX + 30, ballY); ctx.lineTo(startX + 80, ballY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(startX + 30, groundY); ctx.lineTo(startX + 80, groundY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(startX + 55, ballY); ctx.lineTo(startX + 55, groundY); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#00d4ff'; ctx.font = '11px JetBrains Mono'; ctx.textAlign = 'left';
+      ctx.fillText('h=' + h.toFixed(0), startX + 62, (ballY + groundY) / 2);
+    }
+
+    function dropBall() {
+      if (animId) cancelAnimationFrame(animId);
+      ballY = groundY - parseInt(hSlider.value);
+      ballV = 0; running = true;
+      function animate() {
+        if (ballY >= groundY - 15) { ballY = groundY - 15; ballV = 0; running = false; draw(); return; }
+        ballV += g * 0.03;
+        ballY += ballV * 2;
+        if (ballY > groundY - 15) ballY = groundY - 15;
+        draw();
+        animId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function resetSim() {
+      if (animId) cancelAnimationFrame(animId);
+      running = false; ballV = 0;
+      ballY = groundY - parseInt(hSlider.value);
+      draw();
+    }
+
+    ballY = groundY - parseInt(hSlider.value);
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

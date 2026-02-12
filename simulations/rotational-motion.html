@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotational Motion Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a>
+      <div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Rotational Motion</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#9881; Spinning Wheel</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Rotational Motion</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Torque: <input type="range" id="torque" min="0" max="50" value="10" step="1"> <span id="torqueVal">10</span> Nm</label>
+        <label>Radius: <input type="range" id="radius" min="30" max="120" value="80" step="5"> <span id="radiusVal">80</span> px</label>
+        <label>Mass: <input type="range" id="mass" min="1" max="20" value="5" step="1"> <span id="massVal">5</span> kg</label>
+        <button onclick="applyTorque()">&#9654; Apply Torque</button>
+        <button onclick="brakeTorque()">&#9632; Brake</button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>This simulation demonstrates rotational motion of a rigid disc. Apply torque to spin the wheel and observe how angular velocity and angular acceleration change. Adjust the radius and mass to see how the moment of inertia affects the rotation. The brake applies a counter-torque to slow the wheel down.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        &tau; = I&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; I = &frac12;mr&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; L = I&omega; &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = &omega;&#8320; + &alpha;t
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+
+    // Sliders
+    const torqueSlider = document.getElementById('torque');
+    const radiusSlider = document.getElementById('radius');
+    const massSlider = document.getElementById('mass');
+    torqueSlider.oninput = () => document.getElementById('torqueVal').textContent = torqueSlider.value;
+    radiusSlider.oninput = () => document.getElementById('radiusVal').textContent = radiusSlider.value;
+    massSlider.oninput = () => document.getElementById('massVal').textContent = massSlider.value;
+
+    // Physics state
+    let angle = 0;           // radians
+    let omega = 0;           // angular velocity (rad/s)
+    let alpha = 0;           // angular acceleration (rad/s^2)
+    let appliedTorque = 0;   // current torque applied
+    let braking = false;
+    let animId = null;
+    let lastTime = null;
+    let trailAngles = [];
+
+    const CX = 300, CY = 225; // wheel center
+    const SPOKES = 8;
+    const FRICTION_COEFF = 0.3; // small friction to slow naturally
+
+    function getMomentOfInertia() {
+      const m = parseFloat(massSlider.value);
+      const r = parseFloat(radiusSlider.value) / 100; // convert to meters (scale)
+      return 0.5 * m * r * r;
+    }
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    }
+
+    function drawWheel() {
+      const r = parseFloat(radiusSlider.value);
+
+      // Outer glow
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(CX, CY, r + 8, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(0,212,255,0.15)';
+      ctx.lineWidth = 2;
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 20;
+      ctx.stroke();
+      ctx.restore();
+
+      // Rim with gradient
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(CX, CY, r, 0, Math.PI * 2);
+      const rimGrad = ctx.createRadialGradient(CX, CY, r - 6, CX, CY, r + 2);
+      rimGrad.addColorStop(0, 'rgba(0,212,255,0.05)');
+      rimGrad.addColorStop(1, 'rgba(0,212,255,0.25)');
+      ctx.strokeStyle = '#00d4ff';
+      ctx.lineWidth = 4;
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 12;
+      ctx.stroke();
+      ctx.restore();
+
+      // Fill disc
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(CX, CY, r - 2, 0, Math.PI * 2);
+      const discGrad = ctx.createRadialGradient(CX - r * 0.3, CY - r * 0.3, 0, CX, CY, r);
+      discGrad.addColorStop(0, 'rgba(0,212,255,0.08)');
+      discGrad.addColorStop(0.7, 'rgba(10,10,30,0.6)');
+      discGrad.addColorStop(1, 'rgba(0,212,255,0.03)');
+      ctx.fillStyle = discGrad;
+      ctx.fill();
+      ctx.restore();
+
+      // Spokes
+      ctx.save();
+      ctx.translate(CX, CY);
+      ctx.rotate(angle);
+      for (let i = 0; i < SPOKES; i++) {
+        const spokeAngle = (i / SPOKES) * Math.PI * 2;
+        const x1 = Math.cos(spokeAngle) * 12;
+        const y1 = Math.sin(spokeAngle) * 12;
+        const x2 = Math.cos(spokeAngle) * (r - 6);
+        const y2 = Math.sin(spokeAngle) * (r - 6);
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        const spokeGrad = ctx.createLinearGradient(x1, y1, x2, y2);
+        spokeGrad.addColorStop(0, 'rgba(0,255,170,0.8)');
+        spokeGrad.addColorStop(1, 'rgba(0,212,255,0.4)');
+        ctx.strokeStyle = spokeGrad;
+        ctx.lineWidth = 2;
+        ctx.shadowColor = '#00ffaa';
+        ctx.shadowBlur = 6;
+        ctx.stroke();
+      }
+
+      // Marker dot on rim to show rotation
+      const markerX = Math.cos(0) * (r - 15);
+      const markerY = Math.sin(0) * (r - 15);
+      ctx.beginPath();
+      ctx.arc(markerX, markerY, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#ff2d75';
+      ctx.shadowColor = '#ff2d75';
+      ctx.shadowBlur = 15;
+      ctx.fill();
+      ctx.restore();
+
+      // Center hub
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(CX, CY, 12, 0, Math.PI * 2);
+      const hubGrad = ctx.createRadialGradient(CX, CY, 0, CX, CY, 12);
+      hubGrad.addColorStop(0, '#00ffaa');
+      hubGrad.addColorStop(1, '#00d4ff');
+      ctx.fillStyle = hubGrad;
+      ctx.shadowColor = '#00ffaa';
+      ctx.shadowBlur = 15;
+      ctx.fill();
+      ctx.restore();
+
+      // Axle
+      ctx.beginPath();
+      ctx.arc(CX, CY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#080818';
+      ctx.fill();
+    }
+
+    function drawTorqueArrow() {
+      if (appliedTorque === 0 && !braking) return;
+      const r = parseFloat(radiusSlider.value);
+      const arrowR = r + 30;
+      const color = braking ? '#ff2d75' : '#00ffaa';
+      const direction = braking ? -1 : Math.sign(appliedTorque);
+      if (direction === 0) return;
+
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 10;
+
+      const startAngle = -Math.PI * 0.4;
+      const endAngle = Math.PI * 0.4;
+
+      ctx.beginPath();
+      if (direction > 0) {
+        ctx.arc(CX, CY, arrowR, startAngle, endAngle);
+      } else {
+        ctx.arc(CX, CY, arrowR, endAngle, startAngle, true);
+      }
+      ctx.stroke();
+
+      // Arrowhead
+      const tipAngle = direction > 0 ? endAngle : startAngle;
+      const tipX = CX + Math.cos(tipAngle) * arrowR;
+      const tipY = CY + Math.sin(tipAngle) * arrowR;
+      const tangent = tipAngle + (direction > 0 ? Math.PI / 2 : -Math.PI / 2);
+      ctx.beginPath();
+      ctx.moveTo(tipX, tipY);
+      ctx.lineTo(tipX - Math.cos(tangent - 0.4) * 12, tipY - Math.sin(tangent - 0.4) * 12);
+      ctx.lineTo(tipX - Math.cos(tangent + 0.4) * 12, tipY - Math.sin(tangent + 0.4) * 12);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.restore();
+
+      // Label
+      ctx.save();
+      ctx.font = '13px "JetBrains Mono", monospace';
+      ctx.fillStyle = color;
+      ctx.textAlign = 'center';
+      ctx.fillText(braking ? 'BRAKE' : '\u03C4 = ' + Math.abs(appliedTorque).toFixed(1) + ' Nm', CX, CY - r - 40);
+      ctx.restore();
+    }
+
+    function drawStats() {
+      const m = parseFloat(massSlider.value);
+      const rMeters = parseFloat(radiusSlider.value) / 100;
+      const I = 0.5 * m * rMeters * rMeters;
+      const L = I * omega;
+
+      const panelX = 590, panelY = 20, panelW = 245, panelH = 200;
+
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(panelX, panelY, panelW, panelH, 8);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = '11px "Inter", sans-serif';
+      ctx.fillStyle = 'rgba(0,212,255,0.5)';
+      ctx.fillText('ROTATIONAL DYNAMICS', panelX + 14, panelY + 22);
+
+      ctx.font = '13px "JetBrains Mono", monospace';
+      let y = panelY + 46;
+      const gap = 24;
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('\u03C9 (angular vel):', panelX + 14, y);
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText(omega.toFixed(3) + ' rad/s', panelX + 155, y);
+      y += gap;
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('\u03B1 (angular acc):', panelX + 14, y);
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText(alpha.toFixed(3) + ' rad/s\u00B2', panelX + 155, y);
+      y += gap;
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('I (moment):', panelX + 14, y);
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText(I.toFixed(4) + ' kg\u00B7m\u00B2', panelX + 155, y);
+      y += gap;
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('L (ang. mom.):', panelX + 14, y);
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText(L.toFixed(4) + ' kg\u00B7m\u00B2/s', panelX + 155, y);
+      y += gap;
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('RPM:', panelX + 14, y);
+      ctx.fillStyle = '#ff2d75';
+      const rpm = Math.abs(omega) * 60 / (2 * Math.PI);
+      ctx.fillText(rpm.toFixed(1), panelX + 155, y);
+      y += gap;
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('Mass:', panelX + 14, y);
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText(m.toFixed(0) + ' kg', panelX + 155, y);
+    }
+
+    function drawOmegaGraph() {
+      const gx = 590, gy = 240, gw = 245, gh = 140;
+
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(gx, gy, gw, gh, 8);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = '11px "Inter", sans-serif';
+      ctx.fillStyle = 'rgba(0,212,255,0.5)';
+      ctx.fillText('\u03C9 vs TIME', gx + 14, gy + 18);
+
+      // Graph area
+      const px = gx + 30, py = gy + 30, pw = gw - 45, ph = gh - 50;
+
+      // Axes
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(px, py + ph);
+      ctx.lineTo(px + pw, py + ph);
+      ctx.stroke();
+
+      ctx.font = '9px "JetBrains Mono", monospace';
+      ctx.fillStyle = 'rgba(0,212,255,0.4)';
+      ctx.fillText('\u03C9', px - 12, py + 4);
+      ctx.fillText('t', px + pw + 4, py + ph + 4);
+
+      if (trailAngles.length > 1) {
+        const maxOmega = Math.max(1, ...trailAngles.map(v => Math.abs(v)));
+        ctx.beginPath();
+        for (let i = 0; i < trailAngles.length; i++) {
+          const x = px + (i / (trailAngles.length - 1)) * pw;
+          const y = py + ph - (trailAngles[i] / maxOmega) * ph * 0.5 - ph * 0.5;
+          const clampedY = Math.max(py, Math.min(py + ph, y));
+          if (i === 0) ctx.moveTo(x, clampedY);
+          else ctx.lineTo(x, clampedY);
+        }
+        ctx.strokeStyle = '#00ffaa';
+        ctx.lineWidth = 2;
+        ctx.shadowColor = '#00ffaa';
+        ctx.shadowBlur = 8;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      // Zero line
+      ctx.beginPath();
+      ctx.moveTo(px, py + ph / 2);
+      ctx.lineTo(px + pw, py + ph / 2);
+      ctx.strokeStyle = 'rgba(255,45,117,0.2)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function applyTorque() {
+      appliedTorque = parseFloat(torqueSlider.value);
+      braking = false;
+      if (!animId) {
+        lastTime = performance.now();
+        animate();
+      }
+    }
+
+    function brakeTorque() {
+      appliedTorque = 0;
+      braking = true;
+      if (!animId) {
+        lastTime = performance.now();
+        animate();
+      }
+    }
+
+    function resetSim() {
+      if (animId) cancelAnimationFrame(animId);
+      animId = null;
+      angle = 0;
+      omega = 0;
+      alpha = 0;
+      appliedTorque = 0;
+      braking = false;
+      trailAngles = [];
+      lastTime = null;
+      draw();
+    }
+
+    function animate(now) {
+      if (!lastTime) lastTime = now;
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+
+      const I = getMomentOfInertia();
+
+      if (braking) {
+        // Apply braking counter-torque
+        const brakeTorqueVal = 15;
+        if (Math.abs(omega) > 0.01) {
+          alpha = -Math.sign(omega) * brakeTorqueVal / I;
+        } else {
+          omega = 0;
+          alpha = 0;
+          braking = false;
+        }
+      } else {
+        // Normal torque + friction
+        const frictionTorque = omega !== 0 ? -Math.sign(omega) * FRICTION_COEFF : 0;
+        const netTorque = appliedTorque + frictionTorque;
+        alpha = netTorque / I;
+      }
+
+      omega += alpha * dt;
+
+      // Clamp omega
+      if (Math.abs(omega) > 50) omega = Math.sign(omega) * 50;
+
+      angle += omega * dt;
+
+      // Trail for graph (keep last 200 points)
+      trailAngles.push(omega);
+      if (trailAngles.length > 200) trailAngles.shift();
+
+      draw();
+      animId = requestAnimationFrame(animate);
+    }
+
+    function draw() {
+      drawBackground();
+      drawWheel();
+      drawTorqueArrow();
+      drawStats();
+      drawOmegaGraph();
+
+      // Floor / support line
+      const r = parseFloat(radiusSlider.value);
+      ctx.strokeStyle = 'rgba(0,255,170,0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(CX - r - 40, CY + r + 20);
+      ctx.lineTo(CX + r + 40, CY + r + 20);
+      ctx.stroke();
+
+      // Support stand
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(CX, CY + 12);
+      ctx.lineTo(CX, CY + r + 20);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(CX - 25, CY + r + 20);
+      ctx.lineTo(CX + 25, CY + r + 20);
+      ctx.stroke();
+    }
+
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

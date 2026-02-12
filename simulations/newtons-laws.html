@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newton's Laws Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a>
+      <div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Newton's Laws</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">&#9878; Force &amp; Acceleration</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Newton's Laws of Motion</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="400"></canvas>
+      <div class="sim-controls">
+        <label>Force: <input type="range" id="force" min="0" max="100" value="30"> <span id="forceVal">30</span> N</label>
+        <label>Mass: <input type="range" id="mass" min="1" max="20" value="5"> <span id="massVal">5</span> kg</label>
+        <label>Friction (&mu;): <input type="range" id="friction" min="0" max="50" value="10"> <span id="fricVal">0.10</span></label>
+        <button onclick="startSim()">&#9654; Apply Force</button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>Apply a horizontal force to a block on a surface. Adjust the applied force, mass, and coefficient of friction to observe Newton's Second Law (F=ma) in action. The block only accelerates when the net force exceeds static friction.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        F_net = F_applied - f_friction &nbsp;&nbsp;|&nbsp;&nbsp; a = F_net / m &nbsp;&nbsp;|&nbsp;&nbsp; f = &mu;mg
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let animId = null, blockX = 100, blockV = 0, time = 0, running = false;
+
+    const forceSlider = document.getElementById('force');
+    const massSlider = document.getElementById('mass');
+    const fricSlider = document.getElementById('friction');
+    forceSlider.oninput = () => document.getElementById('forceVal').textContent = forceSlider.value;
+    massSlider.oninput = () => document.getElementById('massVal').textContent = massSlider.value;
+    fricSlider.oninput = () => document.getElementById('fricVal').textContent = (fricSlider.value / 100).toFixed(2);
+
+    function draw() {
+      const F = parseInt(forceSlider.value);
+      const m = parseInt(massSlider.value);
+      const mu = parseInt(fricSlider.value) / 100;
+      const g = 9.8;
+      const fFric = mu * m * g;
+      const fNet = Math.max(0, F - fFric);
+      const a = fNet / m;
+
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+      for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+
+      // Ground
+      const groundY = 300;
+      ctx.fillStyle = 'rgba(0,255,170,0.08)';
+      ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
+      ctx.strokeStyle = 'rgba(0,255,170,0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, groundY); ctx.lineTo(canvas.width, groundY); ctx.stroke();
+
+      // Block
+      const bw = 30 + m * 3, bh = 30 + m * 2;
+      const bx = blockX, by = groundY - bh;
+      ctx.fillStyle = 'rgba(0, 212, 255, 0.2)';
+      ctx.strokeStyle = 'rgba(0, 212, 255, 0.6)';
+      ctx.lineWidth = 2;
+      ctx.fillRect(bx, by, bw, bh);
+      ctx.strokeRect(bx, by, bw, bh);
+      ctx.fillStyle = '#00d4ff';
+      ctx.font = 'bold 14px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(m + 'kg', bx + bw / 2, by + bh / 2 + 5);
+
+      // Force arrow (applied)
+      if (F > 0) {
+        const arrowLen = F * 1.5;
+        ctx.strokeStyle = '#00ffaa';
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(bx + bw, by + bh / 2); ctx.lineTo(bx + bw + arrowLen, by + bh / 2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(bx + bw + arrowLen, by + bh / 2); ctx.lineTo(bx + bw + arrowLen - 10, by + bh / 2 - 6); ctx.lineTo(bx + bw + arrowLen - 10, by + bh / 2 + 6); ctx.closePath();
+        ctx.fillStyle = '#00ffaa'; ctx.fill();
+        ctx.fillStyle = '#00ffaa'; ctx.font = '12px JetBrains Mono'; ctx.textAlign = 'center';
+        ctx.fillText('F=' + F + 'N', bx + bw + arrowLen / 2, by + bh / 2 - 12);
+      }
+
+      // Friction arrow
+      if (fFric > 0 && (running || F > 0)) {
+        const fArrow = Math.min(fFric, F) * 1.5;
+        ctx.strokeStyle = '#ff2d75';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(bx, by + bh / 2); ctx.lineTo(bx - fArrow, by + bh / 2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(bx - fArrow, by + bh / 2); ctx.lineTo(bx - fArrow + 8, by + bh / 2 - 5); ctx.lineTo(bx - fArrow + 8, by + bh / 2 + 5); ctx.closePath();
+        ctx.fillStyle = '#ff2d75'; ctx.fill();
+        ctx.fillStyle = '#ff2d75'; ctx.font = '11px JetBrains Mono'; ctx.textAlign = 'center';
+        ctx.fillText('f=' + fFric.toFixed(1) + 'N', bx - fArrow / 2, by + bh / 2 - 10);
+      }
+
+      // Stats
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.fillRect(10, 10, 200, 110);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(10, 10, 200, 110);
+      ctx.fillStyle = '#00d4ff'; ctx.font = '12px JetBrains Mono'; ctx.textAlign = 'left';
+      ctx.fillText('F_applied = ' + F + ' N', 20, 32);
+      ctx.fillText('f_friction = ' + fFric.toFixed(1) + ' N', 20, 50);
+      ctx.fillText('F_net = ' + fNet.toFixed(1) + ' N', 20, 68);
+      ctx.fillText('a = ' + a.toFixed(2) + ' m/s²', 20, 86);
+      ctx.fillText('v = ' + blockV.toFixed(2) + ' m/s', 20, 104);
+
+      if (running) {
+        const dt = 0.05;
+        blockV += a * dt;
+        blockX += blockV * 2;
+        if (blockX > canvas.width - 50) { blockX = 100; blockV = 0; }
+        animId = requestAnimationFrame(draw);
+      }
+    }
+
+    function startSim() {
+      running = true;
+      blockV = 0;
+      draw();
+    }
+
+    function resetSim() {
+      running = false;
+      if (animId) cancelAnimationFrame(animId);
+      blockX = 100; blockV = 0;
+      draw();
+    }
+
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

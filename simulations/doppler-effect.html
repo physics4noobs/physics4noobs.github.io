@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doppler Effect Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Doppler Effect</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">🔊 Doppler Effect Simulation</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Waves</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <div class="control-group">
+          <label>Source Speed: <span id="speedVal">40</span>% of wave speed</label>
+          <input type="range" id="speedSlider" min="0" max="80" value="40" step="5">
+        </div>
+
+        <div class="control-group">
+          <label>Wave Frequency: <span id="freqVal">5</span> Hz</label>
+          <input type="range" id="freqSlider" min="1" max="10" value="5" step="1">
+        </div>
+
+        <div class="control-group">
+          <button id="toggleBtn" class="sim-button">Pause Motion</button>
+          <button id="resetBtn" class="sim-button">Reset</button>
+        </div>
+
+        <div class="stats-panel">
+          <div class="stat-item">v_source: <span id="statVs">80</span> m/s</div>
+          <div class="stat-item">v_wave: <span id="statVw">200</span> m/s</div>
+          <div class="stat-item">f_source: <span id="statFs">5</span> Hz</div>
+          <div class="stat-item">f_ahead: <span id="statFa">6.7</span> Hz</div>
+          <div class="stat-item">f_behind: <span id="statFb">4.2</span> Hz</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>The Doppler Effect occurs when a wave source moves relative to an observer. When the source approaches, the observed frequency increases (wavefronts compress). When receding, the frequency decreases (wavefronts stretch). This affects sound pitch and is used in radar and astronomy.</p>
+      <div class="formula-box" style="margin-top: 16px;">f' = f₀(v ± v_observer)/(v ∓ v_source) | Approaching: f' > f₀ | Receding: f' < f₀</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const waveSpeed = 200; // m/s
+    let sourceSpeedPercent = 40;
+    let sourceSpeed = sourceSpeedPercent * waveSpeed / 100;
+    let frequency = 5;
+    let isMoving = true;
+    let time = 0;
+
+    const wavefronts = [];
+    let sourceX = 150;
+    const sourceY = 225;
+    const observerAheadX = 650;
+    const observerAheadY = 225;
+    const observerBehindX = 100;
+    const observerBehindY = 225;
+
+    const speedSlider = document.getElementById('speedSlider');
+    const freqSlider = document.getElementById('freqSlider');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    speedSlider.oninput = function() {
+      sourceSpeedPercent = parseFloat(this.value);
+      sourceSpeed = sourceSpeedPercent * waveSpeed / 100;
+      document.getElementById('speedVal').textContent = sourceSpeedPercent;
+      updateStats();
+    };
+
+    freqSlider.oninput = function() {
+      frequency = parseFloat(this.value);
+      document.getElementById('freqVal').textContent = frequency;
+      updateStats();
+    };
+
+    toggleBtn.onclick = function() {
+      isMoving = !isMoving;
+      this.textContent = isMoving ? 'Pause Motion' : 'Resume Motion';
+    };
+
+    resetBtn.onclick = function() {
+      time = 0;
+      sourceX = 150;
+      wavefronts.length = 0;
+      isMoving = true;
+      toggleBtn.textContent = 'Pause Motion';
+    };
+
+    function updateStats() {
+      const fAhead = frequency * waveSpeed / (waveSpeed - sourceSpeed);
+      const fBehind = frequency * waveSpeed / (waveSpeed + sourceSpeed);
+
+      document.getElementById('statVs').textContent = sourceSpeed.toFixed(0);
+      document.getElementById('statVw').textContent = waveSpeed;
+      document.getElementById('statFs').textContent = frequency;
+      document.getElementById('statFa').textContent = fAhead.toFixed(1);
+      document.getElementById('statFb').textContent = fBehind.toFixed(1);
+    }
+
+    function drawObserver(x, y, color, label) {
+      // Observer dot
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, 8, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = color;
+      ctx.font = '11px JetBrains Mono';
+      ctx.fillText(label, x - 20, y - 15);
+    }
+
+    function drawSource(x, y) {
+      // Glow
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, 20);
+      gradient.addColorStop(0, 'rgba(0,212,255,0.8)');
+      gradient.addColorStop(1, 'rgba(0,212,255,0)');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(x, y, 20, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Source dot
+      ctx.fillStyle = '#00d4ff';
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = '#00d4ff';
+      ctx.font = '11px JetBrains Mono';
+      ctx.fillText('Source', x - 18, y + 25);
+    }
+
+    function drawWavefront(x, y, radius, alpha) {
+      ctx.strokeStyle = `rgba(124,58,237,${alpha})`;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    function draw() {
+      // Background
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= canvas.width; x += 50) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= canvas.height; y += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // Draw wavefronts
+      for (let i = wavefronts.length - 1; i >= 0; i--) {
+        const wf = wavefronts[i];
+        const alpha = Math.max(0, 1 - wf.radius / 400);
+        drawWavefront(wf.x, wf.y, wf.radius, alpha * 0.7);
+
+        if (wf.radius > 600) {
+          wavefronts.splice(i, 1);
+        }
+      }
+
+      // Draw observers
+      drawObserver(observerAheadX, observerAheadY, '#00ffaa', 'Observer (ahead)');
+      drawObserver(observerBehindX, observerBehindY, '#ff2d75', 'Observer (behind)');
+
+      // Draw source
+      drawSource(sourceX, sourceY);
+
+      // Frequency labels near observers
+      const fAhead = frequency * waveSpeed / (waveSpeed - sourceSpeed);
+      const fBehind = frequency * waveSpeed / (waveSpeed + sourceSpeed);
+
+      ctx.fillStyle = '#00ffaa';
+      ctx.font = '12px JetBrains Mono';
+      ctx.fillText('f = ' + fAhead.toFixed(1) + ' Hz', observerAheadX - 35, observerAheadY + 35);
+
+      ctx.fillStyle = '#ff2d75';
+      ctx.fillText('f = ' + fBehind.toFixed(1) + ' Hz', observerBehindX - 35, observerBehindY + 35);
+
+      // Mach cone warning
+      if (sourceSpeedPercent >= 70) {
+        ctx.fillStyle = 'rgba(245,158,11,0.9)';
+        ctx.font = '13px JetBrains Mono';
+        ctx.fillText('Approaching supersonic - Mach cone forms at v_source = v_wave', 180, 30);
+      }
+
+      // Top-down view label
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.font = '11px JetBrains Mono';
+      ctx.fillText('Top-down view', 20, 25);
+
+      // Motion arrow
+      if (isMoving && sourceSpeed > 0) {
+        ctx.strokeStyle = '#00d4ff';
+        ctx.fillStyle = '#00d4ff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(sourceX + 15, sourceY);
+        ctx.lineTo(sourceX + 45, sourceY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(sourceX + 45, sourceY);
+        ctx.lineTo(sourceX + 40, sourceY - 4);
+        ctx.lineTo(sourceX + 40, sourceY + 4);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+
+    function animate() {
+      if (isMoving) {
+        time += 0.016;
+
+        // Move source
+        sourceX += sourceSpeed * 0.016 * 0.5;
+        if (sourceX > 750) {
+          sourceX = 150;
+          wavefronts.length = 0;
+        }
+
+        // Emit wavefronts
+        if (Math.floor(time * frequency) > Math.floor((time - 0.016) * frequency)) {
+          wavefronts.push({
+            x: sourceX,
+            y: sourceY,
+            radius: 0
+          });
+        }
+
+        // Expand wavefronts
+        for (let wf of wavefronts) {
+          wf.radius += waveSpeed * 0.016 * 0.5;
+        }
+      }
+
+      draw();
+      requestAnimationFrame(animate);
+    }
+
+    updateStats();
+    animate();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continuity Equation | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='20' fill='%2300d4ff'/><circle cx='50' cy='20' r='8' fill='%2300ffaa'/><circle cx='80' cy='50' r='8' fill='%2300ffaa'/><circle cx='50' cy='80' r='8' fill='%2300ffaa'/></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Continuity Equation</span>
+        </div>
+
+        <h1>Continuity Equation</h1>
+        <p class="subtitle">Grade XI - Fluid Mechanics</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label for="area1">Wide Section Area A₁: <span id="area1Val">100</span> px²</label>
+                    <input type="range" id="area1" min="50" max="150" value="100">
+                </div>
+                <div class="control-group">
+                    <label for="area2">Narrow Section Area A₂: <span id="area2Val">40</span> px²</label>
+                    <input type="range" id="area2" min="20" max="80" value="40">
+                </div>
+                <div class="control-group">
+                    <label for="flowRate">Flow Rate Q: <span id="flowRateVal">50</span></label>
+                    <input type="range" id="flowRate" min="20" max="100" value="50">
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <div class="stats-panel">
+                <h3>Parameters</h3>
+                <div class="stat-item">
+                    <span class="stat-label">A₁ (Wide Area):</span>
+                    <span class="stat-value" id="statA1">100 px²</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">A₂ (Narrow Area):</span>
+                    <span class="stat-value" id="statA2">40 px²</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">v₁ (Wide Velocity):</span>
+                    <span class="stat-value" id="statV1">2.0 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">v₂ (Narrow Velocity):</span>
+                    <span class="stat-value" id="statV2">5.0 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Q (Flow Rate):</span>
+                    <span class="stat-value" id="statQ">200 px³/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Velocity Ratio:</span>
+                    <span class="stat-value" id="statRatio">2.50</span>
+                </div>
+            </div>
+
+            <div class="formula-panel">
+                <h3>Formulas</h3>
+                <div class="formula-box">
+                    <p><strong>Continuity Equation:</strong> A₁v₁ = A₂v₂</p>
+                    <p><strong>Flow Rate:</strong> Q = Av = constant</p>
+                    <p><strong>Velocity Relation:</strong> v₂ = v₁(A₁/A₂)</p>
+                    <p><strong>Conservation:</strong> Mass flow rate is constant</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Controls
+        const area1Input = document.getElementById('area1');
+        const area2Input = document.getElementById('area2');
+        const flowRateInput = document.getElementById('flowRate');
+
+        let A1 = 100, A2 = 40, Q = 50;
+        let particles = [];
+
+        area1Input.addEventListener('input', (e) => {
+            A1 = parseFloat(e.target.value);
+            document.getElementById('area1Val').textContent = A1;
+            updateStats();
+        });
+
+        area2Input.addEventListener('input', (e) => {
+            A2 = parseFloat(e.target.value);
+            document.getElementById('area2Val').textContent = A2;
+            updateStats();
+        });
+
+        flowRateInput.addEventListener('input', (e) => {
+            Q = parseFloat(e.target.value);
+            document.getElementById('flowRateVal').textContent = Q;
+            updateStats();
+        });
+
+        function updateStats() {
+            const v1 = Q / A1;
+            const v2 = Q / A2;
+            const ratio = v2 / v1;
+
+            document.getElementById('statA1').textContent = A1.toFixed(0) + ' px²';
+            document.getElementById('statA2').textContent = A2.toFixed(0) + ' px²';
+            document.getElementById('statV1').textContent = (v1 * 4).toFixed(1) + ' m/s';
+            document.getElementById('statV2').textContent = (v2 * 4).toFixed(1) + ' m/s';
+            document.getElementById('statQ').textContent = (Q * 4).toFixed(0) + ' px³/s';
+            document.getElementById('statRatio').textContent = ratio.toFixed(2);
+        }
+
+        class Particle {
+            constructor() {
+                this.x = 50;
+                this.y = 225;
+                this.size = 4;
+            }
+
+            update() {
+                const v1 = Q / A1;
+                const v2 = Q / A2;
+
+                // Determine which section the particle is in
+                if (this.x < 200) {
+                    // Wide section 1
+                    this.x += v1 * 0.5;
+                } else if (this.x < 350) {
+                    // Transition to narrow
+                    const progress = (this.x - 200) / 150;
+                    const v = v1 + (v2 - v1) * progress;
+                    this.x += v * 0.5;
+                } else if (this.x < 500) {
+                    // Narrow section
+                    this.x += v2 * 0.5;
+                } else if (this.x < 650) {
+                    // Transition to wide
+                    const progress = (this.x - 500) / 150;
+                    const v = v2 + (v1 - v2) * progress;
+                    this.x += v * 0.5;
+                } else {
+                    // Wide section 2
+                    this.x += v1 * 0.5;
+                }
+
+                // Reset if out of bounds
+                if (this.x > 800) {
+                    this.x = 50;
+                }
+            }
+
+            draw() {
+                // Determine color based on velocity
+                let color;
+                if (this.x < 200 || this.x > 650) {
+                    color = '#4169ff'; // Blue for slow
+                } else if (this.x > 350 && this.x < 500) {
+                    color = '#ff2d75'; // Red for fast
+                } else {
+                    color = '#f59e0b'; // Orange for transition
+                }
+
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        for (let i = 0; i < 20; i++) {
+            const p = new Particle();
+            p.x = 50 + i * 35;
+            particles.push(p);
+        }
+
+        function drawPipe() {
+            const h1 = A1;
+            const h2 = A2;
+
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 3;
+
+            // Top line
+            ctx.beginPath();
+            ctx.moveTo(50, 225 - h1 / 2);
+            ctx.lineTo(200, 225 - h1 / 2);
+            ctx.lineTo(350, 225 - h2 / 2);
+            ctx.lineTo(500, 225 - h2 / 2);
+            ctx.lineTo(650, 225 - h1 / 2);
+            ctx.lineTo(800, 225 - h1 / 2);
+            ctx.stroke();
+
+            // Bottom line
+            ctx.beginPath();
+            ctx.moveTo(50, 225 + h1 / 2);
+            ctx.lineTo(200, 225 + h1 / 2);
+            ctx.lineTo(350, 225 + h2 / 2);
+            ctx.lineTo(500, 225 + h2 / 2);
+            ctx.lineTo(650, 225 + h1 / 2);
+            ctx.lineTo(800, 225 + h1 / 2);
+            ctx.stroke();
+
+            // Fill sections with color based on velocity
+            const v1 = Q / A1;
+            const v2 = Q / A2;
+
+            // Wide section 1
+            ctx.fillStyle = getVelocityColor(v1, v1, v2);
+            ctx.globalAlpha = 0.3;
+            ctx.fillRect(50, 225 - h1 / 2, 150, h1);
+
+            // Narrow section
+            ctx.fillStyle = getVelocityColor(v2, v1, v2);
+            ctx.beginPath();
+            ctx.moveTo(200, 225 - h1 / 2);
+            ctx.lineTo(350, 225 - h2 / 2);
+            ctx.lineTo(500, 225 - h2 / 2);
+            ctx.lineTo(650, 225 - h1 / 2);
+            ctx.lineTo(650, 225 + h1 / 2);
+            ctx.lineTo(500, 225 + h2 / 2);
+            ctx.lineTo(350, 225 + h2 / 2);
+            ctx.lineTo(200, 225 + h1 / 2);
+            ctx.closePath();
+            ctx.fill();
+
+            // Wide section 2
+            ctx.fillStyle = getVelocityColor(v1, v1, v2);
+            ctx.fillRect(650, 225 - h1 / 2, 150, h1);
+            ctx.globalAlpha = 1;
+        }
+
+        function getVelocityColor(v, vMin, vMax) {
+            const ratio = (v - vMin) / (vMax - vMin);
+            if (ratio < 0.3) return '#4169ff'; // Blue
+            if (ratio < 0.7) return '#f59e0b'; // Orange
+            return '#ff2d75'; // Red
+        }
+
+        function drawVelocityArrows() {
+            const v1 = Q / A1;
+            const v2 = Q / A2;
+
+            // Arrow in wide section
+            drawArrow(125, 300, 125 + v1 * 20, 300, '#00ffaa', 2);
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`v₁`, 125, 320);
+
+            // Arrow in narrow section
+            drawArrow(425, 300, 425 + v2 * 20, 300, '#ff2d75', 2);
+            ctx.fillStyle = '#ff2d75';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`v₂`, 425, 320);
+        }
+
+        function drawArrow(x1, y1, x2, y2, color, width) {
+            const headlen = 10;
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = width;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - headlen * Math.cos(angle - Math.PI / 6), y2 - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - headlen * Math.cos(angle + Math.PI / 6), y2 - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawPipe();
+
+            // Update and draw particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            drawVelocityArrows();
+
+            // Labels
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Wide Section', 125, 50);
+            ctx.fillText('Narrow Section', 425, 50);
+            ctx.fillText('Wide Section', 725, 50);
+
+            requestAnimationFrame(draw);
+        }
+
+        updateStats();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

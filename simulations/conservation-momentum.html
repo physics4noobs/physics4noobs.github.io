@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conservation of Momentum | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='10' fill='%2300d4ff'/><circle cx='50' cy='20' r='5' fill='%23ff2d75'/><ellipse cx='50' cy='50' rx='30' ry='15' fill='none' stroke='%2300d4ff' stroke-width='2'/><ellipse cx='50' cy='50' rx='15' ry='30' fill='none' stroke='%2300d4ff' stroke-width='2'/></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../simulations.html">Simulations</a> / Conservation of Momentum
+        </div>
+
+        <h1>Conservation of Momentum</h1>
+        <p class="subtitle">Grade XI - Work Power Energy</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Mass 1 (kg): <span id="m1Value">5.0</span></label>
+                    <input type="range" id="m1Slider" min="1" max="10" value="5" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>Mass 2 (kg): <span id="m2Value">3.0</span></label>
+                    <input type="range" id="m2Slider" min="1" max="10" value="3" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>Push Force: <span id="forceValue">50</span></label>
+                    <input type="range" id="forceSlider" min="10" max="100" value="50" step="1">
+                </div>
+                <button id="releaseBtn" class="control-btn">Release Spring</button>
+                <button id="resetBtn" class="control-btn">Reset</button>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <div class="stats-panel">
+                <h3>Measurements</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Cart 1 Velocity:</span>
+                    <span class="stat-value" id="statV1">0.0 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Cart 2 Velocity:</span>
+                    <span class="stat-value" id="statV2">0.0 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Momentum 1:</span>
+                    <span class="stat-value" id="statP1">0.0 kg·m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Momentum 2:</span>
+                    <span class="stat-value" id="statP2">0.0 kg·m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Momentum:</span>
+                    <span class="stat-value" id="statPTotal">0.0 kg·m/s</span>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3>Formulas</h3>
+                <div class="formula-item">p = mv</div>
+                <div class="formula-item">p₁ + p₂ = constant</div>
+                <div class="formula-item">m₁v₁ + m₂v₂ = 0 (for explosion from rest)</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Simulation parameters
+        let m1 = 5;
+        let m2 = 3;
+        let pushForce = 50;
+
+        let cart1X = 350;
+        let cart2X = 450;
+        const cartY = 200;
+        const cartWidth = 60;
+        const cartHeight = 40;
+        const trackY = 240;
+
+        let v1 = 0;
+        let v2 = 0;
+        let springCompression = 30;
+        let animating = false;
+        let released = false;
+
+        // Event listeners
+        document.getElementById('m1Slider').addEventListener('input', (e) => {
+            if (!animating) {
+                m1 = parseFloat(e.target.value);
+                document.getElementById('m1Value').textContent = m1.toFixed(1);
+                updateStats();
+            }
+        });
+
+        document.getElementById('m2Slider').addEventListener('input', (e) => {
+            if (!animating) {
+                m2 = parseFloat(e.target.value);
+                document.getElementById('m2Value').textContent = m2.toFixed(1);
+                updateStats();
+            }
+        });
+
+        document.getElementById('forceSlider').addEventListener('input', (e) => {
+            if (!animating) {
+                pushForce = parseFloat(e.target.value);
+                springCompression = pushForce * 0.6;
+                document.getElementById('forceValue').textContent = pushForce;
+            }
+        });
+
+        document.getElementById('releaseBtn').addEventListener('click', () => {
+            if (!animating) {
+                released = true;
+                animating = true;
+                // Calculate velocities based on momentum conservation
+                // m1*v1 + m2*v2 = 0, so v1 = -(m2/m1)*v2
+                // Energy: 0.5*k*x^2 = 0.5*m1*v1^2 + 0.5*m2*v2^2
+                // Simplified: use force to determine velocities
+                const impulse = pushForce * 0.1;
+                v2 = impulse / m2;
+                v1 = -(m2 / m1) * v2;
+
+                animate();
+            }
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            animating = false;
+            released = false;
+            cart1X = 350;
+            cart2X = 450;
+            v1 = 0;
+            v2 = 0;
+            springCompression = pushForce * 0.6;
+            updateStats();
+            draw();
+        });
+
+        function drawCart(x, y, mass, color, label) {
+            // Cart body
+            ctx.fillStyle = color;
+            ctx.fillRect(x - cartWidth/2, y - cartHeight/2, cartWidth, cartHeight);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x - cartWidth/2, y - cartHeight/2, cartWidth, cartHeight);
+
+            // Wheels
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(x - cartWidth/3, y + cartHeight/2, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x + cartWidth/3, y + cartHeight/2, 8, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px JetBrains Mono';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, x, y + 5);
+
+            // Mass label
+            ctx.font = '10px JetBrains Mono';
+            ctx.fillText(mass.toFixed(1) + ' kg', x, y - 25);
+        }
+
+        function drawSpring(x1, x2, y) {
+            const springY = y;
+            const numCoils = 8;
+            const amplitude = 10;
+
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(x1, springY);
+
+            const length = x2 - x1;
+            const coilWidth = length / numCoils;
+
+            for (let i = 0; i < numCoils; i++) {
+                const x = x1 + i * coilWidth;
+                const yOffset = (i % 2 === 0) ? amplitude : -amplitude;
+                ctx.lineTo(x + coilWidth/2, springY + yOffset);
+                ctx.lineTo(x + coilWidth, springY);
+            }
+
+            ctx.stroke();
+        }
+
+        function drawArrow(x, y, velocity, color, label) {
+            if (Math.abs(velocity) < 0.01) return;
+
+            const length = Math.abs(velocity) * 20;
+            const direction = velocity >= 0 ? 1 : -1;
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 3;
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + length * direction, y);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x + length * direction, y);
+            ctx.lineTo(x + length * direction - 10 * direction, y - 6);
+            ctx.lineTo(x + length * direction - 10 * direction, y + 6);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.font = '12px JetBrains Mono';
+            ctx.fillText(label, x + length * direction / 2 - 10, y - 10);
+        }
+
+        function drawBarChart(x, y) {
+            const barWidth = 50;
+            const maxHeight = 120;
+            const p1 = m1 * v1;
+            const p2 = m2 * v2;
+            const pTotal = p1 + p2;
+
+            const maxP = Math.max(Math.abs(p1), Math.abs(p2), 1);
+
+            ctx.font = '14px JetBrains Mono';
+            ctx.fillStyle = '#00d4ff';
+            ctx.fillText('Momentum', x + 20, y - 130);
+
+            // Cart 1 momentum
+            const h1 = (Math.abs(p1) / maxP) * maxHeight;
+            ctx.fillStyle = p1 < 0 ? '#00d4ff' : 'rgba(0, 212, 255, 0.5)';
+            if (p1 < 0) {
+                ctx.fillRect(x, y - h1, barWidth, h1);
+            } else {
+                ctx.fillRect(x, y - h1, barWidth, h1);
+            }
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '10px JetBrains Mono';
+            ctx.textAlign = 'center';
+            ctx.fillText(p1.toFixed(1), x + barWidth/2, y + 15);
+            ctx.fillText('p₁', x + barWidth/2, y + 30);
+
+            // Cart 2 momentum
+            const h2 = (Math.abs(p2) / maxP) * maxHeight;
+            ctx.fillStyle = p2 > 0 ? '#7c3aed' : 'rgba(124, 58, 237, 0.5)';
+            ctx.fillRect(x + barWidth + 10, y - h2, barWidth, h2);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(p2.toFixed(1), x + barWidth + 10 + barWidth/2, y + 15);
+            ctx.fillText('p₂', x + barWidth + 10 + barWidth/2, y + 30);
+
+            // Total momentum
+            const hTotal = (Math.abs(pTotal) / maxP) * maxHeight;
+            ctx.fillStyle = '#00ffaa';
+            ctx.fillRect(x + 2*barWidth + 20, y - Math.max(hTotal, 2), barWidth, Math.max(hTotal, 2));
+
+            ctx.fillStyle = '#00ffaa';
+            ctx.fillText(pTotal.toFixed(1), x + 2*barWidth + 20 + barWidth/2, y + 15);
+            ctx.fillText('Total', x + 2*barWidth + 20 + barWidth/2, y + 30);
+
+            // Zero line
+            ctx.strokeStyle = '#ff2d75';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(x - 10, y);
+            ctx.lineTo(x + 3*barWidth + 30, y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function updateStats() {
+            const p1 = m1 * v1;
+            const p2 = m2 * v2;
+            const pTotal = p1 + p2;
+
+            document.getElementById('statV1').textContent = v1.toFixed(2) + ' m/s';
+            document.getElementById('statV2').textContent = v2.toFixed(2) + ' m/s';
+            document.getElementById('statP1').textContent = p1.toFixed(2) + ' kg·m/s';
+            document.getElementById('statP2').textContent = p2.toFixed(2) + ' kg·m/s';
+            document.getElementById('statPTotal').textContent = pTotal.toFixed(2) + ' kg·m/s';
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw track
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(50, trackY);
+            ctx.lineTo(800, trackY);
+            ctx.stroke();
+
+            // Draw spring if not released or still close
+            if (!released || Math.abs(cart2X - cart1X) < 150) {
+                const springLeft = cart1X + cartWidth/2;
+                const springRight = cart2X - cartWidth/2;
+                drawSpring(springLeft, springRight, cartY);
+            }
+
+            // Draw carts
+            drawCart(cart1X, cartY, m1, '#00d4ff', 'm₁');
+            drawCart(cart2X, cartY, m2, '#7c3aed', 'm₂');
+
+            // Draw velocity arrows
+            if (released) {
+                drawArrow(cart1X, cartY - 40, v1, '#00ffaa', 'v₁');
+                drawArrow(cart2X, cartY - 40, v2, '#00ffaa', 'v₂');
+            }
+
+            // Draw momentum arrows
+            if (released) {
+                const p1 = m1 * v1;
+                const p2 = m2 * v2;
+                drawArrow(cart1X, cartY + 50, p1/5, '#ff2d75', 'p₁');
+                drawArrow(cart2X, cartY + 50, p2/5, '#ff2d75', 'p₂');
+            }
+
+            // Draw bar chart
+            drawBarChart(600, 380);
+
+            // Draw status
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '16px JetBrains Mono';
+            ctx.textAlign = 'left';
+            ctx.fillText(released ? 'RELEASED' : 'READY', 50, 50);
+
+            if (released) {
+                ctx.fillStyle = '#00ffaa';
+                ctx.font = '14px JetBrains Mono';
+                ctx.fillText('Total Momentum = ' + (m1*v1 + m2*v2).toFixed(2) + ' kg·m/s', 50, 80);
+            }
+        }
+
+        function animate() {
+            if (!animating) return;
+
+            cart1X += v1;
+            cart2X += v2;
+
+            if (cart1X < 0 || cart1X > 850 || cart2X < 0 || cart2X > 850) {
+                animating = false;
+            }
+
+            updateStats();
+            draw();
+
+            if (animating) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        // Initialize
+        updateStats();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

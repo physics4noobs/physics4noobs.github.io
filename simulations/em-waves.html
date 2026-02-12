@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EM Waves Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>EM Waves</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">&#128225; Electromagnetic Wave</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Electromagnetic Waves</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Wavelength: <input type="range" id="wavelength" min="30" max="150" value="80"> <span id="wlVal">80</span></label>
+        <label>Amplitude: <input type="range" id="amplitude" min="20" max="100" value="60"> <span id="ampVal">60</span></label>
+        <button onclick="toggleAnim()"><span id="playBtn">&#10074;&#10074; Pause</span></button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>Visualize an electromagnetic wave propagating through space. The electric field (E, cyan) oscillates vertically while the magnetic field (B, green) oscillates horizontally &mdash; both perpendicular to the direction of propagation and to each other. This is the fundamental nature of light and all electromagnetic radiation.</p>
+      <div class="formula-box" style="margin-top: 16px;">c = f&lambda; = 3 &times; 10&sup8; m/s &nbsp;&nbsp;|&nbsp;&nbsp; c = 1/&radic;(&mu;&#8320;&epsilon;&#8320;) &nbsp;&nbsp;|&nbsp;&nbsp; E/B = c</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let phase = 0, running = true, animId;
+    const wlSlider = document.getElementById('wavelength');
+    const ampSlider = document.getElementById('amplitude');
+    wlSlider.oninput = () => document.getElementById('wlVal').textContent = wlSlider.value;
+    ampSlider.oninput = () => document.getElementById('ampVal').textContent = ampSlider.value;
+
+    function draw() {
+      const wl = parseInt(wlSlider.value);
+      const amp = parseInt(ampSlider.value);
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.03)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+      for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+
+      const cx = 60, cy = canvas.height / 2;
+      const len = canvas.width - 120;
+
+      // Propagation axis
+      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([6, 6]);
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + len, cy); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Labels
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.font = '12px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('Direction of propagation →', cx + len / 2, cy + amp + 50);
+
+      // Draw E field (vertical oscillation - cyan)
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      for (let i = 0; i <= len; i++) {
+        const x = cx + i;
+        const y = cy - amp * Math.sin((i / wl) * Math.PI * 2 + phase);
+        ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#00d4ff';
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 8;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // E field vertical lines (showing oscillation direction)
+      for (let i = 0; i <= len; i += 12) {
+        const x = cx + i;
+        const y = cy - amp * Math.sin((i / wl) * Math.PI * 2 + phase);
+        ctx.beginPath();
+        ctx.moveTo(x, cy);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = `rgba(0, 212, 255, 0.12)`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Draw B field (horizontal oscillation shown as perspective/depth - green)
+      // We simulate the perpendicular B field using a skewed perspective
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      for (let i = 0; i <= len; i++) {
+        const x = cx + i;
+        const bVal = amp * 0.6 * Math.sin((i / wl) * Math.PI * 2 + phase);
+        // Perspective: horizontal displacement + slight vertical offset for 3D look
+        const px = x + bVal * 0.3;
+        const py = cy + bVal * 0.5;
+        ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = '#00ffaa';
+      ctx.lineWidth = 2;
+      ctx.shadowColor = '#00ffaa';
+      ctx.shadowBlur = 6;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // B field lines
+      for (let i = 0; i <= len; i += 12) {
+        const x = cx + i;
+        const bVal = amp * 0.6 * Math.sin((i / wl) * Math.PI * 2 + phase);
+        const px = x + bVal * 0.3;
+        const py = cy + bVal * 0.5;
+        ctx.beginPath();
+        ctx.moveTo(x, cy);
+        ctx.lineTo(px, py);
+        ctx.strokeStyle = 'rgba(0, 255, 170, 0.1)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Legend
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.fillRect(10, 10, 180, 80);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(10, 10, 180, 80);
+
+      ctx.font = '12px JetBrains Mono';
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('── E field (Electric)', 22, 32);
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText('── B field (Magnetic)', 22, 52);
+      ctx.fillStyle = '#a0a0b8';
+      ctx.fillText('λ = ' + wl + ' units', 22, 76);
+
+      // Axis labels
+      ctx.font = 'bold 13px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('E', cx - 20, cy - amp - 10);
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText('B', cx + len + 25, cy + amp * 0.4);
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.fillText('x', cx + len + 15, cy - 8);
+
+      if (running) {
+        phase += 0.04;
+        animId = requestAnimationFrame(draw);
+      }
+    }
+
+    function toggleAnim() {
+      running = !running;
+      document.getElementById('playBtn').innerHTML = running ? '&#10074;&#10074; Pause' : '&#9654; Play';
+      if (running) draw();
+    }
+
+    function resetSim() {
+      phase = 0;
+      running = true;
+      document.getElementById('playBtn').innerHTML = '&#10074;&#10074; Pause';
+      if (!animId) draw();
+    }
+
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

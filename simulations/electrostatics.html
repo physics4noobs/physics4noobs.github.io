@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electric Field Lines | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Electrostatics</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#9889; Electric Field Lines</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Electrostatics &amp; Capacitance</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <button onclick="presetDipole()">&#8723; Dipole</button>
+        <button onclick="presetTwoPositive()">&#43;&#43; Two Positive</button>
+        <button onclick="clearAll()">&#8635; Clear All</button>
+        <span style="font-size: 0.78rem; color: var(--text-muted); margin-left: auto;">Click canvas: Left = +Q &nbsp;|&nbsp; Right-click = &minus;Q</span>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>Place positive and negative charges on the canvas by clicking (left-click for positive, right-click for negative). Electric field lines emanate from positive charges and terminate at negative charges, with arrows showing the field direction. The density and curvature of lines represent the field strength and direction at each point in space.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        F = kq&#8321;q&#8322;/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; E = kq/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; k = 8.99 &times; 10&#8313; N&middot;m&sup2;/C&sup2;
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    const k = 500; // Scaled Coulomb constant for visual purposes
+    let charges = [];
+    const LINES_PER_CHARGE = 16;
+    const STEP_SIZE = 3;
+    const MAX_STEPS = 800;
+
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+      charges.push({ x, y, q: 1 });
+      draw();
+    });
+
+    canvas.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+      charges.push({ x, y, q: -1 });
+      draw();
+    });
+
+    function presetDipole() {
+      charges = [
+        { x: 300, y: 225, q: 1 },
+        { x: 550, y: 225, q: -1 }
+      ];
+      draw();
+    }
+
+    function presetTwoPositive() {
+      charges = [
+        { x: 300, y: 225, q: 1 },
+        { x: 550, y: 225, q: 1 }
+      ];
+      draw();
+    }
+
+    function clearAll() {
+      charges = [];
+      draw();
+    }
+
+    function getField(x, y) {
+      let Ex = 0, Ey = 0;
+      for (const c of charges) {
+        const dx = x - c.x;
+        const dy = y - c.y;
+        const r2 = dx * dx + dy * dy;
+        const r = Math.sqrt(r2);
+        if (r < 8) return null; // Too close to charge
+        const E = k * c.q / r2;
+        Ex += E * dx / r;
+        Ey += E * dy / r;
+      }
+      return { x: Ex, y: Ey };
+    }
+
+    function traceFieldLine(startX, startY, direction) {
+      const points = [{ x: startX, y: startY }];
+      let x = startX, y = startY;
+
+      for (let i = 0; i < MAX_STEPS; i++) {
+        const field = getField(x, y);
+        if (!field) break;
+
+        const mag = Math.sqrt(field.x * field.x + field.y * field.y);
+        if (mag < 0.001) break;
+
+        const dx = direction * STEP_SIZE * field.x / mag;
+        const dy = direction * STEP_SIZE * field.y / mag;
+        x += dx;
+        y += dy;
+
+        // Out of bounds
+        if (x < -20 || x > canvas.width + 20 || y < -20 || y > canvas.height + 20) break;
+
+        // Check if reached a negative charge
+        let hitCharge = false;
+        for (const c of charges) {
+          const dist = Math.sqrt((x - c.x) ** 2 + (y - c.y) ** 2);
+          if (dist < 12 && c.q * direction < 0) {
+            points.push({ x, y });
+            hitCharge = true;
+            break;
+          }
+        }
+        if (hitCharge) break;
+
+        points.push({ x, y });
+      }
+      return points;
+    }
+
+    function drawArrow(x, y, dx, dy, size) {
+      const angle = Math.atan2(dy, dx);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.beginPath();
+      ctx.moveTo(size, 0);
+      ctx.lineTo(-size * 0.6, -size * 0.5);
+      ctx.lineTo(-size * 0.6, size * 0.5);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(0, 212, 255, 0.6)';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+    }
+
+    function draw() {
+      drawBackground();
+
+      // Draw field lines from positive charges
+      const positiveCharges = charges.filter(c => c.q > 0);
+      const negativeCharges = charges.filter(c => c.q < 0);
+
+      for (const c of positiveCharges) {
+        for (let i = 0; i < LINES_PER_CHARGE; i++) {
+          const angle = (2 * Math.PI * i) / LINES_PER_CHARGE;
+          const startX = c.x + 14 * Math.cos(angle);
+          const startY = c.y + 14 * Math.sin(angle);
+          const points = traceFieldLine(startX, startY, 1);
+
+          if (points.length > 1) {
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let j = 1; j < points.length; j++) {
+              ctx.lineTo(points[j].x, points[j].y);
+            }
+            ctx.strokeStyle = 'rgba(0,212,255,0.4)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Draw arrows along the line
+            const arrowInterval = Math.floor(points.length / 3);
+            for (let a = arrowInterval; a < points.length - 1; a += arrowInterval) {
+              const dx = points[a + 1].x - points[a].x;
+              const dy = points[a + 1].y - points[a].y;
+              drawArrow(points[a].x, points[a].y, dx, dy, 5);
+            }
+          }
+        }
+      }
+
+      // If only negative charges, draw lines going inward
+      if (positiveCharges.length === 0) {
+        for (const c of negativeCharges) {
+          for (let i = 0; i < LINES_PER_CHARGE; i++) {
+            const angle = (2 * Math.PI * i) / LINES_PER_CHARGE;
+            const startX = c.x + 14 * Math.cos(angle);
+            const startY = c.y + 14 * Math.sin(angle);
+            const points = traceFieldLine(startX, startY, -1);
+
+            if (points.length > 1) {
+              ctx.beginPath();
+              ctx.moveTo(points[0].x, points[0].y);
+              for (let j = 1; j < points.length; j++) {
+                ctx.lineTo(points[j].x, points[j].y);
+              }
+              ctx.strokeStyle = 'rgba(0,212,255,0.4)';
+              ctx.lineWidth = 1.5;
+              ctx.stroke();
+
+              const arrowInterval = Math.floor(points.length / 3);
+              for (let a = arrowInterval; a < points.length - 1; a += arrowInterval) {
+                const dx = points[a].x - points[a + 1].x;
+                const dy = points[a].y - points[a + 1].y;
+                drawArrow(points[a].x, points[a].y, dx, dy, 5);
+              }
+            }
+          }
+        }
+      }
+
+      // Draw charges
+      for (const c of charges) {
+        // Glow
+        const glowGrad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 30);
+        if (c.q > 0) {
+          glowGrad.addColorStop(0, 'rgba(255,45,117,0.3)');
+          glowGrad.addColorStop(1, 'rgba(255,45,117,0)');
+        } else {
+          glowGrad.addColorStop(0, 'rgba(0,212,255,0.3)');
+          glowGrad.addColorStop(1, 'rgba(0,212,255,0)');
+        }
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, 30, 0, Math.PI * 2);
+        ctx.fillStyle = glowGrad;
+        ctx.fill();
+
+        // Charge body
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, 12, 0, Math.PI * 2);
+        const grad = ctx.createRadialGradient(c.x - 3, c.y - 3, 0, c.x, c.y, 12);
+        if (c.q > 0) {
+          grad.addColorStop(0, '#ff5a92');
+          grad.addColorStop(1, '#ff2d75');
+        } else {
+          grad.addColorStop(0, '#33e0ff');
+          grad.addColorStop(1, '#00d4ff');
+        }
+        ctx.fillStyle = grad;
+        ctx.shadowColor = c.q > 0 ? '#ff2d75' : '#00d4ff';
+        ctx.shadowBlur = 15;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // + or - symbol
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 16px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(c.q > 0 ? '+' : '\u2212', c.x, c.y);
+      }
+
+      // Stats overlay
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.fillRect(10, 10, 180, 50);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(10, 10, 180, 50);
+      ctx.fillStyle = '#00d4ff';
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText(`Positive: ${charges.filter(c => c.q > 0).length}`, 20, 18);
+      ctx.fillText(`Negative: ${charges.filter(c => c.q < 0).length}`, 20, 38);
+    }
+
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXOMIYA ENGINEER | Physics JEE & NEET</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">
+          <div class="logo-atom">
+            <div class="nucleus"></div>
+            <div class="orbit"></div>
+            <div class="orbit"></div>
+            <div class="orbit"></div>
+          </div>
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">Axomiya Engineer</span>
+          <span class="brand-tag">IIT Guwahati &bull; Physics</span>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="index.html" class="nav-link active">Home</a>
+        </div>
+
+        <div class="nav-item">
+          <a href="about.html" class="nav-link">About Me</a>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI Chapters</a>
+            <a href="chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII Chapters</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI Lectures</a>
+            <a href="lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII Lectures</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI Notes</a>
+            <a href="notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII Notes</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="books.html" class="nav-link">Books</a>
+        </div>
+
+        <div class="nav-item">
+          <a href="simulations.html" class="nav-link">Simulations</a>
+        </div>
+
+        <a href="#contact" class="nav-cta">Contact Me</a>
+      </div>
+
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse"></span>
+          IIT GUWAHATI &bull; PHYSICS EDUCATOR
+        </div>
+        <h1>
+          Master Physics<br>
+          with <span class="gradient-text">Sankaracharya Dutta</span>
+        </h1>
+        <p class="hero-desc">
+          Transforming how students experience Physics for JEE &amp; NEET.
+          From Kinematics to Modern Physics &mdash; building intuition through
+          interactive simulations, crystal-clear concepts, and a decade of
+          teaching excellence.
+        </p>
+        <div class="hero-buttons">
+          <a href="simulations.html" class="btn btn-primary">
+            &#9889; Explore Simulations
+          </a>
+          <a href="about.html" class="btn btn-outline">
+            Learn More &rarr;
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="physics-orb">
+          <div class="orb-core"></div>
+          <div class="orbit-ring"><div class="orbit-electron"></div></div>
+          <div class="orbit-ring"><div class="orbit-electron"></div></div>
+          <div class="orbit-ring"><div class="orbit-electron"></div></div>
+          <span class="floating-equation">F = ma</span>
+          <span class="floating-equation">E = mc&sup2;</span>
+          <span class="floating-equation">V = IR</span>
+          <span class="floating-equation">&nabla; &times; B = &mu;J</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Preview -->
+  <section class="section" id="about-preview">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">About the Educator</div>
+        <h2 class="section-title">The Mind Behind <span class="text-gradient">Axomiya Engineer</span></h2>
+        <p class="section-subtitle">A decade of passion for physics education, from IIT Guwahati to Bengaluru's top academies.</p>
+      </div>
+
+      <div class="about-preview reveal">
+        <div class="about-image-wrapper">
+          <div class="about-image">&#128104;&#8205;&#127891;</div>
+          <div class="about-stats">
+            <div class="stat-box">
+              <div class="stat-num" data-count="10" data-suffix="+">0</div>
+              <div class="stat-label">Years Exp.</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" data-count="120" data-suffix="+">0</div>
+              <div class="stat-label">Students</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" data-count="96" data-suffix="%">0</div>
+              <div class="stat-label">CBSE Score</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <h3>Sankaracharya Dutta</h3>
+          <p>
+            An IIT Guwahati graduate (B.Tech Civil Engineering) who discovered his true calling
+            in teaching Physics. With a unique ability to transform complex mathematical physics
+            into visual spectacles of energy and attention capture, Shankar Sir has been shaping
+            JEE and NEET aspirants since 2015.
+          </p>
+          <p>
+            From freelance teaching in Guwahati at UrbanPro to leading the Whitefield branch of
+            Centum Academy in Bengaluru, his journey reflects a deep commitment to fostering
+            a collaborative and high-achieving educational community.
+          </p>
+
+          <div class="about-tags">
+            <span class="about-tag">JEE Main & Advanced</span>
+            <span class="about-tag">NEET Physics</span>
+            <span class="about-tag">IIT Guwahati</span>
+            <span class="about-tag">Board Work Expert</span>
+            <span class="about-tag">Digital Content</span>
+            <span class="about-tag">Simulations</span>
+          </div>
+
+          <a href="about.html" class="btn btn-primary">Read Full Story &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I Offer -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Resources</div>
+        <h2 class="section-title">Everything You Need to <span class="text-gradient">Ace Physics</span></h2>
+      </div>
+
+      <div class="grid-3 reveal">
+        <a href="chapters.html" class="card">
+          <div class="card-icon">&#128218;</div>
+          <h3>Chapters</h3>
+          <p>Complete chapter-wise breakdown for Grade XI and XII with key concepts, formulas, and problem-solving strategies.</p>
+        </a>
+
+        <a href="lectures.html" class="card">
+          <div class="card-icon">&#127909;</div>
+          <h3>Lectures</h3>
+          <p>Structured lecture notes with detailed explanations, diagrams, and step-by-step derivations for every topic.</p>
+        </a>
+
+        <a href="notes.html" class="card">
+          <div class="card-icon">&#128221;</div>
+          <h3>Notes</h3>
+          <p>Quick-reference notes, formula sheets, and revision material designed for last-minute prep and regular study.</p>
+        </a>
+
+        <a href="books.html" class="card">
+          <div class="card-icon">&#128214;</div>
+          <h3>Books</h3>
+          <p>Curated book recommendations and study material from top publishers for JEE, NEET, and board preparation.</p>
+        </a>
+
+        <a href="simulations.html" class="card">
+          <div class="card-icon">&#9881;</div>
+          <h3>Simulations</h3>
+          <p>Interactive physics simulations covering all chapters. Visualize projectile motion, electric fields, waves, and more.</p>
+        </a>
+
+        <a href="#contact" class="card">
+          <div class="card-icon">&#128172;</div>
+          <h3>Doubt Sessions</h3>
+          <p>Regular doubt-clearing sessions on Discord with separate channels for tests, submissions, and subject-wise notes.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Testimonials</div>
+        <h2 class="section-title">What People <span class="text-gradient">Say</span></h2>
+      </div>
+
+      <div class="grid-3 reveal">
+        <div class="testimonial-card">
+          <div class="quote-mark">&ldquo;</div>
+          <p class="quote-text">
+            Sankaracharya Dutta teaches physics with full energy and enthusiasm. His passion towards
+            teaching reflects in his work. An IIT Guwahati graduate, he has taught students for
+            Advanced placements. Some of his students got admitted into top universities.
+          </p>
+          <div class="quote-author">Mr. Himanshu Ranjan</div>
+          <div class="quote-role">Faculty at Allen</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote-mark">&ldquo;</div>
+          <p class="quote-text">
+            Shankar sir has this unique ability to pick up the otherwise bland study of mathematical
+            physics, and create a spectacle of energy and attention capture in the classroom. His
+            use of animations, graphs, and diagrams provides a dopamine shot of visual stimulus.
+          </p>
+          <div class="quote-author">Mr. Subrahmanyam Chivukula</div>
+          <div class="quote-role">Faculty at Allen</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote-mark">&ldquo;</div>
+          <p class="quote-text">
+            I was in a very bad situation, struggling to do well in Physics. But Sankar sir helped
+            me fall in love with this subject. He builds up to a concept, starts from the very
+            basics, and pushes you to think harder. Not only was he a teacher but a mentor and friend.
+          </p>
+          <div class="quote-author">Miss Pratiksha Mahanta</div>
+          <div class="quote-role">Student, Dundee Medical College, Scotland</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Get in Touch</div>
+        <h2 class="section-title">Let's <span class="text-gradient">Connect</span></h2>
+        <p class="section-subtitle">Ready to master Physics? Reach out for classes, doubt sessions, or collaborations.</p>
+      </div>
+
+      <div class="contact-grid reveal">
+        <div class="contact-card">
+          <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 24px; letter-spacing: 1px;">
+            Contact Information
+          </h3>
+
+          <div class="contact-item">
+            <div class="ci-icon">&#128222;</div>
+            <div class="ci-info">
+              <h4>Phone</h4>
+              <p><a href="tel:+917896878299">+91 78968 78299</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">&#9993;</div>
+            <div class="ci-info">
+              <h4>Email</h4>
+              <p><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">&#128205;</div>
+            <div class="ci-info">
+              <h4>Location</h4>
+              <p>Whitefield, Bengaluru</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">&#127891;</div>
+            <div class="ci-info">
+              <h4>Teaching</h4>
+              <p>Physics &mdash; JEE (Main & Advanced) &amp; NEET</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom: 20px;">
+            <div class="card-icon">&#128640;</div>
+            <h3>Join My Classes</h3>
+            <p>
+              I teach on Discord with separate text channels for tests, doubts, submissions,
+              and subject-wise notes. You may opt to prepare specifically for Class 12 boards
+              or competitive exams. Reach out on phone or email to get started.
+            </p>
+          </div>
+
+          <div class="card" style="margin-bottom: 20px;">
+            <div class="card-icon">&#127912;</div>
+            <h3>Content &amp; Collaboration</h3>
+            <p>
+              Expert in Photoshop and After Effects for subject-related content creation.
+              Open to collaborations for educational content, social media, and academic events.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">&#128101;</div>
+            <h3>References</h3>
+            <p>
+              <strong>Vivek Aggarwal</strong> &mdash; Math Faculty, Centum Academy<br>
+              <strong>Pikai Sarkar</strong> &mdash; Chemistry Faculty, Founder CEO, Crack-it
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon">
+            <div class="logo-atom">
+              <div class="nucleus"></div>
+              <div class="orbit"></div>
+              <div class="orbit"></div>
+              <div class="orbit"></div>
+            </div>
+          </div>
+          <div class="logo-text">
+            <span class="brand-name">Axomiya Engineer</span>
+            <span class="brand-tag">IIT Guwahati &bull; Physics</span>
+          </div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="chapters.html">Chapters</a>
+        <a href="lectures.html">Lectures</a>
+        <a href="notes.html">Notes</a>
+        <a href="books.html">Books</a>
+        <a href="simulations.html">Simulations</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Grade XI</h4>
+        <a href="chapters.html#grade-xi">Kinematics</a>
+        <a href="chapters.html#grade-xi">Newton's Laws</a>
+        <a href="chapters.html#grade-xi">Work, Power, Energy</a>
+        <a href="chapters.html#grade-xi">Thermodynamics</a>
+        <a href="chapters.html#grade-xi">SHM & Waves</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Grade XII</h4>
+        <a href="chapters.html#grade-xii">Electrostatics</a>
+        <a href="chapters.html#grade-xii">Current Electricity</a>
+        <a href="chapters.html#grade-xii">Magnetism</a>
+        <a href="chapters.html#grade-xii">Ray Optics</a>
+        <a href="chapters.html#grade-xii">Modern Physics</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

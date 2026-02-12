@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Momentum | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Rotational Motion</span>
+        </div>
+
+        <h1>&#9854; Angular Momentum</h1>
+        <p class="subtitle">Grade XI - Rotational Motion</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Arm Radius: <span id="radiusVal">80</span> px</label>
+                    <input type="range" id="radius" min="20" max="120" value="80" step="5">
+                </div>
+
+                <div class="control-group">
+                    <label>Initial ω: <span id="omegaVal">3</span> rad/s</label>
+                    <input type="range" id="omega" min="1" max="10" value="3" step="0.5">
+                </div>
+
+                <div class="control-group">
+                    <button id="startBtn" class="control-btn">Start</button>
+                    <button id="resetBtn" class="control-btn">Reset</button>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">Radius r: <span id="statRadius">80</span> px</div>
+                    <div class="stat-item">I = mr²: <span id="statI">0</span> kg·m²</div>
+                    <div class="stat-item">ω: <span id="statOmega">3.00</span> rad/s</div>
+                    <div class="stat-item">L = Iω: <span id="statL">0</span> kg·m²/s</div>
+                    <div class="stat-item">KE = ½Iω²: <span id="statKE">0</span> J</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>When an ice skater pulls their arms in, the radius decreases, moment of inertia decreases, and angular velocity increases to conserve angular momentum. Kinetic energy increases due to work done by muscles.</p>
+
+            <div class="formula-box">
+                L = Iω = constant &nbsp;|&nbsp; I = mr² &nbsp;|&nbsp; KE = ½Iω² = L²/(2I)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let targetRadius = 80;
+        let currentRadius = 80;
+        let initialOmega = 3;
+        let currentOmega = 3;
+        let isRunning = false;
+        let angle = 0;
+        let lastTime = 0;
+        let angularMomentum = 0;
+
+        const mass = 5; // kg (mass at end of arms)
+        const bodyRadius = 30; // body center radius
+
+        const radiusSlider = document.getElementById('radius');
+        const omegaSlider = document.getElementById('omega');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        radiusSlider.oninput = function() {
+            targetRadius = parseFloat(this.value);
+            document.getElementById('radiusVal').textContent = targetRadius;
+            if (isRunning) {
+                // Smoothly transition to new radius
+            } else {
+                currentRadius = targetRadius;
+                updatePhysics();
+                draw();
+            }
+        };
+
+        omegaSlider.oninput = function() {
+            initialOmega = parseFloat(this.value);
+            document.getElementById('omegaVal').textContent = initialOmega;
+            if (!isRunning) {
+                currentOmega = initialOmega;
+                updatePhysics();
+                draw();
+            }
+        };
+
+        startBtn.onclick = function() {
+            isRunning = !isRunning;
+            this.textContent = isRunning ? 'Pause' : 'Start';
+            if (isRunning) {
+                lastTime = performance.now();
+                requestAnimationFrame(animate);
+            }
+        };
+
+        resetBtn.onclick = function() {
+            isRunning = false;
+            startBtn.textContent = 'Start';
+            angle = 0;
+            currentRadius = targetRadius;
+            currentOmega = initialOmega;
+            updatePhysics();
+            draw();
+        };
+
+        function updatePhysics() {
+            // Calculate moment of inertia (modeling as point masses at radius r)
+            const I = mass * currentRadius * currentRadius / 10000; // scale down for reasonable numbers
+
+            // If angular momentum is set, calculate new omega
+            if (angularMomentum > 0 && isRunning) {
+                currentOmega = angularMomentum / I;
+            } else {
+                angularMomentum = I * currentOmega;
+            }
+
+            const KE = 0.5 * I * currentOmega * currentOmega;
+
+            document.getElementById('statRadius').textContent = currentRadius.toFixed(0);
+            document.getElementById('statI').textContent = I.toFixed(4);
+            document.getElementById('statOmega').textContent = currentOmega.toFixed(2);
+            document.getElementById('statL').textContent = angularMomentum.toFixed(4);
+            document.getElementById('statKE').textContent = KE.toFixed(4);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid pattern
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Draw circular track (reference)
+            ctx.strokeStyle = 'rgba(0,212,255,0.1)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, targetRadius, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw rotation trail
+            const numTrails = 40;
+            for (let i = 0; i < numTrails; i++) {
+                const trailAngle = angle - (i * 0.1);
+                const alpha = 1 - (i / numTrails);
+                const trailRadius = currentRadius + (targetRadius - currentRadius) * (i / numTrails);
+
+                ctx.fillStyle = `rgba(0, 255, 170, ${alpha * 0.3})`;
+                ctx.beginPath();
+                ctx.arc(
+                    centerX + Math.cos(trailAngle) * trailRadius,
+                    centerY + Math.sin(trailAngle) * trailRadius,
+                    3,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.fill();
+            }
+
+            // Draw skater body (center)
+            ctx.fillStyle = '#00d4ff';
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, bodyRadius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Draw arms extending to current radius
+            const arm1X = centerX + Math.cos(angle) * currentRadius;
+            const arm1Y = centerY + Math.sin(angle) * currentRadius;
+            const arm2X = centerX + Math.cos(angle + Math.PI) * currentRadius;
+            const arm2Y = centerY + Math.sin(angle + Math.PI) * currentRadius;
+
+            // Arms
+            ctx.strokeStyle = '#7c3aed';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(arm1X, arm1Y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(arm2X, arm2Y);
+            ctx.stroke();
+
+            // Hands (point masses)
+            ctx.fillStyle = '#ff2d75';
+            ctx.beginPath();
+            ctx.arc(arm1X, arm1Y, 10, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(arm2X, arm2Y, 10, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Angular velocity indicator (curved arrow)
+            const arrowRadius = bodyRadius + 15;
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, arrowRadius, -Math.PI / 2, -Math.PI / 2 + Math.PI / 2, false);
+            ctx.stroke();
+
+            // Arrowhead
+            const arrowX = centerX + Math.cos(-Math.PI / 2 + Math.PI / 2) * arrowRadius;
+            const arrowY = centerY + Math.sin(-Math.PI / 2 + Math.PI / 2) * arrowRadius;
+            const arrowAngle = Math.PI / 2;
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(arrowX, arrowY);
+            ctx.lineTo(arrowX - 10 * Math.cos(arrowAngle - Math.PI / 6), arrowY - 10 * Math.sin(arrowAngle - Math.PI / 6));
+            ctx.lineTo(arrowX - 10 * Math.cos(arrowAngle + Math.PI / 6), arrowY - 10 * Math.sin(arrowAngle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+
+            // Labels
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '16px JetBrains Mono, monospace';
+            ctx.fillText('Ice Skater - Angular Momentum Conservation', 20, 30);
+
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = '14px JetBrains Mono, monospace';
+            ctx.fillText(`L = ${angularMomentum.toFixed(4)} (constant)`, 20, 55);
+
+            // Instructions
+            ctx.fillStyle = '#7c3aed';
+            ctx.font = '13px JetBrains Mono, monospace';
+            ctx.fillText('Adjust arm radius slider while spinning!', 20, canvas.height - 20);
+
+            // Show radius dimension
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY + bodyRadius + 10);
+            ctx.lineTo(centerX, centerY + currentRadius);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText(`r=${currentRadius.toFixed(0)}px`, centerX + 10, centerY + (bodyRadius + currentRadius) / 2);
+        }
+
+        function animate(currentTime) {
+            if (!isRunning) return;
+
+            const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.05);
+            lastTime = currentTime;
+
+            // Smoothly transition radius
+            const radiusChangeRate = 50; // px per second
+            if (currentRadius < targetRadius) {
+                currentRadius = Math.min(currentRadius + radiusChangeRate * deltaTime, targetRadius);
+            } else if (currentRadius > targetRadius) {
+                currentRadius = Math.max(currentRadius - radiusChangeRate * deltaTime, targetRadius);
+            }
+
+            // Update physics (omega changes as radius changes to conserve L)
+            updatePhysics();
+
+            // Update angle
+            angle += currentOmega * deltaTime;
+
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        updatePhysics();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

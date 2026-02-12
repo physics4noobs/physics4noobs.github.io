@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ray Optics Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Ray Optics</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">&#128269; Lens Ray Tracing</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Ray Optics</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Object Distance: <input type="range" id="objDist" min="60" max="350" value="200"> <span id="odVal">200</span></label>
+        <label>Focal Length: <input type="range" id="focal" min="40" max="180" value="100"> <span id="fVal">100</span></label>
+        <button onclick="toggleLens()" id="lensBtn">Convex Lens</button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>Interactive ray tracing through a convex or concave lens. Move the object distance and focal length to see how the image position, size, and nature (real/virtual, inverted/erect) change. Three principal rays are drawn: parallel ray, central ray, and focal ray.</p>
+      <div class="formula-box" style="margin-top: 16px;">1/v - 1/u = 1/f &nbsp;&nbsp;|&nbsp;&nbsp; m = v/u = h'/h &nbsp;&nbsp;|&nbsp;&nbsp; Power P = 1/f (in metres)</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let isConvex = true;
+
+    const odSlider = document.getElementById('objDist');
+    const fSlider = document.getElementById('focal');
+    odSlider.oninput = () => { document.getElementById('odVal').textContent = odSlider.value; draw(); };
+    fSlider.oninput = () => { document.getElementById('fVal').textContent = fSlider.value; draw(); };
+
+    function toggleLens() {
+      isConvex = !isConvex;
+      document.getElementById('lensBtn').textContent = isConvex ? 'Convex Lens' : 'Concave Lens';
+      draw();
+    }
+    function resetSim() { odSlider.value = 200; fSlider.value = 100; isConvex = true; document.getElementById('lensBtn').textContent = 'Convex Lens'; document.getElementById('odVal').textContent = '200'; document.getElementById('fVal').textContent = '100'; draw(); }
+
+    function draw() {
+      const W = canvas.width, H = canvas.height;
+      const lensX = W / 2, axisY = H / 2;
+      const u = -parseInt(odSlider.value); // negative (object on left)
+      const f = isConvex ? parseInt(fSlider.value) : -parseInt(fSlider.value);
+      const objH = 60; // object height in px
+
+      // 1/v - 1/u = 1/f => 1/v = 1/f + 1/u => v = uf/(u+f)
+      const v = (u * f) / (u + f);
+      const m = v / u;
+      const imgH = m * objH;
+
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, W, H);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.03)';
+      for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+      // Principal axis
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, axisY); ctx.lineTo(W, axisY); ctx.stroke();
+
+      // Lens
+      ctx.strokeStyle = 'rgba(0,212,255,0.6)';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      if (isConvex) {
+        ctx.moveTo(lensX, axisY - 150);
+        ctx.quadraticCurveTo(lensX + 20, axisY, lensX, axisY + 150);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(lensX, axisY - 150);
+        ctx.quadraticCurveTo(lensX - 20, axisY, lensX, axisY + 150);
+      } else {
+        ctx.moveTo(lensX, axisY - 150);
+        ctx.quadraticCurveTo(lensX - 15, axisY, lensX, axisY + 150);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(lensX, axisY - 150);
+        ctx.quadraticCurveTo(lensX + 15, axisY, lensX, axisY + 150);
+      }
+      ctx.stroke();
+
+      // Arrows on lens
+      ctx.fillStyle = '#00d4ff';
+      // Top arrow
+      ctx.beginPath(); ctx.moveTo(lensX, axisY - 150); ctx.lineTo(lensX - 8, axisY - 140); ctx.lineTo(lensX + 8, axisY - 140); ctx.closePath(); ctx.fill();
+      // Bottom arrow
+      ctx.beginPath(); ctx.moveTo(lensX, axisY + 150); ctx.lineTo(lensX - 8, axisY + 140); ctx.lineTo(lensX + 8, axisY + 140); ctx.closePath(); ctx.fill();
+
+      // F and 2F marks
+      const fPx = Math.abs(f);
+      const markings = [
+        { x: lensX - fPx, label: 'F' },
+        { x: lensX + fPx, label: "F'" },
+        { x: lensX - 2 * fPx, label: '2F' },
+        { x: lensX + 2 * fPx, label: "2F'" }
+      ];
+      markings.forEach(mk => {
+        if (mk.x > 10 && mk.x < W - 10) {
+          ctx.fillStyle = '#7c3aed';
+          ctx.beginPath(); ctx.arc(mk.x, axisY, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#a0a0b8';
+          ctx.font = '11px JetBrains Mono';
+          ctx.textAlign = 'center';
+          ctx.fillText(mk.label, mk.x, axisY + 18);
+        }
+      });
+
+      // Object (arrow on left of lens)
+      const objX = lensX + u; // u is negative so this puts it left
+      ctx.strokeStyle = '#ff2d75';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(objX, axisY); ctx.lineTo(objX, axisY - objH); ctx.stroke();
+      // Arrowhead
+      ctx.fillStyle = '#ff2d75';
+      ctx.beginPath(); ctx.moveTo(objX, axisY - objH); ctx.lineTo(objX - 6, axisY - objH + 12); ctx.lineTo(objX + 6, axisY - objH + 12); ctx.closePath(); ctx.fill();
+      ctx.font = '11px JetBrains Mono'; ctx.textAlign = 'center';
+      ctx.fillText('Object', objX, axisY + 30);
+
+      // Image
+      const imgX = lensX + v;
+      const imgTop = axisY - imgH;
+
+      if (imgX > 10 && imgX < W - 10 && Math.abs(imgH) < 300) {
+        // Draw image arrow
+        const isVirtual = (isConvex && Math.abs(u) < Math.abs(f)) || !isConvex;
+        ctx.strokeStyle = isVirtual ? 'rgba(0,255,170,0.5)' : '#00ffaa';
+        ctx.lineWidth = 3;
+        if (isVirtual) ctx.setLineDash([6, 4]);
+        ctx.beginPath(); ctx.moveTo(imgX, axisY); ctx.lineTo(imgX, imgTop); ctx.stroke();
+        ctx.setLineDash([]);
+        // Arrowhead
+        ctx.fillStyle = isVirtual ? 'rgba(0,255,170,0.5)' : '#00ffaa';
+        const dir = imgH > 0 ? 1 : -1;
+        ctx.beginPath(); ctx.moveTo(imgX, imgTop); ctx.lineTo(imgX - 6, imgTop + dir * 12); ctx.lineTo(imgX + 6, imgTop + dir * 12); ctx.closePath(); ctx.fill();
+        ctx.font = '11px JetBrains Mono'; ctx.textAlign = 'center';
+        ctx.fillStyle = '#00ffaa';
+        ctx.fillText(isVirtual ? 'Virtual Image' : 'Real Image', imgX, axisY + 30);
+
+        // Ray 1: Parallel to axis then through F' (or appear from F' for concave)
+        ctx.lineWidth = 1.5;
+        // Parallel ray from object tip to lens
+        ctx.strokeStyle = 'rgba(0,212,255,0.5)';
+        ctx.beginPath(); ctx.moveTo(objX, axisY - objH); ctx.lineTo(lensX, axisY - objH); ctx.stroke();
+        // From lens to image tip (through F')
+        ctx.beginPath(); ctx.moveTo(lensX, axisY - objH); ctx.lineTo(imgX, imgTop); ctx.stroke();
+        if (isVirtual) {
+          // Extend ray behind lens (virtual)
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = 'rgba(0,212,255,0.25)';
+          const ext = lensX + (lensX - imgX);
+          ctx.beginPath(); ctx.moveTo(lensX, axisY - objH);
+          ctx.lineTo(lensX + 300, axisY - objH + (imgTop - (axisY - objH)) / (imgX - lensX) * 300);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        // Ray 2: Through optical center (straight line)
+        ctx.strokeStyle = 'rgba(0,255,170,0.5)';
+        ctx.beginPath(); ctx.moveTo(objX, axisY - objH); ctx.lineTo(imgX, imgTop); ctx.stroke();
+
+        // Ray 3: Through F to lens, then parallel
+        if (Math.abs(u) > Math.abs(f) || !isConvex) {
+          ctx.strokeStyle = 'rgba(124,58,237,0.5)';
+          const fPoint = lensX - fPx;
+          const slope = ((axisY - objH) - axisY) / (objX - fPoint);
+          const yAtLens = axisY + slope * (lensX - fPoint);
+          ctx.beginPath(); ctx.moveTo(objX, axisY - objH); ctx.lineTo(lensX, yAtLens); ctx.stroke();
+          // Then parallel
+          ctx.beginPath(); ctx.moveTo(lensX, yAtLens); ctx.lineTo(imgX, yAtLens); ctx.stroke();
+        }
+      }
+
+      // Stats
+      ctx.fillStyle = 'rgba(10,10,30,0.88)';
+      ctx.fillRect(10, 10, 220, 130);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(10, 10, 220, 130);
+      ctx.fillStyle = '#00d4ff';
+      ctx.font = '12px JetBrains Mono';
+      ctx.textAlign = 'left';
+      ctx.fillText('Lens: ' + (isConvex ? 'Convex' : 'Concave'), 20, 32);
+      ctx.fillText('u = ' + u.toFixed(0) + ' px', 20, 50);
+      ctx.fillText('f = ' + f.toFixed(0) + ' px', 20, 68);
+      ctx.fillText('v = ' + v.toFixed(1) + ' px', 20, 86);
+      ctx.fillText('m = ' + m.toFixed(2), 20, 104);
+      const nature = v > 0 ? 'Real, ' : 'Virtual, ';
+      const orient = imgH < 0 ? 'Inverted' : 'Erect';
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText('Image: ' + nature + orient, 20, 128);
+
+      ctx.fillStyle = '#a0a0b8';
+      ctx.font = '10px JetBrains Mono';
+      ctx.textAlign = 'center';
+      ctx.fillText('O', lensX, axisY + 30);
+    }
+
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inclined Plane Race | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Rotational Motion</span>
+        </div>
+
+        <h1>&#127942; Inclined Plane Race</h1>
+        <p class="subtitle">Grade XI - Rotational Motion</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Incline Angle: <span id="angleVal">30</span>°</label>
+                    <input type="range" id="angle" min="15" max="60" value="30" step="1">
+                </div>
+
+                <div class="control-group">
+                    <button id="startBtn" class="control-btn">Start Race</button>
+                    <button id="resetBtn" class="control-btn">Reset</button>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">Time: <span id="statTime">0.00</span> s</div>
+                    <div class="stat-item">Solid Sphere: <span id="statSphere">0.0</span> m</div>
+                    <div class="stat-item">Solid Cylinder: <span id="statCylinder">0.0</span> m</div>
+                    <div class="stat-item">Hollow Sphere: <span id="statHollowSphere">0.0</span> m</div>
+                    <div class="stat-item">Hollow Cylinder: <span id="statHollowCylinder">0.0</span> m</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>Different objects rolling down an incline have different accelerations based on their moment of inertia. Objects with smaller moment of inertia coefficient (c) reach the bottom first.</p>
+
+            <div class="formula-box">
+                a = g sinθ/(1+c) &nbsp;|&nbsp; c = I/MR² &nbsp;|&nbsp; Solid sphere: c=2/5, wins!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let angle = 30;
+        let isRunning = false;
+        let time = 0;
+        let lastTime = 0;
+
+        const g = 9.8; // m/s^2
+        const rampLength = 600; // pixels
+        const rampLengthMeters = 10; // meters
+        const scale = rampLength / rampLengthMeters;
+
+        // Objects with their properties
+        const objects = [
+            { name: 'Solid Sphere', c: 2/5, color: '#00d4ff', position: 0, velocity: 0, radius: 15 },
+            { name: 'Solid Cylinder', c: 1/2, color: '#00ffaa', position: 0, velocity: 0, radius: 15 },
+            { name: 'Hollow Sphere', c: 2/3, color: '#7c3aed', position: 0, velocity: 0, radius: 15 },
+            { name: 'Hollow Cylinder', c: 1, color: '#ff2d75', position: 0, velocity: 0, radius: 15 }
+        ];
+
+        const angleSlider = document.getElementById('angle');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        angleSlider.oninput = function() {
+            angle = parseFloat(this.value);
+            document.getElementById('angleVal').textContent = angle;
+            if (!isRunning) draw();
+        };
+
+        startBtn.onclick = function() {
+            if (!isRunning) {
+                isRunning = true;
+                this.textContent = 'Racing...';
+                this.disabled = true;
+                lastTime = performance.now();
+                requestAnimationFrame(animate);
+            }
+        };
+
+        resetBtn.onclick = function() {
+            isRunning = false;
+            startBtn.textContent = 'Start Race';
+            startBtn.disabled = false;
+            time = 0;
+            objects.forEach(obj => {
+                obj.position = 0;
+                obj.velocity = 0;
+                obj.angle = 0;
+            });
+            updateStats();
+            draw();
+        };
+
+        function updateStats() {
+            document.getElementById('statTime').textContent = time.toFixed(2);
+            document.getElementById('statSphere').textContent = objects[0].position.toFixed(1);
+            document.getElementById('statCylinder').textContent = objects[1].position.toFixed(1);
+            document.getElementById('statHollowSphere').textContent = objects[2].position.toFixed(1);
+            document.getElementById('statHollowCylinder').textContent = objects[3].position.toFixed(1);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid pattern
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            const startX = 100;
+            const startY = 100;
+            const angleRad = angle * Math.PI / 180;
+            const endX = startX + rampLength * Math.cos(angleRad);
+            const endY = startY + rampLength * Math.sin(angleRad);
+
+            // Draw inclined plane
+            ctx.strokeStyle = 'rgba(0,212,255,0.5)';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+
+            // Draw ground
+            ctx.strokeStyle = 'rgba(0,212,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(endX - 50, endY);
+            ctx.lineTo(endX + 100, endY);
+            ctx.stroke();
+
+            // Draw angle arc
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(startX, startY, 40, 0, angleRad);
+            ctx.stroke();
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = '14px JetBrains Mono, monospace';
+            ctx.fillText(`${angle}°`, startX + 50, startY + 20);
+
+            // Draw each object
+            objects.forEach((obj, index) => {
+                const laneOffset = (index - 1.5) * 35; // Spread objects across lanes
+                const posX = startX + obj.position * scale * Math.cos(angleRad);
+                const posY = startY + obj.position * scale * Math.sin(angleRad) + laneOffset;
+
+                // Draw object
+                ctx.strokeStyle = obj.color;
+                ctx.fillStyle = obj.color + '40';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(posX, posY, obj.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Draw rotation marks (spokes)
+                const numSpokes = 6;
+                for (let i = 0; i < numSpokes; i++) {
+                    const spokeAngle = (obj.angle || 0) + (i * 2 * Math.PI / numSpokes);
+                    ctx.beginPath();
+                    ctx.moveTo(posX, posY);
+                    ctx.lineTo(
+                        posX + Math.cos(spokeAngle) * obj.radius * 0.7,
+                        posY + Math.sin(spokeAngle) * obj.radius * 0.7
+                    );
+                    ctx.stroke();
+                }
+
+                // Label
+                ctx.fillStyle = obj.color;
+                ctx.font = '11px JetBrains Mono, monospace';
+                ctx.fillText(obj.name.split(' ')[0], posX - 25, posY - 25);
+            });
+
+            // Legend
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '14px JetBrains Mono, monospace';
+            ctx.fillText('Race of Rolling Objects', 20, 30);
+
+            objects.forEach((obj, index) => {
+                ctx.fillStyle = obj.color;
+                const acceleration = g * Math.sin(angleRad) / (1 + obj.c);
+                ctx.fillText(`${obj.name}: a = ${acceleration.toFixed(2)} m/s²`, 20, 55 + index * 20);
+            });
+        }
+
+        function animate(currentTime) {
+            if (!isRunning) return;
+
+            const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.05); // Cap at 50ms
+            lastTime = currentTime;
+            time += deltaTime;
+
+            const angleRad = angle * Math.PI / 180;
+            let allFinished = true;
+
+            objects.forEach(obj => {
+                if (obj.position < rampLengthMeters) {
+                    allFinished = false;
+                    const acceleration = g * Math.sin(angleRad) / (1 + obj.c);
+                    obj.velocity += acceleration * deltaTime;
+                    obj.position += obj.velocity * deltaTime;
+
+                    // Update rotation angle
+                    const angularVelocity = obj.velocity / (obj.radius / scale);
+                    obj.angle = (obj.angle || 0) + angularVelocity * deltaTime;
+
+                    if (obj.position > rampLengthMeters) {
+                        obj.position = rampLengthMeters;
+                    }
+                }
+            });
+
+            updateStats();
+            draw();
+
+            if (allFinished) {
+                isRunning = false;
+                startBtn.textContent = 'Start Race';
+                startBtn.disabled = false;
+            } else {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

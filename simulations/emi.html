@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faraday's Law | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>EMI</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#9889; Faraday's Law</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Electromagnetic Induction</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Speed: <input type="range" id="speed" min="1" max="10" value="4"> <span id="speedVal">4</span></label>
+        <label>Turns: <input type="range" id="turns" min="5" max="50" value="20"> <span id="turnsVal">20</span></label>
+        <button onclick="startSim()">&#9654; Start</button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>This simulation demonstrates Faraday's Law of Electromagnetic Induction. A bar magnet moves through a coil of wire, and the changing magnetic flux through the coil induces an electromotive force (EMF). As the magnet approaches the coil, the EMF increases; when leaving, the EMF reverses polarity (Lenz's Law). The real-time EMF graph shows how the induced voltage changes during the process.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        &epsilon; = &minus;Nd&Phi;/dt &nbsp;&nbsp;|&nbsp;&nbsp; &Phi; = BA cos &theta; &nbsp;&nbsp;|&nbsp;&nbsp; &epsilon; = BLv (motional EMF)
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let animId = null;
+    let magnetX = 0;
+    let running = false;
+    let emfHistory = [];
+    const MAX_HISTORY = 200;
+
+    const speedSlider = document.getElementById('speed');
+    const turnsSlider = document.getElementById('turns');
+
+    speedSlider.oninput = () => document.getElementById('speedVal').textContent = speedSlider.value;
+    turnsSlider.oninput = () => document.getElementById('turnsVal').textContent = turnsSlider.value;
+
+    // Layout
+    const coilX = 425; // center of coil
+    const coilY = 200;
+    const magnetW = 120;
+    const magnetH = 40;
+    const magnetStartX = 50;
+    const magnetEndX = 800;
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+    }
+
+    function drawCoil(N) {
+      // Draw coil as a series of elliptical loops at coilX
+      const loopW = 14;
+      const loopH = 70;
+      const coilSpread = Math.min(N * 1.5, 40);
+
+      for (let i = 0; i < N; i++) {
+        const t = (i / (N - 1)) - 0.5; // -0.5 to 0.5
+        const offsetX = t * coilSpread;
+        const alpha = 0.15 + 0.2 * (1 - Math.abs(t * 2));
+
+        ctx.beginPath();
+        ctx.ellipse(coilX + offsetX, coilY, loopW, loopH, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 170, 0, ${alpha})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+
+      // Coil outline (thicker front loops)
+      for (let i = 0; i < 3; i++) {
+        const offsetX = (i - 1) * 6;
+        ctx.beginPath();
+        ctx.ellipse(coilX + offsetX, coilY, loopW, loopH, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 170, 0, 0.6)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      // Wire leads going down to galvanometer
+      ctx.beginPath();
+      ctx.moveTo(coilX - coilSpread / 2, coilY + loopH);
+      ctx.lineTo(coilX - coilSpread / 2, coilY + loopH + 30);
+      ctx.lineTo(coilX - 60, coilY + loopH + 30);
+      ctx.strokeStyle = 'rgba(255, 170, 0, 0.5)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(coilX + coilSpread / 2, coilY + loopH);
+      ctx.lineTo(coilX + coilSpread / 2, coilY + loopH + 30);
+      ctx.lineTo(coilX + 60, coilY + loopH + 30);
+      ctx.strokeStyle = 'rgba(255, 170, 0, 0.5)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Coil label
+      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.fillStyle = 'rgba(255,170,0,0.7)';
+      ctx.textAlign = 'center';
+      ctx.fillText(`N = ${N} turns`, coilX, coilY - loopH - 12);
+    }
+
+    function drawMagnet(x) {
+      const my = coilY;
+      // N pole (red, left half)
+      const grad1 = ctx.createLinearGradient(x - magnetW / 2, 0, x, 0);
+      grad1.addColorStop(0, '#cc2244');
+      grad1.addColorStop(1, '#ff2d75');
+      ctx.fillStyle = grad1;
+      ctx.beginPath();
+      ctx.roundRect(x - magnetW / 2, my - magnetH / 2, magnetW / 2, magnetH, [6, 0, 0, 6]);
+      ctx.fill();
+
+      // S pole (blue, right half)
+      const grad2 = ctx.createLinearGradient(x, 0, x + magnetW / 2, 0);
+      grad2.addColorStop(0, '#00a8dd');
+      grad2.addColorStop(1, '#0066aa');
+      ctx.fillStyle = grad2;
+      ctx.beginPath();
+      ctx.roundRect(x, my - magnetH / 2, magnetW / 2, magnetH, [0, 6, 6, 0]);
+      ctx.fill();
+
+      // Glow
+      ctx.shadowColor = '#ff2d75';
+      ctx.shadowBlur = 15;
+      ctx.fillStyle = 'transparent';
+      ctx.fillRect(x - magnetW / 2, my - magnetH / 2, magnetW / 2, magnetH);
+      ctx.shadowBlur = 0;
+
+      // Labels
+      ctx.font = 'bold 18px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff';
+      ctx.fillText('N', x - magnetW / 4, my);
+      ctx.fillText('S', x + magnetW / 4, my);
+
+      // Field lines from magnet
+      const lineCount = 5;
+      for (let i = 0; i < lineCount; i++) {
+        const t = (i / (lineCount - 1)) * 0.8 + 0.1;
+        const startY = my - magnetH / 2 + t * magnetH;
+        const curve = 25 + (Math.abs(t - 0.5)) * 40;
+
+        ctx.beginPath();
+        ctx.moveTo(x - magnetW / 2 - 5, startY);
+        ctx.bezierCurveTo(
+          x - magnetW / 2 - 30, startY - curve,
+          x + magnetW / 2 + 30, startY - curve,
+          x + magnetW / 2 + 5, startY
+        );
+        ctx.strokeStyle = 'rgba(124,58,237,0.15)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
+    function calculateEMF(magnetCenterX) {
+      const N = parseInt(turnsSlider.value);
+      // EMF is proportional to -N * dPhi/dt
+      // Phi depends on how much flux links the coil
+      // Simplified model: EMF is proportional to derivative of flux
+      // Flux is like a Gaussian function centered at coil position
+      const sigma = 60; // spread of flux linkage
+      const dist = magnetCenterX - coilX;
+      // dPhi/dx is proportional to -dist * exp(-dist^2/(2*sigma^2))
+      const dPhidx = -dist * Math.exp(-(dist * dist) / (2 * sigma * sigma)) / (sigma * sigma);
+      const speed = parseInt(speedSlider.value);
+      const emf = -N * dPhidx * speed * 50; // Scale factor
+      return emf;
+    }
+
+    function drawEMFGraph() {
+      // Graph area in lower portion
+      const gx = 100, gy = 310, gw = 650, gh = 120;
+
+      // Graph background
+      ctx.fillStyle = 'rgba(10,10,30,0.8)';
+      ctx.fillRect(gx, gy, gw, gh);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(gx, gy, gw, gh);
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(0,212,255,0.06)';
+      for (let i = 1; i < 4; i++) {
+        const y = gy + (gh / 4) * i;
+        ctx.beginPath(); ctx.moveTo(gx, y); ctx.lineTo(gx + gw, y); ctx.stroke();
+      }
+
+      // Zero line
+      const zeroY = gy + gh / 2;
+      ctx.beginPath();
+      ctx.moveTo(gx, zeroY);
+      ctx.lineTo(gx + gw, zeroY);
+      ctx.strokeStyle = 'rgba(0,212,255,0.3)';
+      ctx.setLineDash([4, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // EMF curve
+      if (emfHistory.length > 1) {
+        ctx.beginPath();
+        const step = gw / MAX_HISTORY;
+        for (let i = 0; i < emfHistory.length; i++) {
+          const x = gx + i * step;
+          const emfNorm = Math.max(-1, Math.min(1, emfHistory[i] / 100));
+          const y = zeroY - emfNorm * (gh / 2 - 5);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = '#00ffaa';
+        ctx.lineWidth = 2;
+        ctx.shadowColor = '#00ffaa';
+        ctx.shadowBlur = 6;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Fill under curve
+        const lastIdx = emfHistory.length - 1;
+        ctx.lineTo(gx + lastIdx * step, zeroY);
+        ctx.lineTo(gx, zeroY);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(0,255,170,0.05)';
+        ctx.fill();
+      }
+
+      // Labels
+      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#00ffaa';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('+EMF', gx - 8, gy + 15);
+      ctx.fillText('0', gx - 8, zeroY);
+      ctx.fillText('\u2212EMF', gx - 8, gy + gh - 15);
+
+      ctx.textAlign = 'center';
+      ctx.fillText('Induced EMF vs Time', gx + gw / 2, gy - 10);
+
+      // Current EMF value
+      if (emfHistory.length > 0) {
+        const currentEMF = emfHistory[emfHistory.length - 1];
+        ctx.font = 'bold 14px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillStyle = currentEMF >= 0 ? '#00ffaa' : '#ff2d75';
+        ctx.fillText(`\u03B5 = ${currentEMF.toFixed(1)} mV`, gx + gw - 10, gy + 15);
+      }
+    }
+
+    function drawFluxIndicator(magnetCenterX) {
+      // Show flux linkage indicator
+      const sigma = 60;
+      const dist = magnetCenterX - coilX;
+      const flux = Math.exp(-(dist * dist) / (2 * sigma * sigma));
+
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.fillRect(10, 10, 160, 55);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(10, 10, 160, 55);
+
+      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#00d4ff';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText(`\u03A6 = ${(flux * 100).toFixed(1)}%`, 20, 18);
+
+      // Flux bar
+      ctx.fillStyle = 'rgba(0,212,255,0.15)';
+      ctx.fillRect(20, 42, 140, 10);
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillRect(20, 42, 140 * flux, 10);
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = flux > 0.3 ? 8 : 0;
+      ctx.fillRect(20, 42, 140 * flux, 10);
+      ctx.shadowBlur = 0;
+    }
+
+    function startSim() {
+      if (running) return;
+      running = true;
+      magnetX = magnetStartX;
+      emfHistory = [];
+
+      function animate() {
+        if (!running) return;
+        const speed = parseInt(speedSlider.value);
+        magnetX += speed * 0.8;
+
+        const emf = calculateEMF(magnetX);
+        emfHistory.push(emf);
+        if (emfHistory.length > MAX_HISTORY) emfHistory.shift();
+
+        const N = parseInt(turnsSlider.value);
+
+        drawBackground();
+        drawCoil(N);
+        drawMagnet(magnetX);
+        drawEMFGraph();
+        drawFluxIndicator(magnetX);
+
+        if (magnetX > magnetEndX) {
+          running = false;
+          return;
+        }
+
+        animId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function resetSim() {
+      if (animId) cancelAnimationFrame(animId);
+      running = false;
+      magnetX = magnetStartX;
+      emfHistory = [];
+      const N = parseInt(turnsSlider.value);
+      drawBackground();
+      drawCoil(N);
+      drawMagnet(magnetStartX);
+      drawEMFGraph();
+      drawFluxIndicator(magnetStartX);
+    }
+
+    // Initial draw
+    resetSim();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

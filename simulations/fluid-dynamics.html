@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluid Dynamics Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a>
+      <div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Fluid Dynamics</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#127754; Bernoulli's Principle</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Fluid Dynamics</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Flow Rate: <input type="range" id="flowRate" min="1" max="10" value="5" step="0.5"> <span id="flowVal">5.0</span></label>
+        <label>Narrow Width: <input type="range" id="pipeNarrow" min="20" max="80" value="35" step="5"> <span id="narrowVal">35</span> px</label>
+        <label>Wide Width: <input type="range" id="pipeWide" min="60" max="140" value="100" step="5"> <span id="wideVal">100</span> px</label>
+        <button onclick="toggleSim()"><span id="toggleBtn">&#9654; Start</span></button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>This simulation demonstrates Bernoulli's principle and the continuity equation. As fluid flows from a wider section to a narrower section of a pipe, the velocity increases and the pressure decreases. Watch the particles speed up in the constriction and observe the pressure gauges change accordingly.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        A&#8321;v&#8321; = A&#8322;v&#8322; &nbsp;&nbsp;|&nbsp;&nbsp; P + &frac12;&rho;v&sup2; + &rho;gh = constant
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+
+    const flowSlider = document.getElementById('flowRate');
+    const narrowSlider = document.getElementById('pipeNarrow');
+    const wideSlider = document.getElementById('pipeWide');
+    flowSlider.oninput = () => document.getElementById('flowVal').textContent = parseFloat(flowSlider.value).toFixed(1);
+    narrowSlider.oninput = () => { document.getElementById('narrowVal').textContent = narrowSlider.value; updatePipe(); };
+    wideSlider.oninput = () => { document.getElementById('wideVal').textContent = wideSlider.value; updatePipe(); };
+
+    let animId = null;
+    let running = false;
+    let particles = [];
+    const NUM_PARTICLES = 80;
+    const PIPE_Y = H / 2;
+
+    // Pipe geometry - sections
+    let pipeSegments = [];
+    let pipeTopPath = [];
+    let pipeBotPath = [];
+
+    function updatePipe() {
+      const wideH = parseFloat(wideSlider.value);
+      const narrowH = parseFloat(narrowSlider.value);
+
+      // Pipe defined as sections: [x_start, x_end, halfHeight_start, halfHeight_end]
+      pipeSegments = [
+        { x0: 40,  x1: 250, h0: wideH/2,   h1: wideH/2 },    // wide left
+        { x0: 250, x1: 350, h0: wideH/2,   h1: narrowH/2 },  // taper in
+        { x0: 350, x1: 530, h0: narrowH/2, h1: narrowH/2 },  // narrow
+        { x0: 530, x1: 630, h0: narrowH/2, h1: wideH/2 },    // taper out
+        { x0: 630, x1: 810, h0: wideH/2,   h1: wideH/2 },    // wide right
+      ];
+    }
+
+    function getPipeHalfHeight(x) {
+      for (const seg of pipeSegments) {
+        if (x >= seg.x0 && x <= seg.x1) {
+          const t = (x - seg.x0) / (seg.x1 - seg.x0);
+          return seg.h0 + t * (seg.h1 - seg.h0);
+        }
+      }
+      return parseFloat(wideSlider.value) / 2;
+    }
+
+    function getVelocityAtX(x) {
+      const baseFlow = parseFloat(flowSlider.value);
+      const wideH = parseFloat(wideSlider.value);
+      const currentH = getPipeHalfHeight(x) * 2;
+      // Continuity: A1*v1 = A2*v2 => v = baseFlow * (wideH / currentH)
+      return baseFlow * (wideH / currentH);
+    }
+
+    function getPressureAtX(x) {
+      const wideH = parseFloat(wideSlider.value);
+      const v_wide = parseFloat(flowSlider.value);
+      const v = getVelocityAtX(x);
+      // Bernoulli (relative): P + 0.5*rho*v^2 = const
+      // P_wide = P0 (reference), P = P0 + 0.5*rho*(v_wide^2 - v^2)
+      const rho = 1000; // water
+      const P0 = 101325;
+      return P0 + 0.5 * rho * (v_wide * v_wide - v * v);
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < NUM_PARTICLES; i++) {
+        spawnParticle(Math.random() * (810 - 40) + 40);
+      }
+    }
+
+    function spawnParticle(x) {
+      if (x === undefined) x = 35;
+      const halfH = getPipeHalfHeight(x);
+      const y = PIPE_Y + (Math.random() - 0.5) * halfH * 1.6;
+      particles.push({
+        x: x,
+        y: y,
+        baseY: PIPE_Y,
+        size: 2 + Math.random() * 2.5,
+        alpha: 0.5 + Math.random() * 0.5
+      });
+    }
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    }
+
+    function drawPipe() {
+      // Draw filled pipe interior
+      ctx.beginPath();
+      ctx.moveTo(pipeSegments[0].x0, PIPE_Y - pipeSegments[0].h0);
+      for (const seg of pipeSegments) {
+        ctx.lineTo(seg.x1, PIPE_Y - seg.h1);
+      }
+      for (let i = pipeSegments.length - 1; i >= 0; i--) {
+        ctx.lineTo(pipeSegments[i].x0, PIPE_Y + pipeSegments[i].h0);
+      }
+      ctx.closePath();
+      const pipeGrad = ctx.createLinearGradient(0, PIPE_Y - 70, 0, PIPE_Y + 70);
+      pipeGrad.addColorStop(0, 'rgba(0,212,255,0.06)');
+      pipeGrad.addColorStop(0.5, 'rgba(0,212,255,0.02)');
+      pipeGrad.addColorStop(1, 'rgba(0,212,255,0.06)');
+      ctx.fillStyle = pipeGrad;
+      ctx.fill();
+
+      // Top wall
+      ctx.beginPath();
+      ctx.moveTo(pipeSegments[0].x0, PIPE_Y - pipeSegments[0].h0);
+      for (const seg of pipeSegments) {
+        ctx.lineTo(seg.x1, PIPE_Y - seg.h1);
+      }
+      ctx.strokeStyle = '#00d4ff';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Bottom wall
+      ctx.beginPath();
+      ctx.moveTo(pipeSegments[0].x0, PIPE_Y + pipeSegments[0].h0);
+      for (const seg of pipeSegments) {
+        ctx.lineTo(seg.x1, PIPE_Y + seg.h1);
+      }
+      ctx.strokeStyle = '#00d4ff';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // End caps
+      ctx.strokeStyle = 'rgba(0,212,255,0.4)';
+      ctx.lineWidth = 2;
+      // Left
+      ctx.beginPath();
+      ctx.moveTo(pipeSegments[0].x0, PIPE_Y - pipeSegments[0].h0);
+      ctx.lineTo(pipeSegments[0].x0, PIPE_Y + pipeSegments[0].h0);
+      ctx.stroke();
+      // Right
+      const last = pipeSegments[pipeSegments.length - 1];
+      ctx.beginPath();
+      ctx.moveTo(last.x1, PIPE_Y - last.h1);
+      ctx.lineTo(last.x1, PIPE_Y + last.h1);
+      ctx.stroke();
+    }
+
+    function drawParticles() {
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        const v = getVelocityAtX(p.x);
+        const maxV = parseFloat(flowSlider.value) * (parseFloat(wideSlider.value) / parseFloat(narrowSlider.value));
+        const t = Math.min(v / maxV, 1);
+        // Color interpolation: slow = cyan, fast = pink
+        const r = Math.round(0 + t * 255);
+        const g = Math.round(212 - t * 167);
+        const b = Math.round(255 - t * 138);
+        ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha})`;
+        ctx.shadowColor = `rgba(${r},${g},${b},0.6)`;
+        ctx.shadowBlur = 6;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function drawPressureGauges() {
+      const positions = [
+        { x: 145, label: 'Wide Section (Left)', section: 'wide' },
+        { x: 440, label: 'Narrow Section', section: 'narrow' },
+        { x: 720, label: 'Wide Section (Right)', section: 'wide2' }
+      ];
+
+      const wideH = parseFloat(wideSlider.value);
+      const narrowH = parseFloat(narrowSlider.value);
+
+      for (const pos of positions) {
+        const halfH = getPipeHalfHeight(pos.x);
+        const v = getVelocityAtX(pos.x);
+        const P = getPressureAtX(pos.x);
+        const P_atm = 101325;
+        const P_rel = P - P_atm;
+
+        // Pressure gauge bar above pipe
+        const gaugeX = pos.x - 18;
+        const gaugeY = PIPE_Y - halfH - 120;
+        const gaugeW = 36;
+        const gaugeH = 80;
+
+        // Gauge background
+        ctx.fillStyle = 'rgba(10,10,30,0.85)';
+        ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(gaugeX - 8, gaugeY - 25, gaugeW + 16, gaugeH + 60, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        // Label
+        ctx.font = '9px "Inter", sans-serif';
+        ctx.fillStyle = 'rgba(0,212,255,0.6)';
+        ctx.textAlign = 'center';
+        ctx.fillText('P', pos.x, gaugeY - 10);
+
+        // Bar background
+        ctx.fillStyle = 'rgba(0,212,255,0.08)';
+        ctx.fillRect(gaugeX, gaugeY, gaugeW, gaugeH);
+
+        // Pressure fill
+        const maxPRel = 0.5 * 1000 * Math.pow(parseFloat(flowSlider.value) * wideH / narrowH, 2);
+        const fillRatio = Math.max(0.05, Math.min(1, (P - P_atm + maxPRel) / (2 * maxPRel)));
+        const fillH = fillRatio * gaugeH;
+        const fillColor = fillRatio > 0.6 ? '#00ffaa' : fillRatio > 0.3 ? '#00d4ff' : '#ff2d75';
+
+        ctx.fillStyle = fillColor;
+        ctx.shadowColor = fillColor;
+        ctx.shadowBlur = 8;
+        ctx.fillRect(gaugeX, gaugeY + gaugeH - fillH, gaugeW, fillH);
+        ctx.shadowBlur = 0;
+
+        // Velocity text
+        ctx.font = '11px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#00ffaa';
+        ctx.textAlign = 'center';
+        ctx.fillText('v=' + v.toFixed(1), pos.x, gaugeY + gaugeH + 16);
+
+        // Pressure text
+        ctx.fillStyle = fillColor;
+        ctx.fillText(fillRatio > 0.5 ? 'HIGH' : 'LOW', pos.x, gaugeY + gaugeH + 30);
+
+        // Vertical line connecting gauge to pipe
+        ctx.beginPath();
+        ctx.moveTo(pos.x, gaugeY + gaugeH);
+        ctx.lineTo(pos.x, PIPE_Y - halfH);
+        ctx.strokeStyle = 'rgba(0,212,255,0.15)';
+        ctx.setLineDash([3, 3]);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    function drawVelocityArrows() {
+      const positions = [145, 440, 720];
+      for (const x of positions) {
+        const v = getVelocityAtX(x);
+        const maxV = parseFloat(flowSlider.value) * (parseFloat(wideSlider.value) / parseFloat(narrowSlider.value));
+        const arrowLen = 15 + (v / maxV) * 40;
+        const halfH = getPipeHalfHeight(x);
+
+        ctx.save();
+        ctx.strokeStyle = 'rgba(0,255,170,0.5)';
+        ctx.fillStyle = 'rgba(0,255,170,0.5)';
+        ctx.lineWidth = 2;
+
+        // Draw arrow at pipe center
+        const ay = PIPE_Y;
+        ctx.beginPath();
+        ctx.moveTo(x - arrowLen / 2, ay);
+        ctx.lineTo(x + arrowLen / 2, ay);
+        ctx.stroke();
+        // Arrowhead
+        ctx.beginPath();
+        ctx.moveTo(x + arrowLen / 2, ay);
+        ctx.lineTo(x + arrowLen / 2 - 6, ay - 4);
+        ctx.lineTo(x + arrowLen / 2 - 6, ay + 4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function drawStats() {
+      const panelX = 10, panelY = 10, panelW = 200, panelH = 100;
+
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(panelX, panelY, panelW, panelH, 8);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = '11px "Inter", sans-serif';
+      ctx.fillStyle = 'rgba(0,212,255,0.5)';
+      ctx.textAlign = 'left';
+      ctx.fillText('BERNOULLI\'S PRINCIPLE', panelX + 12, panelY + 20);
+
+      const wideH = parseFloat(wideSlider.value);
+      const narrowH = parseFloat(narrowSlider.value);
+      const vWide = parseFloat(flowSlider.value);
+      const vNarrow = vWide * (wideH / narrowH);
+
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('v_wide  = ' + vWide.toFixed(1) + ' m/s', panelX + 12, panelY + 42);
+      ctx.fillStyle = '#ff2d75';
+      ctx.fillText('v_narrow= ' + vNarrow.toFixed(1) + ' m/s', panelX + 12, panelY + 60);
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText('A\u2081v\u2081 = A\u2082v\u2082', panelX + 12, panelY + 82);
+    }
+
+    function drawSectionLabels() {
+      ctx.font = '11px "Inter", sans-serif';
+      ctx.textAlign = 'center';
+
+      ctx.fillStyle = 'rgba(0,255,170,0.4)';
+      ctx.fillText('Wide Section', 145, PIPE_Y + parseFloat(wideSlider.value)/2 + 25);
+
+      ctx.fillStyle = 'rgba(255,45,117,0.5)';
+      ctx.fillText('Narrow Section', 440, PIPE_Y + parseFloat(narrowSlider.value)/2 + 25);
+
+      ctx.fillStyle = 'rgba(0,255,170,0.4)';
+      ctx.fillText('Wide Section', 720, PIPE_Y + parseFloat(wideSlider.value)/2 + 25);
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        const v = getVelocityAtX(p.x);
+        p.x += v * 0.8;
+
+        // Constrain y within pipe
+        const halfH = getPipeHalfHeight(p.x);
+        const maxY = PIPE_Y + halfH * 0.85;
+        const minY = PIPE_Y - halfH * 0.85;
+
+        // Gently push particle toward center when pipe narrows
+        const targetY = PIPE_Y + (p.y - PIPE_Y) * (halfH / (getPipeHalfHeight(p.x - v * 0.8) || halfH));
+        p.y = p.y * 0.95 + targetY * 0.05;
+
+        // Hard clamp
+        if (p.y > maxY) p.y = maxY;
+        if (p.y < minY) p.y = minY;
+
+        // Respawn if out of pipe
+        if (p.x > 815) {
+          spawnParticle(35);
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    function toggleSim() {
+      running = !running;
+      document.getElementById('toggleBtn').innerHTML = running ? '&#10074;&#10074; Pause' : '&#9654; Start';
+      if (running && !animId) animate();
+      if (!running && animId) { cancelAnimationFrame(animId); animId = null; }
+    }
+
+    function resetSim() {
+      running = false;
+      document.getElementById('toggleBtn').innerHTML = '&#9654; Start';
+      if (animId) cancelAnimationFrame(animId);
+      animId = null;
+      updatePipe();
+      initParticles();
+      draw();
+    }
+
+    function draw() {
+      drawBackground();
+      drawPipe();
+      drawParticles();
+      drawPressureGauges();
+      drawVelocityArrows();
+      drawStats();
+      drawSectionLabels();
+    }
+
+    function animate() {
+      if (!running) return;
+      updateParticles();
+
+      // Spawn new particles to maintain count
+      while (particles.length < NUM_PARTICLES) {
+        spawnParticle(35 + Math.random() * 20);
+      }
+
+      draw();
+      animId = requestAnimationFrame(animate);
+    }
+
+    updatePipe();
+    initParticles();
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

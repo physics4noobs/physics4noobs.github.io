@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AC Waveforms | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>AC Circuits</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#12336; AC Waveforms</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Alternating Current</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Frequency: <input type="range" id="frequency" min="0.5" max="5" value="1.5" step="0.1"> <span id="freqVal">1.5</span> Hz</label>
+        <label>Amplitude: <input type="range" id="amplitude" min="20" max="100" value="60"> <span id="ampVal">60</span> V</label>
+        <label>Phase (&phi;): <input type="range" id="phase" min="-180" max="180" value="0" step="5"> <span id="phaseVal">0</span>&deg;</label>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>This simulation visualizes alternating current (AC) waveforms. The blue sine wave represents voltage and the green wave represents current. Adjust the phase slider to introduce a phase difference, as seen in RLC circuits where inductors cause current to lag voltage and capacitors cause current to lead. The phasor diagram on the right shows the rotating voltage and current vectors in real-time.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        V = V&#8320; sin(&omega;t) &nbsp;&nbsp;|&nbsp;&nbsp; I = I&#8320; sin(&omega;t &minus; &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; V<sub>rms</sub> = V&#8320;/&radic;2 &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = 2&pi;f
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let time = 0;
+
+    const freqSlider = document.getElementById('frequency');
+    const ampSlider = document.getElementById('amplitude');
+    const phaseSlider = document.getElementById('phase');
+
+    freqSlider.oninput = () => document.getElementById('freqVal').textContent = parseFloat(freqSlider.value).toFixed(1);
+    ampSlider.oninput = () => document.getElementById('ampVal').textContent = ampSlider.value;
+    phaseSlider.oninput = () => document.getElementById('phaseVal').textContent = phaseSlider.value;
+
+    // Waveform area
+    const waveX = 30, waveY = 30, waveW = 540, waveH = 390;
+    // Phasor area
+    const phasorCX = 720, phasorCY = 200, phasorR = 100;
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+    }
+
+    function drawWaveformAxes() {
+      const midY = waveY + waveH / 2;
+
+      // Waveform background
+      ctx.fillStyle = 'rgba(10,10,30,0.5)';
+      ctx.fillRect(waveX, waveY, waveW, waveH);
+      ctx.strokeStyle = 'rgba(0,212,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(waveX, waveY, waveW, waveH);
+
+      // Horizontal grid lines
+      ctx.strokeStyle = 'rgba(0,212,255,0.06)';
+      for (let i = 1; i < 8; i++) {
+        const y = waveY + (waveH / 8) * i;
+        ctx.beginPath(); ctx.moveTo(waveX, y); ctx.lineTo(waveX + waveW, y); ctx.stroke();
+      }
+
+      // Vertical grid lines
+      for (let i = 1; i < 12; i++) {
+        const x = waveX + (waveW / 12) * i;
+        ctx.beginPath(); ctx.moveTo(x, waveY); ctx.lineTo(x, waveY + waveH); ctx.stroke();
+      }
+
+      // Zero line
+      ctx.beginPath();
+      ctx.moveTo(waveX, midY);
+      ctx.lineTo(waveX + waveW, midY);
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Labels
+      ctx.font = '10px "JetBrains Mono", monospace';
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('+V\u2080', waveX - 4, waveY + 40);
+      ctx.fillText('0', waveX - 4, midY);
+      ctx.fillText('\u2212V\u2080', waveX - 4, waveY + waveH - 40);
+
+      // Time axis label
+      ctx.textAlign = 'center';
+      ctx.fillText('t \u2192', waveX + waveW + 15, midY);
+    }
+
+    function drawWaveforms() {
+      const freq = parseFloat(freqSlider.value);
+      const V0 = parseInt(ampSlider.value);
+      const phi = parseInt(phaseSlider.value) * Math.PI / 180;
+      const omega = 2 * Math.PI * freq;
+      const midY = waveY + waveH / 2;
+      const ampScale = (waveH / 2 - 20) / 100;
+
+      // Draw voltage waveform (blue)
+      ctx.beginPath();
+      for (let px = 0; px <= waveW; px++) {
+        const t = (px / waveW) * 4 / freq + time;
+        const v = V0 * Math.sin(omega * t);
+        const x = waveX + px;
+        const y = midY - v * ampScale;
+        if (px === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#00d4ff';
+      ctx.lineWidth = 2;
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 6;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Draw current waveform (green) with phase difference
+      const I0 = V0 * 0.7; // Assume some impedance scaling
+      ctx.beginPath();
+      for (let px = 0; px <= waveW; px++) {
+        const t = (px / waveW) * 4 / freq + time;
+        const i = I0 * Math.sin(omega * t - phi);
+        const x = waveX + px;
+        const y = midY - i * ampScale;
+        if (px === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#00ffaa';
+      ctx.lineWidth = 2;
+      ctx.shadowColor = '#00ffaa';
+      ctx.shadowBlur = 6;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Legend
+      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+
+      // Voltage legend
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillRect(waveX + 10, waveY + 8, 14, 3);
+      ctx.fillText('V(t) = V\u2080 sin(\u03C9t)', waveX + 30, waveY + 4);
+
+      // Current legend
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillRect(waveX + 10, waveY + 24, 14, 3);
+      ctx.fillText(`I(t) = I\u2080 sin(\u03C9t \u2212 \u03C6)`, waveX + 30, waveY + 20);
+    }
+
+    function drawPhasorDiagram() {
+      const freq = parseFloat(freqSlider.value);
+      const V0 = parseInt(ampSlider.value);
+      const phi = parseInt(phaseSlider.value) * Math.PI / 180;
+      const omega = 2 * Math.PI * freq;
+      const I0 = V0 * 0.7;
+
+      // Phasor background circle
+      ctx.fillStyle = 'rgba(10,10,30,0.6)';
+      ctx.beginPath();
+      ctx.arc(phasorCX, phasorCY, phasorR + 20, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,212,255,0.1)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Reference circle
+      ctx.beginPath();
+      ctx.arc(phasorCX, phasorCY, phasorR, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.stroke();
+
+      // Inner circle for current
+      const Iscale = phasorR * I0 / 100;
+      ctx.beginPath();
+      ctx.arc(phasorCX, phasorCY, Iscale, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.stroke();
+
+      // Cross hairs
+      ctx.beginPath();
+      ctx.moveTo(phasorCX - phasorR - 10, phasorCY);
+      ctx.lineTo(phasorCX + phasorR + 10, phasorCY);
+      ctx.moveTo(phasorCX, phasorCY - phasorR - 10);
+      ctx.lineTo(phasorCX, phasorCY + phasorR + 10);
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.stroke();
+
+      // Current angle (omega * time)
+      const angle = omega * time;
+      const Vscale = phasorR * V0 / 100;
+
+      // Voltage phasor
+      const vx = phasorCX + Vscale * Math.cos(-angle);
+      const vy = phasorCY + Vscale * Math.sin(-angle);
+      ctx.beginPath();
+      ctx.moveTo(phasorCX, phasorCY);
+      ctx.lineTo(vx, vy);
+      ctx.strokeStyle = '#00d4ff';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 8;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Voltage phasor arrowhead
+      const vAngle = Math.atan2(vy - phasorCY, vx - phasorCX);
+      ctx.save();
+      ctx.translate(vx, vy);
+      ctx.rotate(vAngle);
+      ctx.beginPath();
+      ctx.moveTo(8, 0);
+      ctx.lineTo(-5, -4);
+      ctx.lineTo(-5, 4);
+      ctx.closePath();
+      ctx.fillStyle = '#00d4ff';
+      ctx.fill();
+      ctx.restore();
+
+      // Phasor endpoint glow
+      ctx.beginPath();
+      ctx.arc(vx, vy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#00d4ff';
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Current phasor (with phase lag)
+      const ix = phasorCX + Iscale * Math.cos(-(angle - phi));
+      const iy = phasorCY + Iscale * Math.sin(-(angle - phi));
+      ctx.beginPath();
+      ctx.moveTo(phasorCX, phasorCY);
+      ctx.lineTo(ix, iy);
+      ctx.strokeStyle = '#00ffaa';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = '#00ffaa';
+      ctx.shadowBlur = 8;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Current phasor arrowhead
+      const iAngle = Math.atan2(iy - phasorCY, ix - phasorCX);
+      ctx.save();
+      ctx.translate(ix, iy);
+      ctx.rotate(iAngle);
+      ctx.beginPath();
+      ctx.moveTo(8, 0);
+      ctx.lineTo(-5, -4);
+      ctx.lineTo(-5, 4);
+      ctx.closePath();
+      ctx.fillStyle = '#00ffaa';
+      ctx.fill();
+      ctx.restore();
+
+      ctx.beginPath();
+      ctx.arc(ix, iy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#00ffaa';
+      ctx.shadowColor = '#00ffaa';
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Draw phase angle arc
+      if (Math.abs(phi) > 0.01) {
+        const arcR = 25;
+        const startAngle = -angle;
+        const endAngle = -(angle - phi);
+        ctx.beginPath();
+        ctx.arc(phasorCX, phasorCY, arcR, Math.min(startAngle, endAngle), Math.max(startAngle, endAngle));
+        ctx.strokeStyle = '#ff2d75';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Phase label
+        const midAngle = -(angle - phi / 2);
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#ff2d75';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('\u03C6', phasorCX + 35 * Math.cos(midAngle), phasorCY + 35 * Math.sin(midAngle));
+      }
+
+      // Labels
+      ctx.font = '10px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#00d4ff';
+      ctx.textAlign = 'center';
+      ctx.fillText('V', vx + 12 * Math.cos(vAngle), vy + 12 * Math.sin(vAngle));
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText('I', ix + 12 * Math.cos(iAngle), iy + 12 * Math.sin(iAngle));
+
+      // Phasor title
+      ctx.font = 'bold 11px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#7c3aed';
+      ctx.textAlign = 'center';
+      ctx.fillText('PHASOR DIAGRAM', phasorCX, phasorCY - phasorR - 30);
+    }
+
+    function drawReadings() {
+      const freq = parseFloat(freqSlider.value);
+      const V0 = parseInt(ampSlider.value);
+      const phi = parseInt(phaseSlider.value);
+      const I0 = V0 * 0.7;
+      const Vrms = (V0 / Math.sqrt(2)).toFixed(1);
+      const Irms = (I0 / Math.sqrt(2)).toFixed(1);
+      const omega = (2 * Math.PI * freq).toFixed(2);
+
+      // Readings panel
+      const rx = 620, ry = 320, rw = 220, rh = 120;
+      ctx.fillStyle = 'rgba(10,10,30,0.9)';
+      ctx.fillRect(rx, ry, rw, rh);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(rx, ry, rw, rh);
+
+      ctx.font = 'bold 11px "JetBrains Mono", monospace';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = '#7c3aed';
+      ctx.fillText('AC READINGS', rx + 10, ry + 8);
+
+      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText(`V\u2080 = ${V0} V`, rx + 10, ry + 28);
+      ctx.fillText(`V_rms = ${Vrms} V`, rx + 10, ry + 44);
+
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText(`I\u2080 = ${I0.toFixed(1)} A`, rx + 10, ry + 62);
+      ctx.fillText(`I_rms = ${Irms} A`, rx + 10, ry + 78);
+
+      ctx.fillStyle = '#ff2d75';
+      ctx.fillText(`\u03C6 = ${phi}\u00B0`, rx + 120, ry + 28);
+
+      ctx.fillStyle = '#ffaa00';
+      ctx.fillText(`f = ${freq} Hz`, rx + 120, ry + 44);
+      ctx.fillText(`\u03C9 = ${omega} rad/s`, rx + 120, ry + 62);
+
+      // Phase description
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.font = '10px "JetBrains Mono", monospace';
+      let phaseDesc = 'In phase';
+      if (phi > 0) phaseDesc = 'I lags V (inductive)';
+      else if (phi < 0) phaseDesc = 'I leads V (capacitive)';
+      ctx.fillText(phaseDesc, rx + 10, ry + 100);
+    }
+
+    function animate() {
+      const freq = parseFloat(freqSlider.value);
+      time += 0.016;
+
+      drawBackground();
+      drawWaveformAxes();
+      drawWaveforms();
+      drawPhasorDiagram();
+      drawReadings();
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

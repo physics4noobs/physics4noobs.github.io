@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendulum Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Pendulum</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">⚙️ Simple Pendulum Simulation</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Simple Harmonic Motion</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <div class="control-group">
+          <label>Length L (m): <span id="lengthValue">1.5</span></label>
+          <input type="range" id="lengthSlider" min="0.5" max="3.0" value="1.5" step="0.1">
+        </div>
+        <div class="control-group">
+          <label>Gravity g (m/s²): <span id="gravityValue">9.8</span></label>
+          <input type="range" id="gravitySlider" min="1" max="20" value="9.8" step="0.1">
+        </div>
+        <div class="control-group">
+          <label>Initial Angle (°): <span id="angleValue">30</span></label>
+          <input type="range" id="angleSlider" min="5" max="45" value="30" step="1">
+        </div>
+        <div class="control-group">
+          <label>Damping: <span id="dampingValue">0.00</span></label>
+          <input type="range" id="dampingSlider" min="0" max="0.1" value="0" step="0.01">
+        </div>
+        <div class="control-group">
+          <label><input type="checkbox" id="phaseSpace"> Show Phase Space</label>
+        </div>
+        <button id="startBtn" class="control-btn">Start</button>
+        <button id="resetBtn" class="control-btn">Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>This simulation demonstrates a simple pendulum undergoing simple harmonic motion. The pendulum consists of a mass (bob) suspended from a fixed point by a massless string. When displaced from equilibrium and released, the pendulum oscillates with a period that depends on its length and the acceleration due to gravity. The simulation uses the actual pendulum equation (not small angle approximation) for accurate physics.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        <strong>Key Formulas:</strong><br>
+        T = 2π√(L/g)<br>
+        θ(t) = θ₀cos(ωt)<br>
+        ω = √(g/L)<br>
+        E = mgh = ½mv²
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Design system colors
+    const colors = {
+      bg: '#080818',
+      primary: '#00d4ff',
+      accent: '#00ffaa',
+      purple: '#7c3aed',
+      rose: '#ff2d75',
+      amber: '#f59e0b',
+      gridLine: 'rgba(0,212,255,0.04)',
+      statsPanel: 'rgba(10,10,30,0.85)'
+    };
+
+    // State
+    let state = {
+      L: 1.5,
+      g: 9.8,
+      theta0: 30 * Math.PI / 180,
+      theta: 30 * Math.PI / 180,
+      omega: 0,
+      damping: 0,
+      time: 0,
+      running: false,
+      trail: [],
+      graphData: [],
+      phaseData: [],
+      lastTime: null,
+      periodStart: 0,
+      periodCount: 0,
+      measuredPeriod: 0,
+      lastCrossing: 0,
+      showPhase: false
+    };
+
+    const pivotX = 250;
+    const pivotY = 80;
+    const scale = 100;
+    const mass = 1;
+
+    function getPendulumPos() {
+      const x = pivotX + state.L * scale * Math.sin(state.theta);
+      const y = pivotY + state.L * scale * Math.cos(state.theta);
+      return { x, y };
+    }
+
+    function drawPendulum() {
+      const pos = getPendulumPos();
+
+      // Trail
+      if (state.running) {
+        state.trail.push({ x: pos.x, y: pos.y, alpha: 1 });
+        if (state.trail.length > 50) state.trail.shift();
+      }
+
+      state.trail.forEach((point, i) => {
+        point.alpha *= 0.95;
+        ctx.fillStyle = `rgba(0, 212, 255, ${point.alpha * 0.3})`;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // String
+      ctx.strokeStyle = colors.primary;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(pivotX, pivotY);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+
+      // Pivot
+      ctx.fillStyle = colors.accent;
+      ctx.beginPath();
+      ctx.arc(pivotX, pivotY, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Bob
+      const gradient = ctx.createRadialGradient(pos.x - 5, pos.y - 5, 5, pos.x, pos.y, 15);
+      gradient.addColorStop(0, colors.accent);
+      gradient.addColorStop(1, colors.primary);
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 15, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = colors.primary;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function drawGraph() {
+      const graphX = 540;
+      const graphY = 100;
+      const graphW = 280;
+      const graphH = 150;
+
+      ctx.fillStyle = colors.statsPanel;
+      ctx.fillRect(graphX, graphY, graphW, graphH);
+
+      ctx.strokeStyle = colors.gridLine;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(graphX, graphY, graphW, graphH);
+
+      // Grid
+      for (let i = 0; i <= 4; i++) {
+        const y = graphY + (graphH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(graphX, y);
+        ctx.lineTo(graphX + graphW, y);
+        ctx.stroke();
+      }
+
+      // Plot
+      if (state.graphData.length > 1) {
+        ctx.strokeStyle = colors.primary;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+
+        const maxTime = 10;
+        const maxTheta = Math.PI / 2;
+
+        state.graphData.forEach((point, i) => {
+          const x = graphX + ((point.t % maxTime) / maxTime) * graphW;
+          const y = graphY + graphH / 2 - (point.theta / maxTheta) * (graphH / 2);
+
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+
+        ctx.stroke();
+      }
+
+      // Labels
+      ctx.fillStyle = '#fff';
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('θ vs Time', graphX + graphW / 2, graphY - 10);
+    }
+
+    function drawPhaseSpace() {
+      const graphX = 540;
+      const graphY = 270;
+      const graphW = 280;
+      const graphH = 150;
+
+      ctx.fillStyle = colors.statsPanel;
+      ctx.fillRect(graphX, graphY, graphW, graphH);
+
+      ctx.strokeStyle = colors.gridLine;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(graphX, graphY, graphW, graphH);
+
+      if (state.phaseData.length > 1) {
+        ctx.strokeStyle = colors.accent;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+
+        const maxTheta = Math.PI / 2;
+        const maxOmega = 5;
+
+        state.phaseData.forEach((point, i) => {
+          const x = graphX + graphW / 2 + (point.theta / maxTheta) * (graphW / 2);
+          const y = graphY + graphH / 2 - (point.omega / maxOmega) * (graphH / 2);
+
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('Phase Space (θ vs ω)', graphX + graphW / 2, graphY - 10);
+    }
+
+    function drawEnergyBars() {
+      const barX = 540;
+      const barY = 30;
+      const barW = 280;
+      const barH = 50;
+
+      const h = state.L * (1 - Math.cos(state.theta));
+      const v = state.omega * state.L;
+      const PE = mass * state.g * h;
+      const KE = 0.5 * mass * v * v;
+      const totalE = mass * state.g * state.L * (1 - Math.cos(state.theta0));
+
+      ctx.fillStyle = colors.statsPanel;
+      ctx.fillRect(barX, barY, barW, barH);
+
+      const peWidth = (PE / totalE) * barW;
+      const keWidth = (KE / totalE) * barW;
+
+      ctx.fillStyle = colors.purple;
+      ctx.fillRect(barX, barY, peWidth, barH);
+
+      ctx.fillStyle = colors.primary;
+      ctx.fillRect(barX + peWidth, barY, keWidth, barH);
+
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(barX, barY, barW, barH);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`PE: ${PE.toFixed(2)} J`, barX + 5, barY + 20);
+      ctx.fillText(`KE: ${KE.toFixed(2)} J`, barX + 5, barY + 40);
+      ctx.textAlign = 'right';
+      ctx.fillText(`Total: ${totalE.toFixed(2)} J`, barX + barW - 5, barY + 30);
+    }
+
+    function drawStats() {
+      ctx.fillStyle = colors.statsPanel;
+      ctx.fillRect(10, 10, 220, 140);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'left';
+
+      const calculated = 2 * Math.PI * Math.sqrt(state.L / state.g);
+
+      let yPos = 30;
+      ctx.fillText(`Length: ${state.L.toFixed(2)} m`, 20, yPos);
+      yPos += 20;
+      ctx.fillText(`Gravity: ${state.g.toFixed(1)} m/s²`, 20, yPos);
+      yPos += 20;
+      ctx.fillText(`θ_max: ${(state.theta0 * 180 / Math.PI).toFixed(1)}°`, 20, yPos);
+      yPos += 20;
+      ctx.fillText(`θ_current: ${(state.theta * 180 / Math.PI).toFixed(1)}°`, 20, yPos);
+      yPos += 20;
+      ctx.fillText(`T_calc: ${calculated.toFixed(3)} s`, 20, yPos);
+      yPos += 20;
+      if (state.measuredPeriod > 0) {
+        ctx.fillText(`T_meas: ${state.measuredPeriod.toFixed(3)} s`, 20, yPos);
+      }
+      yPos += 20;
+      ctx.fillText(`Time: ${state.time.toFixed(2)} s`, 20, yPos);
+    }
+
+    function update(dt) {
+      if (!state.running) return;
+
+      // Pendulum equation: α = -(g/L)sin(θ) - damping*ω
+      const alpha = -(state.g / state.L) * Math.sin(state.theta) - state.damping * state.omega;
+
+      state.omega += alpha * dt;
+      state.theta += state.omega * dt;
+      state.time += dt;
+
+      // Period measurement
+      if (state.theta * state.lastCrossing < 0 && state.theta < 0) {
+        if (state.lastCrossing !== 0) {
+          state.measuredPeriod = state.time - state.periodStart;
+          state.periodStart = state.time;
+        } else {
+          state.periodStart = state.time;
+        }
+      }
+      state.lastCrossing = state.theta;
+
+      // Store data
+      state.graphData.push({ t: state.time, theta: state.theta });
+      if (state.graphData.length > 500) state.graphData.shift();
+
+      state.phaseData.push({ theta: state.theta, omega: state.omega });
+      if (state.phaseData.length > 300) state.phaseData.shift();
+    }
+
+    function animate(timestamp) {
+      if (state.lastTime === null) {
+        state.lastTime = timestamp;
+      }
+
+      const dt = Math.min((timestamp - state.lastTime) / 1000, 0.05);
+      state.lastTime = timestamp;
+
+      ctx.fillStyle = colors.bg;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      update(dt);
+      drawPendulum();
+      drawStats();
+      drawEnergyBars();
+      drawGraph();
+
+      if (state.showPhase) {
+        drawPhaseSpace();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // Event listeners
+    document.getElementById('lengthSlider').addEventListener('input', (e) => {
+      state.L = parseFloat(e.target.value);
+      document.getElementById('lengthValue').textContent = state.L.toFixed(1);
+    });
+
+    document.getElementById('gravitySlider').addEventListener('input', (e) => {
+      state.g = parseFloat(e.target.value);
+      document.getElementById('gravityValue').textContent = state.g.toFixed(1);
+    });
+
+    document.getElementById('angleSlider').addEventListener('input', (e) => {
+      const deg = parseInt(e.target.value);
+      state.theta0 = deg * Math.PI / 180;
+      if (!state.running) state.theta = state.theta0;
+      document.getElementById('angleValue').textContent = deg;
+    });
+
+    document.getElementById('dampingSlider').addEventListener('input', (e) => {
+      state.damping = parseFloat(e.target.value);
+      document.getElementById('dampingValue').textContent = state.damping.toFixed(2);
+    });
+
+    document.getElementById('phaseSpace').addEventListener('change', (e) => {
+      state.showPhase = e.target.checked;
+    });
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+      state.running = !state.running;
+      document.getElementById('startBtn').textContent = state.running ? 'Pause' : 'Start';
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      state.running = false;
+      state.theta = state.theta0;
+      state.omega = 0;
+      state.time = 0;
+      state.trail = [];
+      state.graphData = [];
+      state.phaseData = [];
+      state.lastTime = null;
+      state.measuredPeriod = 0;
+      state.lastCrossing = 0;
+      state.periodStart = 0;
+      document.getElementById('startBtn').textContent = 'Start';
+    });
+
+    // Initialize
+    animate(0);
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

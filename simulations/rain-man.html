@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain Man Problem | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> &raquo;
+            <a href="../simulations.html">Simulations</a> &raquo;
+            <span>Kinematics</span>
+        </div>
+
+        <h1 class="sim-title">&#127783; Rain Man Problem</h1>
+        <p class="sim-subtitle">Grade XI - Kinematics - Relative Velocity</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label for="rainSpeed">Rain Speed: <span id="rainSpeedValue">8</span> m/s</label>
+                    <input type="range" id="rainSpeed" min="1" max="15" value="8" step="0.5">
+                </div>
+                <div class="control-group">
+                    <label for="manSpeed">Man Speed: <span id="manSpeedValue">4</span> m/s</label>
+                    <input type="range" id="manSpeed" min="0" max="10" value="4" step="0.5">
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>See how rain appears to fall at an angle when you walk. The faster you move, the more tilted the rain appears in your reference frame.</p>
+            <div class="formula-box">
+                v<sub>rel</sub> = √(v<sub>rain</sub>² + v<sub>man</sub>²) | tan θ = v<sub>man</sub>/v<sub>rain</sub>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let rainSpeed = 8;
+        let manSpeed = 4;
+        let manPosX = 100;
+        let rainParticles = [];
+
+        // Initialize rain particles
+        for (let i = 0; i < 50; i++) {
+            rainParticles.push({
+                x: Math.random() * 425,
+                y: Math.random() * 450,
+                speed: 1
+            });
+        }
+
+        // Controls
+        document.getElementById('rainSpeed').oninput = function() {
+            rainSpeed = parseFloat(this.value);
+            document.getElementById('rainSpeedValue').textContent = rainSpeed;
+            draw();
+        };
+
+        document.getElementById('manSpeed').oninput = function() {
+            manSpeed = parseFloat(this.value);
+            document.getElementById('manSpeedValue').textContent = manSpeed;
+            draw();
+        };
+
+        function drawMan(x, y, color) {
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+
+            // Head
+            ctx.beginPath();
+            ctx.arc(x, y - 35, 8, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Body
+            ctx.beginPath();
+            ctx.moveTo(x, y - 27);
+            ctx.lineTo(x, y - 10);
+            ctx.stroke();
+
+            // Arms
+            ctx.beginPath();
+            ctx.moveTo(x - 8, y - 20);
+            ctx.lineTo(x + 8, y - 20);
+            ctx.stroke();
+
+            // Legs
+            ctx.beginPath();
+            ctx.moveTo(x, y - 10);
+            ctx.lineTo(x - 6, y);
+            ctx.moveTo(x, y - 10);
+            ctx.lineTo(x + 6, y);
+            ctx.stroke();
+        }
+
+        function drawUmbrella(x, y, angle, color) {
+            ctx.save();
+            ctx.translate(x, y - 40);
+            ctx.rotate(angle);
+
+            // Umbrella arc
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(0, 0, 15, 0, Math.PI, true);
+            ctx.stroke();
+
+            // Handle
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, 20);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawArrow(x1, y1, x2, y2, color, label) {
+            const headlen = 8;
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - headlen * Math.cos(angle - Math.PI / 6), y2 - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - headlen * Math.cos(angle + Math.PI / 6), y2 - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+
+            if (label) {
+                ctx.font = '12px JetBrains Mono, monospace';
+                ctx.fillText(label, x2 + 5, y2 - 5);
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid
+            ctx.strokeStyle = 'rgba(0, 212, 255, 0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            // Ground line
+            const groundY = canvas.height - 30;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, groundY);
+            ctx.lineTo(425, groundY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(425, groundY);
+            ctx.lineTo(canvas.width, groundY);
+            ctx.stroke();
+
+            // Dividing line
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(425, 0);
+            ctx.lineTo(425, canvas.height);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = 'bold 14px JetBrains Mono, monospace';
+            ctx.fillText('Ground Frame', 150, 30);
+            ctx.fillText("Man's Frame", 575, 30);
+
+            // LEFT HALF: Ground Frame
+            // Rain falling vertically
+            rainParticles.forEach(p => {
+                ctx.fillStyle = '#00d4ff';
+                ctx.fillRect(p.x, p.y, 2, 8);
+            });
+
+            // Man walking
+            drawMan(manPosX, groundY, '#00ffaa');
+
+            // Velocity vectors (ground frame)
+            const vecStartX = 320;
+            const vecStartY = 100;
+            drawArrow(vecStartX, vecStartY, vecStartX, vecStartY + 40, '#00d4ff', 'v_rain');
+            drawArrow(vecStartX, vecStartY, vecStartX + 30, vecStartY, '#00ffaa', 'v_man');
+
+            // RIGHT HALF: Man's Frame
+            const angle = Math.atan2(manSpeed, rainSpeed);
+            const vRel = Math.sqrt(rainSpeed * rainSpeed + manSpeed * manSpeed);
+
+            // Rain falling at angle in man's frame
+            rainParticles.forEach(p => {
+                const offsetX = 425;
+                const relX = p.x + offsetX - (p.y / rainSpeed) * manSpeed * 5;
+                ctx.fillStyle = '#00d4ff';
+                ctx.fillRect(relX, p.y, 2, 8);
+            });
+
+            // Man stationary in his frame
+            const manFrameX = 525;
+            drawMan(manFrameX, groundY, '#00ffaa');
+            drawUmbrella(manFrameX, groundY, angle, '#ff2d75');
+
+            // Velocity vectors (man's frame)
+            const vecStartX2 = 720;
+            const vecStartY2 = 100;
+            const scale = 5;
+            drawArrow(vecStartX2, vecStartY2, vecStartX2 + manSpeed * scale, vecStartY2 + rainSpeed * scale, '#7c3aed', 'v_rel');
+
+            // Vector triangle
+            ctx.fillStyle = 'rgba(10, 10, 30, 0.85)';
+            ctx.fillRect(canvas.width - 180, 150, 170, 120);
+
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(canvas.width - 180, 150, 170, 120);
+
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = 'bold 12px JetBrains Mono, monospace';
+            ctx.fillText('Vector Triangle:', canvas.width - 175, 170);
+
+            const triX = canvas.width - 130;
+            const triY = 200;
+            drawArrow(triX, triY, triX, triY + 40, '#00d4ff', '');
+            drawArrow(triX, triY, triX + 30, triY, '#00ffaa', '');
+            drawArrow(triX, triY, triX + 30, triY + 40, '#7c3aed', '');
+
+            ctx.fillStyle = '#fff';
+            ctx.font = '10px JetBrains Mono, monospace';
+            ctx.fillText('rain', triX - 30, triY + 20);
+            ctx.fillText('man', triX + 10, triY - 5);
+            ctx.fillText('rel', triX + 15, triY + 50);
+
+            // Stats panel
+            ctx.fillStyle = 'rgba(10, 10, 30, 0.85)';
+            ctx.fillRect(10, canvas.height - 110, 400, 80);
+
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(10, canvas.height - 110, 400, 80);
+
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText(`v_rain: ${rainSpeed.toFixed(1)} m/s`, 20, canvas.height - 85);
+            ctx.fillText(`v_man: ${manSpeed.toFixed(1)} m/s`, 20, canvas.height - 65);
+            ctx.fillText(`v_relative: ${vRel.toFixed(2)} m/s`, 20, canvas.height - 45);
+
+            const angleDeg = (angle * 180 / Math.PI).toFixed(1);
+            ctx.fillText(`Angle θ: ${angleDeg}°`, 220, canvas.height - 65);
+        }
+
+        function animate() {
+            // Update rain particles
+            rainParticles.forEach(p => {
+                p.y += rainSpeed * 0.3;
+                if (p.y > 450) {
+                    p.y = 0;
+                    p.x = Math.random() * 425;
+                }
+            });
+
+            // Update man position
+            manPosX += manSpeed * 0.15;
+            if (manPosX > 425) {
+                manPosX = 0;
+            }
+
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

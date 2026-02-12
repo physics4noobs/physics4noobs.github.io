@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lectures | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x269B;</text></svg>">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link active">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="simulations.html" class="nav-link">Simulations</a></div>
+        <a href="index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> <span>/</span> <span>Lectures</span>
+    </div>
+    <h1><span class="text-gradient">Lecture Notes</span></h1>
+    <p>Structured lecture notes with detailed explanations, diagrams, and step-by-step derivations for every chapter.</p>
+  </div>
+
+  <!-- Grade Tabs -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <div class="grade-tabs">
+        <button class="grade-tab active" data-grade="grade-xi">Grade XI</button>
+        <button class="grade-tab" data-grade="grade-xii">Grade XII</button>
+      </div>
+
+      <!-- Grade XI Lectures -->
+      <div class="grade-content active" id="grade-xi">
+
+        <div class="content-card reveal">
+          <h3>&#127937; Kinematics</h3>
+          <p>Master the language of motion. From understanding vectors and scalars to analysing projectile trajectories and relative motion between frames, these lectures build the foundational toolkit every physics student needs.</p>
+          <div class="topics">
+            <span class="topic-tag">Vectors &amp; Scalars</span>
+            <span class="topic-tag">Equations of Motion</span>
+            <span class="topic-tag">Projectile Motion</span>
+            <span class="topic-tag">Relative Motion</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#9878; Newton's Laws</h3>
+          <p>Dive deep into the principles that govern force and acceleration. Learn to draw free body diagrams, tackle friction problems, analyse circular motion dynamics, and handle non-inertial frames with pseudo forces.</p>
+          <div class="topics">
+            <span class="topic-tag">Free Body Diagrams</span>
+            <span class="topic-tag">Friction Analysis</span>
+            <span class="topic-tag">Circular Motion Dynamics</span>
+            <span class="topic-tag">Pseudo Forces</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#9889; Work Power Energy</h3>
+          <p>Understand energy as the currency of physics. These lectures cover the work-energy theorem, conservation principles for mechanical energy, and the complete analysis of elastic and inelastic collisions.</p>
+          <div class="topics">
+            <span class="topic-tag">Work-Energy Theorem</span>
+            <span class="topic-tag">Conservation Laws</span>
+            <span class="topic-tag">Elastic &amp; Inelastic Collisions</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128260; Rotational Motion</h3>
+          <p>Extend your understanding of mechanics to rotating bodies. From calculating moments of inertia to analysing rolling motion and the fascinating physics of gyroscopes, these lectures connect linear and rotational worlds.</p>
+          <div class="topics">
+            <span class="topic-tag">Moment of Inertia</span>
+            <span class="topic-tag">Torque &amp; Angular Momentum</span>
+            <span class="topic-tag">Rolling Motion</span>
+            <span class="topic-tag">Gyroscopes</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#127754; Fluid Dynamics</h3>
+          <p>Explore the behaviour of fluids at rest and in motion. From pressure variation in static fluids to Bernoulli&rsquo;s energy conservation for flowing fluids, and the role of viscosity in determining flow regimes.</p>
+          <div class="topics">
+            <span class="topic-tag">Fluid Statics</span>
+            <span class="topic-tag">Bernoulli's Principle</span>
+            <span class="topic-tag">Viscosity &amp; Reynolds Number</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128293; Heat &amp; Thermodynamics</h3>
+          <p>From the microscopic dance of gas molecules to the macroscopic laws governing heat engines and entropy, these lectures unify the kinetic theory of gases with the four laws of thermodynamics.</p>
+          <div class="topics">
+            <span class="topic-tag">Kinetic Theory</span>
+            <span class="topic-tag">Laws of Thermodynamics</span>
+            <span class="topic-tag">Heat Engines</span>
+            <span class="topic-tag">Entropy</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#12336; SHM &amp; Waves</h3>
+          <p>Understand oscillatory motion and wave propagation from first principles. These lectures cover simple harmonic motion, the wave equation, superposition of waves, standing wave patterns, and the Doppler effect.</p>
+          <div class="topics">
+            <span class="topic-tag">Simple Harmonic Motion</span>
+            <span class="topic-tag">Wave Equation</span>
+            <span class="topic-tag">Superposition</span>
+            <span class="topic-tag">Standing Waves</span>
+            <span class="topic-tag">Doppler Effect</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Grade XII Lectures -->
+      <div class="grade-content" id="grade-xii">
+
+        <div class="content-card reveal">
+          <h3>&#9889; Electrostatics &amp; Capacitance</h3>
+          <p>Begin your journey into electromagnetism with Coulomb&rsquo;s law, Gauss&rsquo;s law for symmetric charge distributions, electric potential landscapes, and the art of combining capacitors in series and parallel.</p>
+          <div class="topics">
+            <span class="topic-tag">Coulomb's Law</span>
+            <span class="topic-tag">Gauss's Law</span>
+            <span class="topic-tag">Electric Potential</span>
+            <span class="topic-tag">Capacitor Combinations</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128268; Current Electricity</h3>
+          <p>Understand steady-state current flow through conductors. From Ohm&rsquo;s law and Kirchhoff&rsquo;s circuit rules to precision measurement techniques using the Wheatstone bridge and potentiometer.</p>
+          <div class="topics">
+            <span class="topic-tag">Ohm's Law</span>
+            <span class="topic-tag">Kirchhoff's Laws</span>
+            <span class="topic-tag">Wheatstone Bridge</span>
+            <span class="topic-tag">Potentiometer</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#129522; Moving Charges &amp; Magnetism</h3>
+          <p>Discover how moving charges create and respond to magnetic fields. These lectures cover the Biot-Savart law, Ampere&rsquo;s circuital law, the Lorentz force on charged particles, and cyclotron motion.</p>
+          <div class="topics">
+            <span class="topic-tag">Biot-Savart Law</span>
+            <span class="topic-tag">Ampere's Law</span>
+            <span class="topic-tag">Lorentz Force</span>
+            <span class="topic-tag">Cyclotron</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#9851; Electromagnetic Induction</h3>
+          <p>See how changing magnetic flux gives rise to electric fields and currents. From Faraday&rsquo;s law and Lenz&rsquo;s law to self and mutual inductance, culminating in the working principle of an AC generator.</p>
+          <div class="topics">
+            <span class="topic-tag">Faraday's Law</span>
+            <span class="topic-tag">Lenz's Law</span>
+            <span class="topic-tag">Inductance</span>
+            <span class="topic-tag">AC Generator</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#126;&#126; Alternating Current</h3>
+          <p>Analyse AC circuits using phasor diagrams and complex impedances. These lectures cover resonance in RLC circuits, the working of transformers, and the concept of power factor in AC systems.</p>
+          <div class="topics">
+            <span class="topic-tag">Phasor Diagrams</span>
+            <span class="topic-tag">Resonance</span>
+            <span class="topic-tag">Transformers</span>
+            <span class="topic-tag">Power Factor</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128225; Electromagnetic Waves</h3>
+          <p>Unify electricity and magnetism through Maxwell&rsquo;s equations. Understand how oscillating electric and magnetic fields propagate as waves, explore the EM spectrum, and study wave properties like polarization.</p>
+          <div class="topics">
+            <span class="topic-tag">Maxwell's Equations</span>
+            <span class="topic-tag">EM Spectrum</span>
+            <span class="topic-tag">Wave Properties</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128269; Ray Optics</h3>
+          <p>Trace light rays through mirrors, lenses, and prisms. These lectures derive the mirror and lens formulae, analyse dispersion through prisms, and explore optical instruments from microscopes to telescopes.</p>
+          <div class="topics">
+            <span class="topic-tag">Mirror Formula</span>
+            <span class="topic-tag">Lens Formula</span>
+            <span class="topic-tag">Prism</span>
+            <span class="topic-tag">Optical Instruments</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#127752; Wave Optics</h3>
+          <p>Go beyond rays to understand light as a wave. From Young&rsquo;s double slit interference to single-slit diffraction, polarization of light, and the resolving power of optical instruments.</p>
+          <div class="topics">
+            <span class="topic-tag">Young's Double Slit</span>
+            <span class="topic-tag">Diffraction</span>
+            <span class="topic-tag">Polarization</span>
+            <span class="topic-tag">Resolving Power</span>
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#9883; Modern Physics</h3>
+          <p>Step into the quantum realm with the photoelectric effect and Bohr&rsquo;s atomic model. These lectures then explore nuclear reactions, binding energy, and the mathematics of radioactive decay.</p>
+          <div class="topics">
+            <span class="topic-tag">Photoelectric Effect</span>
+            <span class="topic-tag">Bohr Model</span>
+            <span class="topic-tag">Nuclear Reactions</span>
+            <span class="topic-tag">Radioactive Decay</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="chapters.html">Chapters</a>
+        <a href="lectures.html">Lectures</a>
+        <a href="notes.html">Notes</a>
+        <a href="books.html">Books</a>
+        <a href="simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

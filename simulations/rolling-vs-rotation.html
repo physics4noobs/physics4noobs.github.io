@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolling vs Rotation | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Rotational Motion</span>
+        </div>
+
+        <h1>&#128296; Rolling vs Rotation</h1>
+        <p class="subtitle">Grade XI - Rotational Motion</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Angular Velocity ω: <span id="omegaVal">4</span> rad/s</label>
+                    <input type="range" id="omega" min="1" max="10" value="4" step="0.5">
+                </div>
+
+                <div class="control-group">
+                    <label>Disc Radius: <span id="radiusVal">40</span> px</label>
+                    <input type="range" id="radius" min="20" max="60" value="40" step="5">
+                </div>
+
+                <div class="control-group">
+                    <button id="startBtn" class="control-btn">Start</button>
+                    <button id="resetBtn" class="control-btn">Reset</button>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">ω: <span id="statOmega">4.0</span> rad/s</div>
+                    <div class="stat-item">v<sub>cm</sub> (rolling): <span id="statVcm">0.0</span> px/s</div>
+                    <div class="stat-item">Distance rolled: <span id="statDistance">0</span> px</div>
+                    <div class="stat-item">Rotations: <span id="statRotations">0.0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>Compare pure rotation about a fixed axis with rolling without slipping. In rolling, the contact point is instantaneously at rest, combining rotation and translation.</p>
+
+            <div class="formula-box">
+                v<sub>cm</sub> = ωR &nbsp;|&nbsp; a<sub>cm</sub> = αR &nbsp;|&nbsp; v<sub>contact</sub> = 0 (no slip)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let omega = 4;
+        let radius = 40;
+        let isRunning = false;
+        let angle = 0;
+        let rollingX = 0;
+        let rotationTrail = [];
+        let rollingTrail = [];
+        let totalDistance = 0;
+        let lastTime = 0;
+
+        const omegaSlider = document.getElementById('omega');
+        const radiusSlider = document.getElementById('radius');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        omegaSlider.oninput = function() {
+            omega = parseFloat(this.value);
+            document.getElementById('omegaVal').textContent = omega;
+            updateStats();
+            if (!isRunning) draw();
+        };
+
+        radiusSlider.oninput = function() {
+            radius = parseFloat(this.value);
+            document.getElementById('radiusVal').textContent = radius;
+            updateStats();
+            if (!isRunning) draw();
+        };
+
+        startBtn.onclick = function() {
+            isRunning = !isRunning;
+            this.textContent = isRunning ? 'Pause' : 'Start';
+            if (isRunning) {
+                lastTime = performance.now();
+                requestAnimationFrame(animate);
+            }
+        };
+
+        resetBtn.onclick = function() {
+            isRunning = false;
+            startBtn.textContent = 'Start';
+            angle = 0;
+            rollingX = 0;
+            rotationTrail = [];
+            rollingTrail = [];
+            totalDistance = 0;
+            updateStats();
+            draw();
+        };
+
+        function updateStats() {
+            const vcm = omega * radius;
+            const rotations = angle / (2 * Math.PI);
+            document.getElementById('statOmega').textContent = omega.toFixed(1);
+            document.getElementById('statVcm').textContent = vcm.toFixed(1);
+            document.getElementById('statDistance').textContent = totalDistance.toFixed(0);
+            document.getElementById('statRotations').textContent = rotations.toFixed(2);
+        }
+
+        function drawDisc(x, y, r, currentAngle, color) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Draw spokes
+            for (let i = 0; i < 8; i++) {
+                const spokeAngle = currentAngle + (i * Math.PI / 4);
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + Math.cos(spokeAngle) * r, y + Math.sin(spokeAngle) * r);
+                ctx.stroke();
+            }
+
+            // Marked point on rim
+            const markedX = x + Math.cos(currentAngle) * r;
+            const markedY = y + Math.sin(currentAngle) * r;
+            ctx.fillStyle = '#ff2d75';
+            ctx.beginPath();
+            ctx.arc(markedX, markedY, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            return { x: markedX, y: markedY };
+        }
+
+        function drawArrow(x1, y1, x2, y2, color) {
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - 10 * Math.cos(angle - Math.PI / 6), y2 - 10 * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - 10 * Math.cos(angle + Math.PI / 6), y2 - 10 * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid pattern
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            // Divider line
+            ctx.strokeStyle = 'rgba(0,212,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '16px JetBrains Mono, monospace';
+            ctx.fillText('Pure Rotation', 80, 30);
+            ctx.fillText('Rolling Without Slipping', 500, 30);
+
+            // LEFT SIDE: Pure Rotation
+            const rotationCenterX = canvas.width / 4;
+            const rotationCenterY = canvas.height / 2;
+
+            // Draw rotation trail
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 1;
+            if (rotationTrail.length > 1) {
+                ctx.beginPath();
+                ctx.moveTo(rotationTrail[0].x, rotationTrail[0].y);
+                for (let i = 1; i < rotationTrail.length; i++) {
+                    ctx.lineTo(rotationTrail[i].x, rotationTrail[i].y);
+                }
+                ctx.stroke();
+            }
+
+            const rotationMarked = drawDisc(rotationCenterX, rotationCenterY, radius, angle, '#00d4ff');
+
+            // Velocity vector at marked point (tangent to circle)
+            const vx = -Math.sin(angle) * omega * radius;
+            const vy = Math.cos(angle) * omega * radius;
+            drawArrow(rotationMarked.x, rotationMarked.y,
+                     rotationMarked.x + vx * 0.5, rotationMarked.y + vy * 0.5, '#7c3aed');
+
+            // RIGHT SIDE: Rolling
+            const groundY = canvas.height / 2 + radius + 50;
+            const rollingCenterY = groundY - radius;
+            const rollingCenterX = 550 + rollingX;
+
+            // Ground line
+            ctx.strokeStyle = 'rgba(0,212,255,0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(450, groundY);
+            ctx.lineTo(canvas.width - 50, groundY);
+            ctx.stroke();
+
+            // Draw rolling trail
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 1;
+            if (rollingTrail.length > 1) {
+                ctx.beginPath();
+                ctx.moveTo(rollingTrail[0].x, rollingTrail[0].y);
+                for (let i = 1; i < rollingTrail.length; i++) {
+                    ctx.lineTo(rollingTrail[i].x, rollingTrail[i].y);
+                }
+                ctx.stroke();
+            }
+
+            const rollingMarked = drawDisc(rollingCenterX, rollingCenterY, radius, angle, '#00d4ff');
+
+            // Contact point (instantaneous velocity = 0)
+            ctx.fillStyle = '#ff2d75';
+            ctx.beginPath();
+            ctx.arc(rollingCenterX, groundY, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // v_cm arrow
+            drawArrow(rollingCenterX, rollingCenterY - radius - 15,
+                     rollingCenterX + omega * radius * 0.5, rollingCenterY - radius - 15, '#7c3aed');
+
+            // Label: v_cm = ωR
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText('v_cm = ωR', rollingCenterX + 30, rollingCenterY - radius - 20);
+
+            // Label: v = 0 at contact
+            ctx.fillText('v = 0', rollingCenterX + 10, groundY + 20);
+        }
+
+        function animate(currentTime) {
+            if (!isRunning) return;
+
+            const deltaTime = (currentTime - lastTime) / 1000;
+            lastTime = currentTime;
+
+            angle += omega * deltaTime;
+            const deltaX = omega * radius * deltaTime;
+            rollingX += deltaX;
+            totalDistance += deltaX;
+
+            // Update trails
+            const rotationCenterX = canvas.width / 4;
+            const rotationCenterY = canvas.height / 2;
+            const rotMarkedX = rotationCenterX + Math.cos(angle) * radius;
+            const rotMarkedY = rotationCenterY + Math.sin(angle) * radius;
+            rotationTrail.push({ x: rotMarkedX, y: rotMarkedY });
+            if (rotationTrail.length > 200) rotationTrail.shift();
+
+            const groundY = canvas.height / 2 + radius + 50;
+            const rollingCenterY = groundY - radius;
+            const rollingCenterX = 550 + rollingX;
+            const rollMarkedX = rollingCenterX + Math.cos(angle) * radius;
+            const rollMarkedY = rollingCenterY + Math.sin(angle) * radius;
+            rollingTrail.push({ x: rollMarkedX, y: rollMarkedY });
+            if (rollingTrail.length > 300) rollingTrail.shift();
+
+            // Reset if rolling disc goes off screen
+            if (rollingCenterX > canvas.width - 50) {
+                rollingX = 0;
+                rollingTrail = [];
+            }
+
+            updateStats();
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

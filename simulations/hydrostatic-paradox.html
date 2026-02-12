@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydrostatic Paradox | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Fluid Mechanics</span>
+        </div>
+
+        <h1>&#127754; Hydrostatic Paradox</h1>
+        <p class="subtitle">Grade XI - Fluid Mechanics</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Fluid Height: <span id="heightValue">120</span> px</label>
+                    <input type="range" id="heightSlider" min="50" max="200" value="120" step="5">
+                </div>
+                <div class="control-group">
+                    <label>Fluid Density: <span id="densityValue">1000</span> kg/m³</label>
+                    <input type="range" id="densitySlider" min="500" max="13600" value="1000" step="100">
+                </div>
+                <div id="stats" class="stats-panel"></div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>The hydrostatic paradox: pressure at the bottom depends ONLY on height and density, NOT on the shape of the container or the total amount of fluid. Three different containers with the same base area and fluid height have the same pressure at the bottom, despite holding different volumes of fluid.</p>
+            <div class="formula-box">
+                <strong>Key Formulas:</strong><br>
+                P = ρgh (independent of container shape)<br>
+                F_base = P × A_base<br>
+                Same P and A → Same F_base<br>
+                But total weight differs!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const heightSlider = document.getElementById('heightSlider');
+        const heightValue = document.getElementById('heightValue');
+        const densitySlider = document.getElementById('densitySlider');
+        const densityValue = document.getElementById('densityValue');
+
+        let fluidHeight = 120; // pixels
+        let fluidDensity = 1000; // kg/m³
+        const g = 9.8; // m/s²
+        const baseArea = 0.01; // m² (same for all)
+
+        heightSlider.oninput = function() {
+            fluidHeight = parseFloat(this.value);
+            heightValue.textContent = this.value;
+            draw();
+        };
+
+        densitySlider.oninput = function() {
+            fluidDensity = parseFloat(this.value);
+            densityValue.textContent = this.value;
+            draw();
+        };
+
+        function drawContainer(centerX, baseY, baseWidth, topWidth, height, volume, name) {
+            const topY = baseY - height;
+
+            // Draw container outline
+            ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX - baseWidth / 2, baseY);
+            ctx.lineTo(centerX - topWidth / 2, topY);
+            ctx.lineTo(centerX + topWidth / 2, topY);
+            ctx.lineTo(centerX + baseWidth / 2, baseY);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw fluid
+            ctx.fillStyle = 'rgba(0,212,255,0.3)';
+            ctx.beginPath();
+            ctx.moveTo(centerX - baseWidth / 2, baseY);
+            ctx.lineTo(centerX - topWidth / 2, topY);
+            ctx.lineTo(centerX + topWidth / 2, topY);
+            ctx.lineTo(centerX + baseWidth / 2, baseY);
+            ctx.closePath();
+            ctx.fill();
+
+            // Fluid surface line
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX - topWidth / 2, topY);
+            ctx.lineTo(centerX + topWidth / 2, topY);
+            ctx.stroke();
+
+            // Pressure gauge at bottom
+            const pressure = (fluidDensity * g * (fluidHeight / 100)).toFixed(0); // convert height to meters
+            const gaugeWidth = 80;
+            const gaugeHeight = 30;
+            const gaugeY = baseY + 10;
+
+            ctx.fillStyle = 'rgba(10,10,30,0.85)';
+            ctx.fillRect(centerX - gaugeWidth / 2, gaugeY, gaugeWidth, gaugeHeight);
+            ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(centerX - gaugeWidth / 2, gaugeY, gaugeWidth, gaugeHeight);
+
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '11px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(`P = ${pressure} Pa`, centerX, gaugeY + 20);
+
+            // Container name and weight
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText(name, centerX, topY - 15);
+
+            const weight = (volume * fluidDensity * g / 1000).toFixed(1); // N
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = '11px JetBrains Mono, monospace';
+            ctx.fillText(`Weight: ${weight} N`, centerX, baseY + 55);
+        }
+
+        function drawScene() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            const baseY = 320;
+            const baseWidth = 60;
+
+            // Container 1: Narrow cylinder (straight sides)
+            const vol1 = baseWidth * fluidHeight * 0.01; // volume in liters
+            drawContainer(170, baseY, baseWidth, baseWidth, fluidHeight, vol1, 'Cylinder');
+
+            // Container 2: Wide funnel (wider at top, narrow at bottom)
+            const topWidth2 = baseWidth * 2.5;
+            const vol2 = ((baseWidth + topWidth2) / 2) * fluidHeight * 0.01 * 1.2; // larger volume
+            drawContainer(425, baseY, baseWidth, topWidth2, fluidHeight, vol2, 'Wide Funnel');
+
+            // Container 3: Inverted funnel (narrow at top, wide at bottom)
+            const topWidth3 = baseWidth * 0.5;
+            const vol3 = ((baseWidth + topWidth3) / 2) * fluidHeight * 0.01 * 0.6; // smaller volume
+            drawContainer(680, baseY, baseWidth, topWidth3, fluidHeight, vol3, 'Inverted Funnel');
+
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('SAME height, SAME pressure at bottom, DIFFERENT weights!', canvas.width / 2, 30);
+
+            // Height indicator
+            ctx.strokeStyle = '#ff2d75';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([3, 3]);
+            const indicatorY = baseY - fluidHeight;
+            ctx.beginPath();
+            ctx.moveTo(50, indicatorY);
+            ctx.lineTo(800, indicatorY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#ff2d75';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText(`h = ${fluidHeight} px`, 20, indicatorY - 5);
+
+            // Base area indicator
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.font = '11px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('All have SAME base area', canvas.width / 2, baseY + 80);
+        }
+
+        function updateStats() {
+            const heightMeters = fluidHeight / 100; // convert to meters
+            const pressure = fluidDensity * g * heightMeters;
+            const forceOnBase = pressure * baseArea;
+
+            document.getElementById('stats').innerHTML = `
+                <div><strong>Height (h):</strong> ${heightMeters.toFixed(2)} m</div>
+                <div><strong>Density (ρ):</strong> ${fluidDensity} kg/m³</div>
+                <div><strong>Pressure (P):</strong> ${pressure.toFixed(0)} Pa</div>
+                <div><strong>Base Area (A):</strong> ${baseArea} m²</div>
+                <div><strong>Force on Base:</strong> ${forceOnBase.toFixed(1)} N</div>
+                <div style="color: #00ffaa; margin-top: 8px;"><strong>Paradox:</strong> Same P, same F<br>but different total weights!</div>
+            `;
+        }
+
+        function draw() {
+            drawScene();
+            updateStats();
+        }
+
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

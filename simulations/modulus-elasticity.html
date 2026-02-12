@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulus of Elasticity | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Mechanical Properties</span>
+        </div>
+
+        <h1>&#128200; Modulus of Elasticity</h1>
+        <p class="subtitle">Grade XI - Mechanical Properties of Solids</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Material</label>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="material-btn active" data-material="steel">Steel</button>
+                        <button class="material-btn" data-material="rubber">Rubber</button>
+                        <button class="material-btn" data-material="glass">Glass</button>
+                        <button class="material-btn" data-material="copper">Copper</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" id="showAll"> Show All Materials
+                    </label>
+                </div>
+                <div class="control-group">
+                    <button id="animateBtn">Animate Loading</button>
+                </div>
+                <div id="stats" class="stats-panel"></div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>Compare stress-strain curves for different materials. Young's modulus is the slope in the elastic region. Notice how ductile materials (steel, copper) have large plastic regions while brittle materials (glass) break suddenly.</p>
+            <div class="formula-box">
+                <strong>Key Formulas:</strong><br>
+                σ = F/A (Stress)<br>
+                ε = ΔL/L (Strain)<br>
+                Y = σ/ε (Young's Modulus in elastic region)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let selectedMaterial = 'steel';
+        let showAll = false;
+        let animating = false;
+        let animationProgress = 0;
+
+        const materials = {
+            steel: {
+                name: 'Steel',
+                color: '#00d4ff',
+                youngsModulus: 200,
+                points: [
+                    {strain: 0, stress: 0},
+                    {strain: 0.001, stress: 200, label: 'Proportional Limit'},
+                    {strain: 0.0012, stress: 210, label: 'Elastic Limit'},
+                    {strain: 0.002, stress: 250, label: 'Yield Point'},
+                    {strain: 0.15, stress: 400, label: 'Ultimate Stress'},
+                    {strain: 0.25, stress: 350, label: 'Breaking Point'}
+                ]
+            },
+            rubber: {
+                name: 'Rubber',
+                color: '#00ffaa',
+                youngsModulus: 0.05,
+                points: [
+                    {strain: 0, stress: 0},
+                    {strain: 0.5, stress: 10, label: 'Elastic Limit'},
+                    {strain: 4.0, stress: 25, label: 'Ultimate Stress'},
+                    {strain: 5.0, stress: 20, label: 'Breaking Point'}
+                ]
+            },
+            glass: {
+                name: 'Glass',
+                color: '#ff2d75',
+                youngsModulus: 70,
+                points: [
+                    {strain: 0, stress: 0},
+                    {strain: 0.001, stress: 70, label: 'Proportional Limit'},
+                    {strain: 0.0012, stress: 80, label: 'Breaking Point'}
+                ]
+            },
+            copper: {
+                name: 'Copper',
+                color: '#f59e0b',
+                youngsModulus: 120,
+                points: [
+                    {strain: 0, stress: 0},
+                    {strain: 0.0008, stress: 96, label: 'Proportional Limit'},
+                    {strain: 0.001, stress: 110, label: 'Yield Point'},
+                    {strain: 0.35, stress: 220, label: 'Ultimate Stress'},
+                    {strain: 0.45, stress: 180, label: 'Breaking Point'}
+                ]
+            }
+        };
+
+        // Material buttons
+        document.querySelectorAll('.material-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.material-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedMaterial = btn.dataset.material;
+                animationProgress = 0;
+                animating = false;
+                draw();
+            });
+        });
+
+        document.getElementById('showAll').addEventListener('change', (e) => {
+            showAll = e.target.checked;
+            draw();
+        });
+
+        document.getElementById('animateBtn').addEventListener('click', () => {
+            animating = true;
+            animationProgress = 0;
+            animate();
+        });
+
+        function drawGraph() {
+            const margin = {top: 40, right: 60, bottom: 60, left: 80};
+            const width = canvas.width - margin.left - margin.right;
+            const height = canvas.height - margin.top - margin.bottom;
+
+            // Background
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                ctx.beginPath();
+                ctx.moveTo(margin.left + i * width / 10, margin.top);
+                ctx.lineTo(margin.left + i * width / 10, margin.top + height);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(margin.left, margin.top + i * height / 10);
+                ctx.lineTo(margin.left + width, margin.top + i * height / 10);
+                ctx.stroke();
+            }
+
+            // Axes
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(margin.left, margin.top);
+            ctx.lineTo(margin.left, margin.top + height);
+            ctx.lineTo(margin.left + width, margin.top + height);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('Strain (ε)', margin.left + width / 2, canvas.height - 20);
+
+            ctx.save();
+            ctx.translate(20, margin.top + height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Stress (σ) - GPa', 0, 0);
+            ctx.restore();
+
+            // Draw curves
+            const materialsToRender = showAll ? Object.keys(materials) : [selectedMaterial];
+
+            materialsToRender.forEach(matKey => {
+                const mat = materials[matKey];
+                drawCurve(mat, margin, width, height, matKey === selectedMaterial);
+            });
+
+            // Draw regions label
+            if (!showAll) {
+                const mat = materials[selectedMaterial];
+                ctx.fillStyle = 'rgba(0,212,255,0.1)';
+                const elasticStrain = mat.points[1].strain;
+                const xElastic = margin.left + (elasticStrain / getMaxStrain()) * width;
+                ctx.fillRect(margin.left, margin.top, xElastic - margin.left, height);
+
+                ctx.fillStyle = 'rgba(0,255,170,0.05)';
+                ctx.fillRect(xElastic, margin.top, margin.left + width - xElastic, height);
+
+                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.font = '12px JetBrains Mono, monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('Elastic Region', margin.left + (xElastic - margin.left) / 2, margin.top + 20);
+                ctx.fillText('Plastic Region', xElastic + (margin.left + width - xElastic) / 2, margin.top + 20);
+            }
+        }
+
+        function drawCurve(mat, margin, width, height, isSelected) {
+            const maxStrain = getMaxStrain();
+            const maxStress = getMaxStress();
+
+            ctx.strokeStyle = mat.color;
+            ctx.lineWidth = isSelected ? 3 : 2;
+            ctx.globalAlpha = isSelected ? 1.0 : 0.5;
+            ctx.beginPath();
+
+            for (let i = 0; i < mat.points.length; i++) {
+                const pt = mat.points[i];
+                const x = margin.left + (pt.strain / maxStrain) * width;
+                const y = margin.top + height - (pt.stress / maxStress) * height;
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Draw points and labels for selected material
+            if (isSelected && !showAll) {
+                mat.points.forEach((pt, idx) => {
+                    if (idx === 0) return;
+
+                    const x = margin.left + (pt.strain / maxStrain) * width;
+                    const y = margin.top + height - (pt.stress / maxStress) * height;
+
+                    ctx.fillStyle = mat.color;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    if (pt.label) {
+                        ctx.fillStyle = '#ffffff';
+                        ctx.font = '11px JetBrains Mono, monospace';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(pt.label, x + 8, y - 5);
+                    }
+                });
+
+                // Animate dot
+                if (animating && animationProgress < 1) {
+                    const totalPoints = mat.points.length - 1;
+                    const progress = animationProgress * totalPoints;
+                    const idx = Math.floor(progress);
+                    const t = progress - idx;
+
+                    if (idx < mat.points.length - 1) {
+                        const pt1 = mat.points[idx];
+                        const pt2 = mat.points[idx + 1];
+                        const strain = pt1.strain + (pt2.strain - pt1.strain) * t;
+                        const stress = pt1.stress + (pt2.stress - pt1.stress) * t;
+
+                        const x = margin.left + (strain / maxStrain) * width;
+                        const y = margin.top + height - (stress / maxStress) * height;
+
+                        ctx.fillStyle = '#ffffff';
+                        ctx.beginPath();
+                        ctx.arc(x, y, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            ctx.globalAlpha = 1.0;
+        }
+
+        function getMaxStrain() {
+            if (showAll) {
+                return Math.max(...Object.values(materials).map(m =>
+                    Math.max(...m.points.map(p => p.strain))
+                ));
+            }
+            return Math.max(...materials[selectedMaterial].points.map(p => p.strain));
+        }
+
+        function getMaxStress() {
+            if (showAll) {
+                return Math.max(...Object.values(materials).map(m =>
+                    Math.max(...m.points.map(p => p.stress))
+                ));
+            }
+            return Math.max(...materials[selectedMaterial].points.map(p => p.stress));
+        }
+
+        function updateStats() {
+            const mat = materials[selectedMaterial];
+            const yieldStress = mat.points.find(p => p.label && p.label.includes('Yield'))?.stress || 'N/A';
+            const ultimateStress = mat.points.find(p => p.label && p.label.includes('Ultimate'))?.stress || 'N/A';
+
+            document.getElementById('stats').innerHTML = `
+                <div><strong>Material:</strong> ${mat.name}</div>
+                <div><strong>Young's Modulus:</strong> ${mat.youngsModulus} GPa</div>
+                <div><strong>Yield Stress:</strong> ${yieldStress} ${yieldStress !== 'N/A' ? 'GPa' : ''}</div>
+                <div><strong>Ultimate Stress:</strong> ${ultimateStress} ${ultimateStress !== 'N/A' ? 'GPa' : ''}</div>
+            `;
+        }
+
+        function draw() {
+            drawGraph();
+            updateStats();
+        }
+
+        function animate() {
+            if (!animating) return;
+
+            animationProgress += 0.005;
+            if (animationProgress >= 1) {
+                animationProgress = 1;
+                animating = false;
+            }
+
+            draw();
+
+            if (animating) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projectile: Angle Comparison | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Kinematics</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#127937; Projectile: Angle Comparison</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Kinematics</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Velocity: <input type="range" id="velocity" min="10" max="80" value="50"> <span id="velVal">50</span> m/s</label>
+        <button onclick="launchAll()">&#9654; Launch All</button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>Compare projectile trajectories at different launch angles. Notice that 45° gives maximum range and complementary angles (adding to 90°) produce equal ranges. Five projectiles are launched simultaneously to visualize these principles.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        Range = v&sup2; sin(2&theta;) / g &nbsp;&nbsp;|&nbsp;&nbsp; Complementary angles give equal range
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    const g = 9.8;
+    const scale = 4;
+    const groundY = canvas.height - 30;
+    const startX = 40;
+
+    let animId = null;
+    let projectiles = [];
+
+    const angles = [15, 30, 45, 60, 75];
+    const colors = ['#ff2d75', '#f59e0b', '#00ffaa', '#00d4ff', '#7c3aed'];
+
+    const velSlider = document.getElementById('velocity');
+    velSlider.oninput = () => document.getElementById('velVal').textContent = velSlider.value;
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      // Ground
+      ctx.fillStyle = 'rgba(0,255,170,0.1)';
+      ctx.fillRect(0, groundY, canvas.width, 30);
+      ctx.strokeStyle = 'rgba(0,255,170,0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, groundY);
+      ctx.lineTo(canvas.width, groundY);
+      ctx.stroke();
+    }
+
+    function drawTrail(trail, color) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      if (trail.length > 0) {
+        ctx.moveTo(trail[0].x, trail[0].y);
+        for (let i = 1; i < trail.length; i++) {
+          ctx.lineTo(trail[i].x, trail[i].y);
+        }
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawBall(x, y, color) {
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    function drawLegend() {
+      const legendX = 10;
+      const legendY = 10;
+      const legendWidth = 180;
+      const legendHeight = 150;
+
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.fillRect(legendX, legendY, legendWidth, legendHeight);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(legendX, legendY, legendWidth, legendHeight);
+
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('Launch Angles:', legendX + 10, legendY + 20);
+
+      for (let i = 0; i < angles.length; i++) {
+        ctx.fillStyle = colors[i];
+        ctx.fillRect(legendX + 10, legendY + 30 + i * 22, 15, 15);
+        ctx.fillText(`${angles[i]}°`, legendX + 35, legendY + 42 + i * 22);
+      }
+    }
+
+    function drawRanges() {
+      const v0 = parseInt(velSlider.value);
+      const rangesX = canvas.width - 250;
+      const rangesY = 10;
+      const rangesWidth = 240;
+      const rangesHeight = 150;
+
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.fillRect(rangesX, rangesY, rangesWidth, rangesHeight);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(rangesX, rangesY, rangesWidth, rangesHeight);
+
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('Ranges:', rangesX + 10, rangesY + 20);
+
+      for (let i = 0; i < angles.length; i++) {
+        const rad = angles[i] * Math.PI / 180;
+        const range = (v0 * v0 * Math.sin(2 * rad) / g).toFixed(1);
+        ctx.fillStyle = colors[i];
+        ctx.fillText(`${angles[i]}°: ${range} m`, rangesX + 10, rangesY + 42 + i * 22);
+      }
+    }
+
+    function launchAll() {
+      if (animId) cancelAnimationFrame(animId);
+      projectiles = [];
+
+      const v0 = parseInt(velSlider.value);
+
+      for (let i = 0; i < angles.length; i++) {
+        const rad = angles[i] * Math.PI / 180;
+        projectiles.push({
+          angle: angles[i],
+          color: colors[i],
+          vx: v0 * Math.cos(rad),
+          vy: v0 * Math.sin(rad),
+          t: 0,
+          trail: [],
+          active: true
+        });
+      }
+
+      animate();
+    }
+
+    function animate() {
+      let anyActive = false;
+
+      for (let p of projectiles) {
+        if (p.active) {
+          p.t += 0.03;
+          const x = startX + p.vx * p.t * scale;
+          const y = groundY - (p.vy * p.t - 0.5 * g * p.t * p.t) * scale;
+
+          if (y >= groundY && p.t > 0.1) {
+            p.trail.push({ x, y: groundY });
+            p.active = false;
+          } else {
+            p.trail.push({ x, y: Math.min(y, groundY) });
+            anyActive = true;
+          }
+        }
+      }
+
+      drawBackground();
+      drawLegend();
+      drawRanges();
+
+      // Draw trails
+      for (let p of projectiles) {
+        drawTrail(p.trail, p.color);
+      }
+
+      // Draw balls
+      for (let p of projectiles) {
+        if (p.trail.length > 0) {
+          const last = p.trail[p.trail.length - 1];
+          drawBall(last.x, last.y, p.color);
+        }
+      }
+
+      if (anyActive) {
+        animId = requestAnimationFrame(animate);
+      }
+    }
+
+    function resetSim() {
+      if (animId) cancelAnimationFrame(animId);
+      projectiles = [];
+      drawBackground();
+      drawLegend();
+      drawRanges();
+    }
+
+    drawBackground();
+    drawLegend();
+    drawRanges();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

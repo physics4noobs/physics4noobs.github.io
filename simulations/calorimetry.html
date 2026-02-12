@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calorimetry Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Calorimetry</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">🌡️ Calorimetry Simulation</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Heat & Thermodynamics</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <div class="control-group">
+          <label>Mass of Hot Body (g): <span id="m1Value">200</span></label>
+          <input type="range" id="m1Slider" min="50" max="500" value="200" step="10">
+        </div>
+        <div class="control-group">
+          <label>Mass of Cold Body (g): <span id="m2Value">200</span></label>
+          <input type="range" id="m2Slider" min="50" max="500" value="200" step="10">
+        </div>
+        <div class="control-group">
+          <label>Temp of Hot Body (°C): <span id="t1Value">80</span></label>
+          <input type="range" id="t1Slider" min="50" max="100" value="80" step="1">
+        </div>
+        <div class="control-group">
+          <label>Temp of Cold Body (°C): <span id="t2Value">20</span></label>
+          <input type="range" id="t2Slider" min="0" max="40" value="20" step="1">
+        </div>
+        <div class="control-group">
+          <label>Specific Heat Ratio (c₁/c₂): <span id="cRatioValue">1.00</span></label>
+          <input type="range" id="cRatioSlider" min="0.5" max="2.0" value="1.0" step="0.1">
+        </div>
+        <button id="mixBtn" class="control-btn">Mix</button>
+        <button id="resetBtn" class="control-btn">Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>This simulation demonstrates the principle of calorimetry, where heat transfer occurs between bodies at different temperatures until thermal equilibrium is reached. When two substances are mixed, heat flows from the hotter body to the colder one until they reach the same final temperature. The principle of conservation of energy states that heat lost by the hot body equals heat gained by the cold body.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        <strong>Key Formulas:</strong><br>
+        Q = mcΔT<br>
+        Heat lost = Heat gained<br>
+        T<sub>eq</sub> = (m₁c₁T₁ + m₂c₂T₂)/(m₁c₁ + m₂c₂)
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Design system colors
+    const colors = {
+      bg: '#080818',
+      primary: '#00d4ff',
+      accent: '#00ffaa',
+      purple: '#7c3aed',
+      rose: '#ff2d75',
+      amber: '#f59e0b',
+      gridLine: 'rgba(0,212,255,0.04)',
+      statsPanel: 'rgba(10,10,30,0.85)'
+    };
+
+    // State
+    let state = {
+      m1: 200,
+      m2: 200,
+      t1: 80,
+      t2: 20,
+      c1: 1.0,
+      c2: 1.0,
+      cRatio: 1.0,
+      mixing: false,
+      mixed: false,
+      mixProgress: 0,
+      tEq: 0,
+      qHot: 0,
+      qCold: 0,
+      particles1: [],
+      particles2: [],
+      particlesMix: [],
+      currentT1: 80,
+      currentT2: 20
+    };
+
+    // Particle class
+    class Particle {
+      constructor(x, y, temp) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 2;
+        this.vy = (Math.random() - 0.5) * 2;
+        this.temp = temp;
+        this.r = 2;
+      }
+
+      update(bounds, temp) {
+        this.temp = temp;
+        const speed = Math.sqrt(temp) / 5;
+        this.vx += (Math.random() - 0.5) * 0.5;
+        this.vy += (Math.random() - 0.5) * 0.5;
+
+        const mag = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+        if (mag > 0) {
+          this.vx = (this.vx / mag) * speed;
+          this.vy = (this.vy / mag) * speed;
+        }
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < bounds.x || this.x > bounds.x + bounds.w) this.vx *= -1;
+        if (this.y < bounds.y || this.y > bounds.y + bounds.h) this.vy *= -1;
+        this.x = Math.max(bounds.x, Math.min(bounds.x + bounds.w, this.x));
+        this.y = Math.max(bounds.y, Math.min(bounds.y + bounds.h, this.y));
+      }
+
+      draw(ctx) {
+        const color = getTempColor(this.temp);
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function getTempColor(temp) {
+      if (temp < 30) {
+        const t = temp / 30;
+        return `rgba(0, 212, 255, ${0.3 + t * 0.7})`;
+      } else if (temp < 60) {
+        const t = (temp - 30) / 30;
+        return interpolateColor([0, 212, 255], [245, 158, 11], t);
+      } else {
+        const t = (temp - 60) / 40;
+        return interpolateColor([245, 158, 11], [255, 45, 117], t);
+      }
+    }
+
+    function interpolateColor(c1, c2, t) {
+      const r = Math.round(c1[0] + (c2[0] - c1[0]) * t);
+      const g = Math.round(c1[1] + (c2[1] - c1[1]) * t);
+      const b = Math.round(c1[2] + (c2[2] - c1[2]) * t);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function initParticles() {
+      state.particles1 = [];
+      state.particles2 = [];
+      const numParticles = 30;
+
+      for (let i = 0; i < numParticles; i++) {
+        state.particles1.push(new Particle(
+          180 + Math.random() * 100,
+          180 + Math.random() * 150,
+          state.t1
+        ));
+        state.particles2.push(new Particle(
+          450 + Math.random() * 100,
+          180 + Math.random() * 150,
+          state.t2
+        ));
+      }
+    }
+
+    function drawContainer(x, y, w, h, temp, label) {
+      const gradient = ctx.createLinearGradient(x, y, x, y + h);
+      const color = getTempColor(temp);
+      gradient.addColorStop(0, color.replace(')', ', 0.1)').replace('rgb', 'rgba'));
+      gradient.addColorStop(1, color.replace(')', ', 0.3)').replace('rgb', 'rgba'));
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(x, y, w, h);
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, w, h);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '14px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, x + w / 2, y - 10);
+      ctx.fillText(`${temp.toFixed(1)}°C`, x + w / 2, y + h + 20);
+    }
+
+    function drawStats() {
+      ctx.fillStyle = colors.statsPanel;
+      ctx.fillRect(10, 10, 300, state.mixed ? 180 : 120);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'left';
+
+      let yPos = 30;
+      ctx.fillText(`Hot Body: m₁ = ${state.m1}g, T₁ = ${state.t1}°C`, 20, yPos);
+      yPos += 20;
+      ctx.fillText(`Cold Body: m₂ = ${state.m2}g, T₂ = ${state.t2}°C`, 20, yPos);
+      yPos += 20;
+      ctx.fillText(`Specific Heat Ratio: c₁/c₂ = ${state.cRatio.toFixed(2)}`, 20, yPos);
+      yPos += 20;
+      ctx.fillText(`c₁ = ${state.c1.toFixed(2)}, c₂ = ${state.c2.toFixed(2)}`, 20, yPos);
+
+      if (state.mixed) {
+        yPos += 25;
+        ctx.fillStyle = colors.accent;
+        ctx.fillText(`Equilibrium Temp: ${state.tEq.toFixed(2)}°C`, 20, yPos);
+        yPos += 20;
+        ctx.fillStyle = colors.rose;
+        ctx.fillText(`Heat Lost (Hot): ${state.qHot.toFixed(2)} J`, 20, yPos);
+        yPos += 20;
+        ctx.fillStyle = colors.primary;
+        ctx.fillText(`Heat Gained (Cold): ${state.qCold.toFixed(2)} J`, 20, yPos);
+      }
+    }
+
+    function calculate() {
+      state.c1 = state.cRatio;
+      state.c2 = 1.0;
+
+      const numerator = state.m1 * state.c1 * state.t1 + state.m2 * state.c2 * state.t2;
+      const denominator = state.m1 * state.c1 + state.m2 * state.c2;
+      state.tEq = numerator / denominator;
+
+      state.qHot = state.m1 * state.c1 * (state.t1 - state.tEq);
+      state.qCold = state.m2 * state.c2 * (state.tEq - state.t2);
+    }
+
+    function animate() {
+      ctx.fillStyle = colors.bg;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if (state.mixing) {
+        state.mixProgress += 0.02;
+        if (state.mixProgress >= 1) {
+          state.mixing = false;
+          state.mixed = true;
+          state.mixProgress = 1;
+
+          state.particlesMix = [...state.particles1, ...state.particles2];
+          state.particlesMix.forEach(p => {
+            p.x = 580 + Math.random() * 150;
+            p.y = 180 + Math.random() * 150;
+          });
+        }
+
+        const t = state.mixProgress;
+        state.currentT1 = state.t1 + (state.tEq - state.t1) * t;
+        state.currentT2 = state.t2 + (state.tEq - state.t2) * t;
+      }
+
+      if (!state.mixed) {
+        drawContainer(150, 150, 130, 180, state.currentT1, 'Hot Body');
+        drawContainer(420, 150, 130, 180, state.currentT2, 'Cold Body');
+
+        state.particles1.forEach(p => {
+          p.update({ x: 150, y: 150, w: 130, h: 180 }, state.currentT1);
+          p.draw(ctx);
+        });
+
+        state.particles2.forEach(p => {
+          p.update({ x: 420, y: 150, w: 130, h: 180 }, state.currentT2);
+          p.draw(ctx);
+        });
+      } else {
+        drawContainer(550, 150, 180, 180, state.tEq, 'Mixture');
+
+        state.particlesMix.forEach(p => {
+          p.update({ x: 550, y: 150, w: 180, h: 180 }, state.tEq);
+          p.draw(ctx);
+        });
+      }
+
+      drawStats();
+      requestAnimationFrame(animate);
+    }
+
+    // Event listeners
+    document.getElementById('m1Slider').addEventListener('input', (e) => {
+      state.m1 = parseInt(e.target.value);
+      document.getElementById('m1Value').textContent = state.m1;
+    });
+
+    document.getElementById('m2Slider').addEventListener('input', (e) => {
+      state.m2 = parseInt(e.target.value);
+      document.getElementById('m2Value').textContent = state.m2;
+    });
+
+    document.getElementById('t1Slider').addEventListener('input', (e) => {
+      state.t1 = parseInt(e.target.value);
+      state.currentT1 = state.t1;
+      document.getElementById('t1Value').textContent = state.t1;
+    });
+
+    document.getElementById('t2Slider').addEventListener('input', (e) => {
+      state.t2 = parseInt(e.target.value);
+      state.currentT2 = state.t2;
+      document.getElementById('t2Value').textContent = state.t2;
+    });
+
+    document.getElementById('cRatioSlider').addEventListener('input', (e) => {
+      state.cRatio = parseFloat(e.target.value);
+      document.getElementById('cRatioValue').textContent = state.cRatio.toFixed(2);
+    });
+
+    document.getElementById('mixBtn').addEventListener('click', () => {
+      if (!state.mixing && !state.mixed) {
+        calculate();
+        state.mixing = true;
+        state.mixProgress = 0;
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      state.mixing = false;
+      state.mixed = false;
+      state.mixProgress = 0;
+      state.currentT1 = state.t1;
+      state.currentT2 = state.t2;
+      initParticles();
+    });
+
+    // Initialize
+    initParticles();
+    animate();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

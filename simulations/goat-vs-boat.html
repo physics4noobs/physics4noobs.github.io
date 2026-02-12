@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Man on a Boat | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Rotational Motion</span>
+        </div>
+
+        <h1>&#128674; Man on a Boat</h1>
+        <p class="subtitle">Grade XI - Rotational Motion</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Person Mass: <span id="personMassVal">60</span> kg</label>
+                    <input type="range" id="personMass" min="30" max="100" value="60" step="5">
+                </div>
+
+                <div class="control-group">
+                    <label>Boat Mass: <span id="boatMassVal">150</span> kg</label>
+                    <input type="range" id="boatMass" min="50" max="300" value="150" step="10">
+                </div>
+
+                <div class="control-group">
+                    <button id="walkBtn" class="control-btn">Walk</button>
+                    <button id="resetBtn" class="control-btn">Reset</button>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">Person displacement: <span id="statPersonDisp">0</span> m</div>
+                    <div class="stat-item">Boat displacement: <span id="statBoatDisp">0</span> m</div>
+                    <div class="stat-item">COM position: <span id="statCOM">0</span> m</div>
+                    <div class="stat-item">m₁Δx₁ + m₂Δx₂ = <span id="statMomentum">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>When a person walks on a boat floating on frictionless water, the center of mass remains fixed. The boat moves in the opposite direction to conserve momentum.</p>
+
+            <div class="formula-box">
+                x<sub>cm</sub> = (m₁x₁ + m₂x₂)/(m₁+m₂) = const &nbsp;|&nbsp; m₁Δx₁ + m₂Δx₂ = 0
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let personMass = 60;
+        let boatMass = 150;
+        let isWalking = false;
+        let walkProgress = 0;
+        const walkDistance = 3; // meters in real world
+
+        // Initial positions (in meters, will scale for display)
+        let personPosRelativeToBoat = -1; // person starts at left of boat center
+        let boatPos = 0; // boat center position
+        let initialCOM = 0;
+
+        const personMassSlider = document.getElementById('personMass');
+        const boatMassSlider = document.getElementById('boatMass');
+        const walkBtn = document.getElementById('walkBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        personMassSlider.oninput = function() {
+            personMass = parseFloat(this.value);
+            document.getElementById('personMassVal').textContent = personMass;
+            if (!isWalking) {
+                reset();
+                draw();
+            }
+        };
+
+        boatMassSlider.oninput = function() {
+            boatMass = parseFloat(this.value);
+            document.getElementById('boatMassVal').textContent = boatMass;
+            if (!isWalking) {
+                reset();
+                draw();
+            }
+        };
+
+        walkBtn.onclick = function() {
+            if (!isWalking) {
+                isWalking = true;
+                this.textContent = 'Walking...';
+                this.disabled = true;
+                walkProgress = 0;
+                animate();
+            }
+        };
+
+        resetBtn.onclick = function() {
+            reset();
+            draw();
+        };
+
+        function reset() {
+            isWalking = false;
+            walkProgress = 0;
+            personPosRelativeToBoat = -1;
+            boatPos = 0;
+            initialCOM = calculateCOM();
+            walkBtn.textContent = 'Walk';
+            walkBtn.disabled = false;
+            updateStats();
+        }
+
+        function calculateCOM() {
+            const personAbsPos = boatPos + personPosRelativeToBoat;
+            return (personMass * personAbsPos + boatMass * boatPos) / (personMass + boatMass);
+        }
+
+        function updateStats() {
+            const personAbsPos = boatPos + personPosRelativeToBoat;
+            const personDisp = personAbsPos - (0 + (-1)); // from initial position
+            const boatDisp = boatPos - 0;
+            const currentCOM = calculateCOM();
+            const momentum = personMass * personDisp + boatMass * boatDisp;
+
+            document.getElementById('statPersonDisp').textContent = personDisp.toFixed(2);
+            document.getElementById('statBoatDisp').textContent = boatDisp.toFixed(2);
+            document.getElementById('statCOM').textContent = currentCOM.toFixed(3);
+            document.getElementById('statMomentum').textContent = momentum.toFixed(3);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid pattern
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            const scale = 80; // pixels per meter
+            const centerX = canvas.width / 2;
+            const waterY = canvas.height / 2 + 100;
+
+            // Water surface
+            ctx.strokeStyle = 'rgba(0,212,255,0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, waterY);
+            ctx.lineTo(canvas.width, waterY);
+            ctx.stroke();
+
+            // Water waves
+            ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 5; i++) {
+                const y = waterY + 10 + i * 10;
+                ctx.beginPath();
+                for (let x = 0; x < canvas.width; x += 20) {
+                    ctx.lineTo(x, y + Math.sin(x * 0.1 + i) * 3);
+                }
+                ctx.stroke();
+            }
+
+            // Boat position on screen
+            const boatScreenX = centerX + boatPos * scale;
+            const boatWidth = 200;
+            const boatHeight = 60;
+            const boatY = waterY - boatHeight / 2;
+
+            // Draw boat
+            ctx.fillStyle = '#7c3aed';
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(boatScreenX - boatWidth / 2, boatY + boatHeight);
+            ctx.lineTo(boatScreenX - boatWidth / 2 + 20, boatY);
+            ctx.lineTo(boatScreenX + boatWidth / 2 - 20, boatY);
+            ctx.lineTo(boatScreenX + boatWidth / 2, boatY + boatHeight);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Person position
+            const personAbsPos = boatPos + personPosRelativeToBoat;
+            const personScreenX = centerX + personAbsPos * scale;
+            const personWidth = 30;
+            const personHeight = 50;
+            const personY = boatY - personHeight;
+
+            // Draw person
+            ctx.fillStyle = '#00ffaa';
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 2;
+            ctx.fillRect(personScreenX - personWidth / 2, personY, personWidth, personHeight);
+            ctx.strokeRect(personScreenX - personWidth / 2, personY, personWidth, personHeight);
+
+            // Head
+            ctx.beginPath();
+            ctx.arc(personScreenX, personY - 10, 12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // COM marker
+            const comPos = calculateCOM();
+            const comScreenX = centerX + comPos * scale;
+            ctx.strokeStyle = '#ff2d75';
+            ctx.fillStyle = '#ff2d75';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(comScreenX, 50);
+            ctx.lineTo(comScreenX, canvas.height - 50);
+            ctx.stroke();
+
+            // COM label
+            ctx.font = '14px JetBrains Mono, monospace';
+            ctx.fillText('COM', comScreenX + 5, 70);
+
+            // Reference line at origin
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(centerX, 50);
+            ctx.lineTo(centerX, canvas.height - 50);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Labels
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '16px JetBrains Mono, monospace';
+            ctx.fillText(`Person: ${personMass} kg`, 20, 30);
+            ctx.fillText(`Boat: ${boatMass} kg`, 20, 55);
+
+            // Displacement arrows
+            if (Math.abs(boatPos) > 0.01) {
+                drawArrow(centerX, waterY - 150, personScreenX, waterY - 150, '#00ffaa', `Δx₁=${(personAbsPos - (-1)).toFixed(2)}m`);
+                drawArrow(centerX, waterY - 120, boatScreenX, waterY - 120, '#7c3aed', `Δx₂=${boatPos.toFixed(2)}m`);
+            }
+        }
+
+        function drawArrow(x1, y1, x2, y2, color, label) {
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Arrowhead
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - 10 * Math.cos(angle - Math.PI / 6), y2 - 10 * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - 10 * Math.cos(angle + Math.PI / 6), y2 - 10 * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+
+            // Label
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText(label, (x1 + x2) / 2, y1 - 5);
+        }
+
+        function animate() {
+            if (!isWalking) return;
+
+            walkProgress += 0.01;
+            if (walkProgress >= 1) {
+                walkProgress = 1;
+                isWalking = false;
+                walkBtn.textContent = 'Walk';
+                walkBtn.disabled = false;
+            }
+
+            // Person walks distance walkDistance to the right relative to boat
+            const targetPersonRelPos = -1 + walkDistance;
+            const currentPersonRelPos = -1 + walkDistance * walkProgress;
+
+            // Calculate how much boat must move to keep COM fixed
+            // m1 * (x1_initial + delta_person) + m2 * (x2_boat) = (m1 + m2) * COM_initial
+            // Solving for x2_boat (boat displacement):
+            const personWalked = walkDistance * walkProgress;
+            const boatDisplacement = -(personMass / boatMass) * personWalked;
+
+            personPosRelativeToBoat = currentPersonRelPos;
+            boatPos = boatDisplacement;
+
+            updateStats();
+            draw();
+
+            if (isWalking) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        reset();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

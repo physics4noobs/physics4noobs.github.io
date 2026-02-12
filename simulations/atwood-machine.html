@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atwood Machine with Pulley | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Rotational Motion</span>
+        </div>
+
+        <h1>&#9881; Atwood Machine with Pulley</h1>
+        <p class="subtitle">Grade XI - Rotational Motion</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Mass m₁: <span id="m1Val">10</span> kg</label>
+                    <input type="range" id="m1" min="1" max="20" value="10" step="1">
+                </div>
+
+                <div class="control-group">
+                    <label>Mass m₂: <span id="m2Val">6</span> kg</label>
+                    <input type="range" id="m2" min="1" max="20" value="6" step="1">
+                </div>
+
+                <div class="control-group">
+                    <label>Pulley Mass M: <span id="pulleyMassVal">1</span> kg</label>
+                    <input type="range" id="pulleyMass" min="0" max="5" value="1" step="0.5">
+                </div>
+
+                <div class="control-group">
+                    <label>Pulley Radius: <span id="pulleyRadiusVal">40</span> px</label>
+                    <input type="range" id="pulleyRadius" min="20" max="60" value="40" step="5">
+                </div>
+
+                <div class="control-group">
+                    <button id="startBtn" class="control-btn">Start</button>
+                    <button id="resetBtn" class="control-btn">Reset</button>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">Acceleration: <span id="statAccel">0.00</span> m/s²</div>
+                    <div class="stat-item">Tension T₁: <span id="statT1">0.0</span> N</div>
+                    <div class="stat-item">Tension T₂: <span id="statT2">0.0</span> N</div>
+                    <div class="stat-item">Velocity: <span id="statVel">0.00</span> m/s</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>An Atwood machine with a massive pulley accounts for the pulley's rotational inertia. The tensions on both sides are unequal, and the acceleration is reduced compared to a massless pulley.</p>
+
+            <div class="formula-box">
+                a = (m₁-m₂)g/(m₁+m₂+M/2) &nbsp;|&nbsp; T₁ = m₁(g-a) &nbsp;|&nbsp; T₂ = m₂(g+a)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let m1 = 10; // kg
+        let m2 = 6; // kg
+        let pulleyMass = 1; // kg
+        let pulleyRadius = 40; // pixels
+        let isRunning = false;
+        let velocity = 0;
+        let position1 = 0; // position of m1 (positive downward)
+        let pulleyAngle = 0;
+        let lastTime = 0;
+
+        const g = 9.8; // m/s²
+        const scale = 20; // pixels per meter
+
+        const m1Slider = document.getElementById('m1');
+        const m2Slider = document.getElementById('m2');
+        const pulleyMassSlider = document.getElementById('pulleyMass');
+        const pulleyRadiusSlider = document.getElementById('pulleyRadius');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        m1Slider.oninput = function() {
+            m1 = parseFloat(this.value);
+            document.getElementById('m1Val').textContent = m1;
+            if (!isRunning) {
+                calculateAndUpdate();
+                draw();
+            }
+        };
+
+        m2Slider.oninput = function() {
+            m2 = parseFloat(this.value);
+            document.getElementById('m2Val').textContent = m2;
+            if (!isRunning) {
+                calculateAndUpdate();
+                draw();
+            }
+        };
+
+        pulleyMassSlider.oninput = function() {
+            pulleyMass = parseFloat(this.value);
+            document.getElementById('pulleyMassVal').textContent = pulleyMass;
+            if (!isRunning) {
+                calculateAndUpdate();
+                draw();
+            }
+        };
+
+        pulleyRadiusSlider.oninput = function() {
+            pulleyRadius = parseFloat(this.value);
+            document.getElementById('pulleyRadiusVal').textContent = pulleyRadius;
+            if (!isRunning) {
+                calculateAndUpdate();
+                draw();
+            }
+        };
+
+        startBtn.onclick = function() {
+            isRunning = !isRunning;
+            this.textContent = isRunning ? 'Pause' : 'Start';
+            if (isRunning) {
+                lastTime = performance.now();
+                requestAnimationFrame(animate);
+            }
+        };
+
+        resetBtn.onclick = function() {
+            isRunning = false;
+            startBtn.textContent = 'Start';
+            velocity = 0;
+            position1 = 0;
+            pulleyAngle = 0;
+            calculateAndUpdate();
+            draw();
+        };
+
+        function calculateAcceleration() {
+            // a = (m1 - m2) * g / (m1 + m2 + I/R²)
+            // For disc: I = (1/2) * M * R², so I/R² = M/2
+            return (m1 - m2) * g / (m1 + m2 + pulleyMass / 2);
+        }
+
+        function calculateTensions(a) {
+            const T1 = m1 * (g - a);
+            const T2 = m2 * (g + a);
+            return { T1, T2 };
+        }
+
+        function calculateAndUpdate() {
+            const a = calculateAcceleration();
+            const { T1, T2 } = calculateTensions(a);
+
+            document.getElementById('statAccel').textContent = a.toFixed(2);
+            document.getElementById('statT1').textContent = T1.toFixed(1);
+            document.getElementById('statT2').textContent = T2.toFixed(1);
+            document.getElementById('statVel').textContent = velocity.toFixed(2);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid pattern
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            const pulleyX = canvas.width / 2;
+            const pulleyY = 100;
+
+            // Draw ceiling
+            ctx.strokeStyle = 'rgba(0,212,255,0.5)';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(pulleyX - 100, pulleyY - pulleyRadius - 20);
+            ctx.lineTo(pulleyX + 100, pulleyY - pulleyRadius - 20);
+            ctx.stroke();
+
+            // Draw pulley support
+            ctx.strokeStyle = 'rgba(0,212,255,0.3)';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(pulleyX, pulleyY - pulleyRadius - 20);
+            ctx.lineTo(pulleyX, pulleyY);
+            ctx.stroke();
+
+            // Draw pulley
+            ctx.strokeStyle = '#7c3aed';
+            ctx.fillStyle = '#7c3aed40';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.arc(pulleyX, pulleyY, pulleyRadius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Draw pulley rotation marks
+            const numMarks = 8;
+            for (let i = 0; i < numMarks; i++) {
+                const angle = pulleyAngle + (i * 2 * Math.PI / numMarks);
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(pulleyX, pulleyY);
+                ctx.lineTo(
+                    pulleyX + Math.cos(angle) * pulleyRadius * 0.7,
+                    pulleyY + Math.sin(angle) * pulleyRadius * 0.7
+                );
+                ctx.stroke();
+            }
+
+            // Block positions
+            const block1Y = pulleyY + pulleyRadius + position1 * scale;
+            const block2Y = pulleyY + pulleyRadius - position1 * scale;
+            const blockWidth = 60;
+            const blockHeight = 60;
+
+            // Draw ropes
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 3;
+            // Left rope (m1)
+            ctx.beginPath();
+            ctx.moveTo(pulleyX - pulleyRadius, pulleyY);
+            ctx.lineTo(pulleyX - pulleyRadius, block1Y - blockHeight / 2);
+            ctx.stroke();
+            // Right rope (m2)
+            ctx.beginPath();
+            ctx.moveTo(pulleyX + pulleyRadius, pulleyY);
+            ctx.lineTo(pulleyX + pulleyRadius, block2Y - blockHeight / 2);
+            ctx.stroke();
+
+            // Draw block 1 (left, heavier)
+            ctx.fillStyle = '#00d4ff';
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 3;
+            ctx.fillRect(
+                pulleyX - pulleyRadius - blockWidth / 2,
+                block1Y - blockHeight / 2,
+                blockWidth,
+                blockHeight
+            );
+            ctx.strokeRect(
+                pulleyX - pulleyRadius - blockWidth / 2,
+                block1Y - blockHeight / 2,
+                blockWidth,
+                blockHeight
+            );
+
+            // Label m1
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(`m₁=${m1}kg`, pulleyX - pulleyRadius, block1Y);
+
+            // Draw block 2 (right, lighter)
+            ctx.fillStyle = '#ff2d75';
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 3;
+            ctx.fillRect(
+                pulleyX + pulleyRadius - blockWidth / 2,
+                block2Y - blockHeight / 2,
+                blockWidth,
+                blockHeight
+            );
+            ctx.strokeRect(
+                pulleyX + pulleyRadius - blockWidth / 2,
+                block2Y - blockHeight / 2,
+                blockWidth,
+                blockHeight
+            );
+
+            // Label m2
+            ctx.fillStyle = '#fff';
+            ctx.fillText(`m₂=${m2}kg`, pulleyX + pulleyRadius, block2Y);
+            ctx.textAlign = 'left';
+
+            // Draw tension arrows
+            const a = calculateAcceleration();
+            const { T1, T2 } = calculateTensions(a);
+
+            // T1 arrow on left rope
+            drawArrow(
+                pulleyX - pulleyRadius - 30,
+                block1Y - blockHeight / 2 - 40,
+                pulleyX - pulleyRadius - 30,
+                block1Y - blockHeight / 2 - 80,
+                '#f59e0b',
+                `T₁=${T1.toFixed(1)}N`
+            );
+
+            // T2 arrow on right rope
+            drawArrow(
+                pulleyX + pulleyRadius + 30,
+                block2Y - blockHeight / 2 - 40,
+                pulleyX + pulleyRadius + 30,
+                block2Y - blockHeight / 2 - 80,
+                '#f59e0b',
+                `T₂=${T2.toFixed(1)}N`
+            );
+
+            // Pulley info
+            ctx.fillStyle = '#7c3aed';
+            ctx.font = '14px JetBrains Mono, monospace';
+            ctx.fillText(`Pulley: M=${pulleyMass}kg, R=${pulleyRadius}px`, 20, 30);
+            ctx.fillStyle = '#00d4ff';
+            ctx.fillText(`I = ½MR²`, 20, 50);
+        }
+
+        function drawArrow(x1, y1, x2, y2, color, label) {
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Arrowhead
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - 8 * Math.cos(angle - Math.PI / 6), y2 - 8 * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - 8 * Math.cos(angle + Math.PI / 6), y2 - 8 * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+
+            // Label
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText(label, x2 + 10, y2);
+        }
+
+        function animate(currentTime) {
+            if (!isRunning) return;
+
+            const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.05);
+            lastTime = currentTime;
+
+            const a = calculateAcceleration();
+            velocity += a * deltaTime;
+            position1 += velocity * deltaTime;
+
+            // Update pulley rotation
+            // Angular displacement = linear displacement / radius (in meters)
+            const pulleyRadiusMeters = pulleyRadius / scale;
+            const angularDisplacement = (velocity * deltaTime) / pulleyRadiusMeters;
+            pulleyAngle += angularDisplacement;
+
+            // Reset if blocks go too far
+            if (Math.abs(position1) > 8) {
+                position1 = 0;
+                velocity = 0;
+                pulleyAngle = 0;
+            }
+
+            calculateAndUpdate();
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        calculateAndUpdate();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

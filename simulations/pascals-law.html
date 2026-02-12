@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pascal's Law | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='20' fill='%2300d4ff'/><circle cx='50' cy='20' r='8' fill='%2300ffaa'/><circle cx='80' cy='50' r='8' fill='%2300ffaa'/><circle cx='50' cy='80' r='8' fill='%2300ffaa'/></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Pascal's Law</span>
+        </div>
+
+        <h1>Pascal's Law</h1>
+        <p class="subtitle">Grade XI - Fluid Mechanics</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label for="force1">Force on Small Piston F₁: <span id="force1Val">50</span> N</label>
+                    <input type="range" id="force1" min="10" max="200" value="50">
+                </div>
+                <div class="control-group">
+                    <label for="area1">Small Piston Area A₁: <span id="area1Val">2</span> cm²</label>
+                    <input type="range" id="area1" min="1" max="10" value="2">
+                </div>
+                <div class="control-group">
+                    <label for="area2">Large Piston Area A₂: <span id="area2Val">50</span> cm²</label>
+                    <input type="range" id="area2" min="10" max="100" value="50">
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <div class="stats-panel">
+                <h3>Parameters</h3>
+                <div class="stat-item">
+                    <span class="stat-label">F₁ (Input Force):</span>
+                    <span class="stat-value" id="statF1">50 N</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">A₁ (Small Area):</span>
+                    <span class="stat-value" id="statA1">2 cm²</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">F₂ (Output Force):</span>
+                    <span class="stat-value" id="statF2">1250 N</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">A₂ (Large Area):</span>
+                    <span class="stat-value" id="statA2">50 cm²</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Pressure P:</span>
+                    <span class="stat-value" id="statP">25 N/cm²</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Mechanical Advantage:</span>
+                    <span class="stat-value" id="statMA">25</span>
+                </div>
+            </div>
+
+            <div class="formula-panel">
+                <h3>Formulas</h3>
+                <div class="formula-box">
+                    <p><strong>Pressure:</strong> P = F/A</p>
+                    <p><strong>Pascal's Law:</strong> F₁/A₁ = F₂/A₂</p>
+                    <p><strong>Force Multiplication:</strong> F₂ = F₁ × A₂/A₁</p>
+                    <p><strong>Mechanical Advantage:</strong> MA = A₂/A₁</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Controls
+        const force1Input = document.getElementById('force1');
+        const area1Input = document.getElementById('area1');
+        const area2Input = document.getElementById('area2');
+
+        let F1 = 50, A1 = 2, A2 = 50;
+
+        force1Input.addEventListener('input', (e) => {
+            F1 = parseFloat(e.target.value);
+            document.getElementById('force1Val').textContent = F1;
+            updateStats();
+        });
+
+        area1Input.addEventListener('input', (e) => {
+            A1 = parseFloat(e.target.value);
+            document.getElementById('area1Val').textContent = A1;
+            updateStats();
+        });
+
+        area2Input.addEventListener('input', (e) => {
+            A2 = parseFloat(e.target.value);
+            document.getElementById('area2Val').textContent = A2;
+            updateStats();
+        });
+
+        function updateStats() {
+            const P = F1 / A1;
+            const F2 = P * A2;
+            const MA = A2 / A1;
+
+            document.getElementById('statF1').textContent = F1.toFixed(1) + ' N';
+            document.getElementById('statA1').textContent = A1.toFixed(1) + ' cm²';
+            document.getElementById('statF2').textContent = F2.toFixed(1) + ' N';
+            document.getElementById('statA2').textContent = A2.toFixed(1) + ' cm²';
+            document.getElementById('statP').textContent = P.toFixed(2) + ' N/cm²';
+            document.getElementById('statMA').textContent = MA.toFixed(2);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const P = F1 / A1;
+            const F2 = P * A2;
+
+            // Small piston (left)
+            const piston1Width = 20 + A1 * 5;
+            const piston1X = 150;
+            const piston1Y = 250;
+            const piston1Height = 80;
+
+            // Large piston (right)
+            const piston2Width = 20 + A2 * 2;
+            const piston2X = 650;
+            const piston2Y = 280 - (F1 / 200) * 50; // Rises when F1 applied
+            const piston2Height = 100;
+
+            // Draw connecting fluid tube
+            ctx.fillStyle = '#7c3aed';
+            ctx.globalAlpha = 0.6;
+            ctx.beginPath();
+            ctx.moveTo(piston1X, piston1Y + piston1Height);
+            ctx.lineTo(piston1X + piston1Width, piston1Y + piston1Height);
+            ctx.lineTo(piston2X + piston2Width, piston2Y + piston2Height);
+            ctx.lineTo(piston2X, piston2Y + piston2Height);
+            ctx.closePath();
+            ctx.fill();
+            ctx.globalAlpha = 1;
+
+            // Draw fluid surface
+            ctx.strokeStyle = '#7c3aed';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(piston1X, piston1Y + piston1Height);
+            ctx.lineTo(piston2X, piston2Y + piston2Height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(piston1X + piston1Width, piston1Y + piston1Height);
+            ctx.lineTo(piston2X + piston2Width, piston2Y + piston2Height);
+            ctx.stroke();
+
+            // Draw small piston
+            ctx.fillStyle = '#00d4ff';
+            ctx.fillRect(piston1X, piston1Y, piston1Width, piston1Height);
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(piston1X, piston1Y, piston1Width, piston1Height);
+
+            // Draw large piston
+            ctx.fillStyle = '#00d4ff';
+            ctx.fillRect(piston2X, piston2Y, piston2Width, piston2Height);
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(piston2X, piston2Y, piston2Width, piston2Height);
+
+            // Draw force arrows
+            // F1 arrow (down on small piston)
+            const arrowScale1 = F1 / 5;
+            drawArrow(piston1X + piston1Width / 2, piston1Y - 50,
+                     piston1X + piston1Width / 2, piston1Y - 10, '#ff2d75', 3);
+            ctx.fillStyle = '#ff2d75';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`F₁ = ${F1} N`, piston1X + piston1Width / 2, piston1Y - 60);
+
+            // F2 arrow (up on large piston)
+            const arrowScale2 = Math.min(F2 / 10, 80);
+            drawArrow(piston2X + piston2Width / 2, piston2Y + piston2Height + 10,
+                     piston2X + piston2Width / 2, piston2Y + piston2Height + 10 + arrowScale2, '#00ffaa', 4);
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`F₂ = ${F2.toFixed(1)} N`, piston2X + piston2Width / 2, piston2Y + piston2Height + arrowScale2 + 25);
+
+            // Labels
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`A₁ = ${A1} cm²`, piston1X + piston1Width / 2, piston1Y + piston1Height + 25);
+            ctx.fillText(`A₂ = ${A2} cm²`, piston2X + piston2Width / 2, piston2Y - 10);
+
+            // Pressure indication
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = 'bold 18px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`P = ${P.toFixed(2)} N/cm²`, canvas.width / 2, 50);
+
+            requestAnimationFrame(draw);
+        }
+
+        function drawArrow(x1, y1, x2, y2, color, width) {
+            const headlen = 15;
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = width;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - headlen * Math.cos(angle - Math.PI / 6), y2 - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - headlen * Math.cos(angle + Math.PI / 6), y2 - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        updateStats();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

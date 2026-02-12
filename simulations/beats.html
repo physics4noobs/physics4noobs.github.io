@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beats Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Beats</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">🎵 Beats Simulation</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Waves</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <div class="control-group">
+          <label>Frequency 1: <span id="f1Val">5.0</span> Hz</label>
+          <input type="range" id="f1Slider" min="1" max="20" value="5" step="0.1">
+        </div>
+
+        <div class="control-group">
+          <label>Frequency 2: <span id="f2Val">7.0</span> Hz</label>
+          <input type="range" id="f2Slider" min="1" max="20" value="7" step="0.1">
+        </div>
+
+        <div class="control-group">
+          <label>Amplitude: <span id="ampVal">30</span> px</label>
+          <input type="range" id="ampSlider" min="10" max="50" value="30" step="5">
+        </div>
+
+        <div class="stats-panel">
+          <div class="stat-item">f₁: <span id="statF1">5.0</span> Hz</div>
+          <div class="stat-item">f₂: <span id="statF2">7.0</span> Hz</div>
+          <div class="stat-item">f_beat: <span id="statFbeat">2.0</span> Hz</div>
+          <div class="stat-item">T_beat: <span id="statTbeat">0.50</span> s</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>When two waves of slightly different frequencies interfere, they create a phenomenon called beats. The amplitude of the resultant wave periodically increases and decreases, producing a pulsing sound. The beat frequency equals the absolute difference between the two frequencies.</p>
+      <div class="formula-box" style="margin-top: 16px;">y = y₁ + y₂ = 2A cos(2π·f_beat·t/2) sin(2π·f_avg·t) | f_beat = |f₁ - f₂| | f_avg = (f₁ + f₂)/2</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let f1 = 5.0;
+    let f2 = 7.0;
+    let amplitude = 30;
+    let time = 0;
+
+    const f1Slider = document.getElementById('f1Slider');
+    const f2Slider = document.getElementById('f2Slider');
+    const ampSlider = document.getElementById('ampSlider');
+
+    f1Slider.oninput = function() {
+      f1 = parseFloat(this.value);
+      document.getElementById('f1Val').textContent = f1.toFixed(1);
+      updateStats();
+    };
+
+    f2Slider.oninput = function() {
+      f2 = parseFloat(this.value);
+      document.getElementById('f2Val').textContent = f2.toFixed(1);
+      updateStats();
+    };
+
+    ampSlider.oninput = function() {
+      amplitude = parseFloat(this.value);
+      document.getElementById('ampVal').textContent = amplitude;
+    };
+
+    function updateStats() {
+      const fBeat = Math.abs(f1 - f2);
+      const tBeat = fBeat > 0 ? 1 / fBeat : 0;
+
+      document.getElementById('statF1').textContent = f1.toFixed(1);
+      document.getElementById('statF2').textContent = f2.toFixed(1);
+      document.getElementById('statFbeat').textContent = fBeat.toFixed(1);
+      document.getElementById('statTbeat').textContent = tBeat.toFixed(2);
+    }
+
+    function drawWavePanel(yStart, yEnd, waveFunc, color, label) {
+      const yMid = (yStart + yEnd) / 2;
+      const panelHeight = yEnd - yStart;
+
+      // Panel background
+      ctx.fillStyle = 'rgba(10,10,30,0.4)';
+      ctx.fillRect(50, yStart, 750, panelHeight);
+
+      // Divider line
+      ctx.strokeStyle = 'rgba(0,212,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(50, yEnd);
+      ctx.lineTo(800, yEnd);
+      ctx.stroke();
+
+      // Axis line
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(50, yMid);
+      ctx.lineTo(800, yMid);
+      ctx.stroke();
+
+      // Time arrow
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(780, yMid);
+      ctx.lineTo(790, yMid);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(790, yMid);
+      ctx.lineTo(785, yMid - 4);
+      ctx.moveTo(790, yMid);
+      ctx.lineTo(785, yMid + 4);
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.font = '10px JetBrains Mono';
+      ctx.fillText('t', 795, yMid + 4);
+
+      // Label
+      ctx.fillStyle = color;
+      ctx.font = '12px JetBrains Mono';
+      ctx.fillText(label, 60, yStart + 20);
+
+      // Draw wave
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let x = 50; x <= 800; x++) {
+        const t = (x - 50) / 750 * 2 - time;
+        const y = yMid + waveFunc(t);
+        if (x === 50) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+    }
+
+    function drawEnvelope(yStart, yEnd) {
+      const yMid = (yStart + yEnd) / 2;
+      const fBeat = Math.abs(f1 - f2);
+
+      if (fBeat < 0.1) return;
+
+      ctx.strokeStyle = 'rgba(0,255,170,0.6)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 5]);
+
+      // Upper envelope
+      ctx.beginPath();
+      for (let x = 50; x <= 800; x++) {
+        const t = (x - 50) / 750 * 2 - time;
+        const envelope = Math.abs(2 * amplitude * Math.cos(Math.PI * fBeat * t));
+        const y = yMid - envelope;
+        if (x === 50) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+
+      // Lower envelope
+      ctx.beginPath();
+      for (let x = 50; x <= 800; x++) {
+        const t = (x - 50) / 750 * 2 - time;
+        const envelope = Math.abs(2 * amplitude * Math.cos(Math.PI * fBeat * t));
+        const y = yMid + envelope;
+        if (x === 50) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+    }
+
+    function draw() {
+      // Background
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 50; x <= 800; x += 50) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+
+      const panelHeight = 140;
+
+      // Wave 1
+      drawWavePanel(10, 10 + panelHeight, (t) => {
+        return amplitude * Math.sin(2 * Math.PI * f1 * t);
+      }, '#00d4ff', 'Wave 1 (f₁)');
+
+      // Wave 2
+      drawWavePanel(10 + panelHeight, 10 + 2 * panelHeight, (t) => {
+        return amplitude * Math.sin(2 * Math.PI * f2 * t);
+      }, '#7c3aed', 'Wave 2 (f₂)');
+
+      // Superposition
+      drawWavePanel(10 + 2 * panelHeight, 10 + 3 * panelHeight, (t) => {
+        const y1 = amplitude * Math.sin(2 * Math.PI * f1 * t);
+        const y2 = amplitude * Math.sin(2 * Math.PI * f2 * t);
+        return y1 + y2;
+      }, '#00ffaa', 'Superposition (Beat Pattern)');
+
+      // Draw envelope on superposition
+      drawEnvelope(10 + 2 * panelHeight, 10 + 3 * panelHeight);
+
+      // No beats message
+      const fBeat = Math.abs(f1 - f2);
+      if (fBeat < 0.1) {
+        ctx.fillStyle = 'rgba(245,158,11,0.9)';
+        ctx.font = '14px JetBrains Mono';
+        ctx.fillText('No beats - same frequency', 320, 10 + 2.5 * panelHeight);
+      }
+
+      // Beat frequency display
+      if (fBeat >= 0.1) {
+        ctx.fillStyle = 'rgba(0,255,170,0.9)';
+        ctx.font = '12px JetBrains Mono';
+        ctx.fillText('f_beat = |f₁ - f₂| = ' + fBeat.toFixed(1) + ' Hz', 300, 440);
+      }
+    }
+
+    function animate() {
+      time += 0.005;
+      draw();
+      requestAnimationFrame(animate);
+    }
+
+    updateStats();
+    animate();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

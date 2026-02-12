@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lorentz Force | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Magnetism</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#127768; Lorentz Force</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Moving Charges &amp; Magnetism</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Velocity: <input type="range" id="velocity" min="1" max="20" value="8"> <span id="velVal">8</span> m/s</label>
+        <label>Charge: <input type="range" id="charge" min="1" max="10" value="3" step="0.5"> <span id="chargeVal">3.0</span> &mu;C</label>
+        <label>B Field: <input type="range" id="bfield" min="1" max="20" value="5"> <span id="bVal">5</span> mT</label>
+        <button onclick="launchParticle()">&#9654; Launch</button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>When a charged particle enters a uniform magnetic field perpendicular to its velocity, it experiences the Lorentz force, causing it to move in a circular path. The radius of this circular motion depends on the particle's mass, velocity, charge, and the magnetic field strength. The magnetic field here points into the screen (shown as X marks), and the positive charge enters from the left.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        F = qv &times; B &nbsp;&nbsp;|&nbsp;&nbsp; r = mv/(qB) &nbsp;&nbsp;|&nbsp;&nbsp; T = 2&pi;m/(qB) &nbsp;&nbsp;|&nbsp;&nbsp; f = qB/(2&pi;m)
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let animId = null;
+    let particle = null;
+    let trail = [];
+    let time = 0;
+
+    const velSlider = document.getElementById('velocity');
+    const chargeSlider = document.getElementById('charge');
+    const bfieldSlider = document.getElementById('bfield');
+
+    velSlider.oninput = () => document.getElementById('velVal').textContent = velSlider.value;
+    chargeSlider.oninput = () => document.getElementById('chargeVal').textContent = parseFloat(chargeSlider.value).toFixed(1);
+    bfieldSlider.oninput = () => document.getElementById('bVal').textContent = bfieldSlider.value;
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+    }
+
+    function drawMagneticField() {
+      // Draw X marks for B field into the screen
+      ctx.font = '14px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (let x = 30; x < canvas.width; x += 50) {
+        for (let y = 30; y < canvas.height; y += 50) {
+          ctx.fillStyle = 'rgba(124, 58, 237, 0.25)';
+          ctx.fillText('\u00D7', x, y);
+        }
+      }
+
+      // B field label
+      ctx.fillStyle = 'rgba(124, 58, 237, 0.6)';
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText('B = into screen (\u2297)', 12, canvas.height - 22);
+    }
+
+    function drawTrail() {
+      for (let i = 1; i < trail.length; i++) {
+        const alpha = (i / trail.length) * 0.7;
+        ctx.beginPath();
+        ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+        ctx.lineTo(trail[i].x, trail[i].y);
+        ctx.strokeStyle = `rgba(0, 255, 170, ${alpha})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    }
+
+    function drawParticle(x, y) {
+      // Outer glow
+      const glowGrad = ctx.createRadialGradient(x, y, 0, x, y, 20);
+      glowGrad.addColorStop(0, 'rgba(0,255,170,0.4)');
+      glowGrad.addColorStop(1, 'rgba(0,255,170,0)');
+      ctx.beginPath();
+      ctx.arc(x, y, 20, 0, Math.PI * 2);
+      ctx.fillStyle = glowGrad;
+      ctx.fill();
+
+      // Particle body
+      ctx.beginPath();
+      ctx.arc(x, y, 7, 0, Math.PI * 2);
+      const grad = ctx.createRadialGradient(x - 2, y - 2, 0, x, y, 7);
+      grad.addColorStop(0, '#66ffcc');
+      grad.addColorStop(1, '#00ffaa');
+      ctx.fillStyle = grad;
+      ctx.shadowColor = '#00ffaa';
+      ctx.shadowBlur = 15;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // + symbol on particle
+      ctx.fillStyle = '#080818';
+      ctx.font = 'bold 10px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('+', x, y);
+    }
+
+    function drawStats() {
+      const v = parseInt(velSlider.value);
+      const q = parseFloat(chargeSlider.value);
+      const B = parseInt(bfieldSlider.value);
+      const m = 1.67; // proton-like mass (scaled for display)
+      const r = (m * v) / (q * B);
+      const T = (2 * Math.PI * m) / (q * B);
+      const f = 1 / T;
+
+      ctx.fillStyle = 'rgba(10,10,30,0.9)';
+      ctx.fillRect(canvas.width - 250, 10, 240, 160);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(canvas.width - 250, 10, 240, 160);
+
+      ctx.font = 'bold 13px "JetBrains Mono", monospace';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = '#7c3aed';
+      ctx.fillText('PARTICLE DATA', canvas.width - 238, 18);
+
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText(`v = ${v} m/s`, canvas.width - 238, 42);
+      ctx.fillStyle = '#ff2d75';
+      ctx.fillText(`q = ${q.toFixed(1)} \u03BCC`, canvas.width - 238, 62);
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText(`B = ${B} mT`, canvas.width - 238, 82);
+
+      ctx.fillStyle = '#ffaa00';
+      ctx.fillText(`r = mv/qB = ${(r).toFixed(2)} units`, canvas.width - 238, 108);
+      ctx.fillText(`T = 2\u03C0m/qB = ${T.toFixed(3)} s`, canvas.width - 238, 128);
+      ctx.fillText(`f = ${f.toFixed(2)} Hz`, canvas.width - 238, 148);
+    }
+
+    function drawEntryArrow() {
+      if (particle) return;
+      const y = 225;
+      ctx.beginPath();
+      ctx.moveTo(10, y);
+      ctx.lineTo(60, y);
+      ctx.strokeStyle = 'rgba(0,255,170,0.5)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Arrowhead
+      ctx.beginPath();
+      ctx.moveTo(60, y);
+      ctx.lineTo(50, y - 6);
+      ctx.lineTo(50, y + 6);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(0,255,170,0.5)';
+      ctx.fill();
+
+      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.fillStyle = 'rgba(0,255,170,0.5)';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('v \u2192', 15, y - 8);
+    }
+
+    function launchParticle() {
+      if (animId) cancelAnimationFrame(animId);
+      trail = [];
+      time = 0;
+
+      const v = parseInt(velSlider.value);
+      const q = parseFloat(chargeSlider.value);
+      const B = parseInt(bfieldSlider.value);
+      const m = 1.67;
+      const radius = (m * v) / (q * B) * 30; // Scale for pixels
+      const omega = v / (radius / 30) * 30 / radius; // angular velocity
+      // Particle enters from left moving right, curves upward (for positive charge in -z B field)
+      const centerX = 80;
+      const centerY = 225;
+
+      // Center of circular path is directly above the entry point
+      const cxCircle = centerX;
+      const cyCircle = centerY - radius;
+
+      particle = { cx: cxCircle, cy: cyCircle, r: radius, omega: (v / radius) };
+
+      function animate() {
+        time += 0.025;
+        // Starting angle is at bottom of circle (3pi/2 or -pi/2), moving clockwise
+        // For positive charge, v x B: v is +x, B is -z => F is -y (upward in screen)
+        // So it curves upward first
+        const angle = -Math.PI / 2 + particle.omega * time;
+        const px = particle.cx + particle.r * Math.cos(angle);
+        const py = particle.cy + particle.r * Math.sin(angle);
+
+        trail.push({ x: px, y: py });
+        if (trail.length > 2000) trail.shift();
+
+        drawBackground();
+        drawMagneticField();
+        drawTrail();
+
+        // Draw radius line
+        ctx.beginPath();
+        ctx.moveTo(particle.cx, particle.cy);
+        ctx.lineTo(px, py);
+        ctx.strokeStyle = 'rgba(255,45,117,0.3)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Center mark
+        ctx.beginPath();
+        ctx.arc(particle.cx, particle.cy, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,45,117,0.5)';
+        ctx.fill();
+
+        drawParticle(px, py);
+
+        // Draw force vector
+        const Fx = -Math.sin(angle);
+        const Fy = Math.cos(angle);
+        const fLen = 25;
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(px - Fx * fLen, py - Fy * fLen);
+        ctx.strokeStyle = '#ff2d75';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Force arrowhead
+        const fEndX = px - Fx * fLen;
+        const fEndY = py - Fy * fLen;
+        const fAngle = Math.atan2(-Fy, -Fx);
+        ctx.save();
+        ctx.translate(fEndX, fEndY);
+        ctx.rotate(fAngle);
+        ctx.beginPath();
+        ctx.moveTo(6, 0);
+        ctx.lineTo(-4, -4);
+        ctx.lineTo(-4, 4);
+        ctx.closePath();
+        ctx.fillStyle = '#ff2d75';
+        ctx.fill();
+        ctx.restore();
+
+        // F label
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#ff2d75';
+        ctx.textAlign = 'center';
+        ctx.fillText('F', fEndX - Fx * 10, fEndY - Fy * 10);
+
+        drawStats();
+
+        // Stop if particle goes off screen or completes a few loops
+        if (px < -50 || px > canvas.width + 50 || py < -50 || py > canvas.height + 50) {
+          return;
+        }
+
+        animId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function resetSim() {
+      if (animId) cancelAnimationFrame(animId);
+      particle = null;
+      trail = [];
+      time = 0;
+      drawBackground();
+      drawMagneticField();
+      drawEntryArrow();
+      drawStats();
+    }
+
+    // Initial draw
+    drawBackground();
+    drawMagneticField();
+    drawEntryArrow();
+    drawStats();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

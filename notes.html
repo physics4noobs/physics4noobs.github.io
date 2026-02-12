@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link active">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="simulations.html" class="nav-link">Simulations</a></div>
+        <a href="index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> <span>/</span> <span>Notes</span>
+    </div>
+    <h1><span class="text-gradient">Quick Reference Notes</span></h1>
+    <p>Chapter-wise formula sheets and key concepts for rapid revision. Everything you need at your fingertips.</p>
+  </div>
+
+  <!-- Notes Content -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <div class="grade-tabs">
+        <button class="grade-tab active" data-grade="grade-xi-notes">Grade XI</button>
+        <button class="grade-tab" data-grade="grade-xii-notes">Grade XII</button>
+      </div>
+
+      <!-- Grade XI Notes -->
+      <div class="grade-content active" id="grade-xi-notes">
+
+        <div class="content-card reveal">
+          <h3>&#127937; Kinematics</h3>
+          <p>Equations of motion for uniform acceleration, projectile motion formulas, and relative velocity essentials. Master the building blocks of mechanics.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            v = u + at<br>
+            s = ut + &frac12;at&sup2;<br>
+            v&sup2; = u&sup2; + 2as<br>
+            Range = u&sup2;sin2&theta; / g
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#9878; Newton's Laws of Motion</h3>
+          <p>Force, friction, and circular motion fundamentals. Covers all three laws, free body diagrams, pseudo forces, and banking of roads.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            F = ma<br>
+            f = &mu;N<br>
+            a<sub>c</sub> = v&sup2; / r<br>
+            Pseudo force = &minus;ma
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#9889; Work, Power &amp; Energy</h3>
+          <p>Work-energy theorem, conservation of energy, power, and collisions. Key formulas for kinetic energy, potential energy, and work done by variable forces.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            W = F &middot; d &middot; cos&theta;<br>
+            KE = &frac12;mv&sup2;<br>
+            PE = mgh<br>
+            P = W / t
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128260; Rotational Motion</h3>
+          <p>Torque, angular momentum, moment of inertia, and rolling motion. Covers parallel and perpendicular axis theorems and rotational kinetic energy.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            &tau; = I&alpha;<br>
+            L = I&omega;<br>
+            I = mr&sup2;<br>
+            KE<sub>rot</sub> = &frac12;I&omega;&sup2;
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#127754; Fluid Dynamics</h3>
+          <p>Pressure, Bernoulli's principle, equation of continuity, and viscosity. Essential formulas for fluid statics and dynamics problems.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            P = &rho;gh<br>
+            A&#8321;v&#8321; = A&#8322;v&#8322;<br>
+            P + &frac12;&rho;v&sup2; + &rho;gh = const
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128293; Heat &amp; Thermodynamics</h3>
+          <p>Gas laws, calorimetry, first and second laws of thermodynamics. Covers isothermal, adiabatic, isobaric, and isochoric processes with Carnot efficiency.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            PV = nRT<br>
+            Q = mc&Delta;T<br>
+            &Delta;U = Q &minus; W<br>
+            Efficiency = 1 &minus; T&#8322; / T&#8321;
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#12336; SHM &amp; Waves</h3>
+          <p>Simple harmonic motion, spring-mass systems, simple pendulum, and wave propagation. Covers displacement equations, time period, and wave velocity.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            x = A sin(&omega;t + &phi;)<br>
+            T = 2&pi;&radic;(m/k)<br>
+            v = f&lambda;<br>
+            T<sub>pendulum</sub> = 2&pi;&radic;(l/g)
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Grade XII Notes -->
+      <div class="grade-content" id="grade-xii-notes">
+
+        <div class="content-card reveal">
+          <h3>&#9889; Electrostatics</h3>
+          <p>Coulomb's law, electric field and potential, Gauss's law, and capacitance. Core formulas for point charges, conductors, and parallel plate capacitors.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            F = kq&#8321;q&#8322; / r&sup2;<br>
+            E = kq / r&sup2;<br>
+            V = kq / r<br>
+            C = &epsilon;A / d
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128268; Current Electricity</h3>
+          <p>Ohm's law, resistivity, power dissipation, and Kirchhoff's laws. Covers series and parallel combinations, Wheatstone bridge, and meter bridge.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            V = IR<br>
+            R = &rho;l / A<br>
+            P = VI = I&sup2;R<br>
+            Kirchhoff&rsquo;s: &Sigma;I = 0, &Sigma;V = 0
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#129522; Magnetism</h3>
+          <p>Lorentz force, Biot-Savart law, Ampere's law, and cyclotron motion. Key formulas for force on moving charges and current-carrying conductors in magnetic fields.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            F = qvB sin&theta;<br>
+            B = &mu;&#8320;I / 2&pi;r<br>
+            F = BIl<br>
+            r = mv / qB
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#9851; Electromagnetic Induction</h3>
+          <p>Faraday's law, Lenz's law, self and mutual inductance, and motional EMF. Essential formulas for flux, induced EMF, and energy stored in inductors.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            &epsilon; = &minus;d&Phi; / dt<br>
+            &Phi; = BA cos&theta;<br>
+            L = N&Phi; / I<br>
+            &epsilon; = BLv
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#126;&#126; Alternating Current</h3>
+          <p>AC waveforms, phasor diagrams, impedance, and resonance. Covers RLC circuits, reactance, power factor, and resonant frequency.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            V = V&#8320; sin&omega;t<br>
+            X<sub>L</sub> = &omega;L<br>
+            X<sub>C</sub> = 1 / &omega;C<br>
+            f&#8320; = 1 / 2&pi;&radic;(LC)
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128225; Electromagnetic Waves</h3>
+          <p>Maxwell's equations summary, speed of light derivation, and the electromagnetic spectrum. Key relations between electric and magnetic field components.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            c = 1 / &radic;(&mu;&#8320;&epsilon;&#8320;)<br>
+            c = f&lambda;<br>
+            E / B = c
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#128269; Ray Optics</h3>
+          <p>Mirror and lens formula, magnification, Snell's law, and lensmaker's equation. Covers reflection, refraction, total internal reflection, and prism dispersion.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            1/f = 1/v &minus; 1/u<br>
+            m = v / u<br>
+            n&#8321; sin&theta;&#8321; = n&#8322; sin&theta;&#8322;<br>
+            1/f = (n&minus;1)(1/R&#8321; &minus; 1/R&#8322;)
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#127752; Wave Optics</h3>
+          <p>Young's double slit experiment, fringe width, diffraction, and polarisation. Key formulas for interference patterns and Brewster's angle.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            y = n&lambda;D / d<br>
+            Fringe width &beta; = &lambda;D / d<br>
+            Brewster&rsquo;s angle: tan&theta;<sub>p</sub> = n
+          </div>
+        </div>
+
+        <div class="content-card reveal">
+          <h3>&#9883; Modern Physics</h3>
+          <p>Photoelectric effect, de Broglie wavelength, Bohr model, and nuclear physics. Covers photon energy, work function, hydrogen energy levels, and matter waves.</p>
+          <div class="formula-box" style="font-family: var(--font-mono); background: rgba(0, 212, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 16px; font-size: 0.85rem; color: var(--color-primary);">
+            E = hf<br>
+            KE<sub>max</sub> = hf &minus; &phi;<br>
+            E<sub>n</sub> = &minus;13.6 / n&sup2; eV<br>
+            &lambda; = h / mv
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="chapters.html">Chapters</a>
+        <a href="lectures.html">Lectures</a>
+        <a href="notes.html">Notes</a>
+        <a href="books.html">Books</a>
+        <a href="simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

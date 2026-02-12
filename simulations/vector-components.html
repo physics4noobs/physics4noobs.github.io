@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vector Components | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Kinematics</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#128208; Vector Components</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Kinematics</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Magnitude: <input type="range" id="magnitude" min="1" max="10" value="6" step="0.5"> <span id="magVal">6</span></label>
+        <label>Angle: <input type="range" id="angle" min="0" max="360" value="45"> <span id="angleVal">45</span>&deg;</label>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>Resolve a vector into its rectangular components along x and y axes. Understand how any vector can be decomposed into perpendicular components. The horizontal component (cyan) and vertical component (green) together represent the original vector (purple).</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        Vx = V cos&theta; &nbsp;&nbsp;|&nbsp;&nbsp; Vy = V sin&theta; &nbsp;&nbsp;|&nbsp;&nbsp; V = &radic;(Vx&sup2; + Vy&sup2;)
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const magSlider = document.getElementById('magnitude');
+    const angleSlider = document.getElementById('angle');
+
+    magSlider.oninput = () => { document.getElementById('magVal').textContent = magSlider.value; draw(); };
+    angleSlider.oninput = () => { document.getElementById('angleVal').textContent = angleSlider.value; draw(); };
+
+    const originX = canvas.width / 2;
+    const originY = canvas.height / 2 + 50;
+    const scale = 40;
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      // Coordinate axes
+      ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+      ctx.lineWidth = 2;
+
+      // X-axis
+      ctx.beginPath();
+      ctx.moveTo(40, originY);
+      ctx.lineTo(canvas.width - 40, originY);
+      ctx.stroke();
+
+      // Y-axis
+      ctx.beginPath();
+      ctx.moveTo(originX, 40);
+      ctx.lineTo(originX, canvas.height - 40);
+      ctx.stroke();
+
+      // Axis labels
+      ctx.font = '14px "JetBrains Mono", monospace';
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText('X', canvas.width - 50, originY - 10);
+      ctx.fillText('Y', originX + 10, 50);
+
+      // Tick marks
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      for (let i = 1; i <= 10; i++) {
+        ctx.beginPath();
+        ctx.moveTo(originX + i * scale, originY - 5);
+        ctx.lineTo(originX + i * scale, originY + 5);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(originX - i * scale, originY - 5);
+        ctx.lineTo(originX - i * scale, originY + 5);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(originX - 5, originY - i * scale);
+        ctx.lineTo(originX + 5, originY - i * scale);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(originX - 5, originY + i * scale);
+        ctx.lineTo(originX + 5, originY + i * scale);
+        ctx.stroke();
+      }
+    }
+
+    function drawArrow(x1, y1, x2, y2, color, width = 3) {
+      const headlen = 12;
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - headlen * Math.cos(angle - Math.PI / 6), y2 - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x2 - headlen * Math.cos(angle + Math.PI / 6), y2 - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawRightAngle(x, y, size, flipX, flipY) {
+      ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + size * (flipX ? -1 : 1), y);
+      ctx.lineTo(x + size * (flipX ? -1 : 1), y + size * (flipY ? -1 : 1));
+      ctx.lineTo(x, y + size * (flipY ? -1 : 1));
+      ctx.stroke();
+    }
+
+    function draw() {
+      drawBackground();
+
+      const mag = parseFloat(magSlider.value);
+      const angle = parseFloat(angleSlider.value);
+      const rad = angle * Math.PI / 180;
+
+      // Components
+      const Vx = mag * Math.cos(rad);
+      const Vy = mag * Math.sin(rad);
+
+      // Endpoint of main vector
+      const endX = originX + Vx * scale;
+      const endY = originY - Vy * scale;
+
+      // X-component endpoint
+      const xCompEndX = originX + Vx * scale;
+      const xCompEndY = originY;
+
+      // Y-component endpoint
+      const yCompEndX = originX;
+      const yCompEndY = originY - Vy * scale;
+
+      // Draw dashed projection lines
+      ctx.setLineDash([5, 5]);
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = 1;
+
+      // Vertical projection line
+      ctx.beginPath();
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(endX, originY);
+      ctx.stroke();
+
+      // Horizontal projection line
+      ctx.beginPath();
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(originX, endY);
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+
+      // Draw right angle symbol
+      const rightAngleSize = 15;
+      drawRightAngle(endX, originY, rightAngleSize, Vx < 0, Vy < 0);
+
+      // Draw component arrows
+      drawArrow(originX, originY, xCompEndX, xCompEndY, '#00d4ff', 3);
+      drawArrow(originX, originY, yCompEndX, yCompEndY, '#00ffaa', 3);
+
+      // Draw main vector
+      drawArrow(originX, originY, endX, endY, '#7c3aed', 4);
+
+      // Labels
+      ctx.font = '14px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#7c3aed';
+      ctx.fillText('V', endX + 15, endY - 15);
+
+      ctx.fillStyle = '#00d4ff';
+      const xLabelY = originY + (Vy >= 0 ? 25 : -15);
+      ctx.fillText('Vx', (originX + xCompEndX) / 2, xLabelY);
+
+      ctx.fillStyle = '#00ffaa';
+      const yLabelX = originX + (Vx >= 0 ? -30 : 15);
+      ctx.fillText('Vy', yLabelX, (originY + yCompEndY) / 2);
+
+      // Stats panel
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.fillRect(10, 10, 240, 130);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(10, 10, 240, 130);
+
+      ctx.font = '12px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#7c3aed';
+      ctx.fillText(`|V| = ${mag.toFixed(1)}`, 20, 32);
+      ctx.fillText(`θ = ${angle}°`, 20, 52);
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText(`Vx = V cos(θ) = ${Vx.toFixed(2)}`, 20, 72);
+
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText(`Vy = V sin(θ) = ${Vy.toFixed(2)}`, 20, 92);
+
+      ctx.fillStyle = '#ffffff';
+      const checkMag = Math.sqrt(Vx * Vx + Vy * Vy);
+      ctx.fillText(`√(Vx² + Vy²) = ${checkMag.toFixed(2)}`, 20, 112);
+    }
+
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

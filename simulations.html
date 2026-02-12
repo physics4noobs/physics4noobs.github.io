@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulations | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="simulations.html" class="nav-link active">Simulations</a></div>
+        <a href="index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> <span>/</span> <span>Simulations</span>
+    </div>
+    <h1>Interactive <span class="text-gradient">Physics Simulations</span></h1>
+    <p>Visualize and interact with fundamental physics concepts. Each simulation brings a chapter to life.</p>
+  </div>
+
+  <!-- Grade Tabs -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <div class="grade-tabs">
+        <button class="grade-tab active" data-grade="grade-xi-sims">Grade XI</button>
+        <button class="grade-tab" data-grade="grade-xii-sims">Grade XII</button>
+      </div>
+
+      <!-- Grade XI Simulations -->
+      <div class="grade-content active" id="grade-xi-sims">
+
+        <!-- Chapter 1: Kinematics -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #00d4ff; padding-left: 12px;">Kinematics</h3>
+        <div class="grid-3">
+          <a href="simulations/kinematics.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#127937;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Kinematics</div>
+              <div class="sim-title">Projectile Motion</div>
+              <div class="sim-desc">Adjust launch angle and velocity to see projectile trajectories in real-time.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/vector-addition.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2818);"><span style="position: relative; z-index: 1;">&#10132;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Kinematics</div>
+              <div class="sim-title">Vector Addition</div>
+              <div class="sim-desc">Two draggable vectors with parallelogram law. See the resultant magnitude and direction.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/vector-components.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a1628);"><span style="position: relative; z-index: 1;">&#128208;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Kinematics</div>
+              <div class="sim-title">Vector Components</div>
+              <div class="sim-desc">Resolve a vector into x and y components. See how magnitude and angle relate.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/projectile-angles.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#127942;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Kinematics</div>
+              <div class="sim-title">Projectile: Angle Comparison</div>
+              <div class="sim-desc">Launch multiple projectiles at different angles simultaneously. Which goes farthest?</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/boat-river.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #0a1628);"><span style="position: relative; z-index: 1;">&#9973;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Kinematics</div>
+              <div class="sim-title">Boat Crossing a River</div>
+              <div class="sim-desc">Navigate a boat across a river current. Explore minimum time vs shortest path strategies.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/rain-man.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#127783;&#65039;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Kinematics</div>
+              <div class="sim-title">Rain Man Problem</div>
+              <div class="sim-desc">Man walking in rain. See how the apparent rain angle changes with walking speed.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 2: Newton's Laws -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #7c3aed; padding-left: 12px;">Newton's Laws of Motion</h3>
+        <div class="grid-3">
+          <a href="simulations/newtons-laws.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2818);"><span style="position: relative; z-index: 1;">&#9878;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Newton's Laws</div>
+              <div class="sim-title">Friction Simulation</div>
+              <div class="sim-desc">Apply force to objects and see F=ma in action. Explore friction, normal force, and net force.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/static-kinetic-friction.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a2818);"><span style="position: relative; z-index: 1;">&#128230;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Newton's Laws</div>
+              <div class="sim-title">Static &amp; Kinetic Friction</div>
+              <div class="sim-desc">Increase applied force and watch the friction graph transition from static to kinetic.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/pulley-wire-constraint.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a1628);"><span style="position: relative; z-index: 1;">&#9881;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Newton's Laws</div>
+              <div class="sim-title">Pulley &amp; Wire Constraint</div>
+              <div class="sim-desc">Two masses over a pulley. See constraint acceleration and tension in real-time.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/wire-ring-constraint.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #1a0a28);"><span style="position: relative; z-index: 1;">&#11044;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Newton's Laws</div>
+              <div class="sim-title">Bead on a Wire</div>
+              <div class="sim-desc">A bead constrained to a circular wire. Explore normal force and constraint motion.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 3: Work, Power & Energy -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #00ffaa; padding-left: 12px;">Work, Power &amp; Energy</h3>
+        <div class="grid-3">
+          <a href="simulations/work-power-energy.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#9889;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Work, Power &amp; Energy</div>
+              <div class="sim-title">Conservation of Energy</div>
+              <div class="sim-desc">Ball on a roller coaster. See kinetic and potential energy transform in real-time.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/work-done.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #281a0a);"><span style="position: relative; z-index: 1;">&#128170;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Work, Power &amp; Energy</div>
+              <div class="sim-title">Work Done by a Force</div>
+              <div class="sim-desc">Block on a surface with force at an angle. Visualize W = Fd cos(&theta;).</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/collisions.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #280a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#128165;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Work, Power &amp; Energy</div>
+              <div class="sim-title">Collisions</div>
+              <div class="sim-desc">Elastic vs inelastic collisions. See momentum bars and energy before/after impact.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/conservation-momentum.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #1a0a28);"><span style="position: relative; z-index: 1;">&#8596;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Work, Power &amp; Energy</div>
+              <div class="sim-title">Conservation of Momentum</div>
+              <div class="sim-desc">Two carts collide. Watch momentum conserve as velocities exchange.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 4: Rotational Motion -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #ff2d75; padding-left: 12px;">Rotational Motion</h3>
+        <div class="grid-3">
+          <a href="simulations/rotational-motion.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2818);"><span style="position: relative; z-index: 1;">&#128260;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
+              <div class="sim-title">Moment of Inertia vs Torque</div>
+              <div class="sim-desc">Spinning wheel. Control torque and observe angular velocity and moment of inertia.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/center-of-mass.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2818);"><span style="position: relative; z-index: 1;">&#9678;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
+              <div class="sim-title">Finding Center of Mass</div>
+              <div class="sim-desc">Place point masses on a plane. Watch the center of mass marker update live.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/goat-vs-boat.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #281a0a);"><span style="position: relative; z-index: 1;">&#128674;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
+              <div class="sim-title">Goat vs Boat</div>
+              <div class="sim-desc">Person walks on a boat. COM stays fixed while the boat moves opposite.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/inclined-plane-race.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #1a0a28);"><span style="position: relative; z-index: 1;">&#127947;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
+              <div class="sim-title">Inclined Plane Race</div>
+              <div class="sim-desc">Sphere, cylinder, ring, and hollow sphere race down a ramp. Who wins?</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/atwood-machine.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #280a1a);"><span style="position: relative; z-index: 1;">&#9877;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
+              <div class="sim-title">Atwood Machine</div>
+              <div class="sim-desc">Two blocks, a pulley with mass, friction, and torque. Classic constraint problem.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/angular-momentum.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2828);"><span style="position: relative; z-index: 1;">&#128675;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
+              <div class="sim-title">Angular Momentum</div>
+              <div class="sim-desc">Ice skater effect: change the radius and watch angular velocity change to conserve L.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/rolling-vs-rotation.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #0a1628);"><span style="position: relative; z-index: 1;">&#9899;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
+              <div class="sim-title">Rolling vs Rotation</div>
+              <div class="sim-desc">Side-by-side comparison of pure rotation vs rolling without slipping.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 5: Gravitation -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #f59e0b; padding-left: 12px;">Gravitation</h3>
+        <div class="grid-3">
+          <a href="simulations/gravitation.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#127759;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Gravitation</div>
+              <div class="sim-title">Universal Law of Gravitation</div>
+              <div class="sim-desc">Two masses attract. See force arrows scale with F = GMm/r&sup2;.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/gravity-variation.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #281a0a);"><span style="position: relative; z-index: 1;">&#128200;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Gravitation</div>
+              <div class="sim-title">Variation of Gravity</div>
+              <div class="sim-desc">How does g change from Earth's center through the surface to outer space?</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 6: Mechanical Properties of Solids -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #00d4ff; padding-left: 12px;">Mechanical Properties of Solids</h3>
+        <div class="grid-3">
+          <a href="simulations/hookes-law.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #0a1628);"><span style="position: relative; z-index: 1;">&#128204;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Mech. Properties</div>
+              <div class="sim-title">Hooke's Law</div>
+              <div class="sim-desc">Spring with a load. See extension vs force graph and measure the spring constant.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/modulus-elasticity.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #281a0a);"><span style="position: relative; z-index: 1;">&#128200;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Mech. Properties</div>
+              <div class="sim-title">Modulus of Elasticity</div>
+              <div class="sim-desc">Compare stress-strain curves for steel, rubber, glass, and copper.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/poissons-ratio.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2828);"><span style="position: relative; z-index: 1;">&#9645;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Mech. Properties</div>
+              <div class="sim-title">Poisson's Ratio</div>
+              <div class="sim-desc">Stretch a block and see lateral contraction. Compare steel, rubber, cork, auxetic materials.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 7: Fluid Mechanics -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #7c3aed; padding-left: 12px;">Fluid Mechanics</h3>
+        <div class="grid-3">
+          <a href="simulations/fluid-dynamics.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2828);"><span style="position: relative; z-index: 1;">&#127754;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
+              <div class="sim-title">Bernoulli's Principle</div>
+              <div class="sim-desc">Fluid flow through pipes of varying cross-sections. See Bernoulli's principle in action.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/manometer.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2818);"><span style="position: relative; z-index: 1;">&#9774;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
+              <div class="sim-title">Manometer</div>
+              <div class="sim-desc">U-tube manometer with mercury, water, or oil. Measure gas pressure from height difference.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/hydrostatic-paradox.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #0a1628);"><span style="position: relative; z-index: 1;">&#127754;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
+              <div class="sim-title">Hydrostatic Paradox</div>
+              <div class="sim-desc">Three differently shaped containers, same fluid height, same pressure at the bottom!</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/pascals-law.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#128296;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
+              <div class="sim-title">Pascal's Law</div>
+              <div class="sim-desc">Hydraulic press: small force on small piston lifts heavy load on large piston.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/continuity-equation.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#128167;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
+              <div class="sim-title">Continuity Equation</div>
+              <div class="sim-desc">Pipe narrows, velocity increases. Visualize A&#8321;v&#8321; = A&#8322;v&#8322; with animated flow.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/venturimeter.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #1a0a28);"><span style="position: relative; z-index: 1;">&#128295;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
+              <div class="sim-title">Venturimeter</div>
+              <div class="sim-desc">Narrowing tube with pressure gauges. Measure flow rate from pressure difference.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/magnus-effect.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #280a1a, #0a1628);"><span style="position: relative; z-index: 1;">&#9917;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
+              <div class="sim-title">Magnus Effect</div>
+              <div class="sim-desc">Spinning ball curves through air. See airflow and pressure asymmetry.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 8: Heat & Thermodynamics -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #ff2d75; padding-left: 12px;">Heat &amp; Thermodynamics</h3>
+        <div class="grid-3">
+          <a href="simulations/thermodynamics.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #280a0a, #281a0a);"><span style="position: relative; z-index: 1;">&#128293;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Thermodynamics</div>
+              <div class="sim-title">PV Diagrams &amp; Gas Laws</div>
+              <div class="sim-desc">Interactive PV diagram with isothermal, adiabatic, and isobaric processes.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/calorimetry.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #280a0a);"><span style="position: relative; z-index: 1;">&#127777;&#65039;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Thermodynamics</div>
+              <div class="sim-title">Calorimetry</div>
+              <div class="sim-desc">Mix hot and cold substances. Calculate equilibrium temperature with Q = mc&Delta;T.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 9: Simple Harmonic Motion -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #00ffaa; padding-left: 12px;">Simple Harmonic Motion</h3>
+        <div class="grid-3">
+          <a href="simulations/shm-waves.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#12336;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; SHM</div>
+              <div class="sim-title">Spring-Mass Oscillator</div>
+              <div class="sim-desc">Two spring-mass oscillators with independent amplitude, angular frequency, and phase controls.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/pendulum.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a1628);"><span style="position: relative; z-index: 1;">&#128344;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; SHM</div>
+              <div class="sim-title">Simple Pendulum</div>
+              <div class="sim-desc">Adjust length and gravity. Measure period T = 2&pi;&radic;(L/g) with energy visualization.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Chapter 10: Waves -->
+        <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #f59e0b; padding-left: 12px;">Waves</h3>
+        <div class="grid-3">
+          <a href="simulations/waves.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2828);"><span style="position: relative; z-index: 1;">&#127754;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Waves</div>
+              <div class="sim-title">Waves &amp; Standing Waves</div>
+              <div class="sim-desc">Transverse waves, superposition, and standing wave formation. Nodes and antinodes.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/beats.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #280a1a);"><span style="position: relative; z-index: 1;">&#127925;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Waves</div>
+              <div class="sim-title">Beats</div>
+              <div class="sim-desc">Two close frequencies create a beat pattern. See f_beat = |f&#8321; &minus; f&#8322;|.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+          <a href="simulations/doppler-effect.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #1a0a28);"><span style="position: relative; z-index: 1;">&#128680;</span></div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XI &bull; Waves</div>
+              <div class="sim-title">Doppler Effect</div>
+              <div class="sim-desc">Moving source compresses wavefronts ahead and stretches them behind. See frequency shift.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Grade XII Simulations -->
+      <div class="grade-content" id="grade-xii-sims">
+        <div class="grid-3">
+
+          <a href="simulations/electrostatics.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #281a0a);">
+              <span style="position: relative; z-index: 1;">&#9889;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 1</div>
+              <div class="sim-title">Electrostatics &amp; Capacitance</div>
+              <div class="sim-desc">Place point charges and visualize electric field lines and equipotential surfaces in real-time.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+          <a href="simulations/current-electricity.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #0a1628);">
+              <span style="position: relative; z-index: 1;">&#128268;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 2</div>
+              <div class="sim-title">Current Electricity</div>
+              <div class="sim-desc">Build circuits with resistors, batteries, and switches. See current flow and voltage drops live.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+          <a href="simulations/magnetism.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a1628);">
+              <span style="position: relative; z-index: 1;">&#129522;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 3</div>
+              <div class="sim-title">Moving Charges &amp; Magnetism</div>
+              <div class="sim-desc">Watch charged particles curve in magnetic fields. Explore the Lorentz force and cyclotron motion.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+          <a href="simulations/emi.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #1a0a28);">
+              <span style="position: relative; z-index: 1;">&#9851;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 4</div>
+              <div class="sim-title">Electromagnetic Induction</div>
+              <div class="sim-desc">Move a magnet through a coil and see induced EMF. Explore Faraday's law and Lenz's law.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+          <a href="simulations/ac-circuits.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a2818);">
+              <span style="position: relative; z-index: 1;">&#126;&#126;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 5</div>
+              <div class="sim-title">Alternating Current</div>
+              <div class="sim-desc">Visualize AC waveforms, phasor diagrams, and resonance in RLC circuits with adjustable parameters.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+          <a href="simulations/em-waves.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #280a1a);">
+              <span style="position: relative; z-index: 1;">&#128225;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 6</div>
+              <div class="sim-title">Electromagnetic Waves</div>
+              <div class="sim-desc">See E and B fields oscillating perpendicular to each other. Explore the EM spectrum interactively.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+          <a href="simulations/ray-optics.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #281a0a);">
+              <span style="position: relative; z-index: 1;">&#128269;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 7</div>
+              <div class="sim-title">Ray Optics</div>
+              <div class="sim-desc">Interactive lens and mirror ray tracing. Place objects and see image formation with ray diagrams.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+          <a href="simulations/wave-optics.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2828);">
+              <span style="position: relative; z-index: 1;">&#127752;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 8</div>
+              <div class="sim-title">Wave Optics</div>
+              <div class="sim-desc">Young's double slit experiment. Adjust slit width, spacing, and wavelength to see interference patterns.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+          <a href="simulations/modern-physics.html" class="sim-card reveal">
+            <div class="sim-preview" style="background: linear-gradient(135deg, #280a1a, #0a1628);">
+              <span style="position: relative; z-index: 1;">&#9883;</span>
+            </div>
+            <div class="sim-body">
+              <div class="sim-grade">Grade XII &bull; Chapter 9</div>
+              <div class="sim-title">Modern Physics</div>
+              <div class="sim-desc">Photoelectric effect simulator. Vary light frequency and intensity to observe electron emission.</div>
+              <div class="sim-link">Launch Simulation &rarr;</div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="chapters.html">Chapters</a><a href="lectures.html">Lectures</a><a href="notes.html">Notes</a><a href="books.html">Books</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

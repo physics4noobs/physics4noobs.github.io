@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poisson's Ratio | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Mechanical Properties</span>
+        </div>
+
+        <h1>&#11036; Poisson's Ratio</h1>
+        <p class="subtitle">Grade XI - Mechanical Properties of Solids</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Applied Strain: <span id="strainValue">0</span>%</label>
+                    <input type="range" id="strainSlider" min="0" max="30" value="0" step="0.5">
+                </div>
+                <div class="control-group">
+                    <label>Material Preset</label>
+                    <select id="materialSelect">
+                        <option value="0.3">Steel (ν = 0.3)</option>
+                        <option value="0.5">Rubber (ν = 0.5)</option>
+                        <option value="0">Cork (ν = 0)</option>
+                        <option value="-0.5">Auxetic (ν = -0.5)</option>
+                    </select>
+                </div>
+                <div id="stats" class="stats-panel"></div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>Poisson's ratio describes how materials contract laterally when stretched. Most materials have positive ν (they thin when stretched), but auxetic materials expand laterally.</p>
+            <div class="formula-box">
+                <strong>Key Formulas:</strong><br>
+                ν = -ε_lateral/ε_longitudinal<br>
+                Range: -1 ≤ ν ≤ 0.5<br>
+                Positive ν: material thins when stretched<br>
+                Negative ν: material expands laterally when stretched
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const strainSlider = document.getElementById('strainSlider');
+        const strainValue = document.getElementById('strainValue');
+        const materialSelect = document.getElementById('materialSelect');
+
+        let longitudinalStrain = 0;
+        let poissonsRatio = 0.3;
+
+        const originalWidth = 120;
+        const originalHeight = 200;
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        strainSlider.oninput = function() {
+            longitudinalStrain = parseFloat(this.value) / 100;
+            strainValue.textContent = this.value;
+            draw();
+        };
+
+        materialSelect.onchange = function() {
+            poissonsRatio = parseFloat(this.value);
+            draw();
+        };
+
+        function drawBlock() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid background
+            ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            // Calculate deformed dimensions
+            const newHeight = originalHeight * (1 + longitudinalStrain);
+            const lateralStrain = -poissonsRatio * longitudinalStrain;
+            const newWidth = originalWidth * (1 + lateralStrain);
+
+            // Draw original outline (dashed)
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.strokeRect(
+                centerX - originalWidth / 2,
+                centerY - originalHeight / 2,
+                originalWidth,
+                originalHeight
+            );
+            ctx.setLineDash([]);
+
+            // Draw deformed block
+            const deformedX = centerX - newWidth / 2;
+            const deformedY = centerY - newHeight / 2;
+
+            // Fill with color
+            ctx.fillStyle = 'rgba(0,212,255,0.15)';
+            ctx.fillRect(deformedX, deformedY, newWidth, newHeight);
+
+            // Draw grid pattern on block
+            ctx.strokeStyle = '#7c3aed';
+            ctx.lineWidth = 1;
+            const gridCols = 5;
+            const gridRows = 8;
+
+            for (let i = 0; i <= gridCols; i++) {
+                ctx.beginPath();
+                ctx.moveTo(deformedX + i * newWidth / gridCols, deformedY);
+                ctx.lineTo(deformedX + i * newWidth / gridCols, deformedY + newHeight);
+                ctx.stroke();
+            }
+            for (let i = 0; i <= gridRows; i++) {
+                ctx.beginPath();
+                ctx.moveTo(deformedX, deformedY + i * newHeight / gridRows);
+                ctx.lineTo(deformedX + newWidth, deformedY + i * newHeight / gridRows);
+                ctx.stroke();
+            }
+
+            // Outline
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(deformedX, deformedY, newWidth, newHeight);
+
+            // Measurement arrows for longitudinal change
+            const arrowY = deformedY + newHeight + 40;
+            drawArrow(centerX, centerY - originalHeight / 2, centerX, centerY - newHeight / 2, '#00ffaa', 'vertical');
+
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText(`ΔL = ${((newHeight - originalHeight)).toFixed(1)} px`, centerX + 10, centerY - (originalHeight / 2 + newHeight / 2) / 2);
+
+            // Measurement arrows for lateral change
+            drawArrow(centerX - originalWidth / 2, centerY, centerX - newWidth / 2, centerY, '#ff2d75', 'horizontal');
+
+            ctx.fillStyle = '#ff2d75';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Δw = ${((newWidth - originalWidth)).toFixed(1)} px`, centerX - (originalWidth / 2 + newWidth / 2) / 2, centerY - 10);
+
+            // Labels
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('Original Dimensions', centerX, 30);
+            ctx.fillText(`${originalWidth} × ${originalHeight} px`, centerX, 50);
+
+            // Title
+            ctx.font = '16px JetBrains Mono, monospace';
+            ctx.fillText(longitudinalStrain === 0 ? 'Undeformed Block' : 'Deformed Block', centerX, canvas.height - 20);
+        }
+
+        function drawArrow(x1, y1, x2, y2, color, direction) {
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+
+            // Line
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Arrow heads
+            const headSize = 8;
+            if (direction === 'vertical') {
+                // Top arrow
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x1 - headSize / 2, y1 + headSize);
+                ctx.lineTo(x1 + headSize / 2, y1 + headSize);
+                ctx.closePath();
+                ctx.fill();
+
+                // Bottom arrow
+                ctx.beginPath();
+                ctx.moveTo(x2, y2);
+                ctx.lineTo(x2 - headSize / 2, y2 - headSize);
+                ctx.lineTo(x2 + headSize / 2, y2 - headSize);
+                ctx.closePath();
+                ctx.fill();
+            } else {
+                // Left arrow
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x1 + headSize, y1 - headSize / 2);
+                ctx.lineTo(x1 + headSize, y1 + headSize / 2);
+                ctx.closePath();
+                ctx.fill();
+
+                // Right arrow
+                ctx.beginPath();
+                ctx.moveTo(x2, y2);
+                ctx.lineTo(x2 - headSize, y2 - headSize / 2);
+                ctx.lineTo(x2 - headSize, y2 + headSize / 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function updateStats() {
+            const lateralStrain = -poissonsRatio * longitudinalStrain;
+            const newHeight = originalHeight * (1 + longitudinalStrain);
+            const newWidth = originalWidth * (1 + lateralStrain);
+
+            document.getElementById('stats').innerHTML = `
+                <div><strong>Poisson's Ratio (ν):</strong> ${poissonsRatio.toFixed(2)}</div>
+                <div><strong>Longitudinal Strain:</strong> ${(longitudinalStrain * 100).toFixed(1)}%</div>
+                <div><strong>Lateral Strain:</strong> ${(lateralStrain * 100).toFixed(1)}%</div>
+                <div><strong>Current Dimensions:</strong> ${newWidth.toFixed(1)} × ${newHeight.toFixed(1)} px</div>
+                <div><strong>Behavior:</strong> ${poissonsRatio > 0 ? 'Thins when stretched' : poissonsRatio < 0 ? 'Expands when stretched' : 'No lateral change'}</div>
+            `;
+        }
+
+        function draw() {
+            drawBlock();
+            updateStats();
+        }
+
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

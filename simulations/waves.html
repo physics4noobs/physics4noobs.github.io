@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waves Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+  <style>
+    body { background: #060612; }
+    .wave-page { max-width: 1040px; margin: 0 auto; padding: 90px 20px 40px; }
+    .wave-page .breadcrumb { justify-content: flex-start; margin-bottom: 8px; }
+
+    /* ─── Toolbar ─── */
+    .toolbar {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      background: rgba(12,12,30,0.95); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 10px 16px; margin-bottom: 16px;
+      backdrop-filter: blur(12px);
+    }
+    .play-btn {
+      width: 42px; height: 42px; border-radius: 50%; border: none; cursor: pointer;
+      background: linear-gradient(135deg, #f59e0b, #f97316); color: #1a0800;
+      font-size: 16px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 18px rgba(245,158,11,0.35); transition: 0.2s;
+      flex-shrink: 0;
+    }
+    .play-btn:hover { transform: scale(1.08); box-shadow: 0 0 24px rgba(245,158,11,0.5); }
+    .play-btn.playing { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 0 18px rgba(239,68,68,0.35); }
+
+    .speed-group {
+      display: flex; background: rgba(255,255,255,0.04); border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06); overflow: hidden;
+    }
+    .speed-btn {
+      padding: 7px 14px; font-size: 0.76rem; font-family: 'JetBrains Mono', monospace;
+      background: none; border: none; color: #6b6b85; cursor: pointer; transition: 0.2s;
+    }
+    .speed-btn.active { background: rgba(245,158,11,0.15); color: #f59e0b; }
+    .speed-btn:hover:not(.active) { color: #a0a0b8; }
+
+    .time-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: #f59e0b;
+    }
+    .time-chip .time-label { color: #6b6b85; font-size: 0.7rem; margin-right: 2px; }
+    .time-chip .time-val { min-width: 58px; }
+
+    .toolbar-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.06); flex-shrink: 0; }
+    .toolbar-spacer { flex: 1; }
+
+    .mode-group {
+      display: flex; background: rgba(255,255,255,0.04); border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06); overflow: hidden;
+    }
+    .mode-btn {
+      padding: 7px 14px; font-size: 0.74rem; font-family: 'JetBrains Mono', monospace;
+      background: none; border: none; color: #6b6b85; cursor: pointer; transition: 0.2s;
+      white-space: nowrap;
+    }
+    .mode-btn.active { background: rgba(0,212,255,0.12); color: #00d4ff; }
+    .mode-btn:hover:not(.active) { color: #a0a0b8; }
+
+    /* ─── Wave Canvas ─── */
+    .wave-canvas-wrap {
+      background: rgba(12,12,30,0.9); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; overflow: hidden; margin-bottom: 14px;
+    }
+    .wave-canvas-wrap canvas { width: 100%; display: block; }
+
+    /* ─── Controls Row ─── */
+    .ctrl-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;
+    }
+    .ctrl-panel {
+      background: rgba(12,12,30,0.9); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 14px 18px;
+    }
+    .panel-title {
+      font-family: 'Orbitron', monospace; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .wave1-title { color: #00d4ff; }
+    .wave2-title { color: #f59e0b; }
+
+    .ctrl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .ctrl-group { display: flex; flex-direction: column; gap: 3px; }
+    .ctrl-label {
+      font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; color: #6b6b85;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ctrl-val { font-weight: 600; }
+    .wave1 .ctrl-val { color: #00d4ff; }
+    .wave2 .ctrl-val { color: #f59e0b; }
+
+    input[type=range] { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; outline: none; background: rgba(255,255,255,0.08); }
+    .wave1 input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #00d4ff; cursor: pointer; box-shadow: 0 0 6px rgba(0,212,255,0.4); }
+    .wave2 input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #f59e0b; cursor: pointer; box-shadow: 0 0 6px rgba(245,158,11,0.4); }
+
+    .toggle-group { display: flex; align-items: center; gap: 8px; }
+    .toggle-label { font-size: 0.74rem; color: #6b6b85; white-space: nowrap; }
+    .toggle-switch { position: relative; width: 38px; height: 20px; cursor: pointer; }
+    .toggle-switch input { display: none; }
+    .toggle-track {
+      position: absolute; inset: 0; background: rgba(255,255,255,0.08);
+      border-radius: 10px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.06);
+    }
+    .toggle-switch input:checked + .toggle-track { background: rgba(245,158,11,0.25); border-color: rgba(245,158,11,0.4); }
+    .toggle-thumb {
+      position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+      background: #6b6b85; border-radius: 50%; transition: 0.3s;
+    }
+    .toggle-switch input:checked ~ .toggle-thumb { left: 20px; background: #f59e0b; }
+
+    .ctrl-panel.disabled { opacity: 0.25; pointer-events: none; filter: saturate(0); }
+
+    /* ─── Info Cards ─── */
+    .info-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    .info-card {
+      background: rgba(12,12,30,0.9); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 14px 16px; text-align: center;
+    }
+    .info-label { font-size: 0.68rem; color: #6b6b85; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .info-val { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: #00d4ff; font-weight: 600; }
+    .info-unit { font-size: 0.7rem; color: #6b6b85; margin-left: 2px; }
+
+    /* ─── Questions ─── */
+    .questions-section {
+      background: rgba(12,12,30,0.9); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 20px 24px;
+    }
+    .q-title {
+      font-family: 'Orbitron', monospace; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 1.5px; color: #6b6b85; margin-bottom: 16px; text-transform: uppercase;
+    }
+    .q-item {
+      border: 1px solid rgba(255,255,255,0.05); border-radius: 10px;
+      margin-bottom: 8px; overflow: hidden; transition: 0.3s;
+    }
+    .q-item:hover { border-color: rgba(255,255,255,0.1); }
+    .q-question {
+      padding: 14px 18px; cursor: pointer; display: flex; align-items: center;
+      justify-content: space-between; font-size: 0.88rem; color: #d0d0e0;
+      user-select: none; transition: 0.2s;
+    }
+    .q-question:hover { background: rgba(255,255,255,0.02); }
+    .q-arrow { color: #6b6b85; font-size: 0.7rem; transition: 0.3s; }
+    .q-item.open .q-arrow { transform: rotate(180deg); color: #f59e0b; }
+    .q-answer {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+      font-size: 0.84rem; color: #a0a0b8; line-height: 1.7;
+    }
+    .q-item.open .q-answer { max-height: 300px; }
+    .q-answer-inner { padding: 0 18px 16px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 12px; }
+
+    @media (max-width: 768px) {
+      .ctrl-row { grid-template-columns: 1fr; }
+      .info-row { grid-template-columns: 1fr; }
+      .toolbar { gap: 6px; }
+      .ctrl-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="wave-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Waves</span></div>
+    <h1 style="font-family:var(--font-display);font-size:1.6rem;margin:8px 0 4px;letter-spacing:1px;">Transverse Waves &amp; Superposition</h1>
+    <p style="color:var(--text-secondary);margin-bottom:16px;font-size:0.9rem;">Grade XI &bull; Wave propagation, superposition &amp; standing waves</p>
+
+    <!-- ─── Toolbar ─── -->
+    <div class="toolbar">
+      <button class="play-btn" id="playBtn" onclick="togglePlay()" title="Play / Pause">&#9654;</button>
+      <div class="speed-group">
+        <button class="speed-btn active" data-speed="0.5" onclick="setSpeed(0.5,this)">0.5x</button>
+        <button class="speed-btn" data-speed="1" onclick="setSpeed(1,this)">1x</button>
+        <button class="speed-btn" data-speed="2" onclick="setSpeed(2,this)">2x</button>
+      </div>
+      <div class="time-chip">
+        <span class="time-label">t</span>
+        <span class="time-val" id="timeDisplay">0.00 s</span>
+      </div>
+      <div class="toolbar-spacer"></div>
+      <div class="mode-group">
+        <button class="mode-btn active" data-mode="travelling" onclick="setMode('travelling',this)">Travelling</button>
+        <button class="mode-btn" data-mode="standing" onclick="setMode('standing',this)">Standing</button>
+        <button class="mode-btn" data-mode="superposition" onclick="setMode('superposition',this)">Superposition</button>
+      </div>
+    </div>
+
+    <!-- ─── Main Wave Canvas ─── -->
+    <div class="wave-canvas-wrap">
+      <canvas id="waveCanvas" width="1000" height="350"></canvas>
+    </div>
+
+    <!-- ─── Info Cards ─── -->
+    <div class="info-row">
+      <div class="info-card">
+        <div class="info-label">Wave Speed (v)</div>
+        <div class="info-val" id="infoSpeed">2.0<span class="info-unit">m/s</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Wavelength (&lambda;)</div>
+        <div class="info-val" id="infoLambda">1.00<span class="info-unit">m</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Frequency (f)</div>
+        <div class="info-val" id="infoFreq">2.00<span class="info-unit">Hz</span></div>
+      </div>
+    </div>
+
+    <!-- ─── Controls ─── -->
+    <div class="ctrl-row">
+      <div class="ctrl-panel wave1" id="wave1Panel">
+        <div class="panel-title wave1-title">Wave 1 &mdash; y&#8321; = A&#8321; sin(kx &minus; &omega;t)</div>
+        <div class="ctrl-grid">
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>A&#8321;</span><span class="ctrl-val" id="a1Val">1.0</span></div>
+            <input type="range" id="a1" min="0.2" max="2" step="0.1" value="1.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>&lambda;&#8321;</span><span class="ctrl-val" id="l1Val">1.0 m</span></div>
+            <input type="range" id="l1" min="0.3" max="3" step="0.1" value="1.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>&omega;&#8321;</span><span class="ctrl-val" id="w1Val">4.0 rad/s</span></div>
+            <input type="range" id="w1" min="1" max="12" step="0.5" value="4.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>Direction</span><span class="ctrl-val" id="d1Val">+x &rarr;</span></div>
+            <input type="range" id="d1" min="0" max="1" step="1" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="ctrl-panel wave2" id="wave2Panel">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+          <span class="panel-title wave2-title" style="margin-bottom:0;">Wave 2 &mdash; y&#8322; = A&#8322; sin(kx &minus; &omega;t)</span>
+          <div class="toggle-group">
+            <span class="toggle-label">Enable</span>
+            <label class="toggle-switch"><input type="checkbox" id="wave2Toggle" checked onchange="toggleWave2()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+          </div>
+        </div>
+        <div class="ctrl-grid">
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>A&#8322;</span><span class="ctrl-val" id="a2Val">1.0</span></div>
+            <input type="range" id="a2" min="0.2" max="2" step="0.1" value="1.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>&lambda;&#8322;</span><span class="ctrl-val" id="l2Val">1.0 m</span></div>
+            <input type="range" id="l2" min="0.3" max="3" step="0.1" value="1.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>&omega;&#8322;</span><span class="ctrl-val" id="w2Val">4.0 rad/s</span></div>
+            <input type="range" id="w2" min="1" max="12" step="0.5" value="4.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>Direction</span><span class="ctrl-val" id="d2Val">&larr; -x</span></div>
+            <input type="range" id="d2" min="0" max="1" step="1" value="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Questions ─── -->
+    <div class="questions-section">
+      <div class="q-title">Test Your Understanding</div>
+
+      <div class="q-item" onclick="this.classList.toggle('open')">
+        <div class="q-question"><span>Q1. What determines the speed of a transverse wave on a string?</span><span class="q-arrow">&#9660;</span></div>
+        <div class="q-answer"><div class="q-answer-inner">The speed of a transverse wave on a string depends on the <b>tension (T)</b> and <b>linear mass density (&mu;)</b> of the string: v = &radic;(T/&mu;). The wave speed does <em>not</em> depend on amplitude or frequency. In this simulation, v = &lambda;f = &lambda;&omega;/(2&pi;). Try changing the wavelength while keeping &omega; fixed &mdash; the wave speed changes!</div></div>
+      </div>
+
+      <div class="q-item" onclick="this.classList.toggle('open')">
+        <div class="q-question"><span>Q2. What is the principle of superposition?</span><span class="q-arrow">&#9660;</span></div>
+        <div class="q-answer"><div class="q-answer-inner">When two or more waves pass through the same medium simultaneously, the <b>resultant displacement</b> at any point is the algebraic sum of the individual displacements: y<sub>net</sub> = y&#8321; + y&#8322;. This is the <em>principle of superposition</em>. Switch to "Superposition" mode to see the green resultant wave. Notice how it can have larger amplitude (constructive interference) or smaller amplitude (destructive interference) depending on phase.</div></div>
+      </div>
+
+      <div class="q-item" onclick="this.classList.toggle('open')">
+        <div class="q-question"><span>Q3. How do standing waves form?</span><span class="q-arrow">&#9660;</span></div>
+        <div class="q-answer"><div class="q-answer-inner">Standing waves form when <b>two waves of equal amplitude, frequency, and wavelength</b> travel in <em>opposite</em> directions and superpose. Switch to "Standing" mode &mdash; the simulation automatically sets both waves with equal parameters moving in opposite directions. You'll see <b>nodes</b> (points of zero displacement) and <b>antinodes</b> (points of maximum displacement). The standing wave equation is: y = 2A sin(kx) cos(&omega;t).</div></div>
+      </div>
+
+      <div class="q-item" onclick="this.classList.toggle('open')">
+        <div class="q-question"><span>Q4. What is the difference between nodes and antinodes?</span><span class="q-arrow">&#9660;</span></div>
+        <div class="q-answer"><div class="q-answer-inner"><b>Nodes</b> are points that remain permanently at rest (zero displacement). They occur where sin(kx) = 0, i.e., at x = n&lambda;/2 (n = 0, 1, 2...). <b>Antinodes</b> are points with maximum amplitude of oscillation. They occur where sin(kx) = &pm;1, i.e., midway between consecutive nodes at x = (2n+1)&lambda;/4. The distance between consecutive nodes (or antinodes) is &lambda;/2. Look for the labelled N and A markers in standing wave mode!</div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div class="sim-info">
+        <h2>About This Simulation</h2>
+        <p>Visualize transverse wave propagation, superposition, and standing wave formation. Two independent waves with adjustable amplitude, wavelength, frequency, and direction can be superposed. Switch between modes to see travelling waves, standing waves (two identical counter-propagating waves), or free superposition of any two waves.</p>
+        <div class="formula-box" style="margin-top:14px;">y = A sin(kx &minus; &omega;t) &nbsp;|&nbsp; v = &lambda;f = &omega;/k &nbsp;|&nbsp; Standing: y = 2A sin(kx) cos(&omega;t) &nbsp;|&nbsp; k = 2&pi;/&lambda;</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ══════════════════════════════════════════════
+  //  STATE
+  // ══════════════════════════════════════════════
+  const S = {
+    running: false, time: 0, speed: 0.5,
+    mode: 'travelling', wave2On: true
+  };
+
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Slider refs
+  const sl = {
+    a1: document.getElementById('a1'), l1: document.getElementById('l1'),
+    w1: document.getElementById('w1'), d1: document.getElementById('d1'),
+    a2: document.getElementById('a2'), l2: document.getElementById('l2'),
+    w2: document.getElementById('w2'), d2: document.getElementById('d2')
+  };
+
+  // ── helpers ──
+  function getWave(n) {
+    const A = parseFloat(sl['a'+n].value);
+    const lam = parseFloat(sl['l'+n].value);
+    const w = parseFloat(sl['w'+n].value);
+    const dir = parseInt(sl['d'+n].value) === 0 ? 1 : -1; // 0=+x, 1=-x
+    const k = 2 * Math.PI / lam;
+    return { A, lam, w, k, dir };
+  }
+
+  function yAt(wave, x, t) {
+    return wave.A * Math.sin(wave.k * x - wave.dir * wave.w * t);
+  }
+
+  // ── slider labels ──
+  function updateLabels() {
+    document.getElementById('a1Val').textContent = parseFloat(sl.a1.value).toFixed(1);
+    document.getElementById('l1Val').textContent = parseFloat(sl.l1.value).toFixed(1) + ' m';
+    document.getElementById('w1Val').textContent = parseFloat(sl.w1.value).toFixed(1) + ' rad/s';
+    document.getElementById('d1Val').innerHTML = parseInt(sl.d1.value) === 0 ? '+x &rarr;' : '&larr; -x';
+    document.getElementById('a2Val').textContent = parseFloat(sl.a2.value).toFixed(1);
+    document.getElementById('l2Val').textContent = parseFloat(sl.l2.value).toFixed(1) + ' m';
+    document.getElementById('w2Val').textContent = parseFloat(sl.w2.value).toFixed(1) + ' rad/s';
+    document.getElementById('d2Val').innerHTML = parseInt(sl.d2.value) === 0 ? '+x &rarr;' : '&larr; -x';
+
+    // Update info cards
+    const w1 = getWave(1);
+    const lam = w1.lam;
+    const freq = w1.w / (2 * Math.PI);
+    const speed = lam * freq;
+    document.getElementById('infoSpeed').innerHTML = speed.toFixed(2) + '<span class="info-unit">m/s</span>';
+    document.getElementById('infoLambda').innerHTML = lam.toFixed(2) + '<span class="info-unit">m</span>';
+    document.getElementById('infoFreq').innerHTML = freq.toFixed(2) + '<span class="info-unit">Hz</span>';
+  }
+  Object.values(sl).forEach(s => s.addEventListener('input', () => { updateLabels(); drawAll(); }));
+  updateLabels();
+
+  // ══════════════════════════════════════════════
+  //  DRAW
+  // ══════════════════════════════════════════════
+  function drawAll() {
+    const W = canvas.width, H = canvas.height;
+    const w1 = getWave(1), w2 = getWave(2);
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    ctx.fillStyle = '#060612';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = 'rgba(0,212,255,0.025)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+    const pad = { l: 40, r: 20, t: 30, b: 30 };
+    const gW = W - pad.l - pad.r;
+    const gH = H - pad.t - pad.b;
+    const midY = pad.t + gH / 2;
+    const maxA = 2.2; // max displayable amplitude
+    const scale = gH / 2 / maxA;
+
+    // Horizontal axis
+    ctx.beginPath(); ctx.moveTo(pad.l, midY); ctx.lineTo(pad.l + gW, midY);
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1; ctx.stroke();
+
+    // Axis labels
+    ctx.fillStyle = 'rgba(255,255,255,0.15)'; ctx.font = '10px JetBrains Mono, monospace'; ctx.textAlign = 'right';
+    ctx.fillText('x (m)', pad.l + gW, midY + 20);
+    ctx.textAlign = 'center';
+    ctx.fillText('y', pad.l - 14, pad.t + 6);
+
+    // X-axis distance scale marks
+    const xRange = 6; // show 6 meters
+    const pxPerMeter = gW / xRange;
+    ctx.fillStyle = 'rgba(255,255,255,0.08)'; ctx.font = '9px JetBrains Mono';
+    for (let m = 0; m <= xRange; m++) {
+      const px = pad.l + m * pxPerMeter;
+      ctx.beginPath(); ctx.moveTo(px, midY - 4); ctx.lineTo(px, midY + 4);
+      ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.fillText(m, px, midY + 16);
+    }
+
+    // Y-axis marks
+    for (let a = -2; a <= 2; a++) {
+      if (a === 0) continue;
+      const py = midY - a * scale;
+      ctx.beginPath(); ctx.moveTo(pad.l - 4, py); ctx.lineTo(pad.l + 4, py);
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.06)'; ctx.textAlign = 'right'; ctx.font = '9px JetBrains Mono';
+      ctx.fillText(a > 0 ? '+' + a : a, pad.l - 8, py + 3);
+      // faint horizontal grid
+      ctx.beginPath(); ctx.moveTo(pad.l, py); ctx.lineTo(pad.l + gW, py);
+      ctx.strokeStyle = 'rgba(255,255,255,0.02)'; ctx.stroke();
+    }
+
+    const t = S.time;
+
+    // In standing mode, force wave2 to mirror wave1
+    let effectiveW2 = w2;
+    if (S.mode === 'standing') {
+      effectiveW2 = { A: w1.A, lam: w1.lam, w: w1.w, k: w1.k, dir: -w1.dir };
+    }
+
+    const showWave2 = S.wave2On || S.mode === 'standing';
+
+    // ── Draw Wave 1 (cyan) ──
+    ctx.beginPath();
+    for (let px = 0; px <= gW; px++) {
+      const x = (px / gW) * xRange;
+      const y = yAt(w1, x, t);
+      const screenX = pad.l + px;
+      const screenY = midY - y * scale;
+      if (px === 0) ctx.moveTo(screenX, screenY);
+      else ctx.lineTo(screenX, screenY);
+    }
+    ctx.strokeStyle = '#00d4ff';
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 6; ctx.stroke(); ctx.shadowBlur = 0;
+
+    // Particle dots on wave 1
+    for (let m = 0; m < xRange; m += 0.25) {
+      const y = yAt(w1, m, t);
+      const px = pad.l + (m / xRange) * gW;
+      const py = midY - y * scale;
+      ctx.beginPath(); ctx.arc(px, py, 2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,212,255,0.3)'; ctx.fill();
+    }
+
+    // ── Draw Wave 2 (amber) ──
+    if (showWave2) {
+      ctx.beginPath();
+      for (let px = 0; px <= gW; px++) {
+        const x = (px / gW) * xRange;
+        const y = yAt(effectiveW2, x, t);
+        const screenX = pad.l + px;
+        const screenY = midY - y * scale;
+        if (px === 0) ctx.moveTo(screenX, screenY);
+        else ctx.lineTo(screenX, screenY);
+      }
+      ctx.strokeStyle = S.mode === 'standing' ? 'rgba(245,158,11,0.35)' : '#f59e0b';
+      ctx.lineWidth = S.mode === 'standing' ? 1.5 : 2.5;
+      ctx.shadowColor = '#f59e0b'; ctx.shadowBlur = S.mode === 'standing' ? 2 : 6;
+      ctx.stroke(); ctx.shadowBlur = 0;
+
+      if (S.mode !== 'standing') {
+        for (let m = 0; m < xRange; m += 0.25) {
+          const y = yAt(effectiveW2, m, t);
+          const px = pad.l + (m / xRange) * gW;
+          const py = midY - y * scale;
+          ctx.beginPath(); ctx.arc(px, py, 2, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(245,158,11,0.3)'; ctx.fill();
+        }
+      }
+    }
+
+    // ── Draw Resultant / Standing Wave (green) ──
+    if ((S.mode === 'superposition' || S.mode === 'standing') && showWave2) {
+      ctx.beginPath();
+      for (let px = 0; px <= gW; px++) {
+        const x = (px / gW) * xRange;
+        const y1 = yAt(w1, x, t);
+        const y2 = yAt(effectiveW2, x, t);
+        const y = y1 + y2;
+        const screenX = pad.l + px;
+        const screenY = midY - y * scale;
+        if (px === 0) ctx.moveTo(screenX, screenY);
+        else ctx.lineTo(screenX, screenY);
+      }
+      ctx.strokeStyle = S.mode === 'standing' ? '#00ffaa' : '#22c55e';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = S.mode === 'standing' ? '#00ffaa' : '#22c55e';
+      ctx.shadowBlur = 8; ctx.stroke(); ctx.shadowBlur = 0;
+
+      // Standing wave envelope
+      if (S.mode === 'standing') {
+        // Draw envelope (2A sin(kx))
+        ctx.setLineDash([4, 4]);
+        // Upper envelope
+        ctx.beginPath();
+        for (let px = 0; px <= gW; px++) {
+          const x = (px / gW) * xRange;
+          const env = 2 * w1.A * Math.abs(Math.sin(w1.k * x));
+          const screenX = pad.l + px;
+          const screenY = midY - env * scale;
+          if (px === 0) ctx.moveTo(screenX, screenY); else ctx.lineTo(screenX, screenY);
+        }
+        ctx.strokeStyle = 'rgba(0,255,170,0.2)'; ctx.lineWidth = 1.5; ctx.stroke();
+        // Lower envelope
+        ctx.beginPath();
+        for (let px = 0; px <= gW; px++) {
+          const x = (px / gW) * xRange;
+          const env = -2 * w1.A * Math.abs(Math.sin(w1.k * x));
+          const screenX = pad.l + px;
+          const screenY = midY - env * scale;
+          if (px === 0) ctx.moveTo(screenX, screenY); else ctx.lineTo(screenX, screenY);
+        }
+        ctx.strokeStyle = 'rgba(0,255,170,0.2)'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Node/Antinode markers
+        const lam = w1.lam;
+        ctx.font = 'bold 10px JetBrains Mono'; ctx.textAlign = 'center';
+        // Nodes at x = n*lam/2
+        for (let n = 0; n * lam / 2 < xRange; n++) {
+          const x = n * lam / 2;
+          const px = pad.l + (x / xRange) * gW;
+          ctx.fillStyle = 'rgba(255,255,255,0.3)';
+          ctx.beginPath(); ctx.arc(px, midY, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = 'rgba(255,255,255,0.2)';
+          ctx.fillText('N', px, midY + 22);
+        }
+        // Antinodes at x = (2n+1)*lam/4
+        for (let n = 0; (2 * n + 1) * lam / 4 < xRange; n++) {
+          const x = (2 * n + 1) * lam / 4;
+          const px = pad.l + (x / xRange) * gW;
+          ctx.fillStyle = 'rgba(0,255,170,0.4)';
+          ctx.beginPath(); ctx.arc(px, midY, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = 'rgba(0,255,170,0.3)';
+          ctx.fillText('A', px, midY + 22);
+        }
+      }
+    }
+
+    // ── Direction arrows ──
+    ctx.font = '11px JetBrains Mono'; ctx.textAlign = 'left';
+    const arrowY = pad.t + 10;
+    ctx.fillStyle = '#00d4ff';
+    ctx.fillText('y\u2081 ' + (w1.dir > 0 ? '\u2192' : '\u2190'), pad.l + 6, arrowY);
+    if (showWave2) {
+      ctx.fillStyle = S.mode === 'standing' ? '#f59e0b88' : '#f59e0b';
+      ctx.fillText('y\u2082 ' + (effectiveW2.dir > 0 ? '\u2192' : '\u2190'), pad.l + 60, arrowY);
+    }
+    if (S.mode === 'superposition' || S.mode === 'standing') {
+      ctx.fillStyle = S.mode === 'standing' ? '#00ffaa' : '#22c55e';
+      ctx.fillText(S.mode === 'standing' ? 'standing' : 'y\u2081+y\u2082', pad.l + 120, arrowY);
+    }
+
+    // ── Legend box ──
+    ctx.fillStyle = 'rgba(10,10,30,0.85)';
+    ctx.fillRect(W - 180, 10, 170, S.mode === 'travelling' ? 50 : 72);
+    ctx.strokeStyle = 'rgba(0,212,255,0.15)'; ctx.lineWidth = 1;
+    ctx.strokeRect(W - 180, 10, 170, S.mode === 'travelling' ? 50 : 72);
+    ctx.font = '11px JetBrains Mono'; ctx.textAlign = 'left';
+    ctx.fillStyle = '#00d4ff'; ctx.fillText('\u2500\u2500 Wave 1', W - 168, 30);
+    if (showWave2) { ctx.fillStyle = '#f59e0b'; ctx.fillText('\u2500\u2500 Wave 2', W - 168, 48); }
+    if (S.mode === 'superposition') { ctx.fillStyle = '#22c55e'; ctx.fillText('\u2500\u2500 Resultant', W - 168, 66); }
+    if (S.mode === 'standing') { ctx.fillStyle = '#00ffaa'; ctx.fillText('\u2500\u2500 Standing Wave', W - 168, 66); }
+
+    // Mode label
+    ctx.fillStyle = 'rgba(255,255,255,0.06)'; ctx.font = '12px Orbitron, monospace';
+    ctx.textAlign = 'center';
+    const modeLabel = S.mode === 'travelling' ? 'TRAVELLING WAVE' : S.mode === 'standing' ? 'STANDING WAVE' : 'SUPERPOSITION';
+    ctx.fillText(modeLabel, W / 2, H - 8);
+
+    document.getElementById('timeDisplay').textContent = S.time.toFixed(2) + ' s';
+  }
+
+  // ══════════════════════════════════════════════
+  //  ANIMATION LOOP
+  // ══════════════════════════════════════════════
+  let lastTS = null, animId = null;
+
+  function animate(now) {
+    if (!S.running) return;
+    if (lastTS === null) lastTS = now;
+    const dtReal = Math.min((now - lastTS) / 1000, 0.05);
+    lastTS = now;
+    S.time += dtReal * S.speed;
+    drawAll();
+    animId = requestAnimationFrame(animate);
+  }
+
+  // ══════════════════════════════════════════════
+  //  CONTROLS
+  // ══════════════════════════════════════════════
+  function togglePlay() {
+    S.running = !S.running;
+    const btn = document.getElementById('playBtn');
+    if (S.running) {
+      btn.innerHTML = '&#10074;&#10074;'; btn.classList.add('playing');
+      lastTS = null; animate(performance.now());
+    } else {
+      btn.innerHTML = '&#9654;'; btn.classList.remove('playing');
+      if (animId) cancelAnimationFrame(animId);
+    }
+  }
+
+  function setSpeed(spd, el) {
+    S.speed = spd;
+    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function setMode(mode, el) {
+    S.mode = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+
+    if (mode === 'standing') {
+      // Force wave2 panel to show as linked
+      document.getElementById('wave2Panel').classList.add('disabled');
+      document.getElementById('wave2Toggle').checked = true;
+      S.wave2On = true;
+    } else {
+      document.getElementById('wave2Panel').classList.toggle('disabled', !S.wave2On);
+    }
+
+    if (mode === 'travelling') {
+      // Disable wave 2
+      S.wave2On = false;
+      document.getElementById('wave2Toggle').checked = false;
+      document.getElementById('wave2Panel').classList.add('disabled');
+    }
+
+    drawAll();
+  }
+
+  function toggleWave2() {
+    S.wave2On = document.getElementById('wave2Toggle').checked;
+    document.getElementById('wave2Panel').classList.toggle('disabled', !S.wave2On);
+    if (S.mode === 'travelling' && S.wave2On) {
+      setMode('superposition', document.querySelector('[data-mode="superposition"]'));
+    }
+    drawAll();
+  }
+
+  // ── Initial draw ──
+  // Start in travelling mode with wave2 off
+  S.wave2On = false;
+  document.getElementById('wave2Toggle').checked = false;
+  document.getElementById('wave2Panel').classList.add('disabled');
+  drawAll();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variation of Gravity | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Gravitation</span>
+        </div>
+
+        <h1>&#127757; Variation of Gravity</h1>
+        <p class="subtitle">Grade XI - Gravitation</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Position (r/R): <span id="positionVal">1.00</span></label>
+                    <input type="range" id="position" min="0" max="3" value="1" step="0.05">
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">r/R: <span id="statRatio">1.00</span></div>
+                    <div class="stat-item">g: <span id="statG">9.80</span> m/s²</div>
+                    <div class="stat-item">Location: <span id="statLocation">Surface</span></div>
+                    <div class="stat-item">g₀ = 9.80 m/s²</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>See how gravitational acceleration varies as you move from the center of the Earth to far above its surface. Inside the Earth, g increases linearly with distance from center. Outside, it follows an inverse-square law.</p>
+
+            <div class="formula-box">
+                Inside: g = g₀(r/R) &nbsp;|&nbsp; Surface: g = g₀ &nbsp;|&nbsp; Outside: g = g₀(R/r)²
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const g0 = 9.8;
+        let rRatio = 1.0;
+
+        const positionSlider = document.getElementById('position');
+
+        positionSlider.oninput = function() {
+            rRatio = parseFloat(this.value);
+            document.getElementById('positionVal').textContent = rRatio.toFixed(2);
+            updateStats();
+            draw();
+        };
+
+        function calculateG(ratio) {
+            if (ratio < 1) {
+                return g0 * ratio;
+            } else if (ratio === 1) {
+                return g0;
+            } else {
+                return g0 * (1 / (ratio * ratio));
+            }
+        }
+
+        function getLocation(ratio) {
+            if (ratio < 1) return 'Inside Earth';
+            if (ratio === 1) return 'Surface';
+            return 'Above Surface';
+        }
+
+        function updateStats() {
+            const g = calculateG(rRatio);
+            document.getElementById('statRatio').textContent = rRatio.toFixed(2);
+            document.getElementById('statG').textContent = g.toFixed(2);
+            document.getElementById('statLocation').textContent = getLocation(rRatio);
+        }
+
+        function drawEarth(centerX, centerY, earthRadius) {
+            const coreRadius = earthRadius * 0.35;
+            const mantleRadius = earthRadius * 0.85;
+
+            const coreGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, coreRadius);
+            coreGradient.addColorStop(0, '#ff6b9d');
+            coreGradient.addColorStop(1, '#ff2d75');
+            ctx.fillStyle = coreGradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
+            ctx.fill();
+
+            const mantleGradient = ctx.createRadialGradient(centerX, centerY, coreRadius, centerX, centerY, mantleRadius);
+            mantleGradient.addColorStop(0, '#ff9d5c');
+            mantleGradient.addColorStop(1, '#f59e0b');
+            ctx.fillStyle = mantleGradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, mantleRadius, 0, Math.PI * 2);
+            ctx.fill();
+
+            const crustGradient = ctx.createRadialGradient(centerX, centerY, mantleRadius, centerX, centerY, earthRadius);
+            crustGradient.addColorStop(0, '#4ade80');
+            crustGradient.addColorStop(1, '#00ffaa');
+            ctx.fillStyle = crustGradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, earthRadius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, earthRadius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '10px JetBrains Mono, monospace';
+            ctx.fillText('Core', centerX - 15, centerY);
+            ctx.fillText('Mantle', centerX + coreRadius + 5, centerY);
+            ctx.fillText('Crust', centerX + mantleRadius + 5, centerY);
+        }
+
+        function drawCurrentPosition(centerX, centerY, earthRadius) {
+            let pointX, pointY;
+
+            if (rRatio <= 1) {
+                const actualR = rRatio * earthRadius;
+                pointX = centerX + actualR;
+                pointY = centerY;
+            } else {
+                const actualR = rRatio * earthRadius;
+                pointX = centerX + actualR;
+                pointY = centerY;
+            }
+
+            ctx.strokeStyle = '#ff2d75';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(pointX, pointY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#ff2d75';
+            ctx.beginPath();
+            ctx.arc(pointX, pointY, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#ff2d75';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#ff2d75';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText('r/R = ' + rRatio.toFixed(2), pointX + 10, pointY - 10);
+        }
+
+        function drawGraph(graphX, graphY, graphW, graphH) {
+            ctx.strokeStyle = 'rgba(0,212,255,0.5)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(graphX, graphY, graphW, graphH);
+
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText('g vs r/R', graphX + graphW/2 - 30, graphY - 10);
+
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(graphX + graphW/3, graphY);
+            ctx.lineTo(graphX + graphW/3, graphY + graphH);
+            ctx.stroke();
+
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.font = '10px JetBrains Mono, monospace';
+            ctx.fillText('0', graphX - 10, graphY + graphH + 15);
+            ctx.fillText('R', graphX + graphW/3 - 5, graphY + graphH + 15);
+            ctx.fillText('2R', graphX + 2*graphW/3 - 10, graphY + graphH + 15);
+            ctx.fillText('3R', graphX + graphW - 10, graphY + graphH + 15);
+
+            ctx.fillText('0', graphX - 25, graphY + graphH);
+            ctx.fillText('g₀', graphX - 25, graphY + 15);
+
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let i = 0; i <= graphW/3; i += 2) {
+                const ratio = (i / (graphW/3));
+                const g = g0 * ratio;
+                const plotX = graphX + i;
+                const plotY = graphY + graphH - (g / g0) * (graphH - 20);
+
+                if (i === 0) {
+                    ctx.moveTo(plotX, plotY);
+                } else {
+                    ctx.lineTo(plotX, plotY);
+                }
+            }
+            ctx.stroke();
+
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let i = 0; i <= 2*graphW/3; i += 2) {
+                const ratio = 1 + (i / (graphW/3)) * 2;
+                const g = g0 / (ratio * ratio);
+                const plotX = graphX + graphW/3 + i;
+                const plotY = graphY + graphH - (g / g0) * (graphH - 20);
+
+                if (i === 0) {
+                    ctx.moveTo(plotX, plotY);
+                } else {
+                    ctx.lineTo(plotX, plotY);
+                }
+            }
+            ctx.stroke();
+
+            const currentG = calculateG(rRatio);
+            let currentX;
+            if (rRatio <= 1) {
+                currentX = graphX + rRatio * (graphW/3);
+            } else {
+                currentX = graphX + graphW/3 + ((rRatio - 1) / 2) * (2*graphW/3);
+            }
+            const currentY = graphY + graphH - (currentG / g0) * (graphH - 20);
+
+            ctx.fillStyle = '#ff2d75';
+            ctx.beginPath();
+            ctx.arc(currentX, currentY, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#ff2d75';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const earthCenterX = 200;
+            const earthCenterY = canvas.height / 2;
+            const earthRadius = 120;
+
+            drawEarth(earthCenterX, earthCenterY, earthRadius);
+            drawCurrentPosition(earthCenterX, earthCenterY, earthRadius);
+
+            const graphX = 480;
+            const graphY = 80;
+            const graphW = 330;
+            const graphH = 280;
+            drawGraph(graphX, graphY, graphW, graphH);
+
+            ctx.strokeStyle = 'rgba(0,212,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.moveTo(450, 0);
+            ctx.lineTo(450, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        updateStats();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

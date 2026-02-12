@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venturimeter | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='20' fill='%2300d4ff'/><circle cx='50' cy='20' r='8' fill='%2300ffaa'/><circle cx='80' cy='50' r='8' fill='%2300ffaa'/><circle cx='50' cy='80' r='8' fill='%2300ffaa'/></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Venturimeter</span>
+        </div>
+
+        <h1>Venturimeter</h1>
+        <p class="subtitle">Grade XI - Fluid Mechanics</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label for="velocity">Flow Velocity: <span id="velocityVal">4.0</span> m/s</label>
+                    <input type="range" id="velocity" min="1" max="10" step="0.5" value="4">
+                </div>
+                <div class="control-group">
+                    <label for="diameter1">Wide Diameter D₁: <span id="diameter1Val">100</span> px</label>
+                    <input type="range" id="diameter1" min="60" max="120" value="100">
+                </div>
+                <div class="control-group">
+                    <label for="diameter2">Narrow Diameter D₂: <span id="diameter2Val">40</span> px</label>
+                    <input type="range" id="diameter2" min="20" max="60" value="40">
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <div class="stats-panel">
+                <h3>Parameters</h3>
+                <div class="stat-item">
+                    <span class="stat-label">v₁ (Wide Velocity):</span>
+                    <span class="stat-value" id="statV1">4.0 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">v₂ (Narrow Velocity):</span>
+                    <span class="stat-value" id="statV2">25.0 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">P₁ (Wide Pressure):</span>
+                    <span class="stat-value" id="statP1">100.0 kPa</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">P₂ (Narrow Pressure):</span>
+                    <span class="stat-value" id="statP2">78.5 kPa</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">ΔP (Pressure Drop):</span>
+                    <span class="stat-value" id="statDP">21.5 kPa</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Q (Flow Rate):</span>
+                    <span class="stat-value" id="statQ">31.4 L/s</span>
+                </div>
+            </div>
+
+            <div class="formula-panel">
+                <h3>Formulas</h3>
+                <div class="formula-box">
+                    <p><strong>Bernoulli's Equation:</strong> P₁ + ½ρv₁² = P₂ + ½ρv₂²</p>
+                    <p><strong>Continuity Equation:</strong> A₁v₁ = A₂v₂</p>
+                    <p><strong>Pressure Drop:</strong> ΔP = ½ρ(v₂² - v₁²)</p>
+                    <p><strong>Flow Rate:</strong> Q = A₁v₁ = A₂v₂</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Controls
+        const velocityInput = document.getElementById('velocity');
+        const diameter1Input = document.getElementById('diameter1');
+        const diameter2Input = document.getElementById('diameter2');
+
+        let v1 = 4, D1 = 100, D2 = 40;
+        let particles = [];
+        const rho = 1000; // Water density kg/m³
+
+        velocityInput.addEventListener('input', (e) => {
+            v1 = parseFloat(e.target.value);
+            document.getElementById('velocityVal').textContent = v1.toFixed(1);
+            updateStats();
+        });
+
+        diameter1Input.addEventListener('input', (e) => {
+            D1 = parseFloat(e.target.value);
+            document.getElementById('diameter1Val').textContent = D1;
+            updateStats();
+        });
+
+        diameter2Input.addEventListener('input', (e) => {
+            D2 = parseFloat(e.target.value);
+            document.getElementById('diameter2Val').textContent = D2;
+            updateStats();
+        });
+
+        function updateStats() {
+            const A1 = Math.PI * (D1 / 2) ** 2;
+            const A2 = Math.PI * (D2 / 2) ** 2;
+            const v2 = v1 * A1 / A2;
+            const Q = A1 * v1 / 1000; // Convert to L/s
+
+            // Bernoulli: P1 + 0.5*rho*v1^2 = P2 + 0.5*rho*v2^2
+            // Let P1 = 100 kPa (reference)
+            const P1 = 100;
+            const P2 = P1 + 0.5 * rho * (v1 * v1 - v2 * v2) / 1000; // Convert to kPa
+            const DP = P1 - P2;
+
+            document.getElementById('statV1').textContent = v1.toFixed(1) + ' m/s';
+            document.getElementById('statV2').textContent = v2.toFixed(1) + ' m/s';
+            document.getElementById('statP1').textContent = P1.toFixed(1) + ' kPa';
+            document.getElementById('statP2').textContent = P2.toFixed(1) + ' kPa';
+            document.getElementById('statDP').textContent = DP.toFixed(1) + ' kPa';
+            document.getElementById('statQ').textContent = Q.toFixed(1) + ' L/s';
+        }
+
+        class Particle {
+            constructor() {
+                this.x = 50;
+                this.y = 225;
+                this.size = 3;
+            }
+
+            update() {
+                const A1 = Math.PI * (D1 / 2) ** 2;
+                const A2 = Math.PI * (D2 / 2) ** 2;
+                const v2 = v1 * A1 / A2;
+
+                // Determine velocity based on position
+                if (this.x < 200) {
+                    this.x += v1 * 2;
+                } else if (this.x < 350) {
+                    const progress = (this.x - 200) / 150;
+                    const v = v1 + (v2 - v1) * progress;
+                    this.x += v * 2;
+                } else if (this.x < 500) {
+                    this.x += v2 * 2;
+                } else if (this.x < 650) {
+                    const progress = (this.x - 500) / 150;
+                    const v = v2 + (v1 - v2) * progress;
+                    this.x += v * 2;
+                } else {
+                    this.x += v1 * 2;
+                }
+
+                if (this.x > 800) {
+                    this.x = 50;
+                }
+            }
+
+            draw() {
+                let color;
+                if (this.x > 350 && this.x < 500) {
+                    color = '#ff2d75';
+                } else {
+                    color = '#00d4ff';
+                }
+
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        for (let i = 0; i < 15; i++) {
+            const p = new Particle();
+            p.x = 50 + i * 50;
+            particles.push(p);
+        }
+
+        function drawVenturiTube() {
+            const h1 = D1;
+            const h2 = D2;
+
+            // Draw tube outline
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 3;
+
+            ctx.beginPath();
+            ctx.moveTo(50, 225 - h1 / 2);
+            ctx.lineTo(200, 225 - h1 / 2);
+            ctx.lineTo(350, 225 - h2 / 2);
+            ctx.lineTo(500, 225 - h2 / 2);
+            ctx.lineTo(650, 225 - h1 / 2);
+            ctx.lineTo(800, 225 - h1 / 2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(50, 225 + h1 / 2);
+            ctx.lineTo(200, 225 + h1 / 2);
+            ctx.lineTo(350, 225 + h2 / 2);
+            ctx.lineTo(500, 225 + h2 / 2);
+            ctx.lineTo(650, 225 + h1 / 2);
+            ctx.lineTo(800, 225 + h1 / 2);
+            ctx.stroke();
+
+            // Fill with translucent color
+            ctx.fillStyle = '#7c3aed';
+            ctx.globalAlpha = 0.2;
+            ctx.beginPath();
+            ctx.moveTo(50, 225 - h1 / 2);
+            ctx.lineTo(200, 225 - h1 / 2);
+            ctx.lineTo(350, 225 - h2 / 2);
+            ctx.lineTo(500, 225 - h2 / 2);
+            ctx.lineTo(650, 225 - h1 / 2);
+            ctx.lineTo(800, 225 - h1 / 2);
+            ctx.lineTo(800, 225 + h1 / 2);
+            ctx.lineTo(650, 225 + h1 / 2);
+            ctx.lineTo(500, 225 + h2 / 2);
+            ctx.lineTo(350, 225 + h2 / 2);
+            ctx.lineTo(200, 225 + h1 / 2);
+            ctx.lineTo(50, 225 + h1 / 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        }
+
+        function drawManometers() {
+            const A1 = Math.PI * (D1 / 2) ** 2;
+            const A2 = Math.PI * (D2 / 2) ** 2;
+            const v2 = v1 * A1 / A2;
+            const P1 = 100;
+            const P2 = P1 + 0.5 * rho * (v1 * v1 - v2 * v2) / 1000;
+
+            // Manometer at wide section
+            const m1X = 150;
+            const m1Height = P1 * 0.8;
+            ctx.strokeStyle = '#00ffaa';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(m1X, 225 + D1 / 2);
+            ctx.lineTo(m1X, 225 + D1 / 2 + 20);
+            ctx.lineTo(m1X, 400);
+            ctx.stroke();
+
+            ctx.fillStyle = '#00ffaa';
+            ctx.globalAlpha = 0.6;
+            ctx.fillRect(m1X - 8, 400 - m1Height, 16, m1Height);
+            ctx.globalAlpha = 1;
+
+            ctx.strokeStyle = '#00ffaa';
+            ctx.strokeRect(m1X - 8, 300, 16, 100);
+
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('P₁', m1X, 420);
+
+            // Manometer at narrow section
+            const m2X = 425;
+            const m2Height = P2 * 0.8;
+            ctx.strokeStyle = '#ff2d75';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(m2X, 225 + D2 / 2);
+            ctx.lineTo(m2X, 225 + D2 / 2 + 20);
+            ctx.lineTo(m2X, 400);
+            ctx.stroke();
+
+            ctx.fillStyle = '#ff2d75';
+            ctx.globalAlpha = 0.6;
+            ctx.fillRect(m2X - 8, 400 - m2Height, 16, m2Height);
+            ctx.globalAlpha = 1;
+
+            ctx.strokeStyle = '#ff2d75';
+            ctx.strokeRect(m2X - 8, 300, 16, 100);
+
+            ctx.fillStyle = '#ff2d75';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('P₂', m2X, 420);
+
+            // Pressure difference indicator
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(m1X + 20, 400 - m1Height);
+            ctx.lineTo(m2X - 20, 400 - m2Height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('ΔP', (m1X + m2X) / 2, 380);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawVenturiTube();
+            drawManometers();
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Labels
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Wide Section', 125, 50);
+            ctx.fillText('Throat (Narrow)', 425, 50);
+            ctx.fillText('Wide Section', 725, 50);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px Arial';
+            ctx.fillText('Lower Pressure', 425, 70);
+            ctx.fillText('Higher Pressure', 125, 70);
+
+            requestAnimationFrame(draw);
+        }
+
+        updateStats();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

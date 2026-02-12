@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Harmonic Motion | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+  <style>
+    body { background: #060612; }
+    .shm-page { max-width: 1040px; margin: 0 auto; padding: 90px 20px 40px; }
+    .shm-page .breadcrumb { justify-content: flex-start; margin-bottom: 8px; }
+
+    /* ─── Toolbar ─── */
+    .toolbar {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      background: rgba(12,12,30,0.95); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 10px 16px; margin-bottom: 16px;
+      backdrop-filter: blur(12px);
+    }
+    .play-btn {
+      width: 42px; height: 42px; border-radius: 50%; border: none; cursor: pointer;
+      background: linear-gradient(135deg, #f59e0b, #f97316); color: #1a0800;
+      font-size: 16px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 18px rgba(245,158,11,0.35); transition: 0.2s;
+      flex-shrink: 0;
+    }
+    .play-btn:hover { transform: scale(1.08); box-shadow: 0 0 24px rgba(245,158,11,0.5); }
+    .play-btn.playing { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 0 18px rgba(239,68,68,0.35); }
+
+    .speed-group {
+      display: flex; background: rgba(255,255,255,0.04); border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06); overflow: hidden;
+    }
+    .speed-btn {
+      padding: 7px 14px; font-size: 0.76rem; font-family: 'JetBrains Mono', monospace;
+      background: none; border: none; color: #6b6b85; cursor: pointer; transition: 0.2s;
+    }
+    .speed-btn.active { background: rgba(245,158,11,0.15); color: #f59e0b; }
+    .speed-btn:hover:not(.active) { color: #a0a0b8; }
+
+    .time-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: #f59e0b;
+    }
+    .time-chip .time-label { color: #6b6b85; font-size: 0.7rem; margin-right: 2px; }
+    .time-chip .time-val { min-width: 58px; }
+
+    .toolbar-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.06); flex-shrink: 0; }
+
+    .toggle-group { display: flex; align-items: center; gap: 8px; }
+    .toggle-label { font-size: 0.74rem; color: #6b6b85; white-space: nowrap; }
+    .toggle-switch {
+      position: relative; width: 38px; height: 20px; cursor: pointer;
+    }
+    .toggle-switch input { display: none; }
+    .toggle-track {
+      position: absolute; inset: 0; background: rgba(255,255,255,0.08);
+      border-radius: 10px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.06);
+    }
+    .toggle-switch input:checked + .toggle-track { background: rgba(34,197,94,0.25); border-color: rgba(34,197,94,0.4); }
+    .toggle-thumb {
+      position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+      background: #6b6b85; border-radius: 50%; transition: 0.3s;
+    }
+    .toggle-switch input:checked ~ .toggle-thumb { left: 20px; background: #22c55e; }
+
+    .sound-btn {
+      width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.04); color: #6b6b85; cursor: pointer;
+      font-size: 14px; display: flex; align-items: center; justify-content: center;
+      transition: 0.2s;
+    }
+    .sound-btn.active { color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+
+    .toolbar-spacer { flex: 1; }
+
+    /* ─── Oscillator Panels ─── */
+    .osc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .osc-panel {
+      background: rgba(12,12,30,0.9); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; overflow: hidden; transition: 0.3s;
+    }
+    .osc-panel.disabled { opacity: 0.25; pointer-events: none; filter: saturate(0); }
+    .osc-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px 0;
+    }
+    .osc-label {
+      font-family: 'Orbitron', monospace; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .osc1 .osc-label { color: #ef4444; }
+    .osc2 .osc-label { color: #22c55e; }
+    .osc-eq {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #a0a0b8;
+    }
+    .osc-eq b { font-weight: 600; }
+    .osc1 .osc-eq b { color: #ef4444; }
+    .osc2 .osc-eq b { color: #22c55e; }
+
+    .osc-canvas-wrap { padding: 6px 10px; }
+    .osc-canvas-wrap canvas { width: 100%; display: block; border-radius: 8px; }
+
+    .osc-controls { padding: 8px 16px 14px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .ctrl-group { display: flex; flex-direction: column; gap: 3px; }
+    .ctrl-label {
+      font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; color: #6b6b85;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ctrl-val { font-weight: 600; }
+    .osc1 .ctrl-val { color: #ef4444; }
+    .osc2 .ctrl-val { color: #22c55e; }
+
+    input[type=range] { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; outline: none; background: rgba(255,255,255,0.08); }
+    .osc1 input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #ef4444; cursor: pointer; box-shadow: 0 0 6px rgba(239,68,68,0.4); }
+    .osc2 input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #22c55e; cursor: pointer; box-shadow: 0 0 6px rgba(34,197,94,0.4); }
+
+    /* ─── Graphs ─── */
+    .graphs-section {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;
+    }
+    .graph-box {
+      background: rgba(12,12,30,0.9); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; overflow: hidden;
+    }
+    .graph-label {
+      font-family: 'Orbitron', monospace; font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 1.5px; color: #6b6b85; padding: 10px 16px 4px;
+      text-transform: uppercase;
+    }
+    .graph-box canvas { width: 100%; display: block; padding: 0 6px 6px; }
+
+    /* ─── Questions ─── */
+    .questions-section {
+      background: rgba(12,12,30,0.9); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 20px 24px;
+    }
+    .q-title {
+      font-family: 'Orbitron', monospace; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 1.5px; color: #6b6b85; margin-bottom: 16px; text-transform: uppercase;
+    }
+    .q-item {
+      border: 1px solid rgba(255,255,255,0.05); border-radius: 10px;
+      margin-bottom: 8px; overflow: hidden; transition: 0.3s;
+    }
+    .q-item:hover { border-color: rgba(255,255,255,0.1); }
+    .q-question {
+      padding: 14px 18px; cursor: pointer; display: flex; align-items: center;
+      justify-content: space-between; font-size: 0.88rem; color: #d0d0e0;
+      user-select: none; transition: 0.2s;
+    }
+    .q-question:hover { background: rgba(255,255,255,0.02); }
+    .q-arrow { color: #6b6b85; font-size: 0.7rem; transition: 0.3s; }
+    .q-item.open .q-arrow { transform: rotate(180deg); color: #f59e0b; }
+    .q-answer {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+      font-size: 0.84rem; color: #a0a0b8; line-height: 1.7;
+    }
+    .q-item.open .q-answer { max-height: 300px; }
+    .q-answer-inner { padding: 0 18px 16px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 12px; }
+
+    @media (max-width: 768px) {
+      .osc-row, .graphs-section { grid-template-columns: 1fr; }
+      .toolbar { gap: 6px; }
+      .osc-controls { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="shm-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Simple Harmonic Motion</span></div>
+    <h1 style="font-family:var(--font-display);font-size:1.6rem;margin:8px 0 4px;letter-spacing:1px;">Simple Harmonic Motion</h1>
+    <p style="color:var(--text-secondary);margin-bottom:16px;font-size:0.9rem;">Grade XI &bull; Two coupled oscillators &mdash; x = A sin(&omega;t + &phi;)</p>
+
+    <!-- ─── Toolbar ─── -->
+    <div class="toolbar">
+      <button class="play-btn" id="playBtn" onclick="togglePlay()" title="Play / Pause">&#9654;</button>
+      <div class="speed-group">
+        <button class="speed-btn active" data-speed="0.5" onclick="setSpeed(0.5,this)">0.5x</button>
+        <button class="speed-btn" data-speed="1" onclick="setSpeed(1,this)">1x</button>
+        <button class="speed-btn" data-speed="2" onclick="setSpeed(2,this)">2x</button>
+      </div>
+      <div class="time-chip">
+        <span class="time-label">t</span>
+        <span class="time-val" id="timeDisplay">0.00 s</span>
+      </div>
+      <div class="toolbar-spacer"></div>
+      <div class="toggle-group">
+        <span class="toggle-label">Sound</span>
+        <button class="sound-btn" id="soundBtn" onclick="toggleSound()">&#128264;</button>
+      </div>
+      <div class="toolbar-sep"></div>
+      <div class="toggle-group">
+        <span class="toggle-label">Osc 2</span>
+        <label class="toggle-switch"><input type="checkbox" id="osc2Toggle" checked onchange="toggleOsc2()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+      </div>
+    </div>
+
+    <!-- ─── Oscillators ─── -->
+    <div class="osc-row">
+      <!-- Oscillator 1 -->
+      <div class="osc-panel osc1" id="osc1Panel">
+        <div class="osc-header">
+          <span class="osc-label">Oscillator 1</span>
+          <span class="osc-eq"><b>x&#8321;</b> = A&#8321; sin(&omega;&#8321;t + &phi;&#8321;)</span>
+        </div>
+        <div class="osc-canvas-wrap"><canvas id="osc1Canvas" width="490" height="170"></canvas></div>
+        <div class="osc-controls">
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>A&#8321;</span><span class="ctrl-val" id="a1Val">3.0 cm</span></div>
+            <input type="range" id="a1" min="0.5" max="4" step="0.1" value="3.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>&omega;&#8321;</span><span class="ctrl-val" id="w1Val">4.0 rad/s</span></div>
+            <input type="range" id="w1" min="1" max="10" step="0.5" value="4.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>&phi;&#8321;</span><span class="ctrl-val" id="p1Val">0</span></div>
+            <input type="range" id="p1" min="0" max="4" step="1" value="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- Oscillator 2 -->
+      <div class="osc-panel osc2" id="osc2Panel">
+        <div class="osc-header">
+          <span class="osc-label">Oscillator 2</span>
+          <span class="osc-eq"><b>x&#8322;</b> = A&#8322; sin(&omega;&#8322;t + &phi;&#8322;)</span>
+        </div>
+        <div class="osc-canvas-wrap"><canvas id="osc2Canvas" width="490" height="170"></canvas></div>
+        <div class="osc-controls">
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>A&#8322;</span><span class="ctrl-val" id="a2Val">2.0 cm</span></div>
+            <input type="range" id="a2" min="0.5" max="4" step="0.1" value="2.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>&omega;&#8322;</span><span class="ctrl-val" id="w2Val">4.0 rad/s</span></div>
+            <input type="range" id="w2" min="1" max="10" step="0.5" value="4.0">
+          </div>
+          <div class="ctrl-group">
+            <div class="ctrl-label"><span>&phi;&#8322;</span><span class="ctrl-val" id="p2Val">&pi;/2</span></div>
+            <input type="range" id="p2" min="0" max="4" step="1" value="1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Graphs ─── -->
+    <div class="graphs-section">
+      <div class="graph-box">
+        <div class="graph-label">Displacement (x vs t)</div>
+        <canvas id="dispGraph" width="490" height="160"></canvas>
+      </div>
+      <div class="graph-box">
+        <div class="graph-label">Velocity (v vs t)</div>
+        <canvas id="velGraph" width="490" height="160"></canvas>
+      </div>
+    </div>
+
+    <!-- ─── Questions ─── -->
+    <div class="questions-section">
+      <div class="q-title">Test Your Understanding</div>
+
+      <div class="q-item" onclick="this.classList.toggle('open')">
+        <div class="q-question"><span>Q1. What does <b>A</b> (Amplitude) represent and what does it control in the simulation?</span><span class="q-arrow">&#9660;</span></div>
+        <div class="q-answer"><div class="q-answer-inner"><b>A</b> is the <em>amplitude</em> &mdash; the maximum displacement of the block from its equilibrium (rest) position, measured in centimetres. In the simulation, increasing A makes the block travel farther from the centre in each direction, and the spring stretches and compresses more dramatically. It does <b>not</b> affect how fast the block oscillates.</div></div>
+      </div>
+
+      <div class="q-item" onclick="this.classList.toggle('open')">
+        <div class="q-question"><span>Q2. What does <b>&omega;</b> (Angular Frequency) represent and how does it affect the motion?</span><span class="q-arrow">&#9660;</span></div>
+        <div class="q-answer"><div class="q-answer-inner"><b>&omega;</b> is the angular frequency in rad/s. It determines how <em>fast</em> the block oscillates. A larger &omega; means faster oscillations and a shorter time period (T&nbsp;=&nbsp;2&pi;/&omega;). It also affects the maximum velocity (v<sub>max</sub>&nbsp;=&nbsp;A&omega;) and maximum acceleration (a<sub>max</sub>&nbsp;=&nbsp;A&omega;&sup2;). Try doubling &omega; and observe how the velocity graph changes!</div></div>
+      </div>
+
+      <div class="q-item" onclick="this.classList.toggle('open')">
+        <div class="q-question"><span>Q3. What does <b>&phi;</b> (Phase) represent and what happens when you change it?</span><span class="q-arrow">&#9660;</span></div>
+        <div class="q-answer"><div class="q-answer-inner"><b>&phi;</b> is the initial phase angle. It determines where in the oscillation cycle the block starts at t&nbsp;=&nbsp;0. For example: &phi;&nbsp;=&nbsp;0 starts at equilibrium moving forward; &phi;&nbsp;=&nbsp;&pi;/2 starts at maximum positive displacement; &phi;&nbsp;=&nbsp;&pi; starts at equilibrium moving backward; &phi;&nbsp;=&nbsp;3&pi;/2 starts at maximum negative displacement. Set both oscillators to the same A and &omega; but different &phi; to see the phase difference clearly.</div></div>
+      </div>
+
+      <div class="q-item" onclick="this.classList.toggle('open')">
+        <div class="q-question"><span>Q4. How are displacement and velocity related in SHM?</span><span class="q-arrow">&#9660;</span></div>
+        <div class="q-answer"><div class="q-answer-inner">Velocity <em>leads</em> displacement by &pi;/2 (90&deg;). When displacement is at its maximum (block at extreme), velocity is <b>zero</b> (block momentarily stops). When displacement is zero (block at equilibrium), velocity is at its <b>maximum</b> (block moves fastest). Mathematically: if x&nbsp;=&nbsp;A&nbsp;sin(&omega;t&nbsp;+&nbsp;&phi;) then v&nbsp;=&nbsp;A&omega;&nbsp;cos(&omega;t&nbsp;+&nbsp;&phi;). Compare the two graphs below the simulation to verify this!</div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div class="sim-info">
+        <h2>About This Simulation</h2>
+        <p>Two independent spring-mass oscillators following x = A sin(&omega;t + &phi;). Each block is connected to a fixed wall via a spring. Adjust amplitude (in cm), angular frequency, and phase independently. The background ruler shows real-time displacement, and the graphs below track displacement and velocity over time.</p>
+        <div class="formula-box" style="margin-top:14px;">x = A sin(&omega;t + &phi;) &nbsp;|&nbsp; v = A&omega; cos(&omega;t + &phi;) &nbsp;|&nbsp; T = 2&pi;/&omega; &nbsp;|&nbsp; v<sub>max</sub> = A&omega;</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ══════════════════════════════════════════════
+  //  STATE
+  // ══════════════════════════════════════════════
+  const S = {
+    running: false, time: 0, speed: 0.5, osc2On: true, soundOn: false,
+    history: { t:[], x1:[], x2:[], v1:[], v2:[] },
+    maxHist: 800
+  };
+  const CM = 32;          // 1 cm = 32 px on oscillator canvas
+  const PHASES = [0, Math.PI/2, Math.PI, 3*Math.PI/2, 2*Math.PI];
+  const PHASE_LABELS = ['0', '\u03C0/2', '\u03C0', '3\u03C0/2', '2\u03C0'];
+
+  // Canvas refs
+  const c1 = document.getElementById('osc1Canvas'), ctx1 = c1.getContext('2d');
+  const c2 = document.getElementById('osc2Canvas'), ctx2 = c2.getContext('2d');
+  const cD = document.getElementById('dispGraph'), ctxD = cD.getContext('2d');
+  const cV = document.getElementById('velGraph'),  ctxV = cV.getContext('2d');
+
+  // Slider refs
+  const sl = {
+    a1: document.getElementById('a1'), w1: document.getElementById('w1'), p1: document.getElementById('p1'),
+    a2: document.getElementById('a2'), w2: document.getElementById('w2'), p2: document.getElementById('p2')
+  };
+
+  // Audio
+  let audioCtx = null, gainNode1 = null, gainNode2 = null, oscNode1 = null, oscNode2 = null;
+
+  // ── helpers ──
+  function getOsc(n) {
+    const a = parseFloat(sl['a'+n].value);
+    const w = parseFloat(sl['w'+n].value);
+    const p = PHASES[parseInt(sl['p'+n].value)];
+    return { A: a, w, phi: p };
+  }
+  function xAt(osc, t) { return osc.A * Math.sin(osc.w * t + osc.phi); }
+  function vAt(osc, t) { return osc.A * osc.w * Math.cos(osc.w * t + osc.phi); }
+
+  // ── slider labels ──
+  function updateLabels() {
+    document.getElementById('a1Val').textContent = parseFloat(sl.a1.value).toFixed(1)+' cm';
+    document.getElementById('w1Val').textContent = parseFloat(sl.w1.value).toFixed(1)+' rad/s';
+    document.getElementById('p1Val').innerHTML = PHASE_LABELS[parseInt(sl.p1.value)];
+    document.getElementById('a2Val').textContent = parseFloat(sl.a2.value).toFixed(1)+' cm';
+    document.getElementById('w2Val').textContent = parseFloat(sl.w2.value).toFixed(1)+' rad/s';
+    document.getElementById('p2Val').innerHTML = PHASE_LABELS[parseInt(sl.p2.value)];
+  }
+  Object.values(sl).forEach(s => s.addEventListener('input', () => { updateLabels(); drawAll(); }));
+  updateLabels();
+
+  // ══════════════════════════════════════════════
+  //  DRAW OSCILLATOR
+  // ══════════════════════════════════════════════
+  function drawOsc(ctx, W, H, osc, color, dispCm, label) {
+    const dpr = 1;
+    ctx.clearRect(0, 0, W, H);
+
+    // ── background ruler ──
+    const eqX = W * 0.52;   // equilibrium x (slightly right of center to leave room for wall+spring)
+    const rulerLeft = 50;
+    const rulerRight = W - 14;
+    const rulerY = H / 2;
+
+    // Ruler range: show -maxA to +maxA in cm
+    const maxA = 4.5;
+    const pxPerCm = (rulerRight - rulerLeft) / (maxA * 2);
+
+    // Faint grid lines
+    for (let cm = -4; cm <= 4; cm++) {
+      const rx = eqX + cm * pxPerCm;
+      if (rx < rulerLeft - 5 || rx > rulerRight + 5) continue;
+      ctx.beginPath(); ctx.moveTo(rx, 15); ctx.lineTo(rx, H - 10);
+      ctx.strokeStyle = cm === 0 ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.03)';
+      ctx.lineWidth = cm === 0 ? 1.5 : 1; ctx.stroke();
+      // half marks
+      if (cm < 4) {
+        const hx = eqX + (cm + 0.5) * pxPerCm;
+        if (hx > rulerLeft && hx < rulerRight) {
+          ctx.beginPath(); ctx.moveTo(hx, H - 22); ctx.lineTo(hx, H - 10);
+          ctx.strokeStyle = 'rgba(255,255,255,0.02)'; ctx.lineWidth = 1; ctx.stroke();
+        }
+      }
+      // label
+      ctx.fillStyle = cm === 0 ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.08)';
+      ctx.font = '9px JetBrains Mono, monospace'; ctx.textAlign = 'center';
+      ctx.fillText(cm === 0 ? '0' : (cm > 0 ? '+' : '') + cm, rx, H - 2);
+    }
+    // ruler axis
+    ctx.beginPath(); ctx.moveTo(rulerLeft, H - 14); ctx.lineTo(rulerRight, H - 14);
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.06)'; ctx.font = '8px JetBrains Mono'; ctx.textAlign = 'right';
+    ctx.fillText('cm', rulerRight + 2, H - 6);
+
+    // ── wall ──
+    const wallX = 24;
+    ctx.fillStyle = 'rgba(100,100,130,0.2)';
+    ctx.fillRect(0, rulerY - 40, wallX, 80);
+    ctx.strokeStyle = 'rgba(100,100,130,0.35)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(wallX, rulerY - 40); ctx.lineTo(wallX, rulerY + 40); ctx.stroke();
+    // hatch
+    ctx.strokeStyle = 'rgba(100,100,130,0.2)'; ctx.lineWidth = 1;
+    for (let i = -4; i <= 4; i++) {
+      const hy = rulerY + i * 10;
+      ctx.beginPath(); ctx.moveTo(wallX - 14, hy); ctx.lineTo(wallX, hy + 10); ctx.stroke();
+    }
+
+    // ── spring ──
+    const blockW = 44, blockH = 44;
+    const blockCX = eqX + dispCm * pxPerCm;
+    const blockLeft = blockCX - blockW / 2;
+    const springStart = wallX;
+    const springEnd = blockLeft;
+    const coils = 18;
+    const springAmp = 7;
+    const sy = rulerY;
+
+    if (springEnd > springStart + 10) {
+      ctx.beginPath(); ctx.moveTo(springStart, sy);
+      const segLen = (springEnd - springStart) / (coils * 2 + 2);
+      ctx.lineTo(springStart + segLen, sy); // lead in
+      for (let i = 0; i < coils * 2; i++) {
+        const sx = springStart + segLen + segLen * (i + 1);
+        const sOff = (i % 2 === 0) ? -springAmp : springAmp;
+        ctx.lineTo(sx, sy + sOff);
+      }
+      ctx.lineTo(springEnd, sy); // lead out
+      ctx.strokeStyle = color + '88'; ctx.lineWidth = 2;
+      ctx.shadowColor = color; ctx.shadowBlur = 4; ctx.stroke(); ctx.shadowBlur = 0;
+    }
+
+    // ── block ──
+    const bx = blockCX - blockW / 2, by = rulerY - blockH / 2;
+    const grad = ctx.createLinearGradient(bx, by, bx + blockW, by + blockH);
+    grad.addColorStop(0, color + '30'); grad.addColorStop(0.5, color + '18'); grad.addColorStop(1, color + '30');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.roundRect(bx, by, blockW, blockH, 6); ctx.fill();
+    ctx.strokeStyle = color + 'cc'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect(bx, by, blockW, blockH, 6); ctx.stroke();
+
+    // block label
+    ctx.fillStyle = color; ctx.font = 'bold 12px JetBrains Mono'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(label, blockCX, rulerY);
+    ctx.textBaseline = 'alphabetic';
+
+    // displacement indicator line
+    if (Math.abs(dispCm) > 0.05) {
+      ctx.setLineDash([3,3]);
+      ctx.beginPath(); ctx.moveTo(eqX, rulerY - blockH/2 - 6); ctx.lineTo(blockCX, rulerY - blockH/2 - 6);
+      ctx.strokeStyle = color + '60'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.setLineDash([]);
+      // arrowhead
+      const dir = dispCm > 0 ? 1 : -1;
+      ctx.beginPath();
+      ctx.moveTo(blockCX, rulerY - blockH/2 - 6);
+      ctx.lineTo(blockCX - dir*6, rulerY - blockH/2 - 10);
+      ctx.lineTo(blockCX - dir*6, rulerY - blockH/2 - 2);
+      ctx.closePath(); ctx.fillStyle = color + '80'; ctx.fill();
+      // value
+      ctx.fillStyle = color + 'cc'; ctx.font = '10px JetBrains Mono'; ctx.textAlign = 'center';
+      ctx.fillText(dispCm.toFixed(1)+' cm', (eqX + blockCX)/2, rulerY - blockH/2 - 14);
+    }
+  }
+
+  // ══════════════════════════════════════════════
+  //  DRAW GRAPH
+  // ══════════════════════════════════════════════
+  function drawGraph(ctx, W, H, dataKey1, dataKey2, label, maxVal) {
+    ctx.clearRect(0, 0, W, H);
+    const pad = { l: 8, r: 8, t: 8, b: 20 };
+    const gW = W - pad.l - pad.r, gH = H - pad.t - pad.b;
+
+    // background
+    ctx.fillStyle = 'rgba(6,6,18,0.5)';
+    ctx.beginPath(); ctx.roundRect(pad.l, pad.t, gW, gH, 4); ctx.fill();
+
+    // zero line
+    const zeroY = pad.t + gH / 2;
+    ctx.beginPath(); ctx.moveTo(pad.l, zeroY); ctx.lineTo(pad.l + gW, zeroY);
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 1; ctx.stroke();
+
+    // faint grid
+    for (let i = 1; i <= 3; i++) {
+      const gy = gH / 2 * i / 3;
+      ctx.beginPath(); ctx.moveTo(pad.l, zeroY - gy); ctx.lineTo(pad.l + gW, zeroY - gy); ctx.strokeStyle = 'rgba(255,255,255,0.025)'; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(pad.l, zeroY + gy); ctx.lineTo(pad.l + gW, zeroY + gy); ctx.stroke();
+    }
+
+    const hist = S.history;
+    if (hist.t.length < 2) return;
+
+    // Time window: show enough for 2 full cycles at current omega
+    const o1 = getOsc(1), o2 = getOsc(2);
+    const maxW = Math.max(o1.w, S.osc2On ? o2.w : o1.w, 1);
+    const T = 2 * Math.PI / maxW;
+    const windowT = T * 2 * (1 / S.speed) * S.speed; // 2 full cycles of sim time
+    const timeWindow = Math.max(T * 2, 3);
+
+    const tNow = hist.t[hist.t.length - 1];
+    const tStart = tNow - timeWindow;
+
+    // find start index
+    let si = 0;
+    for (let i = hist.t.length - 1; i >= 0; i--) {
+      if (hist.t[i] < tStart) { si = i; break; }
+    }
+
+    const scale = gH / 2 / maxVal;
+
+    // Draw data1 (osc1 - red)
+    ctx.beginPath();
+    let first = true;
+    for (let i = si; i < hist.t.length; i++) {
+      const frac = (hist.t[i] - tStart) / timeWindow;
+      if (frac < 0) continue;
+      const px = pad.l + frac * gW;
+      const py = zeroY - hist[dataKey1][i] * scale;
+      if (first) { ctx.moveTo(px, py); first = false; } else ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.8;
+    ctx.shadowColor = '#ef4444'; ctx.shadowBlur = 4; ctx.stroke(); ctx.shadowBlur = 0;
+
+    // Current block indicator for osc1
+    if (hist.t.length > 0) {
+      const lastVal = hist[dataKey1][hist.t.length - 1];
+      const bx = pad.l + gW - 1;
+      const by = zeroY - lastVal * scale;
+      ctx.fillStyle = '#ef444488';
+      ctx.beginPath(); ctx.roundRect(bx - 5, by - 5, 10, 10, 2); ctx.fill();
+      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.roundRect(bx - 5, by - 5, 10, 10, 2); ctx.stroke();
+    }
+
+    // Draw data2 (osc2 - green) if active
+    if (S.osc2On) {
+      ctx.beginPath();
+      first = true;
+      for (let i = si; i < hist.t.length; i++) {
+        const frac = (hist.t[i] - tStart) / timeWindow;
+        if (frac < 0) continue;
+        const px = pad.l + frac * gW;
+        const py = zeroY - hist[dataKey2][i] * scale;
+        if (first) { ctx.moveTo(px, py); first = false; } else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 1.8;
+      ctx.shadowColor = '#22c55e'; ctx.shadowBlur = 4; ctx.stroke(); ctx.shadowBlur = 0;
+
+      // Current block indicator for osc2
+      if (hist.t.length > 0) {
+        const lastVal = hist[dataKey2][hist.t.length - 1];
+        const bx = pad.l + gW - 1;
+        const by = zeroY - lastVal * scale;
+        ctx.fillStyle = '#22c55e88';
+        ctx.beginPath(); ctx.roundRect(bx - 5, by - 5, 10, 10, 2); ctx.fill();
+        ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.roundRect(bx - 5, by - 5, 10, 10, 2); ctx.stroke();
+      }
+    }
+
+    // Legend
+    ctx.font = '9px JetBrains Mono'; ctx.textAlign = 'left';
+    ctx.fillStyle = '#ef4444'; ctx.fillText('x\u2081', pad.l + 4, pad.t + 12);
+    if (S.osc2On) { ctx.fillStyle = '#22c55e'; ctx.fillText('x\u2082', pad.l + 22, pad.t + 12); }
+
+    // Time axis label
+    ctx.fillStyle = 'rgba(255,255,255,0.1)'; ctx.font = '8px JetBrains Mono'; ctx.textAlign = 'right';
+    ctx.fillText('t \u2192', pad.l + gW, H - 4);
+  }
+
+  // ══════════════════════════════════════════════
+  //  DRAW ALL
+  // ══════════════════════════════════════════════
+  function drawAll() {
+    const o1 = getOsc(1), o2 = getOsc(2);
+    const x1 = xAt(o1, S.time), x2 = S.osc2On ? xAt(o2, S.time) : 0;
+
+    drawOsc(ctx1, c1.width, c1.height, o1, '#ef4444', x1, 'm\u2081');
+    if (S.osc2On) {
+      drawOsc(ctx2, c2.width, c2.height, o2, '#22c55e', x2, 'm\u2082');
+    } else {
+      ctx2.clearRect(0, 0, c2.width, c2.height);
+      ctx2.fillStyle = 'rgba(6,6,18,0.6)'; ctx2.fillRect(0, 0, c2.width, c2.height);
+      ctx2.fillStyle = 'rgba(255,255,255,0.08)'; ctx2.font = '13px Inter, sans-serif';
+      ctx2.textAlign = 'center'; ctx2.textBaseline = 'middle';
+      ctx2.fillText('Oscillator 2 Off', c2.width/2, c2.height/2);
+      ctx2.textBaseline = 'alphabetic';
+    }
+
+    const maxDisp = Math.max(o1.A, S.osc2On ? o2.A : 0, 1);
+    const maxVel = Math.max(o1.A * o1.w, S.osc2On ? o2.A * o2.w : 0, 1);
+    drawGraph(ctxD, cD.width, cD.height, 'x1', 'x2', 'Displacement', maxDisp * 1.15);
+    drawGraph(ctxV, cV.width, cV.height, 'v1', 'v2', 'Velocity', maxVel * 1.15);
+
+    document.getElementById('timeDisplay').textContent = S.time.toFixed(2) + ' s';
+  }
+
+  // ══════════════════════════════════════════════
+  //  ANIMATION LOOP
+  // ══════════════════════════════════════════════
+  let lastTS = null, animId = null;
+
+  function animate(now) {
+    if (!S.running) return;
+    if (lastTS === null) lastTS = now;
+    const dtReal = Math.min((now - lastTS) / 1000, 0.05);
+    lastTS = now;
+    const dtSim = dtReal * S.speed;
+    S.time += dtSim;
+
+    // Record history
+    const o1 = getOsc(1), o2 = getOsc(2);
+    S.history.t.push(S.time);
+    S.history.x1.push(xAt(o1, S.time));
+    S.history.x2.push(S.osc2On ? xAt(o2, S.time) : 0);
+    S.history.v1.push(vAt(o1, S.time));
+    S.history.v2.push(S.osc2On ? vAt(o2, S.time) : 0);
+    if (S.history.t.length > S.maxHist) {
+      S.history.t.shift(); S.history.x1.shift(); S.history.x2.shift();
+      S.history.v1.shift(); S.history.v2.shift();
+    }
+
+    // Sound
+    if (S.soundOn && audioCtx) {
+      const x1cm = xAt(o1, S.time);
+      const x2cm = S.osc2On ? xAt(o2, S.time) : 0;
+      oscNode1.frequency.setTargetAtTime(280 + x1cm * 35, audioCtx.currentTime, 0.02);
+      gainNode1.gain.setTargetAtTime(0.03 * (0.3 + Math.abs(x1cm) / o1.A * 0.7), audioCtx.currentTime, 0.02);
+      if (S.osc2On) {
+        oscNode2.frequency.setTargetAtTime(400 + x2cm * 35, audioCtx.currentTime, 0.02);
+        gainNode2.gain.setTargetAtTime(0.025 * (0.3 + Math.abs(x2cm) / Math.max(o2.A,0.5) * 0.7), audioCtx.currentTime, 0.02);
+      } else {
+        gainNode2.gain.setTargetAtTime(0, audioCtx.currentTime, 0.02);
+      }
+    }
+
+    drawAll();
+    animId = requestAnimationFrame(animate);
+  }
+
+  // ══════════════════════════════════════════════
+  //  CONTROLS
+  // ══════════════════════════════════════════════
+  function togglePlay() {
+    S.running = !S.running;
+    const btn = document.getElementById('playBtn');
+    if (S.running) {
+      btn.innerHTML = '&#10074;&#10074;'; btn.classList.add('playing');
+      lastTS = null; animate(performance.now());
+    } else {
+      btn.innerHTML = '&#9654;'; btn.classList.remove('playing');
+      if (animId) cancelAnimationFrame(animId);
+    }
+  }
+
+  function setSpeed(spd, el) {
+    S.speed = spd;
+    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function toggleOsc2() {
+    S.osc2On = document.getElementById('osc2Toggle').checked;
+    document.getElementById('osc2Panel').classList.toggle('disabled', !S.osc2On);
+    drawAll();
+  }
+
+  function toggleSound() {
+    S.soundOn = !S.soundOn;
+    const btn = document.getElementById('soundBtn');
+    btn.classList.toggle('active', S.soundOn);
+    btn.innerHTML = S.soundOn ? '&#128266;' : '&#128264;';
+    if (S.soundOn) initAudio();
+    else stopAudio();
+  }
+
+  function initAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      oscNode1 = audioCtx.createOscillator(); oscNode1.type = 'sine';
+      gainNode1 = audioCtx.createGain(); gainNode1.gain.value = 0;
+      oscNode1.connect(gainNode1).connect(audioCtx.destination); oscNode1.start();
+      oscNode2 = audioCtx.createOscillator(); oscNode2.type = 'triangle';
+      gainNode2 = audioCtx.createGain(); gainNode2.gain.value = 0;
+      oscNode2.connect(gainNode2).connect(audioCtx.destination); oscNode2.start();
+    } else {
+      audioCtx.resume();
+    }
+    gainNode1.gain.setTargetAtTime(0.03, audioCtx.currentTime, 0.05);
+    gainNode2.gain.setTargetAtTime(0.025, audioCtx.currentTime, 0.05);
+  }
+
+  function stopAudio() {
+    if (audioCtx) {
+      gainNode1.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
+      gainNode2.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
+    }
+  }
+
+  // ── Initial draw ──
+  drawAll();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

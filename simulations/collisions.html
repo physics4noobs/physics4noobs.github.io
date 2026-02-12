@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collisions | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='10' fill='%2300d4ff'/><circle cx='50' cy='20' r='5' fill='%23ff2d75'/><ellipse cx='50' cy='50' rx='30' ry='15' fill='none' stroke='%2300d4ff' stroke-width='2'/><ellipse cx='50' cy='50' rx='15' ry='30' fill='none' stroke='%2300d4ff' stroke-width='2'/></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../simulations.html">Simulations</a> / Collisions
+        </div>
+
+        <h1>Collisions</h1>
+        <p class="subtitle">Grade XI - Work Power Energy</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Mass 1 (kg): <span id="m1Value">3.0</span></label>
+                    <input type="range" id="m1Slider" min="1" max="10" value="3" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>Mass 2 (kg): <span id="m2Value">5.0</span></label>
+                    <input type="range" id="m2Slider" min="1" max="10" value="5" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>Velocity 1 (m/s): <span id="v1Value">10.0</span></label>
+                    <input type="range" id="v1Slider" min="1" max="20" value="10" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>Velocity 2 (m/s): <span id="v2Value">0.0</span></label>
+                    <input type="range" id="v2Slider" min="-10" max="10" value="0" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" id="elasticToggle" checked>
+                        Elastic Collision
+                    </label>
+                </div>
+                <button id="startBtn" class="control-btn">Start</button>
+                <button id="resetBtn" class="control-btn">Reset</button>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <div class="stats-panel">
+                <h3>Before Collision</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Momentum 1:</span>
+                    <span class="stat-value" id="statP1Before">30.0 kg·m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Momentum 2:</span>
+                    <span class="stat-value" id="statP2Before">0.0 kg·m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Momentum:</span>
+                    <span class="stat-value" id="statPTotalBefore">30.0 kg·m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total KE:</span>
+                    <span class="stat-value" id="statKEBefore">150.0 J</span>
+                </div>
+
+                <h3 style="margin-top: 20px;">After Collision</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Velocity 1':</span>
+                    <span class="stat-value" id="statV1After">-2.5 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Velocity 2':</span>
+                    <span class="stat-value" id="statV2After">7.5 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Momentum:</span>
+                    <span class="stat-value" id="statPTotalAfter">30.0 kg·m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total KE:</span>
+                    <span class="stat-value" id="statKEAfter">150.0 J</span>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3>Formulas</h3>
+                <div class="formula-item">m₁v₁ + m₂v₂ = m₁v₁' + m₂v₂'</div>
+                <div class="formula-item">Elastic: KE conserved</div>
+                <div class="formula-item">Inelastic: v' = (m₁v₁+m₂v₂)/(m₁+m₂)</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Simulation parameters
+        let m1 = 3;
+        let m2 = 5;
+        let v1_initial = 10;
+        let v2_initial = 0;
+        let isElastic = true;
+
+        let v1_final = 0;
+        let v2_final = 0;
+
+        let ball1X = 150;
+        let ball2X = 650;
+        const ballY = 200;
+        const trackY = 250;
+
+        let animating = false;
+        let animationPhase = 'before'; // 'before', 'colliding', 'after'
+        let animationTime = 0;
+
+        const v1 = v1_initial;
+        const v2 = v2_initial;
+
+        // Event listeners
+        document.getElementById('m1Slider').addEventListener('input', (e) => {
+            m1 = parseFloat(e.target.value);
+            document.getElementById('m1Value').textContent = m1.toFixed(1);
+            if (!animating) calculateFinalVelocities();
+        });
+
+        document.getElementById('m2Slider').addEventListener('input', (e) => {
+            m2 = parseFloat(e.target.value);
+            document.getElementById('m2Value').textContent = m2.toFixed(1);
+            if (!animating) calculateFinalVelocities();
+        });
+
+        document.getElementById('v1Slider').addEventListener('input', (e) => {
+            v1_initial = parseFloat(e.target.value);
+            document.getElementById('v1Value').textContent = v1_initial.toFixed(1);
+            if (!animating) calculateFinalVelocities();
+        });
+
+        document.getElementById('v2Slider').addEventListener('input', (e) => {
+            v2_initial = parseFloat(e.target.value);
+            document.getElementById('v2Value').textContent = v2_initial.toFixed(1);
+            if (!animating) calculateFinalVelocities();
+        });
+
+        document.getElementById('elasticToggle').addEventListener('change', (e) => {
+            isElastic = e.target.checked;
+            if (!animating) calculateFinalVelocities();
+        });
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            if (!animating) {
+                animating = true;
+                animationPhase = 'before';
+                animationTime = 0;
+                ball1X = 150;
+                ball2X = 650;
+                animate();
+            }
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            animating = false;
+            animationPhase = 'before';
+            ball1X = 150;
+            ball2X = 650;
+            animationTime = 0;
+            calculateFinalVelocities();
+            draw();
+        });
+
+        function calculateFinalVelocities() {
+            if (isElastic) {
+                // Elastic collision formulas
+                v1_final = ((m1 - m2) * v1_initial + 2 * m2 * v2_initial) / (m1 + m2);
+                v2_final = (2 * m1 * v1_initial + (m2 - m1) * v2_initial) / (m1 + m2);
+            } else {
+                // Inelastic collision - balls stick together
+                v1_final = (m1 * v1_initial + m2 * v2_initial) / (m1 + m2);
+                v2_final = v1_final;
+            }
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const p1_before = m1 * v1_initial;
+            const p2_before = m2 * v2_initial;
+            const p_total_before = p1_before + p2_before;
+            const ke_before = 0.5 * m1 * v1_initial * v1_initial + 0.5 * m2 * v2_initial * v2_initial;
+
+            const p1_after = m1 * v1_final;
+            const p2_after = m2 * v2_final;
+            const p_total_after = p1_after + p2_after;
+            const ke_after = 0.5 * m1 * v1_final * v1_final + 0.5 * m2 * v2_final * v2_final;
+
+            document.getElementById('statP1Before').textContent = p1_before.toFixed(2) + ' kg·m/s';
+            document.getElementById('statP2Before').textContent = p2_before.toFixed(2) + ' kg·m/s';
+            document.getElementById('statPTotalBefore').textContent = p_total_before.toFixed(2) + ' kg·m/s';
+            document.getElementById('statKEBefore').textContent = ke_before.toFixed(2) + ' J';
+
+            document.getElementById('statV1After').textContent = v1_final.toFixed(2) + ' m/s';
+            document.getElementById('statV2After').textContent = v2_final.toFixed(2) + ' m/s';
+            document.getElementById('statPTotalAfter').textContent = p_total_after.toFixed(2) + ' kg·m/s';
+            document.getElementById('statKEAfter').textContent = ke_after.toFixed(2) + ' J';
+        }
+
+        function drawArrow(x, y, velocity, color, label) {
+            const length = Math.abs(velocity) * 10;
+            const direction = velocity >= 0 ? 1 : -1;
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + length * direction, y);
+            ctx.stroke();
+
+            if (length > 0) {
+                ctx.beginPath();
+                ctx.moveTo(x + length * direction, y);
+                ctx.lineTo(x + length * direction - 8 * direction, y - 5);
+                ctx.lineTo(x + length * direction - 8 * direction, y + 5);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            ctx.font = '12px JetBrains Mono';
+            ctx.fillText(label, x + length * direction / 2 - 10, y - 10);
+        }
+
+        function drawBall(x, y, mass, color, label) {
+            const radius = 15 + mass * 3;
+
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px JetBrains Mono';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, x, y + 5);
+        }
+
+        function drawBarChart(x, y, p1_before, p2_before, p1_after, p2_after) {
+            const barWidth = 40;
+            const maxHeight = 100;
+            const maxP = Math.max(Math.abs(p1_before), Math.abs(p2_before), Math.abs(p1_after), Math.abs(p2_after), 1);
+
+            ctx.font = '12px JetBrains Mono';
+            ctx.fillStyle = '#00d4ff';
+            ctx.fillText('Momentum (kg·m/s)', x, y - 110);
+
+            // Before collision
+            const h1b = (Math.abs(p1_before) / maxP) * maxHeight;
+            const h2b = (Math.abs(p2_before) / maxP) * maxHeight;
+
+            ctx.fillStyle = '#00d4ff';
+            ctx.fillRect(x, y - h1b, barWidth, h1b);
+            ctx.fillStyle = '#ff2d75';
+            ctx.fillRect(x + barWidth + 5, y - h2b, barWidth, h2b);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '10px JetBrains Mono';
+            ctx.fillText(p1_before.toFixed(1), x + barWidth/2, y + 15);
+            ctx.fillText(p2_before.toFixed(1), x + barWidth + 5 + barWidth/2, y + 15);
+
+            // After collision
+            const h1a = (Math.abs(p1_after) / maxP) * maxHeight;
+            const h2a = (Math.abs(p2_after) / maxP) * maxHeight;
+
+            ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+            ctx.fillRect(x + 100, y - h1a, barWidth, h1a);
+            ctx.fillStyle = 'rgba(255, 45, 117, 0.5)';
+            ctx.fillRect(x + 145, y - h2a, barWidth, h2a);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(p1_after.toFixed(1), x + 100 + barWidth/2, y + 15);
+            ctx.fillText(p2_after.toFixed(1), x + 145 + barWidth/2, y + 15);
+
+            ctx.fillStyle = '#00ffaa';
+            ctx.fillText('Before', x + 40, y + 30);
+            ctx.fillText('After', x + 120, y + 30);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw track
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(50, trackY);
+            ctx.lineTo(800, trackY);
+            ctx.stroke();
+
+            // Draw balls
+            drawBall(ball1X, ballY, m1, '#00d4ff', 'm₁');
+            drawBall(ball2X, ballY, m2, '#ff2d75', 'm₂');
+
+            // Draw velocity arrows
+            if (animationPhase === 'before') {
+                drawArrow(ball1X, ballY - 40, v1_initial, '#00ffaa', 'v₁');
+                drawArrow(ball2X, ballY - 40, v2_initial, '#00ffaa', 'v₂');
+            } else if (animationPhase === 'after') {
+                drawArrow(ball1X, ballY - 40, v1_final, '#f59e0b', "v₁'");
+                if (!isElastic || Math.abs(ball1X - ball2X) > 5) {
+                    drawArrow(ball2X, ballY - 40, v2_final, '#f59e0b', "v₂'");
+                }
+            }
+
+            // Draw bar chart
+            const p1_before = m1 * v1_initial;
+            const p2_before = m2 * v2_initial;
+            const p1_after = m1 * v1_final;
+            const p2_after = m2 * v2_final;
+            drawBarChart(600, 400, p1_before, p2_before, p1_after, p2_after);
+
+            // Draw phase indicator
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '16px JetBrains Mono';
+            ctx.fillText('Phase: ' + animationPhase.toUpperCase(), 50, 50);
+            ctx.fillText('Type: ' + (isElastic ? 'ELASTIC' : 'INELASTIC'), 50, 75);
+        }
+
+        function animate() {
+            if (!animating) return;
+
+            const dt = 0.5;
+
+            if (animationPhase === 'before') {
+                ball1X += v1_initial * dt;
+                ball2X += v2_initial * dt;
+
+                if (Math.abs(ball1X - ball2X) <= 50) {
+                    animationPhase = 'colliding';
+                    animationTime = 0;
+                }
+            } else if (animationPhase === 'colliding') {
+                animationTime += dt;
+                if (animationTime > 20) {
+                    animationPhase = 'after';
+                }
+            } else if (animationPhase === 'after') {
+                ball1X += v1_final * dt;
+                if (isElastic) {
+                    ball2X += v2_final * dt;
+                } else {
+                    ball2X = ball1X;
+                }
+
+                if (ball1X < 0 || ball1X > 850 || ball2X < 0 || ball2X > 850) {
+                    animating = false;
+                }
+            }
+
+            draw();
+
+            if (animating) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        // Initialize
+        calculateFinalVelocities();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

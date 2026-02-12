@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finding Center of Mass | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='10' fill='%2300d4ff'/><circle cx='50' cy='20' r='5' fill='%23ff2d75'/><ellipse cx='50' cy='50' rx='30' ry='15' fill='none' stroke='%2300d4ff' stroke-width='2'/><ellipse cx='50' cy='50' rx='15' ry='30' fill='none' stroke='%2300d4ff' stroke-width='2'/></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../simulations.html">Simulations</a> / Finding Center of Mass
+        </div>
+
+        <h1>Finding Center of Mass</h1>
+        <p class="subtitle">Grade XI - Rotational Motion</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>Number of Masses: <span id="numMassesValue">3</span></label>
+                    <input type="range" id="numMassesSlider" min="2" max="5" value="3" step="1">
+                </div>
+                <div id="massControls"></div>
+                <button id="resetBtn" class="control-btn">Reset Positions</button>
+                <p style="font-size: 12px; color: #00d4ff; margin-top: 10px;">
+                    Click on canvas to place masses • Drag to move
+                </p>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <div class="stats-panel">
+                <h3>Mass Coordinates</h3>
+                <div id="massCoordinates"></div>
+                <h3 style="margin-top: 20px;">Center of Mass</h3>
+                <div class="stat-item">
+                    <span class="stat-label">X<sub>cm</sub>:</span>
+                    <span class="stat-value" id="statCOMX">0.0 m</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Y<sub>cm</sub>:</span>
+                    <span class="stat-value" id="statCOMY">0.0 m</span>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3>Formulas</h3>
+                <div class="formula-item">x<sub>cm</sub> = Σmᵢxᵢ/Σmᵢ</div>
+                <div class="formula-item">y<sub>cm</sub> = Σmᵢyᵢ/Σmᵢ</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const colors = ['#00d4ff', '#7c3aed', '#00ffaa', '#ff2d75', '#f59e0b'];
+
+        let numMasses = 3;
+        let masses = [];
+        let draggingIndex = -1;
+        let placingMode = false;
+        let placingIndex = 0;
+
+        const originX = 425;
+        const originY = 225;
+        const scale = 50; // pixels per meter
+
+        // Initialize masses
+        function initializeMasses() {
+            masses = [];
+            for (let i = 0; i < numMasses; i++) {
+                masses.push({
+                    m: 5,
+                    x: originX + (i - numMasses/2 + 0.5) * 80,
+                    y: originY - 50 + Math.random() * 100,
+                    color: colors[i % colors.length]
+                });
+            }
+            placingMode = false;
+            placingIndex = 0;
+            updateMassControls();
+            updateStats();
+            draw();
+        }
+
+        // Update mass control sliders
+        function updateMassControls() {
+            const container = document.getElementById('massControls');
+            container.innerHTML = '';
+
+            for (let i = 0; i < numMasses; i++) {
+                const div = document.createElement('div');
+                div.className = 'control-group';
+                div.innerHTML = `
+                    <label style="color: ${colors[i % colors.length]}">
+                        Mass ${i + 1} (kg): <span id="mass${i}Value">${masses[i].m.toFixed(1)}</span>
+                    </label>
+                    <input type="range" id="mass${i}Slider" min="1" max="10" value="${masses[i].m}" step="0.1">
+                `;
+                container.appendChild(div);
+
+                document.getElementById(`mass${i}Slider`).addEventListener('input', (e) => {
+                    masses[i].m = parseFloat(e.target.value);
+                    document.getElementById(`mass${i}Value`).textContent = masses[i].m.toFixed(1);
+                    updateStats();
+                    draw();
+                });
+            }
+        }
+
+        // Event listeners
+        document.getElementById('numMassesSlider').addEventListener('input', (e) => {
+            const newNum = parseInt(e.target.value);
+            document.getElementById('numMassesValue').textContent = newNum;
+
+            if (newNum > numMasses) {
+                // Add new masses
+                for (let i = numMasses; i < newNum; i++) {
+                    masses.push({
+                        m: 5,
+                        x: originX,
+                        y: originY,
+                        color: colors[i % colors.length]
+                    });
+                }
+                placingMode = true;
+                placingIndex = numMasses;
+            } else if (newNum < numMasses) {
+                // Remove masses
+                masses = masses.slice(0, newNum);
+                placingMode = false;
+            }
+
+            numMasses = newNum;
+            updateMassControls();
+            updateStats();
+            draw();
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            initializeMasses();
+        });
+
+        // Canvas interaction
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            if (placingMode) {
+                // Place the next mass
+                masses[placingIndex].x = mouseX;
+                masses[placingIndex].y = mouseY;
+                placingIndex++;
+                if (placingIndex >= numMasses) {
+                    placingMode = false;
+                }
+                updateStats();
+                draw();
+            } else {
+                // Check if clicking on a mass
+                for (let i = 0; i < masses.length; i++) {
+                    const radius = 10 + masses[i].m * 3;
+                    const dx = mouseX - masses[i].x;
+                    const dy = mouseY - masses[i].y;
+                    if (Math.sqrt(dx*dx + dy*dy) <= radius) {
+                        draggingIndex = i;
+                        break;
+                    }
+                }
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (draggingIndex >= 0) {
+                const rect = canvas.getBoundingClientRect();
+                masses[draggingIndex].x = e.clientX - rect.left;
+                masses[draggingIndex].y = e.clientY - rect.top;
+                updateStats();
+                draw();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            draggingIndex = -1;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            draggingIndex = -1;
+        });
+
+        function calculateCOM() {
+            let sumMX = 0;
+            let sumMY = 0;
+            let sumM = 0;
+
+            for (let i = 0; i < masses.length; i++) {
+                sumMX += masses[i].m * masses[i].x;
+                sumMY += masses[i].m * masses[i].y;
+                sumM += masses[i].m;
+            }
+
+            return {
+                x: sumMX / sumM,
+                y: sumMY / sumM
+            };
+        }
+
+        function updateStats() {
+            const com = calculateCOM();
+
+            // Update coordinates display
+            const coordsDiv = document.getElementById('massCoordinates');
+            coordsDiv.innerHTML = '';
+
+            for (let i = 0; i < masses.length; i++) {
+                const xm = (masses[i].x - originX) / scale;
+                const ym = -(masses[i].y - originY) / scale;
+
+                const item = document.createElement('div');
+                item.className = 'stat-item';
+                item.innerHTML = `
+                    <span class="stat-label" style="color: ${masses[i].color}">Mass ${i + 1}:</span>
+                    <span class="stat-value">(${xm.toFixed(2)}, ${ym.toFixed(2)}) m</span>
+                `;
+                coordsDiv.appendChild(item);
+            }
+
+            // Update COM
+            const comXm = (com.x - originX) / scale;
+            const comYm = -(com.y - originY) / scale;
+
+            document.getElementById('statCOMX').textContent = comXm.toFixed(2) + ' m';
+            document.getElementById('statCOMY').textContent = comYm.toFixed(2) + ' m';
+        }
+
+        function drawAxes() {
+            ctx.strokeStyle = 'rgba(0, 212, 255, 0.3)';
+            ctx.lineWidth = 2;
+
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(50, originY);
+            ctx.lineTo(800, originY);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(originX, 50);
+            ctx.lineTo(originX, 400);
+            ctx.stroke();
+
+            // Arrows
+            ctx.fillStyle = 'rgba(0, 212, 255, 0.3)';
+            ctx.beginPath();
+            ctx.moveTo(800, originY);
+            ctx.lineTo(790, originY - 5);
+            ctx.lineTo(790, originY + 5);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(originX, 50);
+            ctx.lineTo(originX - 5, 60);
+            ctx.lineTo(originX + 5, 60);
+            ctx.closePath();
+            ctx.fill();
+
+            // Labels
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '14px JetBrains Mono';
+            ctx.fillText('X', 810, originY + 5);
+            ctx.fillText('Y', originX + 5, 40);
+            ctx.fillText('O', originX - 20, originY + 20);
+
+            // Grid
+            ctx.strokeStyle = 'rgba(0, 212, 255, 0.1)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let i = -8; i <= 8; i++) {
+                if (i === 0) continue;
+                const x = originX + i * scale;
+                ctx.beginPath();
+                ctx.moveTo(x, 50);
+                ctx.lineTo(x, 400);
+                ctx.stroke();
+            }
+
+            for (let i = -3; i <= 3; i++) {
+                if (i === 0) continue;
+                const y = originY + i * scale;
+                ctx.beginPath();
+                ctx.moveTo(50, y);
+                ctx.lineTo(800, y);
+                ctx.stroke();
+            }
+
+            ctx.setLineDash([]);
+        }
+
+        function drawMass(mass, index) {
+            const radius = 10 + mass.m * 3;
+
+            // Mass circle
+            ctx.fillStyle = mass.color;
+            ctx.beginPath();
+            ctx.arc(mass.x, mass.y, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '12px JetBrains Mono';
+            ctx.textAlign = 'center';
+            ctx.fillText(`m${index + 1}`, mass.x, mass.y + 4);
+
+            // Mass value
+            ctx.font = '10px JetBrains Mono';
+            ctx.fillText(`${mass.m.toFixed(1)}kg`, mass.x, mass.y + radius + 12);
+        }
+
+        function drawCOM(com) {
+            // Crosshair with glow
+            ctx.shadowColor = '#ffffff';
+            ctx.shadowBlur = 20;
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3;
+
+            ctx.beginPath();
+            ctx.moveTo(com.x - 20, com.y);
+            ctx.lineTo(com.x + 20, com.y);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(com.x, com.y - 20);
+            ctx.lineTo(com.x, com.y + 20);
+            ctx.stroke();
+
+            ctx.shadowBlur = 0;
+
+            // Center circle
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(com.x, com.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px JetBrains Mono';
+            ctx.textAlign = 'center';
+            ctx.fillText('COM', com.x, com.y - 30);
+        }
+
+        function drawConnections(com) {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+
+            for (let i = 0; i < masses.length; i++) {
+                ctx.beginPath();
+                ctx.moveTo(com.x, com.y);
+                ctx.lineTo(masses[i].x, masses[i].y);
+                ctx.stroke();
+            }
+
+            ctx.setLineDash([]);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawAxes();
+
+            const com = calculateCOM();
+
+            drawConnections(com);
+            drawCOM(com);
+
+            for (let i = 0; i < masses.length; i++) {
+                drawMass(masses[i], i);
+            }
+
+            // Instructions
+            if (placingMode) {
+                ctx.fillStyle = '#f59e0b';
+                ctx.font = '16px JetBrains Mono';
+                ctx.textAlign = 'left';
+                ctx.fillText(`Click to place Mass ${placingIndex + 1}`, 50, 30);
+            }
+        }
+
+        // Initialize
+        initializeMasses();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

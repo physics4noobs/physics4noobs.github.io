@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bead on a Wire | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> &raquo;
+            <a href="../simulations.html">Simulations</a> &raquo;
+            <span>Newton's Laws</span>
+        </div>
+
+        <h1 class="sim-title">&#128280; Bead on a Wire</h1>
+        <p class="sim-subtitle">Grade XI - Newton's Laws of Motion</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simulationCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label for="radius">Ring Radius: <span id="radiusValue">100</span> px</label>
+                    <input type="range" id="radius" min="50" max="150" value="100" step="5">
+                </div>
+                <div class="control-group">
+                    <label for="initialAngle">Initial Angle: <span id="initialAngleValue">45</span>°</label>
+                    <input type="range" id="initialAngle" min="0" max="360" value="45" step="5">
+                </div>
+                <div class="control-group">
+                    <label for="gravityToggle">
+                        <input type="checkbox" id="gravityToggle" checked> Gravity
+                    </label>
+                </div>
+                <div class="control-group">
+                    <button id="startBtn" class="sim-button">Start</button>
+                    <button id="resetBtn" class="sim-button">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <h2>About This Simulation</h2>
+            <p>A bead slides frictionlessly on a circular wire under gravity. The wire exerts a normal (constraint) force on the bead, keeping it on the circular path. Watch how the bead oscillates and observe the constraint force direction.</p>
+            <div class="formula-box">
+                α = -(g/R)sin θ | N = mg cos θ + mω²R | v = ωR
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const g = 9.8;
+        const mass = 0.5; // kg
+        let radius = 100;
+        let angle = Math.PI / 4; // radians
+        let angularVelocity = 0;
+        let initialAngleDeg = 45;
+        let isRunning = false;
+        let gravityEnabled = true;
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        document.getElementById('radius').oninput = function() {
+            radius = parseFloat(this.value);
+            document.getElementById('radiusValue').textContent = radius;
+            draw();
+        };
+
+        document.getElementById('initialAngle').oninput = function() {
+            initialAngleDeg = parseFloat(this.value);
+            document.getElementById('initialAngleValue').textContent = initialAngleDeg;
+            angle = initialAngleDeg * Math.PI / 180;
+            draw();
+        };
+
+        document.getElementById('gravityToggle').onchange = function() {
+            gravityEnabled = this.checked;
+            draw();
+        };
+
+        document.getElementById('startBtn').onclick = function() {
+            isRunning = !isRunning;
+            this.textContent = isRunning ? 'Pause' : 'Start';
+        };
+
+        document.getElementById('resetBtn').onclick = function() {
+            isRunning = false;
+            document.getElementById('startBtn').textContent = 'Start';
+            angle = initialAngleDeg * Math.PI / 180;
+            angularVelocity = 0;
+            draw();
+        };
+
+        function drawArrow(x1, y1, x2, y2, color, label) {
+            const headlen = 10;
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            const length = Math.sqrt(dx * dx + dy * dy);
+
+            if (length < 1) return;
+
+            const angle = Math.atan2(dy, dx);
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - headlen * Math.cos(angle - Math.PI / 6), y2 - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - headlen * Math.cos(angle + Math.PI / 6), y2 - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+
+            if (label) {
+                ctx.font = 'bold 11px JetBrains Mono, monospace';
+                const offsetX = dx / length * 20;
+                const offsetY = dy / length * 20;
+                ctx.fillText(label, x2 + offsetX, y2 + offsetY);
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid
+            ctx.strokeStyle = 'rgba(0, 212, 255, 0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            // Ground line
+            const groundY = canvas.height - 30;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, groundY);
+            ctx.lineTo(canvas.width, groundY);
+            ctx.stroke();
+
+            // Wire ring
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Bead position
+            const beadX = centerX + radius * Math.cos(angle);
+            const beadY = centerY + radius * Math.sin(angle);
+
+            // Draw bead
+            const gradient = ctx.createRadialGradient(beadX, beadY, 0, beadX, beadY, 12);
+            gradient.addColorStop(0, '#00ffaa');
+            gradient.addColorStop(1, '#00d4ff');
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(beadX, beadY, 12, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Force vectors
+            const forceScale = 5;
+
+            // Weight (downward)
+            const weightMag = mass * g;
+            drawArrow(beadX, beadY, beadX, beadY + weightMag * forceScale, '#ff2d75', 'mg');
+
+            if (gravityEnabled) {
+                // Tangential component
+                const tangentialForce = -mass * g * Math.sin(angle);
+                const tangentX = -Math.sin(angle);
+                const tangentY = Math.cos(angle);
+                drawArrow(beadX, beadY,
+                         beadX + tangentialForce * forceScale * tangentX,
+                         beadY + tangentialForce * forceScale * tangentY,
+                         '#f59e0b', 'F_t');
+
+                // Normal force
+                const normalForce = mass * g * Math.cos(angle) + mass * radius * angularVelocity * angularVelocity / 100;
+                const normalX = -Math.cos(angle);
+                const normalY = -Math.sin(angle);
+                drawArrow(beadX, beadY,
+                         beadX + normalForce * forceScale * normalX,
+                         beadY + normalForce * forceScale * normalY,
+                         '#7c3aed', 'N');
+            }
+
+            // Velocity vector
+            const speed = Math.abs(angularVelocity * radius / 100);
+            if (speed > 0.1) {
+                const velX = -Math.sin(angle);
+                const velY = Math.cos(angle);
+                const velScale = 30;
+                ctx.strokeStyle = '#00ffaa';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(beadX, beadY);
+                ctx.lineTo(beadX + velX * speed * velScale * Math.sign(angularVelocity),
+                          beadY + velY * speed * velScale * Math.sign(angularVelocity));
+                ctx.stroke();
+            }
+
+            // Angle line
+            ctx.strokeStyle = 'rgba(0, 212, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(beadX, beadY);
+            ctx.stroke();
+
+            // Vertical reference
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX, centerY + radius);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Physics calculations
+            const angularAcceleration = gravityEnabled ? -(g / (radius / 100)) * Math.sin(angle) : 0;
+            const normalForce = mass * g * Math.cos(angle) + mass * (radius / 100) * angularVelocity * angularVelocity;
+            const velocity = angularVelocity * (radius / 100);
+
+            // Stats panel
+            ctx.fillStyle = 'rgba(10, 10, 30, 0.85)';
+            ctx.fillRect(10, 10, 400, 150);
+
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(10, 10, 400, 150);
+
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = '12px JetBrains Mono, monospace';
+            ctx.fillText(`Angle θ: ${(angle * 180 / Math.PI).toFixed(1)}°`, 20, 35);
+            ctx.fillText(`Angular Velocity ω: ${angularVelocity.toFixed(3)} rad/s`, 20, 55);
+            ctx.fillText(`Normal Force N: ${normalForce.toFixed(2)} N`, 20, 75);
+            ctx.fillText(`Speed v: ${velocity.toFixed(2)} m/s`, 20, 95);
+            ctx.fillText(`Radius R: ${(radius / 100).toFixed(2)} m`, 20, 115);
+
+            if (!gravityEnabled) {
+                ctx.fillStyle = '#f59e0b';
+                ctx.font = 'bold 12px JetBrains Mono, monospace';
+                ctx.fillText('Gravity OFF', 20, 140);
+            }
+        }
+
+        function animate() {
+            if (isRunning && gravityEnabled) {
+                const dt = 0.016;
+                const R = radius / 100; // Convert to meters
+
+                // Angular acceleration: α = -(g/R)sin(θ)
+                const angularAcceleration = -(g / R) * Math.sin(angle);
+
+                angularVelocity += angularAcceleration * dt;
+                angle += angularVelocity * dt;
+
+                // Normalize angle
+                while (angle > 2 * Math.PI) angle -= 2 * Math.PI;
+                while (angle < 0) angle += 2 * Math.PI;
+            }
+
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

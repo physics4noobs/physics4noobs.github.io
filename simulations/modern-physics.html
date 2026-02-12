@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Physics Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Modern Physics</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">&#9883; Photoelectric Effect</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Modern Physics</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Frequency (f): <input type="range" id="freq" min="2" max="20" value="8" step="0.5"> <span id="fVal">8.0</span> &times;10<sup>14</sup> Hz</label>
+        <label>Intensity: <input type="range" id="intensity" min="1" max="10" value="5"> <span id="intVal">5</span></label>
+        <label>Metal:
+          <select id="metal" style="background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2); color: #00d4ff; padding: 6px 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.82rem;">
+            <option value="4.3">Zinc (φ=4.3 eV)</option>
+            <option value="2.3" selected>Sodium (φ=2.3 eV)</option>
+            <option value="4.7">Copper (φ=4.7 eV)</option>
+            <option value="5.1">Gold (φ=5.1 eV)</option>
+          </select>
+        </label>
+        <button onclick="toggleSim()" id="toggleBtn">&#10074;&#10074; Pause</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>The photoelectric effect demonstrates that light behaves as particles (photons). When photons with sufficient energy (frequency above threshold) strike a metal surface, electrons are emitted. Increasing intensity sends more photons but doesn't change individual photon energy. Only increasing frequency increases the kinetic energy of emitted electrons.</p>
+      <div class="formula-box" style="margin-top: 16px;">E = hf &nbsp;&nbsp;|&nbsp;&nbsp; KE<sub>max</sub> = hf - &phi; &nbsp;&nbsp;|&nbsp;&nbsp; f<sub>0</sub> = &phi;/h &nbsp;&nbsp;|&nbsp;&nbsp; h = 6.626 &times; 10<sup>-34</sup> Js</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let running = true, animId;
+    let photons = [], electrons = [];
+    let frameCount = 0;
+
+    const freqSlider = document.getElementById('freq');
+    const intSlider = document.getElementById('intensity');
+    const metalSelect = document.getElementById('metal');
+    freqSlider.oninput = () => document.getElementById('fVal').textContent = parseFloat(freqSlider.value).toFixed(1);
+    intSlider.oninput = () => document.getElementById('intVal').textContent = intSlider.value;
+
+    function freqToColor(f) {
+      // f in 10^14 Hz; visible: ~4.3 to 7.5
+      const wl = 300 / f; // approximate nm / 1000
+      let r = 0, g = 0, b = 0;
+      if (f < 4.3) { r = 200; g = 50; b = 50; } // infrared (red)
+      else if (f < 5.0) { r = 255; g = 0; b = 0; } // red
+      else if (f < 5.3) { r = 255; g = 165; b = 0; } // orange
+      else if (f < 5.8) { r = 255; g = 255; b = 0; } // yellow
+      else if (f < 6.2) { r = 0; g = 255; b = 0; } // green
+      else if (f < 6.8) { r = 0; g = 150; b = 255; } // blue
+      else if (f < 7.5) { r = 75; g = 0; b = 255; } // violet
+      else { r = 150; g = 0; b = 255; } // UV
+      return { r, g, b };
+    }
+
+    function draw() {
+      const f = parseFloat(freqSlider.value); // ×10^14 Hz
+      const intensity = parseInt(intSlider.value);
+      const phi = parseFloat(metalSelect.value); // eV
+      const h = 4.136; // eV·(10^-14 s) — h in eV·s × 10^14
+      const E_photon = h * f; // eV (since f is in 10^14 Hz and h adjusted)
+      const KE = E_photon - phi;
+      const emission = KE > 0;
+      const color = freqToColor(f);
+
+      const W = canvas.width, H = canvas.height;
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, W, H);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.03)';
+      for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+      // Metal plate
+      const plateX = 350, plateY = 80, plateW = 20, plateH = 280;
+      const grad = ctx.createLinearGradient(plateX, 0, plateX + plateW, 0);
+      grad.addColorStop(0, 'rgba(150, 150, 180, 0.6)');
+      grad.addColorStop(0.5, 'rgba(200, 200, 220, 0.8)');
+      grad.addColorStop(1, 'rgba(150, 150, 180, 0.6)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(plateX, plateY, plateW, plateH);
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(plateX, plateY, plateW, plateH);
+
+      // Label
+      ctx.fillStyle = '#a0a0b8';
+      ctx.font = '11px JetBrains Mono';
+      ctx.textAlign = 'center';
+      ctx.fillText('Metal', plateX + plateW / 2, plateY + plateH + 20);
+      ctx.fillText('Surface', plateX + plateW / 2, plateY + plateH + 34);
+
+      // Spawn photons
+      frameCount++;
+      if (frameCount % Math.max(2, 12 - intensity) === 0) {
+        const py = plateY + 20 + Math.random() * (plateH - 40);
+        photons.push({ x: 20, y: py, speed: 3 + Math.random() * 2 });
+      }
+
+      // Update and draw photons
+      photons = photons.filter(p => {
+        p.x += p.speed;
+        if (p.x >= plateX) {
+          // Hit the plate — emit electron if threshold met
+          if (emission) {
+            const eSpeed = 1 + KE * 0.5;
+            electrons.push({
+              x: plateX + plateW + 5,
+              y: p.y + (Math.random() - 0.5) * 10,
+              vx: eSpeed + Math.random() * 2,
+              vy: (Math.random() - 0.5) * 3,
+              life: 120
+            });
+          }
+          return false;
+        }
+
+        // Draw photon as wavy particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.9)`;
+        ctx.shadowColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Small wave trail
+        ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.3)`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let i = 0; i < 20; i++) {
+          const tx = p.x - i * 2;
+          const ty = p.y + Math.sin((tx + frameCount * 3) * 0.3) * 3;
+          if (i === 0) ctx.moveTo(tx, ty);
+          else ctx.lineTo(tx, ty);
+        }
+        ctx.stroke();
+
+        return true;
+      });
+
+      // Update and draw electrons
+      electrons = electrons.filter(e => {
+        e.x += e.vx;
+        e.y += e.vy;
+        e.life--;
+
+        const alpha = Math.max(0, e.life / 120);
+        ctx.beginPath();
+        ctx.arc(e.x, e.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 212, 255, ${alpha})`;
+        ctx.shadowColor = '#00d4ff';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Label first few
+        if (e.x < plateX + plateW + 50 && alpha > 0.8) {
+          ctx.fillStyle = `rgba(0, 212, 255, ${alpha * 0.6})`;
+          ctx.font = '9px JetBrains Mono';
+          ctx.textAlign = 'left';
+          ctx.fillText('e⁻', e.x + 6, e.y - 6);
+        }
+
+        return e.life > 0 && e.x < W;
+      });
+
+      // Flash on plate if emission
+      if (emission && photons.length > 0) {
+        ctx.fillStyle = `rgba(0, 212, 255, 0.05)`;
+        ctx.fillRect(plateX - 5, plateY, plateW + 10, plateH);
+      }
+
+      // "No emission" indicator
+      if (!emission) {
+        ctx.fillStyle = 'rgba(255, 45, 117, 0.15)';
+        ctx.fillRect(plateX - 5, plateY, plateW + 10, plateH);
+        ctx.fillStyle = '#ff2d75';
+        ctx.font = 'bold 14px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('No Emission', plateX + plateW / 2, plateY / 2 + 20);
+        ctx.font = '11px JetBrains Mono';
+        ctx.fillText('f < f₀ (threshold)', plateX + plateW / 2, plateY / 2 + 40);
+      }
+
+      // Energy diagram
+      const diagX = 580, diagY = 30, diagW = 250, diagH = 180;
+      ctx.fillStyle = 'rgba(10,10,30,0.88)';
+      ctx.fillRect(diagX, diagY, diagW, diagH);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(diagX, diagY, diagW, diagH);
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.font = 'bold 12px Inter';
+      ctx.textAlign = 'left';
+      ctx.fillText('Energy Diagram', diagX + 15, diagY + 22);
+
+      // Energy bar chart
+      const barBase = diagY + diagH - 20;
+      const maxE = 10;
+      const barH = diagH - 50;
+
+      // Photon energy bar
+      const photonBarH = Math.min((E_photon / maxE) * barH, barH);
+      ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.6)`;
+      ctx.fillRect(diagX + 30, barBase - photonBarH, 35, photonBarH);
+      ctx.strokeStyle = `rgb(${color.r}, ${color.g}, ${color.b})`;
+      ctx.strokeRect(diagX + 30, barBase - photonBarH, 35, photonBarH);
+      ctx.fillStyle = '#a0a0b8';
+      ctx.font = '10px JetBrains Mono';
+      ctx.textAlign = 'center';
+      ctx.fillText('hf', diagX + 47, barBase + 14);
+      ctx.fillText(E_photon.toFixed(1) + ' eV', diagX + 47, barBase - photonBarH - 6);
+
+      // Work function bar
+      const phiBarH = (phi / maxE) * barH;
+      ctx.fillStyle = 'rgba(255, 45, 117, 0.4)';
+      ctx.fillRect(diagX + 90, barBase - phiBarH, 35, phiBarH);
+      ctx.strokeStyle = '#ff2d75';
+      ctx.strokeRect(diagX + 90, barBase - phiBarH, 35, phiBarH);
+      ctx.fillStyle = '#a0a0b8';
+      ctx.fillText('φ', diagX + 107, barBase + 14);
+      ctx.fillText(phi.toFixed(1) + ' eV', diagX + 107, barBase - phiBarH - 6);
+
+      // KE bar
+      if (emission) {
+        const keBarH = (KE / maxE) * barH;
+        ctx.fillStyle = 'rgba(0, 255, 170, 0.5)';
+        ctx.fillRect(diagX + 150, barBase - keBarH, 35, keBarH);
+        ctx.strokeStyle = '#00ffaa';
+        ctx.strokeRect(diagX + 150, barBase - keBarH, 35, keBarH);
+        ctx.fillStyle = '#00ffaa';
+        ctx.fillText('KE', diagX + 167, barBase + 14);
+        ctx.fillText(KE.toFixed(1) + ' eV', diagX + 167, barBase - keBarH - 6);
+      } else {
+        ctx.fillStyle = '#ff2d75';
+        ctx.font = '10px JetBrains Mono';
+        ctx.fillText('KE=0', diagX + 167, barBase + 14);
+      }
+
+      // Threshold line
+      const f0 = phi / h;
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = 'rgba(255,45,117,0.4)';
+      ctx.beginPath();
+      ctx.moveTo(diagX + 20, barBase - phiBarH);
+      ctx.lineTo(diagX + diagW - 10, barBase - phiBarH);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Stats panel
+      ctx.fillStyle = 'rgba(10,10,30,0.88)';
+      ctx.fillRect(diagX, diagY + diagH + 20, diagW, 130);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(diagX, diagY + diagH + 20, diagW, 130);
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.font = '12px JetBrains Mono';
+      ctx.textAlign = 'left';
+      const sy = diagY + diagH + 40;
+      ctx.fillText('f = ' + f.toFixed(1) + ' × 10¹⁴ Hz', diagX + 15, sy);
+      ctx.fillText('E = hf = ' + E_photon.toFixed(2) + ' eV', diagX + 15, sy + 20);
+      ctx.fillText('φ = ' + phi.toFixed(1) + ' eV', diagX + 15, sy + 40);
+      ctx.fillText('f₀ = ' + f0.toFixed(1) + ' × 10¹⁴ Hz', diagX + 15, sy + 60);
+      if (emission) {
+        ctx.fillStyle = '#00ffaa';
+        ctx.fillText('KE = ' + KE.toFixed(2) + ' eV ✓', diagX + 15, sy + 80);
+      } else {
+        ctx.fillStyle = '#ff2d75';
+        ctx.fillText('No emission (f < f₀) ✗', diagX + 15, sy + 80);
+      }
+
+      // Light source indicator
+      ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.3)`;
+      ctx.beginPath();
+      ctx.arc(50, H / 2, 30, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = `rgb(${color.r}, ${color.g}, ${color.b})`;
+      ctx.beginPath();
+      ctx.arc(50, H / 2, 12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = '10px JetBrains Mono';
+      ctx.textAlign = 'center';
+      ctx.fillText('Light', 50, H / 2 + 45);
+      ctx.fillText('Source', 50, H / 2 + 57);
+
+      if (running) animId = requestAnimationFrame(draw);
+    }
+
+    function toggleSim() {
+      running = !running;
+      document.getElementById('toggleBtn').innerHTML = running ? '&#10074;&#10074; Pause' : '&#9654; Play';
+      if (running) draw();
+    }
+
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

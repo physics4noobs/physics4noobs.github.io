@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematics Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
+      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Kinematics</span>
+    </div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#127937; Projectile Motion</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Kinematics</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Angle: <input type="range" id="angle" min="10" max="80" value="45"> <span id="angleVal">45</span>&deg;</label>
+        <label>Velocity: <input type="range" id="velocity" min="10" max="80" value="50"> <span id="velVal">50</span> m/s</label>
+        <button onclick="launch()">&#9654; Launch</button>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>This projectile motion simulator demonstrates kinematics in two dimensions. Adjust the launch angle and initial velocity to observe how the trajectory, range, maximum height, and time of flight change.</p>
+      <div class="formula-box" style="margin-top: 16px;">
+        Range = v&sup2; sin(2&theta;) / g &nbsp;&nbsp;|&nbsp;&nbsp; H_max = v&sup2; sin&sup2;(&theta;) / 2g &nbsp;&nbsp;|&nbsp;&nbsp; T = 2v sin(&theta;) / g
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    const g = 9.8;
+    let animId = null;
+    let trail = [];
+    let ball = null;
+    let t = 0;
+
+    const angleSlider = document.getElementById('angle');
+    const velSlider = document.getElementById('velocity');
+    angleSlider.oninput = () => document.getElementById('angleVal').textContent = angleSlider.value;
+    velSlider.oninput = () => document.getElementById('velVal').textContent = velSlider.value;
+
+    function drawBackground() {
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+      for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+      // Ground
+      ctx.fillStyle = 'rgba(0,255,170,0.1)';
+      ctx.fillRect(0, canvas.height - 30, canvas.width, 30);
+      ctx.strokeStyle = 'rgba(0,255,170,0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, canvas.height - 30); ctx.lineTo(canvas.width, canvas.height - 30); ctx.stroke();
+    }
+
+    function drawTrail() {
+      for (let i = 1; i < trail.length; i++) {
+        const alpha = i / trail.length;
+        ctx.beginPath();
+        ctx.arc(trail[i].x, trail[i].y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 212, 255, ${alpha * 0.6})`;
+        ctx.fill();
+      }
+    }
+
+    function drawBall(x, y) {
+      ctx.beginPath();
+      ctx.arc(x, y, 8, 0, Math.PI * 2);
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, 8);
+      grad.addColorStop(0, '#00ffaa');
+      grad.addColorStop(1, '#00d4ff');
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.shadowColor = '#00d4ff';
+      ctx.shadowBlur = 15;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    function drawStats(v0, angle, x, y, time) {
+      ctx.fillStyle = 'rgba(10,10,30,0.85)';
+      ctx.fillRect(canvas.width - 220, 10, 210, 120);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(canvas.width - 220, 10, 210, 120);
+      ctx.fillStyle = '#00d4ff';
+      ctx.font = '12px "JetBrains Mono", monospace';
+      const rad = angle * Math.PI / 180;
+      const range = (v0 * v0 * Math.sin(2 * rad) / g).toFixed(1);
+      const hmax = (v0 * v0 * Math.sin(rad) * Math.sin(rad) / (2 * g)).toFixed(1);
+      const tTotal = (2 * v0 * Math.sin(rad) / g).toFixed(2);
+      ctx.fillText(`Velocity: ${v0} m/s`, canvas.width - 210, 32);
+      ctx.fillText(`Angle: ${angle}°`, canvas.width - 210, 50);
+      ctx.fillText(`Range: ${range} m`, canvas.width - 210, 68);
+      ctx.fillText(`Max Height: ${hmax} m`, canvas.width - 210, 86);
+      ctx.fillText(`Flight Time: ${tTotal} s`, canvas.width - 210, 104);
+      ctx.fillText(`t = ${time.toFixed(2)} s`, canvas.width - 210, 122);
+    }
+
+    function launch() {
+      if (animId) cancelAnimationFrame(animId);
+      trail = [];
+      t = 0;
+      const v0 = parseInt(velSlider.value);
+      const angle = parseInt(angleSlider.value);
+      const rad = angle * Math.PI / 180;
+      const vx = v0 * Math.cos(rad);
+      const vy = v0 * Math.sin(rad);
+      const groundY = canvas.height - 30;
+      const scale = 4;
+      const startX = 40;
+      const startY = groundY;
+
+      function animate() {
+        t += 0.03;
+        const x = startX + vx * t * scale;
+        const y = startY - (vy * t - 0.5 * g * t * t) * scale;
+
+        if (y >= groundY && t > 0.1) {
+          trail.push({ x, y: groundY });
+          drawBackground();
+          drawTrail();
+          drawBall(trail[trail.length - 1].x, groundY);
+          drawStats(v0, angle, x, y, t);
+          return;
+        }
+
+        trail.push({ x, y: Math.min(y, groundY) });
+        drawBackground();
+        drawTrail();
+        drawBall(x, Math.min(y, groundY));
+        drawStats(v0, angle, x, y, t);
+        animId = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function resetSim() {
+      if (animId) cancelAnimationFrame(animId);
+      trail = [];
+      t = 0;
+      drawBackground();
+    }
+
+    drawBackground();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

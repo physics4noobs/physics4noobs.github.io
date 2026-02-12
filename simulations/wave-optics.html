@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wave Optics Simulation | AXOMIYA ENGINEER</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <div class="sim-page-container">
+    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;"><a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Wave Optics</span></div>
+    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">&#127752; Young's Double Slit</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Wave Optics</p>
+
+    <div class="sim-canvas-wrapper">
+      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <div class="sim-controls">
+        <label>Slit Separation (d): <input type="range" id="slitSep" min="10" max="80" value="40"> <span id="dVal">40</span></label>
+        <label>Wavelength (&lambda;): <input type="range" id="waveLen" min="380" max="700" value="550"> <span id="lVal">550</span> nm</label>
+        <label>Screen Distance (D): <input type="range" id="screenDist" min="100" max="400" value="250"> <span id="DVal">250</span></label>
+        <button onclick="resetSim()">&#8635; Reset</button>
+      </div>
+    </div>
+
+    <div class="sim-info">
+      <h2>About This Simulation</h2>
+      <p>Young's Double Slit experiment demonstrates the wave nature of light through interference. Coherent light passing through two narrow slits creates an interference pattern of bright and dark fringes on a distant screen. Adjust the slit separation, wavelength, and screen distance to see how the fringe pattern changes.</p>
+      <div class="formula-box" style="margin-top: 16px;">Fringe width &beta; = &lambda;D/d &nbsp;&nbsp;|&nbsp;&nbsp; Bright fringe: y = n&lambda;D/d &nbsp;&nbsp;|&nbsp;&nbsp; Dark fringe: y = (2n+1)&lambda;D/2d</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let phase = 0, animId;
+
+    const dSlider = document.getElementById('slitSep');
+    const lSlider = document.getElementById('waveLen');
+    const DSlider = document.getElementById('screenDist');
+    dSlider.oninput = () => { document.getElementById('dVal').textContent = dSlider.value; draw(); };
+    lSlider.oninput = () => { document.getElementById('lVal').textContent = lSlider.value; draw(); };
+    DSlider.oninput = () => { document.getElementById('DVal').textContent = DSlider.value; draw(); };
+
+    function wavelengthToColor(wl) {
+      let r = 0, g = 0, b = 0;
+      if (wl >= 380 && wl < 440) { r = -(wl - 440) / (440 - 380); b = 1; }
+      else if (wl >= 440 && wl < 490) { g = (wl - 440) / (490 - 440); b = 1; }
+      else if (wl >= 490 && wl < 510) { g = 1; b = -(wl - 510) / (510 - 490); }
+      else if (wl >= 510 && wl < 580) { r = (wl - 510) / (580 - 510); g = 1; }
+      else if (wl >= 580 && wl < 645) { r = 1; g = -(wl - 645) / (645 - 580); }
+      else if (wl >= 645 && wl <= 700) { r = 1; }
+      return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+    }
+
+    function draw() {
+      const d = parseInt(dSlider.value);
+      const lambda = parseInt(lSlider.value);
+      const D = parseInt(DSlider.value);
+      const W = canvas.width, H = canvas.height;
+      const color = wavelengthToColor(lambda);
+
+      ctx.fillStyle = '#080818';
+      ctx.fillRect(0, 0, W, H);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(0,212,255,0.03)';
+      for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+      const slitX = 150;
+      const screenX = slitX + D;
+      const midY = H / 2;
+      const slit1Y = midY - d / 2;
+      const slit2Y = midY + d / 2;
+
+      // Barrier with slits
+      ctx.fillStyle = 'rgba(255,255,255,0.12)';
+      ctx.fillRect(slitX - 3, 0, 6, slit1Y - 4);
+      ctx.fillRect(slitX - 3, slit1Y + 4, 6, d - 8);
+      ctx.fillRect(slitX - 3, slit2Y + 4, 6, H - slit2Y - 4);
+
+      // Slit glow
+      ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.8)`;
+      ctx.fillRect(slitX - 1, slit1Y - 4, 2, 8);
+      ctx.fillRect(slitX - 1, slit2Y - 4, 2, 8);
+
+      // Incoming light (plane waves from left)
+      ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.15)`;
+      ctx.lineWidth = 1;
+      for (let x = 10; x < slitX - 10; x += 20) {
+        const offset = (phase * 10 + x) % 20;
+        ctx.beginPath();
+        ctx.moveTo(x + offset, 30);
+        ctx.lineTo(x + offset, H - 30);
+        ctx.stroke();
+      }
+
+      // Circular wavefronts from each slit
+      const maxR = D + 50;
+      for (let r = 10; r < maxR; r += 15) {
+        const rr = r + (phase * 5) % 15;
+        if (rr > maxR) continue;
+        const alpha = Math.max(0, 0.12 * (1 - rr / maxR));
+        ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
+        ctx.lineWidth = 1;
+        // Slit 1
+        ctx.beginPath();
+        ctx.arc(slitX, slit1Y, rr, -Math.PI / 3, Math.PI / 3);
+        ctx.stroke();
+        // Slit 2
+        ctx.beginPath();
+        ctx.arc(slitX, slit2Y, rr, -Math.PI / 3, Math.PI / 3);
+        ctx.stroke();
+      }
+
+      // Screen
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      ctx.fillRect(screenX, 0, 4, H);
+
+      // Interference pattern on screen
+      const fringeWidth = (lambda / 100) * D / d;
+      const patternW = 80;
+
+      for (let y = 0; y < H; y++) {
+        const dy = y - midY;
+        // Path difference
+        const r1 = Math.sqrt(D * D + (dy - d / 2) * (dy - d / 2));
+        const r2 = Math.sqrt(D * D + (dy + d / 2) * (dy + d / 2));
+        const pathDiff = r2 - r1;
+        const phaseDiff = (2 * Math.PI * pathDiff) / (lambda / 80);
+        const intensity = Math.cos(phaseDiff / 2);
+        const I = intensity * intensity;
+
+        ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${I * 0.9})`;
+        ctx.fillRect(screenX + 8, y, patternW * I, 1);
+      }
+
+      // Intensity graph outline
+      ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.4)`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      for (let y = 0; y < H; y++) {
+        const dy = y - midY;
+        const r1 = Math.sqrt(D * D + (dy - d / 2) * (dy - d / 2));
+        const r2 = Math.sqrt(D * D + (dy + d / 2) * (dy + d / 2));
+        const pathDiff = r2 - r1;
+        const phaseDiff = (2 * Math.PI * pathDiff) / (lambda / 80);
+        const I = Math.pow(Math.cos(phaseDiff / 2), 2);
+        const x = screenX + 8 + patternW * I;
+        if (y === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Labels
+      ctx.fillStyle = '#a0a0b8';
+      ctx.font = '11px JetBrains Mono';
+      ctx.textAlign = 'center';
+      ctx.fillText('S₁', slitX, slit1Y - 14);
+      ctx.fillText('S₂', slitX, slit2Y + 22);
+      ctx.fillText('Screen', screenX + 44, 20);
+
+      // Stats
+      ctx.fillStyle = 'rgba(10,10,30,0.88)';
+      ctx.fillRect(10, 10, 200, 110);
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeRect(10, 10, 200, 110);
+      ctx.fillStyle = '#00d4ff';
+      ctx.font = '12px JetBrains Mono';
+      ctx.textAlign = 'left';
+      ctx.fillText('d = ' + d + ' units', 20, 32);
+      ctx.fillText('λ = ' + lambda + ' nm', 20, 50);
+      ctx.fillText('D = ' + D + ' units', 20, 68);
+      ctx.fillText('β = λD/d = ' + fringeWidth.toFixed(1), 20, 86);
+      // Color swatch
+      ctx.fillStyle = `rgb(${color.r}, ${color.g}, ${color.b})`;
+      ctx.fillRect(20, 96, 60, 14);
+      ctx.fillStyle = '#a0a0b8';
+      ctx.font = '10px JetBrains Mono';
+      ctx.fillText('color', 100, 108);
+
+      // Central max marker
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '10px JetBrains Mono';
+      ctx.textAlign = 'left';
+      ctx.fillText('n=0', screenX + patternW + 14, midY + 4);
+
+      phase += 0.02;
+      animId = requestAnimationFrame(draw);
+    }
+
+    function resetSim() {
+      dSlider.value = 40; lSlider.value = 550; DSlider.value = 250;
+      document.getElementById('dVal').textContent = '40';
+      document.getElementById('lVal').textContent = '550';
+      document.getElementById('DVal').textContent = '250';
+      phase = 0;
+    }
+
+    draw();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

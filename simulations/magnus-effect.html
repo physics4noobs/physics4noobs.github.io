@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnus Effect | AXOMIYA ENGINEER</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='20' fill='%2300d4ff'/><circle cx='50' cy='20' r='8' fill='%2300ffaa'/><circle cx='80' cy='50' r='8' fill='%2300ffaa'/><circle cx='50' cy='80' r='8' fill='%2300ffaa'/></svg>">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-atom"><div class="nucleus"></div><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+    <div class="sim-page-container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> /
+            <a href="../simulations.html">Simulations</a> /
+            <span>Magnus Effect</span>
+        </div>
+
+        <h1>Magnus Effect</h1>
+        <p class="subtitle">Grade XI - Fluid Mechanics</p>
+
+        <div class="sim-canvas-wrapper">
+            <canvas id="simCanvas" width="850" height="450"></canvas>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label for="velocity">Launch Velocity: <span id="velocityVal">15</span> m/s</label>
+                    <input type="range" id="velocity" min="5" max="30" value="15">
+                </div>
+                <div class="control-group">
+                    <label for="spin">Spin Rate: <span id="spinVal">20</span> rev/s</label>
+                    <input type="range" id="spin" min="0" max="50" value="20">
+                </div>
+                <div class="control-group">
+                    <label for="spinDir">Spin Direction:</label>
+                    <select id="spinDir">
+                        <option value="topspin">Topspin (Downward Curve)</option>
+                        <option value="backspin">Backspin (Upward Curve)</option>
+                    </select>
+                </div>
+                <button id="resetBtn" style="padding: 10px 20px; background: #00d4ff; color: #080818; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Reset</button>
+            </div>
+        </div>
+
+        <div class="sim-info">
+            <div class="stats-panel">
+                <h3>Parameters</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Velocity:</span>
+                    <span class="stat-value" id="statV">15 m/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Spin Rate:</span>
+                    <span class="stat-value" id="statSpin">20 rev/s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Spin Type:</span>
+                    <span class="stat-value" id="statSpinDir">Topspin</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Magnus Force:</span>
+                    <span class="stat-value" id="statMagnus">Downward</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Deflection:</span>
+                    <span class="stat-value" id="statDeflection">0.0 m</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Distance:</span>
+                    <span class="stat-value" id="statDistance">0.0 m</span>
+                </div>
+            </div>
+
+            <div class="formula-panel">
+                <h3>Formulas</h3>
+                <div class="formula-box">
+                    <p><strong>Magnus Force:</strong> F_Magnus perpendicular to v</p>
+                    <p><strong>Bernoulli Principle:</strong> Faster flow = Lower pressure</p>
+                    <p><strong>Topspin:</strong> Ball curves downward</p>
+                    <p><strong>Backspin:</strong> Ball curves upward</p>
+                    <p><strong>No spin:</strong> Parabolic trajectory</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Controls
+        const velocityInput = document.getElementById('velocity');
+        const spinInput = document.getElementById('spin');
+        const spinDirInput = document.getElementById('spinDir');
+        const resetBtn = document.getElementById('resetBtn');
+
+        let v0 = 15, spin = 20, spinDir = 'topspin';
+        let ballX = 50, ballY = 225;
+        let ballVx = 0, ballVy = 0;
+        let time = 0;
+        let isLaunched = false;
+        let trail = [];
+        let noSpinTrail = [];
+        let rotation = 0;
+
+        const g = 9.8;
+        const ballRadius = 15;
+        const dt = 0.05;
+
+        velocityInput.addEventListener('input', (e) => {
+            v0 = parseFloat(e.target.value);
+            document.getElementById('velocityVal').textContent = v0;
+            updateStats();
+        });
+
+        spinInput.addEventListener('input', (e) => {
+            spin = parseFloat(e.target.value);
+            document.getElementById('spinVal').textContent = spin;
+            updateStats();
+        });
+
+        spinDirInput.addEventListener('change', (e) => {
+            spinDir = e.target.value;
+            updateStats();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            ballX = 50;
+            ballY = 225;
+            ballVx = v0 * 3;
+            ballVy = 0;
+            time = 0;
+            isLaunched = true;
+            trail = [];
+            noSpinTrail = [];
+            rotation = 0;
+        });
+
+        function updateStats() {
+            document.getElementById('statV').textContent = v0 + ' m/s';
+            document.getElementById('statSpin').textContent = spin + ' rev/s';
+            document.getElementById('statSpinDir').textContent = spinDir === 'topspin' ? 'Topspin' : 'Backspin';
+            document.getElementById('statMagnus').textContent = spinDir === 'topspin' ? 'Downward' : 'Upward';
+        }
+
+        function simulate() {
+            if (!isLaunched) return;
+
+            time += dt;
+
+            // Magnus force coefficient (simplified)
+            const magnusCoeff = spin * 0.02;
+
+            // Magnus force direction based on spin
+            const magnusForceY = spinDir === 'topspin' ? magnusCoeff : -magnusCoeff;
+
+            // Update velocity
+            ballVy += (g + magnusForceY) * dt;
+
+            // Update position
+            ballX += ballVx * dt;
+            ballY += ballVy * dt;
+
+            // Trail
+            trail.push({ x: ballX, y: ballY });
+            if (trail.length > 100) trail.shift();
+
+            // No-spin trajectory calculation
+            const noSpinY = 225 + 0.5 * g * time * time;
+            const noSpinX = 50 + v0 * 3 * time;
+            noSpinTrail.push({ x: noSpinX, y: noSpinY });
+            if (noSpinTrail.length > 100) noSpinTrail.shift();
+
+            // Rotation
+            rotation += spin * dt * Math.PI * 2;
+
+            // Calculate deflection
+            const deflection = Math.abs(ballY - noSpinY) / 30;
+            const distance = (ballX - 50) / 30;
+
+            document.getElementById('statDeflection').textContent = deflection.toFixed(1) + ' m';
+            document.getElementById('statDistance').textContent = distance.toFixed(1) + ' m';
+
+            // Reset if ball goes off screen
+            if (ballX > canvas.width || ballY > canvas.height || ballY < 0) {
+                isLaunched = false;
+            }
+        }
+
+        function drawBall() {
+            // Draw ball
+            ctx.fillStyle = '#00d4ff';
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw spin indicator (rotating mark)
+            ctx.save();
+            ctx.translate(ballX, ballY);
+            ctx.rotate(rotation);
+            ctx.strokeStyle = '#ff2d75';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(ballRadius, 0);
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw spin direction arrow
+            if (spinDir === 'topspin') {
+                drawCurvedArrow(ballX + ballRadius + 10, ballY, 15, true, '#f59e0b');
+            } else if (spin > 0) {
+                drawCurvedArrow(ballX + ballRadius + 10, ballY, 15, false, '#f59e0b');
+            }
+        }
+
+        function drawCurvedArrow(x, y, r, clockwise, color) {
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+
+            const startAngle = clockwise ? 0 : Math.PI;
+            const endAngle = clockwise ? Math.PI * 1.5 : Math.PI * 2.5;
+
+            ctx.beginPath();
+            ctx.arc(x, y, r, startAngle, endAngle);
+            ctx.stroke();
+
+            // Arrow head
+            const arrowX = x + r * Math.cos(endAngle);
+            const arrowY = y + r * Math.sin(endAngle);
+            const arrowAngle = endAngle + (clockwise ? Math.PI / 2 : -Math.PI / 2);
+
+            ctx.beginPath();
+            ctx.moveTo(arrowX, arrowY);
+            ctx.lineTo(arrowX - 8 * Math.cos(arrowAngle - 0.3), arrowY - 8 * Math.sin(arrowAngle - 0.3));
+            ctx.lineTo(arrowX - 8 * Math.cos(arrowAngle + 0.3), arrowY - 8 * Math.sin(arrowAngle + 0.3));
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawTrail() {
+            if (trail.length > 1) {
+                ctx.strokeStyle = '#00ffaa';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(trail[0].x, trail[0].y);
+                for (let i = 1; i < trail.length; i++) {
+                    ctx.lineTo(trail[i].x, trail[i].y);
+                }
+                ctx.stroke();
+            }
+
+            // Draw no-spin trajectory (dashed)
+            if (noSpinTrail.length > 1) {
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(noSpinTrail[0].x, noSpinTrail[0].y);
+                for (let i = 1; i < noSpinTrail.length; i++) {
+                    ctx.lineTo(noSpinTrail[i].x, noSpinTrail[i].y);
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+
+        function drawAirflow() {
+            if (!isLaunched) return;
+
+            const numLines = 5;
+            for (let i = 0; i < numLines; i++) {
+                const offsetY = -40 + i * 20;
+                const lineY = ballY + offsetY;
+
+                // Determine line curvature based on proximity to ball and spin
+                let startX = ballX - 60;
+                let endX = ballX + 60;
+
+                if (Math.abs(offsetY) < 20) {
+                    // Close to ball - show velocity difference
+                    if ((spinDir === 'topspin' && offsetY < 0) || (spinDir === 'backspin' && offsetY > 0)) {
+                        // Faster flow side
+                        ctx.strokeStyle = 'rgba(255, 45, 117, 0.5)';
+                        endX = ballX + 80;
+                    } else {
+                        // Slower flow side
+                        ctx.strokeStyle = 'rgba(0, 212, 255, 0.3)';
+                        endX = ballX + 50;
+                    }
+                } else {
+                    ctx.strokeStyle = 'rgba(245, 158, 11, 0.3)';
+                }
+
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(startX, lineY);
+                ctx.lineTo(endX, lineY);
+                ctx.stroke();
+
+                // Arrow
+                ctx.fillStyle = ctx.strokeStyle;
+                ctx.beginPath();
+                ctx.moveTo(endX, lineY);
+                ctx.lineTo(endX - 5, lineY - 3);
+                ctx.lineTo(endX - 5, lineY + 3);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = '#080818';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (isLaunched) {
+                simulate();
+                drawAirflow();
+                drawTrail();
+                drawBall();
+            } else {
+                // Show initial state
+                drawBall();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '18px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Click RESET to launch the ball', canvas.width / 2, 100);
+            }
+
+            // Labels
+            ctx.fillStyle = '#00ffaa';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('Magnus Effect Trajectory', 20, 30);
+
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.fillText('No-Spin Trajectory (dashed)', 20, 50);
+
+            // Legend
+            if (isLaunched) {
+                ctx.fillStyle = '#ff2d75';
+                ctx.font = '12px Arial';
+                ctx.fillText('Faster airflow (lower pressure)', canvas.width - 220, 30);
+
+                ctx.fillStyle = '#00d4ff';
+                ctx.fillText('Slower airflow (higher pressure)', canvas.width - 220, 50);
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        updateStats();
+        draw();
+    </script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
