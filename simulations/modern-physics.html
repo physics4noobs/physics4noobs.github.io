@@ -6,6 +6,9 @@
   <title>Photoelectric Effect | AXOMIYA ENGINEER</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Delius&family=Fredericka+the+Great&display=swap" rel="stylesheet">
   <script src="../js/theme.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -34,7 +37,6 @@
   <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo"><div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"></div></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">IIT Guwahati &bull; Physics</span></div></a><div class="nav-links"><div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div><div class="nav-item"><a href="../simulations.html" class="nav-link active">Simulations</a></div><div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button><button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button><div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
 
   <style>
-    body { background: #0a0a0a !important; }
     .bg-grid, #particles-canvas { display: none !important; }
 
     .sim-wrapper {
@@ -47,36 +49,40 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .sim-header h1 {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #e0e0e0;
-      letter-spacing: 2px;
+      font-family: 'Fredericka the Great', cursive;
+      font-size: clamp(1.3rem, 2vw, 1.8rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }
 
     .sim-btn {
-      padding: 8px 20px;
-      font-size: 0.82rem;
-      font-weight: 500;
-      font-family: 'Inter', sans-serif;
-      color: #e0e0e0;
-      background: transparent;
-      border: 1px solid #333;
-      border-radius: 4px;
+      padding: 10px 24px;
+      font-size: clamp(0.85rem, 1vw, 1rem);
+      font-weight: 600;
+      font-family: 'Delius', cursive;
+      color: var(--color-primary);
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: var(--transition-fast);
       letter-spacing: 0.5px;
     }
 
     .sim-btn:hover {
-      background: #e0e0e0;
-      color: #0a0a0a;
-      border-color: #e0e0e0;
+      background: var(--color-primary);
+      color: var(--bg-primary);
+      border-color: var(--color-primary);
+      box-shadow: var(--glow-primary);
     }
 
     .sim-main-row {
@@ -86,10 +92,12 @@
 
     .canvas-wrap {
       flex: 1;
-      border: 1px solid #222;
-      border-radius: 6px 0 0 0;
+      border: 1px solid var(--border-subtle);
+      border-right: none;
+      border-radius: var(--radius-md) 0 0 0;
       overflow: hidden;
-      background: #111;
+      background: var(--bg-secondary);
+      box-shadow: inset 0 0 60px rgba(0, 212, 255, 0.02);
     }
 
     .canvas-wrap canvas {
@@ -98,43 +106,47 @@
     }
 
     .side-graph {
-      width: 320px;
-      min-width: 260px;
-      background: #161616;
-      border: 1px solid #222;
-      border-left: none;
-      border-radius: 0 6px 0 0;
+      width: 380px;
+      min-width: 300px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-left: 1px solid rgba(0, 212, 255, 0.1);
+      border-radius: 0 var(--radius-md) 0 0;
       padding: 16px;
       display: flex;
       flex-direction: column;
     }
 
     .side-graph h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.82rem;
+      font-family: 'Fredericka the Great', cursive;
+      font-size: clamp(0.75rem, 1vw, 0.95rem);
       font-weight: 600;
-      color: #888;
+      color: var(--color-primary);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       margin-bottom: 10px;
     }
 
     .side-graph canvas {
       width: 100%;
       flex: 1;
-      border-radius: 4px;
+      border-radius: var(--radius-sm);
     }
 
     /* Controls */
     .controls-bar {
       display: flex;
       align-items: center;
-      gap: 24px;
-      padding: 16px 20px;
-      background: #161616;
-      border: 1px solid #222;
-      border-top: none;
-      border-radius: 0 0 6px 6px;
+      gap: clamp(16px, 2vw, 32px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-top: 1px solid rgba(0, 212, 255, 0.06);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
       flex-wrap: wrap;
       margin-top: 0;
     }
@@ -146,57 +158,69 @@
     }
 
     .control-group label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: #888;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.85rem, 1vw, 1.05rem);
+      color: var(--text-muted);
       white-space: nowrap;
     }
 
     .control-group input[type="range"] {
-      width: 120px;
+      width: clamp(100px, 10vw, 160px);
       -webkit-appearance: none;
-      background: #333;
-      height: 3px;
+      background: var(--border-subtle);
+      height: 4px;
       border-radius: 2px;
       outline: none;
     }
 
     .control-group input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 14px;
-      height: 14px;
-      background: #e0e0e0;
+      width: 16px;
+      height: 16px;
+      background: var(--color-primary);
       border-radius: 50%;
       cursor: pointer;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+      transition: box-shadow 0.2s;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 14px rgba(0, 212, 255, 0.7);
     }
 
     .control-group .val {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      color: #e0e0e0;
-      min-width: 52px;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.88rem, 1vw, 1.05rem);
+      color: var(--text-primary);
+      min-width: 60px;
       text-align: right;
     }
 
     .control-group select {
-      background: #222;
-      border: 1px solid #333;
-      color: #e0e0e0;
-      padding: 6px 10px;
-      border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.85rem, 1vw, 1rem);
       cursor: pointer;
       outline: none;
+      transition: var(--transition-fast);
     }
 
     .control-group select:hover {
-      border-color: #555;
+      border-color: rgba(0, 212, 255, 0.3);
+    }
+
+    .control-group select:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.1);
     }
 
     .spectrum-bar {
-      width: 120px;
-      height: 6px;
+      width: clamp(100px, 10vw, 160px);
+      height: 7px;
       border-radius: 3px;
       background: linear-gradient(to right,
         #cc0000 0%,
@@ -222,14 +246,16 @@
       background: #fff;
       border-radius: 2px;
       transform: translateX(-50%);
-      box-shadow: 0 0 4px rgba(255,255,255,0.5);
+      box-shadow: 0 0 6px rgba(255,255,255,0.6);
     }
 
     /* Data panel */
     .data-panel {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 6px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
       padding: 20px;
       margin-top: 16px;
     }
@@ -241,20 +267,20 @@
     }
 
     .data-panel h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
+      font-family: 'Fredericka the Great', cursive;
+      font-size: clamp(0.8rem, 1vw, 1rem);
       font-weight: 600;
-      color: #888;
+      color: var(--color-secondary);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       margin-bottom: 16px;
     }
 
     .data-row {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #1e1e1e;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
     .data-row:last-child {
@@ -262,26 +288,72 @@
     }
 
     .data-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: #888;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.88rem, 1vw, 1.05rem);
+      color: var(--text-muted);
     }
 
     .data-value {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      color: #e0e0e0;
-      font-weight: 500;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.92rem, 1.1vw, 1.1rem);
+      color: var(--text-primary);
+      font-weight: 600;
     }
 
     .data-value.emission {
-      color: #4AFF8B;
+      color: var(--color-accent);
+      text-shadow: 0 0 8px rgba(0, 255, 170, 0.4);
     }
 
     .data-value.no-emission {
-      color: #FF4A6E;
+      color: var(--color-rose);
+      text-shadow: 0 0 8px rgba(255, 45, 117, 0.4);
     }
 
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: 'Fredericka the Great', cursive;
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: 'Delius', cursive;
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
 
     /* Q&A */
     .qa-section {
@@ -289,48 +361,54 @@
     }
 
     .qa-section h2 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
+      font-family: 'Fredericka the Great', cursive;
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
       font-weight: 600;
-      color: #888;
+      color: var(--color-secondary);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       margin-bottom: 16px;
     }
 
     .qa-item {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
       margin-bottom: 8px;
       overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(0, 212, 255, 0.15);
     }
 
     .qa-q {
-      padding: 14px 20px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      color: #e0e0e0;
+      padding: 16px 24px;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.15s;
+      transition: var(--transition-fast);
     }
 
     .qa-q:hover {
-      background: #1a1a1a;
+      background: var(--bg-glass-hover);
     }
 
     .qa-q::after {
       content: '+';
-      font-size: 1.2rem;
-      color: #555;
+      font-size: 1.4rem;
+      color: var(--color-primary);
       transition: transform 0.2s;
+      font-weight: 300;
     }
 
     .qa-item.open .qa-q::after {
-      content: '-';
+      content: '\2212';
     }
 
     .qa-a {
@@ -344,17 +422,44 @@
     }
 
     .qa-a-inner {
-      padding: 0 20px 16px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.84rem;
-      color: #aaa;
-      line-height: 1.6;
+      padding: 0 24px 18px;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen mode */
+    #simArea {
+      background: var(--bg-primary);
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      overflow-y: auto;
+    }
+
+    #simArea:fullscreen .side-graph,
+    #simArea:-webkit-full-screen .side-graph {
+      width: 420px;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    #simArea:fullscreen .data-panel,
+    #simArea:-webkit-full-screen .data-panel {
+      margin-top: 12px;
     }
 
     @media (max-width: 900px) {
       .sim-main-row { flex-direction: column; }
-      .side-graph { width: 100%; border-left: 1px solid #222; border-top: none; border-radius: 0; }
-      .canvas-wrap { border-radius: 6px 6px 0 0; }
+      .side-graph { width: 100%; border-left: 1px solid var(--border-subtle); border-top: none; border-radius: 0; }
+      .canvas-wrap { border-radius: var(--radius-md) var(--radius-md) 0 0; }
     }
     @media (max-width: 768px) {
       .sim-wrapper { padding: 70px 12px 24px; }
@@ -365,9 +470,13 @@
   </style>
 
   <div class="sim-wrapper">
+    <div id="simArea">
     <div class="sim-header">
       <h1>Photoelectric Effect</h1>
-      <button class="sim-btn" id="resetBtn">Reset</button>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="resetBtn">Reset</button>
+      </div>
     </div>
 
     <div class="sim-main-row">
@@ -429,6 +538,33 @@
         <div class="data-row"><span class="data-label">Status</span><span class="data-value emission" id="dStatus">Emission</span></div>
       </div>
     </div>
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Photon Energy</span>
+          E = hf
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Max Kinetic Energy</span>
+          KE<sub>max</sub> = hf &minus; &phi;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Stopping Potential</span>
+          V<sub>0</sub> = KE<sub>max</sub> / e
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Threshold Frequency</span>
+          f<sub>0</sub> = &phi; / h
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Planck's Constant</span>
+          h = 4.136 &times; 10<sup>&minus;15</sup> eV&middot;s
+        </div>
+      </div>
+    </div>
 
     <div class="qa-section">
       <h2>Questions &amp; Answers</h2>
@@ -480,6 +616,67 @@
     let frameCount = 0;
     let arrivedCount = 0;
     let smoothCurrent = 0;
+
+    // === THEME COLORS (dynamic, responds to light/dark) ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        canvasBg: isLight ? '#eaebf2' : '#08081a',
+        grid: isLight ? 'rgba(0,120,200,0.04)' : 'rgba(0,212,255,0.025)',
+        tube: isLight ? '#333' : '#ccc',
+        tubeWindow: isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)',
+        vacuum: isLight ? '#555' : '#aaa',
+        cathodeA: isLight ? '#555' : '#999',
+        cathodeB: isLight ? '#777' : '#bbb',
+        cathodeStroke: isLight ? '#333' : '#ddd',
+        anodeA: isLight ? '#666' : '#aaa',
+        anodeB: isLight ? '#888' : '#ccc',
+        anodeStroke: isLight ? '#444' : '#ddd',
+        label: isLight ? '#222' : '#e0e0e0',
+        wire: isLight ? '#222' : '#ddd',
+        lampBody: isLight ? '#e0e0e8' : '#1a1a2a',
+        lampStroke: isLight ? '#333' : '#ccc',
+        batteryLine: isLight ? '#111' : '#eee',
+        ammeterBg: isLight ? '#f0f0f5' : '#0e0e28',
+        ammeterStroke: isLight ? '#222' : '#eee',
+        ammeterText: isLight ? '#111' : '#f0f0f0',
+        currentOn: isLight ? '#00b377' : '#4AFF8B',
+        currentOff: isLight ? '#888' : '#666',
+        formulaBg: isLight ? 'rgba(240,240,250,0.92)' : 'rgba(8,8,26,0.92)',
+        formulaBorder: isLight ? '#ddd' : '#1a1a3a',
+        formulaText: isLight ? '#8888a0' : '#6b6b85',
+        noEmBg: isLight ? 'rgba(255,45,117,0.05)' : 'rgba(255,45,117,0.06)',
+        noEmText: isLight ? '#cc2266' : '#FF4A6E',
+        noEmSub: isLight ? '#bb5577' : '#aa3355',
+        emGlow: isLight ? 'rgba(0,179,119,0.04)' : 'rgba(74,255,139,0.04)',
+        // graph
+        graphBg: isLight ? '#f0f0f8' : '#0a0a22',
+        graphGrid: isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)',
+        graphAxis: isLight ? '#ccc' : '#2a2a50',
+        graphTick: isLight ? '#999' : '#555',
+        graphLabel: isLight ? '#888' : '#6b6b85',
+        zeroAxis: isLight ? 'rgba(0,100,180,0.18)' : 'rgba(0,212,255,0.2)',
+        zeroLabel: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)',
+        noEmitText: isLight ? '#bbb' : '#555',
+        // curve colors (consistent)
+        curve: '#00d4ff',
+        curveSat: isLight ? 'rgba(0,153,204,0.4)' : 'rgba(0,212,255,0.4)',
+        stopLine: isLight ? '#cc2266' : '#FF4A6E',
+        opPoint: isLight ? '#0099cc' : '#fff',
+        opGlow: isLight ? '#0099cc' : '#00d4ff',
+        // electrons
+        electronColor: isLight ? '0, 80, 220' : '255, 220, 50',
+        electronTurned: isLight ? '200, 0, 60' : '255, 80, 120',
+        electronCore: isLight ? '0, 0, 0' : '255, 255, 255',
+      };
+    }
+    updateThemeColors();
+
+    // Watch for theme changes
+    new MutationObserver(function() { updateThemeColors(); }).observe(
+      document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }
+    );
 
     // === DOM ===
     const canvas = document.getElementById('simCanvas');
@@ -557,18 +754,31 @@
     var dpr = window.devicePixelRatio || 1;
 
     function resizeCanvas() {
+      var isFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
       var wrap = canvas.parentElement;
       var w = wrap.clientWidth;
-      var h = Math.max(350, Math.min(w * 0.55, window.innerHeight * 0.55));
+      var h;
+      if (isFS) {
+        // Measure actual remaining height: screen - header - controls - data - padding
+        var header = document.querySelector('.sim-header');
+        var controls = document.querySelector('.controls-bar');
+        var data = document.querySelector('.data-panel');
+        var used = (header ? header.offsetHeight : 40) +
+                   (controls ? controls.offsetHeight : 60) +
+                   (data ? data.offsetHeight : 80) + 80; // 80 for padding/margins
+        h = Math.max(250, window.innerHeight - used);
+      } else {
+        h = Math.max(350, Math.min(w * 0.55, window.innerHeight * 0.55));
+      }
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Graph canvas — sits beside the main canvas
+      // Graph canvas — match main canvas height
       var gWrap = graphCanvas.parentElement;
       var gw = gWrap.clientWidth - 32;
-      var gh = h - 42; // match main canvas height minus header
+      var gh = h - 42;
       graphCanvas.width = gw * dpr;
       graphCanvas.height = gh * dpr;
       graphCanvas.style.height = gh + 'px';
@@ -584,29 +794,31 @@
       var wl = wavelength();
       var color = wlToRGB(wl);
       var emission = photonEnergy() > workFunction();
+      // Font scale: base at 700px width, scale up for larger screens
+      var fs = Math.max(1, W / 700);
 
       // Background
-      ctx.fillStyle = '#111';
+      ctx.fillStyle = tc.canvasBg;
       ctx.fillRect(0, 0, W, H);
 
       // Grid
-      ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+      ctx.strokeStyle = tc.grid;
       ctx.lineWidth = 1;
       for (var x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
       for (var y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
 
-      // Layout proportions
-      var tubeL = W * 0.28;
-      var tubeR = W * 0.78;
-      var tubeT = H * 0.1;
-      var tubeB = H * 0.65;
-      var cathodeX = W * 0.36;
-      var anodeX = W * 0.7;
+      // Layout proportions — spread to fill canvas
+      var tubeL = W * 0.22;
+      var tubeR = W * 0.82;
+      var tubeT = H * 0.15;
+      var tubeB = H * 0.68;
+      var cathodeX = W * 0.32;
+      var anodeX = W * 0.72;
       var plateTop = tubeT + 20;
       var plateBot = tubeB - 20;
 
       // === VACUUM TUBE ===
-      ctx.strokeStyle = '#333';
+      ctx.strokeStyle = tc.tube;
       ctx.lineWidth = 2;
       ctx.beginPath();
       var tubePad = 15;
@@ -621,14 +833,14 @@
       ctx.quadraticCurveTo(tubeL, tubeT, tubeL + tubePad, tubeT);
       ctx.stroke();
 
-      // Vacuum label
-      ctx.fillStyle = '#2a2a2a';
-      ctx.font = '10px Inter, sans-serif';
+      // Vacuum label (at bottom of tube)
+      ctx.fillStyle = tc.vacuum;
+      ctx.font = Math.round(12 * fs) + 'px Delius, cursive';
       ctx.textAlign = 'center';
-      ctx.fillText('VACUUM', (tubeL + tubeR) / 2, tubeT + 14);
+      ctx.fillText('Vacuum', (tubeL + tubeR) / 2, tubeB - 8);
 
       // Window on tube (where light enters at angle)
-      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.strokeStyle = tc.tubeWindow;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(tubeL + tubePad, tubeT);
@@ -637,43 +849,44 @@
 
       // === CATHODE ===
       var cathGrad = ctx.createLinearGradient(cathodeX - 8, 0, cathodeX + 8, 0);
-      cathGrad.addColorStop(0, '#4a4a5a');
-      cathGrad.addColorStop(0.5, '#6a6a7a');
-      cathGrad.addColorStop(1, '#4a4a5a');
+      cathGrad.addColorStop(0, tc.cathodeA);
+      cathGrad.addColorStop(0.5, tc.cathodeB);
+      cathGrad.addColorStop(1, tc.cathodeA);
       ctx.fillStyle = cathGrad;
       ctx.fillRect(cathodeX - 6, plateTop, 12, plateBot - plateTop);
-      ctx.strokeStyle = '#555';
+      ctx.strokeStyle = tc.cathodeStroke;
       ctx.lineWidth = 1;
       ctx.strokeRect(cathodeX - 6, plateTop, 12, plateBot - plateTop);
 
       // Glow on cathode if emission
       if (emission) {
-        ctx.fillStyle = 'rgba(74, 255, 139, 0.04)';
+        ctx.fillStyle = tc.emGlow;
         ctx.fillRect(cathodeX + 6, plateTop, 30, plateBot - plateTop);
       }
 
       // === ANODE ===
       var anGrad = ctx.createLinearGradient(anodeX - 6, 0, anodeX + 6, 0);
-      anGrad.addColorStop(0, '#5a5a6a');
-      anGrad.addColorStop(0.5, '#7a7a8a');
-      anGrad.addColorStop(1, '#5a5a6a');
+      anGrad.addColorStop(0, tc.anodeA);
+      anGrad.addColorStop(0.5, tc.anodeB);
+      anGrad.addColorStop(1, tc.anodeA);
       ctx.fillStyle = anGrad;
       ctx.fillRect(anodeX - 5, plateTop, 10, plateBot - plateTop);
-      ctx.strokeStyle = '#666';
+      ctx.strokeStyle = tc.anodeStroke;
       ctx.lineWidth = 1;
       ctx.strokeRect(anodeX - 5, plateTop, 10, plateBot - plateTop);
 
-      // Labels
-      ctx.fillStyle = '#555';
-      ctx.font = '11px JetBrains Mono, monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText('Cathode', cathodeX, tubeB + 16);
-      ctx.fillText('Anode', anodeX, tubeB + 16);
+      // Labels (left of cathode, right of anode)
+      ctx.fillStyle = tc.label;
+      ctx.font = Math.round(13 * fs) + 'px Delius, cursive';
+      ctx.textAlign = 'right';
+      ctx.fillText('Cathode', cathodeX - 12, (plateTop + plateBot) / 2 + 4);
+      ctx.textAlign = 'left';
+      ctx.fillText('Anode', anodeX + 12, (plateTop + plateBot) / 2 + 4);
 
       // === LIGHT SOURCE (top center, shining diagonally onto cathode) ===
       var lsX = (tubeL + tubeR) / 2;
-      var lsY = H * 0.04;
-      var lsR = 18;
+      var lsY = H * 0.05;
+      var lsR = 20;
       // Target point on cathode surface (where beam hits)
       var targetX = cathodeX - 6;
       var targetY = (plateTop + plateBot) / 2;
@@ -687,8 +900,8 @@
       // Lamp body
       ctx.beginPath();
       ctx.arc(lsX, lsY, lsR, 0, Math.PI * 2);
-      ctx.fillStyle = '#1a1a2a';
-      ctx.strokeStyle = '#444';
+      ctx.fillStyle = tc.lampBody;
+      ctx.strokeStyle = tc.lampStroke;
       ctx.lineWidth = 1.5;
       ctx.fill();
       ctx.stroke();
@@ -714,56 +927,60 @@
       ctx.fill();
 
       // Label
-      ctx.fillStyle = '#888';
-      ctx.font = '10px JetBrains Mono, monospace';
+      ctx.fillStyle = tc.label;
+      ctx.font = Math.round(12 * fs) + 'px Delius, cursive';
       ctx.textAlign = 'left';
       ctx.fillText(freq.toFixed(1) + '\u00D710\u00B9\u2074 Hz', lsX + lsR + 6, lsY + 4);
-      if (wl < 380) {
-        ctx.fillStyle = '#666';
-        ctx.fillText('(UV)', lsX + lsR + 6, lsY + 16);
-      }
 
-      // === CIRCUIT (below tube) ===
-      var circY = tubeB + 40;
-      var circBot = H - 15;
-      var midY = (circY + circBot) / 2;
+      // === CIRCUIT (below tube, moved up) ===
+      var circBot = H - 30;
+      var amR = 14;
+      var amY = tubeB + (circBot - tubeB) * 0.45; // ammeter on anode wire, upper portion
 
-      ctx.strokeStyle = '#444';
+      // Battery on bottom wire (moved up)
+      var batX = (cathodeX + anodeX) / 2;
+      var batY = circBot;
+
+      ctx.strokeStyle = tc.wire;
       ctx.lineWidth = 1.5;
 
-      // Wire from cathode down
+      // Wire from cathode down to bottom
       ctx.beginPath();
       ctx.moveTo(cathodeX, plateBot);
       ctx.lineTo(cathodeX, circBot);
       ctx.stroke();
 
-      // Wire from anode down
+      // Wire from anode down to ammeter top
       ctx.beginPath();
       ctx.moveTo(anodeX, plateBot);
+      ctx.lineTo(anodeX, amY - amR);
+      ctx.stroke();
+
+      // Wire from ammeter bottom to circuit bottom
+      ctx.beginPath();
+      ctx.moveTo(anodeX, amY + amR);
       ctx.lineTo(anodeX, circBot);
       ctx.stroke();
 
-      // Bottom wire left
+      // Bottom wire left (cathode to battery)
       ctx.beginPath();
       ctx.moveTo(cathodeX, circBot);
-      ctx.lineTo((cathodeX + anodeX) / 2 - 30, circBot);
+      ctx.lineTo(batX - 12, circBot);
       ctx.stroke();
 
-      // Bottom wire right
+      // Bottom wire right (battery to anode)
       ctx.beginPath();
-      ctx.moveTo((cathodeX + anodeX) / 2 + 30, circBot);
+      ctx.moveTo(batX + 12, circBot);
       ctx.lineTo(anodeX, circBot);
       ctx.stroke();
 
       // Battery symbol
-      var batX = (cathodeX + anodeX) / 2;
-      var batY = circBot;
+      ctx.strokeStyle = tc.batteryLine;
+      ctx.lineWidth = 2.5;
       // Long line (positive)
-      ctx.strokeStyle = '#888';
-      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(batX - 8, batY - 8);
-      ctx.lineTo(batX - 8, batY + 8);
+      ctx.moveTo(batX - 8, batY - 9);
+      ctx.lineTo(batX - 8, batY + 9);
       ctx.stroke();
       // Short line (negative)
       ctx.lineWidth = 1.5;
@@ -771,47 +988,73 @@
       ctx.moveTo(batX + 8, batY - 5);
       ctx.lineTo(batX + 8, batY + 5);
       ctx.stroke();
-
-      // Battery label
-      ctx.fillStyle = '#888';
-      ctx.font = '10px JetBrains Mono, monospace';
+      // + and - signs
+      ctx.fillStyle = tc.label;
+      ctx.font = Math.round(11 * fs) + 'px Delius, cursive';
       ctx.textAlign = 'center';
-      var vStr = voltage >= 0 ? '+' + voltage.toFixed(1) : voltage.toFixed(1);
-      ctx.fillText(vStr + ' V', batX, batY - 14);
+      ctx.fillText('+', batX - 8, batY - 14);
+      ctx.fillText('\u2013', batX + 8, batY - 14);
 
-      // Ammeter on right wire
-      var amX = anodeX + 30;
-      var amY = (plateBot + circBot) / 2;
-      // Wire to ammeter
-      ctx.strokeStyle = '#444';
-      ctx.lineWidth = 1.5;
+      // Ammeter circle (inline on anode wire)
       ctx.beginPath();
-      ctx.moveTo(anodeX, amY - 12);
-      ctx.lineTo(anodeX, amY + 12);
-      ctx.stroke();
-
-      // Ammeter circle (on the wire)
-      ctx.beginPath();
-      ctx.arc(anodeX, amY, 14, 0, Math.PI * 2);
-      ctx.fillStyle = '#1a1a1a';
-      ctx.strokeStyle = '#555';
-      ctx.lineWidth = 1.5;
+      ctx.arc(anodeX, amY, amR, 0, Math.PI * 2);
+      ctx.fillStyle = tc.ammeterBg;
+      ctx.strokeStyle = tc.ammeterStroke;
+      ctx.lineWidth = 2;
       ctx.fill();
       ctx.stroke();
 
       // A label
-      ctx.fillStyle = '#e0e0e0';
-      ctx.font = 'bold 11px Inter, sans-serif';
+      ctx.fillStyle = tc.ammeterText;
+      ctx.font = 'bold ' + Math.round(14 * fs) + 'px Delius, cursive';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('A', anodeX, amY);
       ctx.textBaseline = 'alphabetic';
 
-      // Current value near ammeter
+      // === CURRENT READING (to the right of ammeter) ===
       var curVal = currentAt(voltage);
-      ctx.fillStyle = emission ? '#4AFF8B' : '#666';
-      ctx.font = '10px JetBrains Mono, monospace';
-      ctx.fillText(curVal.toFixed(2) + ' \u00B5A', anodeX + 30, amY + 4);
+      var curStr = curVal.toFixed(2) + ' \u00B5A';
+      var curZero = curVal < 0.005;
+      var curColor = !emission ? tc.currentOff : (curZero ? tc.stopLine : tc.currentOn);
+      var curBorder = !emission ? tc.formulaBorder : (curZero ? 'rgba(255,45,117,0.3)' : 'rgba(0,255,170,0.25)');
+      ctx.font = 'bold ' + Math.round(14 * fs) + 'px JetBrains Mono, monospace';
+      var curW = ctx.measureText(curStr).width + 18;
+      var curH = Math.round(24 * fs);
+      var curPx = anodeX + amR + 10;
+      var curPy = amY - curH / 2;
+      ctx.fillStyle = tc.formulaBg;
+      ctx.beginPath();
+      ctx.roundRect(curPx, curPy, curW, curH, 4);
+      ctx.fill();
+      ctx.strokeStyle = curBorder;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(curPx, curPy, curW, curH, 4);
+      ctx.stroke();
+      ctx.fillStyle = curColor;
+      ctx.textAlign = 'left';
+      ctx.fillText(curStr, curPx + 9, curPy + curH * 0.68);
+
+      // === VOLTAGE READING (to the left of battery) ===
+      var vStr2 = (voltage >= 0 ? '+' : '') + voltage.toFixed(1) + ' V';
+      ctx.font = 'bold ' + Math.round(14 * fs) + 'px JetBrains Mono, monospace';
+      var vW = ctx.measureText(vStr2).width + 18;
+      var vH = Math.round(24 * fs);
+      var vPx = batX - vW / 2;
+      var vPy = batY - 38;
+      ctx.fillStyle = tc.formulaBg;
+      ctx.beginPath();
+      ctx.roundRect(vPx, vPy, vW, vH, 4);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(vPx, vPy, vW, vH, 4);
+      ctx.stroke();
+      ctx.fillStyle = '#00d4ff';
+      ctx.textAlign = 'center';
+      ctx.fillText(vStr2, batX, vPy + vH * 0.68);
 
       // === PHOTON PARTICLES (diagonal from top-center to cathode) ===
       frameCount++;
@@ -936,46 +1179,36 @@
 
         // Draw electron
         var alpha = Math.min(1, e.life / 60);
-        var eColor = e.turned ? '255, 74, 110' : '74, 255, 139';
+        var eColor = e.turned ? tc.electronTurned : tc.electronColor;
         ctx.beginPath();
-        ctx.arc(e.x, e.y, 3, 0, Math.PI * 2);
+        ctx.arc(e.x, e.y, 4, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(' + eColor + ',' + alpha + ')';
-        ctx.shadowColor = 'rgba(' + eColor + ',0.6)';
-        ctx.shadowBlur = 6;
+        ctx.shadowColor = 'rgba(' + eColor + ',0.8)';
+        ctx.shadowBlur = 10;
         ctx.fill();
         ctx.shadowBlur = 0;
+        // bright core
+        ctx.beginPath();
+        ctx.arc(e.x, e.y, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + tc.electronCore + ',' + (alpha * 0.7) + ')';
+        ctx.fill();
 
         return true;
       });
 
       // === NO EMISSION INDICATOR ===
       if (!emission) {
-        ctx.fillStyle = 'rgba(255, 74, 110, 0.06)';
+        ctx.fillStyle = tc.noEmBg;
         ctx.fillRect(cathodeX - 8, plateTop, 16, plateBot - plateTop);
 
-        ctx.fillStyle = '#FF4A6E';
-        ctx.font = 'bold 13px Inter, sans-serif';
+        ctx.fillStyle = tc.noEmText;
+        ctx.font = 'bold ' + Math.round(15 * fs) + 'px Delius, cursive';
         ctx.textAlign = 'center';
         ctx.fillText('No Emission', (cathodeX + anodeX) / 2, (tubeT + tubeB) / 2 - 8);
-        ctx.font = '11px JetBrains Mono, monospace';
-        ctx.fillStyle = '#aa3355';
+        ctx.font = Math.round(12 * fs) + 'px Delius, cursive';
+        ctx.fillStyle = tc.noEmSub;
         ctx.fillText('E < \u03C6  (' + photonEnergy().toFixed(2) + ' < ' + workFunction().toFixed(2) + ' eV)', (cathodeX + anodeX) / 2, (tubeT + tubeB) / 2 + 12);
       }
-
-      // === FORMULA at top-right ===
-      var fX = W * 0.82;
-      var fY = H * 0.08;
-      ctx.fillStyle = 'rgba(17,17,17,0.9)';
-      ctx.fillRect(fX - 10, fY - 4, W * 0.17, 60);
-      ctx.strokeStyle = '#222';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(fX - 10, fY - 4, W * 0.17, 60);
-      ctx.fillStyle = '#666';
-      ctx.font = '11px JetBrains Mono, monospace';
-      ctx.textAlign = 'left';
-      ctx.fillText('E = hf', fX, fY + 14);
-      ctx.fillText('KE = hf \u2212 \u03C6', fX, fY + 30);
-      ctx.fillText('V\u2080 = KE/e', fX, fY + 46);
 
       requestAnimationFrame(drawSim);
     }
@@ -985,27 +1218,21 @@
       var w = graphCanvas.width / dpr;
       var h = graphCanvas.height / dpr;
 
-      gctx.fillStyle = '#161616';
+      gctx.fillStyle = tc.graphBg;
       gctx.fillRect(0, 0, w, h);
 
-      var padL = 45, padR = 15, padT = 15, padB = 35;
+      var padL = 50, padR = 18, padT = 22, padB = 40;
       var plotW = w - padL - padR;
       var plotH = h - padT - padB;
       var Isat = satCurrent();
       var Vs = stoppingV();
       var emitting = photonEnergy() > workFunction();
-
-      // Axes
-      gctx.strokeStyle = '#444';
-      gctx.lineWidth = 1;
-      gctx.beginPath();
-      gctx.moveTo(padL, padT);
-      gctx.lineTo(padL, padT + plotH);
-      gctx.lineTo(padL + plotW, padT + plotH);
-      gctx.stroke();
+      var yMax = 12;
+      var gfs = Math.min(1.15, Math.max(0.85, w / 300)); // graph font scale, capped
 
       // Grid lines
-      gctx.strokeStyle = 'rgba(255,255,255,0.04)';
+      gctx.strokeStyle = tc.graphGrid;
+      gctx.lineWidth = 1;
       for (var i = 1; i <= 4; i++) {
         var gy = padT + plotH * (1 - i / 4);
         gctx.beginPath();
@@ -1021,86 +1248,103 @@
         gctx.stroke();
       }
 
-      // Axis labels
-      gctx.fillStyle = '#666';
-      gctx.font = '10px JetBrains Mono, monospace';
+      // V=0 axis (prominent)
+      var zeroX = padL + (5 / 10) * plotW;
+      gctx.strokeStyle = tc.zeroAxis;
+      gctx.lineWidth = 1.5;
+      gctx.beginPath();
+      gctx.moveTo(zeroX, padT);
+      gctx.lineTo(zeroX, padT + plotH);
+      gctx.stroke();
+
+      // I=0 axis (prominent)
+      gctx.beginPath();
+      gctx.moveTo(padL, padT + plotH);
+      gctx.lineTo(padL + plotW, padT + plotH);
+      gctx.stroke();
+
+      // Outer axes (bold)
+      gctx.strokeStyle = tc.label;
+      gctx.lineWidth = 1.5;
+      gctx.beginPath();
+      gctx.moveTo(padL, padT);
+      gctx.lineTo(padL, padT + plotH);
+      gctx.lineTo(padL + plotW, padT + plotH);
+      gctx.stroke();
+
+      // Axis title labels
+      gctx.fillStyle = tc.label;
+      gctx.font = 'bold ' + Math.round(13 * gfs) + 'px Delius, cursive';
       gctx.textAlign = 'center';
-      gctx.fillText('V (volts)', padL + plotW / 2, h - 5);
-      // Y label
+      gctx.fillText('V (volts)', padL + plotW / 2, h - 6);
       gctx.save();
-      gctx.translate(12, padT + plotH / 2);
+      gctx.translate(14, padT + plotH / 2);
       gctx.rotate(-Math.PI / 2);
       gctx.fillText('I (\u00B5A)', 0, 0);
       gctx.restore();
 
       // Tick labels on X
       gctx.textAlign = 'center';
-      gctx.fillStyle = '#555';
-      gctx.font = '9px JetBrains Mono, monospace';
+      gctx.fillStyle = tc.label;
+      gctx.font = Math.round(11 * gfs) + 'px JetBrains Mono, monospace';
       for (var v = -5; v <= 5; v += 2.5) {
         var tx = padL + ((v + 5) / 10) * plotW;
-        gctx.fillText(v.toFixed(1), tx, padT + plotH + 14);
+        gctx.fillText(v.toFixed(1), tx, padT + plotH + 18);
         // Tick mark
+        gctx.strokeStyle = tc.label;
+        gctx.lineWidth = 1;
         gctx.beginPath();
         gctx.moveTo(tx, padT + plotH);
-        gctx.lineTo(tx, padT + plotH + 4);
-        gctx.strokeStyle = '#444';
+        gctx.lineTo(tx, padT + plotH + 5);
         gctx.stroke();
       }
+      // "0" label on V=0
+      gctx.fillStyle = tc.zeroLabel;
+      gctx.font = 'bold ' + Math.round(11 * gfs) + 'px JetBrains Mono, monospace';
+      gctx.fillText('0', zeroX, padT + plotH + 18);
 
       // Tick labels on Y
       gctx.textAlign = 'right';
-      var yMax = 12; // Fixed scale (max Isat = 10 μA at 100% intensity)
+      gctx.fillStyle = tc.label;
+      gctx.font = Math.round(11 * gfs) + 'px JetBrains Mono, monospace';
       for (var i = 0; i <= 4; i++) {
         var yVal = (i / 4) * yMax;
         var ty = padT + plotH * (1 - i / 4);
-        gctx.fillText(yVal.toFixed(1), padL - 6, ty + 3);
+        gctx.fillText(yVal.toFixed(0), padL - 8, ty + 4);
+        // Tick mark
+        gctx.strokeStyle = tc.label;
+        gctx.lineWidth = 1;
+        gctx.beginPath();
+        gctx.moveTo(padL - 4, ty);
+        gctx.lineTo(padL, ty);
+        gctx.stroke();
       }
-
-      // V=0 axis (prominent vertical line)
-      var zeroX = padL + (5 / 10) * plotW;
-      gctx.strokeStyle = 'rgba(255,255,255,0.35)';
-      gctx.lineWidth = 1.5;
-      gctx.beginPath();
-      gctx.moveTo(zeroX, padT);
-      gctx.lineTo(zeroX, padT + plotH);
-      gctx.stroke();
-      // V=0 label
-      gctx.fillStyle = 'rgba(255,255,255,0.4)';
-      gctx.font = '9px JetBrains Mono, monospace';
-      gctx.textAlign = 'center';
-      gctx.fillText('0', zeroX, padT + plotH + 14);
-
-      // I=0 axis (prominent horizontal line at bottom of plot)
-      gctx.strokeStyle = 'rgba(255,255,255,0.35)';
-      gctx.lineWidth = 1.5;
-      gctx.beginPath();
-      gctx.moveTo(padL, padT + plotH);
-      gctx.lineTo(padL + plotW, padT + plotH);
-      gctx.stroke();
 
       if (emitting && Isat > 0) {
         // Stopping potential marker
         if (Vs > 0 && Vs <= 5) {
           var vsX = padL + ((-Vs + 5) / 10) * plotW;
-          gctx.strokeStyle = '#FF4A6E';
-          gctx.lineWidth = 1;
-          gctx.setLineDash([4, 4]);
+          gctx.strokeStyle = tc.stopLine;
+          gctx.lineWidth = 1.5;
+          gctx.setLineDash([5, 4]);
           gctx.beginPath();
           gctx.moveTo(vsX, padT);
           gctx.lineTo(vsX, padT + plotH);
           gctx.stroke();
           gctx.setLineDash([]);
 
-          gctx.fillStyle = '#FF4A6E';
-          gctx.font = '9px JetBrains Mono, monospace';
+          // Label with background
+          gctx.fillStyle = tc.stopLine;
+          gctx.font = 'bold ' + Math.round(12 * gfs) + 'px Delius, cursive';
           gctx.textAlign = 'center';
-          gctx.fillText('-V\u2080', vsX, padT - 3);
+          gctx.fillText('-V\u2080', vsX, padT - 6);
         }
 
-        // Draw I-V curve
-        gctx.strokeStyle = '#4A9EFF';
-        gctx.lineWidth = 2;
+        // Draw I-V curve (thick, glowing)
+        gctx.strokeStyle = tc.curve;
+        gctx.lineWidth = 3;
+        gctx.shadowColor = tc.curve;
+        gctx.shadowBlur = 6;
         gctx.beginPath();
         var first = true;
         for (var px = 0; px <= plotW; px += 1) {
@@ -1111,44 +1355,66 @@
           else gctx.lineTo(padL + px, cy);
         }
         gctx.stroke();
+        gctx.shadowBlur = 0;
 
         // Saturation line and label
         var satY = padT + plotH * (1 - Isat / yMax);
-        gctx.setLineDash([4, 3]);
-        gctx.strokeStyle = 'rgba(74, 158, 255, 0.5)';
-        gctx.lineWidth = 1;
+        gctx.setLineDash([5, 4]);
+        gctx.strokeStyle = tc.curveSat;
+        gctx.lineWidth = 1.5;
         gctx.beginPath();
         gctx.moveTo(padL, satY);
         gctx.lineTo(padL + plotW, satY);
         gctx.stroke();
         gctx.setLineDash([]);
 
-        gctx.fillStyle = '#4A9EFF';
-        gctx.font = '10px JetBrains Mono, monospace';
+        gctx.fillStyle = tc.curve;
+        gctx.font = 'bold ' + Math.round(12 * gfs) + 'px Delius, cursive';
         gctx.textAlign = 'right';
-        gctx.fillText('I_sat = ' + Isat.toFixed(1) + ' \u00B5A', padL + plotW - 4, satY - 6);
+        gctx.fillText('I sat = ' + Isat.toFixed(1) + ' \u00B5A', padL + plotW - 4, satY - 8);
 
-        // Current operating point
+        // Current operating point (larger, with crosshairs)
         var opV = voltage;
         var opI = currentAt(opV);
         var opX = padL + ((opV + 5) / 10) * plotW;
         var opY = padT + plotH * (1 - opI / yMax);
 
+        // Crosshair lines to axes
+        gctx.setLineDash([3, 3]);
+        gctx.strokeStyle = 'rgba(255,255,255,0.12)';
+        gctx.lineWidth = 1;
         gctx.beginPath();
-        gctx.arc(opX, opY, 5, 0, Math.PI * 2);
-        gctx.fillStyle = '#fff';
-        gctx.shadowColor = '#4A9EFF';
-        gctx.shadowBlur = 8;
+        gctx.moveTo(opX, opY);
+        gctx.lineTo(opX, padT + plotH);
+        gctx.stroke();
+        gctx.beginPath();
+        gctx.moveTo(opX, opY);
+        gctx.lineTo(padL, opY);
+        gctx.stroke();
+        gctx.setLineDash([]);
+
+        // Operating point dot
+        gctx.beginPath();
+        gctx.arc(opX, opY, 6, 0, Math.PI * 2);
+        gctx.fillStyle = tc.opPoint;
+        gctx.shadowColor = tc.opGlow;
+        gctx.shadowBlur = 14;
         gctx.fill();
         gctx.shadowBlur = 0;
+
+        // Value label near operating point
+        gctx.fillStyle = tc.curve;
+        gctx.font = Math.round(11 * gfs) + 'px JetBrains Mono, monospace';
+        gctx.textAlign = 'left';
+        gctx.fillText(opI.toFixed(2) + ' \u00B5A', opX + 10, opY - 4);
       } else {
         // No emission text
-        gctx.fillStyle = '#555';
-        gctx.font = '12px Inter, sans-serif';
+        gctx.fillStyle = tc.label;
+        gctx.font = Math.round(15 * gfs) + 'px Delius, cursive';
         gctx.textAlign = 'center';
         gctx.fillText('No emission', padL + plotW / 2, padT + plotH / 2 - 6);
-        gctx.font = '10px JetBrains Mono, monospace';
-        gctx.fillText('I = 0', padL + plotW / 2, padT + plotH / 2 + 12);
+        gctx.font = Math.round(13 * gfs) + 'px Delius, cursive';
+        gctx.fillText('I = 0', padL + plotW / 2, padT + plotH / 2 + 16);
       }
 
       requestAnimationFrame(drawGraph);
@@ -1174,10 +1440,10 @@
 
       var statusEl = document.getElementById('dStatus');
       if (emitting) {
-        statusEl.textContent = '\u2713 Emission';
+        statusEl.innerHTML = '<span style="color:var(--color-accent)">\u2713</span> Emission';
         statusEl.className = 'data-value emission';
       } else {
-        statusEl.textContent = '\u2717 No Emission';
+        statusEl.innerHTML = '<span style="color:var(--color-rose)">\u2717</span> No Emission';
         statusEl.className = 'data-value no-emission';
       }
     }
@@ -1213,6 +1479,30 @@
       metalIdx = parseInt(this.value);
       updateData();
     });
+
+    // === FULLSCREEN ===
+    var simArea = document.getElementById('simArea');
+    var fsBtn = document.getElementById('fullscreenBtn');
+
+    fsBtn.addEventListener('click', function() {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        (simArea.requestFullscreen || simArea.webkitRequestFullscreen).call(simArea);
+      }
+    });
+
+    function onFSChange() {
+      var isFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      fsBtn.textContent = isFS ? 'Exit Full Screen' : 'Full Screen';
+      // Resize multiple times as DOM settles into fullscreen layout
+      resizeCanvas();
+      setTimeout(resizeCanvas, 100);
+      setTimeout(resizeCanvas, 300);
+    }
+
+    document.addEventListener('fullscreenchange', onFSChange);
+    document.addEventListener('webkitfullscreenchange', onFSChange);
 
     document.getElementById('resetBtn').addEventListener('click', function() {
       photons = [];

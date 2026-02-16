@@ -2,7 +2,7 @@
    AXOMIYA ENGINEER - Physics Theme Design System
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Fredericka+the+Great&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* --- CSS Custom Properties --- */
 :root {
@@ -29,9 +29,9 @@
   --glow-secondary: 0 0 20px rgba(124, 58, 237, 0.3), 0 0 60px rgba(124, 58, 237, 0.1);
   --glow-accent: 0 0 20px rgba(0, 255, 170, 0.3);
 
-  --font-display: 'Orbitron', monospace;
-  --font-body: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Fredericka the Great', cursive;
+  --font-body: 'Delius', cursive;
+  --font-mono: 'Delius', cursive;
 
   --radius-sm: 8px;
   --radius-md: 12px;
