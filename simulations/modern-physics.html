@@ -1050,7 +1050,7 @@
 
       // Tick labels on Y
       gctx.textAlign = 'right';
-      var yMax = emitting && Isat > 0 ? Isat * 1.3 : 10;
+      var yMax = 12; // Fixed scale (max Isat = 10 μA at 100% intensity)
       for (var i = 0; i <= 4; i++) {
         var yVal = (i / 4) * yMax;
         var ty = padT + plotH * (1 - i / 4);
