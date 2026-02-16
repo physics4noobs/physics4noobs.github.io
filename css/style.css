@@ -597,8 +597,8 @@ ul { list-style: none; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
+  width: 96px;
+  height: 96px;
   background: radial-gradient(circle, var(--color-primary), rgba(0, 212, 255, 0.1));
   border-radius: 50%;
   box-shadow: 0 0 60px rgba(0, 212, 255, 0.4), 0 0 120px rgba(0, 212, 255, 0.2);
@@ -656,6 +656,7 @@ ul { list-style: none; }
   margin-left: -5px;
 }
 
+/* Electron colors per ring */
 .orbit-ring:nth-child(2) .orbit-electron {
   background: var(--color-primary);
   box-shadow: 0 0 10px var(--color-primary);
