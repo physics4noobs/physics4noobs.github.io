@@ -37,6 +37,30 @@
     .sim-card:not(:hover) .proj-dot {
       cx: 20; cy: 100; opacity: 1;
     }
+    /* Photoelectric effect thumbnail hover animation */
+    .sim-card:hover .pe-photon {
+      animation: pePhoton 1s ease-in forwards;
+    }
+    .sim-card:hover .pe-electron {
+      animation: peElectron 1s ease-out 0.5s forwards;
+    }
+    @keyframes pePhoton {
+      0%   { cx: 20;  opacity: 1; }
+      60%  { cx: 75;  opacity: 1; }
+      70%  { cx: 78;  opacity: 0.5; }
+      100% { cx: 78;  opacity: 0; }
+    }
+    @keyframes peElectron {
+      0%   { cx: 85;  opacity: 0; }
+      20%  { cx: 95;  opacity: 1; }
+      100% { cx: 155; opacity: 1; }
+    }
+    .sim-card:not(:hover) .pe-photon {
+      cx: 20; opacity: 1;
+    }
+    .sim-card:not(:hover) .pe-electron {
+      cx: 85; opacity: 0;
+    }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -660,13 +684,29 @@
           </a>
 
           <a href="simulations/modern-physics.html" class="sim-card reveal">
-            <div class="sim-preview" style="background: linear-gradient(135deg, #280a1a, #0a1628);">
-              <span style="position: relative; z-index: 1;">&#9883;</span>
+            <div class="sim-preview pe-thumb" style="background: #111;">
+              <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
+                <!-- Cathode plate -->
+                <line x1="80" y1="20" x2="80" y2="100" stroke="#6a6a7a" stroke-width="3"/>
+                <!-- Anode plate -->
+                <line x1="160" y1="25" x2="160" y2="95" stroke="#7a7a8a" stroke-width="2"/>
+                <!-- Static photon dots (grey) -->
+                <circle cx="30" cy="50" r="3" fill="#444"/>
+                <circle cx="45" cy="65" r="3" fill="#444"/>
+                <circle cx="55" cy="40" r="3" fill="#444"/>
+                <!-- Animated photon -->
+                <circle class="pe-photon" cx="20" cy="55" r="3.5" fill="#8B5CF6"/>
+                <!-- Animated electron -->
+                <circle class="pe-electron" cx="85" cy="55" r="3" fill="#4AFF8B" opacity="0"/>
+                <!-- Labels -->
+                <text x="80" y="115" fill="#555" font-size="9" text-anchor="middle" font-family="monospace">C</text>
+                <text x="160" y="115" fill="#555" font-size="9" text-anchor="middle" font-family="monospace">A</text>
+              </svg>
             </div>
             <div class="sim-body">
               <div class="sim-grade">Grade XII &bull; Chapter 9</div>
-              <div class="sim-title">Modern Physics</div>
-              <div class="sim-desc">Photoelectric effect simulator. Vary light frequency and intensity to observe electron emission.</div>
+              <div class="sim-title">Photoelectric Effect</div>
+              <div class="sim-desc">Explore the photoelectric effect. Vary wavelength, intensity, and voltage to observe electron emission, stopping potential, and V-I characteristics.</div>
               <div class="sim-link">Launch Simulation &rarr;</div>
             </div>
           </a>
