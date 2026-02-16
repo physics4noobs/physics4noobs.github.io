@@ -405,6 +405,7 @@
         <div class="data-row"><span class="data-label">Threshold &lambda;</span><span class="data-value" id="dThresh">544 nm</span></div>
         <div class="data-row"><span class="data-label">Max KE</span><span class="data-value" id="dKE">1.26 eV</span></div>
         <div class="data-row"><span class="data-label">Stopping Potential</span><span class="data-value" id="dVstop">1.26 V</span></div>
+        <div class="data-row"><span class="data-label">Saturation Current</span><span class="data-value" id="dIsat">5.00 &micro;A</span></div>
         <div class="data-row"><span class="data-label">Current</span><span class="data-value" id="dCurrent">5.00 &micro;A</span></div>
         <div class="data-row"><span class="data-label">Status</span><span class="data-value emission" id="dStatus">Emission</span></div>
       </div>
@@ -1000,7 +1001,7 @@
 
       // Tick labels on Y
       gctx.textAlign = 'right';
-      var yMax = Math.max(10, Isat + 1);
+      var yMax = emitting && Isat > 0 ? Isat * 1.3 : 10;
       for (var i = 0; i <= 4; i++) {
         var yVal = (i / 4) * yMax;
         var ty = padT + plotH * (1 - i / 4);
@@ -1051,10 +1052,10 @@
         }
         gctx.stroke();
 
-        // Saturation label
+        // Saturation line and label
         var satY = padT + plotH * (1 - Isat / yMax);
-        gctx.setLineDash([2, 3]);
-        gctx.strokeStyle = 'rgba(74, 158, 255, 0.3)';
+        gctx.setLineDash([4, 3]);
+        gctx.strokeStyle = 'rgba(74, 158, 255, 0.5)';
         gctx.lineWidth = 1;
         gctx.beginPath();
         gctx.moveTo(padL, satY);
@@ -1062,10 +1063,10 @@
         gctx.stroke();
         gctx.setLineDash([]);
 
-        gctx.fillStyle = 'rgba(74, 158, 255, 0.5)';
-        gctx.font = '9px JetBrains Mono, monospace';
+        gctx.fillStyle = '#4A9EFF';
+        gctx.font = '10px JetBrains Mono, monospace';
         gctx.textAlign = 'right';
-        gctx.fillText('I_sat', padL + plotW - 4, satY - 4);
+        gctx.fillText('I_sat = ' + Isat.toFixed(1) + ' \u00B5A', padL + plotW - 4, satY - 6);
 
         // Current operating point
         var opV = voltage;
@@ -1108,6 +1109,7 @@
       document.getElementById('dThresh').textContent = thresh.toFixed(0) + ' nm';
       document.getElementById('dKE').textContent = ke.toFixed(2) + ' eV';
       document.getElementById('dVstop').textContent = Vs.toFixed(2) + ' V';
+      document.getElementById('dIsat').innerHTML = (emitting ? satCurrent().toFixed(2) : '0.00') + ' &micro;A';
       document.getElementById('dCurrent').innerHTML = cur.toFixed(2) + ' &micro;A';
 
       var statusEl = document.getElementById('dStatus');
