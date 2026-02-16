@@ -627,12 +627,12 @@
       ctx.textAlign = 'center';
       ctx.fillText('VACUUM', (tubeL + tubeR) / 2, tubeT + 14);
 
-      // Window on top of tube (where light enters)
+      // Window on tube (where light enters at angle)
       ctx.strokeStyle = 'rgba(255,255,255,0.08)';
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(cathodeX - 15, tubeT);
-      ctx.lineTo(cathodeX + 15, tubeT);
+      ctx.moveTo(tubeL + tubePad, tubeT);
+      ctx.lineTo((tubeL + tubeR) / 2 - 10, tubeT);
       ctx.stroke();
 
       // === CATHODE ===
@@ -670,10 +670,13 @@
       ctx.fillText('Cathode', cathodeX, tubeB + 16);
       ctx.fillText('Anode', anodeX, tubeB + 16);
 
-      // === LIGHT SOURCE (top, shining down onto cathode) ===
-      var lsX = cathodeX;
+      // === LIGHT SOURCE (top center, shining diagonally onto cathode) ===
+      var lsX = (tubeL + tubeR) / 2;
       var lsY = H * 0.04;
       var lsR = 18;
+      // Target point on cathode surface (where beam hits)
+      var targetX = cathodeX - 6;
+      var targetY = (plateTop + plateBot) / 2;
 
       // Outer glow
       ctx.beginPath();
@@ -699,14 +702,15 @@
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // Light beam cone downward to cathode
+      // Light beam cone — diagonal from source down to cathode surface
+      var beamSpread = 12;
       ctx.beginPath();
-      ctx.moveTo(lsX - 6, lsY + lsR);
-      ctx.lineTo(cathodeX - 10, tubeT);
-      ctx.lineTo(cathodeX + 10, tubeT);
-      ctx.lineTo(lsX + 6, lsY + lsR);
+      ctx.moveTo(lsX - 4, lsY + lsR);
+      ctx.lineTo(targetX - beamSpread, plateTop);
+      ctx.lineTo(targetX + beamSpread, plateBot);
+      ctx.lineTo(lsX + 4, lsY + lsR);
       ctx.closePath();
-      ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.05)';
+      ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.04)';
       ctx.fill();
 
       // Label
@@ -809,16 +813,25 @@
       ctx.font = '10px JetBrains Mono, monospace';
       ctx.fillText(curVal.toFixed(2) + ' \u00B5A', anodeX + 30, amY + 4);
 
-      // === PHOTON PARTICLES (falling from top) ===
+      // === PHOTON PARTICLES (diagonal from top-center to cathode) ===
       frameCount++;
       var spawnRate = Math.max(1, Math.floor(8 - (intensity / 100) * 7));
+      // Direction vector from light source to cathode surface
+      var dx = targetX - lsX;
+      var dy = targetY - lsY;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var dirX = dx / dist;
+      var dirY = dy / dist;
+
       if (frameCount % spawnRate === 0) {
-        var px = cathodeX + (Math.random() - 0.5) * 16;
+        // Spawn near light source with slight spread
+        var spread = (Math.random() - 0.5) * 8;
         photons.push({
-          x: px,
-          y: lsY + lsR + 2,
-          speed: 2 + Math.random() * 1.5,
-          wave: Math.random() * Math.PI * 2
+          x: lsX + spread * dirY,
+          y: lsY + lsR + Math.abs(spread * dirX),
+          speed: 2.5 + Math.random() * 1.5,
+          wave: Math.random() * Math.PI * 2,
+          hitY: plateTop + Math.random() * (plateBot - plateTop)
         });
       }
 
@@ -826,20 +839,19 @@
       if (photons.length > 80) photons.splice(0, photons.length - 80);
 
       photons = photons.filter(function(p) {
-        p.y += p.speed;
+        p.x += dirX * p.speed;
+        p.y += dirY * p.speed;
         p.wave += 0.15;
 
-        if (p.y >= plateTop) {
-          // Hit cathode
+        // Hit the cathode surface (reached cathode x position)
+        if (p.x <= cathodeX + 6 && p.y >= plateTop - 5) {
           if (emission) {
-            // Emit electron with random KE and random direction
             var ke = Math.random() * maxKE();
             var speed = 0.8 + (ke / Math.max(0.01, maxKE())) * 2.5;
-            // Random emission angle: some go straight, some drift up/down
             var angle = (Math.random() - 0.5) * Math.PI * 0.8;
             electrons.push({
               x: cathodeX + 8,
-              y: p.y + (Math.random() - 0.5) * 8,
+              y: Math.max(plateTop, Math.min(plateBot, p.y)),
               vx: speed * Math.cos(angle),
               vy: speed * Math.sin(angle),
               ke: ke,
@@ -850,6 +862,9 @@
           return false;
         }
 
+        // Out of bounds
+        if (p.y > tubeB + 10 || p.x < tubeL - 10) return false;
+
         // Draw photon
         ctx.beginPath();
         ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
@@ -859,13 +874,13 @@
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Wave trail (upward behind the photon)
+        // Wave trail (behind the photon, opposite to direction)
         ctx.strokeStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         for (var i = 0; i < 15; i++) {
-          var ty = p.y - i * 2;
-          var tx = p.x + Math.sin(p.wave - i * 0.5) * 2.5;
+          var tx = p.x - dirX * i * 2 + Math.sin(p.wave - i * 0.5) * dirY * 2.5;
+          var ty = p.y - dirY * i * 2 - Math.sin(p.wave - i * 0.5) * dirX * 2.5;
           if (i === 0) ctx.moveTo(tx, ty);
           else ctx.lineTo(tx, ty);
         }
@@ -1042,16 +1057,27 @@
         gctx.fillText(yVal.toFixed(1), padL - 6, ty + 3);
       }
 
-      // Zero line (V=0 axis)
+      // V=0 axis (prominent vertical line)
       var zeroX = padL + (5 / 10) * plotW;
-      gctx.strokeStyle = 'rgba(255,255,255,0.08)';
-      gctx.lineWidth = 1;
-      gctx.setLineDash([3, 3]);
+      gctx.strokeStyle = 'rgba(255,255,255,0.35)';
+      gctx.lineWidth = 1.5;
       gctx.beginPath();
       gctx.moveTo(zeroX, padT);
       gctx.lineTo(zeroX, padT + plotH);
       gctx.stroke();
-      gctx.setLineDash([]);
+      // V=0 label
+      gctx.fillStyle = 'rgba(255,255,255,0.4)';
+      gctx.font = '9px JetBrains Mono, monospace';
+      gctx.textAlign = 'center';
+      gctx.fillText('0', zeroX, padT + plotH + 14);
+
+      // I=0 axis (prominent horizontal line at bottom of plot)
+      gctx.strokeStyle = 'rgba(255,255,255,0.35)';
+      gctx.lineWidth = 1.5;
+      gctx.beginPath();
+      gctx.moveTo(padL, padT + plotH);
+      gctx.lineTo(padL + plotW, padT + plotH);
+      gctx.stroke();
 
       if (emitting && Isat > 0) {
         // Stopping potential marker
