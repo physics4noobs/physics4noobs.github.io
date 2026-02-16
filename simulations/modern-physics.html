@@ -79,10 +79,15 @@
       border-color: #e0e0e0;
     }
 
+    .sim-main-row {
+      display: flex;
+      gap: 0;
+    }
+
     .canvas-wrap {
-      width: 100%;
+      flex: 1;
       border: 1px solid #222;
-      border-radius: 6px;
+      border-radius: 6px 0 0 0;
       overflow: hidden;
       background: #111;
     }
@@ -90,6 +95,34 @@
     .canvas-wrap canvas {
       display: block;
       width: 100%;
+    }
+
+    .side-graph {
+      width: 320px;
+      min-width: 260px;
+      background: #161616;
+      border: 1px solid #222;
+      border-left: none;
+      border-radius: 0 6px 0 0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-graph h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+
+    .side-graph canvas {
+      width: 100%;
+      flex: 1;
+      border-radius: 4px;
     }
 
     /* Controls */
@@ -103,6 +136,7 @@
       border-top: none;
       border-radius: 0 0 6px 6px;
       flex-wrap: wrap;
+      margin-top: 0;
     }
 
     .control-group {
@@ -165,16 +199,16 @@
       height: 6px;
       border-radius: 3px;
       background: linear-gradient(to right,
-        #8000ff 0%,
-        #4400ff 15%,
-        #0044ff 25%,
-        #00ccff 33%,
-        #00ff44 42%,
-        #aaff00 52%,
-        #ffff00 58%,
-        #ffaa00 67%,
-        #ff4400 80%,
-        #cc0000 100%
+        #cc0000 0%,
+        #ff4400 20%,
+        #ffaa00 33%,
+        #ffff00 42%,
+        #aaff00 48%,
+        #00ff44 58%,
+        #00ccff 67%,
+        #0044ff 75%,
+        #4400ff 85%,
+        #8000ff 100%
       );
       margin-top: 2px;
       position: relative;
@@ -191,19 +225,19 @@
       box-shadow: 0 0 4px rgba(255,255,255,0.5);
     }
 
-    /* Data + Graph row */
-    .data-graph-row {
-      display: flex;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
+    /* Data panel */
     .data-panel {
-      flex: 1;
       background: #161616;
       border: 1px solid #222;
       border-radius: 6px;
       padding: 20px;
+      margin-top: 16px;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0 32px;
     }
 
     .data-panel h3 {
@@ -248,31 +282,6 @@
       color: #FF4A6E;
     }
 
-    .graph-panel {
-      flex: 1;
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 6px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .graph-panel h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 12px;
-    }
-
-    .graph-panel canvas {
-      width: 100%;
-      flex: 1;
-      border-radius: 4px;
-    }
 
     /* Q&A */
     .qa-section {
@@ -342,12 +351,16 @@
       line-height: 1.6;
     }
 
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .side-graph { width: 100%; border-left: 1px solid #222; border-top: none; border-radius: 0; }
+      .canvas-wrap { border-radius: 6px 6px 0 0; }
+    }
     @media (max-width: 768px) {
       .sim-wrapper { padding: 70px 12px 24px; }
       .controls-bar { gap: 12px; padding: 12px; }
       .control-group input[type="range"] { width: 80px; }
       .spectrum-bar { width: 80px; }
-      .data-graph-row { flex-direction: column; }
     }
   </style>
 
@@ -357,18 +370,24 @@
       <button class="sim-btn" id="resetBtn">Reset</button>
     </div>
 
-    <div class="canvas-wrap">
-      <canvas id="simCanvas"></canvas>
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div class="side-graph">
+        <h3>V &ndash; I Characteristic</h3>
+        <canvas id="graphCanvas"></canvas>
+      </div>
     </div>
 
     <div class="controls-bar">
       <div class="control-group">
-        <label>&lambda;</label>
+        <label>f</label>
         <div>
-          <input type="range" id="wavelengthSlider" min="200" max="700" value="350" step="5">
+          <input type="range" id="freqSlider" min="40" max="150" value="86" step="1">
           <div class="spectrum-bar"><div class="spectrum-marker" id="specMarker"></div></div>
         </div>
-        <span class="val" id="wavelengthVal">350 nm</span>
+        <span class="val" id="freqVal">8.6 &times;10<sup>14</sup> Hz</span>
       </div>
       <div class="control-group">
         <label>Intensity</label>
@@ -397,21 +416,17 @@
       </div>
     </div>
 
-    <div class="data-graph-row">
-      <div class="data-panel">
-        <h3>Data</h3>
-        <div class="data-row"><span class="data-label">Photon Energy (E)</span><span class="data-value" id="dEnergy">3.54 eV</span></div>
+    <div class="data-panel">
+      <h3>Data</h3>
+      <div class="data-grid">
+        <div class="data-row"><span class="data-label">Photon Energy (E)</span><span class="data-value" id="dEnergy">3.56 eV</span></div>
         <div class="data-row"><span class="data-label">Work Function (&phi;)</span><span class="data-value" id="dPhi">2.28 eV</span></div>
-        <div class="data-row"><span class="data-label">Threshold &lambda;</span><span class="data-value" id="dThresh">544 nm</span></div>
-        <div class="data-row"><span class="data-label">Max KE</span><span class="data-value" id="dKE">1.26 eV</span></div>
-        <div class="data-row"><span class="data-label">Stopping Potential</span><span class="data-value" id="dVstop">1.26 V</span></div>
+        <div class="data-row"><span class="data-label">Threshold f</span><span class="data-value" id="dThresh">5.51 &times;10<sup>14</sup> Hz</span></div>
+        <div class="data-row"><span class="data-label">Max KE</span><span class="data-value" id="dKE">1.28 eV</span></div>
+        <div class="data-row"><span class="data-label">Stopping Potential</span><span class="data-value" id="dVstop">1.28 V</span></div>
         <div class="data-row"><span class="data-label">Saturation Current</span><span class="data-value" id="dIsat">5.00 &micro;A</span></div>
         <div class="data-row"><span class="data-label">Current</span><span class="data-value" id="dCurrent">5.00 &micro;A</span></div>
         <div class="data-row"><span class="data-label">Status</span><span class="data-value emission" id="dStatus">Emission</span></div>
-      </div>
-      <div class="graph-panel">
-        <h3>V &ndash; I Characteristic</h3>
-        <canvas id="graphCanvas"></canvas>
       </div>
     </div>
 
@@ -456,7 +471,7 @@
     ];
 
     // === STATE ===
-    let wavelength = 350;
+    let freq = 8.6;       // ×10¹⁴ Hz (default: UV, above sodium threshold)
     let intensity = 50;
     let voltage = 0;
     let metalIdx = 1;
@@ -472,18 +487,20 @@
     const graphCanvas = document.getElementById('graphCanvas');
     const gctx = graphCanvas.getContext('2d');
 
-    const wavelengthSlider = document.getElementById('wavelengthSlider');
+    const freqSlider = document.getElementById('freqSlider');
     const intensitySlider = document.getElementById('intensitySlider');
     const voltageSlider = document.getElementById('voltageSlider');
     const metalSelect = document.getElementById('metalSelect');
     const specMarker = document.getElementById('specMarker');
 
     // === PHYSICS ===
-    function photonEnergy() { return 1239.84 / wavelength; }
+    // h = 4.136×10⁻¹⁵ eV·s, freq in 10¹⁴ Hz → E = 0.4136 × freq
+    function photonEnergy() { return 0.4136 * freq; }
+    function wavelength() { return 3000 / freq; } // nm, for color mapping
     function workFunction() { return metals[metalIdx].W; }
     function maxKE() { return Math.max(0, photonEnergy() - workFunction()); }
     function stoppingV() { return maxKE(); }
-    function thresholdWL() { return 1239.84 / workFunction(); }
+    function thresholdFreq() { return workFunction() / 0.4136; } // ×10¹⁴ Hz
     function satCurrent() {
       if (photonEnergy() < workFunction()) return 0;
       return (intensity / 100) * 10;
@@ -542,16 +559,16 @@
     function resizeCanvas() {
       var wrap = canvas.parentElement;
       var w = wrap.clientWidth;
-      var h = Math.max(350, Math.min(w * 0.45, window.innerHeight * 0.55));
+      var h = Math.max(350, Math.min(w * 0.55, window.innerHeight * 0.55));
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Graph canvas
+      // Graph canvas — sits beside the main canvas
       var gWrap = graphCanvas.parentElement;
-      var gw = gWrap.clientWidth - 40;
-      var gh = Math.max(180, gw * 0.65);
+      var gw = gWrap.clientWidth - 32;
+      var gh = h - 42; // match main canvas height minus header
       graphCanvas.width = gw * dpr;
       graphCanvas.height = gh * dpr;
       graphCanvas.style.height = gh + 'px';
@@ -564,7 +581,8 @@
     function drawSim() {
       var W = canvas.width / dpr;
       var H = canvas.height / dpr;
-      var color = wlToRGB(wavelength);
+      var wl = wavelength();
+      var color = wlToRGB(wl);
       var emission = photonEnergy() > workFunction();
 
       // Background
@@ -609,12 +627,12 @@
       ctx.textAlign = 'center';
       ctx.fillText('VACUUM', (tubeL + tubeR) / 2, tubeT + 14);
 
-      // Window on left side of tube (where light enters)
+      // Window on top of tube (where light enters)
       ctx.strokeStyle = 'rgba(255,255,255,0.08)';
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(tubeL, tubeT + 40);
-      ctx.lineTo(tubeL, tubeB - 40);
+      ctx.moveTo(cathodeX - 15, tubeT);
+      ctx.lineTo(cathodeX + 15, tubeT);
       ctx.stroke();
 
       // === CATHODE ===
@@ -652,14 +670,14 @@
       ctx.fillText('Cathode', cathodeX, tubeB + 16);
       ctx.fillText('Anode', anodeX, tubeB + 16);
 
-      // === LIGHT SOURCE ===
-      var lsX = W * 0.1;
-      var lsY = (tubeT + tubeB) / 2;
-      var lsR = 22;
+      // === LIGHT SOURCE (top, shining down onto cathode) ===
+      var lsX = cathodeX;
+      var lsY = H * 0.04;
+      var lsR = 18;
 
       // Outer glow
       ctx.beginPath();
-      ctx.arc(lsX, lsY, lsR + 10, 0, Math.PI * 2);
+      ctx.arc(lsX, lsY, lsR + 8, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.08)';
       ctx.fill();
 
@@ -674,30 +692,31 @@
 
       // Inner glow
       ctx.beginPath();
-      ctx.arc(lsX, lsY, lsR - 6, 0, Math.PI * 2);
+      ctx.arc(lsX, lsY, lsR - 5, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.6)';
       ctx.shadowColor = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
       ctx.shadowBlur = 15;
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // Light beam cone from source to tube
+      // Light beam cone downward to cathode
       ctx.beginPath();
-      ctx.moveTo(lsX + lsR, lsY - 8);
-      ctx.lineTo(tubeL, tubeT + 50);
-      ctx.lineTo(tubeL, tubeB - 50);
-      ctx.lineTo(lsX + lsR, lsY + 8);
+      ctx.moveTo(lsX - 6, lsY + lsR);
+      ctx.lineTo(cathodeX - 10, tubeT);
+      ctx.lineTo(cathodeX + 10, tubeT);
+      ctx.lineTo(lsX + 6, lsY + lsR);
       ctx.closePath();
-      ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.04)';
+      ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.05)';
       ctx.fill();
 
       // Label
-      ctx.fillStyle = '#555';
+      ctx.fillStyle = '#888';
       ctx.font = '10px JetBrains Mono, monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText(wavelength + ' nm', lsX, lsY + lsR + 18);
-      if (wavelength < 380) {
-        ctx.fillText('(UV)', lsX, lsY + lsR + 30);
+      ctx.textAlign = 'left';
+      ctx.fillText(freq.toFixed(1) + '\u00D710\u00B9\u2074 Hz', lsX + lsR + 6, lsY + 4);
+      if (wl < 380) {
+        ctx.fillStyle = '#666';
+        ctx.fillText('(UV)', lsX + lsR + 6, lsY + 16);
       }
 
       // === CIRCUIT (below tube) ===
@@ -790,14 +809,14 @@
       ctx.font = '10px JetBrains Mono, monospace';
       ctx.fillText(curVal.toFixed(2) + ' \u00B5A', anodeX + 30, amY + 4);
 
-      // === PHOTON PARTICLES ===
+      // === PHOTON PARTICLES (falling from top) ===
       frameCount++;
       var spawnRate = Math.max(1, Math.floor(8 - (intensity / 100) * 7));
       if (frameCount % spawnRate === 0) {
-        var py = plateTop + 15 + Math.random() * (plateBot - plateTop - 30);
+        var px = cathodeX + (Math.random() - 0.5) * 16;
         photons.push({
-          x: tubeL + 5,
-          y: py,
+          x: px,
+          y: lsY + lsR + 2,
           speed: 2 + Math.random() * 1.5,
           wave: Math.random() * Math.PI * 2
         });
@@ -807,10 +826,10 @@
       if (photons.length > 80) photons.splice(0, photons.length - 80);
 
       photons = photons.filter(function(p) {
-        p.x += p.speed;
+        p.y += p.speed;
         p.wave += 0.15;
 
-        if (p.x >= cathodeX - 6) {
+        if (p.y >= plateTop) {
           // Hit cathode
           if (emission) {
             // Emit electron with random KE and random direction
@@ -840,13 +859,13 @@
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Wave trail
+        // Wave trail (upward behind the photon)
         ctx.strokeStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         for (var i = 0; i < 15; i++) {
-          var tx = p.x - i * 2;
-          var ty = p.y + Math.sin(p.wave - i * 0.5) * 2.5;
+          var ty = p.y - i * 2;
+          var tx = p.x + Math.sin(p.wave - i * 0.5) * 2.5;
           if (i === 0) ctx.moveTo(tx, ty);
           else ctx.lineTo(tx, ty);
         }
@@ -939,8 +958,8 @@
       ctx.fillStyle = '#666';
       ctx.font = '11px JetBrains Mono, monospace';
       ctx.textAlign = 'left';
-      ctx.fillText('E = hc/\u03BB', fX, fY + 14);
-      ctx.fillText('KE = E \u2212 \u03C6', fX, fY + 30);
+      ctx.fillText('E = hf', fX, fY + 14);
+      ctx.fillText('KE = hf \u2212 \u03C6', fX, fY + 30);
       ctx.fillText('V\u2080 = KE/e', fX, fY + 46);
 
       requestAnimationFrame(drawSim);
@@ -1115,13 +1134,13 @@
       var W = workFunction();
       var ke = maxKE();
       var Vs = stoppingV();
-      var thresh = thresholdWL();
+      var threshF = thresholdFreq();
       var cur = currentAt(voltage);
       var emitting = E > W;
 
       document.getElementById('dEnergy').textContent = E.toFixed(2) + ' eV';
       document.getElementById('dPhi').textContent = W.toFixed(2) + ' eV';
-      document.getElementById('dThresh').textContent = thresh.toFixed(0) + ' nm';
+      document.getElementById('dThresh').innerHTML = threshF.toFixed(1) + ' \u00D710<sup>14</sup> Hz';
       document.getElementById('dKE').textContent = ke.toFixed(2) + ' eV';
       document.getElementById('dVstop').textContent = Vs.toFixed(2) + ' V';
       document.getElementById('dIsat').innerHTML = (emitting ? satCurrent().toFixed(2) : '0.00') + ' &micro;A';
@@ -1139,14 +1158,15 @@
 
     // === UPDATE SPECTRUM MARKER ===
     function updateSpecMarker() {
-      var pct = (wavelength - 200) / (700 - 200) * 100;
-      specMarker.style.left = pct + '%';
+      // Spectrum bar: red(left) to UV(right) — matches increasing frequency
+      var pct = (freq - 4) / (15 - 4) * 100;
+      specMarker.style.left = Math.max(0, Math.min(100, pct)) + '%';
     }
 
     // === CONTROLS ===
-    wavelengthSlider.addEventListener('input', function() {
-      wavelength = parseInt(this.value);
-      document.getElementById('wavelengthVal').textContent = wavelength + ' nm';
+    freqSlider.addEventListener('input', function() {
+      freq = parseInt(this.value) / 10;
+      document.getElementById('freqVal').innerHTML = freq.toFixed(1) + ' \u00D710<sup>14</sup> Hz';
       updateSpecMarker();
       updateData();
     });
@@ -1171,15 +1191,15 @@
     document.getElementById('resetBtn').addEventListener('click', function() {
       photons = [];
       electrons = [];
-      wavelength = 350;
+      freq = 8.6;
       intensity = 50;
       voltage = 0;
       metalIdx = 1;
-      wavelengthSlider.value = 350;
+      freqSlider.value = 86;
       intensitySlider.value = 50;
       voltageSlider.value = 0;
       metalSelect.value = '1';
-      document.getElementById('wavelengthVal').textContent = '350 nm';
+      document.getElementById('freqVal').innerHTML = '8.6 \u00D710<sup>14</sup> Hz';
       document.getElementById('intensityVal').textContent = '50%';
       document.getElementById('voltageVal').textContent = '0.0 V';
       updateSpecMarker();
