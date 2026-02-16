@@ -7,6 +7,37 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="js/theme.js"></script>
+  <style>
+    /* Projectile thumbnail hover animation */
+    .projectile-thumb .proj-arc { transition: stroke-dashoffset 0s; }
+    .projectile-thumb .proj-dot { transition: none; }
+    .sim-card:hover .proj-arc {
+      animation: projDraw 1.2s ease-out forwards;
+    }
+    .sim-card:hover .proj-dot {
+      animation: projMove 1.2s ease-out forwards;
+    }
+    @keyframes projDraw {
+      0%   { stroke-dashoffset: 260; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes projMove {
+      0%   { cx: 20;  cy: 100; opacity: 1; }
+      15%  { cx: 45;  cy: 45;  opacity: 1; }
+      30%  { cx: 70;  cy: 22;  opacity: 1; }
+      50%  { cx: 110; cy: 20;  opacity: 1; }
+      70%  { cx: 145; cy: 40;  opacity: 1; }
+      85%  { cx: 165; cy: 70;  opacity: 1; }
+      100% { cx: 180; cy: 100; opacity: 0; }
+    }
+    /* Reset animation when not hovering */
+    .sim-card:not(:hover) .proj-arc {
+      stroke-dashoffset: 260;
+    }
+    .sim-card:not(:hover) .proj-dot {
+      cx: 20; cy: 100; opacity: 1;
+    }
+  </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -113,11 +144,18 @@
         <h3 style="font-family: var(--font-display); color: var(--text-primary); font-size: 1.2rem; margin: 32px 0 16px; padding-left: 4px; border-left: 3px solid #00d4ff; padding-left: 12px;">Kinematics</h3>
         <div class="grid-3">
           <a href="simulations/kinematics.html" class="sim-card reveal">
-            <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#127937;</span></div>
+            <div class="sim-preview projectile-thumb" style="background: #111;">
+              <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
+                <line x1="20" y1="100" x2="185" y2="100" stroke="#333" stroke-width="1"/>
+                <path d="M20,100 Q60,15 110,20 Q155,25 180,100" fill="none" stroke="#333" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <path class="proj-arc" d="M20,100 Q60,15 110,20 Q155,25 180,100" fill="none" stroke="#4A9EFF" stroke-width="2" stroke-dasharray="260" stroke-dashoffset="260"/>
+                <circle class="proj-dot" cx="20" cy="100" r="4" fill="#4A9EFF"/>
+              </svg>
+            </div>
             <div class="sim-body">
               <div class="sim-grade">Grade XI &bull; Kinematics</div>
               <div class="sim-title">Projectile Motion</div>
-              <div class="sim-desc">Adjust launch angle and velocity to see projectile trajectories in real-time.</div>
+              <div class="sim-desc">Launch projectiles at different angles. Compare ranges, heights, and trajectories with persistent color-coded trails.</div>
               <div class="sim-link">Launch Simulation &rarr;</div>
             </div>
           </a>

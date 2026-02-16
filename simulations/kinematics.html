@@ -50,28 +50,376 @@
     </div>
   </nav>
 
-  <div class="sim-page-container">
-    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
-      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Kinematics</span>
-    </div>
-    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#127937; Projectile Motion</h1>
-    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Kinematics</p>
+  <style>
+    /* Override site theme — minimalist monochrome */
+    body { background: #0a0a0a !important; }
+    .bg-grid, #particles-canvas { display: none !important; }
 
-    <div class="sim-canvas-wrapper">
-      <canvas id="simCanvas" width="850" height="450"></canvas>
-      <div class="sim-controls">
-        <label>Angle: <input type="range" id="angle" min="10" max="80" value="45"> <span id="angleVal">45</span>&deg;</label>
-        <label>Velocity: <input type="range" id="velocity" min="10" max="80" value="50"> <span id="velVal">50</span> m/s</label>
-        <button onclick="launch()">&#9654; Launch</button>
-        <button onclick="resetSim()">&#8635; Reset</button>
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .sim-header h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .sim-header .sim-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      color: #e0e0e0;
+      background: transparent;
+      border: 1px solid #333;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn:hover {
+      background: #e0e0e0;
+      color: #0a0a0a;
+      border-color: #e0e0e0;
+    }
+
+    .sim-btn.primary {
+      background: #e0e0e0;
+      color: #0a0a0a;
+      border-color: #e0e0e0;
+    }
+
+    .sim-btn.primary:hover {
+      background: #fff;
+    }
+
+    /* Canvas */
+    .canvas-wrap {
+      width: 100%;
+      border: 1px solid #222;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 16px 20px;
+      background: #161616;
+      border: 1px solid #222;
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    .control-group .val {
+      color: #e0e0e0;
+      font-weight: 600;
+      min-width: 36px;
+      text-align: right;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 3px;
+      background: #333;
+      border-radius: 2px;
+      outline: none;
+      width: 140px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      background: #e0e0e0;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      background: #e0e0e0;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* Data Panel */
+    .data-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: #222;
+      border: 1px solid #222;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .data-col {
+      padding: 20px 24px;
+      background: #161616;
+    }
+
+    .data-col h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #555;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      border-bottom: 1px solid #1e1e1e;
+    }
+
+    .data-row:last-child { border-bottom: none; }
+    .data-row .data-label { color: #888; }
+    .data-row .data-value { color: #e0e0e0; font-weight: 500; }
+
+    /* Q&A Section */
+    .qa-section {
+      margin-top: 40px;
+      padding-bottom: 60px;
+    }
+
+    .qa-section h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: #161616;
+      border: 1px solid #222;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      overflow: hidden;
+    }
+
+    .qa-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: #ccc;
+      transition: background 0.15s ease;
+      user-select: none;
+    }
+
+    .qa-question:hover { background: #1a1a1a; }
+
+    .qa-question .qa-arrow {
+      font-size: 0.7rem;
+      color: #555;
+      transition: transform 0.2s ease;
+    }
+
+    .qa-item.open .qa-arrow { transform: rotate(180deg); color: #e0e0e0; }
+
+    .qa-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-answer { max-height: 300px; }
+
+    .qa-answer-inner {
+      padding: 0 20px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.7;
+    }
+
+    .qa-answer-inner strong { color: #e0e0e0; }
+
+    /* Legend (drawn inside canvas but we also show color chips) */
+    .legend-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background: #131313;
+      border: 1px solid #222;
+      border-top: none;
+    }
+
+    .legend-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: #888;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 768px) {
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 16px; }
+      input[type="range"] { width: 100px; }
+      .data-panel { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div class="sim-header">
+      <h1>Projectile Motion</h1>
+      <div class="sim-btns">
+        <button class="sim-btn primary" id="launchBtn">Launch</button>
+        <button class="sim-btn" id="resetBtn">Reset</button>
       </div>
     </div>
 
-    <div class="sim-info">
-      <h2>About This Simulation</h2>
-      <p>This projectile motion simulator demonstrates kinematics in two dimensions. Adjust the launch angle and initial velocity to observe how the trajectory, range, maximum height, and time of flight change.</p>
-      <div class="formula-box" style="margin-top: 16px;">
-        Range = v&sup2; sin(2&theta;) / g &nbsp;&nbsp;|&nbsp;&nbsp; H_max = v&sup2; sin&sup2;(&theta;) / 2g &nbsp;&nbsp;|&nbsp;&nbsp; T = 2v sin(&theta;) / g
+    <div class="canvas-wrap">
+      <canvas id="simCanvas"></canvas>
+    </div>
+    <div class="legend-bar" id="legendBar"></div>
+
+    <div class="controls-bar">
+      <div class="control-group">
+        <label>u</label>
+        <input type="range" id="velSlider" min="5" max="100" value="50">
+        <label><span class="val" id="velVal">50</span> m/s</label>
+      </div>
+      <div class="control-group">
+        <label>&theta;</label>
+        <input type="range" id="angleSlider" min="5" max="85" value="45">
+        <label><span class="val" id="angleVal">45</span>&deg;</label>
+      </div>
+    </div>
+
+    <div class="data-panel">
+      <div class="data-col">
+        <h3>Parameters</h3>
+        <div class="data-row"><span class="data-label">u</span><span class="data-value" id="d-u">&mdash;</span></div>
+        <div class="data-row"><span class="data-label">&theta;</span><span class="data-value" id="d-theta">&mdash;</span></div>
+      </div>
+      <div class="data-col">
+        <h3>Data</h3>
+        <div class="data-row"><span class="data-label">Time of Flight</span><span class="data-value" id="d-tof">&mdash;</span></div>
+        <div class="data-row"><span class="data-label">Range</span><span class="data-value" id="d-range">&mdash;</span></div>
+        <div class="data-row"><span class="data-label">Max Height</span><span class="data-value" id="d-hmax">&mdash;</span></div>
+        <div class="data-row"><span class="data-label">U<sub>x</sub></span><span class="data-value" id="d-ux">&mdash;</span></div>
+        <div class="data-row"><span class="data-label">U<sub>y</sub></span><span class="data-value" id="d-uy">&mdash;</span></div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>At what angle is the range maximum?</span>
+          <span class="qa-arrow">&#9660;</span>
+        </div>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <strong>45&deg;</strong>. Range = u&sup2; sin(2&theta;) / g. The function sin(2&theta;) reaches its maximum value of 1 when 2&theta; = 90&deg;, which means &theta; = 45&deg;.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>When are the ranges of two projectiles equal?</span>
+          <span class="qa-arrow">&#9660;</span>
+        </div>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          When launched at <strong>complementary angles</strong> (&theta; and 90&deg;&minus;&theta;) with the same speed. This is because sin(2&theta;) = sin(2(90&deg;&minus;&theta;)). For example, 30&deg; and 60&deg; give equal ranges. Try it in the simulation!
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>What happens to time of flight as angle increases?</span>
+          <span class="qa-arrow">&#9660;</span>
+        </div>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          It <strong>increases</strong>. Time of flight T = 2u sin&theta; / g. As &theta; goes from 0&deg; to 90&deg;, sin&theta; increases from 0 to 1, so T increases. A vertically launched projectile stays in the air the longest.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>At what angle is maximum height equal to the range?</span>
+          <span class="qa-arrow">&#9660;</span>
+        </div>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          At <strong>&theta; = tan&sup2;&sup1;(4) &approx; 76&deg;</strong>. Setting H<sub>max</sub> = R gives u&sup2;sin&sup2;&theta;/2g = u&sup2;sin(2&theta;)/g. Simplifying: sin&theta;/2 = 2cos&theta;, so tan&theta; = 4.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>What is the shape of a projectile's trajectory?</span>
+          <span class="qa-arrow">&#9660;</span>
+        </div>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          A <strong>parabola</strong>. Eliminating time from the equations of motion: y = x tan&theta; &minus; gx&sup2; / (2u&sup2;cos&sup2;&theta;). This is quadratic in x, which is the equation of a parabola.
+        </div></div>
       </div>
     </div>
   </div>
@@ -79,122 +427,329 @@
   <script>
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
-    const g = 9.8;
+    const G = 9.8;
+
+    const COLORS = ['#4A9EFF','#FF4A6E','#4AFF8B','#FFB84A','#B44AFF','#FF4AD4','#4AFFF0','#FFF04A'];
+    let colorIndex = 0;
+    let launches = []; // {trail:[], color, active, vx, vy, t, u, angle, done}
     let animId = null;
-    let trail = [];
-    let ball = null;
-    let t = 0;
 
-    const angleSlider = document.getElementById('angle');
-    const velSlider = document.getElementById('velocity');
-    angleSlider.oninput = () => document.getElementById('angleVal').textContent = angleSlider.value;
-    velSlider.oninput = () => document.getElementById('velVal').textContent = velSlider.value;
+    const velSlider = document.getElementById('velSlider');
+    const angleSlider = document.getElementById('angleSlider');
+    const velVal = document.getElementById('velVal');
+    const angleVal = document.getElementById('angleVal');
+    const legendBar = document.getElementById('legendBar');
 
-    function drawBackground() {
-      ctx.fillStyle = '#080818';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      // Grid
-      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
-      for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
-      // Ground
-      ctx.fillStyle = 'rgba(0,255,170,0.1)';
-      ctx.fillRect(0, canvas.height - 30, canvas.width, 30);
-      ctx.strokeStyle = 'rgba(0,255,170,0.4)';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(0, canvas.height - 30); ctx.lineTo(canvas.width, canvas.height - 30); ctx.stroke();
+    velSlider.oninput = function() { velVal.textContent = this.value; drawScene(); };
+    angleSlider.oninput = function() { angleVal.textContent = this.value; drawScene(); };
+
+    // --- Canvas sizing ---
+    const PADDING = 50;
+    let originX, originY, scaleX, scaleY, canvasW, canvasH;
+
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      const w = wrap.clientWidth;
+      const h = Math.max(400, window.innerHeight * 0.6);
+      canvas.width = w * (window.devicePixelRatio || 1);
+      canvas.height = h * (window.devicePixelRatio || 1);
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(window.devicePixelRatio || 1, 0, 0, window.devicePixelRatio || 1, 0, 0);
+      canvasW = w;
+      canvasH = h;
+      originX = PADDING;
+      originY = canvasH - PADDING;
+      // Scale: 100 m/s at 45deg gives range ~1020m. We want that to fill ~80% of width
+      const maxRange = (100 * 100) / G; // ~1020m at 45 deg
+      scaleX = (canvasW - PADDING * 2) * 0.8 / maxRange;
+      scaleY = scaleX; // keep aspect ratio
+      drawScene();
     }
 
-    function drawTrail() {
-      for (let i = 1; i < trail.length; i++) {
-        const alpha = i / trail.length;
+    window.addEventListener('resize', resizeCanvas);
+
+    // --- Audio ---
+    let audioCtx = null;
+    function playBoom() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(80, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(audioCtx.currentTime);
+      osc.stop(audioCtx.currentTime + 0.2);
+      // Add a noise burst for "crack"
+      const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.08, audioCtx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 3);
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buf;
+      const ng = audioCtx.createGain();
+      ng.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      ng.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+      noise.connect(ng);
+      ng.connect(audioCtx.destination);
+      noise.start(audioCtx.currentTime);
+    }
+
+    // --- Drawing ---
+    function drawBg() {
+      ctx.fillStyle = '#111';
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+      ctx.lineWidth = 1;
+      for (let x = PADDING; x < canvasW - PADDING; x += 50) {
+        ctx.beginPath(); ctx.moveTo(x, PADDING / 2); ctx.lineTo(x, originY); ctx.stroke();
+      }
+      for (let y = PADDING / 2; y < originY; y += 50) {
+        ctx.beginPath(); ctx.moveTo(PADDING, y); ctx.lineTo(canvasW - PADDING, y); ctx.stroke();
+      }
+
+      // Axes
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      // X axis
+      ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(canvasW - PADDING / 2, originY); ctx.stroke();
+      // Y axis
+      ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(originX, PADDING / 2); ctx.stroke();
+
+      // Tick marks
+      ctx.fillStyle = 'rgba(255,255,255,0.25)';
+      ctx.font = '9px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      const tickSpacingM = getTickSpacing();
+      for (let m = tickSpacingM; m * scaleX + originX < canvasW - PADDING; m += tickSpacingM) {
+        const px = originX + m * scaleX;
+        ctx.beginPath(); ctx.moveTo(px, originY); ctx.lineTo(px, originY + 4); ctx.stroke();
+        ctx.fillText(m + 'm', px, originY + 14);
+      }
+      ctx.textAlign = 'right';
+      for (let m = tickSpacingM; originY - m * scaleY > PADDING; m += tickSpacingM) {
+        const py = originY - m * scaleY;
+        ctx.beginPath(); ctx.moveTo(originX - 4, py); ctx.lineTo(originX, py); ctx.stroke();
+        ctx.fillText(m + 'm', originX - 6, py + 3);
+      }
+
+      // Axis labels
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('x', canvasW - PADDING / 2 + 10, originY + 4);
+      ctx.fillText('y', originX, PADDING / 2 - 8);
+    }
+
+    function getTickSpacing() {
+      const maxVisible = (canvasW - PADDING * 2) / scaleX;
+      if (maxVisible > 800) return 200;
+      if (maxVisible > 400) return 100;
+      if (maxVisible > 200) return 50;
+      return 20;
+    }
+
+    function drawCannon(angle) {
+      const rad = angle * Math.PI / 180;
+      const cx = originX;
+      const cy = originY;
+      const barrelLen = 28;
+      const barrelW = 10;
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(-rad);
+
+      // Barrel
+      ctx.fillStyle = '#555';
+      ctx.strokeStyle = '#888';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(-4, -barrelW / 2, barrelLen, barrelW, 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Muzzle
+      ctx.fillStyle = '#444';
+      ctx.fillRect(barrelLen - 4, -barrelW / 2 - 2, 6, barrelW + 4);
+
+      ctx.restore();
+
+      // Base (wheel)
+      ctx.fillStyle = '#444';
+      ctx.strokeStyle = '#666';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      // Hub
+      ctx.fillStyle = '#333';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawTrails() {
+      for (let l of launches) {
+        if (l.trail.length < 2) continue;
+        ctx.strokeStyle = l.done
+          ? hexToRgba(l.color, 0.35)
+          : l.color;
+        ctx.lineWidth = 2;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
         ctx.beginPath();
-        ctx.arc(trail[i].x, trail[i].y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 212, 255, ${alpha * 0.6})`;
+        ctx.moveTo(l.trail[0].px, l.trail[0].py);
+        for (let i = 1; i < l.trail.length; i++) {
+          ctx.lineTo(l.trail[i].px, l.trail[i].py);
+        }
+        ctx.stroke();
+      }
+    }
+
+    function drawBalls() {
+      for (let l of launches) {
+        if (l.done || l.trail.length === 0) continue;
+        const last = l.trail[l.trail.length - 1];
+        ctx.beginPath();
+        ctx.arc(last.px, last.py, 5, 0, Math.PI * 2);
+        ctx.fillStyle = l.color;
         ctx.fill();
       }
     }
 
-    function drawBall(x, y) {
-      ctx.beginPath();
-      ctx.arc(x, y, 8, 0, Math.PI * 2);
-      const grad = ctx.createRadialGradient(x, y, 0, x, y, 8);
-      grad.addColorStop(0, '#00ffaa');
-      grad.addColorStop(1, '#00d4ff');
-      ctx.fillStyle = grad;
-      ctx.fill();
-      ctx.shadowColor = '#00d4ff';
-      ctx.shadowBlur = 15;
-      ctx.fill();
-      ctx.shadowBlur = 0;
+    function hexToRgba(hex, alpha) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
     }
 
-    function drawStats(v0, angle, x, y, time) {
-      ctx.fillStyle = 'rgba(10,10,30,0.85)';
-      ctx.fillRect(canvas.width - 220, 10, 210, 120);
-      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
-      ctx.strokeRect(canvas.width - 220, 10, 210, 120);
-      ctx.fillStyle = '#00d4ff';
-      ctx.font = '12px "JetBrains Mono", monospace';
-      const rad = angle * Math.PI / 180;
-      const range = (v0 * v0 * Math.sin(2 * rad) / g).toFixed(1);
-      const hmax = (v0 * v0 * Math.sin(rad) * Math.sin(rad) / (2 * g)).toFixed(1);
-      const tTotal = (2 * v0 * Math.sin(rad) / g).toFixed(2);
-      ctx.fillText(`Velocity: ${v0} m/s`, canvas.width - 210, 32);
-      ctx.fillText(`Angle: ${angle}°`, canvas.width - 210, 50);
-      ctx.fillText(`Range: ${range} m`, canvas.width - 210, 68);
-      ctx.fillText(`Max Height: ${hmax} m`, canvas.width - 210, 86);
-      ctx.fillText(`Flight Time: ${tTotal} s`, canvas.width - 210, 104);
-      ctx.fillText(`t = ${time.toFixed(2)} s`, canvas.width - 210, 122);
+    function drawScene() {
+      drawBg();
+      drawTrails();
+      drawBalls();
+      drawCannon(parseInt(angleSlider.value));
     }
 
-    function launch() {
-      if (animId) cancelAnimationFrame(animId);
-      trail = [];
-      t = 0;
-      const v0 = parseInt(velSlider.value);
+    // --- Physics ---
+    function toScreen(x, y) {
+      return { px: originX + x * scaleX, py: originY - y * scaleY };
+    }
+
+    function launchProjectile() {
+      const u = parseInt(velSlider.value);
       const angle = parseInt(angleSlider.value);
       const rad = angle * Math.PI / 180;
-      const vx = v0 * Math.cos(rad);
-      const vy = v0 * Math.sin(rad);
-      const groundY = canvas.height - 30;
-      const scale = 4;
-      const startX = 40;
-      const startY = groundY;
+      const vx = u * Math.cos(rad);
+      const vy = u * Math.sin(rad);
+      const color = COLORS[colorIndex % COLORS.length];
+      colorIndex++;
 
-      function animate() {
-        t += 0.03;
-        const x = startX + vx * t * scale;
-        const y = startY - (vy * t - 0.5 * g * t * t) * scale;
+      const proj = {
+        u, angle, vx, vy, t: 0, color,
+        trail: [],
+        active: true,
+        done: false
+      };
+      launches.push(proj);
 
-        if (y >= groundY && t > 0.1) {
-          trail.push({ x, y: groundY });
-          drawBackground();
-          drawTrail();
-          drawBall(trail[trail.length - 1].x, groundY);
-          drawStats(v0, angle, x, y, t);
-          return;
-        }
+      // Update data panel
+      const tof = (2 * u * Math.sin(rad) / G).toFixed(2);
+      const range = (u * u * Math.sin(2 * rad) / G).toFixed(1);
+      const hmax = (u * u * Math.sin(rad) * Math.sin(rad) / (2 * G)).toFixed(1);
+      document.getElementById('d-u').textContent = u + ' m/s';
+      document.getElementById('d-theta').textContent = angle + '\u00B0';
+      document.getElementById('d-tof').textContent = tof + ' s';
+      document.getElementById('d-range').textContent = range + ' m';
+      document.getElementById('d-hmax').textContent = hmax + ' m';
+      document.getElementById('d-ux').textContent = vx.toFixed(1) + ' m/s';
+      document.getElementById('d-uy').textContent = vy.toFixed(1) + ' m/s';
 
-        trail.push({ x, y: Math.min(y, groundY) });
-        drawBackground();
-        drawTrail();
-        drawBall(x, Math.min(y, groundY));
-        drawStats(v0, angle, x, y, t);
-        animId = requestAnimationFrame(animate);
+      // Update legend
+      updateLegend();
+
+      playBoom();
+
+      if (!animId) animate();
+    }
+
+    function updateLegend() {
+      legendBar.innerHTML = '';
+      for (let l of launches) {
+        const chip = document.createElement('div');
+        chip.className = 'legend-chip';
+        chip.innerHTML = '<div class="legend-dot" style="background:' + l.color + '"></div>' + l.angle + '\u00B0 @ ' + l.u + ' m/s';
+        legendBar.appendChild(chip);
       }
-      animate();
+    }
+
+    function animate() {
+      let anyActive = false;
+
+      for (let l of launches) {
+        if (!l.active) continue;
+        l.t += 0.025;
+        const x = l.vx * l.t;
+        const y = l.vy * l.t - 0.5 * G * l.t * l.t;
+
+        if (y <= 0 && l.t > 0.05) {
+          // Land at y=0
+          const tLand = 2 * l.vy / G;
+          const xLand = l.vx * tLand;
+          l.trail.push(toScreen(xLand, 0));
+          l.active = false;
+          l.done = true;
+        } else {
+          l.trail.push(toScreen(x, Math.max(y, 0)));
+          anyActive = true;
+        }
+      }
+
+      drawScene();
+
+      if (anyActive) {
+        animId = requestAnimationFrame(animate);
+      } else {
+        animId = null;
+      }
     }
 
     function resetSim() {
-      if (animId) cancelAnimationFrame(animId);
-      trail = [];
-      t = 0;
-      drawBackground();
+      if (animId) { cancelAnimationFrame(animId); animId = null; }
+      launches = [];
+      colorIndex = 0;
+      legendBar.innerHTML = '';
+      document.getElementById('d-u').innerHTML = '&mdash;';
+      document.getElementById('d-theta').innerHTML = '&mdash;';
+      document.getElementById('d-tof').innerHTML = '&mdash;';
+      document.getElementById('d-range').innerHTML = '&mdash;';
+      document.getElementById('d-hmax').innerHTML = '&mdash;';
+      document.getElementById('d-ux').innerHTML = '&mdash;';
+      document.getElementById('d-uy').innerHTML = '&mdash;';
+      drawScene();
     }
 
-    drawBackground();
+    // --- Event listeners ---
+    document.getElementById('launchBtn').addEventListener('click', launchProjectile);
+    document.getElementById('resetBtn').addEventListener('click', resetSim);
+
+    // Keyboard shortcut
+    document.addEventListener('keydown', function(e) {
+      if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+        e.preventDefault();
+        launchProjectile();
+      }
+    });
+
+    // Init
+    resizeCanvas();
   </script>
   <script src="../js/main.js"></script>
 </body>
