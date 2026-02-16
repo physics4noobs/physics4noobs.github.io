@@ -2,7 +2,7 @@
    AXOMIYA ENGINEER - Physics Theme Design System
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Delius&family=Fredericka+the+Great&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* --- CSS Custom Properties --- */
 :root {
@@ -29,7 +29,7 @@
   --glow-secondary: 0 0 20px rgba(124, 58, 237, 0.3), 0 0 60px rgba(124, 58, 237, 0.1);
   --glow-accent: 0 0 20px rgba(0, 255, 170, 0.3);
 
-  --font-display: 'Fredericka the Great', cursive;
+  --font-display: 'Nova Square', sans-serif;
   --font-body: 'Delius', cursive;
   --font-mono: 'Delius', cursive;
 
@@ -136,8 +136,8 @@ ul { list-style: none; }
   gap: 12px;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: 2px;
+  font-size: 0.45rem;
+  letter-spacing: 1.5px;
   color: var(--text-primary);
   text-transform: uppercase;
 }
@@ -158,41 +158,87 @@ ul { list-style: none; }
   position: relative;
 }
 
+/* Top mounting bracket */
+.logo-pendulum .pendulum-mount {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--text-muted) 0%,
+    var(--text-secondary) 40%,
+    rgba(255,255,255,0.35) 50%,
+    var(--text-secondary) 60%,
+    var(--text-muted) 100%);
+  border-radius: 1px;
+}
+
+/* Pivot point — subtle pin */
 .logo-pendulum .pendulum-pivot {
   position: absolute;
   top: 4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  background: var(--color-primary);
+  width: 2px;
+  height: 2px;
+  background: var(--text-secondary);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--color-primary);
   z-index: 2;
 }
 
+/* Swinging arm */
 .logo-pendulum .pendulum-arm {
   position: absolute;
-  top: 7px;
+  top: 5px;
   left: 50%;
   transform-origin: top center;
-  animation: pendulumSwing 2s ease-in-out infinite alternate;
+  animation: pendulumSwing 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
 }
 
+/* Rod with metallic gradient */
 .logo-pendulum .pendulum-rod {
-  width: 2px;
+  width: 1.5px;
   height: 22px;
-  background: linear-gradient(180deg, var(--color-primary), rgba(0, 212, 255, 0.5));
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.4),
+    var(--color-primary) 30%,
+    rgba(0, 212, 255, 0.3) 90%);
   margin: 0 auto;
+  border-radius: 1px;
+  box-shadow: 0 0 3px rgba(0, 212, 255, 0.15);
 }
 
+/* Bob with metallic sheen */
 .logo-pendulum .pendulum-bob {
-  width: 10px;
-  height: 10px;
-  background: var(--color-primary);
+  width: 11px;
+  height: 11px;
+  background: radial-gradient(circle at 35% 30%,
+    rgba(255,255,255,0.7),
+    var(--color-primary) 45%,
+    rgba(0, 140, 180, 0.9) 75%,
+    rgba(0, 60, 80, 0.8));
   border-radius: 50%;
   margin: -1px auto 0;
-  box-shadow: 0 0 10px var(--color-primary), 0 0 20px rgba(0, 212, 255, 0.3);
+  box-shadow:
+    0 0 8px var(--color-primary),
+    0 0 18px rgba(0, 212, 255, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
+    inset 0 1px 2px rgba(255,255,255,0.2);
+  position: relative;
+}
+
+/* Ambient glow beneath bob */
+.logo-pendulum .bob-glow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 4px;
+  background: radial-gradient(ellipse, rgba(0, 212, 255, 0.25), transparent 70%);
+  filter: blur(2px);
 }
 
 @keyframes pendulumSwing {
@@ -207,11 +253,13 @@ ul { list-style: none; }
 }
 
 .nav-logo .logo-text .brand-name {
-  font-size: 0.95rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
   background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  margin-bottom: 4px;
 }
 
 .nav-logo .logo-text .brand-tag {
@@ -469,6 +517,7 @@ ul { list-style: none; }
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: shimmer 4s linear infinite;
+  white-space: nowrap;
 }
 
 @keyframes shimmer {
@@ -601,21 +650,39 @@ ul { list-style: none; }
   position: absolute;
   width: 10px;
   height: 10px;
-  background: var(--color-accent);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--color-accent);
   top: -5px;
   left: 50%;
   margin-left: -5px;
 }
 
+.orbit-ring:nth-child(2) .orbit-electron {
+  background: var(--color-primary);
+  box-shadow: 0 0 10px var(--color-primary);
+}
+
+.orbit-ring:nth-child(3) .orbit-electron {
+  background: var(--color-secondary);
+  box-shadow: 0 0 10px var(--color-secondary);
+}
+
+.orbit-ring:nth-child(4) .orbit-electron {
+  background: var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
+}
+
 .floating-equation {
   position: absolute;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: rgba(0, 212, 255, 0.3);
+  font-size: 0.9rem;
   white-space: nowrap;
-  animation: floatEq 6s ease-in-out infinite;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-primary) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.3));
+  animation: floatEq 6s ease-in-out infinite, shimmer 4s linear infinite;
 }
 
 .floating-equation:nth-child(5) { top: 10%; left: 5%; animation-delay: 0s; }
@@ -624,8 +691,8 @@ ul { list-style: none; }
 .floating-equation:nth-child(8) { top: 30%; right: 5%; animation-delay: -1s; }
 
 @keyframes floatEq {
-  0%, 100% { transform: translateY(0); opacity: 0.3; }
-  50% { transform: translateY(-15px); opacity: 0.6; }
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(-15px); opacity: 1; }
 }
 
 /* --- Section Styles --- */
@@ -1929,10 +1996,10 @@ ul { list-style: none; }
 }
 
 .splash-brand {
-  font-family: var(--font-display, 'Orbitron', monospace);
-  font-size: 1.2rem;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 0.5px;
   background: linear-gradient(135deg, var(--color-primary, #00d4ff), var(--color-accent, #00ffaa));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
