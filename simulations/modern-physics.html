@@ -493,10 +493,14 @@
       var Isat = satCurrent();
       var Vs = stoppingV();
       if (Vs <= 0.001) return 0;
-      if (V >= 0) return Isat;
       if (V <= -Vs) return 0;
-      var ratio = 1 + V / Vs;
-      return Isat * ratio * ratio;
+      // Retarding region: V < 0
+      if (V <= 0) {
+        var ratio = (V + Vs) / Vs;
+        return Isat * 0.75 * ratio * ratio;
+      }
+      // Accelerating region: V > 0, gradually reach saturation ~+2V
+      return Isat * (1 - 0.25 * Math.exp(-V * 2));
     }
 
     // === WAVELENGTH TO COLOR ===
@@ -809,13 +813,16 @@
         if (p.x >= cathodeX - 6) {
           // Hit cathode
           if (emission) {
-            // Emit electron with random KE between 0 and K_max
+            // Emit electron with random KE and random direction
             var ke = Math.random() * maxKE();
-            var baseSpeed = 0.8 + (ke / Math.max(0.01, maxKE())) * 2.5;
+            var speed = 0.8 + (ke / Math.max(0.01, maxKE())) * 2.5;
+            // Random emission angle: some go straight, some drift up/down
+            var angle = (Math.random() - 0.5) * Math.PI * 0.8;
             electrons.push({
               x: cathodeX + 8,
               y: p.y + (Math.random() - 0.5) * 8,
-              vx: baseSpeed,
+              vx: speed * Math.cos(angle),
+              vy: speed * Math.sin(angle),
               ke: ke,
               life: 300,
               turned: false
@@ -856,15 +863,19 @@
         e.life--;
         if (e.life <= 0) return false;
 
-        // Voltage effect on electron motion
+        // Voltage effect: accelerate toward anode (positive V) or away (negative V)
         var accel = 0;
         if (voltage >= 0) {
-          accel = 0.02 + voltage * 0.01;
+          accel = 0.01 + voltage * 0.015;
         } else {
-          // Retarding: decelerate electron
           accel = voltage * 0.015;
         }
         e.vx += accel;
+
+        // Dampen vertical drift with positive voltage (field straightens path)
+        if (voltage > 0) {
+          e.vy *= 0.98;
+        }
 
         // If electron stopped or turned back
         if (e.vx < 0) {
@@ -872,6 +883,7 @@
         }
 
         e.x += e.vx;
+        e.y += e.vy;
 
         // Reached anode
         if (e.x >= anodeX - 5 && !e.turned) {
@@ -881,6 +893,9 @@
 
         // Turned back past cathode
         if (e.x < cathodeX - 10) return false;
+
+        // Drifted out of tube vertically
+        if (e.y < plateTop || e.y > plateBot) return false;
 
         // Out of bounds
         if (e.x > anodeX + 20) return false;
