@@ -4,6 +4,19 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
+/* Greek symbol font override — ensures θ, φ, ω, α, etc. render correctly */
+@font-face {
+  font-family: 'Delius';
+  src: local('Inter'), local('Segoe UI'), local('Helvetica Neue'), local('Arial');
+  unicode-range: U+0370-03FF, U+1F00-1FFF, U+2200-22FF, U+2100-214F;
+}
+
+@font-face {
+  font-family: 'Nova Square';
+  src: local('Inter'), local('Segoe UI'), local('Helvetica Neue'), local('Arial');
+  unicode-range: U+0370-03FF, U+1F00-1FFF, U+2200-22FF, U+2100-214F;
+}
+
 /* --- CSS Custom Properties --- */
 :root {
   --bg-primary: #050510;
