@@ -18,7 +18,7 @@
 </head>
 <body>
   <!-- Splash Screen -->
-  <div class="splash-screen" id="splash"></div>
+  <div class="splash-screen" id="splash"><div class="splash-logo">Axomiya Engineer</div><div class="splash-tagline">Lets Make Physics Fun</div><div class="splash-bar"><div class="splash-bar-fill"></div></div></div>
 <div class="bg-grid"></div>
   <canvas id="particles-canvas"></canvas>
 
@@ -80,14 +80,10 @@
   </nav>
   <script>
     (function(){
-      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      var s=document.getElementById('splash');
       if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
       else{
-        sessionStorage.setItem('ae-splash','1');
-        l.classList.add('splash-phase-1');
-        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
-        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
-        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
       }
     })();
   </script>

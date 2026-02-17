@@ -2443,210 +2443,59 @@ ul { list-style: none; }
 }
 
 /* ============================================
-   SPLASH SCREEN — Logo Morph System
+   SPLASH SCREEN — Simple fade
    ============================================ */
-
-/* Overlay backdrop */
 .splash-screen {
   position: fixed;
   inset: 0;
   z-index: 9999;
   background: var(--bg-primary, #050510);
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 .splash-screen.fade-out {
   opacity: 0;
-  visibility: hidden;
+  pointer-events: none;
 }
-
-/* ------------------------------------------
-   Phase 1 (0–1.5s): Large centered logo
-   ------------------------------------------ */
-.nav-logo.splash-phase-1 {
-  position: fixed !important;
-  z-index: 10000;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(2.5);
-  flex-direction: column;
-  gap: 16px;
-  align-items: center;
-  animation: splashFadeIn 0.5s ease-out both;
+.splash-logo {
+  font-family: var(--font-display, 'Orbitron', sans-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-primary, #00d4ff), var(--color-accent, #00ffaa));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-
-/* Hide mount bar and tagline during phase 1 */
-.nav-logo.splash-phase-1 .pendulum-mount,
-.nav-logo.splash-phase-1 .brand-tag {
-  opacity: 0;
+.splash-tagline {
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  color: var(--text-muted, #6b6b85);
+  text-transform: uppercase;
 }
-
-/* Dramatic wide swing */
-.nav-logo.splash-phase-1 .pendulum-arm {
-  animation: splashSwingWide 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate !important;
+.splash-bar {
+  width: 120px;
+  height: 2px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
 }
-
-/* Enhanced bob glow in splash */
-.nav-logo.splash-phase-1 .pendulum-bob {
-  box-shadow:
-    0 0 15px var(--color-primary),
-    0 0 35px rgba(0, 212, 255, 0.5),
-    0 0 60px rgba(0, 212, 255, 0.2),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
-    inset 0 1px 2px rgba(255,255,255,0.2);
+.splash-bar-fill {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary, #00d4ff), var(--color-accent, #00ffaa));
+  animation: splashFill 1.5s ease-in-out 0.3s forwards;
 }
-
-/* ------------------------------------------
-   Phase 2 (1.5–3s): Shrink + fly to navbar
-   ------------------------------------------ */
-.nav-logo.splash-phase-2 {
-  position: fixed !important;
-  z-index: 10000;
-  animation: splashMorphToNav 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+[data-theme="light"] .splash-bar {
+  background: rgba(0,0,0,0.08);
 }
-
-/* Layout transitions to row during morph */
-.nav-logo.splash-phase-2 {
-  flex-direction: row;
-  gap: 12px;
-  align-items: center;
-}
-
-/* Swing decelerates */
-.nav-logo.splash-phase-2 .pendulum-arm {
-  animation: splashSwingDecel 1.5s ease-out forwards !important;
-}
-
-/* Mount bar fades in */
-.nav-logo.splash-phase-2 .pendulum-mount {
-  animation: splashElementFadeIn 0.4s ease-out 0.8s both;
-}
-
-/* Tagline fades in */
-.nav-logo.splash-phase-2 .brand-tag {
-  animation: splashElementFadeIn 0.4s ease-out 1s both;
-}
-
-/* Bob glow reduces to normal */
-.nav-logo.splash-phase-2 .pendulum-bob {
-  transition: box-shadow 1s ease-out;
-  box-shadow:
-    0 0 8px var(--color-primary),
-    0 0 18px rgba(0, 212, 255, 0.3),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
-    inset 0 1px 2px rgba(255,255,255,0.2);
-}
-
-/* ------------------------------------------
-   Phase 3 (3–3.6s): Logo at navbar, overlay fades
-   ------------------------------------------ */
-.nav-logo.splash-phase-3 {
-  position: fixed !important;
-  z-index: 10000;
-  top: 15px;
-  left: 2rem;
-  transform: scale(1);
-}
-
-/* Resume normal pendulum swing */
-.nav-logo.splash-phase-3 .pendulum-arm {
-  animation: pendulumSwing 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate !important;
-}
-
-/* ------------------------------------------
-   Keyframes
-   ------------------------------------------ */
-@keyframes splashFadeIn {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(2.2); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(2.5); }
-}
-
-@keyframes splashSwingWide {
-  0% { transform: translateX(-50%) rotate(-35deg); }
-  100% { transform: translateX(-50%) rotate(35deg); }
-}
-
-@keyframes splashMorphToNav {
-  0% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(2.5);
-    flex-direction: column;
-    gap: 16px;
-  }
-  40% {
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.8);
-  }
-  100% {
-    top: 15px;
-    left: 2rem;
-    transform: translate(0, 0) scale(1);
-    gap: 12px;
-  }
-}
-
-@keyframes splashSwingDecel {
-  0% { transform: translateX(-50%) rotate(-30deg); }
-  25% { transform: translateX(-50%) rotate(15deg); }
-  50% { transform: translateX(-50%) rotate(-8deg); }
-  75% { transform: translateX(-50%) rotate(3deg); }
-  100% { transform: translateX(-50%) rotate(0deg); }
-}
-
-@keyframes splashElementFadeIn {
-  0% { opacity: 0; transform: translateY(4px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* ------------------------------------------
-   Responsive splash overrides
-   ------------------------------------------ */
-@media (max-width: 768px) {
-  .nav-logo.splash-phase-1 {
-    transform: translate(-50%, -50%) scale(2.0);
-  }
-  @keyframes splashFadeIn {
-    0% { opacity: 0; transform: translate(-50%, -50%) scale(1.7); }
-    100% { opacity: 1; transform: translate(-50%, -50%) scale(2.0); }
-  }
-  @keyframes splashMorphToNav {
-    0% {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(2.0);
-    }
-    40% {
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(1.5);
-    }
-    100% {
-      top: 15px;
-      left: 1.2rem;
-      transform: translate(0, 0) scale(1);
-    }
-  }
-}
-
-@media (min-width: 1432px) {
-  @keyframes splashMorphToNav {
-    0% {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(2.5);
-    }
-    40% {
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(1.8);
-    }
-    100% {
-      top: 15px;
-      left: calc((100vw - 1400px) / 2 + 2rem);
-      transform: translate(0, 0) scale(1);
-    }
-  }
+@keyframes splashFill {
+  to { width: 100%; }
 }
 
 /* ============================================

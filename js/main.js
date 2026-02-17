@@ -242,8 +242,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Particles — delay init if splash is playing
   const canvas = document.getElementById('particles-canvas');
   if (canvas) {
-    if (document.querySelector('.nav-logo.splash-phase-1')) {
-      setTimeout(() => new ParticleSystem(canvas), 3600);
+    const splashEl = document.getElementById('splash');
+    if (splashEl && splashEl.style.display !== 'none') {
+      setTimeout(() => new ParticleSystem(canvas), 2800);
     } else {
       new ParticleSystem(canvas);
     }
