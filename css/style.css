@@ -2453,8 +2453,6 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  gap: 0;
   opacity: 1;
   transition: opacity 0.5s ease;
 }
@@ -2463,67 +2461,82 @@ ul { list-style: none; }
   pointer-events: none;
 }
 
-/* Splash pendulum */
+/* Content wrapper — row layout to match navbar logo */
+.splash-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Text group — stacks vertically to the right of pendulum */
+.splash-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Splash pendulum — same 42px base as navbar, scaled up with transform */
 .splash-pendulum {
-  width: 80px;
-  height: 80px;
+  width: 42px;
+  height: 42px;
   position: relative;
-  margin-bottom: 24px;
+  flex-shrink: 0;
+  transform: scale(1.9);
 }
 .splash-pendulum .sp-mount {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: linear-gradient(90deg, #3a3a50, #6b6b85 40%, rgba(255,255,255,.25) 50%, #6b6b85 60%, #3a3a50);
+  border-radius: 1px;
+}
+.splash-pendulum .sp-pivot {
   position: absolute;
   top: 4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 36px;
-  height: 4px;
-  background: linear-gradient(90deg, #3a3a50, #6b6b85 40%, rgba(255,255,255,.25) 50%, #6b6b85 60%, #3a3a50);
-  border-radius: 2px;
-}
-.splash-pendulum .sp-pivot {
-  position: absolute;
-  top: 7px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
+  width: 2px;
+  height: 2px;
   background: #6b6b85;
   border-radius: 50%;
   z-index: 2;
 }
 .splash-pendulum .sp-arm {
   position: absolute;
-  top: 9px;
+  top: 5px;
   left: 50%;
   transform-origin: top center;
   animation: splashSwing 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
 }
 .splash-pendulum .sp-rod {
-  width: 2px;
-  height: 38px;
-  background: linear-gradient(180deg, rgba(255,255,255,.3), #00d4ff 30%, rgba(0,212,255,.2) 90%);
+  width: 1.5px;
+  height: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,.4), #00d4ff 30%, rgba(0,212,255,.3) 90%);
   margin: 0 auto;
   border-radius: 1px;
-  box-shadow: 0 0 6px rgba(0,212,255,.15);
+  box-shadow: 0 0 3px rgba(0,212,255,.15);
 }
 .splash-pendulum .sp-bob {
-  width: 20px;
-  height: 20px;
+  width: 11px;
+  height: 11px;
   background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.7), #00d4ff 45%, rgba(0,140,180,.9) 75%, rgba(0,60,80,.8));
   border-radius: 50%;
   margin: -1px auto 0;
-  box-shadow: 0 0 14px #00d4ff, 0 0 30px rgba(0,212,255,.4), 0 0 50px rgba(0,212,255,.15);
+  box-shadow: 0 0 8px #00d4ff, 0 0 18px rgba(0,212,255,.3), inset 0 -2px 3px rgba(0,0,0,.3), inset 0 1px 2px rgba(255,255,255,.2);
   position: relative;
 }
 .splash-pendulum .sp-glow {
   position: absolute;
-  bottom: -6px;
+  bottom: -4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 16px;
-  height: 8px;
-  background: radial-gradient(ellipse, rgba(0,212,255,.3), transparent 70%);
-  filter: blur(3px);
+  width: 8px;
+  height: 4px;
+  background: radial-gradient(ellipse, rgba(0,212,255,.25), transparent 70%);
+  filter: blur(2px);
 }
 [data-theme="light"] .splash-pendulum .sp-mount {
   background: linear-gradient(90deg, #bbb, #ddd 40%, #fff 50%, #ddd 60%, #bbb);
@@ -2533,45 +2546,64 @@ ul { list-style: none; }
 }
 
 .splash-logo {
-  font-family: var(--font-display, 'Orbitron', sans-serif);
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--color-primary, #00d4ff), var(--color-accent, #00ffaa));
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #00d4ff 0%, #00ffaa 50%, #2a2a3a 50.1%);
+  background-size: 200% 100%;
+  background-position: right;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 10px;
+  animation: textFill 2s ease-in-out 0.6s forwards;
+  margin-bottom: 4px;
+}
+[data-theme="light"] .splash-logo {
+  background: linear-gradient(90deg, #00d4ff 0%, #00ffaa 50%, #c0c0c8 50.1%);
+  background-size: 200% 100%;
+  background-position: right;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .splash-tagline {
   font-family: var(--font-body, system-ui, sans-serif);
   font-size: 0.7rem;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   color: var(--text-muted, #6b6b85);
   text-transform: uppercase;
-  margin-bottom: 24px;
 }
-.splash-bar {
-  width: 120px;
-  height: 2px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 2px;
-  overflow: hidden;
+
+/* Morph phase — JS pins with position:fixed then transitions top/left */
+.splash-content.morphing {
+  position: fixed !important;
+  z-index: 10000;
+  transition: top 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              left 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              gap 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.splash-bar-fill {
-  width: 0;
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-primary, #00d4ff), var(--color-accent, #00ffaa));
-  animation: splashFill 1.5s ease-in-out 0.3s forwards;
+.splash-screen.morphing .splash-tagline {
+  transition: opacity 0.3s ease-out;
+  opacity: 0;
 }
-[data-theme="light"] .splash-bar {
-  background: rgba(0,0,0,0.08);
+.splash-screen.morphing .splash-pendulum {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
 }
+.splash-screen.morphing .splash-logo {
+  transition: font-size 0.8s cubic-bezier(0.4, 0, 0.2, 1), margin-bottom 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
 @keyframes splashSwing {
   0% { transform: translateX(-50%) rotate(-30deg); }
   100% { transform: translateX(-50%) rotate(30deg); }
 }
-@keyframes splashFill {
-  to { width: 100%; }
+@keyframes textFill {
+  to { background-position: left; }
 }
 
 /* ============================================
