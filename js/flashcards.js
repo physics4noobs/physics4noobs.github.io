@@ -13,11 +13,9 @@
     var interval = card.interval || 0;
 
     if (quality < 3) {
-      // Lapse: reset
       rep = 0;
       interval = 0;
     } else {
-      // Correct response
       if (rep === 0) {
         interval = 1;
       } else if (rep === 1) {
@@ -55,20 +53,9 @@
   var isFlipped = false;
   var session = { reviewed: 0, correct: 0, streak: 0 };
 
-  // --- DOM refs ---
-  var chapterSelector = document.getElementById('fc-chapter-selector');
-  var cardArea = document.getElementById('fc-card-area');
-  var emptyState = document.getElementById('fc-empty');
-  var cardContainer = document.getElementById('fc-card');
-  var cardFront = document.getElementById('fc-front');
-  var cardBack = document.getElementById('fc-back');
-  var ratingBtns = document.getElementById('fc-rating-btns');
-  var progressBar = document.getElementById('fc-progress-fill');
-  var progressText = document.getElementById('fc-progress-text');
-  var statReviewed = document.getElementById('fc-stat-reviewed');
-  var statStreak = document.getElementById('fc-stat-streak');
-  var statAccuracy = document.getElementById('fc-stat-accuracy');
-  var doneMsg = document.getElementById('fc-done');
+  // --- DOM refs (populated in init) ---
+  var chapterSelector, cardArea, emptyState, cardContainer, cardFront, cardBack;
+  var ratingBtns, progressBar, progressText, statReviewed, statStreak, statAccuracy, doneMsg;
 
   // --- localStorage helpers ---
   function storageKey(ch) { return 'ae-flashcards-' + ch; }
@@ -154,7 +141,6 @@
         due.push(i);
       }
     });
-    // Due cards first (sorted by nextReview ascending), then new cards
     due.sort(function (a, b) {
       return ((progress[cards[a].id] || {}).nextReview || 0) -
         ((progress[cards[b].id] || {}).nextReview || 0);
@@ -164,31 +150,8 @@
   }
 
   // --- Rendering ---
-  function renderContent(el, text, type) {
-    el.innerHTML = '';
-    if (!text) return;
-    var lines = text.split('\n');
-    var html = '';
-
-    lines.forEach(function (line) {
-      line = line.trim();
-      if (!line) { html += '<br>'; return; }
-
-      // Check if line is primarily LaTeX (contains backslash commands)
-      if (type === 'formula' || /\\[a-zA-Z{]/.test(line)) {
-        html += '<div class="fc-math">' + escapeHtml(line) + '</div>';
-      } else {
-        // Markdown-lite: bold, inline code
-        var processed = escapeHtml(line)
-          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-          .replace(/`(.+?)`/g, '<code>$1</code>');
-        html += '<p>' + processed + '</p>';
-      }
-    });
-
-    el.innerHTML = html;
-
-    // Render KaTeX in .fc-math spans
+  function renderKaTeX(el) {
+    if (typeof katex === 'undefined') return;
     var mathEls = el.querySelectorAll('.fc-math');
     for (var i = 0; i < mathEls.length; i++) {
       try {
@@ -201,6 +164,30 @@
         // Leave as text if KaTeX fails
       }
     }
+  }
+
+  function renderContent(el, text, type) {
+    el.innerHTML = '';
+    if (!text) return;
+    var lines = text.split('\n');
+    var html = '';
+
+    lines.forEach(function (line) {
+      line = line.trim();
+      if (!line) { html += '<br>'; return; }
+
+      if (type === 'formula' || /\\[a-zA-Z{]/.test(line)) {
+        html += '<div class="fc-math">' + escapeHtml(line) + '</div>';
+      } else {
+        var processed = escapeHtml(line)
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/`(.+?)`/g, '<code>$1</code>');
+        html += '<p>' + processed + '</p>';
+      }
+    });
+
+    el.innerHTML = html;
+    renderKaTeX(el);
   }
 
   function escapeHtml(s) {
@@ -217,54 +204,45 @@
     }
 
     doneMsg.style.display = 'none';
-    cardArea.style.display = '';
+    cardArea.style.display = 'block';
 
     var card = cards[queue[currentIdx]];
     isFlipped = false;
     cardContainer.classList.remove('flipped');
     ratingBtns.style.display = 'none';
 
-    // Card type badge
     var typeBadge = card.type === 'formula' ? 'Formula' :
       card.type === 'mcq' ? 'MCQ' : 'Concept';
     var typeClass = 'fc-type-' + card.type;
 
-    // Front
-    cardFront.innerHTML = '<span class="fc-badge ' + typeClass + '">' + typeBadge + '</span>';
-    var frontTitle = document.createElement('div');
-    frontTitle.className = 'fc-front-title';
-    frontTitle.textContent = card.front;
-    cardFront.appendChild(frontTitle);
+    // Build front HTML all at once (avoid innerHTML += which destroys/recreates DOM)
+    var frontHtml = '<span class="fc-badge ' + typeClass + '">' + typeBadge + '</span>';
+    frontHtml += '<div class="fc-front-title">' + escapeHtml(card.front) + '</div>';
 
     if (card.type === 'mcq' && card.options) {
-      var optHtml = '<div class="fc-options">';
+      frontHtml += '<div class="fc-options">';
       var labels = ['A', 'B', 'C', 'D'];
       card.options.forEach(function (opt, i) {
-        optHtml += '<div class="fc-opt" data-opt="' + labels[i] + '">' +
+        frontHtml += '<div class="fc-opt" data-opt="' + labels[i] + '">' +
           '<span class="fc-opt-label">' + labels[i] + '</span> ' +
           escapeHtml(opt) + '</div>';
       });
-      optHtml += '</div>';
-      cardFront.innerHTML += optHtml;
+      frontHtml += '</div>';
     }
 
-    cardFront.innerHTML += '<div class="fc-tap-hint">Tap to reveal answer</div>';
+    frontHtml += '<div class="fc-tap-hint">Tap to reveal answer</div>';
+    cardFront.innerHTML = frontHtml;
 
-    // Back
+    // Build back
+    var backHtml = '';
     if (card.type === 'mcq') {
-      var ansHtml = '<div class="fc-answer">Answer: <strong>' + card.answer + '</strong></div>';
-      cardBack.innerHTML = ansHtml;
-      var backContent = document.createElement('div');
-      backContent.className = 'fc-back-content';
-      renderContent(backContent, card.back, card.type);
-      cardBack.appendChild(backContent);
-    } else {
-      cardBack.innerHTML = '';
-      var backDiv = document.createElement('div');
-      backDiv.className = 'fc-back-content';
-      renderContent(backDiv, card.back, card.type);
-      cardBack.appendChild(backDiv);
+      backHtml = '<div class="fc-answer">Answer: <strong>' + escapeHtml(card.answer) + '</strong></div>';
     }
+    backHtml += '<div class="fc-back-content"></div>';
+    cardBack.innerHTML = backHtml;
+
+    var backContent = cardBack.querySelector('.fc-back-content');
+    renderContent(backContent, card.back, card.type);
 
     updateProgress();
   }
@@ -273,11 +251,7 @@
     if (queue.length === 0 || currentIdx >= queue.length) return;
     isFlipped = !isFlipped;
     cardContainer.classList.toggle('flipped', isFlipped);
-    if (isFlipped) {
-      ratingBtns.style.display = 'flex';
-    } else {
-      ratingBtns.style.display = 'none';
-    }
+    ratingBtns.style.display = isFlipped ? 'flex' : 'none';
   }
 
   // --- Rating ---
@@ -288,7 +262,6 @@
     var result = calcSM2(quality, prev);
     progress[card.id] = result;
 
-    // Session stats
     session.reviewed++;
     if (quality >= 3) {
       session.correct++;
@@ -306,10 +279,8 @@
   }
 
   function updateProgress() {
-    var total = cards.length;
-    var done = currentIdx;
     var remaining = queue.length - currentIdx;
-    var pct = queue.length > 0 ? Math.round((done / queue.length) * 100) : 100;
+    var pct = queue.length > 0 ? Math.round((currentIdx / queue.length) * 100) : 100;
     progressBar.style.width = pct + '%';
     progressText.textContent = remaining + ' card' + (remaining !== 1 ? 's' : '') + ' remaining';
   }
@@ -319,7 +290,7 @@
     statStreak.textContent = session.streak;
     statAccuracy.textContent = session.reviewed > 0
       ? Math.round((session.correct / session.reviewed) * 100) + '%'
-      : '—';
+      : '\u2014';
   }
 
   // --- Chapter loading ---
@@ -340,7 +311,10 @@
     emptyState.style.display = 'none';
 
     fetch('cards/' + ch + '.json')
-      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
       .then(function (data) {
         cards = data;
         buildQueue();
@@ -351,14 +325,35 @@
         }
         syncWithFirebase(ch);
       })
-      .catch(function () {
+      .catch(function (err) {
+        console.error('Flashcards: Failed to load cards for ' + ch, err);
         emptyState.style.display = 'block';
-        emptyState.textContent = 'Failed to load cards for this chapter.';
+        emptyState.textContent = 'Failed to load cards. Please check your connection and try again.';
       });
   }
 
   // --- Init ---
   function init() {
+    // Grab DOM refs here to guarantee DOM is ready
+    chapterSelector = document.getElementById('fc-chapter-selector');
+    cardArea = document.getElementById('fc-card-area');
+    emptyState = document.getElementById('fc-empty');
+    cardContainer = document.getElementById('fc-card');
+    cardFront = document.getElementById('fc-front');
+    cardBack = document.getElementById('fc-back');
+    ratingBtns = document.getElementById('fc-rating-btns');
+    progressBar = document.getElementById('fc-progress-fill');
+    progressText = document.getElementById('fc-progress-text');
+    statReviewed = document.getElementById('fc-stat-reviewed');
+    statStreak = document.getElementById('fc-stat-streak');
+    statAccuracy = document.getElementById('fc-stat-accuracy');
+    doneMsg = document.getElementById('fc-done');
+
+    if (!chapterSelector || !cardContainer) {
+      console.error('Flashcards: Required DOM elements not found');
+      return;
+    }
+
     // Build chapter chips
     Object.keys(chapters).forEach(function (key) {
       var chip = document.createElement('button');
@@ -369,20 +364,19 @@
       chapterSelector.appendChild(chip);
     });
 
-    // Card flip
-    cardContainer.addEventListener('click', function (e) {
-      // Don't flip if clicking rating buttons
-      if (e.target.closest('#fc-rating-btns')) return;
+    // Card flip on click
+    cardContainer.addEventListener('click', function () {
       flipCard();
     });
 
     // Rating buttons
-    document.querySelectorAll('.fc-rate-btn').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
+    var rateBtns = document.querySelectorAll('.fc-rate-btn');
+    for (var i = 0; i < rateBtns.length; i++) {
+      rateBtns[i].addEventListener('click', function (e) {
         e.stopPropagation();
         rateCard(parseInt(this.dataset.quality));
       });
-    });
+    }
 
     // Touch swipe support
     var startX = 0, startY = 0;
@@ -415,14 +409,16 @@
       }
     });
 
-    // Firebase auth listener
-    if (typeof firebase !== 'undefined' && firebase.auth) {
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user && currentChapter) {
-          syncWithFirebase(currentChapter);
-        }
-      });
-    }
+    // Firebase auth listener — wait a tick for defer scripts
+    setTimeout(function () {
+      if (typeof firebase !== 'undefined' && firebase.auth) {
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user && currentChapter) {
+            syncWithFirebase(currentChapter);
+          }
+        });
+      }
+    }, 0);
 
     // Sync on page unload
     window.addEventListener('beforeunload', function () {
@@ -450,10 +446,6 @@
     }
   }
 
-  // Wait for DOM
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  // Wait for DOM + defer scripts
+  document.addEventListener('DOMContentLoaded', init);
 })();
