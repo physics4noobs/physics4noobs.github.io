@@ -1,0 +1,302 @@
+[
+  {
+    "id": "fluid-f-01",
+    "type": "formula",
+    "front": "Pressure at Depth in a Liquid",
+    "back": "P = P_0 + h\\rho g\n\n\\text{where:} \\\\\nP_0 = \\text{atmospheric pressure} \\\\\nh = \\text{depth below surface} \\\\\n\\rho = \\text{density of liquid} \\\\\ng = \\text{acceleration due to gravity}",
+    "tags": ["fluid-mechanics", "pressure"]
+  },
+  {
+    "id": "fluid-f-02",
+    "type": "formula",
+    "front": "Gauge Pressure",
+    "back": "P_{\\text{gauge}} = h\\rho g = P - P_0\n\n\\text{Pressure measured relative to atmospheric pressure}",
+    "tags": ["fluid-mechanics", "pressure"]
+  },
+  {
+    "id": "fluid-f-03",
+    "type": "formula",
+    "front": "Pascal's Law - Hydraulic Press",
+    "back": "\\frac{F_1}{A_1} = \\frac{F_2}{A_2}\n\nF_2 = F_1 \\frac{A_2}{A_1}\n\n\\text{Mechanical advantage} = \\frac{A_2}{A_1}",
+    "tags": ["fluid-mechanics", "pressure"]
+  },
+  {
+    "id": "fluid-f-04",
+    "type": "formula",
+    "front": "Archimedes' Principle - Buoyant Force",
+    "back": "B = V\\rho_{\\text{fluid}} g\n\n\\text{where:} \\\\\nV = \\text{volume of fluid displaced} \\\\\n\\rho_{\\text{fluid}} = \\text{density of fluid} \\\\\ng = \\text{acceleration due to gravity}",
+    "tags": ["fluid-mechanics", "buoyancy"]
+  },
+  {
+    "id": "fluid-f-05",
+    "type": "formula",
+    "front": "Apparent Weight of Submerged Object",
+    "back": "W_{\\text{app}} = W - B = mg - V\\rho_{\\text{fluid}} g\n\n\\text{or } W_{\\text{app}} = V(\\rho_{\\text{body}} - \\rho_{\\text{fluid}}) g",
+    "tags": ["fluid-mechanics", "buoyancy"]
+  },
+  {
+    "id": "fluid-f-06",
+    "type": "formula",
+    "front": "Fraction Submerged for Floating Bodies",
+    "back": "\\frac{V_{\\text{sub}}}{V_{\\text{total}}} = \\frac{\\rho_{\\text{body}}}{\\rho_{\\text{fluid}}}\n\n\\text{Density ratio equals fraction submerged}",
+    "tags": ["fluid-mechanics", "floating-bodies"]
+  },
+  {
+    "id": "fluid-f-07",
+    "type": "formula",
+    "front": "Equation of Continuity",
+    "back": "A_1 v_1 = A_2 v_2\n\n\\text{or } A v = \\text{constant (for incompressible fluids)}\n\n\\text{where:} \\\\\nA = \\text{cross-sectional area} \\\\\nv = \\text{velocity of flow}",
+    "tags": ["fluid-mechanics", "flow"]
+  },
+  {
+    "id": "fluid-f-08",
+    "type": "formula",
+    "front": "Bernoulli's Theorem",
+    "back": "P + \\frac{1}{2}\\rho v^2 + \\rho gh = \\text{constant}\n\n\\text{Energy conservation in fluid flow}",
+    "tags": ["fluid-mechanics", "bernoulli"]
+  },
+  {
+    "id": "fluid-f-09",
+    "type": "formula",
+    "front": "Torricelli's Theorem - Velocity of Efflux",
+    "back": "v = \\sqrt{2gh}\n\n\\text{where:} \\\\\nh = \\text{height of liquid above the hole}\n\n\\text{(applies for hole at bottom of container)}",
+    "tags": ["fluid-mechanics", "efflux"]
+  },
+  {
+    "id": "fluid-f-10",
+    "type": "formula",
+    "front": "Range of Efflux from Side Hole",
+    "back": "R = 2\\sqrt{h(H - h)}\n\n\\text{where:} \\\\\nH = \\text{total height of liquid} \\\\\nh = \\text{height of hole from bottom}\n\n\\text{Maximum range at } h = \\frac{H}{2}",
+    "tags": ["fluid-mechanics", "efflux"]
+  },
+  {
+    "id": "fluid-f-11",
+    "type": "formula",
+    "front": "Surface Tension - Force Definition",
+    "back": "T = \\frac{F}{l}\n\n\\text{where:} \\\\\nF = \\text{force on liquid surface} \\\\\nl = \\text{length of contact line}",
+    "tags": ["fluid-mechanics", "surface-tension"]
+  },
+  {
+    "id": "fluid-f-12",
+    "type": "formula",
+    "front": "Work Done Against Surface Tension",
+    "back": "W = T \\Delta A = T(A_f - A_i)\n\n\\text{where:} \\\\\n\\Delta A = \\text{change in surface area}",
+    "tags": ["fluid-mechanics", "surface-tension"]
+  },
+  {
+    "id": "fluid-f-13",
+    "type": "formula",
+    "front": "Excess Pressure in a Liquid Drop",
+    "back": "\\Delta P = \\frac{2T}{R}\n\n\\text{Single curved interface (sphere)}",
+    "tags": ["fluid-mechanics", "surface-tension"]
+  },
+  {
+    "id": "fluid-f-14",
+    "type": "formula",
+    "front": "Excess Pressure in a Soap Bubble",
+    "back": "\\Delta P = \\frac{4T}{R}\n\n\\text{Two curved interfaces (two surfaces)}",
+    "tags": ["fluid-mechanics", "surface-tension"]
+  },
+  {
+    "id": "fluid-f-15",
+    "type": "formula",
+    "front": "Capillary Rise in a Tube",
+    "back": "h = \\frac{2T \\cos\\theta}{\\rho g r}\n\n\\text{where:} \\\\\nT = \\text{surface tension} \\\\\n\\theta = \\text{angle of contact} \\\\\nr = \\text{radius of capillary tube}",
+    "tags": ["fluid-mechanics", "capillarity"]
+  },
+  {
+    "id": "fluid-f-16",
+    "type": "formula",
+    "front": "Viscous Force (Stokes-Newton Law)",
+    "back": "F = \\eta A \\frac{dv}{dx}\n\n\\text{where:} \\\\\n\\eta = \\text{coefficient of viscosity} \\\\\nA = \\text{area of contact} \\\\\n\\frac{dv}{dx} = \\text{velocity gradient}",
+    "tags": ["fluid-mechanics", "viscosity"]
+  },
+  {
+    "id": "fluid-f-17",
+    "type": "formula",
+    "front": "Poiseuille's Formula",
+    "back": "Q = \\frac{\\pi \\Delta P r^4}{8\\eta l}\n\n\\text{where:} \\\\\nQ = \\text{volume flow rate} \\\\\n\\Delta P = \\text{pressure difference} \\\\\nr = \\text{radius of pipe} \\\\\nl = \\text{length of pipe}",
+    "tags": ["fluid-mechanics", "viscosity"]
+  },
+  {
+    "id": "fluid-f-18",
+    "type": "formula",
+    "front": "Stokes' Law - Drag on a Sphere",
+    "back": "F = 6\\pi\\eta r v\n\n\\text{where:} \\\\\n\\eta = \\text{coefficient of viscosity} \\\\\nr = \\text{radius of sphere} \\\\\nv = \\text{velocity of sphere through fluid}",
+    "tags": ["fluid-mechanics", "viscosity"]
+  },
+  {
+    "id": "fluid-f-19",
+    "type": "formula",
+    "front": "Terminal Velocity",
+    "back": "v_t = \\frac{2r^2(\\rho - \\sigma)g}{9\\eta}\n\n\\text{where:} \\\\\nr = \\text{radius of sphere} \\\\\n\\rho = \\text{density of sphere} \\\\\n\\sigma = \\text{density of fluid} \\\\\n\\eta = \\text{coefficient of viscosity}",
+    "tags": ["fluid-mechanics", "viscosity"]
+  },
+  {
+    "id": "fluid-f-20",
+    "type": "formula",
+    "front": "Reynolds Number",
+    "back": "Re = \\frac{\\rho v d}{\\eta}\n\n\\text{where:} \\\\\n\\rho = \\text{density of fluid} \\\\\nv = \\text{average velocity} \\\\\nd = \\text{characteristic diameter} \\\\\n\\eta = \\text{coefficient of viscosity}",
+    "tags": ["fluid-mechanics", "flow"]
+  },
+  {
+    "id": "fluid-c-01",
+    "type": "concept",
+    "front": "What is Pascal's Principle?",
+    "back": "**Pascal's Principle:** A change in pressure applied to an enclosed incompressible fluid is transmitted undiminished to all parts of the fluid and the walls of the container.\n\nThis principle is the basis for hydraulic presses and hydraulic lifts.",
+    "tags": ["fluid-mechanics", "pressure"]
+  },
+  {
+    "id": "fluid-c-02",
+    "type": "concept",
+    "front": "Why does pressure increase with depth in a liquid?",
+    "back": "Pressure increases with depth because the weight of the fluid above creates additional pressure. Each layer of fluid must support the weight of all the fluid above it, resulting in P = P₀ + hρg.",
+    "tags": ["fluid-mechanics", "pressure"]
+  },
+  {
+    "id": "fluid-c-03",
+    "type": "concept",
+    "front": "Explain Archimedes' Principle.",
+    "back": "**Archimedes' Principle:** When a body is partially or completely immersed in a fluid, it experiences an upward buoyant force equal to the weight of the fluid displaced by the body.\n\nThis explains why objects float and how their apparent weight decreases in water.",
+    "tags": ["fluid-mechanics", "buoyancy"]
+  },
+  {
+    "id": "fluid-c-04",
+    "type": "concept",
+    "front": "Why do floating objects displace a volume of liquid equal to their weight?",
+    "back": "For a floating object in equilibrium, the buoyant force equals the weight of the object. Since B = V_displaced × ρ_fluid × g, and B = mg:\n\nV_displaced × ρ_fluid × g = m × g\n\nTherefore, the volume displaced equals the volume if the object had the same density as the fluid times the density ratio.",
+    "tags": ["fluid-mechanics", "floating-bodies"]
+  },
+  {
+    "id": "fluid-c-05",
+    "type": "concept",
+    "front": "What does the Equation of Continuity represent?",
+    "back": "**Equation of Continuity:** For incompressible fluid flow, the product of cross-sectional area and velocity is constant: A₁v₁ = A₂v₂\n\nThis expresses conservation of mass - the mass flow rate must be the same at all points along a streamline.",
+    "tags": ["fluid-mechanics", "flow"]
+  },
+  {
+    "id": "fluid-c-06",
+    "type": "concept",
+    "front": "How is Bernoulli's Theorem related to energy conservation?",
+    "back": "**Bernoulli's Theorem** is a statement of energy conservation for fluids:\n\nP + ½ρv² + ρgh = constant\n\nWhere:\n- P = pressure energy per unit volume\n- ½ρv² = kinetic energy per unit volume\n- ρgh = gravitational potential energy per unit volume\n\nThe sum of all three forms of energy remains constant along a streamline.",
+    "tags": ["fluid-mechanics", "bernoulli"]
+  },
+  {
+    "id": "fluid-c-07",
+    "type": "concept",
+    "front": "Why is the excess pressure in a soap bubble 4T/R while in a drop it's 2T/R?",
+    "back": "A soap bubble has **two surfaces** (inner and outer), each contributing ΔP = 2T/R.\n\nTotal excess pressure = 2T/R + 2T/R = **4T/R**\n\nA liquid drop has only **one surface**, so its excess pressure is **2T/R**.",
+    "tags": ["fluid-mechanics", "surface-tension"]
+  },
+  {
+    "id": "fluid-c-08",
+    "type": "concept",
+    "front": "What is the angle of contact and how does it determine capillary rise vs. depression?",
+    "back": "**Angle of Contact (θ):** The angle between the liquid surface and the solid surface at the contact line.\n\n- θ < 90° (acute): Liquid wets the surface → **Capillary RISE** (e.g., water in glass)\n- θ > 90° (obtuse): Liquid does not wet the surface → **Capillary DEPRESSION** (e.g., mercury in glass)\n- θ = 90°: No rise or depression",
+    "tags": ["fluid-mechanics", "capillarity"]
+  },
+  {
+    "id": "fluid-c-09",
+    "type": "concept",
+    "front": "Distinguish between laminar and turbulent flow.",
+    "back": "**Laminar Flow:**\n- Fluid moves in parallel layers\n- Smooth, orderly motion\n- Re < 2000 (in pipes)\n- Low energy loss\n\n**Turbulent Flow:**\n- Chaotic, irregular fluid motion\n- Mixing between layers\n- Re > 4000 (in pipes)\n- Significant energy loss\n\nTransition occurs in critical Reynolds number range 2000-4000.",
+    "tags": ["fluid-mechanics", "flow"]
+  },
+  {
+    "id": "fluid-c-10",
+    "type": "concept",
+    "front": "Why does terminal velocity increase with the square of the sphere's radius?",
+    "back": "From v_t = 2r²(ρ - σ)g / (9η):\n\n- **Drag force** ∝ r (from Stokes' law: F = 6πηrv)\n- **Gravitational force** ∝ r³ (from volume)\n\nAt terminal velocity, these balance. When radius increases:\n- Gravity increases as r³\n- Drag only increases as r\n\nSo velocity must increase as r² to maintain balance.",
+    "tags": ["fluid-mechanics", "viscosity"]
+  },
+  {
+    "id": "fluid-mcq-01",
+    "type": "mcq",
+    "front": "Three containers with different shapes but the same base area contain water to the same height. What is the relationship between pressures at the bottom?",
+    "options": ["Different in all three containers", "Same in all three containers", "Depends on the shape of the container", "Increases in the order: narrow → wide → inverted"],
+    "answer": "B",
+    "back": "Pressure at the bottom depends only on depth and density, not on the shape of the container. P = P₀ + hρg is the same for all three containers.\n\nThis is called the **hydrostatic paradox** - the pressure is independent of the volume or shape of the container.",
+    "tags": ["fluid-mechanics", "pressure"]
+  },
+  {
+    "id": "fluid-mcq-02",
+    "type": "mcq",
+    "front": "A wooden block floats with 75% of its volume submerged. What is the density ratio of wood to water?",
+    "options": ["0.25", "0.5", "0.75", "1.0"],
+    "answer": "C",
+    "back": "For a floating object: V_sub / V_total = ρ_body / ρ_fluid\n\nIf 75% is submerged: ρ_wood / ρ_water = 0.75\n\nSo the density of wood is 0.75 g/cm³ (assuming water is 1 g/cm³).",
+    "tags": ["fluid-mechanics", "floating-bodies"]
+  },
+  {
+    "id": "fluid-mcq-03",
+    "type": "mcq",
+    "front": "Water flows through a pipe that narrows. How does the pressure change when the pipe narrows?",
+    "options": ["Pressure increases", "Pressure decreases", "Pressure remains constant", "Cannot be determined"],
+    "answer": "B",
+    "back": "From continuity equation: A₁v₁ = A₂v₂\n\nWhen the pipe narrows (A₂ < A₁), velocity increases (v₂ > v₁).\n\nFrom Bernoulli's theorem: P + ½ρv² + ρgh = constant\n\nIncreased velocity means increased kinetic energy, so pressure must decrease.",
+    "tags": ["fluid-mechanics", "bernoulli"]
+  },
+  {
+    "id": "fluid-mcq-04",
+    "type": "mcq",
+    "front": "A hole is made at height h from the bottom of a water tank of height H. At what height should a second hole be made for maximum range of efflux?",
+    "options": ["H/4", "H/2", "3H/4", "H"],
+    "answer": "B",
+    "back": "Range of efflux: R = 2√[h(H-h)]\n\nTo find maximum, differentiate with respect to h and set to zero:\ndR/dh = 0\n\nThis gives h = H/2\n\nSo the second hole should be at height H/2 from the bottom for maximum horizontal range.",
+    "tags": ["fluid-mechanics", "efflux"]
+  },
+  {
+    "id": "fluid-mcq-05",
+    "type": "mcq",
+    "front": "When two soap bubbles merge into one, what happens to the total surface area?",
+    "options": ["Increases", "Decreases", "Remains the same", "Cannot be determined"],
+    "answer": "B",
+    "back": "When two bubbles merge into one:\n- Original total surface area = 2 × 4πr₁² + 2 × 4πr₂²\n- Final bubble has larger radius R > r₁ and R > r₂\n- But final surface area = 4πR² < sum of original areas\n\nSurface area decreases because the system minimizes surface energy.",
+    "tags": ["fluid-mechanics", "surface-tension"]
+  },
+  {
+    "id": "fluid-mcq-06",
+    "type": "mcq",
+    "front": "Water rises to height 10 cm in a capillary tube of radius r. To what height will it rise in a tube of radius r/2?",
+    "options": ["5 cm", "10 cm", "20 cm", "40 cm"],
+    "answer": "C",
+    "back": "From capillary rise formula: h = 2T cosθ / (ρgr)\n\nCapillary height is inversely proportional to radius: h ∝ 1/r\n\nWhen radius is halved: h' = 2 × h = 2 × 10 = 20 cm\n\nSmaller tubes cause higher capillary rise.",
+    "tags": ["fluid-mechanics", "capillarity"]
+  },
+  {
+    "id": "fluid-mcq-07",
+    "type": "mcq",
+    "front": "Which factor has the greatest effect on the viscous force acting on a sphere moving through a fluid?",
+    "options": ["Velocity of the sphere", "Radius of the sphere", "Viscosity of the fluid", "Temperature of the fluid"],
+    "answer": "B",
+    "back": "From Stokes' law: F = 6πηrv\n\nThe force is:\n- Linear in v (proportional to velocity)\n- Linear in r (proportional to radius)\n- Linear in η (proportional to viscosity)\n\nWhile all are equally important in the formula, radius directly affects the surface area in contact with the fluid, making it the most critical geometric factor.",
+    "tags": ["fluid-mechanics", "viscosity"]
+  },
+  {
+    "id": "fluid-mcq-08",
+    "type": "mcq",
+    "front": "In a hydraulic press, if the input piston has area 10 cm² and the output piston has area 100 cm², what is the force amplification?",
+    "options": ["10 times", "100 times", "0.1 times", "1000 times"],
+    "answer": "A",
+    "back": "From Pascal's law: F₂/F₁ = A₂/A₁\n\nMechanical advantage = A₂/A₁ = 100/10 = 10\n\nSo a 1000 N input force produces a 10,000 N output force (10 times amplification).",
+    "tags": ["fluid-mechanics", "pressure"]
+  },
+  {
+    "id": "fluid-mcq-09",
+    "type": "mcq",
+    "front": "At very high velocities, flow transitions from laminar to turbulent. Which Reynolds number typically marks this transition in pipes?",
+    "options": ["Re ≈ 500", "Re ≈ 2000", "Re ≈ 10000", "Re ≈ 1 million"],
+    "answer": "B",
+    "back": "In cylindrical pipes:\n- **Laminar flow:** Re < 2000\n- **Transition zone:** Re = 2000-4000\n- **Turbulent flow:** Re > 4000\n\nThe critical Reynolds number is approximately 2000 for pipe flow.",
+    "tags": ["fluid-mechanics", "flow"]
+  },
+  {
+    "id": "fluid-mcq-10",
+    "type": "mcq",
+    "front": "A sphere of radius 2r falls through a viscous fluid. If instead we use a sphere of radius r, how does the terminal velocity change?",
+    "options": ["Decreases to 1/4", "Decreases to 1/2", "Increases to 4 times", "Increases to 2 times"],
+    "answer": "A",
+    "back": "Terminal velocity: v_t = 2r²(ρ - σ)g / (9η)\n\nTerminal velocity is proportional to r².\n\nWhen radius is halved: v_t' = (1/4) × v_t\n\nThe terminal velocity decreases to 1/4 of the original value.",
+    "tags": ["fluid-mechanics", "viscosity"]
+  }
+]

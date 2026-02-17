@@ -43,7 +43,11 @@
   var chapters = {
     kinematics: 'Kinematics',
     'newtons-laws': "Newton's Laws",
-    'work-power-energy': 'Work, Power & Energy'
+    'work-power-energy': 'Work, Power & Energy',
+    gravitation: 'Gravitation',
+    'rotational-motion': 'Rotational Motion',
+    'mechanical-properties': 'Mechanical Properties',
+    'fluid-mechanics': 'Fluid Mechanics'
   };
   var currentChapter = null;
   var cards = [];

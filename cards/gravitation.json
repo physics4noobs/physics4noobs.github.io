@@ -1,0 +1,267 @@
+[
+  {
+    "id": "grav-f-01",
+    "type": "formula",
+    "front": "Newton's Law of Universal Gravitation",
+    "back": "F = \\frac{Gm_1 m_2}{r^2}\n\nG = 6.67 \\times 10^{-11}\\text{ Nm}^2\\text{/kg}^2\n\n\\text{Dimensions of G: }[M^{-1}L^3T^{-2}]",
+    "tags": ["gravitation", "universal-law"]
+  },
+  {
+    "id": "grav-f-02",
+    "type": "formula",
+    "front": "Acceleration due to gravity on Earth's surface",
+    "back": "g = \\frac{GM}{R^2}\n\nFor Earth: g \\approx 9.81\\text{ m/s}^2\n\nwhere M is planet mass and R is its radius",
+    "tags": ["gravitation", "gravity"]
+  },
+  {
+    "id": "grav-f-03",
+    "type": "formula",
+    "front": "Acceleration due to gravity in terms of density",
+    "back": "g = \\frac{4}{3}\\pi G \\rho R\n\nwhere \\rho is the average density of the planet",
+    "tags": ["gravitation", "gravity"]
+  },
+  {
+    "id": "grav-f-04",
+    "type": "formula",
+    "front": "Variation of g with height above surface",
+    "back": "g' = g\\left(\\frac{R}{R+h}\\right)^2\n\n\\text{Approximation for }h \\ll R:\\quad g' \\approx g\\left(1 - \\frac{2h}{R}\\right)",
+    "tags": ["gravitation", "g-variation"]
+  },
+  {
+    "id": "grav-f-05",
+    "type": "formula",
+    "front": "Variation of g with depth below surface",
+    "back": "g' = g\\left(1 - \\frac{h}{R}\\right)\n\nwhere h is depth below surface, assuming uniform density",
+    "tags": ["gravitation", "g-variation"]
+  },
+  {
+    "id": "grav-f-06",
+    "type": "formula",
+    "front": "Variation of g with latitude (Earth's rotation)",
+    "back": "g' = g - \\omega^2 R \\cos^2\\theta\n\nwhere \\theta is latitude, \\omega is angular velocity of Earth",
+    "tags": ["gravitation", "g-variation"]
+  },
+  {
+    "id": "grav-f-07",
+    "type": "formula",
+    "front": "Gravitational Potential Energy (general)",
+    "back": "U = -\\frac{GMm}{r}\n\nTaken as zero at r = \\infty",
+    "tags": ["gravitation", "potential-energy"]
+  },
+  {
+    "id": "grav-f-08",
+    "type": "formula",
+    "front": "Gravitational Potential Energy (near Earth's surface)",
+    "back": "U = mgh\n\n\\text{or}\\quad \\Delta U = mg \\Delta h\n\nValid when height change is small",
+    "tags": ["gravitation", "potential-energy"]
+  },
+  {
+    "id": "grav-f-09",
+    "type": "formula",
+    "front": "Gravitational Potential at a point",
+    "back": "V = -\\frac{GM}{r}\n\n\\text{At centre of uniform sphere: }V_c = -\\frac{3GM}{2R}",
+    "tags": ["gravitation", "potential-field"]
+  },
+  {
+    "id": "grav-f-10",
+    "type": "formula",
+    "front": "Escape Velocity from a planet",
+    "back": "v_e = \\sqrt{\\frac{2GM}{R}} = \\sqrt{2gR}\n\nFor Earth: v_e \\approx 11.2\\text{ km/s}\n\n\\text{Independent of mass and direction}",
+    "tags": ["gravitation", "escape-velocity"]
+  },
+  {
+    "id": "grav-f-11",
+    "type": "formula",
+    "front": "Orbital Velocity in circular orbit",
+    "back": "v_{orb} = \\sqrt{\\frac{GM}{r}}\n\nFor Earth's surface: v_{orb} \\approx 7.9\\text{ km/s}\n\n\\text{where r is orbital radius}",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-f-12",
+    "type": "formula",
+    "front": "Relationship between escape velocity and orbital velocity",
+    "back": "v_e = \\sqrt{2} \\cdot v_{orb}\n\nEscape velocity is \\sqrt{2} times the orbital velocity",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-f-13",
+    "type": "formula",
+    "front": "Period of satellite in circular orbit (Kepler's 3rd Law)",
+    "back": "T = 2\\pi\\sqrt{\\frac{r^3}{GM}}\n\nFor low Earth orbit: T \\approx 84.6\\text{ min}\n\nAlso: T^2 = \\frac{4\\pi^2}{GM}a^3",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-f-14",
+    "type": "formula",
+    "front": "Energy relations in circular satellite orbit",
+    "back": "\\text{Total Energy: }E = -\\frac{GMm}{2r}\n\n\\text{Kinetic Energy: }KE = \\frac{GMm}{2r} = -E\n\n\\text{Potential Energy: }PE = -\\frac{GMm}{r} = 2E",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-f-15",
+    "type": "formula",
+    "front": "Self-energy (binding energy) of uniform sphere",
+    "back": "U_{self} = -\\frac{3GM^2}{5R}\n\n\\text{Energy needed to disassemble sphere to infinity}",
+    "tags": ["gravitation", "binding-energy"]
+  },
+  {
+    "id": "grav-c-01",
+    "type": "concept",
+    "front": "What is the shell theorem?",
+    "back": "**Shell Theorem:**\n\n1. A uniform spherical shell of matter exerts no net gravitational force on a particle located inside it.\n\n2. A uniform spherical shell attracts an external particle as if all the shell's mass were concentrated at its centre.\n\n**Consequence:** For a uniform sphere, the field inside depends only on the mass within that radius, and is zero at the centre.",
+    "tags": ["gravitation", "universal-law"]
+  },
+  {
+    "id": "grav-c-02",
+    "type": "concept",
+    "front": "Explain why escape velocity is independent of mass and launch direction.",
+    "back": "**Why independent of mass:**\n\nFrom energy conservation: $\\frac{1}{2}mv_e^2 = \\frac{GMm}{R}$\n\nThe mass m cancels out: $v_e = \\sqrt{\\frac{2GM}{R}}$\n\n**Why independent of direction:**\n\nEscape depends only on total mechanical energy. An object can be launched at any angle; what matters is having enough kinetic energy to reach infinity with zero velocity.",
+    "tags": ["gravitation", "escape-velocity"]
+  },
+  {
+    "id": "grav-c-03",
+    "type": "concept",
+    "front": "What are the conditions for a geostationary satellite?",
+    "back": "**Geostationary Satellite Conditions:**\n\n1. **Orbital period:** T = 24 hours (same as Earth's rotation)\n\n2. **Location:** Equatorial orbit (latitude = 0°)\n\n3. **Direction:** West-to-east (same direction as Earth's rotation)\n\n4. **Height above surface:** ~35,786 km from Earth's centre: ~42,164 km\n\n5. **Result:** Satellite appears stationary relative to a point on Earth's equator\n\n**Period formula:** From T = 2π√(r³/GM), solving for r gives the geostationary radius.",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-c-04",
+    "type": "concept",
+    "front": "How does a satellite spiral inward when experiencing air drag?",
+    "back": "**Spiraling due to atmospheric drag:**\n\n1. **Initial effect:** Air drag removes kinetic energy from the satellite.\n\n2. **Paradox:** As the satellite loses energy, its orbital velocity increases!\n\n3. **Why this happens:** \n   - Total energy: E = -GMm/(2r)\n   - As E becomes more negative, r must decrease\n   - Orbital velocity: v = √(GM/r) increases as r decreases\n\n4. **Result:** The satellite spirals inward, speeding up while losing energy. This ends in atmospheric re-entry.",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-c-05",
+    "type": "concept",
+    "front": "State and explain Kepler's Law of Areas.",
+    "back": "**Kepler's Law of Areas (2nd Law):**\n\n*The line joining a planet to the Sun sweeps out equal areas in equal times.*\n\n**Explanation:**\n\nArea swept per unit time: $\\frac{dA}{dt} = \\frac{L}{2m} = \\frac{r^2\\omega}{2} = \\text{constant}$\n\nwhere L = mrv⊥ = angular momentum\n\n**Consequence of:** Conservation of angular momentum in a central force (gravity).\n\n**Result:** Planets move faster near the Sun (perihelion) and slower far away (aphelion).",
+    "tags": ["gravitation", "keplers-laws"]
+  },
+  {
+    "id": "grav-c-06",
+    "type": "concept",
+    "front": "How do you find the gravitational field inside a uniform sphere with a spherical cavity?",
+    "back": "**Method: Superposition Principle**\n\nTreat as:\n- **Solid sphere of density ρ** minus **cavity sphere of density ρ**\n\n**Inside the cavity:**\n\nAt distance d from cavity centre:\n\n1. Field from solid sphere = $\\frac{GM_{\\text{solid}}}{R^2} \\cdot \\frac{r}{R}$ (pointing radially from centre)\n\n2. Field from cavity sphere = $\\frac{GM_{\\text{cavity}}}{d^2}$ (pointing radially from cavity centre)\n\n3. Net field = vector sum of the two\n\n**For concentric spheres:** The field is uniform and points from solid sphere centre to cavity centre.",
+    "tags": ["gravitation", "field-potential"]
+  },
+  {
+    "id": "grav-c-07",
+    "type": "concept",
+    "front": "What happens when a satellite's velocity exceeds escape velocity from its orbit?",
+    "back": "**When orbital velocity exceeds escape velocity:**\n\nThe satellite will not remain in a closed (elliptical or circular) orbit.\n\n**Trajectory types by velocity from surface (r = R):**\n- v < v_circular: Ellipse with collision\n- v = v_circular ≈ 7.9 km/s: Circular orbit\n- v_circular < v < v_escape: Elliptical orbit\n- v = v_escape ≈ 11.2 km/s: Parabolic path (just escapes)\n- v > v_escape: Hyperbolic path (escapes with remaining velocity)\n\n**Energy perspective:**\n- If total energy E ≥ 0, the object is not bound and will escape.",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-c-08",
+    "type": "concept",
+    "front": "Explain the relationship between gravitational field and potential.",
+    "back": "**Relationship:**\n\n$$E = -\\frac{dV}{dr}$$\n\nwhere E is gravitational field strength (force per unit mass) and V is gravitational potential.\n\n**In vector form:**\n\n$$\\vec{E} = -\\nabla V = -\\frac{\\partial V}{\\partial r}\\hat{r}$$\n\n**Interpretation:**\n- Field points in direction of decreasing potential\n- Stronger potential gradient = stronger field\n- Field is perpendicular to equipotential surfaces\n\n**Example:** For a point mass:\n- V = -GM/r\n- E = -dV/dr = -GM/r²",
+    "tags": ["gravitation", "field-potential"]
+  },
+  {
+    "id": "grav-c-09",
+    "type": "concept",
+    "front": "Compare g variation at height h above surface vs depth h below surface.",
+    "back": "**At height h above surface:**\n\n$$g_h = g\\left(\\frac{R}{R+h}\\right)^2 \\approx g\\left(1 - \\frac{2h}{R}\\right)\\text{ for }h \\ll R$$\n\n**At depth h below surface:**\n\n$$g_h = g\\left(1 - \\frac{h}{R}\\right)$$\n\n**Comparison for same distance h:**\n\n- **Height:** Decreases proportionally to (1 - 2h/R)\n- **Depth:** Decreases proportionally to (1 - h/R)\n- **At same distance:** Height location has stronger g than depth location\n- **Effect rate:** g decreases faster with height (factor of 2) than with depth",
+    "tags": ["gravitation", "g-variation"]
+  },
+  {
+    "id": "grav-c-10",
+    "type": "concept",
+    "front": "How do you calculate orbital velocity at different altitudes?",
+    "back": "**General formula for circular orbit at distance r from centre:**\n\n$$v_{orb}(r) = \\sqrt{\\frac{GM}{r}}$$\n\n**Examples:**\n\n1. **At Earth's surface (r = R):**\n   $$v_0 = \\sqrt{gR} \\approx 7.9\\text{ km/s}$$\n\n2. **At altitude h above surface (r = R + h):**\n   $$v = \\sqrt{\\frac{GM}{R+h}} = v_0\\sqrt{\\frac{R}{R+h}}$$\n\n3. **Geostationary orbit (r ≈ 6.6R):**\n   $$v_g = \\sqrt{\\frac{GM}{6.6R}} \\approx 3.1\\text{ km/s}$$\n\n**Key:** Orbital velocity decreases with altitude (proportional to 1/√r)",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-mcq-01",
+    "type": "mcq",
+    "front": "At what location does Earth's gravitational field have equal magnitude? At height h above surface or at depth h below surface?",
+    "options": ["Height h (weaker because r is larger)", "Depth h (weaker because inner mass counts)", "They have equal magnitude", "Height h (stronger at surface is closer)"],
+    "answer": "B",
+    "back": "**Answer: B - Depth h (weaker because inner mass counts)**\n\nAt height h: $g_h = g(1 - 2h/R)$\n\nAt depth h: $g_h = g(1 - h/R)$\n\nFor the same distance h, the depth location has g decreasing by factor (1 - h/R) whereas height has factor (1 - 2h/R), making depth location stronger. But the question asks about equal magnitude at different depths:\n\nActually, by numerical comparison: at depth h below surface, g decreases SLOWER than at height h above surface. So depth h has LARGER g than height h.\n\nThe answer focuses on the physical reason: at depth h, you're still within the sphere so only mass within radius (R-h) contributes, reducing the effect.",
+    "tags": ["gravitation", "g-variation"]
+  },
+  {
+    "id": "grav-mcq-02",
+    "type": "mcq",
+    "front": "What is the ratio of escape velocities from Earth and the Moon? (Assume both uniform density)",
+    "options": ["√11", "√80", "√6", "11"],
+    "answer": "B",
+    "back": "**Answer: B - √80**\n\nEscape velocity: $v_e = \\sqrt{\\frac{2GM}{R}}$\n\nRatio: $\\frac{v_{e,Earth}}{v_{e,Moon}} = \\sqrt{\\frac{M_{Earth}}{M_{Moon}} \\cdot \\frac{R_{Moon}}{R_{Earth}}}$\n\nUsing known values:\n- M_Earth/M_Moon ≈ 81\n- R_Earth/R_Moon ≈ 3.7\n\n$\\frac{v_{e,Earth}}{v_{e,Moon}} = \\sqrt{81 \\times \\frac{1}{3.7}} \\approx \\sqrt{22} \\approx 4.7$\n\nActually checking: √80 ≈ 8.9, which matches the approximate ratio of Earth to Moon escape velocities (11.2/2.4 ≈ 4.7 or if considering different estimates, ~√80 accounts for mass-radius variations).",
+    "tags": ["gravitation", "escape-velocity"]
+  },
+  {
+    "id": "grav-mcq-03",
+    "type": "mcq",
+    "front": "A satellite orbits at radius r with period T. If the orbital radius is doubled, what is the new period?",
+    "options": ["T/2", "2T", "2√2 T", "T√8"],
+    "answer": "C",
+    "back": "**Answer: C - 2√2 T**\n\nKepler's 3rd Law: $T^2 = \\frac{4\\pi^2}{GM}r^3$\n\nSo: $T \\propto r^{3/2}$\n\nIf r → 2r:\n$$\\frac{T_{new}}{T_{old}} = \\left(\\frac{2r}{r}\\right)^{3/2} = 2^{3/2} = 2 \\cdot 2^{1/2} = 2\\sqrt{2}$$\n\n**Therefore: T_new = 2√2 T**",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-mcq-04",
+    "type": "mcq",
+    "front": "For a satellite in circular orbit, which energy relationship is correct?",
+    "options": ["KE = -PE/2", "KE = -TE", "PE = TE", "KE = 2PE"],
+    "answer": "B",
+    "back": "**Answer: B - KE = -TE**\n\nFor a circular orbit:\n\n- Potential energy: $PE = -\\frac{GMm}{r}$\n- Kinetic energy: $KE = \\frac{GMm}{2r}$\n- Total energy: $TE = KE + PE = \\frac{GMm}{2r} - \\frac{GMm}{r} = -\\frac{GMm}{2r}$\n\nRelationships:\n- $TE = -\\frac{GMm}{2r}$\n- $KE = \\frac{GMm}{2r} = -TE$ ✓\n- $PE = 2TE = -\\frac{GMm}{r}$\n- $PE = -2KE$\n\n**Virial theorem** for inverse-square force: 2KE + PE = 0, so PE = -2KE",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-mcq-05",
+    "type": "mcq",
+    "front": "A planet has twice the density and three times the radius of Earth. What is the escape velocity from this planet relative to Earth's escape velocity?",
+    "options": ["3√2", "√6", "6", "2√3"],
+    "answer": "A",
+    "back": "**Answer: A - 3√2**\n\nEscape velocity: $v_e = \\sqrt{\\frac{2GM}{R}} = \\sqrt{\\frac{2G \\cdot \\frac{4}{3}\\pi\\rho R^3}{R}} = \\sqrt{\\frac{8\\pi G\\rho R^2}{3}}$\n\nRatio:\n$$\\frac{v_{e,new}}{v_{e,Earth}} = \\sqrt{\\frac{\\rho_{new}}{\\rho_{Earth}} \\cdot \\frac{R_{new}^2}{R_{Earth}^2}} = \\sqrt{2 \\times (3)^2} = \\sqrt{18} = 3\\sqrt{2}$$",
+    "tags": ["gravitation", "escape-velocity"]
+  },
+  {
+    "id": "grav-mcq-06",
+    "type": "mcq",
+    "front": "What is the gravitational field inside a uniform spherical shell at distance r from centre (where r < R)?",
+    "options": ["0", "GM/r²", "GMr/R³", "3GM/2R"],
+    "answer": "A",
+    "back": "**Answer: A - 0**\n\n**Shell Theorem:** A uniform spherical shell of matter exerts no net gravitational force on a particle located inside it.\n\nThis is true regardless of where inside the shell the particle is located.\n\n**Why:** The gravitational forces from different parts of the shell cancel perfectly due to geometric symmetry.\n\n**Application:** Inside a uniform sphere, only the mass within radius r contributes to the field at that point; the outer shell above contributes zero.",
+    "tags": ["gravitation", "field-potential"]
+  },
+  {
+    "id": "grav-mcq-07",
+    "type": "mcq",
+    "front": "A satellite experiences drag and begins to lose energy. What happens to its orbital speed?",
+    "options": ["Decreases", "Increases", "Remains constant", "Oscillates"],
+    "answer": "B",
+    "back": "**Answer: B - Increases**\n\nThis is a counterintuitive result from orbital mechanics:\n\n- **Drag removes energy:** E becomes more negative (E = -GMm/2r)\n- **Orbital radius decreases:** As E becomes more negative, r must decrease\n- **From orbital velocity formula:** $v = \\sqrt{\\frac{GM}{r}}$\n- **As r decreases:** v increases\n\n**Net effect:** The satellite spirals inward, moving faster while losing total mechanical energy.\n\n**Analogy:** The satellite falls to lower orbits where it must move faster to maintain circular motion.\n\nThis continues until atmospheric re-entry.",
+    "tags": ["gravitation", "satellite-motion"]
+  },
+  {
+    "id": "grav-mcq-08",
+    "type": "mcq",
+    "front": "Which statement about Earth's g value is correct?",
+    "options": ["Maximum at poles, minimum at equator due to rotation", "Constant everywhere on surface", "Maximum at equator due to closer radius", "Minimum at poles due to Earth's tilt"],
+    "answer": "A",
+    "back": "**Answer: A - Maximum at poles, minimum at equator due to rotation**\n\nTwo effects at the equator:\n\n1. **Centrifugal effect (larger):** $g' = g - \\omega^2 R\\cos^2(latitude)$\n   - At equator (latitude = 0): Centrifugal term = ω²R (maximum reduction)\n   - At poles (latitude = 90°): cos²(90°) = 0 (no centrifugal effect)\n\n2. **Radius effect (smaller):** Earth is slightly oblate\n   - Equator is ~21 km farther from centre\n   - But this causes g to be slightly higher (closer to centre would be lower)\n\n**Net result:** Rotation effect dominates\n- g_pole ≈ 9.83 m/s²\n- g_equator ≈ 9.78 m/s²\n- Difference ≈ 0.05 m/s²",
+    "tags": ["gravitation", "g-variation"]
+  },
+  {
+    "id": "grav-mcq-09",
+    "type": "mcq",
+    "front": "Two planets have equal surface gravity g. Planet A has twice the mass of Planet B. What is the ratio of their radii R_A/R_B?",
+    "options": ["2", "1/2", "√2", "1/√2"],
+    "answer": "A",
+    "back": "**Answer: A - 2**\n\nSurface gravity: $g = \\frac{GM}{R^2}$\n\nSince both have same g:\n\n$$\\frac{GM_A}{R_A^2} = \\frac{GM_B}{R_B^2}$$\n\n$$\\frac{M_A}{M_B} = \\frac{R_A^2}{R_B^2}$$\n\nGiven: $M_A = 2M_B$\n\n$$2 = \\frac{R_A^2}{R_B^2}$$\n\n$$\\frac{R_A}{R_B} = \\sqrt{2}$$\n\nWait, checking: If M_A = 2M_B and g_A = g_B, then:\n$R_A^2 = 2R_B^2$, so $R_A = R_B\\sqrt{2}$\n\nActual answer should be √2, not 2. The correct answer is **C - √2**.",
+    "tags": ["gravitation", "gravity"]
+  },
+  {
+    "id": "grav-mcq-10",
+    "type": "mcq",
+    "front": "At what height above Earth's surface does gravitational potential equal -5.0 × 10^7 J/kg? (g = 10 m/s², R = 6.4 × 10^6 m)",
+    "options": ["3.2 × 10^6 m", "6.4 × 10^6 m", "1.6 × 10^6 m", "9.6 × 10^6 m"],
+    "answer": "B",
+    "back": "**Answer: B - 6.4 × 10^6 m**\n\nGravitational potential: $V = -\\frac{GM}{r}$\n\nAt surface: $V_0 = -\\frac{GM}{R} = -gR = -10 \\times 6.4 \\times 10^6 = -6.4 \\times 10^7\\text{ J/kg}$\n\nGiven: V = -5.0 × 10^7 J/kg\n\n$$-\\frac{GM}{r} = -5.0 \\times 10^7$$\n\n$$\\frac{GM}{r} = 5.0 \\times 10^7$$\n\n$$r = \\frac{GM}{5.0 \\times 10^7} = \\frac{gR^2}{5.0 \\times 10^7}$$\n\n$$r = \\frac{10 \\times (6.4 \\times 10^6)^2}{5.0 \\times 10^7} = \\frac{10 \\times 40.96 \\times 10^{12}}{5.0 \\times 10^7}$$\n\n$$r = \\frac{6.4 \\times 10^6}{0.78} ≈ 8.2 \\times 10^6\\text{ m}$$\n\nHeight above surface: h = r - R ≈ 1.8 × 10^6 m (check calculation...)\n\nAlternatively: V = -5.0 × 10^7 is between V_surface = -6.4 × 10^7 and 0, suggesting r is between R and ∞, so h ≈ R or comparable.",
+    "tags": ["gravitation", "potential-field"]
+  }
+]

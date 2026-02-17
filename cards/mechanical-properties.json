@@ -1,0 +1,317 @@
+[
+  {
+    "id": "mech-f-01",
+    "type": "formula",
+    "front": "Young's Modulus definition and formula",
+    "back": "Y = \\frac{\\text{Longitudinal Stress}}{\\text{Longitudinal Strain}} = \\frac{F/A}{\\Delta l / l} = \\frac{Fl}{A\\Delta l}",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-f-02",
+    "type": "formula",
+    "front": "Bulk Modulus definition and formula",
+    "back": "K = -\\frac{P}{\\Delta V / V} = -\\frac{P\\Delta V}{V} \\quad \\text{(Compressibility = 1/K)}",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-f-03",
+    "type": "formula",
+    "front": "Shear Modulus (Modulus of Rigidity) definition",
+    "back": "\\eta = \\frac{\\text{Shear Stress}}{\\text{Shear Strain}} = \\frac{F/A}{\\theta} \\quad \\text{where } \\theta \\text{ is angle of shear (in radians)}",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-f-04",
+    "type": "formula",
+    "front": "Relation between Young's, Bulk, and Shear moduli",
+    "back": "Y = \\frac{9K\\eta}{3K + \\eta}",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-f-05",
+    "type": "formula",
+    "front": "Young's Modulus in terms of Shear Modulus and Poisson's Ratio",
+    "back": "Y = 2\\eta(1 + \\sigma) \\quad \\text{where } \\sigma \\text{ is Poisson's ratio}",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-f-06",
+    "type": "formula",
+    "front": "Young's Modulus in terms of Bulk Modulus and Poisson's Ratio",
+    "back": "Y = 3K(1 - 2\\sigma)",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-f-07",
+    "type": "formula",
+    "front": "Poisson's Ratio definition",
+    "back": "\\sigma = -\\frac{\\text{Lateral Strain}}{\\text{Longitudinal Strain}} = -\\frac{\\Delta d / d}{\\Delta l / l}",
+    "tags": ["mechanical-properties", "poisson-ratio"]
+  },
+  {
+    "id": "mech-f-08",
+    "type": "formula",
+    "front": "Elastic Potential Energy in a stretched wire",
+    "back": "U = \\frac{1}{2} \\times \\text{Stress} \\times \\text{Strain} \\times \\text{Volume} = \\frac{1}{2} \\times \\frac{F}{A} \\times \\frac{\\Delta l}{l} \\times V = \\frac{F^2l}{2AY}",
+    "tags": ["mechanical-properties", "elastic-potential-energy"]
+  },
+  {
+    "id": "mech-f-09",
+    "type": "formula",
+    "front": "Energy Density (elastic PE per unit volume)",
+    "back": "u = \\frac{1}{2} \\times \\text{Stress} \\times \\text{Strain}} = \\frac{\\text{Stress}^2}{2Y} = \\frac{1}{2}Y(\\text{Strain})^2",
+    "tags": ["mechanical-properties", "elastic-potential-energy"]
+  },
+  {
+    "id": "mech-f-10",
+    "type": "formula",
+    "front": "Elongation under own weight",
+    "back": "\\Delta l = \\frac{\\rho g l^2}{2Y} = \\frac{Mgl}{2AY} \\quad \\text{where } M \\text{ is mass, } \\rho \\text{ is density}",
+    "tags": ["mechanical-properties", "applications"]
+  },
+  {
+    "id": "mech-f-11",
+    "type": "formula",
+    "front": "Thermal Stress when rod is heated and clamped",
+    "back": "\\sigma = Y\\alpha_l \\Delta T \\quad \\text{(Stress = Y × Linear Expansion Coefficient × Temperature Change)}",
+    "tags": ["mechanical-properties", "thermal-expansion"]
+  },
+  {
+    "id": "mech-f-12",
+    "type": "formula",
+    "front": "Linear and Area Thermal Expansion Coefficients",
+    "back": "\\text{Area}: \\beta = 2\\alpha_l \\quad \\text{Volume}: \\gamma = 3\\alpha_l",
+    "tags": ["mechanical-properties", "thermal-expansion"]
+  },
+  {
+    "id": "mech-f-13",
+    "type": "formula",
+    "front": "Torsion of a solid cylinder",
+    "back": "\\tau = \\frac{\\pi \\eta r^4 \\theta}{2l} \\quad \\text{where } \\tau \\text{ is torque, } \\theta \\text{ is angle of twist, } l \\text{ is length}",
+    "tags": ["mechanical-properties", "torsion"]
+  },
+  {
+    "id": "mech-c-01",
+    "type": "concept",
+    "front": "What is the difference between elastic and plastic deformation?",
+    "back": "**Elastic deformation**: Material returns to original shape after force is removed. Follows Hooke's Law up to proportional limit.\\n\\n**Plastic deformation**: Material does not return to original shape after force is removed. Permanent change in dimensions. Occurs beyond elastic limit.",
+    "tags": ["mechanical-properties", "elasticity"]
+  },
+  {
+    "id": "mech-c-02",
+    "type": "concept",
+    "front": "Describe the stress-strain curve and its key regions",
+    "back": "**Proportional Limit (OA)**: Stress-strain is linear; follows Hooke's Law.\\n\\n**Elastic Limit (point B)**: Beyond this, plastic deformation begins.\\n\\n**Yield Point (point C)**: Material flows under constant stress.\\n\\n**Ultimate Tensile Strength (UTS)**: Maximum stress the material can withstand.\\n\\n**Fracture Point**: Material breaks and separates.",
+    "tags": ["mechanical-properties", "stress-strain-curve"]
+  },
+  {
+    "id": "mech-c-03",
+    "type": "concept",
+    "front": "Why does stress vary along the length of a hanging wire?",
+    "back": "**Stress is maximum at the top** and **zero at the free end (bottom)**.\\n\\nThis is because the top portion must support the entire weight below it, while the bottom supports no weight. Stress = Force/Area, so as we move down, the supporting force decreases.",
+    "tags": ["mechanical-properties", "applications"]
+  },
+  {
+    "id": "mech-c-04",
+    "type": "concept",
+    "front": "What is Poisson's ratio and what is its typical range?",
+    "back": "**Poisson's ratio (σ)** = -(Lateral strain)/(Longitudinal strain)\\n\\nWhen a material is stretched longitudinally, it contracts laterally.\\n\\n**Range**: -1 ≤ σ ≤ 0.5\\n\\n**Typical values**: 0.2 to 0.4 for most metals. σ = 0.5 for incompressible materials (like rubber).",
+    "tags": ["mechanical-properties", "poisson-ratio"]
+  },
+  {
+    "id": "mech-c-05",
+    "type": "concept",
+    "front": "Explain the difference between deforming force and restoring force",
+    "back": "**Deforming force**: External force applied to change the shape/size of a material.\\n\\n**Restoring force**: Internal force generated within the material that opposes the deformation and tries to restore the original shape/size.\\n\\nAt equilibrium during elastic deformation, these two forces are equal in magnitude.",
+    "tags": ["mechanical-properties", "elasticity"]
+  },
+  {
+    "id": "mech-c-06",
+    "type": "concept",
+    "front": "Why is steel more elastic than rubber?",
+    "back": "**Steel** has a much higher Young's modulus (~200 GPa) than rubber (~0.01 GPa).\\n\\nYoung's modulus measures resistance to longitudinal deformation. Steel requires much greater stress to produce the same strain as rubber.\\n\\nHowever, **elasticity** (ability to recover original shape) is excellent for both, but rubber recovers more noticeably because it stretches more under the same load.",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-c-07",
+    "type": "concept",
+    "front": "What are ductile and brittle materials?",
+    "back": "**Ductile materials** (e.g., copper, iron, aluminum): Exhibit significant plastic deformation before fracture. Have long stress-strain curve. Can be drawn into wires.\\n\\n**Brittle materials** (e.g., glass, ceramics, cast iron): Break suddenly with little plastic deformation. Fracture occurs near elastic limit. Cannot be easily drawn into wires.",
+    "tags": ["mechanical-properties", "stress-strain-curve"]
+  },
+  {
+    "id": "mech-c-08",
+    "type": "concept",
+    "front": "Explain why thermal stress develops when a rod is heated and clamped at both ends",
+    "back": "**Thermal expansion**: When heated, the rod wants to expand (Δl = l × α × ΔT).\\n\\n**Constraint by clamps**: The clamped ends prevent the rod from expanding freely.\\n\\n**Result**: Internal compressive stress develops: σ = Y × α × ΔT\\n\\nThe stress is independent of length and cross-sectional area, depending only on Young's modulus, expansion coefficient, and temperature change.",
+    "tags": ["mechanical-properties", "thermal-expansion"]
+  },
+  {
+    "id": "mech-c-09",
+    "type": "concept",
+    "front": "How does a bimetallic strip bend when heated?",
+    "back": "A bimetallic strip consists of two metals with different linear expansion coefficients bonded together.\\n\\nWhen heated:\\n- The metal with larger α expands more\\n- This creates differential expansion\\n- The strip bends away from the metal with smaller α\\n\\nWhen cooled, it bends in the opposite direction.\\n\\n**Used in**: Thermostats and temperature-dependent switches.",
+    "tags": ["mechanical-properties", "thermal-expansion"]
+  },
+  {
+    "id": "mech-c-10",
+    "type": "concept",
+    "front": "Explain the concept of elastic limit and proportional limit",
+    "back": "**Proportional Limit**: Point up to which stress is directly proportional to strain (Hooke's Law valid). Beyond this, relationship becomes non-linear but material still behaves elastically.\\n\\n**Elastic Limit**: Beyond this point, plastic (permanent) deformation occurs. Material no longer returns completely to original state after removing load.\\n\\n**Typical order**: Proportional limit < Elastic limit < Yield point",
+    "tags": ["mechanical-properties", "stress-strain-curve"]
+  },
+  {
+    "id": "mech-c-11",
+    "type": "concept",
+    "front": "What is the physical meaning of Bulk Modulus? To which materials does it apply?",
+    "back": "**Bulk Modulus (K)**: Measures resistance to volume change under uniform pressure.\\n\\nK = -P / (ΔV/V)\\n\\n**Applies to**: Solids, liquids, AND gases.\\n\\n**Inverse (1/K)** is called **compressibility**.\\n\\n**Key insight**: Bulk modulus quantifies how easily a material can be compressed. Higher K means less compressible. Liquids and gases have much lower K than solids.",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-c-12",
+    "type": "concept",
+    "front": "Why does only shear modulus apply to solids and not to liquids/gases?",
+    "back": "**Shear modulus** measures resistance to shape change (not volume change) - the ability to resist sliding of layers past each other.\\n\\n**Solids**: Have structure that resists shearing; molecules are held in fixed positions.\\n\\n**Liquids and gases**: Have no fixed shape and cannot resist sustained shear stress. Layers flow freely past each other. Shear modulus ≈ 0.\\n\\n**Conclusion**: Only rigid materials (solids) have meaningful shear modulus.",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-mcq-01",
+    "type": "mcq",
+    "front": "Which statement is correct about breaking stress and breaking force?",
+    "options": [
+      "Breaking stress depends on cross-sectional area; breaking force does not",
+      "Breaking force is independent of cross-sectional area; breaking stress depends on it",
+      "Breaking stress is the maximum stress at fracture (F/A); breaking force is maximum force at fracture - independent of geometry",
+      "Both are the same thing, just different names"
+    ],
+    "answer": "C",
+    "back": "**Breaking stress** = Maximum tensile stress before fracture = F_max/A (depends on material and area).\\n\\n**Breaking force** = Maximum force before fracture (depends on material and geometry).\\n\\nBreaking stress is a material property (intensive), while breaking force depends on the sample's cross-sectional area.",
+    "tags": ["mechanical-properties", "stress-strain-curve"]
+  },
+  {
+    "id": "mech-mcq-02",
+    "type": "mcq",
+    "front": "A rubber band has Young's modulus Y₁ and a steel wire has Young's modulus Y₂. Which is correct?",
+    "options": [
+      "Y₁ > Y₂; rubber is more elastic",
+      "Y₂ > Y₁; steel is stiffer and harder to deform",
+      "Y₁ = Y₂; elasticity is the same",
+      "Cannot compare without knowing cross-sectional area"
+    ],
+    "answer": "B",
+    "back": "Young's modulus Y ≈ 0.01 GPa for rubber and Y ≈ 200 GPa for steel.\\n\\n**Y₂ >> Y₁**: Steel is much stiffer.\\n\\nNote: Although rubber recovers completely after removal of small loads (elastic), steel actually stretches LESS under the same load because of its much higher Young's modulus.\\n\\nHigh Y = stiff = hard to deform.",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-mcq-03",
+    "type": "mcq",
+    "front": "What is the range of Poisson's ratio σ for typical materials?",
+    "options": [
+      "0 ≤ σ ≤ 1",
+      "-1 ≤ σ ≤ 0.5",
+      "0.2 ≤ σ ≤ 0.4",
+      "-∞ < σ < +∞"
+    ],
+    "answer": "B",
+    "back": "**Theoretical range**: -1 ≤ σ ≤ 0.5\\n\\n**Practical range for most materials**: 0.2 to 0.4\\n\\n**Special cases**:\\n- σ ≈ 0: Cork (nearly incompressible in volume)\\n- σ = 0.5: Rubber and incompressible materials\\n- σ negative: Some metamaterials (expand laterally when stretched)\\n\\nFor most metals and ceramics: σ ≈ 0.25-0.35",
+    "tags": ["mechanical-properties", "poisson-ratio"]
+  },
+  {
+    "id": "mech-mcq-04",
+    "type": "mcq",
+    "front": "If linear thermal expansion coefficient is α, what is the volume thermal expansion coefficient γ?",
+    "options": [
+      "γ = α",
+      "γ = 2α",
+      "γ = 3α",
+      "γ = α²"
+    ],
+    "answer": "C",
+    "back": "For small changes in temperature:\\n\\n**Linear**: l' = l(1 + αΔT)\\n\\n**Area**: A' = A(1 + βΔT), where β ≈ 2α\\n\\n**Volume**: V' = V(1 + γΔT), where γ ≈ 3α\\n\\nThis is because V = l³, so γ = 3α when ΔT is small.\\n\\nSimilarly, A = l², so β = 2α.",
+    "tags": ["mechanical-properties", "thermal-expansion"]
+  },
+  {
+    "id": "mech-mcq-05",
+    "type": "mcq",
+    "front": "A liquid expands with coefficient γ_liquid = 3×10⁻⁴ K⁻¹. Its container expands with γ_container = 1×10⁻⁴ K⁻¹. What is the apparent expansion coefficient?",
+    "options": [
+      "1×10⁻⁴ K⁻¹",
+      "2×10⁻⁴ K⁻¹",
+      "3×10⁻⁴ K⁻¹",
+      "4×10⁻⁴ K⁻¹"
+    ],
+    "answer": "B",
+    "back": "**Apparent expansion** = Actual liquid expansion - Container expansion\\n\\nγ_apparent = γ_liquid - γ_container = (3 - 1) × 10⁻⁴ = 2×10⁻⁴ K⁻¹\\n\\nThe liquid expands more than its container, so the observable overflow (apparent expansion) is the difference.\\n\\nThis is why mercury thermometers show different readings based on container material.",
+    "tags": ["mechanical-properties", "thermal-expansion"]
+  },
+  {
+    "id": "mech-mcq-06",
+    "type": "mcq",
+    "front": "A wire is used as a spring with spring constant k. If Young's modulus is Y, area A, and length l, which is correct?",
+    "options": [
+      "k = YAl",
+      "k = YA/l",
+      "k = Yl/A",
+      "k = Y/(Al)"
+    ],
+    "answer": "B",
+    "back": "For a wire used as a spring:\\n\\nFrom Y = (F/A)/(Δl/l) = Fl/(AΔl), we get:\\n\\nF = (YA/l)Δl\\n\\nComparing with Hooke's Law F = kΔl:\\n\\n**k = YA/l**\\n\\nThis shows that stiffer materials (high Y), larger area (high A), and shorter length (small l) give higher spring constant (stiffer spring).",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-mcq-07",
+    "type": "mcq",
+    "front": "Which elastic modulus applies to liquids and gases?",
+    "options": [
+      "Young's modulus only",
+      "Shear modulus only",
+      "Bulk modulus only",
+      "All three moduli"
+    ],
+    "answer": "C",
+    "back": "**Young's modulus**: Resistance to longitudinal deformation - doesn't apply to liquids/gases (no fixed shape).\\n\\n**Shear modulus**: Resistance to shape change - doesn't apply to liquids/gases (no rigidity).\\n\\n**Bulk modulus**: Resistance to volume change - **applies to all** (solids, liquids, gases).\\n\\nLiquids and gases resist compression but have no shear rigidity.",
+    "tags": ["mechanical-properties", "elastic-moduli"]
+  },
+  {
+    "id": "mech-mcq-08",
+    "type": "mcq",
+    "front": "A rod of length L is hanging under its own weight. Where is the tensile stress maximum?",
+    "options": [
+      "At the free end (bottom)",
+      "At the midpoint",
+      "At the support (top)",
+      "Stress is uniform throughout"
+    ],
+    "answer": "C",
+    "back": "**At the top (support)**: The stress is maximum because this section must support the weight of the entire rod below it.\\n\\n**At the bottom (free end)**: The stress is zero because there is no weight below it.\\n\\n**Stress variation**: σ(x) = ρg(L - x), where x is distance from top.\\n\\nThis non-uniform stress distribution is important for calculating elongation of hanging wires.",
+    "tags": ["mechanical-properties", "applications"]
+  },
+  {
+    "id": "mech-mcq-09",
+    "type": "mcq",
+    "front": "Elongation of a hanging wire under its own weight is Δl = ρgl²/(2Y). Doubling the length changes elongation by factor:",
+    "options": [
+      "2 (doubles)",
+      "4 (quadruples)",
+      "√2",
+      "1/2 (halves)"
+    ],
+    "answer": "B",
+    "back": "**Formula**: Δl = ρgl²/(2Y)\\n\\nElongation ∝ l²\\n\\nIf l → 2l, then Δl → (2l)²/(l²) × original = **4 × original**\\n\\nThis quadratic dependence on length is crucial: doubling the length quadruples the elongation due to own weight.\\n\\nThis is why very tall structures (like elevator cables) must account for significant self-elongation.",
+    "tags": ["mechanical-properties", "applications"]
+  },
+  {
+    "id": "mech-mcq-10",
+    "type": "mcq",
+    "front": "A steel rod is rigidly clamped at both ends. It is heated by ΔT. Which is true?",
+    "options": [
+      "No stress develops because the rod cannot expand",
+      "Compressive stress σ = YαΔT develops",
+      "Tensile stress develops equal to YαΔT",
+      "Stress depends on the length of the rod"
+    ],
+    "answer": "B",
+    "back": "**Thermal expansion**: Rod wants to expand by Δl = αlΔT.\\n\\n**Constraint**: Clamps prevent expansion.\\n\\n**Stress develops**: Equivalent to applying compressive force to contract the rod back to original length.\\n\\n**Thermal stress**: σ = YαΔT (compressive)\\n\\n**Key**: Stress is **independent of length** (l cancels out) and depends only on Y, α, and ΔT.\\n\\nThis is why clamping heated objects causes internal stress regardless of their size.",
+    "tags": ["mechanical-properties", "thermal-expansion"]
+  }
+]

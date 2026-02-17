@@ -1,0 +1,351 @@
+[
+  {
+    "id": "rot-f-01",
+    "type": "formula",
+    "front": "Angular Velocity and Period Relationship",
+    "back": "\\omega = \\frac{2\\pi}{T} = 2\\pi f",
+    "tags": ["rotational-motion", "kinematics"]
+  },
+  {
+    "id": "rot-f-02",
+    "type": "formula",
+    "front": "Relationship between Linear and Angular Velocity",
+    "back": "v = r\\omega",
+    "tags": ["rotational-motion", "kinematics"]
+  },
+  {
+    "id": "rot-f-03",
+    "type": "formula",
+    "front": "Tangential Acceleration",
+    "back": "a_t = r\\alpha",
+    "tags": ["rotational-motion", "kinematics"]
+  },
+  {
+    "id": "rot-f-04",
+    "type": "formula",
+    "front": "Centripetal Acceleration",
+    "back": "a_r = \\omega^2 r = \\frac{v^2}{r}",
+    "tags": ["rotational-motion", "kinematics"]
+  },
+  {
+    "id": "rot-f-05",
+    "type": "formula",
+    "front": "Rotational SUVAT Equations",
+    "back": "\\omega_f = \\omega_i + \\alpha t\n\n\\theta = \\omega_i t + \\frac{1}{2}\\alpha t^2\n\n\\omega_f^2 = \\omega_i^2 + 2\\alpha\\theta",
+    "tags": ["rotational-motion", "kinematics"]
+  },
+  {
+    "id": "rot-f-06",
+    "type": "formula",
+    "front": "Definition of Moment of Inertia (Discrete)",
+    "back": "I = \\sum_i m_i r_i^2",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-07",
+    "type": "formula",
+    "front": "Definition of Moment of Inertia (Continuous)",
+    "back": "I = \\int r^2 \\, dm",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-08",
+    "type": "formula",
+    "front": "Rotational Kinetic Energy",
+    "back": "KE_{rot} = \\frac{1}{2}I\\omega^2",
+    "tags": ["rotational-motion", "energy"]
+  },
+  {
+    "id": "rot-f-09",
+    "type": "formula",
+    "front": "Radius of Gyration",
+    "back": "k = \\sqrt{\\frac{I}{M}}",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-10",
+    "type": "formula",
+    "front": "MOI of Thin Ring (axis through center)",
+    "back": "I = MR^2",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-11",
+    "type": "formula",
+    "front": "MOI of Disc (axis through center)",
+    "back": "I = \\frac{1}{2}MR^2",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-12",
+    "type": "formula",
+    "front": "MOI of Solid Sphere (axis through center)",
+    "back": "I = \\frac{2}{5}MR^2",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-13",
+    "type": "formula",
+    "front": "MOI of Hollow Sphere (axis through center)",
+    "back": "I = \\frac{2}{3}MR^2",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-14",
+    "type": "formula",
+    "front": "MOI of Rod (axis through center, perpendicular to length)",
+    "back": "I = \\frac{1}{12}ML^2",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-15",
+    "type": "formula",
+    "front": "MOI of Rod (axis through end, perpendicular to length)",
+    "back": "I = \\frac{1}{3}ML^2",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-16",
+    "type": "formula",
+    "front": "Parallel Axis Theorem",
+    "back": "I_P = I_{CM} + Md^2",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-17",
+    "type": "formula",
+    "front": "Perpendicular Axis Theorem (planar bodies)",
+    "back": "I_Z = I_X + I_Y",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-f-18",
+    "type": "formula",
+    "front": "Torque Definition (magnitude)",
+    "back": "\\tau = rF\\sin\\theta = r_\\perp F",
+    "tags": ["rotational-motion", "torque"]
+  },
+  {
+    "id": "rot-f-19",
+    "type": "formula",
+    "front": "Newton's Second Law for Rotation",
+    "back": "\\vec{\\tau} = I\\vec{\\alpha}",
+    "tags": ["rotational-motion", "torque"]
+  },
+  {
+    "id": "rot-f-20",
+    "type": "formula",
+    "front": "Angular Momentum Definition",
+    "back": "L = I\\omega = r \\times p",
+    "tags": ["rotational-motion", "angular-momentum"]
+  },
+  {
+    "id": "rot-f-21",
+    "type": "formula",
+    "front": "Torque and Angular Momentum Relationship",
+    "back": "\\tau = \\frac{dL}{dt}",
+    "tags": ["rotational-motion", "angular-momentum"]
+  },
+  {
+    "id": "rot-f-22",
+    "type": "formula",
+    "front": "Pure Rolling Condition",
+    "back": "v_{CM} = R\\omega",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-f-23",
+    "type": "formula",
+    "front": "Total Kinetic Energy (Rolling Motion)",
+    "back": "KE_{total} = \\frac{1}{2}mv_{CM}^2 + \\frac{1}{2}I\\omega^2 = \\frac{1}{2}mv_{CM}^2\\left(1 + \\frac{k^2}{R^2}\\right)",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-f-24",
+    "type": "formula",
+    "front": "Acceleration on Incline (Rolling without slipping)",
+    "back": "a = \\frac{g\\sin\\theta}{1 + \\frac{k^2}{R^2}}",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-f-25",
+    "type": "formula",
+    "front": "Angular Impulse",
+    "back": "J = \\int \\tau \\, dt = \\Delta L = I\\Delta\\omega",
+    "tags": ["rotational-motion", "impulse"]
+  },
+  {
+    "id": "rot-f-26",
+    "type": "formula",
+    "front": "Work Done by Torque",
+    "back": "W = \\tau\\theta",
+    "tags": ["rotational-motion", "work-energy"]
+  },
+  {
+    "id": "rot-f-27",
+    "type": "formula",
+    "front": "Rotational Power",
+    "back": "P = \\tau\\omega",
+    "tags": ["rotational-motion", "work-energy"]
+  },
+  {
+    "id": "rot-c-01",
+    "type": "concept",
+    "front": "Why does moment of inertia depend on the rotation axis?",
+    "back": "Moment of inertia depends on the distance of mass from the axis of rotation. A mass farther from the axis requires more torque to achieve the same angular acceleration. Different axes pass through different distances from the mass distribution, resulting in different I values.",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-c-02",
+    "type": "concept",
+    "front": "Why is the perpendicular axis theorem only valid for planar bodies?",
+    "back": "The perpendicular axis theorem (I_Z = I_X + I_Y) assumes all mass lies in the XY plane. For 3D objects where mass extends perpendicular to a plane, this relationship breaks down because torques about different axes couple together differently. It only works for 2D rigid bodies or bodies with negligible thickness.",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-c-03",
+    "type": "concept",
+    "front": "What is the translational-rotational analogy?",
+    "back": "Rotational dynamics mirrors translational dynamics through corresponding quantities:\n- Mass (m) ↔ Moment of inertia (I)\n- Velocity (v) ↔ Angular velocity (ω)\n- Force (F) ↔ Torque (τ)\n- Momentum (p) ↔ Angular momentum (L)\n- KE = ½mv² ↔ KE_rot = ½Iω²",
+    "tags": ["rotational-motion", "concepts"]
+  },
+  {
+    "id": "rot-c-04",
+    "type": "concept",
+    "front": "What is the pure rolling condition and why is it important?",
+    "back": "Pure rolling without slipping occurs when v_CM = Rω. This constraint couples translational and rotational motion. It ensures the contact point has zero velocity relative to the ground. This is crucial for friction to act as an internal force, conserving mechanical energy (no energy loss at the contact point).",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-c-05",
+    "type": "concept",
+    "front": "How does conservation of angular momentum apply to spinning systems?",
+    "back": "When external torque is zero, angular momentum L = Iω is conserved. If moment of inertia decreases (e.g., ice skater pulling arms in), angular velocity must increase to maintain constant L. This is why spinning systems spin faster when mass moves closer to the axis.",
+    "tags": ["rotational-motion", "angular-momentum"]
+  },
+  {
+    "id": "rot-c-06",
+    "type": "concept",
+    "front": "Why do different rolling objects reach different speeds at the bottom of an incline?",
+    "back": "On an incline, a = g sinθ/(1 + k²/R²). Objects with smaller k²/R² (mass concentrated near center) accelerate faster. The solid sphere (k²/R² = 2/5) rolls faster than a disc (k²/R² = 1/2), which rolls faster than a ring (k²/R² = 1). More rotational inertia means more energy goes into rotation rather than translation.",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-c-07",
+    "type": "concept",
+    "front": "What determines whether an object topples or slides on an incline?",
+    "back": "An object topples when the torque about its lower edge (from gravity) exceeds the frictional torque. Toppling occurs when the center of mass position relative to the base width makes gravity's torque dominant. Sliding occurs when friction force is insufficient. The critical angle depends on height-to-width ratio.",
+    "tags": ["rotational-motion", "toppling"]
+  },
+  {
+    "id": "rot-c-08",
+    "type": "concept",
+    "front": "How does radius of gyration simplify rotational dynamics?",
+    "back": "Radius of gyration k = √(I/M) allows expressing I = Mk². It represents the effective distance from the axis where all mass could be concentrated to yield the same moment of inertia. Useful for comparing how 'spread out' different bodies are relative to their size.",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-c-09",
+    "type": "concept",
+    "front": "What is the relationship between torque and angular momentum?",
+    "back": "Torque is the rate of change of angular momentum: τ = dL/dt. Just as force changes momentum, torque changes angular momentum. If external torque is zero, angular momentum remains constant. This is the rotational analog of Newton's second law in momentum form.",
+    "tags": ["rotational-motion", "angular-momentum"]
+  },
+  {
+    "id": "rot-c-10",
+    "type": "concept",
+    "front": "Why is rotational kinetic energy not simply converted to heat during rolling?",
+    "back": "During pure rolling, the contact point between the object and surface is instantaneously at rest (relative to ground), so friction does no work at the contact point. There's no sliding, hence no energy dissipation. Friction acts as an internal force that couples translation and rotation without energy loss.",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-mcq-01",
+    "type": "mcq",
+    "front": "Which object reaches the bottom of an incline first when rolling without slipping?",
+    "options": ["Solid sphere (I = 2MR²/5)", "Solid disc (I = MR²/2)", "Thin ring (I = MR²)", "All reach simultaneously"],
+    "answer": "Solid sphere (I = 2MR²/5)",
+    "back": "Using a = g sinθ/(1 + k²/R²), the object with the smallest k²/R² accelerates fastest. For sphere: k²/R² = 2/5; disc: k²/R² = 1/2; ring: k²/R² = 1. The solid sphere wins because it has mass concentrated closer to the center, requiring less rotational kinetic energy.",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-mcq-02",
+    "type": "mcq",
+    "front": "What is the moment of inertia of a thin circular disc about an axis along its diameter?",
+    "options": ["MR²/2", "MR²/4", "3MR²/4", "MR²"],
+    "answer": "MR²/4",
+    "back": "Using the perpendicular axis theorem: I_z = I_x + I_y. For a disc perpendicular to the plane: I_z = MR²/2. By symmetry: I_x = I_y. Therefore: MR²/2 = I_x + I_x → I_x = MR²/4.",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-mcq-03",
+    "type": "mcq",
+    "front": "A rotating disc has angular velocity ω. If its moment of inertia suddenly doubles due to added mass at radius, what happens to angular momentum?",
+    "options": ["Doubles", "Halves", "Remains constant", "Becomes zero"],
+    "answer": "Remains constant",
+    "back": "Without external torque, angular momentum L = Iω is conserved. If I doubles, ω halves to keep L constant. This is analogous to conservation of linear momentum when mass is added.",
+    "tags": ["rotational-motion", "angular-momentum"]
+  },
+  {
+    "id": "rot-mcq-04",
+    "type": "mcq",
+    "front": "An ice skater spins with arms extended. She pulls her arms in. What happens to her angular velocity?",
+    "options": ["Increases", "Decreases", "Remains constant", "Becomes zero"],
+    "answer": "Increases",
+    "back": "Pulling arms in decreases moment of inertia (mass moves closer to axis). With no external torque, L = Iω is conserved. If I decreases, ω must increase proportionally.",
+    "tags": ["rotational-motion", "angular-momentum"]
+  },
+  {
+    "id": "rot-mcq-05",
+    "type": "mcq",
+    "front": "A wheel rolls without slipping down an incline. What fraction of its kinetic energy is rotational for a solid disc (k² = R²/2)?",
+    "options": ["1/3", "1/2", "2/3", "1/4"],
+    "answer": "1/3",
+    "back": "KE_total = ½mv²(1 + k²/R²) = ½mv²(1 + 1/2) = ¾mv². KE_rot = ½Iω² = ½(½mR²)(v²/R²) = ¼mv². Fraction = (¼mv²)/(¾mv²) = 1/3.",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-mcq-06",
+    "type": "mcq",
+    "front": "A torque of 10 N⋅m is applied to a disc with I = 2 kg⋅m² for 5 seconds. What is the change in angular momentum?",
+    "options": ["10 kg⋅m²/s", "25 kg⋅m²/s", "50 kg⋅m²/s", "2.5 kg⋅m²/s"],
+    "answer": "50 kg⋅m²/s",
+    "back": "Angular impulse equals change in angular momentum: J = ∫τ dt = τ⋅Δt = ΔL. Here: ΔL = 10 × 5 = 50 kg⋅m²/s.",
+    "tags": ["rotational-motion", "impulse"]
+  },
+  {
+    "id": "rot-mcq-07",
+    "type": "mcq",
+    "front": "Two cylinders with the same mass and radius roll down an incline. One is solid, one is hollow. Which reaches the bottom with greater speed?",
+    "options": ["Solid cylinder", "Hollow cylinder", "Both have equal speed", "Depends on incline angle"],
+    "answer": "Solid cylinder",
+    "back": "Solid cylinder has I = ½MR² (k² = R²/2), while hollow has I = MR² (k² = R²). Acceleration a = g sinθ/(1 + k²/R²) is greater for smaller k²/R², so the solid cylinder accelerates faster and reaches the bottom first.",
+    "tags": ["rotational-motion", "rolling"]
+  },
+  {
+    "id": "rot-mcq-08",
+    "type": "mcq",
+    "front": "What is the angular acceleration of a disc (I = 2 kg⋅m²) when a force of 10 N is applied tangentially at radius 0.5 m?",
+    "options": ["0.5 rad/s²", "1 rad/s²", "2.5 rad/s²", "5 rad/s²"],
+    "answer": "2.5 rad/s²",
+    "back": "Torque τ = rF = 0.5 × 10 = 5 N⋅m. Using τ = Iα: 5 = 2 × α → α = 2.5 rad/s².",
+    "tags": ["rotational-motion", "torque"]
+  },
+  {
+    "id": "rot-mcq-09",
+    "type": "mcq",
+    "front": "A body has I_cm = 5 kg⋅m² about its center of mass. What is its moment of inertia about a parallel axis 2 m away? (M = 4 kg)",
+    "options": ["13 kg⋅m²", "21 kg⋅m²", "9 kg⋅m²", "29 kg⋅m²"],
+    "answer": "21 kg⋅m²",
+    "back": "Using the parallel axis theorem: I_P = I_CM + Md² = 5 + 4 × (2)² = 5 + 16 = 21 kg⋅m².",
+    "tags": ["rotational-motion", "moi"]
+  },
+  {
+    "id": "rot-mcq-10",
+    "type": "mcq",
+    "front": "A rotating platform decelerates from 10 rad/s to rest in 20 seconds with constant angular acceleration. What is the angular displacement?",
+    "options": ["100 rad", "150 rad", "50 rad", "200 rad"],
+    "answer": "100 rad",
+    "back": "Using ω_f² = ω_i² + 2αθ: 0 = 100 + 2α × θ. First find α: α = (ω_f - ω_i)/t = (0 - 10)/20 = -0.5 rad/s². Then: 0 = 100 + 2(-0.5)θ → θ = 100 rad.",
+    "tags": ["rotational-motion", "kinematics"]
+  }
+]
