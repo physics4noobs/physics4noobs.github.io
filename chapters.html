@@ -30,33 +30,29 @@
         <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
       </a>
       <div class="nav-links">
-        <div class="nav-item"><a href="index.html" class="nav-link">Home</a></div>
-        <div class="nav-item"><a href="about.html" class="nav-link">About Me</a></div>
         <div class="nav-item">
-          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
-          <div class="dropdown">
-            <a href="chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
-            <a href="chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
-          </div>
+          <a href="index.html" class="nav-link">Home</a>
         </div>
         <div class="nav-item">
-          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
-          <div class="dropdown">
-            <a href="lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
-            <a href="lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
-          </div>
+          <a href="about.html" class="nav-link">About Me</a>
         </div>
+        <div class="nav-item"><a href="chapters.html" class="nav-link active">Chapters</a></div>
         <div class="nav-item">
           <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
           <div class="dropdown">
-            <a href="notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
-            <a href="notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+            <a href="notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI Notes</a>
+            <a href="notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII Notes</a>
           </div>
         </div>
-        <div class="nav-item"><a href="books.html" class="nav-link">Books</a></div>
-        <div class="nav-item"><a href="simulations.html" class="nav-link">Simulations</a></div>
-        <div class="nav-item"><a href="flashcards.html" class="nav-link">Flashcards</a></div>
-        <div class="nav-item"><a href="tests.html" class="nav-link">Tests</a></div>
+        <div class="nav-item">
+          <a href="simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="tests.html" class="nav-link">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="flashcards.html" class="nav-link">Flashcards</a>
+        </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
 
         <button class="auth-btn" id="auth-login-btn">
@@ -106,669 +102,166 @@
 
       <!-- ==================== GRADE XI ==================== -->
       <div class="grade-content active" id="grade-xi">
+        <div class="ch-grid">
 
-        <div class="chapter-group">
-          <h2><span class="grade-badge">GRADE XI</span> Mechanics &amp; Beyond</h2>
+          <a class="ch-card" href="chapters/kinematics.html">
+            <span class="ch-num">01</span>
+            <h3>Kinematics</h3>
+            <p class="ch-desc">Motion, velocity, projectiles</p>
+            <span class="ch-formula">v = u + at</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 1 - Kinematics -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">01</span> Kinematics</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Kinematics is the study of motion without considering its causes. This chapter lays the
-                  foundation for all of mechanics by introducing displacement, velocity, and acceleration
-                  in one and two dimensions, along with graphical analysis and relative motion.
-                </p>
-                <ul>
-                  <li>Distance vs. Displacement; Speed vs. Velocity</li>
-                  <li>Uniform and non-uniform motion in a straight line</li>
-                  <li>Equations of motion (v = u + at, s = ut + &frac12;at&sup2;, v&sup2; = u&sup2; + 2as)</li>
-                  <li>Motion under gravity &mdash; free fall</li>
-                  <li>Projectile motion &mdash; time of flight, range, maximum height</li>
-                  <li>Relative velocity in 1D and 2D</li>
-                </ul>
-                <div class="formula-box">
-                  v = u + at &nbsp;&nbsp;|&nbsp;&nbsp; s = ut + &frac12;at&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; v&sup2; = u&sup2; + 2as<br>
-                  R = (u&sup2; sin2&theta;)/g &nbsp;&nbsp;|&nbsp;&nbsp; T = 2u sin&theta;/g &nbsp;&nbsp;|&nbsp;&nbsp; H = u&sup2; sin&sup2;&theta;/2g
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/kinematics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/kinematics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/kinematics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/newtons-laws.html">
+            <span class="ch-num">02</span>
+            <h3>Newton's Laws</h3>
+            <p class="ch-desc">Force, inertia, friction</p>
+            <span class="ch-formula">F = ma</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 2 - Newton's Laws -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">02</span> Newton's Laws of Motion</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Newton&rsquo;s three laws form the backbone of classical mechanics. This chapter explores force,
-                  inertia, momentum, and the techniques of free body diagrams to solve real-world problems
-                  involving friction, tension, and circular motion dynamics.
-                </p>
-                <ul>
-                  <li>Newton&rsquo;s First Law &mdash; inertia and equilibrium</li>
-                  <li>Newton&rsquo;s Second Law &mdash; F = ma, impulse and momentum</li>
-                  <li>Newton&rsquo;s Third Law &mdash; action-reaction pairs</li>
-                  <li>Free body diagrams and constraint equations</li>
-                  <li>Static and kinetic friction; angle of repose</li>
-                  <li>Circular motion dynamics &mdash; centripetal force, banking of roads</li>
-                </ul>
-                <div class="formula-box">
-                  F = ma &nbsp;&nbsp;|&nbsp;&nbsp; p = mv &nbsp;&nbsp;|&nbsp;&nbsp; J = F&Delta;t = &Delta;p<br>
-                  f = &mu;N &nbsp;&nbsp;|&nbsp;&nbsp; F<sub>c</sub> = mv&sup2;/r &nbsp;&nbsp;|&nbsp;&nbsp; tan&theta; = v&sup2;/rg
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/newtons-laws.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/newtons-laws.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/newtons-laws.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/work-power-energy.html">
+            <span class="ch-num">03</span>
+            <h3>Work, Power &amp; Energy</h3>
+            <p class="ch-desc">Work-energy theorem, collisions</p>
+            <span class="ch-formula">KE = &frac12;mv&sup2;</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 3 - Work, Power & Energy -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">03</span> Work, Power &amp; Energy</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Energy is the currency of the universe. This chapter introduces the scalar concepts of work
-                  and energy, the powerful work-energy theorem, conservation laws, and the mechanics of
-                  elastic and inelastic collisions.
-                </p>
-                <ul>
-                  <li>Work done by a constant and variable force</li>
-                  <li>Kinetic energy and the work-energy theorem</li>
-                  <li>Potential energy &mdash; gravitational and elastic</li>
-                  <li>Conservation of mechanical energy</li>
-                  <li>Power &mdash; instantaneous and average</li>
-                  <li>Elastic and inelastic collisions; coefficient of restitution</li>
-                </ul>
-                <div class="formula-box">
-                  W = Fd cos&theta; &nbsp;&nbsp;|&nbsp;&nbsp; KE = &frac12;mv&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; PE = mgh<br>
-                  W<sub>net</sub> = &Delta;KE &nbsp;&nbsp;|&nbsp;&nbsp; P = F &middot; v &nbsp;&nbsp;|&nbsp;&nbsp; e = (v&#8322; &minus; v&#8321;)/(u&#8321; &minus; u&#8322;)
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/work-power-energy.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/work-power-energy.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/work-power-energy.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/rotational-motion.html">
+            <span class="ch-num">04</span>
+            <h3>Rotational Motion</h3>
+            <p class="ch-desc">Torque, MOI, rolling</p>
+            <span class="ch-formula">&tau; = I&alpha;</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 4 - Rotational Motion -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">04</span> Rotational Motion</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Rotational motion extends Newton&rsquo;s laws into the angular domain. This chapter covers
-                  torque, moment of inertia, angular momentum conservation, and rolling motion.
-                </p>
-                <ul>
-                  <li>Angular displacement, velocity, and acceleration</li>
-                  <li>Torque (&tau; = I&alpha;) and moment of inertia</li>
-                  <li>Parallel and perpendicular axis theorems</li>
-                  <li>Angular momentum and its conservation</li>
-                  <li>Rolling motion without slipping</li>
-                </ul>
-                <div class="formula-box">
-                  &tau; = I&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; L = I&omega; &nbsp;&nbsp;|&nbsp;&nbsp; KE<sub>rot</sub> = &frac12;I&omega;&sup2;<br>
-                  I = I<sub>cm</sub> + Md&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>cm</sub> = R&omega;
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/rotational-motion.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/rotational-motion.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/rotational-motion.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/gravitation.html">
+            <span class="ch-num">05</span>
+            <h3>Gravitation</h3>
+            <p class="ch-desc">Orbits, escape velocity, Kepler</p>
+            <span class="ch-formula">F = GMm/r&sup2;</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 5 - Gravitation -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">05</span> Gravitation</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Newton&rsquo;s law of universal gravitation explains everything from falling apples to orbiting
-                  satellites. This chapter covers gravitational fields, potentials, Kepler&rsquo;s laws, and
-                  the physics of escape velocity and orbital mechanics.
-                </p>
-                <ul>
-                  <li>Newton&rsquo;s law of gravitation &mdash; F = GMm/r&sup2;</li>
-                  <li>Gravitational field and potential</li>
-                  <li>Variation of g with height, depth, and latitude</li>
-                  <li>Escape velocity and orbital velocity</li>
-                  <li>Kepler&rsquo;s laws of planetary motion</li>
-                  <li>Satellites and geostationary orbits</li>
-                </ul>
-                <div class="formula-box">
-                  F = GMm/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; g = GM/R&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>e</sub> = &radic;(2gR)<br>
-                  v<sub>o</sub> = &radic;(gR) &nbsp;&nbsp;|&nbsp;&nbsp; T&sup2; &prop; r&sup3; &nbsp;&nbsp;|&nbsp;&nbsp; E = &minus;GMm/2r
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/gravitation.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/gravitation.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/gravitation.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/mechanical-properties.html">
+            <span class="ch-num">06</span>
+            <h3>Mechanical Properties</h3>
+            <p class="ch-desc">Stress, strain, elasticity</p>
+            <span class="ch-formula">Y = &sigma;/&epsilon;</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 6 - Mechanical Properties of Solids -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">06</span> Mechanical Properties of Solids</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  How materials deform under stress is central to engineering. This chapter introduces
-                  elasticity, stress-strain relationships, and the moduli that characterise different materials.
-                </p>
-                <ul>
-                  <li>Stress (tensile, compressive, shear) and strain</li>
-                  <li>Hooke&rsquo;s law and the stress-strain curve</li>
-                  <li>Young&rsquo;s modulus, Bulk modulus, Shear modulus</li>
-                  <li>Poisson&rsquo;s ratio</li>
-                  <li>Elastic potential energy</li>
-                </ul>
-                <div class="formula-box">
-                  &sigma; = F/A &nbsp;&nbsp;|&nbsp;&nbsp; &epsilon; = &Delta;L/L &nbsp;&nbsp;|&nbsp;&nbsp; Y = &sigma;/&epsilon;<br>
-                  B = &minus;V&Delta;P/&Delta;V &nbsp;&nbsp;|&nbsp;&nbsp; U = &frac12;&sigma;&epsilon;V
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/mechanical-properties.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/mechanical-properties.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/hookes-law.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/fluid-mechanics.html">
+            <span class="ch-num">07</span>
+            <h3>Fluid Mechanics</h3>
+            <p class="ch-desc">Pressure, buoyancy, Bernoulli</p>
+            <span class="ch-formula">P + &frac12;&rho;v&sup2; + &rho;gh = const</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 7 - Fluid Mechanics -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">07</span> Fluid Mechanics</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Fluids obey elegant principles that explain everything from hydraulic lifts to airplane wings.
-                  This chapter explores pressure, buoyancy, fluid flow, and viscosity.
-                </p>
-                <ul>
-                  <li>Pressure and Pascal&rsquo;s law; hydraulic machines</li>
-                  <li>Archimedes&rsquo; principle and buoyancy</li>
-                  <li>Equation of continuity and Bernoulli&rsquo;s theorem</li>
-                  <li>Viscosity, Stokes&rsquo; law, and terminal velocity</li>
-                  <li>Surface tension and capillarity</li>
-                </ul>
-                <div class="formula-box">
-                  P = P&#8320; + &rho;gh &nbsp;&nbsp;|&nbsp;&nbsp; F<sub>b</sub> = &rho;Vg<br>
-                  P + &frac12;&rho;v&sup2; + &rho;gh = const &nbsp;&nbsp;|&nbsp;&nbsp; F = 6&pi;&eta;rv
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/fluid-mechanics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/fluid-mechanics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/fluid-dynamics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/thermodynamics.html">
+            <span class="ch-num">08</span>
+            <h3>Thermodynamics</h3>
+            <p class="ch-desc">Heat, gas laws, Carnot</p>
+            <span class="ch-formula">&Delta;U = Q &minus; W</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 8 - Heat & Thermodynamics -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">08</span> Heat &amp; Thermodynamics</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Thermodynamics governs the flow of heat and the transformation of energy. From the
-                  microscopic world of gas molecules to the macroscopic laws of engines and refrigerators.
-                </p>
-                <ul>
-                  <li>Thermal expansion &mdash; linear, area, and volume</li>
-                  <li>Calorimetry and specific heat capacity</li>
-                  <li>Kinetic Theory of Gases &mdash; RMS speed, degrees of freedom</li>
-                  <li>First Law of Thermodynamics (&Delta;U = Q &minus; W)</li>
-                  <li>Thermodynamic processes &mdash; isothermal, adiabatic, isobaric, isochoric</li>
-                  <li>Second Law &mdash; Carnot engine, entropy</li>
-                  <li>Heat transfer &mdash; conduction, convection, radiation</li>
-                </ul>
-                <div class="formula-box">
-                  PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>rms</sub> = &radic;(3RT/M)<br>
-                  &Delta;U = Q &minus; W &nbsp;&nbsp;|&nbsp;&nbsp; &eta;<sub>Carnot</sub> = 1 &minus; T&#8322;/T&#8321;
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/thermodynamics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/thermodynamics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/thermodynamics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/shm.html">
+            <span class="ch-num">09</span>
+            <h3>Simple Harmonic Motion</h3>
+            <p class="ch-desc">Oscillations, pendulum, springs</p>
+            <span class="ch-formula">x = A sin(&omega;t + &phi;)</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 9 - Simple Harmonic Motion -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">09</span> Simple Harmonic Motion</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Oscillations are ubiquitous in nature. This chapter covers the defining condition of SHM,
-                  energy in oscillating systems, spring-mass and pendulum systems, and resonance.
-                </p>
-                <ul>
-                  <li>SHM &mdash; definition, characteristics, energy</li>
-                  <li>Spring-mass system (T = 2&pi;&radic;(m/k))</li>
-                  <li>Simple pendulum (T = 2&pi;&radic;(l/g))</li>
-                  <li>Damped and forced oscillations; resonance</li>
-                  <li>Superposition of SHM</li>
-                </ul>
-                <div class="formula-box">
-                  x = A sin(&omega;t + &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = 2&pi;/T<br>
-                  T<sub>spring</sub> = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; T<sub>pendulum</sub> = 2&pi;&radic;(l/g) &nbsp;&nbsp;|&nbsp;&nbsp; E = &frac12;kA&sup2;
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/shm.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/shm.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/shm-waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ch 10 - Waves -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">10</span> Waves</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Waves carry energy through space and matter. This chapter builds from the wave equation
-                  to superposition, standing waves, beats, and the Doppler effect for sound.
-                </p>
-                <ul>
-                  <li>Transverse and longitudinal waves</li>
-                  <li>Wave equation: y = A sin(&omega;t &minus; kx)</li>
-                  <li>Speed of waves in strings and air</li>
-                  <li>Standing waves and harmonics</li>
-                  <li>Beats (f<sub>beat</sub> = |f&#8321; &minus; f&#8322;|)</li>
-                  <li>Doppler effect for sound</li>
-                </ul>
-                <div class="formula-box">
-                  v = f&lambda; &nbsp;&nbsp;|&nbsp;&nbsp; v = &radic;(T/&mu;) (string)<br>
-                  f<sub>beat</sub> = |f&#8321; &minus; f&#8322;| &nbsp;&nbsp;|&nbsp;&nbsp; f' = f(v &plusmn; v<sub>o</sub>)/(v &mp; v<sub>s</sub>)
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/waves.html">
+            <span class="ch-num">10</span>
+            <h3>Waves</h3>
+            <p class="ch-desc">Standing waves, Doppler, beats</p>
+            <span class="ch-formula">v = f&lambda;</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
         </div>
       </div>
 
       <!-- ==================== GRADE XII ==================== -->
       <div class="grade-content" id="grade-xii">
+        <div class="ch-grid">
 
-        <div class="chapter-group">
-          <h2><span class="grade-badge">GRADE XII</span> Electromagnetism, Optics &amp; Modern Physics</h2>
+          <a class="ch-card" href="chapters/electrostatics.html">
+            <span class="ch-num">01</span>
+            <h3>Electrostatics &amp; Capacitance</h3>
+            <p class="ch-desc">Coulomb, Gauss, capacitors</p>
+            <span class="ch-formula">F = kq&#8321;q&#8322;/r&sup2;</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 1 - Electrostatics & Capacitance -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">01</span> Electrostatics &amp; Capacitance</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Electrostatics is the study of charges at rest. From Coulomb&rsquo;s inverse-square law to
-                  the elegant machinery of Gauss&rsquo;s law, this chapter builds the concepts of electric
-                  field, potential, and capacitance that underpin all of electromagnetism.
-                </p>
-                <ul>
-                  <li>Electric charge &mdash; properties, conservation, quantisation</li>
-                  <li>Coulomb&rsquo;s law and superposition principle</li>
-                  <li>Electric field lines and field due to various charge distributions</li>
-                  <li>Gauss&rsquo;s law and its applications</li>
-                  <li>Electric potential and potential energy</li>
-                  <li>Equipotential surfaces</li>
-                  <li>Capacitors &mdash; parallel plate, series/parallel combinations</li>
-                  <li>Energy stored in a capacitor; effect of dielectrics</li>
-                </ul>
-                <div class="formula-box">
-                  F = kq&#8321;q&#8322;/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; E = kq/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; V = kq/r<br>
-                  &oint; E &middot; dA = Q<sub>enc</sub>/&epsilon;&#8320; (Gauss) &nbsp;&nbsp;|&nbsp;&nbsp; C = &epsilon;&#8320;A/d &nbsp;&nbsp;|&nbsp;&nbsp; U = &frac12;CV&sup2;
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/electrostatics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/electrostatics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/electrostatics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/current-electricity.html">
+            <span class="ch-num">02</span>
+            <h3>Current Electricity</h3>
+            <p class="ch-desc">Ohm's law, Kirchhoff, circuits</p>
+            <span class="ch-formula">V = IR</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 2 - Current Electricity -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">02</span> Current Electricity</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  When charges flow, we get electric current. This chapter covers the fundamental laws
-                  governing DC circuits &mdash; from Ohm&rsquo;s law to Kirchhoff&rsquo;s rules &mdash; and introduces
-                  practical instruments like the Wheatstone bridge and potentiometer.
-                </p>
-                <ul>
-                  <li>Electric current, drift velocity, and mobility</li>
-                  <li>Ohm&rsquo;s law; resistivity and conductivity</li>
-                  <li>Temperature dependence of resistance</li>
-                  <li>Series and parallel combinations of resistors</li>
-                  <li>Kirchhoff&rsquo;s junction and loop rules</li>
-                  <li>Wheatstone bridge and meter bridge</li>
-                  <li>Potentiometer &mdash; principle and applications</li>
-                  <li>EMF, terminal voltage, and internal resistance of cells</li>
-                </ul>
-                <div class="formula-box">
-                  V = IR &nbsp;&nbsp;|&nbsp;&nbsp; R = &rho;l/A &nbsp;&nbsp;|&nbsp;&nbsp; P = VI = I&sup2;R = V&sup2;/R<br>
-                  &Sigma;I<sub>in</sub> = &Sigma;I<sub>out</sub> (KCL) &nbsp;&nbsp;|&nbsp;&nbsp; &Sigma;V = 0 (KVL) &nbsp;&nbsp;|&nbsp;&nbsp; R&#8321;/R&#8322; = R&#8323;/R&#8324; (Wheatstone)
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/current-electricity.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/current-electricity.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/current-electricity.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/magnetism.html">
+            <span class="ch-num">03</span>
+            <h3>Moving Charges &amp; Magnetism</h3>
+            <p class="ch-desc">Lorentz force, Biot-Savart</p>
+            <span class="ch-formula">F = qv &times; B</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 3 - Moving Charges & Magnetism -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">03</span> Moving Charges &amp; Magnetism</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Moving charges create magnetic fields, and magnetic fields exert forces on moving charges.
-                  This beautiful interplay is the foundation of electromagnetism, from the Biot-Savart law
-                  to the cyclotron &mdash; a chapter that bridges electricity and magnetism.
-                </p>
-                <ul>
-                  <li>Magnetic force on a moving charge (Lorentz force)</li>
-                  <li>Motion of a charged particle in a magnetic field &mdash; circular and helical paths</li>
-                  <li>Biot-Savart law &mdash; field due to a current-carrying wire, loop, solenoid</li>
-                  <li>Ampere&rsquo;s circuital law and its applications</li>
-                  <li>Force between two parallel current-carrying conductors</li>
-                  <li>Torque on a current loop in a magnetic field</li>
-                  <li>Moving coil galvanometer; cyclotron</li>
-                </ul>
-                <div class="formula-box">
-                  F = qv &times; B &nbsp;&nbsp;|&nbsp;&nbsp; r = mv/qB (circular motion)<br>
-                  dB = (&mu;&#8320;/4&pi;)(Idl &times; r&#770;)/r&sup2; (Biot-Savart) &nbsp;&nbsp;|&nbsp;&nbsp; &oint; B &middot; dl = &mu;&#8320;I<sub>enc</sub> (Ampere)<br>
-                  &tau; = NIAB sin&theta; &nbsp;&nbsp;|&nbsp;&nbsp; F/l = &mu;&#8320;I&#8321;I&#8322;/2&pi;d
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/magnetism.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/magnetism.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/magnetism.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/emi.html">
+            <span class="ch-num">04</span>
+            <h3>Electromagnetic Induction</h3>
+            <p class="ch-desc">Faraday, Lenz, inductance</p>
+            <span class="ch-formula">&epsilon; = &minus;d&Phi;/dt</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 4 - Electromagnetic Induction -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">04</span> Electromagnetic Induction</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  A changing magnetic flux induces an EMF &mdash; the revolutionary discovery by Faraday
-                  that gave us generators, transformers, and the entire electrical power grid. This chapter
-                  explores induction, Lenz&rsquo;s law, inductance, and eddy currents.
-                </p>
-                <ul>
-                  <li>Magnetic flux and Faraday&rsquo;s law of electromagnetic induction</li>
-                  <li>Lenz&rsquo;s law and conservation of energy</li>
-                  <li>Motional EMF &mdash; conducting rod in a magnetic field</li>
-                  <li>Self-inductance (L) and mutual inductance (M)</li>
-                  <li>Energy stored in an inductor (&frac12;LI&sup2;)</li>
-                  <li>Eddy currents &mdash; applications and minimisation</li>
-                  <li>AC generator &mdash; working principle</li>
-                </ul>
-                <div class="formula-box">
-                  &epsilon; = &minus;d&Phi;<sub>B</sub>/dt (Faraday) &nbsp;&nbsp;|&nbsp;&nbsp; &Phi;<sub>B</sub> = B &middot; A &middot; cos&theta;<br>
-                  &epsilon; = Blv (motional EMF) &nbsp;&nbsp;|&nbsp;&nbsp; &epsilon; = &minus;L(dI/dt) &nbsp;&nbsp;|&nbsp;&nbsp; U = &frac12;LI&sup2;<br>
-                  M = &mu;&#8320;N&#8321;N&#8322;A/l (mutual inductance for solenoids)
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/emi.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/emi.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/emi.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/ac-circuits.html">
+            <span class="ch-num">05</span>
+            <h3>Alternating Current</h3>
+            <p class="ch-desc">Phasors, resonance, transformers</p>
+            <span class="ch-formula">Z = &radic;(R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;)</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 5 - Alternating Current -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">05</span> Alternating Current</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Alternating current powers the modern world. This chapter delves into AC circuit analysis
-                  using phasors, impedance, resonance in RLC circuits, the power factor, and the
-                  transformers that make efficient long-distance power transmission possible.
-                </p>
-                <ul>
-                  <li>AC voltage and current &mdash; peak, RMS, and average values</li>
-                  <li>AC through pure R, L, and C circuits</li>
-                  <li>Phasor diagrams and impedance</li>
-                  <li>Series LCR circuit and resonance</li>
-                  <li>Quality factor (Q) and bandwidth</li>
-                  <li>Power in AC circuits &mdash; power factor (cos&phi;)</li>
-                  <li>Transformers &mdash; step-up and step-down</li>
-                  <li>LC oscillations</li>
-                </ul>
-                <div class="formula-box">
-                  V<sub>rms</sub> = V&#8320;/&radic;2 &nbsp;&nbsp;|&nbsp;&nbsp; Z = &radic;(R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;)<br>
-                  X<sub>L</sub> = &omega;L &nbsp;&nbsp;|&nbsp;&nbsp; X<sub>C</sub> = 1/&omega;C &nbsp;&nbsp;|&nbsp;&nbsp; f<sub>res</sub> = 1/(2&pi;&radic;LC)<br>
-                  P<sub>avg</sub> = V<sub>rms</sub>I<sub>rms</sub>cos&phi; &nbsp;&nbsp;|&nbsp;&nbsp; V&#8321;/V&#8322; = N&#8321;/N&#8322; (transformer)
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/ac-circuits.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/ac-circuits.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/ac-circuits.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/em-waves.html">
+            <span class="ch-num">06</span>
+            <h3>Electromagnetic Waves</h3>
+            <p class="ch-desc">EM spectrum, Maxwell</p>
+            <span class="ch-formula">c = 1/&radic;(&mu;&#8320;&epsilon;&#8320;)</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 6 - Electromagnetic Waves -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">06</span> Electromagnetic Waves</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Maxwell unified electricity and magnetism, predicting electromagnetic waves that travel
-                  at the speed of light. This chapter explores Maxwell&rsquo;s equations, the EM spectrum, and
-                  the properties that make radio waves, microwaves, light, and X-rays all part of one family.
-                </p>
-                <ul>
-                  <li>Maxwell&rsquo;s equations &mdash; displacement current and Ampere-Maxwell law</li>
-                  <li>Electromagnetic waves &mdash; nature, speed, and transverse character</li>
-                  <li>The electromagnetic spectrum &mdash; radio to gamma rays</li>
-                  <li>Properties: energy, momentum, and intensity of EM waves</li>
-                  <li>Applications of different regions of the EM spectrum</li>
-                </ul>
-                <div class="formula-box">
-                  c = 1/&radic;(&mu;&#8320;&epsilon;&#8320;) = 3 &times; 10&sup8; m/s &nbsp;&nbsp;|&nbsp;&nbsp; c = f&lambda;<br>
-                  E&#8320;/B&#8320; = c &nbsp;&nbsp;|&nbsp;&nbsp; I = &frac12;&epsilon;&#8320;cE&#8320;&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; p = U/c (momentum)
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/em-waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/em-waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/em-waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/ray-optics.html">
+            <span class="ch-num">07</span>
+            <h3>Ray Optics</h3>
+            <p class="ch-desc">Mirrors, lenses, prisms</p>
+            <span class="ch-formula">1/v &minus; 1/u = 1/f</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 7 - Ray Optics -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">07</span> Ray Optics</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Ray optics treats light as straight-line rays, providing an elegant framework for
-                  understanding mirrors, lenses, prisms, and the optical instruments that extend human
-                  vision from microscopes to telescopes.
-                </p>
-                <ul>
-                  <li>Reflection &mdash; laws, plane mirrors, spherical mirrors</li>
-                  <li>Mirror formula (1/v + 1/u = 1/f) and magnification</li>
-                  <li>Refraction &mdash; Snell&rsquo;s law, total internal reflection</li>
-                  <li>Lenses &mdash; thin lens formula, power, combinations</li>
-                  <li>Prism &mdash; deviation, dispersion, and minimum deviation</li>
-                  <li>Optical instruments &mdash; microscope, telescope, human eye</li>
-                  <li>Defects of vision &mdash; myopia, hypermetropia</li>
-                </ul>
-                <div class="formula-box">
-                  1/v + 1/u = 1/f (mirror) &nbsp;&nbsp;|&nbsp;&nbsp; n&#8321; sin&theta;&#8321; = n&#8322; sin&theta;&#8322; (Snell)<br>
-                  1/v &minus; 1/u = 1/f (lens) &nbsp;&nbsp;|&nbsp;&nbsp; P = 1/f (dioptre)<br>
-                  &delta;<sub>min</sub> = (n &minus; 1)A (thin prism) &nbsp;&nbsp;|&nbsp;&nbsp; sin&theta;<sub>c</sub> = n&#8322;/n&#8321; (TIR)
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/ray-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/ray-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/ray-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/wave-optics.html">
+            <span class="ch-num">08</span>
+            <h3>Wave Optics</h3>
+            <p class="ch-desc">YDSE, diffraction, polarization</p>
+            <span class="ch-formula">&beta; = &lambda;D/d</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
-          <!-- Ch 8 - Wave Optics -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">08</span> Wave Optics</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Wave optics reveals light&rsquo;s true wave nature through phenomena that ray optics
-                  cannot explain. Interference fringes, diffraction patterns, and polarization provide
-                  stunning evidence of superposition and the transverse nature of light waves.
-                </p>
-                <ul>
-                  <li>Huygens&rsquo; principle &mdash; wavefronts and secondary wavelets</li>
-                  <li>Young&rsquo;s double slit experiment &mdash; fringe width, conditions for maxima/minima</li>
-                  <li>Coherent and incoherent sources</li>
-                  <li>Diffraction &mdash; single slit, resolving power</li>
-                  <li>Polarization &mdash; Malus&rsquo;s law, Brewster&rsquo;s angle</li>
-                </ul>
-                <div class="formula-box">
-                  &beta; = &lambda;D/d (fringe width, YDSE) &nbsp;&nbsp;|&nbsp;&nbsp; Path diff = d sin&theta;<br>
-                  Maxima: d sin&theta; = n&lambda; &nbsp;&nbsp;|&nbsp;&nbsp; Minima: d sin&theta; = (n+&frac12;)&lambda;<br>
-                  I = I&#8320; cos&sup2;&theta; (Malus) &nbsp;&nbsp;|&nbsp;&nbsp; tan&theta;<sub>B</sub> = n (Brewster)
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/wave-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/wave-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/wave-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ch 9 - Modern Physics -->
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><span class="ch-num">09</span> Modern Physics</h3>
-              <span class="toggle-icon">&#9660;</span>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <p>
-                  Modern physics broke the boundaries of classical mechanics, revealing the quantum nature
-                  of light, the structure of atoms, and the immense energy locked within the nucleus.
-                  From the photoelectric effect to nuclear fission, this chapter is the frontier of physics.
-                </p>
-                <ul>
-                  <li>Photoelectric effect &mdash; Einstein&rsquo;s equation, threshold frequency, stopping potential</li>
-                  <li>de Broglie wavelength and wave-particle duality</li>
-                  <li>Bohr&rsquo;s model of the hydrogen atom &mdash; energy levels, spectral series</li>
-                  <li>X-rays &mdash; production, properties, Moseley&rsquo;s law</li>
-                  <li>Nuclear structure &mdash; mass defect and binding energy</li>
-                  <li>Radioactivity &mdash; &alpha;, &beta;, &gamma; decay; half-life; decay law</li>
-                  <li>Nuclear fission and fusion</li>
-                </ul>
-                <div class="formula-box">
-                  E = hf &nbsp;&nbsp;|&nbsp;&nbsp; KE<sub>max</sub> = hf &minus; &phi; (photoelectric)<br>
-                  &lambda; = h/mv = h/p (de Broglie) &nbsp;&nbsp;|&nbsp;&nbsp; E<sub>n</sub> = &minus;13.6/n&sup2; eV (hydrogen)<br>
-                  N = N&#8320;e<sup>&minus;&lambda;t</sup> &nbsp;&nbsp;|&nbsp;&nbsp; t<sub>&frac12;</sub> = 0.693/&lambda; &nbsp;&nbsp;|&nbsp;&nbsp; E = &Delta;mc&sup2;
-                </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-                  <a href="chapters/modern-physics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
-                  <a href="tests/modern-physics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
-                  <a href="simulations/modern-physics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a class="ch-card" href="chapters/modern-physics.html">
+            <span class="ch-num">09</span>
+            <h3>Modern Physics</h3>
+            <p class="ch-desc">Photoelectric, Bohr, nuclear</p>
+            <span class="ch-formula">E = hf</span>
+            <span class="ch-arrow">Read Theory &rarr;</span>
+          </a>
 
         </div>
       </div>

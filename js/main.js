@@ -146,25 +146,6 @@ function initScrollReveal() {
   reveals.forEach(el => observer.observe(el));
 }
 
-// --- Accordion ---
-function initAccordion() {
-  document.querySelectorAll('.accordion-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const item = header.parentElement;
-      const wasActive = item.classList.contains('active');
-
-      // Close all in same group
-      item.closest('.chapter-group')?.querySelectorAll('.accordion-item').forEach(i => {
-        i.classList.remove('active');
-      });
-
-      if (!wasActive) {
-        item.classList.add('active');
-      }
-    });
-  });
-}
-
 // --- Grade Tabs ---
 function initGradeTabs() {
   document.querySelectorAll('.grade-tab').forEach(tab => {
@@ -252,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initNavbar();
   initScrollReveal();
-  initAccordion();
   initGradeTabs();
   initSmoothScroll();
   animateCounters();

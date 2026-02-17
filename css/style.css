@@ -2139,6 +2139,69 @@ ul { list-style: none; }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* --- Chapter Card Grid --- */
+.ch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.ch-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md, 12px);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.ch-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15);
+}
+
+.ch-card .ch-num {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.ch-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--text-primary);
+}
+
+.ch-card .ch-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+.ch-card .ch-formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.ch-card .ch-arrow {
+  margin-top: auto;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: letter-spacing 0.2s ease;
+}
+
+.ch-card:hover .ch-arrow {
+  letter-spacing: 0.5px;
+}
+
 /* --- Responsive --- */
 @media (max-width: 1024px) {
   .hero-container {
