@@ -87,54 +87,143 @@
         <span class="ch-meta">Chapter 09 &mdash; Grade XI &bull; Oscillations</span>
       </div>
 
-      <!-- Section 1: Definition & Characteristics -->
+      <!-- Section 1: Oscillatory & Periodic Motion -->
       <div class="theory-section">
-        <h2>1. Definition &amp; Characteristics</h2>
+        <h2>1. Oscillatory &amp; Periodic Motion</h2>
         <p>
-          Simple Harmonic Motion (SHM) is a special type of periodic oscillatory motion in which the
-          restoring force is directly proportional to the displacement from the mean position and is always
-          directed towards it. This is the most fundamental and widely studied type of oscillation in physics.
+          A body is said to possess <strong>oscillatory motion</strong> if it moves back and forth repeatedly
+          about a mean (equilibrium) position. Examples include a swinging pendulum and the vibratory motion
+          of a mass attached to a spring. The mean position is defined as the position where the net force on
+          the body is zero; any small displacement from it produces a restoring force directed back toward it.
         </p>
         <p>
-          The defining condition for SHM is that the restoring force is F = &minus;kx, where k is the force
-          constant (or spring constant) and x is the displacement from equilibrium. Applying Newton&rsquo;s
-          second law, F = ma, this gives a = &minus;(k/m)x = &minus;&omega;&sup2;x, where &omega; =
-          &radic;(k/m) is the angular frequency.
+          A motion that repeats itself after equal intervals of time is called <strong>periodic motion</strong>.
+          The smallest time interval after which the motion repeats is the <strong>time period T</strong>, and
+          the number of repetitions per second is the <strong>frequency &nu; = 1/T</strong> (in Hz).
         </p>
 
-        <h3>Key Parameters</h3>
+        <h3>Key Distinction</h3>
         <ul>
-          <li><strong>Amplitude (A):</strong> the maximum displacement from the mean position.</li>
-          <li><strong>Angular frequency (&omega;):</strong> &omega; = 2&pi;/T = 2&pi;f, measured in rad/s.</li>
-          <li><strong>Time period (T):</strong> the time for one complete oscillation.</li>
-          <li><strong>Frequency (f):</strong> the number of oscillations per second, f = 1/T, in Hz.</li>
-          <li><strong>Phase (&phi;):</strong> determines the initial state of the oscillation at t = 0.</li>
+          <li>Every oscillatory motion is periodic, but not every periodic motion is oscillatory.</li>
+          <li>A particle moving uniformly in a circle executes periodic motion (period = time for one revolution) but it is <strong>not</strong> oscillatory because it does not move back and forth about a mean position.</li>
+          <li>A mass on a spring oscillating about its equilibrium is both oscillatory and periodic.</li>
         </ul>
+        <p>
+          For JEE, the most important type of oscillatory motion is <strong>Simple Harmonic Motion (SHM)</strong>,
+          in which the restoring force is directly proportional to the displacement from the mean position.
+        </p>
         <div class="formula-box">
-          F = &minus;kx &nbsp;&nbsp;|&nbsp;&nbsp; a = &minus;&omega;&sup2;x<br>
-          &omega; = &radic;(k/m) = 2&pi;/T = 2&pi;f
+          Time period T: smallest time after which motion repeats<br>
+          Frequency: &nu; = 1/T &nbsp;&nbsp;(Hz or cycles per second)
         </div>
       </div>
 
-      <!-- Section 2: Equation of Motion -->
+      <!-- Section 2: SHM Definition & Differential Equation -->
       <div class="theory-section">
-        <h2>2. Equation of Motion</h2>
+        <h2>2. SHM Definition &amp; Differential Equation</h2>
         <p>
-          The general solution to the SHM equation a = &minus;&omega;&sup2;x is a sinusoidal function. The
-          displacement, velocity, and acceleration as functions of time are:
+          A system executes <strong>Simple Harmonic Motion</strong> if the magnitude of the restoring force is
+          directly proportional to the displacement from the mean position and the force is always directed
+          toward the mean position. Common examples include a simple pendulum (small angle), a vibrating tuning
+          fork, and a loaded spring.
+        </p>
+        <p>
+          Consider a particle of mass m executing SHM along the x-axis with the mean position at the origin.
+          If x(t) denotes the displacement from the mean position, the defining condition is:
         </p>
         <div class="formula-box">
-          x = A sin(&omega;t + &phi;) &nbsp;&nbsp;(displacement)<br>
-          v = dx/dt = A&omega; cos(&omega;t + &phi;) &nbsp;&nbsp;(velocity)<br>
-          a = d&sup2;x/dt&sup2; = &minus;A&omega;&sup2; sin(&omega;t + &phi;) &nbsp;&nbsp;(acceleration)
+          Restoring force: F = &minus;kx &nbsp;&nbsp;(k = force constant / spring constant)<br>
+          Newton&rsquo;s second law: ma = &minus;kx<br>
+          Differential equation of SHM: d&sup2;x/dt&sup2; = &minus;(k/m)x = &minus;&omega;&sup2;x<br>
+          where &omega; = &radic;(k/m) is the angular frequency
         </div>
         <p>
-          Here A is the amplitude, &omega; is the angular frequency, and &phi; is the initial phase. The
-          velocity is maximum at the mean position (|v<sub>max</sub>| = A&omega;) and zero at the extremes.
-          The acceleration is maximum at the extremes (|a<sub>max</sub>| = A&omega;&sup2;) and zero at
-          the mean position. At any displacement x, the velocity can be expressed as
-          v = &omega;&radic;(A&sup2; &minus; x&sup2;).
+          The <strong>general solution</strong> of the SHM differential equation is:
         </p>
+        <div class="formula-box">
+          x(t) = A sin(&omega;t + &phi;<sub>0</sub>)<br>
+          Alternative form: x(t) = A cos(&omega;t + &phi;<sub>0</sub>)
+        </div>
+        <p>
+          Here A is the amplitude (maximum displacement), &omega; is the angular frequency, and &phi;<sub>0</sub>
+          is the initial phase constant. Any equation of the form d&sup2;y/dt&sup2; = &minus;&omega;&sup2;y
+          represents SHM, regardless of the variable y.
+        </p>
+
+        <h3>Important Notes</h3>
+        <ul>
+          <li>The key condition for SHM: the restoring force (or acceleration) must be proportional to displacement and directed opposite to it.</li>
+          <li>If displacement is given as y = a cos(&omega;t) + b sin(&omega;t), the motion is SHM with amplitude A = &radic;(a&sup2; + b&sup2;) and tan(&phi;<sub>0</sub>) = a/b.</li>
+        </ul>
+      </div>
+
+      <!-- Section 3: Amplitude, Time Period, Frequency & Phase -->
+      <div class="theory-section">
+        <h2>3. Amplitude, Time Period, Frequency &amp; Phase</h2>
+        <p>
+          The key parameters that completely characterise SHM are:
+        </p>
+        <ul>
+          <li><strong>Amplitude (A):</strong> The magnitude of the maximum displacement on either side of the mean position. From x(t) = A sin(&omega;t + &phi;<sub>0</sub>), since the maximum value of sin is 1, we have &minus;A &le; x &le; A.</li>
+          <li><strong>Time Period (T):</strong> The time taken to complete one full cycle. The function x(t) repeats after an interval of 2&pi;/&omega;.</li>
+          <li><strong>Frequency (&nu;):</strong> The number of oscillations completed per second, measured in Hertz (Hz).</li>
+          <li><strong>Angular Frequency (&omega;):</strong> Equal to 2&pi; times the frequency.</li>
+          <li><strong>Phase:</strong> The state of the particle (position and direction of motion) at any instant, given by the argument of the sine function: phase = &omega;t + &phi;<sub>0</sub>.</li>
+          <li><strong>Initial Phase (&phi;<sub>0</sub>):</strong> The phase constant at t = 0, determined entirely by the initial conditions.</li>
+        </ul>
+        <div class="formula-box">
+          T = 2&pi;/&omega; = 2&pi;&radic;(m/k)<br>
+          &nu; = &omega;/(2&pi;) = (1/2&pi;)&radic;(k/m)<br>
+          &omega; = 2&pi;&nu; = 2&pi;/T = &radic;(k/m)
+        </div>
+
+        <h3>Initial Conditions &amp; Phasor Representation</h3>
+        <p>
+          At t = 0: x(0) = A sin(&phi;<sub>0</sub>) and v(0) = A&omega; cos(&phi;<sub>0</sub>). The initial
+          phase &phi;<sub>0</sub> is fixed by these two conditions.
+        </p>
+        <ul>
+          <li>If &phi;<sub>0</sub> = &pi;/2: x(0) = A and v(0) = 0 &mdash; particle starts from the right extreme. Equation: x(t) = A cos(&omega;t).</li>
+          <li>If &phi;<sub>0</sub> = 0: x(0) = 0 and v(0) = A&omega; (positive) &mdash; particle starts from mean position moving in +x direction. Equation: x(t) = A sin(&omega;t).</li>
+          <li>If &phi;<sub>0</sub> = &pi;: x(0) = 0 and v(0) = &minus;A&omega; &mdash; particle starts from mean position moving in &minus;x direction. Equation: x(t) = &minus;A sin(&omega;t).</li>
+          <li>If &phi;<sub>0</sub> = &minus;&pi;/2: x(0) = &minus;A &mdash; particle starts from the left extreme. Equation: x(t) = &minus;A cos(&omega;t).</li>
+        </ul>
+        <p>
+          In the <strong>phasor representation</strong>, the SHM is visualised as the projection of uniform
+          circular motion onto a diameter. A phasor of length A rotates at angular frequency &omega;, and its
+          projection on the x-axis gives x(t) = A sin(&omega;t + &phi;<sub>0</sub>). This is extremely useful
+          for superposition problems.
+        </p>
+        <p>
+          <strong>Isochronous property:</strong> The time period and frequency of SHM are independent of the
+          amplitude. This is a defining characteristic of SHM.
+        </p>
+      </div>
+
+      <!-- Section 4: Velocity & Acceleration in SHM -->
+      <div class="theory-section">
+        <h2>4. Velocity &amp; Acceleration in SHM</h2>
+        <p>
+          The velocity is obtained by differentiating the displacement equation, and the acceleration by
+          differentiating the velocity (or double-differentiating displacement).
+        </p>
+        <div class="formula-box">
+          <strong>As functions of time:</strong><br>
+          v(t) = A&omega; cos(&omega;t + &phi;<sub>0</sub>)<br>
+          a(t) = &minus;A&omega;&sup2; sin(&omega;t + &phi;<sub>0</sub>)<br><br>
+          <strong>As functions of position:</strong><br>
+          v(x) = &plusmn;&omega;&radic;(A&sup2; &minus; x&sup2;)<br>
+          a(x) = &minus;&omega;&sup2;x
+        </div>
+
+        <h3>Extreme Values</h3>
+        <ul>
+          <li><strong>Maximum velocity:</strong> |v<sub>max</sub>| = A&omega; (at the mean position, x = 0)</li>
+          <li><strong>Minimum velocity:</strong> v = 0 (at the extreme positions, x = &plusmn;A)</li>
+          <li><strong>Maximum acceleration:</strong> |a<sub>max</sub>| = A&omega;&sup2; (at the extremes, x = &plusmn;A)</li>
+          <li><strong>Minimum acceleration:</strong> a = 0 (at the mean position, x = 0)</li>
+          <li><strong>Maximum force:</strong> |F<sub>max</sub>| = m&omega;&sup2;A = kA (at the extremes)</li>
+        </ul>
 
         <h3>Phase Relationships</h3>
         <p>
@@ -142,36 +231,78 @@
           by &pi;/2 &mdash; equivalently, the acceleration is &pi; (180&deg;) out of phase with the
           displacement. These phase relationships are a hallmark of SHM.
         </p>
-      </div>
 
-      <!-- Section 3: Energy in SHM -->
-      <div class="theory-section">
-        <h2>3. Energy in SHM</h2>
+        <h3>Velocity&ndash;Displacement Relation</h3>
         <p>
-          A particle executing SHM possesses both kinetic energy and potential energy that interconvert
-          during the oscillation. At any displacement x from the mean position:
-        </p>
-        <div class="formula-box">
-          KE = &frac12;m&omega;&sup2;(A&sup2; &minus; x&sup2;) = &frac12;k(A&sup2; &minus; x&sup2;)<br>
-          PE = &frac12;m&omega;&sup2;x&sup2; = &frac12;kx&sup2;<br>
-          TE = KE + PE = &frac12;m&omega;&sup2;A&sup2; = &frac12;kA&sup2; = constant
-        </div>
-        <p>
-          The total energy is constant throughout the motion and is proportional to the square of the
-          amplitude. At the mean position (x = 0), KE is maximum and PE is zero. At the extreme positions
-          (x = &plusmn;A), PE is maximum and KE is zero. The average KE equals the average PE, each being
-          half the total energy: &langle;KE&rangle; = &langle;PE&rangle; = &frac12;E<sub>total</sub>.
+          The &plusmn; sign in v(x) = &plusmn;&omega;&radic;(A&sup2; &minus; x&sup2;) indicates that at any
+          position the particle passes with equal and opposite velocities (once going right, once going left).
+          This relation can be rewritten as an ellipse:
+          v&sup2;/(&omega;A)&sup2; + x&sup2;/A&sup2; = 1. The v&ndash;x graph is therefore an ellipse.
         </p>
 
         <div class="example-box">
           <div class="ex-label">Solved Example 1</div>
+          <p>
+            A 50 g mass vibrates in SHM at the end of a spring. The amplitude is 12 cm and the time period
+            is 1.70 s. Find: (a) frequency, (b) spring constant, (c) maximum speed, (d) maximum acceleration,
+            (e) speed when displacement is 6 cm.
+          </p>
+          <div class="solution">
+            <p>
+              (a) &nu; = 1/T = 1/1.70 = 0.588 Hz<br><br>
+              (b) T = 2&pi;&radic;(m/k) &rArr; k = 4&pi;&sup2;m/T&sup2; = 4&pi;&sup2; &times; 0.05 / (1.70)&sup2; = 0.68 N/m<br><br>
+              (c) v<sub>max</sub> = &omega;A = (2&pi;/T) &times; A = (2&pi;/1.70) &times; 0.12 = 0.44 m/s<br><br>
+              (d) a<sub>max</sub> = &omega;&sup2;A = (4&pi;&sup2;/T&sup2;) &times; A = (4&pi;&sup2;/(1.70)&sup2;) &times; 0.12 = 1.63 m/s&sup2;<br><br>
+              (e) v(x) = &omega;&radic;(A&sup2; &minus; x&sup2;) = (2&pi;/1.70) &times; &radic;(0.12&sup2; &minus; 0.06&sup2;) = (3.696) &times; &radic;(0.0108) = 0.38 m/s
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5: Energy in SHM -->
+      <div class="theory-section">
+        <h2>5. Energy in SHM</h2>
+        <p>
+          A particle executing SHM possesses both kinetic energy (due to velocity) and potential energy (due
+          to displacement from the mean position). These two forms of energy interconvert continuously during
+          the oscillation, but their sum &mdash; the total mechanical energy &mdash; remains constant
+          (provided there is no dissipation).
+        </p>
+        <div class="formula-box">
+          KE = &frac12;mv&sup2; = &frac12;m&omega;&sup2;(A&sup2; &minus; x&sup2;) = &frac12;k(A&sup2; &minus; x&sup2;)<br>
+          PE = &frac12;kx&sup2; &nbsp;&nbsp;(taking PE = 0 at mean position)<br>
+          In general: PE = U(0) + &frac12;kx&sup2;<br>
+          TE = KE + PE = &frac12;kA&sup2; = &frac12;m&omega;&sup2;A&sup2; = constant
+        </div>
+
+        <h3>Key Energy Facts</h3>
+        <ul>
+          <li>At <strong>mean position</strong> (x = 0): KE is maximum = &frac12;kA&sup2;, PE is zero (if reference is mean position).</li>
+          <li>At <strong>extreme positions</strong> (x = &plusmn;A): PE is maximum = &frac12;kA&sup2;, KE is zero.</li>
+          <li>At x = &plusmn;A/&radic;2: KE = PE, and each equals half the total energy.</li>
+          <li>At x = A/2: KE:PE = 3:1. At x = A&radic;3/2: KE:PE = 1:3.</li>
+          <li>The average KE over one full cycle equals the average PE: &langle;KE&rangle; = &langle;PE&rangle; = &frac12;E<sub>total</sub>.</li>
+          <li>Total energy is proportional to A&sup2;: TE &prop; A&sup2;.</li>
+          <li>Both KE and PE oscillate with angular frequency 2&omega; (i.e., frequency 2&nu;), which is <strong>twice</strong> the SHM frequency.</li>
+        </ul>
+
+        <h3>Energy as a Function of Time</h3>
+        <p>
+          KE = &frac12;m&omega;&sup2;A&sup2; cos&sup2;(&omega;t + &phi;<sub>0</sub>) and
+          PE = &frac12;m&omega;&sup2;A&sup2; sin&sup2;(&omega;t + &phi;<sub>0</sub>). These oscillate with
+          angular frequency 2&omega;, hence the frequency of KE (or PE) oscillation is 2f (twice the SHM
+          frequency). This is an important JEE fact.
+        </p>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 2</div>
           <p>
             A 0.5 kg block attached to a spring of spring constant k = 200 N/m oscillates with an amplitude
             of 0.1 m. Find the total energy and the maximum speed of the block.
           </p>
           <div class="solution">
             <p>
-              Total energy: E = &frac12;kA&sup2; = &frac12; &times; 200 &times; (0.1)&sup2; = 1 J<br>
+              Total energy: E = &frac12;kA&sup2; = &frac12; &times; 200 &times; (0.1)&sup2; = 1 J<br><br>
               At mean position, all energy is kinetic:<br>
               &frac12;mv&sup2;<sub>max</sub> = E<br>
               v<sub>max</sub> = &radic;(2E/m) = &radic;(2 &times; 1 / 0.5) = &radic;4 = 2 m/s<br><br>
@@ -181,60 +312,122 @@
         </div>
       </div>
 
-      <!-- Section 4: Spring-Mass System -->
+      <!-- Section 6: Analysis of Forces in SHM -->
       <div class="theory-section">
-        <h2>4. Spring-Mass System</h2>
+        <h2>6. Analysis of Forces in SHM</h2>
         <p>
-          The spring-mass system is the simplest physical realisation of SHM. A block of mass m attached to
-          a spring of spring constant k, displaced from its natural length and released, executes SHM with:
+          To identify whether a given physical system executes SHM, follow these systematic steps:
         </p>
+        <ul>
+          <li><strong>Step 1:</strong> Displace the particle from the mean (equilibrium) position by a distance x along the line of expected SHM.</li>
+          <li><strong>Step 2:</strong> Analyse the forces on the particle and show that (a) the net force is proportional to x, and (b) the force is directed toward the mean position (restoring nature).</li>
+          <li><strong>Step 3:</strong> Find the proportionality constant k from the expression for the magnitude of force: F = kx.</li>
+          <li><strong>Step 4:</strong> Find the time period using T = 2&pi;&radic;(m/k).</li>
+        </ul>
         <div class="formula-box">
-          T = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; f = (1/2&pi;)&radic;(k/m)
+          General SHM condition: F<sub>net</sub> = &minus;kx &nbsp;&nbsp;(restoring, proportional to displacement)<br>
+          Time period: T = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = &radic;(k/m)
         </div>
 
-        <h3>Springs in Series and Parallel</h3>
+        <h3>Liquid Oscillating in a U-Tube</h3>
         <p>
-          When springs are combined in parallel (both attached to the same block), the effective spring
-          constant is k<sub>eff</sub> = k&#8321; + k&#8322;. When in series (end-to-end), the effective
-          constant follows 1/k<sub>eff</sub> = 1/k&#8321; + 1/k&#8322;.
+          A liquid column of total length 2l in a U-tube of uniform cross-section A is displaced by a distance
+          x from equilibrium. The extra height of liquid on one side is 2x (since liquid drops by x on one side
+          and rises by x on the other). The restoring force is:
         </p>
         <div class="formula-box">
-          Parallel: k<sub>eff</sub> = k&#8321; + k&#8322;<br>
-          Series: 1/k<sub>eff</sub> = 1/k&#8321; + 1/k&#8322; &rArr; k<sub>eff</sub> = k&#8321;k&#8322;/(k&#8321; + k&#8322;)
+          F = &minus;(2x)&rho;gA &nbsp;&nbsp;&rArr;&nbsp;&nbsp; k = 2A&rho;g<br>
+          T = 2&pi;&radic;(l/g) &nbsp;&nbsp;(equivalent to a simple pendulum of length l)
         </div>
 
-        <h3>Two-Body Oscillation (Reduced Mass)</h3>
+        <h3>Cylinder Floating in a Liquid</h3>
         <p>
-          When a spring connects two blocks of masses m&#8321; and m&#8322; (both free to move), the system
-          oscillates with T = 2&pi;&radic;(&mu;/k), where &mu; = m&#8321;m&#8322;/(m&#8321; + m&#8322;) is
-          the reduced mass.
+          A cylinder of mass m, density d, length L, and cross-section A floating in a liquid of density &rho;
+          with immersed length l at equilibrium. At equilibrium: Ld = l&rho; (flotation condition). If the
+          cylinder is pushed down by x, the extra buoyant force is A&rho;gx, which is the restoring force.
+        </p>
+        <div class="formula-box">
+          F = &minus;A&rho;gx &nbsp;&nbsp;&rArr;&nbsp;&nbsp; k = A&rho;g<br>
+          T = 2&pi;&radic;(m/(A&rho;g)) = 2&pi;&radic;(l/g) &nbsp;&nbsp;(depends only on immersed length)
+        </div>
+
+        <h3>Ball in a Smooth Bowl</h3>
+        <p>
+          A particle sliding inside a smooth hemispherical bowl of radius R executes SHM (for small
+          displacements) with &omega; = &radic;(g/R). This is equivalent to a simple pendulum of length R.
+        </p>
+
+        <h3>Gas in a Piston (Isothermal Process)</h3>
+        <p>
+          A cylindrical piston of mass M slides smoothly inside a long cylinder closed at one end, enclosing
+          gas at pressure P and the piston is at distance h from the closed end. For an isothermal process
+          (diathermic piston), if the piston is displaced by x, the restoring force can be shown to be
+          proportional to x (for small displacements).
+        </p>
+        <div class="formula-box">
+          T = 2&pi;&radic;(Mh/(PA))
+        </div>
+
+        <h3>Block on an Oscillating Platform</h3>
+        <p>
+          For a block on a piston executing vertical SHM: the block separates from the piston when the normal
+          reaction becomes zero, i.e., when &omega;&sup2;A &ge; g. For the block to maintain contact at all
+          times, we need &omega;&sup2;A &le; g.
         </p>
       </div>
 
-      <!-- Section 5: Simple Pendulum -->
+      <!-- Section 7: Simple Pendulum -->
       <div class="theory-section">
-        <h2>5. Simple Pendulum</h2>
+        <h2>7. Simple Pendulum</h2>
         <p>
-          A simple pendulum consists of a point mass (bob) suspended by a massless, inextensible string of
-          length l from a fixed support. For small angular displacements (&theta; &lt;&lt; 1 radian), the
-          restoring torque is approximately proportional to &theta;, and the pendulum executes SHM with:
+          A simple pendulum is an idealised body consisting of a point mass (bob) suspended by a light,
+          inextensible string of length l from a fixed support. The forces on the bob are its weight mg
+          (vertically downward) and tension T (along the string toward the support). The component
+          mg cos&theta; balances the tension, while the component mg sin&theta; acts as the tangential
+          restoring force.
+        </p>
+        <p>
+          For small angular displacements (&theta; &lt;&lt; 1 radian): sin&theta; &asymp; &theta;, so the
+          restoring force becomes F = mg&theta; = mg(x/l), which is proportional to displacement. This gives
+          SHM with:
         </p>
         <div class="formula-box">
-          T = 2&pi;&radic;(l/g)<br>
-          f = (1/2&pi;)&radic;(g/l)
+          Force constant: k = mg/l<br>
+          T = 2&pi;&radic;(l/g) &nbsp;&nbsp;|&nbsp;&nbsp; &nu; = (1/2&pi;)&radic;(g/l)<br>
+          &omega; = &radic;(g/l)<br>
+          Maximum tension in string (at lowest point): T<sub>max</sub> = mg(1 + &theta;<sub>m</sub>&sup2;)
         </div>
 
-        <h3>Important Points</h3>
+        <h3>Key Properties</h3>
         <ul>
-          <li>The time period is independent of the mass of the bob and the amplitude (for small oscillations).</li>
+          <li>The time period is <strong>independent of the mass</strong> of the bob and the amplitude (for small angles) &mdash; this is the property of <strong>isochronism</strong>.</li>
+          <li>The time period depends only on the length l and the acceleration due to gravity g.</li>
           <li>The equivalent length l is measured from the point of suspension to the centre of mass of the bob.</li>
-          <li>A seconds pendulum has T = 2 s, giving l = g/&pi;&sup2; &asymp; 0.994 m on Earth&rsquo;s surface.</li>
-          <li>If the pendulum oscillates in a medium of density &sigma; and the bob has density &rho;, the effective g is replaced by g(1 &minus; &sigma;/&rho;), giving a longer period.</li>
-          <li>In an accelerating lift (upward acceleration a): T = 2&pi;&radic;(l/(g+a)); in a freely falling lift: T &rarr; &infin; (no oscillation).</li>
         </ul>
 
+        <h3>Effect of Acceleration</h3>
+        <ul>
+          <li><strong>Pendulum in a lift accelerating upward with acceleration a:</strong> T = 2&pi;&radic;(l/(g+a)). The period decreases.</li>
+          <li><strong>Pendulum in a lift accelerating downward with acceleration a:</strong> T = 2&pi;&radic;(l/(g&minus;a)). The period increases.</li>
+          <li><strong>In free fall</strong> (g<sub>eff</sub> = 0): the pendulum does not oscillate, T &rarr; &infin;.</li>
+          <li><strong>Pendulum in a car on a circular track</strong> (speed v, radius R): g<sub>eff</sub> = (g&sup2; + v<sup>4</sup>/R&sup2;)<sup>1/4</sup>... more precisely, T = 2&pi;&radic;(l / (g&sup2; + v<sup>4</sup>/R&sup2;)<sup>1/2</sup>).</li>
+        </ul>
+
+        <h3>Seconds Pendulum</h3>
+        <p>
+          A <strong>seconds pendulum</strong> has T = 2 s, giving l = g/&pi;&sup2; &asymp; 0.994 m on
+          Earth&rsquo;s surface (taking g = 9.8 m/s&sup2;).
+        </p>
+
+        <h3>Effect of Medium Density</h3>
+        <p>
+          If the pendulum oscillates in a medium of density &sigma; and the bob has density &rho;, the
+          effective g is replaced by g(1 &minus; &sigma;/&rho;), giving a longer period:
+          T = 2&pi;&radic;(l / (g(1 &minus; &sigma;/&rho;))).
+        </p>
+
         <div class="example-box">
-          <div class="ex-label">Solved Example 2</div>
+          <div class="ex-label">Solved Example 3</div>
           <p>
             A simple pendulum has a time period of 2 s on the surface of the Earth. What will be its time
             period on a planet where g is 4 times that on Earth?
@@ -244,140 +437,320 @@
               T = 2&pi;&radic;(l/g)<br>
               T is proportional to 1/&radic;g (for the same length l)<br>
               T&prime;/T = &radic;(g/g&prime;) = &radic;(g/4g) = &radic;(1/4) = 1/2<br>
-              T&prime; = T/2 = 2/2 = 1 s
+              T&prime; = T/2 = 2/2 = <strong>1 s</strong>
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Section 6: Physical Pendulum -->
+      <!-- Section 8: Spring-Mass Systems -->
       <div class="theory-section">
-        <h2>6. Physical (Compound) Pendulum</h2>
+        <h2>8. Spring-Mass Systems</h2>
         <p>
-          A physical pendulum is any rigid body that can oscillate about a horizontal axis that does not pass
-          through its centre of mass. If the body of mass m is pivoted at a point O at a distance l from
-          its centre of mass G, and I is the moment of inertia about the pivot, then for small oscillations:
-        </p>
-        <div class="formula-box">
-          T = 2&pi;&radic;(I / mgl)
-        </div>
-        <p>
-          Using the parallel axis theorem, I = I<sub>cm</sub> + ml&sup2;, so the period becomes
-          T = 2&pi;&radic;((I<sub>cm</sub> + ml&sup2;) / mgl). The equivalent simple pendulum length is
-          L<sub>eq</sub> = I / ml = (k&sup2;/l) + l, where k is the radius of gyration about the centre
-          of mass.
+          The spring-mass system is the simplest physical realisation of SHM. Both horizontal and vertical
+          spring-mass systems yield the same time period formula.
         </p>
 
-        <h3>Centre of Oscillation</h3>
+        <h3>(a) Horizontal Spring</h3>
         <p>
-          The centre of oscillation is a point at distance L<sub>eq</sub> from the pivot, on the opposite
-          side of the centre of mass. If the pendulum is instead suspended from the centre of oscillation,
-          the time period remains the same &mdash; this is the principle behind Kater&rsquo;s reversible
-          pendulum used to measure g accurately.
+          A block of mass m on a smooth horizontal surface is connected to a spring of force constant k, with
+          the other end fixed. When displaced by distance x from the natural length position, the spring exerts
+          a restoring force F = &minus;kx. The block executes SHM with the natural length position as the mean
+          position.
         </p>
+
+        <h3>(b) Vertical Spring</h3>
+        <p>
+          A spring suspended vertically carries a block of mass m at its free end. At equilibrium, the spring
+          elongates by d such that kd = mg. If further displaced by x from equilibrium, the net restoring
+          force is F = k(d + x) &minus; mg = kx (since kd = mg). The block executes SHM about the
+          <strong>equilibrium position</strong> (not the natural length position). Gravity only determines
+          the equilibrium position but does <strong>not</strong> affect the time period.
+        </p>
+        <div class="formula-box">
+          Horizontal &amp; Vertical: T = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = &radic;(k/m)<br>
+          Equilibrium elongation (vertical): d = mg/k
+        </div>
+
+        <h3>Cutting a Spring</h3>
+        <p>
+          The force constant of a spring is inversely proportional to its natural length: k &times; l = constant.
+          If a spring of constant k and length l is cut into parts of lengths l<sub>1</sub> and l<sub>2</sub>,
+          then k<sub>1</sub> = kl/l<sub>1</sub> and k<sub>2</sub> = kl/l<sub>2</sub>. Each shorter piece has
+          a higher force constant.
+        </p>
+
+        <h3>Spring with Mass</h3>
+        <p>
+          If the spring itself has mass M<sub>s</sub> (not massless), the effective mass for the oscillation
+          becomes m + M<sub>s</sub>/3 (for a spring with uniform mass distribution), and the time period is
+          T = 2&pi;&radic;((m + M<sub>s</sub>/3)/k).
+        </p>
+
+        <h3>Rolling Body on a Spring</h3>
+        <p>
+          A solid cylinder of mass m attached to a spring (constant k) rolling without slipping on a horizontal
+          surface has both translational and rotational KE. For a solid cylinder (I<sub>cm</sub> = mR&sup2;/2):
+        </p>
+        <div class="formula-box">
+          T = 2&pi;&radic;(3m/(2k))
+        </div>
       </div>
 
-      <!-- Section 7: Damped & Forced Oscillations -->
+      <!-- Section 9: Combinations of Springs -->
       <div class="theory-section">
-        <h2>7. Damped &amp; Forced Oscillations</h2>
+        <h2>9. Combinations of Springs</h2>
 
-        <h3>Damped Oscillations</h3>
+        <h3>Springs in Series</h3>
         <p>
-          In real systems, dissipative forces (friction, air resistance) act on the oscillator, causing the
-          amplitude to decrease over time. If the damping force is proportional to the velocity
-          (F<sub>d</sub> = &minus;bv), the equation of motion becomes:
+          When two springs of force constants k&#8321; and k&#8322; are connected end-to-end (in series), both
+          springs experience the <strong>same force</strong>, but the total extension is the sum of individual
+          extensions. The effective spring constant is:
         </p>
         <div class="formula-box">
-          m(d&sup2;x/dt&sup2;) + b(dx/dt) + kx = 0<br>
-          x(t) = A&#8320; e<sup>&minus;(b/2m)t</sup> sin(&omega;&prime;t + &phi;)<br>
-          &omega;&prime; = &radic;(&omega;&#8320;&sup2; &minus; (b/2m)&sup2;) &nbsp;&nbsp;(damped angular frequency)
+          Series: 1/k<sub>eff</sub> = 1/k&#8321; + 1/k&#8322; &nbsp;&rArr;&nbsp; k<sub>eff</sub> = k&#8321;k&#8322;/(k&#8321; + k&#8322;)<br>
+          For n springs in series: 1/k<sub>eff</sub> = 1/k&#8321; + 1/k&#8322; + &hellip; + 1/k<sub>n</sub>
         </div>
-        <p>
-          The amplitude decays exponentially with the damping factor b/2m. The oscillation frequency
-          &omega;&prime; is slightly less than the natural frequency &omega;&#8320; = &radic;(k/m). If
-          b/2m = &omega;&#8320;, the system is critically damped and returns to equilibrium without
-          oscillating. If b/2m &gt; &omega;&#8320;, the system is overdamped.
-        </p>
 
-        <h3>Forced Oscillations &amp; Resonance</h3>
+        <h3>Springs in Parallel</h3>
         <p>
-          When an external periodic force F = F&#8320; cos(&omega;<sub>d</sub>t) drives a damped oscillator,
-          the system eventually oscillates at the driving frequency &omega;<sub>d</sub> with a steady
-          amplitude that depends on how close &omega;<sub>d</sub> is to the natural frequency
-          &omega;&#8320;.
+          When two springs of force constants k&#8321; and k&#8322; are connected side-by-side (in parallel),
+          both springs have the <strong>same extension</strong>, but the total restoring force is the sum of
+          individual forces. Two springs attached to a block from opposite sides also act as a parallel
+          combination.
         </p>
+        <div class="formula-box">
+          Parallel: k<sub>eff</sub> = k&#8321; + k&#8322;<br>
+          For n springs in parallel: k<sub>eff</sub> = k&#8321; + k&#8322; + &hellip; + k<sub>n</sub><br>
+          Time period: T = 2&pi;&radic;(m/k<sub>eff</sub>)
+        </div>
+
+        <h3>Two-Body Oscillation (Reduced Mass)</h3>
         <p>
-          Resonance occurs when &omega;<sub>d</sub> &asymp; &omega;&#8320;, at which the amplitude of
-          oscillation becomes maximum. The sharpness of the resonance peak depends on the damping: less
-          damping leads to a sharper, taller peak. Resonance has important applications (musical instruments,
-          radio tuning) and can be destructive (bridge collapse due to wind or marching soldiers).
+          When a spring connects two blocks of masses m&#8321; and m&#8322; (both free to move), the system
+          oscillates with:
         </p>
+        <div class="formula-box">
+          T = 2&pi;&radic;(&mu;/k)<br>
+          Reduced mass: &mu; = m&#8321;m&#8322;/(m&#8321; + m&#8322;)
+        </div>
+
+        <h3>Important Results</h3>
+        <ul>
+          <li>In series combination, the weaker spring (smaller k) dominates, and k<sub>eff</sub> is less than the smallest individual constant.</li>
+          <li>In parallel combination, k<sub>eff</sub> is greater than the largest individual constant.</li>
+          <li>If T&#8321; and T&#8322; are time periods with springs separately, then for <strong>parallel</strong> combination: 1/T&sup2; = 1/T&#8321;&sup2; + 1/T&#8322;&sup2;.</li>
+          <li>If a spring of constant k is cut into n equal parts, each part has constant nk. If those n parts are connected in parallel, the effective constant is n&sup2;k.</li>
+          <li>For two springs attached from opposite sides of a mass on a smooth incline, k<sub>eff</sub> = k&#8321; + k&#8322; (parallel), and the incline angle does <strong>not</strong> affect the time period.</li>
+        </ul>
       </div>
 
-      <!-- Section 8: Superposition of SHM -->
+      <!-- Section 10: Physical Pendulum & Torsional Pendulum -->
       <div class="theory-section">
-        <h2>8. Superposition of SHM</h2>
+        <h2>10. Physical Pendulum &amp; Torsional Pendulum</h2>
 
-        <h3>Same Frequency, Different Phase</h3>
+        <h3>Physical (Compound) Pendulum</h3>
         <p>
-          When two SHMs of the same frequency but different amplitudes and phases are superposed along the
-          same direction, the resultant is also SHM with the same frequency. If
-          x&#8321; = A&#8321; sin(&omega;t) and x&#8322; = A&#8322; sin(&omega;t + &delta;), the resultant
-          amplitude is:
+          A physical pendulum is any rigid body suspended from a fixed point O, free to oscillate in a vertical
+          plane about a horizontal axis through O. Let C be the centre of gravity at distance d from O. When
+          displaced by a small angle &theta;, the weight creates a restoring torque:
+          &tau; = &minus;mgd sin&theta; &asymp; &minus;mgd&theta; (for small &theta;).
         </p>
         <div class="formula-box">
-          A = &radic;(A&#8321;&sup2; + A&#8322;&sup2; + 2A&#8321;A&#8322; cos&delta;)<br>
-          tan&phi; = (A&#8322; sin&delta;) / (A&#8321; + A&#8322; cos&delta;)
+          T = 2&pi;&radic;(I / mgd)<br>
+          where I = moment of inertia about the axis through O<br>
+          Using parallel axis theorem: I = I<sub>cm</sub> + md&sup2;<br>
+          Equivalent simple pendulum length: L<sub>eq</sub> = I/(md) = (k&sup2;/d) + d<br>
+          (k = radius of gyration about centre of mass)
         </div>
+
+        <h3>Centre of Oscillation &amp; Kater&rsquo;s Pendulum</h3>
         <p>
-          For &delta; = 0 (in phase): A = A&#8321; + A&#8322; (constructive). For &delta; = &pi;
-          (out of phase): A = |A&#8321; &minus; A&#8322;| (destructive).
+          The <strong>centre of oscillation</strong> is a point at distance L<sub>eq</sub> from the pivot, on
+          the opposite side of the centre of mass. If the pendulum is instead suspended from the centre of
+          oscillation, the time period remains the same. This is the principle behind <strong>Kater&rsquo;s
+          reversible pendulum</strong>, used to measure g accurately.
         </p>
 
-        <h3>Perpendicular SHM &amp; Lissajous Figures</h3>
+        <h3>Examples of Physical Pendulums</h3>
+        <ul>
+          <li><strong>Simple pendulum</strong> is a special case where all mass is at a point: I = ml&sup2;, d = l, giving T = 2&pi;&radic;(l/g).</li>
+          <li><strong>Uniform rod of length l suspended from one end:</strong> I = ml&sup2;/3, d = l/2, so T = 2&pi;&radic;(2l/(3g)).</li>
+          <li><strong>Metre stick pivoted at the 75 cm mark:</strong> d = |75 &minus; 50| = 25 cm = 0.25 m, I = ml&sup2;/12 + md&sup2;, T = 2&pi;&radic;((l&sup2; + 12d&sup2;)/(12gd)).</li>
+        </ul>
+
+        <h3>Torsional Pendulum</h3>
         <p>
-          When two SHMs are perpendicular to each other, the resulting path traced by the particle is called
-          a Lissajous figure. If x = A sin(&omega;t) and y = B sin(&omega;t + &delta;), the path depends
-          on the phase difference &delta;:
+          A rigid body (e.g., a disc) suspended by a wire attached to its centre. When rotated in the
+          horizontal plane, the twisted wire exerts a restoring torque proportional to the angular
+          displacement: &tau; = &minus;C&theta;, where C is the torsional constant of the wire. This is
+          angular SHM.
+        </p>
+        <div class="formula-box">
+          Torsional pendulum: T = 2&pi;&radic;(I/C)<br>
+          where I = moment of inertia about the axis of the wire, C = torsional constant
+        </div>
+
+        <h3>Comparison: Linear SHM vs Angular SHM</h3>
+        <ul>
+          <li>Linear: F = &minus;kx &nbsp;&nbsp;&harr;&nbsp;&nbsp; Angular: &tau; = &minus;C&theta;</li>
+          <li>Linear: T = 2&pi;&radic;(m/k) &nbsp;&nbsp;&harr;&nbsp;&nbsp; Angular: T = 2&pi;&radic;(I/C)</li>
+          <li>Linear: x(t) = A sin(&omega;t + &phi;) &nbsp;&nbsp;&harr;&nbsp;&nbsp; Angular: &theta;(t) = &theta;<sub>max</sub> sin(&omega;t + &phi;)</li>
+          <li>Linear: v(x) = &plusmn;&omega;&radic;(A&sup2; &minus; x&sup2;) &nbsp;&nbsp;&harr;&nbsp;&nbsp; Angular: &Omega;(&theta;) = &plusmn;&omega;&radic;(&theta;<sub>max</sub>&sup2; &minus; &theta;&sup2;)</li>
+          <li>Linear: a(x) = &minus;&omega;&sup2;x &nbsp;&nbsp;&harr;&nbsp;&nbsp; Angular: &alpha;(&theta;) = &minus;&omega;&sup2;&theta;</li>
+        </ul>
+      </div>
+
+      <!-- Section 11: Superposition of SHMs -->
+      <div class="theory-section">
+        <h2>11. Superposition of SHMs</h2>
+        <p>
+          When two or more SHMs act on a particle simultaneously, the resultant displacement is the vector sum
+          (algebraic sum for same-line motions) of individual displacements.
+        </p>
+
+        <h3>Same Frequency, Different Phase (Along the Same Line)</h3>
+        <p>
+          If x&#8321; = A&#8321; sin(&omega;t + &phi;&#8321;) and x&#8322; = A&#8322; sin(&omega;t + &phi;&#8322;),
+          the resultant is also SHM with the same frequency. The resultant amplitude is:
+        </p>
+        <div class="formula-box">
+          A<sub>R</sub> = &radic;(A&#8321;&sup2; + A&#8322;&sup2; + 2A&#8321;A&#8322; cos&delta;)<br>
+          tan&phi; = (A&#8322; sin&delta;) / (A&#8321; + A&#8322; cos&delta;)<br>
+          where &delta; = &phi;&#8322; &minus; &phi;&#8321; is the phase difference
+        </div>
+        <ul>
+          <li><strong>&delta; = 0 (in phase):</strong> A<sub>R</sub> = A&#8321; + A&#8322; (constructive superposition).</li>
+          <li><strong>&delta; = &pi; (out of phase):</strong> A<sub>R</sub> = |A&#8321; &minus; A&#8322;| (destructive superposition).</li>
+          <li>If two SHMs have the same amplitude A and same frequency but phase difference &pi;, they cancel completely.</li>
+        </ul>
+
+        <h3>Special Case: x&#8321; = A sin(&omega;t) and x&#8322; = A cos(&omega;t)</h3>
+        <p>
+          Resultant: x = A&radic;2 sin(&omega;t + &pi;/4). The resultant amplitude is A&radic;2, the time
+          period is unchanged, and the initial phase is &pi;/4.
+        </p>
+
+        <h3>Perpendicular SHMs &amp; Lissajous Figures</h3>
+        <p>
+          When two SHMs are perpendicular to each other, the resulting path traced by the particle depends on
+          the amplitudes, frequencies, and phase difference. If x = A sin(&omega;t) and
+          y = B sin(&omega;t + &delta;), the path depends on &delta;:
         </p>
         <ul>
-          <li>&delta; = 0 or &pi;: straight line (y = &plusmn;(B/A)x)</li>
-          <li>&delta; = &pi;/2: ellipse; if A = B, a circle</li>
-          <li>Other values of &delta;: general ellipse</li>
+          <li><strong>&delta; = 0 or &pi;:</strong> straight line (y = &plusmn;(B/A)x)</li>
+          <li><strong>&delta; = &pi;/2:</strong> ellipse; if A = B, a circle (x&sup2; + y&sup2; = A&sup2;)</li>
+          <li><strong>Other values of &delta;:</strong> general ellipse</li>
         </ul>
         <p>
           When the two frequencies are different, the Lissajous figures become more complex and their shape
           depends on the frequency ratio. These patterns are used in oscilloscopes to compare frequencies.
         </p>
 
-        <div class="example-box">
-          <div class="ex-label">Solved Example 3</div>
-          <p>
-            Two SHMs of equal amplitude A and same frequency are superposed along the same line with a phase
-            difference of 120&deg;. Find the amplitude of the resultant SHM.
-          </p>
-          <div class="solution">
-            <p>
-              A<sub>R</sub> = &radic;(A&sup2; + A&sup2; + 2A&sup2; cos 120&deg;)<br>
-              cos 120&deg; = &minus;1/2<br>
-              A<sub>R</sub> = &radic;(A&sup2; + A&sup2; + 2A&sup2;(&minus;1/2))<br>
-              A<sub>R</sub> = &radic;(A&sup2; + A&sup2; &minus; A&sup2;)<br>
-              A<sub>R</sub> = &radic;(A&sup2;) = A<br><br>
-              The resultant amplitude equals A, the same as each individual SHM.
-            </p>
-          </div>
+        <h3>Beats from Superposition</h3>
+        <p>
+          Superposition of two SHMs of slightly different frequencies produces beats. For instance,
+          x = a cos(2.1t) cos(50t) represents a modulated oscillation with constituent frequencies
+          &omega;&#8321; = 52.1 rad/s and &omega;&#8322; = 47.9 rad/s; the beat frequency = |&omega;&#8321; &minus; &omega;&#8322;|/(2&pi;).
+        </p>
+      </div>
+
+      <!-- Section 12: Damped & Forced Oscillations -->
+      <div class="theory-section">
+        <h2>12. Damped &amp; Forced Oscillations</h2>
+
+        <h3>Damped Oscillations</h3>
+        <p>
+          In real systems, dissipative forces (friction, air resistance, viscosity) act on the oscillator,
+          causing the amplitude to decrease over time. If the damping force is proportional to velocity
+          (F<sub>d</sub> = &minus;bv), the equation of motion becomes:
+        </p>
+        <div class="formula-box">
+          m(d&sup2;x/dt&sup2;) + b(dx/dt) + kx = 0<br>
+          Solution: x(t) = A&#8320; e<sup>&minus;(b/2m)t</sup> sin(&omega;&prime;t + &phi;)<br>
+          Damped angular frequency: &omega;&prime; = &radic;(&omega;&#8320;&sup2; &minus; (b/2m)&sup2;)<br>
+          where &omega;&#8320; = &radic;(k/m) is the natural frequency
         </div>
+        <p>
+          The amplitude decays exponentially with the damping factor b/2m. The oscillation frequency
+          &omega;&prime; is slightly less than the natural frequency &omega;&#8320;.
+        </p>
+
+        <h3>Types of Damping</h3>
+        <ul>
+          <li><strong>Underdamped</strong> (b/2m &lt; &omega;&#8320;): the system oscillates with decreasing amplitude. This is the most common case.</li>
+          <li><strong>Critically damped</strong> (b/2m = &omega;&#8320;): the system returns to equilibrium without oscillating, in the shortest possible time.</li>
+          <li><strong>Overdamped</strong> (b/2m &gt; &omega;&#8320;): the system returns to equilibrium without oscillating, but more slowly than critically damped.</li>
+        </ul>
+
+        <h3>Quality Factor</h3>
+        <div class="formula-box">
+          Q = &omega;&#8320; / (2b/m) = &omega;&#8320; &times; m / (2b)<br>
+          Higher Q &rArr; sharper resonance, less damping
+        </div>
+
+        <h3>Forced Oscillations &amp; Resonance</h3>
+        <p>
+          When an external periodic force F = F&#8320; cos(&omega;<sub>d</sub>t) drives a damped oscillator,
+          the system eventually oscillates at the <strong>driving frequency</strong> &omega;<sub>d</sub> (not
+          its natural frequency) with a steady amplitude that depends on how close &omega;<sub>d</sub> is to
+          the natural frequency &omega;&#8320;.
+        </p>
+        <p>
+          <strong>Resonance</strong> occurs when &omega;<sub>d</sub> &asymp; &omega;&#8320;, at which the
+          amplitude of oscillation becomes maximum. At resonance, maximum energy transfer occurs from the
+          driving force to the system.
+        </p>
+        <ul>
+          <li>The sharpness of the resonance peak depends on the damping: less damping leads to a sharper, taller peak.</li>
+          <li><strong>Examples of resonance:</strong> soldiers breaking step on a bridge (to avoid resonance), tuning a radio (matching circuit frequency to broadcast frequency), musical instruments, Tacoma Narrows Bridge collapse.</li>
+        </ul>
+
+        <h3>Resonance Condition</h3>
+        <div class="formula-box">
+          At resonance: &omega;<sub>d</sub> = &omega;&#8320; = &radic;(k/m)
+        </div>
+        <p>
+          In JEE, damped and forced oscillations are mostly conceptual; focus on understanding the resonance
+          condition, energy considerations, and the three damping regimes.
+        </p>
       </div>
 
       <!-- Key Formulas Summary -->
       <div class="theory-section">
         <h2>Key Formulas Summary</h2>
         <div class="formula-box">
-          x = A sin(&omega;t + &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = 2&pi;/T = 2&pi;f<br>
+          <strong>SHM Basics:</strong><br>
+          x = A sin(&omega;t + &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = 2&pi;/T = 2&pi;f = &radic;(k/m)<br>
           v = A&omega; cos(&omega;t + &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; a = &minus;A&omega;&sup2; sin(&omega;t + &phi;)<br>
-          T<sub>spring</sub> = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; T<sub>pendulum</sub> = 2&pi;&radic;(l/g)<br>
-          E = &frac12;kA&sup2; = &frac12;m&omega;&sup2;A&sup2;<br>
-          KE = &frac12;k(A&sup2; &minus; x&sup2;) &nbsp;&nbsp;|&nbsp;&nbsp; PE = &frac12;kx&sup2;
+          v(x) = &plusmn;&omega;&radic;(A&sup2; &minus; x&sup2;) &nbsp;&nbsp;|&nbsp;&nbsp; a(x) = &minus;&omega;&sup2;x<br><br>
+
+          <strong>Energy:</strong><br>
+          KE = &frac12;k(A&sup2; &minus; x&sup2;) &nbsp;&nbsp;|&nbsp;&nbsp; PE = &frac12;kx&sup2;<br>
+          TE = &frac12;kA&sup2; = &frac12;m&omega;&sup2;A&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; &langle;KE&rangle; = &langle;PE&rangle; = E/2<br><br>
+
+          <strong>Spring-Mass System:</strong><br>
+          T = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; Series: 1/k<sub>eff</sub> = 1/k&#8321; + 1/k&#8322;<br>
+          Parallel: k<sub>eff</sub> = k&#8321; + k&#8322; &nbsp;&nbsp;|&nbsp;&nbsp; Reduced mass: &mu; = m&#8321;m&#8322;/(m&#8321; + m&#8322;)<br><br>
+
+          <strong>Simple Pendulum:</strong><br>
+          T = 2&pi;&radic;(l/g) &nbsp;&nbsp;|&nbsp;&nbsp; Seconds pendulum: l = g/&pi;&sup2; &asymp; 1 m<br>
+          In lift (upward a): T = 2&pi;&radic;(l/(g+a)) &nbsp;&nbsp;|&nbsp;&nbsp; Free fall: T &rarr; &infin;<br><br>
+
+          <strong>Physical &amp; Torsional Pendulum:</strong><br>
+          Physical: T = 2&pi;&radic;(I/mgd) &nbsp;&nbsp;|&nbsp;&nbsp; L<sub>eq</sub> = I/(md)<br>
+          Torsional: T = 2&pi;&radic;(I/C)<br><br>
+
+          <strong>Superposition (same frequency):</strong><br>
+          A<sub>R</sub> = &radic;(A&#8321;&sup2; + A&#8322;&sup2; + 2A&#8321;A&#8322; cos&delta;)<br><br>
+
+          <strong>Damped Oscillations:</strong><br>
+          x(t) = A&#8320; e<sup>&minus;(b/2m)t</sup> sin(&omega;&prime;t + &phi;)<br>
+          &omega;&prime; = &radic;(&omega;&#8320;&sup2; &minus; (b/2m)&sup2;) &nbsp;&nbsp;|&nbsp;&nbsp; Resonance: &omega;<sub>d</sub> = &omega;&#8320;<br><br>
+
+          <strong>Special Systems:</strong><br>
+          U-tube liquid: T = 2&pi;&radic;(l/g) &nbsp;&nbsp;|&nbsp;&nbsp; Floating cylinder: T = 2&pi;&radic;(l/g)<br>
+          Rolling cylinder on spring: T = 2&pi;&radic;(3m/(2k))
         </div>
       </div>
 
@@ -405,8 +778,8 @@
       <div class="footer-col">
         <h4>Resources</h4>
         <a href="../chapters.html">Chapters</a>
-        
-        
+
+
         <a href="../simulations.html">Simulations</a>
       </div>
       <div class="footer-col">

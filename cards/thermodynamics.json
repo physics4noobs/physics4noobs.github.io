@@ -1,0 +1,267 @@
+[
+  {
+    "id": "thermo-f-01",
+    "type": "formula",
+    "front": "Ideal Gas Equation",
+    "back": "PV = nRT\n\nR = 8.314\\text{ J mol}^{-1}\\text{K}^{-1} = 0.082\\text{ L·atm mol}^{-1}\\text{K}^{-1}\n\nAlternate form: PM = dRT\\text{ (d = density, M = molar mass)}\n\nFor N molecules: PV = Nk_BT,\\quad k_B = 1.38 \\times 10^{-23}\\text{ J/K}",
+    "tags": ["thermodynamics", "ideal-gas"]
+  },
+  {
+    "id": "thermo-f-02",
+    "type": "formula",
+    "front": "RMS Speed of Gas Molecules",
+    "back": "v_{rms} = \\sqrt{\\frac{3RT}{M}} = \\sqrt{\\frac{3k_BT}{m_0}} = \\sqrt{\\frac{3P}{\\rho}}\n\nwhere M is molar mass, m_0 is mass of one molecule, \\rho is density",
+    "tags": ["thermodynamics", "molecular-speeds"]
+  },
+  {
+    "id": "thermo-f-03",
+    "type": "formula",
+    "front": "Average Speed of Gas Molecules",
+    "back": "v_{avg} = \\sqrt{\\frac{8RT}{\\pi M}} = \\sqrt{\\frac{8k_BT}{\\pi m_0}}\n\nv_{avg} \\approx 0.921 \\times v_{rms}",
+    "tags": ["thermodynamics", "molecular-speeds"]
+  },
+  {
+    "id": "thermo-f-04",
+    "type": "formula",
+    "front": "Most Probable Speed of Gas Molecules",
+    "back": "v_{mp} = \\sqrt{\\frac{2RT}{M}} = \\sqrt{\\frac{2k_BT}{m_0}}\n\nv_{mp} is the speed at which the Maxwell speed distribution curve peaks\n\nOrdering: v_{rms} > v_{avg} > v_{mp}",
+    "tags": ["thermodynamics", "molecular-speeds"]
+  },
+  {
+    "id": "thermo-f-05",
+    "type": "formula",
+    "front": "Pressure of an Ideal Gas from Kinetic Theory (KTG)",
+    "back": "P = \\frac{1}{3}\\rho\\, v_{rms}^2 = \\frac{1}{3}\\frac{m_0 N}{V}\\, v_{rms}^2\n\nwhere \\rho is gas density, m_0 is molecular mass, N is total number of molecules",
+    "tags": ["thermodynamics", "kinetic-theory"]
+  },
+  {
+    "id": "thermo-f-06",
+    "type": "formula",
+    "front": "Average Kinetic Energy per Molecule of a Gas",
+    "back": "\\text{KE}_{avg} = \\frac{1}{2}m_0\\, v_{rms}^2 = \\frac{3}{2}k_BT\n\n\\text{KE per mole} = \\frac{3}{2}RT\n\nDepends only on temperature, not on the nature of the gas",
+    "tags": ["thermodynamics", "kinetic-energy"]
+  },
+  {
+    "id": "thermo-f-07",
+    "type": "formula",
+    "front": "Degrees of Freedom, C_v, C_p, and γ for Mono/Di/Polyatomic Gases",
+    "back": "\\text{Monoatomic (f=3): } C_v = \\frac{3}{2}R,\\; C_p = \\frac{5}{2}R,\\; \\gamma = \\frac{5}{3}\n\n\\text{Diatomic (f=5): } C_v = \\frac{5}{2}R,\\; C_p = \\frac{7}{2}R,\\; \\gamma = \\frac{7}{5}\n\n\\text{Triatomic (f=6): } C_v = 3R,\\; C_p = 4R,\\; \\gamma = \\frac{4}{3}\n\n\\text{General: } C_v = \\frac{f}{2}R,\\; C_p = \\left(\\frac{f}{2}+1\\right)R,\\; \\gamma = 1 + \\frac{2}{f}",
+    "tags": ["thermodynamics", "specific-heats"]
+  },
+  {
+    "id": "thermo-f-08",
+    "type": "formula",
+    "front": "Mayer's Relation between C_p and C_v",
+    "back": "C_p - C_v = R\n\nAlso: C_v = \\frac{R}{\\gamma - 1},\\quad C_p = \\frac{\\gamma R}{\\gamma - 1}\n\nValid for all ideal gases regardless of atomicity",
+    "tags": ["thermodynamics", "specific-heats"]
+  },
+  {
+    "id": "thermo-f-09",
+    "type": "formula",
+    "front": "First Law of Thermodynamics",
+    "back": "\\Delta Q = \\Delta U + W\n\n\\text{or equivalently: } \\Delta U = Q - W\n\nwhere \\Delta Q = heat supplied, \\Delta U = change in internal energy, W = work done by the system\n\n\\Delta U = nC_v\\Delta T\\text{ for any process (state function)}",
+    "tags": ["thermodynamics", "first-law"]
+  },
+  {
+    "id": "thermo-f-10",
+    "type": "formula",
+    "front": "Work Done in Isothermal Process",
+    "back": "W = nRT\\ln\\left(\\frac{V_2}{V_1}\\right) = 2.303\\, nRT\\log_{10}\\left(\\frac{V_2}{V_1}\\right)\n\nSince T = \\text{const}: \\Delta U = 0,\\; \\Delta Q = W\n\nP-V curve is a rectangular hyperbola (PV = \\text{const})",
+    "tags": ["thermodynamics", "isothermal-process"]
+  },
+  {
+    "id": "thermo-f-11",
+    "type": "formula",
+    "front": "Adiabatic Process Relations",
+    "back": "PV^{\\gamma} = \\text{constant}\n\nTV^{\\gamma - 1} = \\text{constant}\n\nT^{\\gamma}P^{1-\\gamma} = \\text{constant}\n\nNo heat exchange: \\Delta Q = 0,\\text{ so } W = -\\Delta U",
+    "tags": ["thermodynamics", "adiabatic-process"]
+  },
+  {
+    "id": "thermo-f-12",
+    "type": "formula",
+    "front": "Work Done in Adiabatic Process",
+    "back": "W = \\frac{P_1V_1 - P_2V_2}{\\gamma - 1} = \\frac{nR(T_1 - T_2)}{\\gamma - 1}\n\n\\text{Expansion }(T_1 > T_2):\\; W > 0\n\\text{Compression }(T_2 > T_1):\\; W < 0",
+    "tags": ["thermodynamics", "adiabatic-process"]
+  },
+  {
+    "id": "thermo-f-13",
+    "type": "formula",
+    "front": "Carnot Engine Efficiency",
+    "back": "\\eta = 1 - \\frac{T_2}{T_1} = \\frac{W}{Q_1} = \\frac{Q_1 - Q_2}{Q_1}\n\nwhere T_1 = source temperature, T_2 = sink temperature (in Kelvin)\n\nAlso: \\frac{Q_1}{T_1} = \\frac{Q_2}{T_2}",
+    "tags": ["thermodynamics", "carnot-engine"]
+  },
+  {
+    "id": "thermo-f-14",
+    "type": "formula",
+    "front": "Stefan-Boltzmann Law of Radiation",
+    "back": "P = \\sigma \\varepsilon A T^4\n\n\\sigma = 5.67 \\times 10^{-8}\\text{ W m}^{-2}\\text{K}^{-4}\n\n\\varepsilon = \\text{emissivity (0 to 1; 1 for black body)}\n\n\\text{Net radiation: } P_{net} = \\sigma \\varepsilon A(T^4 - T_s^4)",
+    "tags": ["thermodynamics", "heat-transfer"]
+  },
+  {
+    "id": "thermo-f-15",
+    "type": "formula",
+    "front": "Newton's Law of Cooling",
+    "back": "\\frac{dT}{dt} = -k(T - T_s)\n\nwhere T is body temperature, T_s is surrounding temperature, k is a positive constant\n\n\\text{Approximate form: }\\frac{T_1 - T_2}{t} = k\\left(\\frac{T_1 + T_2}{2} - T_s\\right)\n\nValid when temperature difference is small",
+    "tags": ["thermodynamics", "heat-transfer"]
+  },
+  {
+    "id": "thermo-c-01",
+    "type": "concept",
+    "front": "What are the fundamental assumptions of the Kinetic Theory of Gases?",
+    "back": "**Postulates of Kinetic Theory:**\n\n1. Gas consists of a large number of identical, rigid, perfectly elastic spheres; molecular volume is negligible compared to container volume\n2. Molecules are in continuous random motion in all directions with all possible velocities\n3. Collisions between molecules and with walls are perfectly elastic (KE is conserved)\n4. No intermolecular forces act except during brief collisions; energy is purely kinetic\n5. Molecules travel in straight lines between collisions; the average distance between collisions is the **mean free path**\n6. Time of collision is negligible compared to time between collisions\n\nA gas satisfying all assumptions is called an **ideal gas**. Real gases deviate at low temperature and high pressure.",
+    "tags": ["thermodynamics", "kinetic-theory"]
+  },
+  {
+    "id": "thermo-c-02",
+    "type": "concept",
+    "front": "What is the difference between isothermal and adiabatic processes?",
+    "back": "**Isothermal Process (T = constant):**\n- System in thermal contact with reservoir\n- Process must be slow (quasi-static)\n- PV = \\text{constant} (Boyle's Law)\n- \\Delta U = 0, so \\Delta Q = W\n- P-V curve: rectangular hyperbola\n\n**Adiabatic Process (\\Delta Q = 0):**\n- System is thermally insulated\n- Process can be rapid/sudden\n- PV^{\\gamma} = \\text{constant}\n- W = -\\Delta U (work at expense of internal energy)\n- P-V curve: steeper than isothermal\n\n**Key difference:** In isothermal, energy comes from the reservoir; in adiabatic, energy comes from the gas itself (changing its temperature).",
+    "tags": ["thermodynamics", "thermodynamic-processes"]
+  },
+  {
+    "id": "thermo-c-03",
+    "type": "concept",
+    "front": "State the Kelvin-Planck and Clausius statements of the Second Law of Thermodynamics.",
+    "back": "**Kelvin-Planck Statement:**\nIt is impossible to construct a heat engine that, operating in a cycle, converts all the heat absorbed from a single reservoir entirely into work with no other effect. (No perfect heat engine exists.)\n\n**Clausius Statement:**\nIt is impossible for heat to flow spontaneously from a colder body to a hotter body without external work being done. (No perfect refrigerator exists.)\n\n**Both statements are equivalent** -- violating one implies violating the other.\n\nConsequence: No engine can be more efficient than a Carnot engine operating between the same two temperatures.",
+    "tags": ["thermodynamics", "second-law"]
+  },
+  {
+    "id": "thermo-c-04",
+    "type": "concept",
+    "front": "Explain the Law of Equipartition of Energy.",
+    "back": "**Equipartition Theorem:**\n\nFor a system in thermal equilibrium at temperature T, each **degree of freedom** contributes:\n- \\frac{1}{2}k_BT per molecule\n- \\frac{1}{2}RT per mole\n\n**Degrees of freedom (f):**\n- Monoatomic (He, Ne): f = 3 (3 translational)\n- Diatomic (H_2, O_2): f = 5 (3 translational + 2 rotational)\n- Triatomic (CO_2, H_2O): f = 6 (3 translational + 3 rotational)\n\n**Total internal energy per mole:** U = \\frac{f}{2}RT\n\nThis theorem explains why different gases have different specific heat capacities.",
+    "tags": ["thermodynamics", "equipartition"]
+  },
+  {
+    "id": "thermo-c-05",
+    "type": "concept",
+    "front": "Why is C_p always greater than C_v for a gas?",
+    "back": "**C_p > C_v because of expansion work:**\n\nAt **constant volume:** All heat goes into raising the internal energy of the gas.\n\\Delta Q = nC_v\\Delta T = \\Delta U\n\nAt **constant pressure:** The gas must also expand against external pressure, doing additional work W = nR\\Delta T.\n\\Delta Q = nC_p\\Delta T = \\Delta U + W\n\nSince the gas needs extra heat to do expansion work:\nC_p = C_v + R\\quad\\text{(Mayer's relation)}\n\nThe ratio \\gamma = C_p/C_v is always > 1 for any gas.",
+    "tags": ["thermodynamics", "specific-heats"]
+  },
+  {
+    "id": "thermo-c-06",
+    "type": "concept",
+    "front": "Describe the four steps of the Carnot cycle.",
+    "back": "**Carnot Cycle (4 reversible steps):**\n\n**Step 1 -- Isothermal Expansion (A to B):**\nGas absorbs heat Q_1 from source at T_1, expands slowly. \\Delta U = 0, W_1 = Q_1.\n\n**Step 2 -- Adiabatic Expansion (B to C):**\nGas is insulated and expands further. Temperature drops from T_1 to T_2. W_2 = nR(T_1 - T_2)/(\\gamma - 1).\n\n**Step 3 -- Isothermal Compression (C to D):**\nGas is compressed at T_2, rejecting heat Q_2 to the sink. \\Delta U = 0.\n\n**Step 4 -- Adiabatic Compression (D to A):**\nGas is insulated and compressed. Temperature rises from T_2 back to T_1.\n\n**Net work** = area enclosed in P-V diagram.\n**Efficiency:** \\eta = 1 - T_2/T_1",
+    "tags": ["thermodynamics", "carnot-engine"]
+  },
+  {
+    "id": "thermo-c-07",
+    "type": "concept",
+    "front": "How does heat conduction work in series and parallel combinations?",
+    "back": "**Series Combination (layers in sequence):**\n- Same heat current flows through all layers\n- Thermal resistances add: R_{total} = R_1 + R_2 + \\ldots\n- R = \\frac{L}{kA} where L = thickness, k = conductivity, A = area\n- Equivalent: \\frac{L_1 + L_2}{k_{eq}} = \\frac{L_1}{k_1} + \\frac{L_2}{k_2}\n\n**Parallel Combination (layers side by side):**\n- Same temperature difference across all layers\n- Conductances add: \\frac{1}{R_{total}} = \\frac{1}{R_1} + \\frac{1}{R_2}\n- Equivalent: k_{eq}(A_1 + A_2) = k_1A_1 + k_2A_2\n\nAnalogous to electrical resistors in series and parallel.",
+    "tags": ["thermodynamics", "heat-transfer"]
+  },
+  {
+    "id": "thermo-c-08",
+    "type": "concept",
+    "front": "What happens during free expansion of an ideal gas?",
+    "back": "**Free Expansion:**\nA gas expands into vacuum (external pressure = 0).\n\n**Key results:**\n- **Work done W = 0** (no external pressure to push against)\n- **Heat exchange Q = 0** (rapid/sudden process, no time for heat transfer)\n- By First Law: \\Delta U = Q - W = 0\n- **Temperature remains unchanged** (for ideal gas)\n- **Internal energy is unchanged**\n\n**Important:** This is an **irreversible** process. The gas does no useful work.\n\nFor a real gas, free expansion causes a slight temperature change (Joule-Thomson effect) due to intermolecular forces.",
+    "tags": ["thermodynamics", "free-expansion"]
+  },
+  {
+    "id": "thermo-c-09",
+    "type": "concept",
+    "front": "How do real gases differ from ideal gases?",
+    "back": "**Ideal Gas:**\n- Obeys PV = nRT exactly at all conditions\n- No intermolecular forces\n- Molecules are point particles (zero volume)\n\n**Real Gas -- Deviations:**\n- At **high pressure:** Molecular volume becomes significant; actual volume > predicted\n- At **low temperature:** Intermolecular attractions become significant; actual pressure < predicted\n- Described by van der Waals equation: \\left(P + \\frac{a}{V^2}\\right)(V - b) = RT (for 1 mole)\n  - a accounts for intermolecular attraction\n  - b accounts for molecular volume\n\n**Real gases approximate ideal behaviour at high temperature and low pressure**, where molecules are far apart and move fast.",
+    "tags": ["thermodynamics", "real-gas"]
+  },
+  {
+    "id": "thermo-c-10",
+    "type": "concept",
+    "front": "What are the three types of thermal expansion and their coefficients?",
+    "back": "**Linear Expansion (solids -- length):**\nL = L_0(1 + \\alpha\\Delta T)\n\\alpha = coefficient of linear expansion\n\n**Area (Superficial) Expansion:**\nA = A_0(1 + \\beta\\Delta T)\n\\beta = coefficient of area expansion\n\n**Volume (Cubical) Expansion:**\nV = V_0(1 + \\gamma_v\\Delta T)\n\\gamma_v = coefficient of volume expansion\n\n**Relation between coefficients:**\n\\alpha : \\beta : \\gamma_v = 1 : 2 : 3\n\nSo \\beta = 2\\alpha and \\gamma_v = 3\\alpha\n\nFor liquids, only volume expansion is defined. The **apparent expansion** of a liquid in a container depends on \\gamma_{liquid} - \\gamma_{container}.",
+    "tags": ["thermodynamics", "thermal-expansion"]
+  },
+  {
+    "id": "thermo-mcq-01",
+    "type": "mcq",
+    "front": "The ratio of RMS speed, average speed, and most probable speed of gas molecules at a given temperature is:",
+    "options": ["1 : 1.13 : 1.22", "1.22 : 1.13 : 1", "1.73 : 1.60 : 1.41", "1.41 : 1.60 : 1.73"],
+    "answer": "B",
+    "back": "**Answer: B -- 1.22 : 1.13 : 1**\n\nv_{rms} : v_{avg} : v_{mp} = \\sqrt{3} : \\sqrt{\\frac{8}{\\pi}} : \\sqrt{2}\n\n= 1.732 : 1.596 : 1.414\n\nDividing by \\sqrt{2}:\n= 1.224 : 1.128 : 1\n\nSo v_{rms} > v_{avg} > v_{mp} always holds.",
+    "tags": ["thermodynamics", "molecular-speeds"]
+  },
+  {
+    "id": "thermo-mcq-02",
+    "type": "mcq",
+    "front": "How many degrees of freedom does a diatomic gas molecule have at moderate temperature?",
+    "options": ["3", "5", "6", "7"],
+    "answer": "B",
+    "back": "**Answer: B -- 5**\n\nA diatomic molecule (e.g., O_2, N_2) has:\n- 3 translational degrees of freedom (motion along x, y, z)\n- 2 rotational degrees of freedom (rotation about two axes perpendicular to the bond axis)\n\nTotal f = 5 at moderate temperatures.\n\nAt very high temperatures, vibrational modes (2 more) become active, giving f = 7.",
+    "tags": ["thermodynamics", "degrees-of-freedom"]
+  },
+  {
+    "id": "thermo-mcq-03",
+    "type": "mcq",
+    "front": "In a cyclic process, a gas returns to its initial state. The net change in internal energy and net work done are:",
+    "options": ["ΔU = 0, W = 0", "ΔU ≠ 0, W = 0", "ΔU = 0, W = ΔQ (net heat)", "ΔU = ΔQ, W = 0"],
+    "answer": "C",
+    "back": "**Answer: C -- \\Delta U = 0, W = \\Delta Q**\n\nIn a cyclic process, the system returns to its original state.\n\nSince internal energy is a state function:\n\\Delta U = 0\n\nBy the First Law: \\Delta Q = \\Delta U + W\n\\Rightarrow \\Delta Q = W\n\nThe net work done equals the area enclosed by the cycle on the P-V diagram. Work is positive if the cycle is clockwise, negative if anticlockwise.",
+    "tags": ["thermodynamics", "cyclic-process"]
+  },
+  {
+    "id": "thermo-mcq-04",
+    "type": "mcq",
+    "front": "A Carnot engine operates between a source at 600 K and a sink at 300 K. Its efficiency is:",
+    "options": ["25%", "50%", "75%", "100%"],
+    "answer": "B",
+    "back": "**Answer: B -- 50%**\n\n\\eta = 1 - \\frac{T_2}{T_1} = 1 - \\frac{300}{600} = 1 - 0.5 = 0.5\n\n\\eta = 50\\%\n\nThe Carnot efficiency depends only on the source and sink temperatures (in Kelvin), not on the working substance.",
+    "tags": ["thermodynamics", "carnot-engine"]
+  },
+  {
+    "id": "thermo-mcq-05",
+    "type": "mcq",
+    "front": "On a P-V diagram, which process curve is steeper -- isothermal or adiabatic?",
+    "options": ["Isothermal is steeper", "Adiabatic is steeper", "Both have the same slope", "Depends on the gas"],
+    "answer": "B",
+    "back": "**Answer: B -- Adiabatic is steeper**\n\nFor an isothermal process: PV = C, so \\frac{dP}{dV} = -\\frac{P}{V}\n\nFor an adiabatic process: PV^{\\gamma} = C, so \\frac{dP}{dV} = -\\gamma\\frac{P}{V}\n\nSince \\gamma > 1, the adiabatic slope is \\gamma times the isothermal slope at any point.\n\nThis means the adiabatic curve is always steeper than the isothermal curve on the P-V diagram.",
+    "tags": ["thermodynamics", "pv-diagrams"]
+  },
+  {
+    "id": "thermo-mcq-06",
+    "type": "mcq",
+    "front": "The speed of sound in a gas is v at temperature T. At temperature 4T, the speed of sound will be:",
+    "options": ["v", "2v", "4v", "v/2"],
+    "answer": "B",
+    "back": "**Answer: B -- 2v**\n\nThe speed of sound in an ideal gas is:\nv_s = \\sqrt{\\frac{\\gamma RT}{M}}\n\nSo v_s \\propto \\sqrt{T}\n\n\\frac{v_2}{v_1} = \\sqrt{\\frac{T_2}{T_1}} = \\sqrt{\\frac{4T}{T}} = 2\n\nTherefore v_2 = 2v. The speed of sound doubles when the absolute temperature is quadrupled.",
+    "tags": ["thermodynamics", "sound-speed"]
+  },
+  {
+    "id": "thermo-mcq-07",
+    "type": "mcq",
+    "front": "Two ideal gases at temperatures T₁ and T₂ with n₁ and n₂ moles are mixed in an insulated container. The final temperature of the mixture is:",
+    "options": ["(T₁ + T₂)/2", "(n₁T₁ + n₂T₂)/(n₁ + n₂)", "√(T₁T₂)", "(n₁T₂ + n₂T₁)/(n₁ + n₂)"],
+    "answer": "B",
+    "back": "**Answer: B -- \\frac{n_1T_1 + n_2T_2}{n_1 + n_2}**\n\nFor an insulated container, total internal energy is conserved:\nn_1C_v T_1 + n_2C_v T_2 = (n_1 + n_2)C_v T\n\nSolving: T = \\frac{n_1T_1 + n_2T_2}{n_1 + n_2}\n\nThis assumes both gases are the same type (same C_v). For different gases, use the weighted sum with respective C_v values.",
+    "tags": ["thermodynamics", "gas-mixing"]
+  },
+  {
+    "id": "thermo-mcq-08",
+    "type": "mcq",
+    "front": "For a monoatomic ideal gas, the ratio C_p/C_v (adiabatic index γ) is:",
+    "options": ["4/3", "7/5", "5/3", "9/7"],
+    "answer": "C",
+    "back": "**Answer: C -- 5/3**\n\nFor monoatomic gas: f = 3 degrees of freedom\nC_v = \\frac{3}{2}R,\\quad C_p = \\frac{5}{2}R\n\n\\gamma = \\frac{C_p}{C_v} = \\frac{5/2}{3/2} = \\frac{5}{3} \\approx 1.67\n\n**Comparison:**\n- Monoatomic: \\gamma = 5/3\n- Diatomic: \\gamma = 7/5 = 1.4\n- Triatomic: \\gamma = 4/3 \\approx 1.33",
+    "tags": ["thermodynamics", "specific-heats"]
+  },
+  {
+    "id": "thermo-mcq-09",
+    "type": "mcq",
+    "front": "The value of the adiabatic index γ for a diatomic gas (at moderate temperature) is:",
+    "options": ["1.33", "1.40", "1.50", "1.67"],
+    "answer": "B",
+    "back": "**Answer: B -- 1.40**\n\nFor a diatomic gas (e.g., N_2, O_2) at moderate temperature:\nf = 5,\\quad C_v = \\frac{5}{2}R,\\quad C_p = \\frac{7}{2}R\n\n\\gamma = \\frac{C_p}{C_v} = \\frac{7}{5} = 1.40\n\nGeneral formula: \\gamma = 1 + \\frac{2}{f}\n\nAt very high temperatures, vibrational modes activate (f = 7), giving \\gamma = 9/7 \\approx 1.29.",
+    "tags": ["thermodynamics", "specific-heats"]
+  },
+  {
+    "id": "thermo-mcq-10",
+    "type": "mcq",
+    "front": "A body at 80°C cools to 70°C in 5 minutes in a room at 25°C. Using Newton's law of cooling, the time to cool further from 70°C to 60°C is approximately:",
+    "options": ["5 minutes", "More than 5 minutes", "Less than 5 minutes", "Exactly 10 minutes"],
+    "answer": "B",
+    "back": "**Answer: B -- More than 5 minutes**\n\nBy Newton's law of cooling: \\frac{dT}{dt} = -k(T - T_s)\n\nThe rate of cooling is proportional to the temperature difference (T - T_s).\n\n**First interval (80 to 70°C):**\nAverage excess = \\frac{80+70}{2} - 25 = 50°C\n\n**Second interval (70 to 60°C):**\nAverage excess = \\frac{70+60}{2} - 25 = 40°C\n\nSince the temperature difference is smaller in the second interval, the rate of cooling is slower, so it takes **longer** than 5 minutes (approximately 6.25 minutes).",
+    "tags": ["thermodynamics", "newtons-law-cooling"]
+  }
+]

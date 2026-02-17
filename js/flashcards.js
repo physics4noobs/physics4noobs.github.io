@@ -47,7 +47,10 @@
     gravitation: 'Gravitation',
     'rotational-motion': 'Rotational Motion',
     'mechanical-properties': 'Mechanical Properties',
-    'fluid-mechanics': 'Fluid Mechanics'
+    'fluid-mechanics': 'Fluid Mechanics',
+    thermodynamics: 'Thermodynamics',
+    shm: 'Simple Harmonic Motion',
+    waves: 'Waves'
   };
   var currentChapter = null;
   var cards = [];

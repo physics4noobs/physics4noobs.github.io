@@ -22,12 +22,12 @@ VMC Physics Class 11 & 12 JEE (Modules + Workbooks + Solutions)
 | Mechanical Properties | `mechanical-properties.md` | Done | Theory (10 concepts) + 150+ questions (L0-L3, Misc, JEE Main/Advanced archives with keys) |
 | Fluid Mechanics | `fluid-mechanics.md` | Done | Theory (19 concepts) + 170+ questions (L0-L3, Misc, JEE Main/Advanced archives with keys) |
 
-### Session 3 (Pending)
-| Chapter | File | Status |
-|---|---|---|
-| Thermodynamics | `thermodynamics.md` | Pending |
-| Simple Harmonic Motion | `shm.md` | Pending |
-| Waves | `waves.md` | Pending |
+### Session 3 (Completed)
+| Chapter | File | Status | Content |
+|---|---|---|---|
+| Thermodynamics | `thermodynamics.md` | Done | Theory (KTG, gas laws, thermodynamic processes, Carnot) + 200+ questions (L0-L3, Misc, JEE Main/Advanced archives with keys) |
+| Simple Harmonic Motion | `shm.md` | Done | Theory (12 concepts) + 200+ questions (L0-L3, Misc, JEE Main/Advanced archives with keys) |
+| Waves | `waves.md` | Done | Theory (wave motion, superposition, standing waves, beats, Doppler) + 200+ questions (L0-L3, Misc, JEE Main/Advanced archives with keys) |
 
 ### Session 4 (Pending)
 | Chapter | File | Status |

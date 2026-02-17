@@ -87,390 +87,848 @@
         <span class="ch-meta">Chapter 08 &mdash; Grade XI &bull; Thermal Physics</span>
       </div>
 
-      <!-- Section 1: Heat & Temperature -->
+      <!-- 1. Kinetic Theory of Gases -->
       <div class="theory-section">
-        <h2>1. Heat &amp; Temperature</h2>
+        <h2>1. Kinetic Theory of Gases &mdash; Fundamental Assumptions</h2>
         <p>
-          Heat is energy in transit due to a temperature difference, while temperature is a measure of the
-          average kinetic energy of molecules. The Zeroth Law of Thermodynamics establishes the concept of
-          thermal equilibrium: if two systems are each in thermal equilibrium with a third system, then they
-          are in thermal equilibrium with each other. This law provides the foundation for temperature
-          measurement using thermometers.
+          The kinetic theory of gases provides a microscopic model that explains the macroscopic
+          properties of gases &mdash; pressure, temperature, and internal energy &mdash; in terms
+          of the motion of individual molecules. It bridges the gap between molecular behaviour
+          and the thermodynamic quantities we measure in the laboratory.
         </p>
 
-        <h3>Temperature Scales</h3>
+        <h3>Postulates of Kinetic Theory</h3>
+        <ul>
+          <li>A gas consists of a very large number of identical molecules that are rigid, perfectly
+            elastic spheres. The volume occupied by the molecules themselves is negligible compared
+            to the volume of the container.</li>
+          <li>Molecules are in continuous random motion, moving in all directions with all possible
+            velocities. There is no preferred direction of motion.</li>
+          <li>Molecules collide with one another and with the walls of the container. These collisions
+            are perfectly elastic &mdash; kinetic energy is conserved before and after every collision.</li>
+          <li>No intermolecular forces of attraction or repulsion act between the molecules except
+            during the brief instant of collision. The energy of the gas is purely kinetic.</li>
+          <li>Molecules travel in straight lines with uniform velocity between successive collisions.
+            The average distance between two consecutive collisions is called the
+            <strong>mean free path</strong>.</li>
+          <li>The time spent in a collision is negligible compared to the time between collisions.</li>
+        </ul>
         <p>
-          Three principal temperature scales are used in physics. The Celsius scale sets 0&deg;C at the
-          freezing point of water and 100&deg;C at its boiling point. The Fahrenheit scale uses 32&deg;F and
-          212&deg;F for the same reference points. The Kelvin scale is the SI unit of temperature, with
-          0 K representing absolute zero &mdash; the lowest possible temperature where molecular motion
-          ceases entirely.
+          A gas satisfying all these assumptions under all conditions of temperature and pressure is
+          called an <strong>ideal gas</strong> (or perfect gas). Real gases deviate from ideal
+          behaviour at <em>low temperatures</em> and <em>high pressures</em>, where intermolecular
+          forces and molecular volume become significant. At high temperature and low pressure, real
+          gases approximate ideal behaviour closely.
         </p>
-        <div class="formula-box">
-          T(K) = T(&deg;C) + 273.15<br>
-          T(&deg;F) = (9/5) T(&deg;C) + 32<br>
-          T(&deg;C) = (5/9) [T(&deg;F) &minus; 32]
-        </div>
 
-        <h3>Thermal Expansion</h3>
+        <h3>Ideal Gas Equation</h3>
         <p>
-          When a solid is heated, its dimensions increase. The fractional change is proportional to the
-          temperature change, governed by the coefficient of thermal expansion. For linear expansion, the
-          change in length is &Delta;L = L&alpha;&Delta;T, where &alpha; is the coefficient of linear
-          expansion. For area expansion, &Delta;A = 2&alpha;A&Delta;T, and for volume expansion,
-          &Delta;V = 3&alpha;V&Delta;T (equivalently &Delta;V = &gamma;V&Delta;T, where &gamma; = 3&alpha;
-          for isotropic solids).
+          The equation of state for an ideal gas relates its pressure, volume, temperature, and
+          amount of substance:
         </p>
         <div class="formula-box">
-          &Delta;L = L&alpha;&Delta;T &nbsp;&nbsp;(linear expansion)<br>
-          &Delta;A = 2&alpha; A &Delta;T &nbsp;&nbsp;(area expansion)<br>
-          &Delta;V = &gamma; V &Delta;T &nbsp;&nbsp;(volume expansion, &gamma; &asymp; 3&alpha;)
+          PV = nRT
         </div>
+        <p>
+          Here P is the pressure, V is the volume, n is the number of moles, T is the absolute
+          temperature (in Kelvin), and R is the universal gas constant:
+        </p>
+        <div class="formula-box">
+          R = 8.314 J mol<sup>&minus;1</sup> K<sup>&minus;1</sup> = 0.082 L&middot;atm mol<sup>&minus;1</sup> K<sup>&minus;1</sup> = 2 cal mol<sup>&minus;1</sup> K<sup>&minus;1</sup>
+        </div>
+        <p>
+          An alternate form in terms of density is <strong>PM = dRT</strong>, where M is the
+          molar mass and d is the density of the gas. For N individual molecules, the equation
+          becomes PV = Nk<sub>B</sub>T, where k<sub>B</sub> = R/N<sub>A</sub> =
+          1.38 &times; 10<sup>&minus;23</sup> J/K is the Boltzmann constant.
+        </p>
+
+        <h3>Pressure from Molecular Motion</h3>
+        <p>
+          By considering the momentum transfer during elastic collisions of molecules with the
+          walls of the container, we derive the pressure exerted by an ideal gas:
+        </p>
+        <div class="formula-box">
+          P = (1/3)(m&#8320;N/V) c<sub>rms</sub>&sup2; = (1/3) &rho; c<sub>rms</sub>&sup2;
+        </div>
+        <p>
+          Here m&#8320; is the mass of one molecule, N is the total number of molecules, &rho; is
+          the gas density, and c<sub>rms</sub> is the root mean square speed. This result is one
+          of the central achievements of the kinetic theory &mdash; it connects the microscopic
+          quantity (molecular speed) to the macroscopic quantity (pressure).
+        </p>
+
+        <h3>Evidence for Molecular Motion</h3>
+        <ul>
+          <li><strong>Diffusion:</strong> Gases spread spontaneously into available space (e.g., H&#8322;
+            diffuses into CO&#8322; even against gravity).</li>
+          <li><strong>Evaporation:</strong> Fast molecules escape from the liquid surface, causing cooling.</li>
+          <li><strong>Brownian Motion:</strong> Irregular, zigzag motion of small suspended particles
+            caused by random molecular impacts.</li>
+        </ul>
       </div>
 
-      <!-- Section 2: Calorimetry -->
+      <!-- 2. Molecular Speeds -->
       <div class="theory-section">
-        <h2>2. Calorimetry</h2>
+        <h2>2. Molecular Speeds</h2>
         <p>
-          Calorimetry is the science of measuring heat exchange. When two bodies at different temperatures are
-          brought into thermal contact within an insulated system, heat flows from the hotter body to the
-          cooler one until thermal equilibrium is reached. The principle of calorimetry states that heat lost
-          by the hot body equals heat gained by the cold body.
+          The molecules of a gas do not all move at the same speed. The Maxwell&ndash;Boltzmann
+          distribution describes how molecular speeds are distributed at a given temperature. Three
+          characteristic speeds are defined, each providing a different statistical measure of the
+          speed distribution.
         </p>
 
-        <h3>Specific Heat Capacity</h3>
+        <h3>Root Mean Square (RMS) Speed</h3>
         <p>
-          The specific heat capacity (c) of a substance is the amount of heat required to raise the
-          temperature of 1 kg of that substance by 1 K (or 1&deg;C). The heat absorbed or released during
-          a temperature change is given by Q = mc&Delta;T.
-        </p>
-
-        <h3>Latent Heat &amp; Phase Changes</h3>
-        <p>
-          During a phase change (solid &rarr; liquid or liquid &rarr; gas), the temperature remains constant
-          even though heat is being supplied. The latent heat of fusion (L<sub>f</sub>) is the heat per unit
-          mass required to change a solid into a liquid at its melting point, while the latent heat of
-          vaporisation (L<sub>v</sub>) applies to the liquid-gas transition. The heat involved is Q = mL.
-        </p>
-        <p>
-          The water equivalent of a body is the mass of water that would absorb or release the same amount of
-          heat as the body for a given temperature change. It equals mc/c<sub>water</sub>, where c is the
-          specific heat of the body.
+          The RMS speed is the square root of the mean of the squares of all molecular speeds. It
+          is the most commonly used speed in kinetic theory because it relates directly to the
+          kinetic energy of the gas.
         </p>
         <div class="formula-box">
-          Q = mc&Delta;T &nbsp;&nbsp;(temperature change)<br>
-          Q = mL &nbsp;&nbsp;(phase change, L = latent heat)<br>
-          Water equivalent W = mc / c<sub>water</sub>
+          v<sub>rms</sub> = &radic;(3RT/M) = &radic;(3k<sub>B</sub>T/m&#8320;) = &radic;(3P/&rho;)
         </div>
+
+        <h3>Average (Mean) Speed</h3>
+        <p>
+          The average speed is the arithmetic mean of the magnitudes of all molecular velocities:
+        </p>
+        <div class="formula-box">
+          v<sub>avg</sub> = &radic;(8RT/&pi;M) = &radic;(8k<sub>B</sub>T/&pi;m&#8320;)
+        </div>
+
+        <h3>Most Probable Speed</h3>
+        <p>
+          The most probable speed is the speed possessed by the greatest number of molecules &mdash;
+          it corresponds to the peak of the Maxwell&ndash;Boltzmann distribution curve:
+        </p>
+        <div class="formula-box">
+          v<sub>mp</sub> = &radic;(2RT/M) = &radic;(2k<sub>B</sub>T/m&#8320;)
+        </div>
+
+        <h3>Speed Ratios</h3>
+        <p>
+          The three speeds are always ordered as v<sub>rms</sub> &gt; v<sub>avg</sub> &gt;
+          v<sub>mp</sub>. Their ratio is:
+        </p>
+        <div class="formula-box">
+          v<sub>mp</sub> : v<sub>avg</sub> : v<sub>rms</sub> = &radic;2 : &radic;(8/&pi;) : &radic;3 &asymp; 1.41 : 1.60 : 1.73
+        </div>
+        <p>
+          <strong>Important:</strong> At the same temperature, lighter molecules move faster
+          (speed &prop; 1/&radic;M). For the same gas at two different temperatures,
+          v<sub>rms</sub>(T&#8321;)/v<sub>rms</sub>(T&#8322;) = &radic;(T&#8321;/T&#8322;). For
+          two different gases at different temperatures,
+          v<sub>rms,1</sub>/v<sub>rms,2</sub> = &radic;(T&#8321;M&#8322; / T&#8322;M&#8321;).
+        </p>
 
         <div class="example-box">
           <div class="ex-label">Solved Example 1</div>
           <p>
-            A 200 g copper block (c = 390 J/kg&middot;K) at 150&deg;C is dropped into 500 g of water
-            (c = 4200 J/kg&middot;K) at 20&deg;C in a calorimeter. Find the final equilibrium temperature.
+            Calculate the root mean square speed of argon atoms at room temperature (25&deg;C).
+            At what temperature will the RMS speed be half that value?
+            (M<sub>Ar</sub> = 0.040 kg/mol, R = 8.3 J mol<sup>&minus;1</sup> K<sup>&minus;1</sup>)
           </p>
           <div class="solution">
             <p>
-              Heat lost by copper = Heat gained by water<br>
-              m<sub>Cu</sub> c<sub>Cu</sub> (T<sub>Cu</sub> &minus; T<sub>f</sub>) = m<sub>w</sub> c<sub>w</sub> (T<sub>f</sub> &minus; T<sub>w</sub>)<br>
-              0.2 &times; 390 &times; (150 &minus; T<sub>f</sub>) = 0.5 &times; 4200 &times; (T<sub>f</sub> &minus; 20)<br>
-              78 (150 &minus; T<sub>f</sub>) = 2100 (T<sub>f</sub> &minus; 20)<br>
-              11700 &minus; 78 T<sub>f</sub> = 2100 T<sub>f</sub> &minus; 42000<br>
-              53700 = 2178 T<sub>f</sub><br>
-              T<sub>f</sub> &asymp; 24.7&deg;C
+              T = 273 + 25 = 298 K<br><br>
+              v<sub>rms</sub> = &radic;(3RT/M) = &radic;(3 &times; 8.3 &times; 298 / 0.040)<br>
+              v<sub>rms</sub> = &radic;(185,115) &asymp; <strong>430.7 m/s</strong><br><br>
+              For the same gas, v<sub>rms</sub> &prop; &radic;T. If v&prime;<sub>rms</sub> = v<sub>rms</sub>/2:<br>
+              v&prime;/v = &radic;(T&prime;/T) &rArr; 1/2 = &radic;(T&prime;/298)<br>
+              T&prime; = 298/4 = <strong>74.5 K = &minus;198.5&deg;C</strong>
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Section 3: Kinetic Theory of Gases -->
+      <!-- 3. Kinetic Energy & Degrees of Freedom -->
       <div class="theory-section">
-        <h2>3. Kinetic Theory of Gases</h2>
-        <p>
-          The kinetic theory of gases models a gas as a large number of tiny molecules in constant random
-          motion. It provides a microscopic explanation for macroscopic properties like pressure and
-          temperature.
-        </p>
+        <h2>3. Kinetic Energy &amp; Degrees of Freedom</h2>
 
-        <h3>Ideal Gas Equation</h3>
+        <h3>Average Kinetic Energy</h3>
         <p>
-          An ideal gas obeys the equation PV = nRT, where P is pressure, V is volume, n is the number of
-          moles, R = 8.314 J/(mol&middot;K) is the universal gas constant, and T is the absolute temperature.
-          For N molecules, PV = Nk<sub>B</sub>T, where k<sub>B</sub> = R/N<sub>A</sub> is the Boltzmann
-          constant.
-        </p>
-
-        <h3>Assumptions of Kinetic Theory</h3>
-        <ul>
-          <li>Gas consists of a very large number of identical molecules in random motion.</li>
-          <li>The size of molecules is negligible compared to the average intermolecular separation.</li>
-          <li>Molecules exert no forces on each other except during brief elastic collisions.</li>
-          <li>Collisions with the walls of the container are perfectly elastic.</li>
-          <li>The time of collision is negligible compared to the time between collisions.</li>
-        </ul>
-
-        <h3>Pressure from Molecular Motion</h3>
-        <p>
-          The pressure exerted by an ideal gas can be derived from the momentum transfer during molecular
-          collisions with the walls. The result is P = (1/3)&rho;v&sup2;<sub>rms</sub>, where &rho; is the
-          gas density and v<sub>rms</sub> is the root mean square speed of the molecules.
-        </p>
-
-        <h3>Molecular Speeds</h3>
-        <p>
-          The Maxwell-Boltzmann distribution gives three characteristic speeds for gas molecules.
-          The RMS speed is v<sub>rms</sub> = &radic;(3RT/M), the mean speed is v<sub>avg</sub> =
-          &radic;(8RT/&pi;M), and the most probable speed is v<sub>mp</sub> = &radic;(2RT/M), where M is the
-          molar mass. Their ratio is v<sub>mp</sub> : v<sub>avg</sub> : v<sub>rms</sub> =
-          1 : 1.128 : 1.224.
+          From the kinetic theory, the average translational kinetic energy of a single molecule
+          is directly proportional to the absolute temperature and is independent of the nature
+          of the gas (its mass or chemical composition):
         </p>
         <div class="formula-box">
-          PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; P = &frac13;&rho;v&sup2;<sub>rms</sub><br>
-          v<sub>rms</sub> = &radic;(3RT/M) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>avg</sub> = &radic;(8RT/&pi;M) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>mp</sub> = &radic;(2RT/M)
+          KE per molecule = &frac12; m&#8320; v<sub>rms</sub>&sup2; = (3/2) k<sub>B</sub>T
         </div>
-      </div>
-
-      <!-- Section 4: Degrees of Freedom -->
-      <div class="theory-section">
-        <h2>4. Degrees of Freedom &amp; Equipartition of Energy</h2>
         <p>
-          The degrees of freedom (f) of a gas molecule represent the number of independent ways in which the
-          molecule can possess energy. By the law of equipartition of energy, each degree of freedom
-          contributes &frac12;k<sub>B</sub>T to the average energy of one molecule, or &frac12;RT per mole.
-        </p>
-
-        <h3>Degrees of Freedom by Molecular Type</h3>
-        <ul>
-          <li><strong>Monatomic</strong> (He, Ne, Ar): 3 translational DOF &rArr; f = 3</li>
-          <li><strong>Diatomic</strong> (H&#8322;, O&#8322;, N&#8322;) at moderate T: 3 translational + 2 rotational DOF &rArr; f = 5</li>
-          <li><strong>Polyatomic / Non-linear</strong> (H&#8322;O, CH&#8324;): 3 translational + 3 rotational DOF &rArr; f = 6 (vibrational modes add at high T)</li>
-        </ul>
-
-        <h3>Molar Heat Capacities</h3>
-        <p>
-          Using the equipartition theorem, the molar heat capacity at constant volume is
-          C<sub>v</sub> = (f/2)R and at constant pressure is C<sub>p</sub> = C<sub>v</sub> + R = ((f+2)/2)R.
-          The heat capacity ratio (adiabatic index) is &gamma; = C<sub>p</sub>/C<sub>v</sub> = (f+2)/f.
+          For one mole of gas, the total translational kinetic energy is:
         </p>
         <div class="formula-box">
-          C<sub>v</sub> = (f/2)R &nbsp;&nbsp;|&nbsp;&nbsp; C<sub>p</sub> = C<sub>v</sub> + R = ((f+2)/2)R<br>
-          &gamma; = C<sub>p</sub>/C<sub>v</sub> = (f+2)/f<br>
-          Monatomic: C<sub>v</sub> = 3R/2, &gamma; = 5/3 &asymp; 1.67<br>
-          Diatomic: C<sub>v</sub> = 5R/2, &gamma; = 7/5 = 1.4<br>
-          Polyatomic: C<sub>v</sub> = 3R, &gamma; = 4/3 &asymp; 1.33
+          KE per mole = (3/2) RT = (3/2) PV
         </div>
-      </div>
-
-      <!-- Section 5: First Law of Thermodynamics -->
-      <div class="theory-section">
-        <h2>5. First Law of Thermodynamics</h2>
         <p>
-          The first law of thermodynamics is a statement of energy conservation applied to thermal systems.
-          It states that the change in internal energy of a system equals the heat supplied to it minus the
-          work done by the system on its surroundings:
+          For n moles: KE = n(3/2)RT = (3/2)PV. This is the <em>translational</em> kinetic energy
+          only. The total internal energy also includes rotational and vibrational contributions
+          depending on the molecular structure.
+        </p>
+
+        <h3>Degrees of Freedom</h3>
+        <p>
+          The <strong>degrees of freedom</strong> (f) of a system is the total number of independent
+          coordinates or quantities needed to completely specify the position and motion of the
+          system. For gas molecules:
+        </p>
+        <ul>
+          <li><strong>Monatomic gas</strong> (He, Ne, Ar): f = 3 (three translational DOF only).
+            Total energy per mole = (3/2)RT.</li>
+          <li><strong>Diatomic gas</strong> (H&#8322;, N&#8322;, O&#8322;) at moderate temperatures:
+            f = 5 (3 translational + 2 rotational DOF). Total energy per mole = (5/2)RT.</li>
+          <li><strong>Triatomic / Polyatomic gas</strong> (CO&#8322;, H&#8322;O, SO&#8322;):
+            f = 6 (3 translational + 3 rotational DOF). Total energy per mole = 3RT.</li>
+        </ul>
+
+        <h3>Law of Equipartition of Energy</h3>
+        <p>
+          The law of equipartition of energy states that in thermal equilibrium, each degree of
+          freedom contributes an equal amount of energy:
         </p>
         <div class="formula-box">
-          &Delta;U = Q &minus; W
+          Energy per DOF per molecule = &frac12; k<sub>B</sub>T<br>
+          Energy per DOF per mole = &frac12; RT
         </div>
         <p>
-          Here &Delta;U is the change in internal energy, Q is the heat added to the system, and W is the
-          work done by the system. Internal energy is a state function &mdash; it depends only on the current
-          state (temperature, for an ideal gas) and not on how the system reached that state.
+          Therefore, the total internal energy per mole is U = (f/2)RT. This theorem is fundamental
+          because it directly determines the heat capacities C<sub>v</sub> and C<sub>p</sub> of
+          ideal gases.
         </p>
-
-        <h3>Sign Convention</h3>
-        <ul>
-          <li>Q &gt; 0: heat is absorbed by the system; Q &lt; 0: heat is released.</li>
-          <li>W &gt; 0: work is done by the system (expansion); W &lt; 0: work is done on the system (compression).</li>
-          <li>&Delta;U &gt; 0: internal energy (and temperature, for an ideal gas) increases.</li>
-        </ul>
         <p>
-          For an ideal gas, the internal energy depends only on temperature: U = nC<sub>v</sub>T, and
-          therefore &Delta;U = nC<sub>v</sub>&Delta;T for any process.
+          <strong>Key insight:</strong> At the same temperature, all ideal gas molecules have the
+          same average <em>translational</em> KE = (3/2)k<sub>B</sub>T regardless of mass. However,
+          the <em>total</em> KE depends on the molecular structure (mono/di/polyatomic) because it
+          includes rotational energy. For a diatomic gas, total KE = (5/2)PV, not (3/2)PV.
         </p>
       </div>
 
-      <!-- Section 6: Thermodynamic Processes -->
+      <!-- 4. Gas Laws -->
       <div class="theory-section">
-        <h2>6. Thermodynamic Processes</h2>
-
-        <h3>Isothermal Process (T = constant)</h3>
+        <h2>4. Gas Laws</h2>
         <p>
-          In an isothermal process the temperature stays constant, so &Delta;U = 0 and therefore Q = W.
-          For an ideal gas, PV = constant (Boyle&rsquo;s law). The work done is:
+          The gas laws describe the relationships between pressure, volume, and temperature of a
+          fixed quantity of an ideal gas. Each law holds one variable constant while examining the
+          relationship between the other two.
+        </p>
+
+        <h3>Boyle&rsquo;s Law (Constant Temperature)</h3>
+        <p>
+          At constant temperature, the pressure of a given quantity of gas is inversely proportional
+          to its volume. On a P&ndash;V diagram, isotherms appear as rectangular hyperbolas.
         </p>
         <div class="formula-box">
-          W = nRT ln(V&#8322;/V&#8321;) &nbsp;&nbsp;(isothermal)
+          P &prop; 1/V &nbsp;&nbsp;(at constant n, T)<br>
+          PV = constant &nbsp;&nbsp;|&nbsp;&nbsp; P&#8321;V&#8321; = P&#8322;V&#8322;
         </div>
 
-        <h3>Adiabatic Process (Q = 0)</h3>
+        <h3>Charles&rsquo;s Law (Constant Pressure)</h3>
         <p>
-          In an adiabatic process no heat enters or leaves the system. All the work done comes at the expense
-          of internal energy: &Delta;U = &minus;W. The relations governing an adiabatic process for an ideal
-          gas are:
+          At constant pressure, the volume of a given quantity of gas is directly proportional to
+          its absolute temperature. The volume increases linearly with temperature on a V&ndash;T
+          graph, and all lines extrapolate to zero volume at absolute zero (0 K).
         </p>
         <div class="formula-box">
-          PV<sup>&gamma;</sup> = constant<br>
-          TV<sup>&gamma;&minus;1</sup> = constant<br>
-          T<sup>&gamma;</sup> P<sup>1&minus;&gamma;</sup> = constant<br>
-          W = (P&#8321;V&#8321; &minus; P&#8322;V&#8322;) / (&gamma; &minus; 1) = nC<sub>v</sub>(T&#8321; &minus; T&#8322;)
+          V &prop; T &nbsp;&nbsp;(at constant n, P)<br>
+          V/T = constant &nbsp;&nbsp;|&nbsp;&nbsp; V&#8321;/T&#8321; = V&#8322;/T&#8322;
         </div>
 
-        <h3>Isobaric Process (P = constant)</h3>
+        <h3>Gay-Lussac&rsquo;s Law (Constant Volume)</h3>
         <p>
-          At constant pressure, the work done by the gas is simply W = P&Delta;V = P(V&#8322; &minus; V&#8321;).
-          The heat supplied is Q = nC<sub>p</sub>&Delta;T.
+          At constant volume, the pressure of a given quantity of gas is directly proportional to
+          its absolute temperature. This law is relevant to rigid containers where volume cannot change.
         </p>
         <div class="formula-box">
-          W = P&Delta;V &nbsp;&nbsp;|&nbsp;&nbsp; Q = nC<sub>p</sub>&Delta;T &nbsp;&nbsp;(isobaric)
+          P &prop; T &nbsp;&nbsp;(at constant n, V)<br>
+          P/T = constant &nbsp;&nbsp;|&nbsp;&nbsp; P&#8321;/T&#8321; = P&#8322;/T&#8322;
         </div>
 
-        <h3>Isochoric Process (V = constant)</h3>
+        <h3>Avogadro&rsquo;s Law</h3>
         <p>
-          At constant volume, no expansion or compression occurs, so W = 0. All the heat supplied goes into
-          changing the internal energy: Q = &Delta;U = nC<sub>v</sub>&Delta;T.
+          Equal volumes of all gases at the same temperature and pressure contain equal numbers of
+          molecules: V&#8321;/N&#8321; = V&#8322;/N&#8322; at the same P and T. One mole of any
+          ideal gas occupies 22.4 L at STP (273.15 K, 1 atm).
+        </p>
+
+        <h3>Dalton&rsquo;s Law of Partial Pressures</h3>
+        <p>
+          The total pressure exerted by a mixture of non-reacting gases equals the sum of the
+          partial pressures of each individual gas. The partial pressure of each gas is the
+          pressure it would exert if it alone occupied the entire volume at the same temperature.
         </p>
         <div class="formula-box">
-          W = 0 &nbsp;&nbsp;|&nbsp;&nbsp; Q = &Delta;U = nC<sub>v</sub>&Delta;T &nbsp;&nbsp;(isochoric)
+          P<sub>total</sub> = p&#8321; + p&#8322; + p&#8323; + &hellip;<br>
+          P<sub>total</sub> = (RT/V)(n&#8321; + n&#8322; + &hellip;)
+        </div>
+        <p>
+          <strong>Mixing gases at different temperatures:</strong> When two vessels at different
+          temperatures are connected, total moles are conserved. The final equilibrium pressure is
+          P = (P&#8321;V&#8321; + P&#8322;V&#8322;)/(V&#8321; + V&#8322;) and the equilibrium
+          temperature is T = (n&#8321;T&#8321; + n&#8322;T&#8322;)/(n&#8321; + n&#8322;).
+        </p>
+      </div>
+
+      <!-- 5. Specific Heat Capacities -->
+      <div class="theory-section">
+        <h2>5. Specific Heat Capacities (C<sub>p</sub> and C<sub>v</sub>)</h2>
+        <p>
+          The specific heat of a gas depends on the conditions under which heat is supplied. Unlike
+          solids and liquids, a gas can be heated at constant volume or constant pressure, leading
+          to two distinct molar heat capacities.
+        </p>
+
+        <h3>C<sub>v</sub> &mdash; Molar Heat Capacity at Constant Volume</h3>
+        <p>
+          C<sub>v</sub> is the amount of heat required to raise the temperature of one mole of gas
+          by 1 K when the volume is kept constant. Since W = 0 at constant volume, all the heat
+          goes into increasing internal energy:
+        </p>
+        <div class="formula-box">
+          &Delta;Q = n C<sub>v</sub> &Delta;T = &Delta;U &nbsp;&nbsp;(at constant V)
+        </div>
+
+        <h3>C<sub>p</sub> &mdash; Molar Heat Capacity at Constant Pressure</h3>
+        <p>
+          C<sub>p</sub> is the amount of heat required to raise the temperature of one mole of gas
+          by 1 K at constant pressure. At constant pressure, the gas expands and does work
+          W = nR&Delta;T, so the gas requires extra heat beyond what is needed to raise its
+          internal energy:
+        </p>
+        <div class="formula-box">
+          &Delta;Q = n C<sub>p</sub> &Delta;T &nbsp;&nbsp;(at constant P)<br>
+          C<sub>p</sub> &gt; C<sub>v</sub> always
+        </div>
+
+        <h3>Mayer&rsquo;s Relation</h3>
+        <p>
+          The difference between C<sub>p</sub> and C<sub>v</sub> for any ideal gas is exactly
+          equal to R, the universal gas constant. This elegant result, known as Mayer&rsquo;s
+          relation, follows directly from the first law of thermodynamics:
+        </p>
+        <div class="formula-box">
+          C<sub>p</sub> &minus; C<sub>v</sub> = R
+        </div>
+
+        <h3>Adiabatic Index (&gamma;)</h3>
+        <p>
+          The ratio &gamma; = C<sub>p</sub>/C<sub>v</sub> is called the adiabatic exponent or
+          heat capacity ratio. From C<sub>p</sub> &minus; C<sub>v</sub> = R and
+          &gamma; = C<sub>p</sub>/C<sub>v</sub>, we can express:
+        </p>
+        <div class="formula-box">
+          C<sub>v</sub> = R/(&gamma; &minus; 1) &nbsp;&nbsp;|&nbsp;&nbsp; C<sub>p</sub> = &gamma;R/(&gamma; &minus; 1)
+        </div>
+
+        <h3>Values for Different Gas Types</h3>
+        <ul>
+          <li><strong>Monatomic</strong> (He, Ne, Ar): C<sub>v</sub> = (3/2)R, C<sub>p</sub> = (5/2)R, &gamma; = 5/3 &asymp; 1.67</li>
+          <li><strong>Diatomic</strong> (H&#8322;, N&#8322;, O&#8322;): C<sub>v</sub> = (5/2)R, C<sub>p</sub> = (7/2)R, &gamma; = 7/5 = 1.4</li>
+          <li><strong>Triatomic</strong> (CO&#8322;, H&#8322;O): C<sub>v</sub> = 3R, C<sub>p</sub> = 4R, &gamma; = 4/3 &asymp; 1.33</li>
+        </ul>
+
+        <h3>Polytropic Process Heat Capacity</h3>
+        <p>
+          For a general polytropic process PV<sup>x</sup> = constant, the molar heat capacity is:
+        </p>
+        <div class="formula-box">
+          C = C<sub>v</sub> &minus; R/(x &minus; 1) = R/(&gamma; &minus; 1) &minus; R/(x &minus; 1)
+        </div>
+        <p>
+          Special cases: x = 0 gives C = C<sub>p</sub> (isobaric), x = 1 gives C &rarr; &infin;
+          (isothermal), x = &gamma; gives C = 0 (adiabatic), and x &rarr; &infin; gives
+          C = C<sub>v</sub> (isochoric).
+        </p>
+
+        <h3>Mixture of Gases</h3>
+        <p>
+          For a mixture of ideal gases, the effective heat capacities and &gamma; can be obtained
+          from the individual components. If n&#8321; moles of gas 1 with C<sub>v1</sub> are
+          mixed with n&#8322; moles of gas 2 with C<sub>v2</sub>:
+        </p>
+        <div class="formula-box">
+          C<sub>v,mix</sub> = (n&#8321;C<sub>v1</sub> + n&#8322;C<sub>v2</sub>) / (n&#8321; + n&#8322;)<br>
+          C<sub>p,mix</sub> = C<sub>v,mix</sub> + R<br>
+          &gamma;<sub>mix</sub> = C<sub>p,mix</sub> / C<sub>v,mix</sub>
         </div>
 
         <div class="example-box">
           <div class="ex-label">Solved Example 2</div>
           <p>
-            Two moles of an ideal diatomic gas (&gamma; = 7/5) at 300 K undergo an adiabatic expansion where
-            the volume doubles. Find the final temperature.
+            One mole of oxygen (diatomic, &gamma; = 7/5) is heated at constant pressure starting
+            from 0&deg;C. How much heat must be supplied to double the temperature? If the same
+            amount of heat is supplied at constant volume instead, what will the final temperature be?
           </p>
           <div class="solution">
             <p>
-              For an adiabatic process: TV<sup>&gamma;&minus;1</sup> = constant<br>
-              T&#8321; V&#8321;<sup>&gamma;&minus;1</sup> = T&#8322; V&#8322;<sup>&gamma;&minus;1</sup><br>
-              T&#8322; = T&#8321; (V&#8321;/V&#8322;)<sup>&gamma;&minus;1</sup><br>
-              T&#8322; = 300 &times; (1/2)<sup>0.4</sup><br>
-              (1/2)<sup>0.4</sup> = 2<sup>&minus;0.4</sup> &asymp; 0.7579<br>
-              T&#8322; &asymp; 300 &times; 0.758 &asymp; 227.4 K
+              T&#8321; = 273 K. For temperature to double: T&#8322; = 546 K, so &Delta;T = 273 K.<br><br>
+              <strong>At constant pressure:</strong><br>
+              &Delta;Q = nC<sub>p</sub>&Delta;T = 1 &times; (7/2) &times; 8.3 &times; 273<br>
+              C<sub>p</sub> = (7/2)R = 3.5 &times; 8.3 = 29.05 J mol<sup>&minus;1</sup> K<sup>&minus;1</sup><br>
+              &Delta;Q = 29.05 &times; 273 = <strong>7930.6 J</strong><br><br>
+              <strong>At constant volume with the same heat:</strong><br>
+              &Delta;Q = nC<sub>v</sub>&Delta;T&prime;<br>
+              C<sub>v</sub> = R/(&gamma; &minus; 1) = 8.3/0.4 = 20.75 J mol<sup>&minus;1</sup> K<sup>&minus;1</sup><br>
+              &Delta;T&prime; = 7930.6/20.75 = 382.2 K<br>
+              T<sub>final</sub> = 273 + 382.2 = <strong>655.2 K</strong>
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Section 7: Second Law & Carnot Engine -->
+      <!-- 6. First Law of Thermodynamics -->
       <div class="theory-section">
-        <h2>7. Second Law of Thermodynamics &amp; Carnot Engine</h2>
-
-        <h3>Kelvin-Planck Statement</h3>
+        <h2>6. First Law of Thermodynamics</h2>
         <p>
-          It is impossible to construct a heat engine that operates in a cycle and converts all the heat
-          absorbed from a single reservoir entirely into work &mdash; some heat must always be rejected to a
-          cold reservoir.
-        </p>
-
-        <h3>Clausius Statement</h3>
-        <p>
-          It is impossible for heat to flow spontaneously from a colder body to a hotter body without the
-          expenditure of external work.
-        </p>
-
-        <h3>Carnot Cycle &amp; Efficiency</h3>
-        <p>
-          The Carnot engine is an ideal reversible engine operating between two temperature reservoirs. It
-          consists of four steps: isothermal expansion (absorb Q&#8321; at T&#8321;), adiabatic expansion
-          (cool from T&#8321; to T&#8322;), isothermal compression (reject Q&#8322; at T&#8322;), and
-          adiabatic compression (heat from T&#8322; back to T&#8321;). The Carnot efficiency sets an upper
-          bound for all real engines operating between the same two temperatures:
+          The first law of thermodynamics is a statement of the conservation of energy as applied
+          to thermodynamic systems. If &Delta;Q is the heat supplied to the system, W is the work
+          done <em>by</em> the system, and &Delta;U is the change in internal energy, then:
         </p>
         <div class="formula-box">
-          &eta;<sub>Carnot</sub> = 1 &minus; T&#8322;/T&#8321; = (T&#8321; &minus; T&#8322;)/T&#8321;<br>
-          &eta; = W/Q&#8321; = (Q&#8321; &minus; Q&#8322;)/Q&#8321;
+          &Delta;Q = &Delta;U + W
         </div>
-
-        <h3>Refrigerator &amp; Coefficient of Performance</h3>
         <p>
-          A refrigerator extracts heat Q&#8322; from a cold reservoir and rejects Q&#8321; to a hot
-          reservoir, consuming work W = Q&#8321; &minus; Q&#8322;. Its coefficient of performance (COP) is:
+          In words: the heat supplied to a system goes partly into increasing the internal energy
+          of the system and partly into doing external work against its surroundings.
+        </p>
+
+        <h3>Sign Convention</h3>
+        <ul>
+          <li>&Delta;Q &gt; 0: heat is <em>absorbed</em> by the system; &Delta;Q &lt; 0: heat is <em>released</em>.</li>
+          <li>W &gt; 0: work is done <em>by</em> the system (expansion); W &lt; 0: work is done <em>on</em> the system (compression).</li>
+          <li>&Delta;U &gt; 0: internal energy increases (temperature rises for an ideal gas).</li>
+        </ul>
+
+        <h3>Internal Energy as a State Function</h3>
+        <p>
+          Internal energy U is a <strong>state function</strong> &mdash; its value depends only on
+          the current state of the system (temperature, for an ideal gas), not on how the system
+          reached that state. Therefore, &Delta;U between two states is the same regardless of the
+          path taken. In contrast, both Q and W are <em>path functions</em> and depend on the
+          specific process.
         </p>
         <div class="formula-box">
-          COP = Q&#8322;/W = Q&#8322;/(Q&#8321; &minus; Q&#8322;) = T&#8322;/(T&#8321; &minus; T&#8322;) &nbsp;&nbsp;(Carnot refrigerator)
+          &Delta;U = nC<sub>v</sub>&Delta;T = nR&Delta;T/(&gamma; &minus; 1) &nbsp;&nbsp;(valid for every process)
         </div>
+
+        <h3>Work Done by a Gas</h3>
+        <p>
+          The work done by a gas during a volume change is:
+        </p>
+        <div class="formula-box">
+          W = &int; P dV &nbsp;&nbsp;(from V&#8321; to V&#8322;)
+        </div>
+        <p>
+          Graphically, W equals the area under the P&ndash;V curve. Since W depends on the path,
+          the same change of state can involve different amounts of work depending on the process.
+        </p>
+
+        <h3>Cyclic Processes</h3>
+        <p>
+          In a cyclic process the system returns to its initial state, so &Delta;U = 0. By the
+          first law, <strong>&Delta;Q = W</strong> &mdash; the net heat absorbed equals the net
+          work done in each complete cycle. The work done equals the area enclosed by the cycle
+          on the P&ndash;V diagram.
+        </p>
+
+        <h3>Zeroth Law of Thermodynamics</h3>
+        <p>
+          The zeroth law establishes the concept of thermal equilibrium: if two bodies A and B are
+          each in thermal equilibrium with a third body C, then A and B are in thermal equilibrium
+          with each other. This law provides the logical foundation for temperature measurement
+          using thermometers.
+        </p>
+      </div>
+
+      <!-- 7. Thermodynamic Processes -->
+      <div class="theory-section">
+        <h2>7. Thermodynamic Processes</h2>
+        <p>
+          A thermodynamic process is a change in the state of a system characterised by specific
+          constraints on its variables (P, V, T). Below are the four fundamental processes and
+          their associated formulas.
+        </p>
+
+        <h3>Isothermal Process (T = constant)</h3>
+        <p>
+          In an isothermal process, the temperature remains constant. The system must be in thermal
+          contact with a large heat reservoir, and the process must be conducted slowly enough to
+          maintain thermal equilibrium. Since T is constant for an ideal gas, &Delta;U = 0 and all
+          the heat absorbed is converted into work: &Delta;Q = W.
+        </p>
+        <div class="formula-box">
+          PV = constant &nbsp;&nbsp;(Boyle&rsquo;s Law)<br>
+          W = nRT ln(V&#8322;/V&#8321;) = 2.303 nRT log&#8321;&#8320;(V&#8322;/V&#8321;)<br>
+          &Delta;U = 0 &nbsp;&nbsp;|&nbsp;&nbsp; &Delta;Q = W
+        </div>
+
+        <h3>Adiabatic Process (&Delta;Q = 0)</h3>
+        <p>
+          In an adiabatic process, no heat enters or leaves the system. The system is either
+          thermally insulated or the process occurs so rapidly that heat transfer is negligible
+          (e.g., bursting of a tyre, sound propagation). All the work is done at the expense of
+          internal energy: W = &minus;&Delta;U. During adiabatic expansion the temperature falls;
+          during adiabatic compression the temperature rises.
+        </p>
+        <div class="formula-box">
+          PV<sup>&gamma;</sup> = constant<br>
+          TV<sup>&gamma;&minus;1</sup> = constant<br>
+          T<sup>&gamma;</sup> P<sup>1&minus;&gamma;</sup> = constant<br>
+          W = (P&#8321;V&#8321; &minus; P&#8322;V&#8322;)/(&gamma; &minus; 1) = nR(T&#8321; &minus; T&#8322;)/(&gamma; &minus; 1) = nC<sub>v</sub>(T&#8321; &minus; T&#8322;)
+        </div>
+        <p>
+          <strong>Important:</strong> On a P&ndash;V diagram, the adiabatic curve is always steeper
+          than the isothermal curve at any given point, because it falls off as PV<sup>&gamma;</sup>
+          = constant (with &gamma; &gt; 1) rather than PV = constant.
+        </p>
+
+        <h3>Isobaric Process (P = constant)</h3>
+        <p>
+          At constant pressure, the gas obeys Charles&rsquo;s law (V &prop; T). During isobaric
+          expansion, both volume and temperature increase, and the gas does positive work. The
+          heat supplied goes into both work and internal energy change:
+        </p>
+        <div class="formula-box">
+          W = P(V&#8322; &minus; V&#8321;) = nR(T&#8322; &minus; T&#8321;)<br>
+          &Delta;Q = nC<sub>p</sub>&Delta;T
+        </div>
+
+        <h3>Isochoric Process (V = constant)</h3>
+        <p>
+          At constant volume, no expansion or compression occurs, so the work done is zero. The
+          pressure varies directly with temperature (Gay-Lussac&rsquo;s law). All the heat
+          supplied goes entirely into changing the internal energy:
+        </p>
+        <div class="formula-box">
+          W = 0 &nbsp;&nbsp;|&nbsp;&nbsp; &Delta;Q = &Delta;U = nC<sub>v</sub>&Delta;T<br>
+          P&#8321;/T&#8321; = P&#8322;/T&#8322;
+        </div>
+
+        <h3>Free Expansion</h3>
+        <p>
+          Free expansion occurs when a gas expands into a vacuum (external pressure = 0). Since
+          the gas pushes against nothing, W = 0. If the container is insulated, &Delta;Q = 0 as
+          well, so &Delta;U = 0 and the temperature remains unchanged for an ideal gas. Free
+          expansion is an irreversible process.
+        </p>
+
+        <h3>Summary Table</h3>
+        <div class="formula-box">
+          <strong>Process &nbsp;&nbsp;|&nbsp;&nbsp; Condition &nbsp;&nbsp;|&nbsp;&nbsp; Work Done &nbsp;&nbsp;|&nbsp;&nbsp; Heat Exchange</strong><br>
+          Isothermal &nbsp;&nbsp;|&nbsp;&nbsp; T = const &nbsp;&nbsp;|&nbsp;&nbsp; nRT ln(V&#8322;/V&#8321;) &nbsp;&nbsp;|&nbsp;&nbsp; &Delta;Q = W<br>
+          Adiabatic &nbsp;&nbsp;|&nbsp;&nbsp; &Delta;Q = 0 &nbsp;&nbsp;|&nbsp;&nbsp; nR(T&#8321;&minus;T&#8322;)/(&gamma;&minus;1) &nbsp;&nbsp;|&nbsp;&nbsp; &Delta;Q = 0<br>
+          Isobaric &nbsp;&nbsp;|&nbsp;&nbsp; P = const &nbsp;&nbsp;|&nbsp;&nbsp; P&Delta;V = nR&Delta;T &nbsp;&nbsp;|&nbsp;&nbsp; nC<sub>p</sub>&Delta;T<br>
+          Isochoric &nbsp;&nbsp;|&nbsp;&nbsp; V = const &nbsp;&nbsp;|&nbsp;&nbsp; 0 &nbsp;&nbsp;|&nbsp;&nbsp; nC<sub>v</sub>&Delta;T
+        </div>
+        <p>
+          For <strong>all</strong> processes, the internal energy change is &Delta;U = nC<sub>v</sub>&Delta;T,
+          since internal energy is a state function.
+        </p>
 
         <div class="example-box">
           <div class="ex-label">Solved Example 3</div>
           <p>
-            A Carnot engine operates between a source at 600 K and a sink at 300 K. If the engine absorbs
-            1000 J of heat per cycle, find the efficiency and work output per cycle.
+            In a cylinder, 2.0 moles of an ideal monatomic gas (&gamma; = 5/3) initially at
+            1.0 &times; 10<sup>6</sup> Pa and 300 K expands until its volume doubles. Compute the
+            work done if the expansion is: (a) isothermal, (b) adiabatic, (c) isobaric.
           </p>
           <div class="solution">
             <p>
-              &eta; = 1 &minus; T&#8322;/T&#8321; = 1 &minus; 300/600 = 0.5 = 50%<br>
-              W = &eta; &times; Q&#8321; = 0.5 &times; 1000 = 500 J<br>
-              Q&#8322; = Q&#8321; &minus; W = 1000 &minus; 500 = 500 J (rejected to sink)
+              Given: n = 2 mol, T&#8321; = 300 K, P&#8321; = 10<sup>6</sup> Pa, V&#8322; = 2V&#8321;, &gamma; = 5/3.<br>
+              V&#8321; = nRT&#8321;/P&#8321; = 2 &times; 8.3 &times; 300 / 10<sup>6</sup> = 4.98 &times; 10<sup>&minus;3</sup> m&sup3;<br><br>
+              <strong>(a) Isothermal:</strong><br>
+              W = nRT ln(V&#8322;/V&#8321;) = 2.303 &times; 2 &times; 8.3 &times; 300 &times; log&#8321;&#8320;(2)<br>
+              W = 2.303 &times; 4980 &times; 0.3010 &asymp; <strong>3452 J</strong><br><br>
+              <strong>(b) Adiabatic:</strong><br>
+              T&#8322; = T&#8321;(V&#8321;/V&#8322;)<sup>&gamma;&minus;1</sup> = 300 &times; (1/2)<sup>2/3</sup><br>
+              (1/2)<sup>2/3</sup> = 1/2<sup>0.667</sup> &asymp; 0.630<br>
+              T&#8322; &asymp; 300 &times; 0.630 = 189 K<br>
+              W = nR(T&#8321; &minus; T&#8322;)/(&gamma; &minus; 1) = 2 &times; 8.3 &times; (300 &minus; 189)/(5/3 &minus; 1)<br>
+              W = 2 &times; 8.3 &times; 111 / 0.667 &asymp; <strong>2764 J</strong><br><br>
+              <strong>(c) Isobaric:</strong><br>
+              W = P&Delta;V = P&#8321; &times; V&#8321; = 10<sup>6</sup> &times; 4.98 &times; 10<sup>&minus;3</sup><br>
+              W = <strong>4980 J</strong><br><br>
+              <strong>Comparison:</strong> W<sub>isobaric</sub> &gt; W<sub>isothermal</sub> &gt; W<sub>adiabatic</sub>
+              for the same expansion ratio, which is a general result.
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Section 8: Heat Transfer -->
+      <!-- 8. Carnot Engine & Second Law -->
       <div class="theory-section">
-        <h2>8. Heat Transfer</h2>
+        <h2>8. Carnot Engine &amp; Second Law of Thermodynamics</h2>
+
+        <h3>The Carnot Cycle</h3>
+        <p>
+          The Carnot engine is an ideal, reversible heat engine operating between a hot reservoir
+          (source) at temperature T&#8321; and a cold reservoir (sink) at temperature T&#8322;.
+          The cycle consists of four steps:
+        </p>
+        <ul>
+          <li><strong>Step 1 &mdash; Isothermal Expansion at T&#8321;:</strong> The gas absorbs heat
+            Q&#8321; from the source and expands isothermally. Work is done by the gas.</li>
+          <li><strong>Step 2 &mdash; Adiabatic Expansion:</strong> The gas continues to expand without
+            heat exchange. Its temperature drops from T&#8321; to T&#8322;.</li>
+          <li><strong>Step 3 &mdash; Isothermal Compression at T&#8322;:</strong> The gas is compressed
+            isothermally, rejecting heat Q&#8322; to the sink.</li>
+          <li><strong>Step 4 &mdash; Adiabatic Compression:</strong> The gas is compressed further
+            without heat exchange. Its temperature rises from T&#8322; back to T&#8321;, completing
+            the cycle.</li>
+        </ul>
+
+        <h3>Carnot Efficiency</h3>
+        <p>
+          The efficiency of the Carnot engine depends only on the temperatures of the source and
+          sink, not on the nature of the working substance. It represents the maximum possible
+          efficiency for any heat engine operating between the same two temperatures.
+        </p>
+        <div class="formula-box">
+          &eta;<sub>Carnot</sub> = 1 &minus; T&#8322;/T&#8321; = (T&#8321; &minus; T&#8322;)/T&#8321;<br>
+          &eta; = W/Q&#8321; = (Q&#8321; &minus; Q&#8322;)/Q&#8321;<br>
+          W = Q&#8321; &minus; Q&#8322; &nbsp;&nbsp;|&nbsp;&nbsp; Q&#8321;/T&#8321; = Q&#8322;/T&#8322;
+        </div>
+        <p>
+          The efficiency is 100% only when T&#8322; = 0 K (absolute zero), which is physically
+          impossible. No real engine can be more efficient than a Carnot engine operating between
+          the same two temperatures.
+        </p>
+
+        <h3>Second Law of Thermodynamics</h3>
+        <p>
+          The second law of thermodynamics places fundamental restrictions on the direction of
+          thermodynamic processes. It has two equivalent statements:
+        </p>
+        <p>
+          <strong>Kelvin&ndash;Planck Statement:</strong> It is impossible to construct a heat engine
+          that operates in a cycle and converts all the heat absorbed from a single reservoir entirely
+          into work &mdash; some heat must always be rejected to a cold reservoir. In other words,
+          no perfect heat engine exists.
+        </p>
+        <p>
+          <strong>Clausius Statement:</strong> It is impossible for heat to flow spontaneously from
+          a colder body to a hotter body without the input of external work. In other words, no
+          perfect refrigerator exists.
+        </p>
+        <p>
+          Both statements are equivalent &mdash; violating one necessarily implies violating the other.
+        </p>
+
+        <h3>Refrigerator &amp; Coefficient of Performance</h3>
+        <p>
+          A refrigerator is a heat engine operating in reverse. It extracts heat Q&#8322; from a
+          cold reservoir and rejects heat Q&#8321; to a hot reservoir, consuming external work
+          W = Q&#8321; &minus; Q&#8322;. Its performance is measured by the coefficient of
+          performance (COP or &beta;):
+        </p>
+        <div class="formula-box">
+          &beta; = Q&#8322;/W = Q&#8322;/(Q&#8321; &minus; Q&#8322;) = T&#8322;/(T&#8321; &minus; T&#8322;) &nbsp;&nbsp;(for Carnot refrigerator)
+        </div>
+
+        <h3>Entropy</h3>
+        <p>
+          Entropy (S) is a thermodynamic state function that quantifies the disorder or randomness
+          of a system. For a reversible process at temperature T:
+        </p>
+        <div class="formula-box">
+          &Delta;S = &Delta;Q / T &nbsp;&nbsp;(reversible process)
+        </div>
+        <p>
+          The entropy of an isolated system never decreases: &Delta;S<sub>total</sub> &ge; 0. For
+          a reversible process, &Delta;S<sub>total</sub> = 0; for an irreversible process,
+          &Delta;S<sub>total</sub> &gt; 0. This is another way of stating the second law.
+        </p>
+      </div>
+
+      <!-- 9. Heat Transfer -->
+      <div class="theory-section">
+        <h2>9. Heat Transfer</h2>
+        <p>
+          Heat can be transferred from one region to another by three mechanisms: conduction,
+          convection, and radiation. Each mechanism dominates under different physical conditions.
+        </p>
 
         <h3>Conduction</h3>
         <p>
-          Heat conduction is the transfer of thermal energy through a material without any bulk motion of
-          the material itself. It occurs due to molecular collisions and is most effective in solids,
-          especially metals. The rate of heat flow through a uniform rod is given by Fourier&rsquo;s law:
+          Heat conduction is the transfer of thermal energy through a material without any bulk
+          motion of the material itself. It occurs due to molecular collisions and free electron
+          drift, and is most effective in solids, especially metals. The rate of heat flow is
+          governed by <strong>Fourier&rsquo;s law</strong>:
         </p>
         <div class="formula-box">
-          dQ/dt = KA (dT/dx)<br>
-          For a uniform rod: dQ/dt = KA (T&#8321; &minus; T&#8322;) / L
+          dQ/dt = &minus;KA (dT/dx)<br>
+          For a uniform rod: dQ/dt = KA(T&#8321; &minus; T&#8322;)/L
         </div>
         <p>
-          Here K is the thermal conductivity of the material, A is the cross-sectional area, dT/dx is the
-          temperature gradient, and L is the length of the rod.
+          Here K is the thermal conductivity of the material (W m<sup>&minus;1</sup> K<sup>&minus;1</sup>),
+          A is the cross-sectional area, dT/dx is the temperature gradient, and L is the length
+          of the rod. The negative sign indicates that heat flows in the direction of decreasing
+          temperature. Metals have high K (good conductors); materials like wood, air, and foam have
+          low K (insulators).
+        </p>
+        <p>
+          For slabs in series (same heat current), the equivalent thermal resistance is
+          R<sub>eq</sub> = R&#8321; + R&#8322; + &hellip; where R = L/(KA). For slabs in parallel
+          (same temperature difference), 1/R<sub>eq</sub> = 1/R&#8321; + 1/R&#8322; + &hellip;
         </p>
 
         <h3>Convection</h3>
         <p>
-          Convection is the transfer of heat by actual bulk movement of a fluid (liquid or gas). Natural
-          convection occurs due to buoyancy forces from density differences caused by temperature variations.
-          Forced convection involves an external agency (fan, pump) driving the fluid flow. Convection is the
-          primary mode of heat transfer in fluids.
+          Convection is the transfer of heat by actual bulk movement of a fluid (liquid or gas).
+          <strong>Natural convection</strong> occurs due to buoyancy forces arising from density
+          differences caused by temperature variations &mdash; hot fluid rises and cool fluid sinks,
+          creating convection currents. <strong>Forced convection</strong> involves an external
+          agency (fan, pump) driving the fluid motion. Convection is the primary mode of heat
+          transfer in fluids and is responsible for phenomena such as sea breezes, trade winds, and
+          heating of rooms.
         </p>
 
         <h3>Radiation</h3>
         <p>
-          Thermal radiation is the emission of electromagnetic waves by all bodies at any temperature above
-          absolute zero. Unlike conduction and convection, radiation does not require any medium and can
-          travel through a vacuum.
+          Thermal radiation is the emission of electromagnetic waves by all bodies at temperatures
+          above absolute zero. Unlike conduction and convection, radiation requires no medium and
+          can travel through vacuum at the speed of light. The power radiated by a body is given
+          by the <strong>Stefan&ndash;Boltzmann law</strong>:
         </p>
         <div class="formula-box">
-          P = &sigma;AT<sup>4</sup> &nbsp;&nbsp;(Stefan-Boltzmann law, for a black body)<br>
-          P = &sigma;A&epsilon;T<sup>4</sup> &nbsp;&nbsp;(for a grey body, &epsilon; = emissivity)<br>
+          P = &sigma;AT<sup>4</sup> &nbsp;&nbsp;(for a perfect black body)<br>
+          P = &epsilon;&sigma;AT<sup>4</sup> &nbsp;&nbsp;(for a grey body, 0 &le; &epsilon; &le; 1)<br>
           &sigma; = 5.67 &times; 10<sup>&minus;8</sup> W m<sup>&minus;2</sup> K<sup>&minus;4</sup>
+        </div>
+        <p>
+          Here &epsilon; is the emissivity of the surface (equal to its absorptivity by
+          Kirchhoff&rsquo;s law). A perfect black body has &epsilon; = 1.
+        </p>
+        <p>
+          The net rate of heat loss by a body at temperature T in surroundings at temperature
+          T<sub>s</sub> is:
+        </p>
+        <div class="formula-box">
+          P<sub>net</sub> = &epsilon;&sigma;A(T<sup>4</sup> &minus; T<sub>s</sub><sup>4</sup>)
         </div>
 
         <h3>Newton&rsquo;s Law of Cooling</h3>
         <p>
-          For small temperature differences between a body and its surroundings, the rate of cooling is
-          approximately proportional to the temperature difference:
+          When the temperature difference between a body and its surroundings is small, the rate
+          of cooling is approximately proportional to that temperature difference. This is
+          Newton&rsquo;s law of cooling:
         </p>
         <div class="formula-box">
-          dT/dt = &minus;k (T &minus; T<sub>s</sub>)<br>
+          dT/dt = &minus;k(T &minus; T<sub>s</sub>)<br>
           T(t) = T<sub>s</sub> + (T&#8320; &minus; T<sub>s</sub>) e<sup>&minus;kt</sup>
         </div>
         <p>
-          Here T<sub>s</sub> is the surrounding temperature, T&#8320; is the initial temperature of the body,
-          and k is a positive constant that depends on the surface area, emissivity, and heat capacity.
+          Here T<sub>s</sub> is the surrounding temperature, T&#8320; is the initial body
+          temperature, and k is a positive constant depending on the surface area, emissivity,
+          and heat capacity of the body. This exponential decay formula is widely used in
+          problems involving cooling of hot liquids.
         </p>
+      </div>
+
+      <!-- 10. Calorimetry & Thermal Expansion -->
+      <div class="theory-section">
+        <h2>10. Calorimetry &amp; Thermal Expansion</h2>
+
+        <h3>Calorimetry</h3>
+        <p>
+          Calorimetry is the science of measuring heat exchange. When two bodies at different
+          temperatures are brought into thermal contact within an insulated system, heat flows
+          from the hotter body to the cooler one until thermal equilibrium is reached. The
+          principle of calorimetry states:
+        </p>
+        <div class="formula-box">
+          Heat lost by hot body = Heat gained by cold body
+        </div>
+
+        <h3>Specific Heat Capacity</h3>
+        <p>
+          The specific heat capacity (c) of a substance is the amount of heat required to raise
+          the temperature of 1 kg of that substance by 1 K (or 1&deg;C). The heat absorbed or
+          released during a temperature change is:
+        </p>
+        <div class="formula-box">
+          Q = mc&Delta;T
+        </div>
+        <p>
+          The <strong>water equivalent</strong> of a body is the mass of water that would absorb
+          or release the same amount of heat as the body for a given temperature change:
+          W = mc/c<sub>water</sub>.
+        </p>
+
+        <h3>Latent Heat &amp; Phase Changes</h3>
+        <p>
+          During a phase change (solid &rarr; liquid or liquid &rarr; gas), the temperature remains
+          constant even though heat is being supplied. All the energy goes into breaking or forming
+          intermolecular bonds. The latent heat of fusion (L<sub>f</sub>) is the heat per unit mass
+          needed to convert a solid to liquid at the melting point. The latent heat of vaporisation
+          (L<sub>v</sub>) is for the liquid-to-gas transition at the boiling point.
+        </p>
+        <div class="formula-box">
+          Q = mL &nbsp;&nbsp;(L = L<sub>f</sub> for fusion, L<sub>v</sub> for vaporisation)<br>
+          L<sub>f</sub>(ice) = 3.34 &times; 10<sup>5</sup> J/kg &nbsp;&nbsp;|&nbsp;&nbsp; L<sub>v</sub>(water) = 2.26 &times; 10<sup>6</sup> J/kg
+        </div>
+
+        <h3>Thermal Expansion</h3>
+        <p>
+          When a solid is heated, its dimensions increase. The fractional change is proportional to
+          the temperature change, governed by coefficients of thermal expansion. These coefficients
+          are related as &beta; &asymp; 2&alpha; and &gamma; &asymp; 3&alpha; for isotropic
+          materials.
+        </p>
+        <div class="formula-box">
+          <strong>Linear:</strong> &Delta;L = L&alpha;&Delta;T &nbsp;&nbsp;(&alpha; = coefficient of linear expansion)<br>
+          <strong>Area:</strong> &Delta;A = 2&alpha; A &Delta;T = &beta; A &Delta;T<br>
+          <strong>Volume:</strong> &Delta;V = 3&alpha; V &Delta;T = &gamma; V &Delta;T
+        </div>
+        <p>
+          For liquids, only volume expansion is meaningful. The <strong>apparent expansion</strong>
+          of a liquid in a container is the difference between the actual expansion of the liquid
+          and the expansion of the container: &gamma;<sub>apparent</sub> = &gamma;<sub>liquid</sub>
+          &minus; &gamma;<sub>container</sub>.
+        </p>
+
+        <h3>Temperature Scales</h3>
+        <p>
+          Three principal temperature scales are used in physics. The Celsius scale sets 0&deg;C at
+          the freezing point of water and 100&deg;C at its boiling point. The Kelvin scale is the
+          SI unit of temperature, with 0 K at absolute zero. Conversions:
+        </p>
+        <div class="formula-box">
+          T(K) = T(&deg;C) + 273.15<br>
+          T(&deg;F) = (9/5) T(&deg;C) + 32 &nbsp;&nbsp;|&nbsp;&nbsp; T(&deg;C) = (5/9)[T(&deg;F) &minus; 32]
+        </div>
       </div>
 
       <!-- Key Formulas Summary -->
       <div class="theory-section">
         <h2>Key Formulas Summary</h2>
         <div class="formula-box">
-          PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>rms</sub> = &radic;(3RT/M)<br>
-          &Delta;U = Q &minus; W &nbsp;&nbsp;|&nbsp;&nbsp; &eta;<sub>Carnot</sub> = 1 &minus; T&#8322;/T&#8321;<br>
-          &Delta;L = L&alpha;&Delta;T &nbsp;&nbsp;|&nbsp;&nbsp; Q = mc&Delta;T &nbsp;&nbsp;|&nbsp;&nbsp; Q = mL<br>
-          C<sub>v</sub> = (f/2)R &nbsp;&nbsp;|&nbsp;&nbsp; C<sub>p</sub> = C<sub>v</sub> + R &nbsp;&nbsp;|&nbsp;&nbsp; &gamma; = C<sub>p</sub>/C<sub>v</sub><br>
-          P = &sigma;AT<sup>4</sup> &nbsp;&nbsp;|&nbsp;&nbsp; dQ/dt = KA(dT/dx)
+          <strong>Ideal Gas &amp; KTG</strong><br>
+          PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; PM = dRT &nbsp;&nbsp;|&nbsp;&nbsp; PV = Nk<sub>B</sub>T<br>
+          P = (1/3)&rho;v<sub>rms</sub>&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; k<sub>B</sub> = 1.38 &times; 10<sup>&minus;23</sup> J/K<br><br>
+          <strong>Molecular Speeds</strong><br>
+          v<sub>rms</sub> = &radic;(3RT/M) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>avg</sub> = &radic;(8RT/&pi;M) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>mp</sub> = &radic;(2RT/M)<br>
+          v<sub>mp</sub> : v<sub>avg</sub> : v<sub>rms</sub> = &radic;2 : &radic;(8/&pi;) : &radic;3<br><br>
+          <strong>Kinetic Energy</strong><br>
+          KE per molecule = (3/2)k<sub>B</sub>T &nbsp;&nbsp;|&nbsp;&nbsp; KE per mole = (3/2)RT<br>
+          Energy per DOF = &frac12;k<sub>B</sub>T per molecule = &frac12;RT per mole<br><br>
+          <strong>Gas Laws</strong><br>
+          Boyle: P&#8321;V&#8321; = P&#8322;V&#8322; (T const) &nbsp;&nbsp;|&nbsp;&nbsp; Charles: V&#8321;/T&#8321; = V&#8322;/T&#8322; (P const)<br>
+          Gay-Lussac: P&#8321;/T&#8321; = P&#8322;/T&#8322; (V const) &nbsp;&nbsp;|&nbsp;&nbsp; Dalton: P<sub>total</sub> = &Sigma;p<sub>i</sub><br><br>
+          <strong>Heat Capacities</strong><br>
+          C<sub>v</sub> = R/(&gamma; &minus; 1) &nbsp;&nbsp;|&nbsp;&nbsp; C<sub>p</sub> = &gamma;R/(&gamma; &minus; 1) &nbsp;&nbsp;|&nbsp;&nbsp; C<sub>p</sub> &minus; C<sub>v</sub> = R<br>
+          &gamma;: mono = 5/3, di = 7/5, tri = 4/3<br><br>
+          <strong>First Law &amp; Processes</strong><br>
+          &Delta;Q = &Delta;U + W &nbsp;&nbsp;|&nbsp;&nbsp; &Delta;U = nC<sub>v</sub>&Delta;T (always)<br>
+          Isothermal: W = nRT ln(V&#8322;/V&#8321;) &nbsp;&nbsp;|&nbsp;&nbsp; Adiabatic: PV<sup>&gamma;</sup> = const, W = nR(T&#8321;&minus;T&#8322;)/(&gamma;&minus;1)<br>
+          Isobaric: W = P&Delta;V &nbsp;&nbsp;|&nbsp;&nbsp; Isochoric: W = 0<br><br>
+          <strong>Carnot Engine &amp; Entropy</strong><br>
+          &eta; = 1 &minus; T&#8322;/T&#8321; &nbsp;&nbsp;|&nbsp;&nbsp; COP = T&#8322;/(T&#8321; &minus; T&#8322;)<br>
+          &Delta;S = &Delta;Q/T (reversible) &nbsp;&nbsp;|&nbsp;&nbsp; Q&#8321;/T&#8321; = Q&#8322;/T&#8322;<br><br>
+          <strong>Heat Transfer</strong><br>
+          dQ/dt = KA(T&#8321; &minus; T&#8322;)/L &nbsp;&nbsp;|&nbsp;&nbsp; P = &epsilon;&sigma;AT<sup>4</sup><br>
+          dT/dt = &minus;k(T &minus; T<sub>s</sub>) &nbsp;&nbsp;|&nbsp;&nbsp; &sigma; = 5.67 &times; 10<sup>&minus;8</sup> W m<sup>&minus;2</sup> K<sup>&minus;4</sup><br><br>
+          <strong>Calorimetry &amp; Expansion</strong><br>
+          Q = mc&Delta;T &nbsp;&nbsp;|&nbsp;&nbsp; Q = mL &nbsp;&nbsp;|&nbsp;&nbsp; &Delta;L = L&alpha;&Delta;T &nbsp;&nbsp;|&nbsp;&nbsp; &Delta;V = &gamma;V&Delta;T
         </div>
       </div>
 
@@ -498,8 +956,8 @@
       <div class="footer-col">
         <h4>Resources</h4>
         <a href="../chapters.html">Chapters</a>
-        
-        
+
+
         <a href="../simulations.html">Simulations</a>
       </div>
       <div class="footer-col">
