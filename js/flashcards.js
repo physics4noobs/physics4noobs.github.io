@@ -200,6 +200,7 @@
     if (queue.length === 0 || currentIdx >= queue.length) {
       cardArea.style.display = 'none';
       doneMsg.style.display = 'block';
+      updateDashboard();
       return;
     }
 
@@ -245,6 +246,7 @@
     renderContent(backContent, card.back, card.type);
 
     updateProgress();
+    updateDashboard();
   }
 
   function flipCard() {
@@ -291,6 +293,113 @@
     statAccuracy.textContent = session.reviewed > 0
       ? Math.round((session.correct / session.reviewed) * 100) + '%'
       : '\u2014';
+    updateDashboard();
+  }
+
+  // --- Dashboard ---
+  function updateDashboard() {
+    var dashContent = document.getElementById('fc-dash-content');
+    var dashTypes = document.getElementById('fc-dash-types');
+    var dashInfo = document.getElementById('fc-dash-info');
+    if (!dashContent || !cards.length) return;
+
+    var now = Date.now();
+    var total = cards.length;
+    var newCount = 0, dueCount = 0, learningCount = 0, masteredCount = 0;
+    var efSum = 0, efCount = 0;
+    var earliestReview = Infinity;
+
+    cards.forEach(function (c) {
+      var p = progress[c.id];
+      if (!p) {
+        newCount++;
+      } else if ((p.nextReview || 0) <= now) {
+        dueCount++;
+      } else if ((p.interval || 0) >= 21) {
+        masteredCount++;
+        efSum += p.easeFactor || 2.5;
+        efCount++;
+        if (p.nextReview < earliestReview) earliestReview = p.nextReview;
+      } else {
+        learningCount++;
+        efSum += p.easeFactor || 2.5;
+        efCount++;
+        if (p.nextReview < earliestReview) earliestReview = p.nextReview;
+      }
+    });
+
+    var studied = total - newCount;
+    var pct = total > 0 ? Math.round((studied / total) * 100) : 0;
+    var circumference = 2 * Math.PI * 34;
+    var offset = circumference - (pct / 100) * circumference;
+
+    // Ring + breakdown
+    var html = '<div class="fc-ring-wrap">';
+    html += '<svg class="fc-ring-svg" viewBox="0 0 80 80">';
+    html += '<circle class="fc-ring-track" cx="40" cy="40" r="34"/>';
+    html += '<circle class="fc-ring-fill" cx="40" cy="40" r="34" stroke-dasharray="' + circumference.toFixed(1) + '" stroke-dashoffset="' + offset.toFixed(1) + '"/>';
+    html += '<text class="fc-ring-text" x="40" y="40">' + pct + '%</text>';
+    html += '</svg>';
+    html += '<div class="fc-ring-info">';
+    html += '<div class="fc-ring-label"><strong>' + studied + '</strong> of ' + total + ' cards seen</div>';
+    html += '<div class="fc-ring-label"><strong>' + masteredCount + '</strong> mastered</div>';
+    html += '</div></div>';
+
+    html += '<div class="fc-dash-rows">';
+    html += dashRow('due', 'Due Now', dueCount);
+    html += dashRow('new', 'New', newCount);
+    html += dashRow('learning', 'Learning', learningCount);
+    html += dashRow('mastered', 'Mastered', masteredCount);
+    html += '</div>';
+    dashContent.innerHTML = html;
+
+    // Type breakdown
+    var typeCount = { formula: 0, concept: 0, mcq: 0 };
+    cards.forEach(function (c) { typeCount[c.type] = (typeCount[c.type] || 0) + 1; });
+    var typeHtml = '<div class="fc-type-bar-wrap">';
+    typeHtml += typeBar('Formula', typeCount.formula, total, 'formula');
+    typeHtml += typeBar('Concept', typeCount.concept, total, 'concept');
+    typeHtml += typeBar('MCQ', typeCount.mcq, total, 'mcq');
+    typeHtml += '</div>';
+    dashTypes.innerHTML = typeHtml;
+
+    // Study info
+    var avgEf = efCount > 0 ? (efSum / efCount).toFixed(2) : '\u2014';
+    var infoHtml = '<div class="fc-dash-rows">';
+    infoHtml += '<div class="fc-dash-row"><span class="fc-dash-row-label">Avg Ease Factor</span>';
+    infoHtml += '<span class="fc-dash-row-value">' + avgEf + '</span></div>';
+
+    var nextStr = '\u2014';
+    if (earliestReview < Infinity) {
+      var diff = earliestReview - now;
+      if (diff <= 0) { nextStr = 'Now'; }
+      else if (diff < 3600000) { nextStr = Math.ceil(diff / 60000) + 'm'; }
+      else if (diff < 86400000) { nextStr = Math.ceil(diff / 3600000) + 'h'; }
+      else { nextStr = Math.ceil(diff / 86400000) + 'd'; }
+    }
+    infoHtml += '<div class="fc-dash-row"><span class="fc-dash-row-label">Next Review</span>';
+    infoHtml += '<span class="fc-dash-row-value">' + nextStr + '</span></div>';
+
+    var queueLeft = queue.length - currentIdx;
+    infoHtml += '<div class="fc-dash-row"><span class="fc-dash-row-label">Queue Left</span>';
+    infoHtml += '<span class="fc-dash-row-value">' + queueLeft + '</span></div>';
+
+    infoHtml += '</div>';
+    dashInfo.innerHTML = infoHtml;
+  }
+
+  function dashRow(dotClass, label, value) {
+    return '<div class="fc-dash-row">' +
+      '<span class="fc-dash-row-label"><span class="fc-dot fc-dot-' + dotClass + '"></span>' + label + '</span>' +
+      '<span class="fc-dash-row-value">' + value + '</span></div>';
+  }
+
+  function typeBar(label, count, total, type) {
+    var pct = total > 0 ? Math.round((count / total) * 100) : 0;
+    return '<div class="fc-type-row">' +
+      '<span class="fc-type-row-label">' + label + '</span>' +
+      '<div class="fc-type-bar-bg"><div class="fc-type-bar-fill bar-' + type + '" style="width:' + pct + '%"></div></div>' +
+      '<span class="fc-type-row-count">' + count + '</span></div>';
   }
 
   // --- Chapter loading ---
@@ -323,6 +432,7 @@
         } else {
           showCard();
         }
+        updateDashboard();
         syncWithFirebase(ch);
       })
       .catch(function (err) {

@@ -20,10 +20,19 @@
   <script defer src="js/auth.js"></script>
   <style>
     /* --- Flashcard Page Styles --- */
-    .fc-wrapper {
-      max-width: 700px;
+    .fc-page {
+      max-width: 1200px;
       margin: 120px auto 60px;
       padding: 0 20px;
+    }
+    .fc-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 28px;
+      align-items: start;
+    }
+    .fc-main {
+      min-width: 0;
     }
     .fc-header {
       text-align: center;
@@ -379,7 +388,7 @@
 
     /* Mobile */
     @media (max-width: 768px) {
-      .fc-wrapper { margin-top: 100px; padding: 0 14px; }
+      .fc-page { margin-top: 100px; padding: 0 14px; }
       .fc-header h1 { font-size: 1.5rem; }
       .fc-face { padding: 24px 18px; }
       .fc-front-title { font-size: 1.05rem; }
@@ -392,9 +401,204 @@
       .fc-card { min-height: 280px; }
     }
 
+    /* --- Dashboard Panel --- */
+    .fc-dashboard {
+      position: sticky;
+      top: 100px;
+    }
+    .fc-dash-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .fc-dash-title {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* Overview ring */
+    .fc-ring-wrap {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .fc-ring-svg {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+    }
+    .fc-ring-track {
+      fill: none;
+      stroke: var(--border-subtle);
+      stroke-width: 6;
+    }
+    .fc-ring-fill {
+      fill: none;
+      stroke: url(#dash-gradient);
+      stroke-width: 6;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dashoffset 0.6s ease;
+    }
+    .fc-ring-text {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      fill: var(--text-primary);
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+    .fc-ring-info {
+      flex: 1;
+    }
+    .fc-ring-label {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .fc-ring-label strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Stat rows */
+    .fc-dash-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .fc-dash-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .fc-dash-row:last-child { border-bottom: none; }
+    .fc-dash-row-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .fc-dash-row-label .fc-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .fc-dash-row-value {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+    .fc-dot-due { background: var(--color-rose); }
+    .fc-dot-new { background: var(--color-primary); }
+    .fc-dot-learning { background: var(--color-warning, #ff6b35); }
+    .fc-dot-mastered { background: var(--color-accent); }
+
+    /* Type breakdown bars */
+    .fc-type-bar-wrap {
+      margin-top: 4px;
+    }
+    .fc-type-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .fc-type-row-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      width: 60px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--font-display);
+    }
+    .fc-type-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: var(--bg-glass);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .fc-type-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+    .fc-type-bar-fill.bar-formula { background: var(--color-primary); }
+    .fc-type-bar-fill.bar-concept { background: var(--color-secondary); }
+    .fc-type-bar-fill.bar-mcq { background: var(--color-accent); }
+    .fc-type-row-count {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      width: 24px;
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+
+    /* Ease indicator */
+    .fc-ease-display {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .fc-ease-num {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--color-primary);
+    }
+    .fc-ease-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Next review */
+    .fc-next-review {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .fc-next-review strong {
+      color: var(--color-primary);
+    }
+
+    /* No-chapter placeholder */
+    .fc-dash-placeholder {
+      text-align: center;
+      padding: 24px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
     /* KaTeX overrides */
     .katex { font-size: 1.15em; }
     .fc-back .katex { color: var(--color-primary); }
+
+    /* Mobile */
+    @media (max-width: 960px) {
+      .fc-layout {
+        grid-template-columns: 1fr;
+      }
+      .fc-dashboard {
+        position: static;
+        order: -1;
+      }
+      .fc-dash-card { padding: 18px; }
+      .fc-ring-svg { width: 64px; height: 64px; }
+    }
   </style>
 </head>
 <body>
@@ -456,7 +660,7 @@
   </script>
 
   <!-- Flashcard Content -->
-  <div class="fc-wrapper">
+  <div class="fc-page">
     <div class="fc-header">
       <h1>Physics Flashcards</h1>
       <p>Spaced repetition for JEE Physics revision</p>
@@ -465,64 +669,108 @@
     <!-- Chapter Selector -->
     <div id="fc-chapter-selector"></div>
 
-    <!-- Session Stats -->
-    <div class="fc-stats">
-      <div class="fc-stat">
-        <div class="fc-stat-value" id="fc-stat-reviewed">0</div>
-        <div class="fc-stat-label">Reviewed</div>
-      </div>
-      <div class="fc-stat">
-        <div class="fc-stat-value" id="fc-stat-streak">0</div>
-        <div class="fc-stat-label">Streak</div>
-      </div>
-      <div class="fc-stat">
-        <div class="fc-stat-value" id="fc-stat-accuracy">&mdash;</div>
-        <div class="fc-stat-label">Accuracy</div>
-      </div>
-    </div>
+    <!-- Two-column layout -->
+    <div class="fc-layout">
 
-    <!-- Card Area -->
-    <div id="fc-card-area" style="display:none;">
-      <!-- Progress Bar -->
-      <div class="fc-progress">
-        <div class="fc-progress-bar">
-          <div class="fc-progress-fill" id="fc-progress-fill"></div>
+      <!-- Left: Card Area -->
+      <div class="fc-main">
+        <!-- Session Stats -->
+        <div class="fc-stats">
+          <div class="fc-stat">
+            <div class="fc-stat-value" id="fc-stat-reviewed">0</div>
+            <div class="fc-stat-label">Reviewed</div>
+          </div>
+          <div class="fc-stat">
+            <div class="fc-stat-value" id="fc-stat-streak">0</div>
+            <div class="fc-stat-label">Streak</div>
+          </div>
+          <div class="fc-stat">
+            <div class="fc-stat-value" id="fc-stat-accuracy">&mdash;</div>
+            <div class="fc-stat-label">Accuracy</div>
+          </div>
         </div>
-        <div class="fc-progress-text" id="fc-progress-text"></div>
-      </div>
 
-      <!-- Flip Card -->
-      <div class="fc-card-container">
-        <div class="fc-card" id="fc-card">
-          <div class="fc-face fc-front" id="fc-front"></div>
-          <div class="fc-face fc-back" id="fc-back"></div>
+        <!-- Card Area -->
+        <div id="fc-card-area" style="display:none;">
+          <div class="fc-progress">
+            <div class="fc-progress-bar">
+              <div class="fc-progress-fill" id="fc-progress-fill"></div>
+            </div>
+            <div class="fc-progress-text" id="fc-progress-text"></div>
+          </div>
+
+          <div class="fc-card-container">
+            <div class="fc-card" id="fc-card">
+              <div class="fc-face fc-front" id="fc-front"></div>
+              <div class="fc-face fc-back" id="fc-back"></div>
+            </div>
+          </div>
+
+          <div class="fc-rating" id="fc-rating-btns">
+            <button class="fc-rate-btn fc-rate-again" data-quality="0">Again</button>
+            <button class="fc-rate-btn fc-rate-hard" data-quality="2">Hard</button>
+            <button class="fc-rate-btn fc-rate-good" data-quality="4">Good</button>
+            <button class="fc-rate-btn fc-rate-easy" data-quality="5">Easy</button>
+          </div>
+
+          <div class="fc-keyboard-hints">
+            <kbd>Space</kbd> flip &nbsp; <kbd>1</kbd> Again &nbsp; <kbd>2</kbd> Hard &nbsp; <kbd>3</kbd> Good &nbsp; <kbd>4</kbd> Easy
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="fc-empty" id="fc-empty">Select a chapter to start reviewing flashcards.</div>
+
+        <!-- Done Message -->
+        <div class="fc-done" id="fc-done">
+          <div class="fc-done-icon">&#10024;</div>
+          <h2>All Done!</h2>
+          <p>You've reviewed all due cards for this chapter. Come back later for more.</p>
+          <button class="fc-reset-btn" id="fc-reset-btn">Reset Progress</button>
         </div>
       </div>
 
-      <!-- Rating Buttons -->
-      <div class="fc-rating" id="fc-rating-btns">
-        <button class="fc-rate-btn fc-rate-again" data-quality="0">Again</button>
-        <button class="fc-rate-btn fc-rate-hard" data-quality="2">Hard</button>
-        <button class="fc-rate-btn fc-rate-good" data-quality="4">Good</button>
-        <button class="fc-rate-btn fc-rate-easy" data-quality="5">Easy</button>
-      </div>
+      <!-- Right: Dashboard -->
+      <aside class="fc-dashboard" id="fc-dashboard">
 
-      <div class="fc-keyboard-hints">
-        <kbd>Space</kbd> flip &nbsp; <kbd>1</kbd> Again &nbsp; <kbd>2</kbd> Hard &nbsp; <kbd>3</kbd> Good &nbsp; <kbd>4</kbd> Easy
-      </div>
-    </div>
+        <!-- Completion Ring -->
+        <div class="fc-dash-card">
+          <div class="fc-dash-title">Chapter Progress</div>
+          <div id="fc-dash-content">
+            <div class="fc-dash-placeholder">Select a chapter to see your progress</div>
+          </div>
+        </div>
 
-    <!-- Empty State -->
-    <div class="fc-empty" id="fc-empty">Select a chapter to start reviewing flashcards.</div>
+        <!-- Card Breakdown -->
+        <div class="fc-dash-card">
+          <div class="fc-dash-title">Card Types</div>
+          <div id="fc-dash-types">
+            <div class="fc-dash-placeholder">No data yet</div>
+          </div>
+        </div>
 
-    <!-- Done Message -->
-    <div class="fc-done" id="fc-done">
-      <div class="fc-done-icon">&#10024;</div>
-      <h2>All Done!</h2>
-      <p>You've reviewed all due cards for this chapter. Come back later for more.</p>
-      <button class="fc-reset-btn" id="fc-reset-btn">Reset Progress</button>
+        <!-- Study Info -->
+        <div class="fc-dash-card">
+          <div class="fc-dash-title">Study Info</div>
+          <div id="fc-dash-info">
+            <div class="fc-dash-placeholder">No data yet</div>
+          </div>
+        </div>
+
+      </aside>
+
     </div>
   </div>
+
+  <!-- SVG defs for ring gradient -->
+  <svg style="position:absolute;width:0;height:0;">
+    <defs>
+      <linearGradient id="dash-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--color-primary, #00d4ff)"/>
+        <stop offset="100%" stop-color="var(--color-accent, #00ffaa)"/>
+      </linearGradient>
+    </defs>
+  </svg>
 
   <script src="js/main.js"></script>
   <script src="js/flashcards.js"></script>
