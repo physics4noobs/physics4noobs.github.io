@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluid Mechanics | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Main Content -->
+  <main>
+    <div class="chapter-detail">
+
+      <div class="ch-hero">
+        <h1>Fluid Mechanics</h1>
+        <span class="ch-meta">Chapter 07 &mdash; Grade XI &mdash; Properties of Matter</span>
+      </div>
+
+      <!-- 1. Pressure -->
+      <div class="theory-section">
+        <h2>1. Pressure</h2>
+        <p>
+          Pressure is defined as the normal force acting per unit area of a surface. It is a scalar
+          quantity (though force is a vector, pressure acts equally in all directions at a point in
+          a static fluid).
+        </p>
+        <div class="formula-box">
+          P = F / A
+        </div>
+        <p>
+          The SI unit of pressure is the Pascal (Pa), where 1 Pa = 1 N/m&sup2;. Other common units
+          include atmosphere (atm), bar, and mm of Hg (torr).
+        </p>
+
+        <h3>Key Pressure Definitions</h3>
+        <ul>
+          <li><strong>Atmospheric Pressure:</strong> The pressure exerted by the Earth&rsquo;s atmosphere at sea level. 1 atm = 1.013 &times; 10<sup>5</sup> Pa = 760 mm Hg.</li>
+          <li><strong>Gauge Pressure:</strong> The pressure measured above atmospheric pressure. P<sub>gauge</sub> = P &minus; P<sub>atm</sub>.</li>
+          <li><strong>Absolute Pressure:</strong> The total pressure at a point, including atmospheric pressure. P<sub>abs</sub> = P<sub>atm</sub> + P<sub>gauge</sub>.</li>
+        </ul>
+      </div>
+
+      <!-- 2. Pascal's Law -->
+      <div class="theory-section">
+        <h2>2. Pascal&rsquo;s Law</h2>
+        <p>
+          Pascal&rsquo;s Law states that a change in pressure applied to an enclosed fluid is
+          transmitted undiminished to every portion of the fluid and to the walls of the containing
+          vessel. This principle is the foundation of hydraulic systems.
+        </p>
+
+        <h3>Hydraulic Lift / Press</h3>
+        <p>
+          In a hydraulic system, a small force applied on a small-area piston produces a large force
+          on a large-area piston. Since pressure is transmitted equally:
+        </p>
+        <div class="formula-box">
+          F&#8321; / A&#8321; = F&#8322; / A&#8322;<br><br>
+          F&#8322; = F&#8321; &times; (A&#8322; / A&#8321;)
+        </div>
+        <p>
+          This is the principle behind hydraulic brakes, hydraulic lifts, and hydraulic presses.
+          The mechanical advantage is the ratio A&#8322;/A&#8321;. Although the force is amplified,
+          the work done on both sides is the same (conservation of energy): F&#8321;d&#8321; = F&#8322;d&#8322;.
+        </p>
+      </div>
+
+      <!-- 3. Hydrostatic Pressure -->
+      <div class="theory-section">
+        <h2>3. Hydrostatic Pressure</h2>
+        <p>
+          In a fluid at rest, pressure increases with depth due to the weight of the fluid above.
+          The pressure at a depth h below the surface of a fluid of density &rho; is:
+        </p>
+        <div class="formula-box">
+          P = P&#8320; + &rho;gh
+        </div>
+        <p>
+          where P&#8320; is the pressure at the surface (usually atmospheric pressure), &rho; is the
+          fluid density, g is the acceleration due to gravity, and h is the depth. This shows that
+          pressure at a given depth depends only on the depth and the fluid density, not on the shape
+          of the container.
+        </p>
+
+        <h3>Hydrostatic Paradox</h3>
+        <p>
+          The pressure at the bottom of a container depends only on the height of the fluid column,
+          not on the shape or volume of the container. Containers of different shapes but the same
+          base area and fluid height exert the same pressure on the base &mdash; this is the
+          hydrostatic paradox.
+        </p>
+
+        <h3>Measurement Instruments</h3>
+        <ul>
+          <li><strong>Manometer:</strong> A U-tube device used to measure the gauge pressure of a gas. The pressure difference is &Delta;P = &rho;g&Delta;h, where &Delta;h is the height difference of the manometer liquid.</li>
+          <li><strong>Barometer:</strong> A mercury barometer measures atmospheric pressure. At sea level, the mercury column stands at 760 mm, giving P<sub>atm</sub> = &rho;<sub>Hg</sub> &times; g &times; 0.76 m.</li>
+        </ul>
+      </div>
+
+      <!-- 4. Archimedes' Principle -->
+      <div class="theory-section">
+        <h2>4. Archimedes&rsquo; Principle</h2>
+        <p>
+          Archimedes&rsquo; Principle states that when a body is partially or wholly immersed in a
+          fluid, it experiences an upward buoyant force equal to the weight of the fluid displaced
+          by the body.
+        </p>
+        <div class="formula-box">
+          F<sub>b</sub> = &rho;<sub>fluid</sub> &times; V<sub>displaced</sub> &times; g
+        </div>
+
+        <h3>Floating and Sinking Conditions</h3>
+        <ul>
+          <li>If &rho;<sub>body</sub> &lt; &rho;<sub>fluid</sub>: Body floats (partially submerged). The fraction submerged equals &rho;<sub>body</sub>/&rho;<sub>fluid</sub>.</li>
+          <li>If &rho;<sub>body</sub> = &rho;<sub>fluid</sub>: Body is in neutral equilibrium (floats fully submerged at any depth).</li>
+          <li>If &rho;<sub>body</sub> &gt; &rho;<sub>fluid</sub>: Body sinks.</li>
+        </ul>
+
+        <h3>Apparent Weight</h3>
+        <p>
+          The apparent weight of a body immersed in a fluid is less than its true weight by the
+          amount of the buoyant force:
+        </p>
+        <div class="formula-box">
+          W<sub>apparent</sub> = W &minus; F<sub>b</sub> = &rho;<sub>body</sub>Vg &minus; &rho;<sub>fluid</sub>Vg = (&rho;<sub>body</sub> &minus; &rho;<sub>fluid</sub>)Vg
+        </div>
+      </div>
+
+      <!-- 5. Equation of Continuity -->
+      <div class="theory-section">
+        <h2>5. Equation of Continuity</h2>
+        <p>
+          For a steady, incompressible fluid flow through a tube of varying cross-section, the
+          mass flow rate must remain constant. Since the fluid is incompressible (&rho; = constant),
+          the volume flow rate is conserved:
+        </p>
+        <div class="formula-box">
+          A&#8321;v&#8321; = A&#8322;v&#8322; = constant
+        </div>
+        <p>
+          This means that where the tube narrows (smaller A), the fluid speeds up (larger v), and
+          vice versa. This is why water from a garden hose moves faster when you partially cover the
+          opening with your thumb.
+        </p>
+
+        <h3>Streamline vs. Turbulent Flow</h3>
+        <ul>
+          <li><strong>Streamline (Laminar) Flow:</strong> Fluid particles follow smooth, well-defined paths (streamlines). Adjacent layers slide smoothly past each other. Occurs at low velocities.</li>
+          <li><strong>Turbulent Flow:</strong> Fluid particles move in irregular, chaotic paths with eddies and vortices. Occurs at high velocities.</li>
+        </ul>
+
+        <h3>Reynolds Number</h3>
+        <p>
+          The Reynolds number (Re) is a dimensionless quantity that predicts whether flow will be
+          laminar or turbulent:
+        </p>
+        <div class="formula-box">
+          Re = &rho;vD / &eta;
+        </div>
+        <p>
+          where D is the characteristic length (e.g., pipe diameter) and &eta; is the dynamic viscosity.
+          For flow in a pipe, Re &lt; 2000 indicates laminar flow, Re &gt; 4000 indicates turbulent
+          flow, and 2000 &lt; Re &lt; 4000 is the transition region.
+        </p>
+      </div>
+
+      <!-- 6. Bernoulli's Theorem -->
+      <div class="theory-section">
+        <h2>6. Bernoulli&rsquo;s Theorem</h2>
+        <p>
+          Bernoulli&rsquo;s theorem is a statement of conservation of energy for a flowing fluid.
+          For an ideal (incompressible, non-viscous) fluid in steady flow, the sum of pressure
+          energy, kinetic energy, and potential energy per unit volume remains constant along a
+          streamline:
+        </p>
+        <div class="formula-box">
+          P + &frac12;&rho;v&sup2; + &rho;gh = constant
+        </div>
+        <p>
+          This equation shows that where the fluid velocity increases (as in a constriction), the
+          pressure decreases, and vice versa.
+        </p>
+
+        <h3>Applications</h3>
+        <ul>
+          <li><strong>Venturi Meter:</strong> A device to measure fluid flow rate. The pressure drop across a constriction is related to the velocity (and hence flow rate) by Bernoulli&rsquo;s equation.</li>
+          <li><strong>Lift on an Airfoil:</strong> Air moves faster over the curved upper surface of an airplane wing than the flat lower surface, creating lower pressure above and higher pressure below &mdash; resulting in an upward lift force.</li>
+          <li><strong>Magnus Effect:</strong> A spinning ball moving through air experiences a lateral force because the spin creates a pressure difference on opposite sides of the ball, causing it to curve.</li>
+          <li><strong>Atomiser / Spray Gun:</strong> High-speed air flowing over a tube reduces pressure at the top, drawing liquid up and atomising it into a fine spray.</li>
+        </ul>
+      </div>
+
+      <!-- 7. Viscosity -->
+      <div class="theory-section">
+        <h2>7. Viscosity</h2>
+        <p>
+          Viscosity is the property of a fluid that opposes the relative motion between adjacent
+          fluid layers. It is the internal friction of fluids. Newton&rsquo;s law of viscosity states
+          that the viscous force between two parallel layers is:
+        </p>
+        <div class="formula-box">
+          F = &eta;A (dv/dy)
+        </div>
+        <p>
+          where &eta; is the coefficient of dynamic viscosity (SI unit: Pa&middot;s or N&middot;s/m&sup2;),
+          A is the area of the layers, and dv/dy is the velocity gradient perpendicular to the flow
+          direction. Fluids that obey this linear relationship are called Newtonian fluids.
+        </p>
+
+        <h3>Stokes&rsquo; Law</h3>
+        <p>
+          When a small sphere moves through a viscous fluid at low speed, the viscous drag force
+          acting on it is:
+        </p>
+        <div class="formula-box">
+          F = 6&pi;&eta;rv
+        </div>
+        <p>
+          where r is the radius of the sphere and v is its velocity. This is valid for streamline
+          flow (low Reynolds number).
+        </p>
+
+        <h3>Terminal Velocity</h3>
+        <p>
+          When a sphere falls through a viscous fluid, it accelerates initially. As its velocity
+          increases, the viscous drag increases until it balances gravity. At this point, the sphere
+          falls with a constant velocity called the terminal velocity:
+        </p>
+        <div class="formula-box">
+          v<sub>t</sub> = 2r&sup2;(&rho;<sub>sphere</sub> &minus; &rho;<sub>fluid</sub>)g / (9&eta;)
+        </div>
+
+        <h3>Poiseuille&rsquo;s Equation</h3>
+        <p>
+          For laminar flow of a viscous fluid through a horizontal cylindrical pipe of radius R and
+          length L, the volume flow rate is:
+        </p>
+        <div class="formula-box">
+          Q = &pi;&Delta;P R<sup>4</sup> / (8&eta;L)
+        </div>
+        <p>
+          This shows that flow rate is extremely sensitive to the pipe radius (proportional to R<sup>4</sup>).
+          Doubling the radius increases the flow rate by a factor of 16. This has important
+          implications in blood flow and engineering pipe design.
+        </p>
+      </div>
+
+      <!-- 8. Surface Tension -->
+      <div class="theory-section">
+        <h2>8. Surface Tension</h2>
+        <p>
+          Surface tension is the property of a liquid surface that makes it behave like a stretched
+          elastic membrane. It arises because molecules at the surface experience a net inward force
+          (they have neighbours only on one side), minimising the surface area.
+        </p>
+        <div class="formula-box">
+          T = F / l
+        </div>
+        <p>
+          where T is the surface tension (N/m) and F is the force acting along a length l of an
+          imaginary line on the surface. Surface tension can also be defined as the surface energy
+          per unit area (J/m&sup2;).
+        </p>
+
+        <h3>Excess Pressure</h3>
+        <ul>
+          <li><strong>Inside a liquid drop (sphere):</strong> &Delta;P = 2T / R</li>
+          <li><strong>Inside a soap bubble:</strong> &Delta;P = 4T / R (because a soap bubble has two surfaces &mdash; inner and outer)</li>
+        </ul>
+        <div class="formula-box">
+          Liquid drop: &Delta;P = 2T/R &nbsp;&nbsp;|&nbsp;&nbsp; Soap bubble: &Delta;P = 4T/R
+        </div>
+
+        <h3>Capillarity</h3>
+        <p>
+          Capillarity is the rise or fall of a liquid in a narrow tube (capillary). It occurs due to
+          the competition between adhesive forces (liquid-tube) and cohesive forces (liquid-liquid).
+          The height of capillary rise is:
+        </p>
+        <div class="formula-box">
+          h = 2T cos&theta; / (r&rho;g)
+        </div>
+        <p>
+          where &theta; is the contact angle, r is the radius of the capillary tube, &rho; is the
+          liquid density, and g is the acceleration due to gravity.
+        </p>
+        <ul>
+          <li>If &theta; &lt; 90&deg; (e.g., water in glass): The meniscus is concave, and liquid rises in the tube.</li>
+          <li>If &theta; &gt; 90&deg; (e.g., mercury in glass): The meniscus is convex, and liquid falls in the tube.</li>
+          <li>If &theta; = 90&deg;: No capillary rise or fall.</li>
+        </ul>
+      </div>
+
+      <!-- Key Formulas Summary -->
+      <div class="theory-section">
+        <h2>Key Formulas Summary</h2>
+        <div class="formula-box">
+          P = F/A &nbsp;&nbsp;|&nbsp;&nbsp; P = P&#8320; + &rho;gh &nbsp;&nbsp;|&nbsp;&nbsp; F&#8321;/A&#8321; = F&#8322;/A&#8322; (Pascal)<br>
+          F<sub>b</sub> = &rho;Vg (Archimedes) &nbsp;&nbsp;|&nbsp;&nbsp; A&#8321;v&#8321; = A&#8322;v&#8322; (Continuity)<br>
+          P + &frac12;&rho;v&sup2; + &rho;gh = const (Bernoulli)<br>
+          F = 6&pi;&eta;rv (Stokes) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>t</sub> = 2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>f</sub>)g / 9&eta;<br>
+          T = F/l &nbsp;&nbsp;|&nbsp;&nbsp; h = 2T cos&theta; / r&rho;g (Capillarity)
+        </div>
+      </div>
+
+      <!-- Solved Examples -->
+      <div class="theory-section">
+        <h2>Solved Examples</h2>
+
+        <div class="example-box">
+          <div class="ex-label">Example 1</div>
+          <p>
+            In a hydraulic lift, the area of the small piston is 10 cm&sup2; and the area of the large
+            piston is 1000 cm&sup2;. If a force of 50 N is applied on the small piston, what is the
+            maximum weight that can be lifted by the large piston?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              By Pascal&rsquo;s Law: F&#8321;/A&#8321; = F&#8322;/A&#8322;<br><br>
+              F&#8322; = F&#8321; &times; (A&#8322; / A&#8321;)<br>
+              F&#8322; = 50 &times; (1000 / 10)<br>
+              F&#8322; = 50 &times; 100<br>
+              F&#8322; = 5000 N<br><br>
+              The large piston can lift a maximum weight of 5000 N (approximately 510 kg).
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 2</div>
+          <p>
+            Water flows through a horizontal pipe of varying cross-section. At a point where the
+            cross-sectional area is 40 cm&sup2;, the velocity is 2 m/s and the pressure is
+            3 &times; 10<sup>4</sup> Pa. Find the pressure at another point where the area is
+            20 cm&sup2;. (Density of water = 1000 kg/m&sup3;)
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Step 1: Find v&#8322; using the equation of continuity:<br>
+              A&#8321;v&#8321; = A&#8322;v&#8322;<br>
+              40 &times; 2 = 20 &times; v&#8322;<br>
+              v&#8322; = 4 m/s<br><br>
+              Step 2: Apply Bernoulli&rsquo;s equation (horizontal pipe, so h&#8321; = h&#8322;):<br>
+              P&#8321; + &frac12;&rho;v&#8321;&sup2; = P&#8322; + &frac12;&rho;v&#8322;&sup2;<br>
+              P&#8322; = P&#8321; + &frac12;&rho;(v&#8321;&sup2; &minus; v&#8322;&sup2;)<br>
+              P&#8322; = 3 &times; 10<sup>4</sup> + &frac12; &times; 1000 &times; (4 &minus; 16)<br>
+              P&#8322; = 30,000 + 500 &times; (&minus;12)<br>
+              P&#8322; = 30,000 &minus; 6,000<br>
+              P&#8322; = 24,000 Pa = 2.4 &times; 10<sup>4</sup> Pa<br><br>
+              The pressure at the narrower section is 2.4 &times; 10<sup>4</sup> Pa, confirming that
+              where velocity increases, pressure decreases.
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 3</div>
+          <p>
+            A steel ball of radius 2 mm and density 8000 kg/m&sup3; is dropped in a container of
+            glycerine (density = 1300 kg/m&sup3;, viscosity &eta; = 0.83 Pa&middot;s). Find the
+            terminal velocity of the ball.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using the terminal velocity formula:<br>
+              v<sub>t</sub> = 2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>f</sub>)g / (9&eta;)<br><br>
+              Given: r = 2 mm = 2 &times; 10<sup>&minus;3</sup> m, &rho;<sub>s</sub> = 8000 kg/m&sup3;,
+              &rho;<sub>f</sub> = 1300 kg/m&sup3;, &eta; = 0.83 Pa&middot;s, g = 9.8 m/s&sup2;<br><br>
+              v<sub>t</sub> = 2 &times; (2 &times; 10<sup>&minus;3</sup>)&sup2; &times; (8000 &minus; 1300) &times; 9.8 / (9 &times; 0.83)<br>
+              v<sub>t</sub> = 2 &times; 4 &times; 10<sup>&minus;6</sup> &times; 6700 &times; 9.8 / 7.47<br>
+              v<sub>t</sub> = 2 &times; 4 &times; 10<sup>&minus;6</sup> &times; 65,660 / 7.47<br>
+              v<sub>t</sub> = 525,280 &times; 10<sup>&minus;6</sup> / 7.47<br>
+              v<sub>t</sub> = 0.5253 / 7.47<br>
+              v<sub>t</sub> &approx; 0.070 m/s &approx; 7.0 cm/s
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter Links -->
+      <div class="ch-links">
+        <a href="../simulations/fluid-dynamics.html" class="primary-link">Launch Simulation &rarr;</a>
+        <a href="../tests/fluid-mechanics.html">Take Chapter Test</a>
+        <a href="mechanical-properties.html">&larr; Previous: Mechanical Properties</a>
+        <a href="thermodynamics.html">Next: Thermodynamics &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a>
+        <a href="../lectures.html">Lectures</a>
+        <a href="../notes.html">Notes</a>
+        <a href="../books.html">Books</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Current Electricity | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>Current Electricity</h1>
+      <div class="ch-meta">Grade XII &mdash; Chapter 02</div>
+      <div class="ch-nav">
+        <a href="#electric-current">Electric Current</a>
+        <a href="#ohms-law">Ohm's Law</a>
+        <a href="#series-parallel">Series &amp; Parallel</a>
+        <a href="#kirchhoffs-laws">Kirchhoff's Laws</a>
+        <a href="#wheatstone-bridge">Wheatstone Bridge</a>
+        <a href="#potentiometer">Potentiometer</a>
+        <a href="#electrical-energy-power">Energy &amp; Power</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Electric Current -->
+    <!-- ============================== -->
+    <div class="theory-section" id="electric-current">
+      <h2>1. Electric Current</h2>
+
+      <h3>Definition</h3>
+      <p>
+        Electric current is the rate of flow of electric charge through a cross-section of a conductor. By convention, the direction of current is taken as the direction in which positive charges would flow, which is opposite to the direction of electron flow.
+      </p>
+      <div class="formula-box">
+        I = dQ / dt<br><br>
+        For steady current: I = Q / t<br>
+        SI unit: Ampere (A) = C/s
+      </div>
+
+      <h3>Drift Velocity</h3>
+      <p>
+        In the absence of an electric field, free electrons in a conductor move randomly with high thermal velocities (of the order of 10<sup>5</sup> m/s) but with zero average displacement. When an electric field is applied, the electrons acquire a small systematic velocity superimposed on their random motion. This systematic velocity is called the <strong>drift velocity</strong> v<sub>d</sub>.
+      </p>
+      <div class="formula-box">
+        v<sub>d</sub> = eE&tau; / m<br><br>
+        where e = electron charge, E = electric field,<br>
+        &tau; = relaxation time (average time between successive collisions),<br>
+        m = electron mass
+      </div>
+      <p>
+        Typical drift velocities are of the order of 10<sup>&minus;4</sup> m/s, which is much smaller than the random thermal speed. Despite this slow drift, the electric signal travels at nearly the speed of light because the electric field is set up almost instantaneously throughout the conductor.
+      </p>
+
+      <h3>Current Density</h3>
+      <p>
+        Current density <strong>J</strong> is a vector quantity that gives the current per unit cross-sectional area. It is directed along the direction of current flow.
+      </p>
+      <div class="formula-box">
+        J = I / A = nev<sub>d</sub><br><br>
+        where n = number density of free electrons (electrons per unit volume)
+      </div>
+
+      <h3>Mobility</h3>
+      <p>
+        Mobility (&mu;) of a charge carrier is defined as the drift velocity per unit electric field:
+      </p>
+      <div class="formula-box">
+        &mu; = v<sub>d</sub> / E = e&tau; / m<br>
+        SI unit: m&sup2; V<sup>&minus;1</sup> s<sup>&minus;1</sup>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Ohm's Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="ohms-law">
+      <h2>2. Ohm's Law</h2>
+
+      <h3>Statement</h3>
+      <p>
+        Ohm's law states that the current through a conductor between two points is directly proportional to the potential difference across the two points, provided the physical conditions (temperature, mechanical strain, etc.) remain constant.
+      </p>
+      <div class="formula-box">
+        V = IR<br><br>
+        where R = resistance of the conductor (unit: Ohm, &Omega;)
+      </div>
+
+      <h3>Resistance</h3>
+      <p>
+        Resistance is the opposition offered by a conductor to the flow of current. It depends on the material, length, cross-sectional area, and temperature of the conductor.
+      </p>
+      <div class="formula-box">
+        R = &rho;l / A<br><br>
+        where &rho; = resistivity of the material (unit: &Omega; m),<br>
+        l = length of the conductor, A = cross-sectional area
+      </div>
+
+      <h3>Resistivity and Conductivity</h3>
+      <p>
+        Resistivity (&rho;) is an intrinsic property of the material, independent of the shape or size of the conductor. It is the resistance offered by a unit cube of the material. Conductivity (&sigma;) is the reciprocal of resistivity.
+      </p>
+      <div class="formula-box">
+        &sigma; = 1 / &rho;<br>
+        SI unit of conductivity: S/m (siemens per metre)<br><br>
+        In terms of microscopic quantities:<br>
+        &rho; = m / (ne&sup2;&tau;) &nbsp; and &nbsp; &sigma; = ne&sup2;&tau; / m
+      </div>
+
+      <h3>Temperature Dependence of Resistance</h3>
+      <p>
+        For most metals, resistance increases with temperature. For small temperature changes, the variation is approximately linear:
+      </p>
+      <div class="formula-box">
+        R<sub>T</sub> = R<sub>0</sub>(1 + &alpha;&Delta;T)<br>
+        &rho;<sub>T</sub> = &rho;<sub>0</sub>(1 + &alpha;&Delta;T)<br><br>
+        where &alpha; = temperature coefficient of resistance (unit: &deg;C<sup>&minus;1</sup> or K<sup>&minus;1</sup>)
+      </div>
+      <ul>
+        <li><strong>Metals:</strong> &alpha; is positive (resistance increases with temperature).</li>
+        <li><strong>Semiconductors and insulators:</strong> &alpha; is negative (resistance decreases with temperature).</li>
+        <li><strong>Alloys</strong> like manganin and constantan have very small &alpha;, making them suitable for standard resistors.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 1</div>
+        <p>
+          A copper wire of length 2 m and cross-sectional area 1 mm&sup2; carries a current of 1 A. If the number density of free electrons in copper is n = 8.5 &times; 10<sup>28</sup> m<sup>&minus;3</sup>, find the drift velocity and the time taken by an electron to traverse the wire.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            I = 1 A, A = 1 &times; 10<sup>&minus;6</sup> m&sup2;, n = 8.5 &times; 10<sup>28</sup> m<sup>&minus;3</sup>, e = 1.6 &times; 10<sup>&minus;19</sup> C<br><br>
+            Using I = nAev<sub>d</sub>:<br>
+            v<sub>d</sub> = I / (nAe) = 1 / [(8.5 &times; 10<sup>28</sup>)(1 &times; 10<sup>&minus;6</sup>)(1.6 &times; 10<sup>&minus;19</sup>)]<br>
+            v<sub>d</sub> = 1 / (8.5 &times; 10<sup>28</sup> &times; 1.6 &times; 10<sup>&minus;25</sup>)<br>
+            v<sub>d</sub> = 1 / (1.36 &times; 10<sup>4</sup>) = <strong>7.35 &times; 10<sup>&minus;5</sup> m/s</strong><br><br>
+            Time to traverse the wire:<br>
+            t = l / v<sub>d</sub> = 2 / (7.35 &times; 10<sup>&minus;5</sup>) = <strong>2.72 &times; 10<sup>4</sup> s &asymp; 7.55 hours</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Series & Parallel -->
+    <!-- ============================== -->
+    <div class="theory-section" id="series-parallel">
+      <h2>3. Resistors in Series &amp; Parallel</h2>
+
+      <h3>Series Combination</h3>
+      <p>
+        When resistors are connected in series, the same current flows through each resistor. The total voltage is the sum of the individual voltage drops.
+      </p>
+      <div class="formula-box">
+        R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub> + ...<br><br>
+        V = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub> + ... &nbsp; (I same through all)
+      </div>
+
+      <h3>Parallel Combination</h3>
+      <p>
+        When resistors are connected in parallel, the voltage across each resistor is the same. The total current divides among the branches.
+      </p>
+      <div class="formula-box">
+        1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + 1/R<sub>3</sub> + ...<br><br>
+        For two resistors: R<sub>eq</sub> = R<sub>1</sub>R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)<br><br>
+        I = I<sub>1</sub> + I<sub>2</sub> + I<sub>3</sub> + ... &nbsp; (V same across all)
+      </div>
+
+      <h3>Voltage Divider</h3>
+      <p>
+        For two resistors R<sub>1</sub> and R<sub>2</sub> in series across a voltage V:
+      </p>
+      <div class="formula-box">
+        V<sub>1</sub> = V &times; R<sub>1</sub> / (R<sub>1</sub> + R<sub>2</sub>)<br>
+        V<sub>2</sub> = V &times; R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+      </div>
+
+      <h3>Current Divider</h3>
+      <p>
+        For two resistors R<sub>1</sub> and R<sub>2</sub> in parallel with total current I:
+      </p>
+      <div class="formula-box">
+        I<sub>1</sub> = I &times; R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)<br>
+        I<sub>2</sub> = I &times; R<sub>1</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+      </div>
+      <p>
+        Notice in the current divider that more current flows through the <em>smaller</em> resistance.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Kirchhoff's Laws -->
+    <!-- ============================== -->
+    <div class="theory-section" id="kirchhoffs-laws">
+      <h2>4. Kirchhoff's Laws</h2>
+
+      <h3>Kirchhoff's Current Law (KCL) &mdash; Junction Rule</h3>
+      <p>
+        At any junction (node) in an electrical circuit, the algebraic sum of currents entering the junction equals the algebraic sum of currents leaving it. Equivalently, the total current entering a junction equals the total current leaving it. This is a consequence of the <strong>conservation of charge</strong>.
+      </p>
+      <div class="formula-box">
+        &sum; I<sub>in</sub> = &sum; I<sub>out</sub><br><br>
+        Or equivalently: &sum; I = 0 &nbsp; (at any junction)
+      </div>
+
+      <h3>Kirchhoff's Voltage Law (KVL) &mdash; Loop Rule</h3>
+      <p>
+        In any closed loop of an electrical circuit, the algebraic sum of all the potential differences (including EMFs and voltage drops across resistors) is zero. This is a consequence of the <strong>conservation of energy</strong>.
+      </p>
+      <div class="formula-box">
+        &sum; V = 0 &nbsp; (around any closed loop)<br><br>
+        &sum; &epsilon; = &sum; IR &nbsp; (EMFs = sum of voltage drops)
+      </div>
+
+      <h3>Sign Conventions for KVL</h3>
+      <ul>
+        <li>Choose a direction to traverse the loop (clockwise or anticlockwise).</li>
+        <li>When traversing a resistor in the direction of assumed current: voltage drop = &minus;IR.</li>
+        <li>When traversing a resistor against the assumed current: voltage rise = +IR.</li>
+        <li>When traversing an EMF source from &minus; to + terminal: voltage rise = +&epsilon;.</li>
+        <li>When traversing an EMF source from + to &minus; terminal: voltage drop = &minus;&epsilon;.</li>
+      </ul>
+
+      <h3>Solving Circuits with Kirchhoff's Laws</h3>
+      <p>
+        For a circuit with <em>n</em> unknowns, you need <em>n</em> independent equations. Use as many junction equations (KCL) as needed, and supplement with loop equations (KVL). For a circuit with b branches and n nodes, you need (n &minus; 1) KCL equations and (b &minus; n + 1) KVL equations.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 2</div>
+        <p>
+          In the circuit shown, two cells of EMF &epsilon;<sub>1</sub> = 10 V (internal resistance r<sub>1</sub> = 1 &Omega;) and &epsilon;<sub>2</sub> = 4 V (internal resistance r<sub>2</sub> = 2 &Omega;) are connected in parallel across an external resistance R = 10 &Omega;. Find the current through R.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Let I<sub>1</sub> be the current from &epsilon;<sub>1</sub>, I<sub>2</sub> from &epsilon;<sub>2</sub>, and I through R.<br>
+            By KCL at the junction: I = I<sub>1</sub> + I<sub>2</sub> &nbsp; ...(i)<br><br>
+            Loop 1 (through &epsilon;<sub>1</sub> and R):<br>
+            &epsilon;<sub>1</sub> &minus; I<sub>1</sub>r<sub>1</sub> &minus; IR = 0<br>
+            10 &minus; I<sub>1</sub> &minus; 10I = 0 &nbsp; ...(ii)<br><br>
+            Loop 2 (through &epsilon;<sub>2</sub> and R):<br>
+            &epsilon;<sub>2</sub> &minus; I<sub>2</sub>r<sub>2</sub> &minus; IR = 0<br>
+            4 &minus; 2I<sub>2</sub> &minus; 10I = 0 &nbsp; ...(iii)<br><br>
+            From (ii): I<sub>1</sub> = 10 &minus; 10I<br>
+            From (iii): I<sub>2</sub> = (4 &minus; 10I) / 2 = 2 &minus; 5I<br>
+            Substituting in (i): I = (10 &minus; 10I) + (2 &minus; 5I)<br>
+            I = 12 &minus; 15I<br>
+            16I = 12<br>
+            I = <strong>0.75 A</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Wheatstone Bridge -->
+    <!-- ============================== -->
+    <div class="theory-section" id="wheatstone-bridge">
+      <h2>5. Wheatstone Bridge</h2>
+
+      <h3>Principle</h3>
+      <p>
+        A Wheatstone bridge is an arrangement of four resistances P, Q, R, and S connected in a diamond (quadrilateral) configuration. A galvanometer is connected between the junctions of P-Q and R-S. The bridge is said to be <strong>balanced</strong> when no current flows through the galvanometer.
+      </p>
+
+      <h3>Balanced Condition</h3>
+      <div class="formula-box">
+        P / Q = R / S<br><br>
+        When balanced, V<sub>B</sub> = V<sub>D</sub> &nbsp; (points B and D are at equal potential)
+      </div>
+      <p>
+        At balance, the galvanometer can be effectively removed from the circuit without affecting the currents in the branches. This principle is widely used in measurement of unknown resistances.
+      </p>
+
+      <h3>Meter Bridge (Slide Wire Bridge)</h3>
+      <p>
+        The meter bridge is a practical form of the Wheatstone bridge. It uses a uniform wire of length 100 cm as two of the resistances. A standard resistance S is placed in one gap and the unknown resistance R in the other. A jockey is moved along the wire to find the balance point at length l from one end.
+      </p>
+      <div class="formula-box">
+        At balance: R / S = l / (100 &minus; l)<br>
+        Therefore: R = S &times; l / (100 &minus; l)
+      </div>
+
+      <h3>Sensitivity of Wheatstone Bridge</h3>
+      <p>
+        The sensitivity of a Wheatstone bridge is highest when all four resistances are of comparable magnitude. The bridge is most sensitive when P = Q = R = S. High sensitivity means even a small imbalance produces a noticeable deflection in the galvanometer.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Potentiometer -->
+    <!-- ============================== -->
+    <div class="theory-section" id="potentiometer">
+      <h2>6. Potentiometer</h2>
+
+      <h3>Principle</h3>
+      <p>
+        A potentiometer is a device used to measure the EMF of a cell or potential difference without drawing any current from the source being measured. It works on the principle that when a constant current flows through a wire of uniform cross-section and material, the potential drop across any length of the wire is proportional to that length.
+      </p>
+      <div class="formula-box">
+        V &propto; l &nbsp; (for a uniform wire carrying constant current)<br>
+        V = (I&rho;/A) &times; l = kl<br>
+        where k = potential gradient (V/m)
+      </div>
+
+      <h3>Comparison of EMFs</h3>
+      <p>
+        Two cells with EMFs &epsilon;<sub>1</sub> and &epsilon;<sub>2</sub> are connected one at a time and their balance lengths l<sub>1</sub> and l<sub>2</sub> are found:
+      </p>
+      <div class="formula-box">
+        &epsilon;<sub>1</sub> / &epsilon;<sub>2</sub> = l<sub>1</sub> / l<sub>2</sub>
+      </div>
+
+      <h3>Internal Resistance of a Cell</h3>
+      <p>
+        A potentiometer can be used to find the internal resistance of a cell. First find the balance length l<sub>1</sub> with the cell in open circuit (EMF = &epsilon;). Then connect a known resistance R across the cell and find the new balance length l<sub>2</sub> (terminal voltage = V):
+      </p>
+      <div class="formula-box">
+        &epsilon; / V = l<sub>1</sub> / l<sub>2</sub><br>
+        Since &epsilon; = I(R + r) and V = IR:<br>
+        r = R(l<sub>1</sub> &minus; l<sub>2</sub>) / l<sub>2</sub>
+      </div>
+
+      <h3>Advantages of Potentiometer over Voltmeter</h3>
+      <ul>
+        <li>At the balance point, no current is drawn from the cell being measured, so the EMF is measured accurately (no voltage drop across internal resistance).</li>
+        <li>A potentiometer has theoretically infinite resistance at balance.</li>
+        <li>It can compare EMFs with high precision.</li>
+        <li>It is a null method, which eliminates calibration errors.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Electrical Energy & Power -->
+    <!-- ============================== -->
+    <div class="theory-section" id="electrical-energy-power">
+      <h2>7. Electrical Energy &amp; Power</h2>
+
+      <h3>Electrical Energy</h3>
+      <p>
+        When a current I flows through a resistor R for a time t, the electrical energy dissipated as heat is given by Joule's law:
+      </p>
+      <div class="formula-box">
+        W = VIt = I&sup2;Rt = V&sup2;t / R
+      </div>
+
+      <h3>Electrical Power</h3>
+      <p>
+        Power is the rate at which electrical energy is dissipated or consumed:
+      </p>
+      <div class="formula-box">
+        P = VI = I&sup2;R = V&sup2; / R<br>
+        SI unit: Watt (W) = J/s
+      </div>
+
+      <h3>Maximum Power Transfer Theorem</h3>
+      <p>
+        When a cell of EMF &epsilon; and internal resistance r is connected to an external load resistance R, the power delivered to the external resistance is:
+      </p>
+      <div class="formula-box">
+        P = &epsilon;&sup2;R / (R + r)&sup2;
+      </div>
+      <p>
+        To find the value of R for maximum power, we differentiate P with respect to R and set it to zero. This gives:
+      </p>
+      <div class="formula-box">
+        For maximum power transfer: R = r<br><br>
+        P<sub>max</sub> = &epsilon;&sup2; / (4r)
+      </div>
+      <p>
+        The maximum power is transferred to the external load when the load resistance equals the internal resistance of the source. At this condition, the efficiency is 50% (half the total power is dissipated internally).
+      </p>
+
+      <h3>Combination of Bulbs</h3>
+      <ul>
+        <li><strong>Series:</strong> The bulb with higher resistance (lower wattage rating) glows brighter because P = I&sup2;R and I is the same.</li>
+        <li><strong>Parallel:</strong> The bulb with lower resistance (higher wattage rating) glows brighter because P = V&sup2;/R and V is the same.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 3</div>
+        <p>
+          A battery of EMF 12 V and internal resistance 2 &Omega; is connected to a variable external resistance R. Find the value of R for maximum power transfer, the maximum power delivered to R, and the efficiency at this condition.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            &epsilon; = 12 V, r = 2 &Omega;<br><br>
+            For maximum power: R = r = <strong>2 &Omega;</strong><br><br>
+            Current: I = &epsilon; / (R + r) = 12 / (2 + 2) = 3 A<br><br>
+            Power to R: P<sub>R</sub> = I&sup2;R = (3)&sup2;(2) = <strong>18 W</strong><br>
+            (Alternatively: P<sub>max</sub> = &epsilon;&sup2;/(4r) = 144/8 = 18 W)<br><br>
+            Total power from battery: P<sub>total</sub> = &epsilon;I = 12 &times; 3 = 36 W<br>
+            Power dissipated internally: P<sub>r</sub> = I&sup2;r = 9 &times; 2 = 18 W<br><br>
+            Efficiency = P<sub>R</sub> / P<sub>total</sub> = 18/36 = <strong>50%</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="../simulations/current-electricity.html" class="primary-link">Simulation</a>
+      <a href="../tests/current-electricity.html">Take a Test</a>
+      <a href="magnetism.html">Next: Moving Charges &amp; Magnetism &rarr;</a>
+      <a href="electrostatics.html">&larr; Prev: Electrostatics</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

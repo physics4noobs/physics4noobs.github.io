@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Tests | Axomiya Engineer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="js/theme.js"></script>
+  <style>
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .test-card {
+      background: var(--card-bg, rgba(255,255,255,0.04));
+      border: 1px solid var(--border, rgba(255,255,255,0.08));
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .test-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #7c3aed, #00d4ff);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .test-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+    .test-card:hover::before {
+      opacity: 1;
+    }
+    .tc-grade {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted, #888);
+      font-weight: 600;
+    }
+    .tc-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text, #fff);
+      line-height: 1.3;
+    }
+    .tc-info {
+      font-size: 0.82rem;
+      color: var(--text-muted, #999);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .tc-info span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tc-link {
+      margin-top: auto;
+      padding-top: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #7c3aed;
+      transition: color 0.2s ease;
+    }
+    .test-card:hover .tc-link {
+      color: #00d4ff;
+    }
+  </style>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="js/firebase-config.js"></script>
+  <script defer src="js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+<div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="simulations.html" class="nav-link">Simulations</a></div>
+        <div class="nav-item"><a href="tests.html" class="nav-link active">Tests</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>Physics <span class="text-gradient">Practice Tests</span></h1>
+    <p>DTS-based chapter-wise tests designed to strengthen your problem-solving skills. Timed assessments with detailed solutions for every question.</p>
+  </div>
+
+  <!-- Test Listings -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <div class="grade-tabs">
+        <button class="grade-tab active" data-grade="grade-xi-tests">Grade XI</button>
+        <button class="grade-tab" data-grade="grade-xii-tests">Grade XII</button>
+      </div>
+
+      <!-- ==================== GRADE XI TESTS ==================== -->
+      <div class="grade-content active" id="grade-xi-tests">
+        <div class="test-grid">
+
+          <!-- 1. Kinematics -->
+          <a href="tests/kinematics.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 1</div>
+            <div class="tc-title">Kinematics</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 2. Newton's Laws of Motion -->
+          <a href="tests/newtons-laws.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 2</div>
+            <div class="tc-title">Newton's Laws of Motion</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 3. Work, Power & Energy -->
+          <a href="tests/work-power-energy.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 3</div>
+            <div class="tc-title">Work, Power &amp; Energy</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 4. Rotational Motion -->
+          <a href="tests/rotational-motion.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 4</div>
+            <div class="tc-title">Rotational Motion</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 5. Gravitation -->
+          <a href="tests/gravitation.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 5</div>
+            <div class="tc-title">Gravitation</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 6. Mechanical Properties -->
+          <a href="tests/mechanical-properties.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 6</div>
+            <div class="tc-title">Mechanical Properties</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 7. Fluid Mechanics -->
+          <a href="tests/fluid-mechanics.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 7</div>
+            <div class="tc-title">Fluid Mechanics</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 8. Heat & Thermodynamics -->
+          <a href="tests/thermodynamics.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 8</div>
+            <div class="tc-title">Heat &amp; Thermodynamics</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 9. Simple Harmonic Motion -->
+          <a href="tests/shm.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 9</div>
+            <div class="tc-title">Simple Harmonic Motion</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 10. Waves -->
+          <a href="tests/waves.html" class="test-card reveal">
+            <div class="tc-grade">Grade XI &bull; Chapter 10</div>
+            <div class="tc-title">Waves</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- ==================== GRADE XII TESTS ==================== -->
+      <div class="grade-content" id="grade-xii-tests">
+        <div class="test-grid">
+
+          <!-- 1. Electrostatics & Capacitance -->
+          <a href="tests/electrostatics.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 1</div>
+            <div class="tc-title">Electrostatics &amp; Capacitance</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 2. Current Electricity -->
+          <a href="tests/current-electricity.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 2</div>
+            <div class="tc-title">Current Electricity</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 3. Moving Charges & Magnetism -->
+          <a href="tests/magnetism.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 3</div>
+            <div class="tc-title">Moving Charges &amp; Magnetism</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 4. Electromagnetic Induction -->
+          <a href="tests/emi.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 4</div>
+            <div class="tc-title">Electromagnetic Induction</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 5. Alternating Current -->
+          <a href="tests/ac-circuits.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 5</div>
+            <div class="tc-title">Alternating Current</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 6. Electromagnetic Waves -->
+          <a href="tests/em-waves.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 6</div>
+            <div class="tc-title">Electromagnetic Waves</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 7. Ray Optics -->
+          <a href="tests/ray-optics.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 7</div>
+            <div class="tc-title">Ray Optics</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 8. Wave Optics -->
+          <a href="tests/wave-optics.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 8</div>
+            <div class="tc-title">Wave Optics</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+          <!-- 9. Modern Physics -->
+          <a href="tests/modern-physics.html" class="test-card reveal">
+            <div class="tc-grade">Grade XII &bull; Chapter 9</div>
+            <div class="tc-title">Modern Physics</div>
+            <div class="tc-info">
+              <span>&#128221; 15 Questions</span>
+              <span>&#9201; 90 min</span>
+            </div>
+            <div class="tc-link">Start Test &rarr;</div>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="chapters.html">Chapters</a><a href="lectures.html">Lectures</a><a href="notes.html">Notes</a><a href="books.html">Books</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

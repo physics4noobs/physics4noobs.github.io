@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EM Waves DTS | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Electromagnetic Waves &mdash; Daily Test Series</h1>
+      <div class="test-meta">Grade XII &bull; 15 Questions &bull; 90 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">90:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">Maxwell's modification of Ampere's circuital law introduced:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Conduction current</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Displacement current</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Eddy current</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Thermionic current</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Maxwell modified Ampere's law by adding the displacement current term: I<sub>d</sub> = &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt. This accounts for the changing electric field between capacitor plates and ensures continuity of current.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">The speed of electromagnetic waves in vacuum is given by:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1/&radic;(&mu;<sub>0</sub>&epsilon;<sub>0</sub>)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &radic;(&mu;<sub>0</sub>&epsilon;<sub>0</sub>)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &mu;<sub>0</sub>&epsilon;<sub>0</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1/(&mu;<sub>0</sub>&epsilon;<sub>0</sub>)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> c = 1/&radic;(&mu;<sub>0</sub>&epsilon;<sub>0</sub>) = 1/&radic;(4&pi; &times; 10<sup>&minus;7</sup> &times; 8.85 &times; 10<sup>&minus;12</sup>) &approx; 3 &times; 10<sup>8</sup> m/s.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">Which of the following electromagnetic waves has the longest wavelength?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Gamma rays</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> X-rays</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Radio waves</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Microwaves</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In the EM spectrum, the order from longest to shortest wavelength is: Radio waves > Microwaves > Infrared > Visible > Ultraviolet > X-rays > Gamma rays. Radio waves have the longest wavelength.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">Electromagnetic waves are:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Longitudinal waves</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Mechanical waves</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Longitudinal and require a medium</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Transverse waves that do not require a medium</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> EM waves are transverse in nature: E and B oscillate perpendicular to each other and to the direction of propagation. They do not require a material medium and can travel through vacuum.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">The wavelength range of visible light is approximately:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 400 nm to 700 nm</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 1 nm to 400 nm</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 700 nm to 1 mm</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1 mm to 1 m</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Visible light ranges from about 400 nm (violet) to 700 nm (red). Below 400 nm is ultraviolet and above 700 nm is infrared.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">In an electromagnetic wave, the electric and magnetic fields are:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Parallel to each other</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Perpendicular to each other and in phase</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Perpendicular and out of phase by 90&deg;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Anti-parallel to each other</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In an EM wave, E and B are mutually perpendicular and also perpendicular to the direction of propagation. They oscillate in phase, reaching their maxima and minima at the same time.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">Which EM radiation is used in RADAR systems?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Infrared</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Ultraviolet</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Microwaves</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Radio waves</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> RADAR (Radio Detection And Ranging) uses microwaves because of their short wavelength, which provides good resolution and directional properties for detecting objects.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">The ratio of the amplitudes of the electric field (E<sub>0</sub>) and magnetic field (B<sub>0</sub>) in an electromagnetic wave in vacuum is equal to:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> c (speed of light)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 1/c</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> c&sup2;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &radic;c</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In an EM wave, E<sub>0</sub>/B<sub>0</sub> = c = 3 &times; 10<sup>8</sup> m/s. This relationship holds because E and B are related by E = cB at every instant.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">The displacement current through a parallel plate capacitor of capacitance 20 &mu;F is 0.1 A. The rate of change of voltage across the capacitor is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2 &times; 10<sup>3</sup> V/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 0.5 &times; 10<sup>3</sup> V/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2 &times; 10<sup>6</sup> V/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 5 &times; 10<sup>3</sup> V/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> I<sub>d</sub> = C &times; dV/dt. So dV/dt = I<sub>d</sub>/C = 0.1 / (20 &times; 10<sup>&minus;6</sup>) = 0.1 / (2 &times; 10<sup>&minus;5</sup>) = 5 &times; 10<sup>3</sup> V/s.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">The intensity of an electromagnetic wave is proportional to:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> E<sub>0</sub></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> E<sub>0</sub>&sup2;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> E<sub>0</sub><sup>3</sup></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &radic;E<sub>0</sub></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The intensity I = &frac12;&epsilon;<sub>0</sub>cE<sub>0</sub>&sup2;. Since &epsilon;<sub>0</sub> and c are constants, I &prop; E<sub>0</sub>&sup2;. Intensity is proportional to the square of the amplitude of the electric field.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 11</div>
+      <div class="q-text">Which of the following EM waves is produced by the deceleration of high-energy electrons striking a metal target?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Gamma rays</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Ultraviolet</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> X-rays</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Infrared</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> X-rays are produced when high-energy electrons are decelerated upon hitting a heavy metal target (bremsstrahlung/braking radiation). Gamma rays are emitted from atomic nuclei during radioactive decay.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 12</div>
+      <div class="q-text">The radiation pressure exerted by an electromagnetic wave of intensity I on a perfectly absorbing surface is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> I/c</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2I/c</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> I/c&sup2;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Ic</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For a perfectly absorbing surface, radiation pressure P = I/c. For a perfectly reflecting surface, P = 2I/c (momentum change is doubled).</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 13</div>
+      <div class="q-text">The ozone layer in the atmosphere absorbs which type of radiation from the sun?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Infrared</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Visible light</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Radio waves</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Ultraviolet</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The ozone (O<sub>3</sub>) layer in the stratosphere absorbs most of the harmful ultraviolet radiation from the sun, protecting life on Earth from UV-induced damage.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 14</div>
+      <div class="q-text">An EM wave of frequency 10<sup>10</sup> Hz belongs to which part of the EM spectrum?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Radio waves</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Microwaves</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Infrared</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Visible light</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Wavelength &lambda; = c/f = 3 &times; 10<sup>8</sup> / 10<sup>10</sup> = 3 &times; 10<sup>&minus;2</sup> m = 3 cm. This falls in the microwave range (wavelength ~1 mm to ~30 cm, frequency ~10<sup>9</sup> to ~3 &times; 10<sup>11</sup> Hz).</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 15</div>
+      <div class="q-text">The energy of an electromagnetic wave is carried by:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Only the electric field</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Only the magnetic field</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Both the electric and magnetic fields equally</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Neither field; it is carried by the medium</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In an EM wave, the energy is shared equally between the electric and magnetic fields. The energy density u = &frac12;&epsilon;<sub>0</sub>E&sup2; + B&sup2;/(2&mu;<sub>0</sub>), and at any instant &frac12;&epsilon;<sub>0</sub>E&sup2; = B&sup2;/(2&mu;<sub>0</sub>), confirming equal sharing.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    var totalSeconds = 90 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>

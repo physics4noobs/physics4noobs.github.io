@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mechanical Properties of Solids | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Main Content -->
+  <main>
+    <div class="chapter-detail">
+
+      <div class="ch-hero">
+        <h1>Mechanical Properties of Solids</h1>
+        <span class="ch-meta">Chapter 06 &mdash; Grade XI &mdash; Properties of Matter</span>
+      </div>
+
+      <!-- 1. Elasticity & Plasticity -->
+      <div class="theory-section">
+        <h2>1. Elasticity &amp; Plasticity</h2>
+        <p>
+          When an external force (called a deforming force) is applied to a body, the body undergoes
+          a change in shape or size. The property by virtue of which a body tends to regain its
+          original shape and size upon removal of the deforming force is called <strong>elasticity</strong>.
+          The property by which a body does not regain its original shape and retains the deformed
+          state permanently is called <strong>plasticity</strong>.
+        </p>
+        <p>
+          No material is perfectly elastic or perfectly plastic. Steel is close to being perfectly
+          elastic (for small deformations), while putty and clay are nearly perfectly plastic.
+          The behaviour of a material under deformation is best described by its stress-strain curve.
+        </p>
+        <ul>
+          <li><strong>Elastic behaviour:</strong> Body returns to original shape after force is removed</li>
+          <li><strong>Plastic behaviour:</strong> Body retains the deformed shape permanently</li>
+          <li>At the atomic level, elasticity arises from interatomic restoring forces when atoms are displaced from equilibrium positions</li>
+        </ul>
+      </div>
+
+      <!-- 2. Stress & Strain -->
+      <div class="theory-section">
+        <h2>2. Stress &amp; Strain</h2>
+
+        <h3>Stress</h3>
+        <p>
+          Stress is the restoring force per unit area developed inside a body when it is deformed.
+          It is measured in Pascals (Pa) or N/m&sup2;.
+        </p>
+        <div class="formula-box">
+          &sigma; = F / A
+        </div>
+
+        <h3>Types of Stress</h3>
+        <ul>
+          <li><strong>Tensile Stress:</strong> When the body is stretched along its length by equal and opposite forces applied normally to its cross-section.</li>
+          <li><strong>Compressive Stress:</strong> When the body is compressed by equal and opposite forces applied normally, reducing its length.</li>
+          <li><strong>Shear Stress (Tangential Stress):</strong> When equal and opposite forces are applied tangentially to the opposite faces, causing angular deformation.</li>
+        </ul>
+
+        <h3>Strain</h3>
+        <p>
+          Strain is the ratio of change in dimension to the original dimension. It is a dimensionless quantity.
+        </p>
+
+        <h3>Types of Strain</h3>
+        <ul>
+          <li><strong>Longitudinal Strain:</strong> &epsilon; = &Delta;L / L (change in length per unit original length)</li>
+          <li><strong>Volumetric Strain:</strong> &epsilon;<sub>v</sub> = &Delta;V / V (change in volume per unit original volume)</li>
+          <li><strong>Shear Strain:</strong> &gamma; = &Delta;x / L = tan&theta; &approx; &theta; (angular displacement, for small deformations)</li>
+        </ul>
+        <div class="formula-box">
+          &epsilon; = &Delta;L / L &nbsp;&nbsp;|&nbsp;&nbsp; &epsilon;<sub>v</sub> = &Delta;V / V &nbsp;&nbsp;|&nbsp;&nbsp; &gamma; = tan&theta; &approx; &theta;
+        </div>
+      </div>
+
+      <!-- 3. Hooke's Law -->
+      <div class="theory-section">
+        <h2>3. Hooke&rsquo;s Law</h2>
+        <p>
+          Hooke&rsquo;s Law states that within the elastic limit, stress is directly proportional to
+          strain. The constant of proportionality is called the modulus of elasticity (or elastic modulus).
+        </p>
+        <div class="formula-box">
+          Stress &propto; Strain &nbsp;&nbsp;(within elastic limit)<br><br>
+          Stress = E &times; Strain
+        </div>
+        <p>
+          where E is the modulus of elasticity. This linear relationship holds only up to the
+          proportional limit. Beyond the elastic limit, the material undergoes permanent (plastic)
+          deformation, and Hooke&rsquo;s Law no longer applies.
+        </p>
+        <p>
+          The modulus of elasticity has the same dimensions as stress (since strain is dimensionless)
+          and is measured in Pascals (Pa). A higher modulus means the material is stiffer and resists
+          deformation more effectively.
+        </p>
+      </div>
+
+      <!-- 4. Elastic Moduli -->
+      <div class="theory-section">
+        <h2>4. Elastic Moduli</h2>
+
+        <h3>Young&rsquo;s Modulus (Y)</h3>
+        <p>
+          Young&rsquo;s modulus is the ratio of longitudinal (tensile or compressive) stress to
+          longitudinal strain. It measures a material&rsquo;s resistance to being stretched or compressed.
+        </p>
+        <div class="formula-box">
+          Y = &sigma; / &epsilon; = (F/A) / (&Delta;L/L) = FL / A&Delta;L
+        </div>
+        <p>
+          Steel has a very high Young&rsquo;s modulus (~200 GPa), making it extremely rigid. Rubber has
+          a very low Young&rsquo;s modulus, making it highly deformable.
+        </p>
+
+        <h3>Bulk Modulus (B)</h3>
+        <p>
+          Bulk modulus is the ratio of volumetric (hydraulic) stress to volumetric strain. It measures
+          a material&rsquo;s resistance to uniform compression.
+        </p>
+        <div class="formula-box">
+          B = &minus;V &Delta;P / &Delta;V = &minus;&Delta;P / (&Delta;V/V)
+        </div>
+        <p>
+          The negative sign ensures that B is positive, since an increase in pressure (&Delta;P &gt; 0)
+          causes a decrease in volume (&Delta;V &lt; 0). The reciprocal of bulk modulus is called
+          compressibility: K = 1/B.
+        </p>
+
+        <h3>Shear Modulus / Modulus of Rigidity (G)</h3>
+        <p>
+          Shear modulus is the ratio of shear stress to shear strain. It measures a material&rsquo;s
+          resistance to angular deformation.
+        </p>
+        <div class="formula-box">
+          G = Shear Stress / Shear Strain = (F/A) / &theta;
+        </div>
+        <p>
+          Fluids have zero shear modulus since they cannot sustain shear stress at rest. For most
+          solids, G is typically about one-third to one-half of Y.
+        </p>
+      </div>
+
+      <!-- 5. Poisson's Ratio -->
+      <div class="theory-section">
+        <h2>5. Poisson&rsquo;s Ratio</h2>
+        <p>
+          When a rod is stretched along its length, it contracts in the lateral (perpendicular)
+          direction. Poisson&rsquo;s ratio is defined as the ratio of lateral strain to longitudinal
+          strain, with a negative sign to make it positive for normal materials:
+        </p>
+        <div class="formula-box">
+          &sigma;<sub>P</sub> = &minus;(Lateral Strain) / (Longitudinal Strain) = &minus;(&Delta;d/d) / (&Delta;L/L)
+        </div>
+        <p>
+          The theoretical range for Poisson&rsquo;s ratio is &minus;1 to 0.5, but for most real
+          materials it lies between 0 and 0.5:
+        </p>
+        <ul>
+          <li>&sigma;<sub>P</sub> = 0: Material does not contract laterally when stretched (e.g., cork, approximately)</li>
+          <li>&sigma;<sub>P</sub> = 0.5: Material is perfectly incompressible (volume remains constant during deformation)</li>
+          <li>Most metals: &sigma;<sub>P</sub> &approx; 0.25 to 0.35</li>
+          <li>Rubber: &sigma;<sub>P</sub> &approx; 0.5 (nearly incompressible)</li>
+        </ul>
+
+        <h3>Relation Between Elastic Constants</h3>
+        <div class="formula-box">
+          Y = 2G(1 + &sigma;<sub>P</sub>) &nbsp;&nbsp;|&nbsp;&nbsp; Y = 3B(1 &minus; 2&sigma;<sub>P</sub>)
+        </div>
+      </div>
+
+      <!-- 6. Elastic PE -->
+      <div class="theory-section">
+        <h2>6. Elastic Potential Energy</h2>
+        <p>
+          When a body is deformed within the elastic limit, work is done by the deforming force and
+          this work is stored as elastic potential energy in the body. The energy is recovered when
+          the deforming force is removed.
+        </p>
+        <p>
+          The work done per unit volume in deforming the body equals the area under the stress-strain
+          curve. For a linear (Hookean) material:
+        </p>
+        <div class="formula-box">
+          Energy stored per unit volume (u) = &frac12; &times; Stress &times; Strain = &frac12; &times; &sigma; &times; &epsilon;<br><br>
+          Total Energy: U = &frac12; &times; &sigma; &times; &epsilon; &times; V
+        </div>
+        <p>
+          Using Hooke&rsquo;s Law (&sigma; = Y&epsilon;), this can be rewritten as:
+        </p>
+        <div class="formula-box">
+          U = &frac12; &times; Y &times; &epsilon;&sup2; &times; V &nbsp;&nbsp;=&nbsp;&nbsp; &sigma;&sup2;V / (2Y)
+        </div>
+        <p>
+          This energy density concept is critical in engineering design &mdash; it determines how much
+          energy a material can absorb before yielding (resilience) or fracturing (toughness).
+        </p>
+      </div>
+
+      <!-- 7. Stress-Strain Curve -->
+      <div class="theory-section">
+        <h2>7. Stress-Strain Curve</h2>
+        <p>
+          The stress-strain curve is the most informative representation of a material&rsquo;s
+          mechanical behaviour. For a typical ductile material (like mild steel), the curve exhibits
+          several important regions:
+        </p>
+        <ul>
+          <li><strong>Proportional Limit (A):</strong> Up to this point, stress is directly proportional to strain (Hooke&rsquo;s Law holds exactly). The curve is a straight line.</li>
+          <li><strong>Elastic Limit (B):</strong> The maximum stress up to which the material returns to its original shape upon unloading. Beyond this, permanent deformation sets in.</li>
+          <li><strong>Yield Point (C):</strong> The point where the material begins to deform plastically with little or no increase in stress. Many materials exhibit an upper yield point and a lower yield point.</li>
+          <li><strong>Ultimate Tensile Strength (D):</strong> The maximum stress the material can withstand. Beyond this, necking (localised constriction) begins.</li>
+          <li><strong>Fracture Point (E):</strong> The point at which the material breaks. The stress at this point is called the breaking stress or fracture stress.</li>
+        </ul>
+
+        <h3>Ductile vs. Brittle Materials</h3>
+        <ul>
+          <li><strong>Ductile materials</strong> (e.g., copper, steel, aluminium): Show a large plastic deformation region before fracture. They can be drawn into wires. The stress-strain curve has a long plateau after the yield point.</li>
+          <li><strong>Brittle materials</strong> (e.g., glass, cast iron, ceramics): Fracture soon after the elastic limit with negligible plastic deformation. Their stress-strain curve shows little or no yielding region.</li>
+        </ul>
+        <p>
+          The area under the entire stress-strain curve up to fracture represents the <strong>toughness</strong>
+          of the material (total energy absorbed per unit volume before breaking). The area under the
+          curve up to the elastic limit represents the <strong>resilience</strong> (energy recovered
+          upon unloading).
+        </p>
+      </div>
+
+      <!-- Key Formulas Summary -->
+      <div class="theory-section">
+        <h2>Key Formulas Summary</h2>
+        <div class="formula-box">
+          &sigma; = F/A &nbsp;&nbsp;|&nbsp;&nbsp; &epsilon; = &Delta;L/L &nbsp;&nbsp;|&nbsp;&nbsp; Stress = E &times; Strain<br>
+          Y = &sigma;/&epsilon; = FL/A&Delta;L &nbsp;&nbsp;|&nbsp;&nbsp; B = &minus;V&Delta;P/&Delta;V &nbsp;&nbsp;|&nbsp;&nbsp; G = (F/A)/&theta;<br>
+          U = &frac12; &times; &sigma; &times; &epsilon; &times; V = &frac12; &times; Y &times; &epsilon;&sup2; &times; V<br>
+          Y = 2G(1 + &sigma;<sub>P</sub>) &nbsp;&nbsp;|&nbsp;&nbsp; Y = 3B(1 &minus; 2&sigma;<sub>P</sub>)
+        </div>
+      </div>
+
+      <!-- Solved Examples -->
+      <div class="theory-section">
+        <h2>Solved Examples</h2>
+
+        <div class="example-box">
+          <div class="ex-label">Example 1</div>
+          <p>
+            A steel wire of length 2 m and cross-sectional area 1 mm&sup2; is stretched by a force of
+            400 N. Find the elongation produced if Young&rsquo;s modulus of steel is Y = 2 &times; 10<sup>11</sup> Pa.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Given: L = 2 m, A = 1 mm&sup2; = 1 &times; 10<sup>&minus;6</sup> m&sup2;, F = 400 N,
+              Y = 2 &times; 10<sup>11</sup> Pa<br><br>
+              Using Y = FL / A&Delta;L:<br>
+              &Delta;L = FL / (AY)<br>
+              &Delta;L = (400 &times; 2) / (1 &times; 10<sup>&minus;6</sup> &times; 2 &times; 10<sup>11</sup>)<br>
+              &Delta;L = 800 / (2 &times; 10<sup>5</sup>)<br>
+              &Delta;L = 4 &times; 10<sup>&minus;3</sup> m = 4 mm
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 2</div>
+          <p>
+            A copper cube of side 10 cm is subjected to a uniform pressure of 7 &times; 10<sup>6</sup> Pa.
+            Find the change in volume if the bulk modulus of copper is B = 140 &times; 10<sup>9</sup> Pa.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Given: Side = 10 cm = 0.1 m, so V = (0.1)&sup3; = 10<sup>&minus;3</sup> m&sup3;<br>
+              &Delta;P = 7 &times; 10<sup>6</sup> Pa, B = 140 &times; 10<sup>9</sup> Pa<br><br>
+              Using B = &minus;V&Delta;P / &Delta;V:<br>
+              &Delta;V = &minus;V&Delta;P / B<br>
+              &Delta;V = &minus;(10<sup>&minus;3</sup> &times; 7 &times; 10<sup>6</sup>) / (140 &times; 10<sup>9</sup>)<br>
+              &Delta;V = &minus;7 &times; 10<sup>3</sup> / (140 &times; 10<sup>9</sup>)<br>
+              &Delta;V = &minus;5 &times; 10<sup>&minus;8</sup> m&sup3; = &minus;0.05 mm&sup3;<br><br>
+              The volume decreases by 5 &times; 10<sup>&minus;8</sup> m&sup3; (the negative sign
+              indicates compression).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter Links -->
+      <div class="ch-links">
+        <a href="../simulations/hookes-law.html" class="primary-link">Launch Simulation &rarr;</a>
+        <a href="../tests/mechanical-properties.html">Take Chapter Test</a>
+        <a href="gravitation.html">&larr; Previous: Gravitation</a>
+        <a href="fluid-mechanics.html">Next: Fluid Mechanics &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a>
+        <a href="../lectures.html">Lectures</a>
+        <a href="../notes.html">Notes</a>
+        <a href="../books.html">Books</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

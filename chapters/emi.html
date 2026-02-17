@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electromagnetic Induction | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>Electromagnetic Induction</h1>
+      <div class="ch-meta">Grade XII &mdash; Chapter 04</div>
+      <div class="ch-nav">
+        <a href="#magnetic-flux">Magnetic Flux</a>
+        <a href="#faradays-law">Faraday's Law</a>
+        <a href="#lenzs-law">Lenz's Law</a>
+        <a href="#motional-emf">Motional EMF</a>
+        <a href="#self-inductance">Self-Inductance</a>
+        <a href="#mutual-inductance">Mutual Inductance</a>
+        <a href="#ac-generator">AC Generator</a>
+        <a href="#eddy-currents">Eddy Currents</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Magnetic Flux -->
+    <!-- ============================== -->
+    <div class="theory-section" id="magnetic-flux">
+      <h2>1. Magnetic Flux</h2>
+
+      <h3>Definition</h3>
+      <p>
+        Magnetic flux through a surface is a measure of the total magnetic field passing through that surface. For a uniform magnetic field <strong>B</strong> passing through a flat surface of area <strong>A</strong>:
+      </p>
+      <div class="formula-box">
+        &Phi;<sub>B</sub> = <strong>B</strong> &middot; <strong>A</strong> = BA cos&theta;<br><br>
+        where &theta; = angle between <strong>B</strong> and the area vector <strong>A</strong> (normal to the surface)<br>
+        SI unit: Weber (Wb) = T m&sup2;
+      </div>
+      <p>
+        Key points about magnetic flux:
+      </p>
+      <ul>
+        <li>&Phi;<sub>B</sub> is maximum when <strong>B</strong> is perpendicular to the surface (&theta; = 0&deg;): &Phi; = BA.</li>
+        <li>&Phi;<sub>B</sub> is zero when <strong>B</strong> is parallel to the surface (&theta; = 90&deg;).</li>
+        <li>Magnetic flux can be positive, negative, or zero depending on the orientation.</li>
+        <li>For a non-uniform field or curved surface: &Phi; = &int; <strong>B</strong> &middot; d<strong>A</strong>.</li>
+      </ul>
+
+      <h3>Flux Linkage</h3>
+      <p>
+        For a coil of N turns, the total flux linkage is N times the flux through one turn:
+      </p>
+      <div class="formula-box">
+        Flux linkage = N&Phi; = NBA cos&theta;
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Faraday's Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="faradays-law">
+      <h2>2. Faraday's Law of Electromagnetic Induction</h2>
+
+      <h3>Faraday's Experiments</h3>
+      <p>
+        Michael Faraday discovered that a changing magnetic flux through a circuit induces an electromotive force (EMF) in the circuit. He demonstrated this through several experiments:
+      </p>
+      <ul>
+        <li>Moving a magnet towards or away from a coil produces a current in the coil.</li>
+        <li>Moving a coil towards or away from a stationary magnet also produces a current.</li>
+        <li>Changing the current in one coil (primary) induces a current in a nearby coil (secondary).</li>
+        <li>The induced EMF exists only as long as the flux is changing.</li>
+      </ul>
+
+      <h3>Statement of Faraday's Law</h3>
+      <p>
+        The magnitude of the induced EMF in a circuit is equal to the rate of change of magnetic flux linkage through the circuit. For a coil of N turns:
+      </p>
+      <div class="formula-box">
+        &epsilon; = &minus;d(N&Phi;)/dt = &minus;N d&Phi;/dt<br><br>
+        &epsilon; = &minus;N d(BA cos&theta;)/dt
+      </div>
+      <p>
+        The negative sign indicates that the induced EMF opposes the change in flux (Lenz's law). The flux can change due to a change in B, A, &theta;, or any combination of these.
+      </p>
+
+      <h3>Ways to Change Magnetic Flux</h3>
+      <ul>
+        <li>Change the magnitude of the magnetic field B.</li>
+        <li>Change the area A of the coil within the field.</li>
+        <li>Change the angle &theta; between the field and the area vector (rotation).</li>
+        <li>Move the coil into or out of the field region.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Lenz's Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="lenzs-law">
+      <h2>3. Lenz's Law</h2>
+
+      <h3>Statement</h3>
+      <p>
+        Lenz's law states that the direction of the induced current (or EMF) is such that it <strong>opposes</strong> the change in magnetic flux that caused it. This is a consequence of the law of conservation of energy.
+      </p>
+      <p>
+        Applications of Lenz's law:
+      </p>
+      <ul>
+        <li>If the magnetic flux through a coil is <em>increasing</em>, the induced current flows in a direction that creates a magnetic field opposing the increase (opposing the external field).</li>
+        <li>If the flux is <em>decreasing</em>, the induced current creates a field that supports the external field (opposing the decrease).</li>
+        <li>When a magnet's north pole approaches a coil, the face of the coil facing the magnet becomes a north pole (to repel the approaching magnet).</li>
+        <li>When a north pole recedes from a coil, the face becomes a south pole (to attract and oppose the recession).</li>
+      </ul>
+
+      <h3>Energy Conservation</h3>
+      <p>
+        Lenz's law is a manifestation of the conservation of energy. If the induced current aided the change in flux instead of opposing it, the current would further increase the flux, which would induce more current, creating a runaway process that generates energy from nothing &mdash; violating conservation of energy. The opposing nature ensures that external work must be done to maintain the change, and this work is converted into electrical energy.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Motional EMF -->
+    <!-- ============================== -->
+    <div class="theory-section" id="motional-emf">
+      <h2>4. Motional EMF</h2>
+
+      <h3>EMF in a Straight Conductor</h3>
+      <p>
+        When a straight conductor of length l moves with velocity <strong>v</strong> perpendicular to a uniform magnetic field <strong>B</strong>, an EMF is induced across its ends. The free electrons in the conductor experience a magnetic force (F = qvB), causing charge separation until the electric force balances the magnetic force.
+      </p>
+      <div class="formula-box">
+        &epsilon; = Blv<br><br>
+        where B = magnetic field, l = length of conductor,<br>
+        v = velocity perpendicular to both l and B
+      </div>
+
+      <h3>Sliding Rod on Rails</h3>
+      <p>
+        A conducting rod slides with velocity v on two parallel rails connected by a resistance R, in a uniform magnetic field B perpendicular to the plane of the rails. The induced EMF drives a current through the circuit:
+      </p>
+      <div class="formula-box">
+        EMF: &epsilon; = Blv<br>
+        Current: I = Blv / R<br>
+        Force on rod (opposing motion): F = BIl = B&sup2;l&sup2;v / R<br>
+        Power dissipated: P = B&sup2;l&sup2;v&sup2; / R = Fv
+      </div>
+
+      <h3>Rotating Rod</h3>
+      <p>
+        A conducting rod of length l rotates about one end with angular velocity &omega; in a uniform magnetic field B perpendicular to the plane of rotation. Different parts of the rod have different velocities. The EMF is found by integration:
+      </p>
+      <div class="formula-box">
+        &epsilon; = &frac12;Bl&sup2;&omega;
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 1</div>
+        <p>
+          A metallic rod of length 1 m is rotated about one of its ends in a horizontal plane with an angular velocity of 10 rad/s. If the horizontal component of the Earth's magnetic field is 3 &times; 10<sup>&minus;5</sup> T, find the EMF induced across the ends of the rod.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            l = 1 m, &omega; = 10 rad/s, B = 3 &times; 10<sup>&minus;5</sup> T<br><br>
+            &epsilon; = &frac12;Bl&sup2;&omega; = &frac12;(3 &times; 10<sup>&minus;5</sup>)(1)&sup2;(10)<br>
+            &epsilon; = &frac12; &times; 3 &times; 10<sup>&minus;4</sup> = <strong>1.5 &times; 10<sup>&minus;4</sup> V = 0.15 mV</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Self-Inductance -->
+    <!-- ============================== -->
+    <div class="theory-section" id="self-inductance">
+      <h2>5. Self-Inductance</h2>
+
+      <h3>Concept</h3>
+      <p>
+        When the current in a coil changes, the magnetic flux through the coil itself changes, inducing an EMF in the same coil. This phenomenon is called <strong>self-induction</strong>, and the induced EMF is called a <strong>back-EMF</strong>. The self-inductance L of a coil relates the flux linkage to the current:
+      </p>
+      <div class="formula-box">
+        N&Phi; = LI<br><br>
+        Induced EMF: &epsilon; = &minus;L dI/dt<br><br>
+        SI unit of inductance: Henry (H) = V s/A = Wb/A
+      </div>
+
+      <h3>Inductance of a Solenoid</h3>
+      <p>
+        For a solenoid of N turns, length l, and cross-sectional area A:
+      </p>
+      <div class="formula-box">
+        B = &mu;<sub>0</sub>nI = &mu;<sub>0</sub>(N/l)I<br>
+        &Phi; = BA = &mu;<sub>0</sub>(N/l)IA<br>
+        N&Phi; = &mu;<sub>0</sub>N&sup2;A/l &times; I<br><br>
+        L = &mu;<sub>0</sub>N&sup2;A/l = &mu;<sub>0</sub>n&sup2;Al<br><br>
+        With core of permeability &mu;: L = &mu;N&sup2;A/l = &mu;<sub>0</sub>&mu;<sub>r</sub>N&sup2;A/l
+      </div>
+
+      <h3>Energy Stored in an Inductor</h3>
+      <p>
+        An inductor stores energy in its magnetic field. The energy stored when a current I flows through an inductance L is:
+      </p>
+      <div class="formula-box">
+        U = &frac12;LI&sup2;
+      </div>
+      <p>
+        The energy density (energy per unit volume) in the magnetic field is:
+      </p>
+      <div class="formula-box">
+        u = B&sup2; / (2&mu;<sub>0</sub>)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 2</div>
+        <p>
+          A solenoid of length 40 cm, radius 2 cm, and 1000 turns carries a current of 5 A. Find the self-inductance and the energy stored.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            l = 0.40 m, r = 0.02 m, N = 1000, I = 5 A<br>
+            A = &pi;r&sup2; = &pi;(0.02)&sup2; = 4&pi; &times; 10<sup>&minus;4</sup> m&sup2;<br><br>
+            L = &mu;<sub>0</sub>N&sup2;A/l = (4&pi; &times; 10<sup>&minus;7</sup>)(10<sup>6</sup>)(4&pi; &times; 10<sup>&minus;4</sup>) / 0.40<br>
+            L = (4&pi; &times; 10<sup>&minus;7</sup>)(4&pi; &times; 10<sup>2</sup>)<br>
+            L = 16&pi;&sup2; &times; 10<sup>&minus;5</sup> = <strong>1.58 &times; 10<sup>&minus;3</sup> H &asymp; 1.58 mH</strong><br><br>
+            Energy: U = &frac12;LI&sup2; = &frac12;(1.58 &times; 10<sup>&minus;3</sup>)(25)<br>
+            U = <strong>0.0197 J &asymp; 19.7 mJ</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Mutual Inductance -->
+    <!-- ============================== -->
+    <div class="theory-section" id="mutual-inductance">
+      <h2>6. Mutual Inductance</h2>
+
+      <h3>Concept</h3>
+      <p>
+        When the current in one coil (primary) changes, it changes the magnetic flux through a nearby coil (secondary), inducing an EMF in the secondary coil. This phenomenon is called <strong>mutual induction</strong>. The mutual inductance M between two coils relates the flux linkage in one coil due to the current in the other:
+      </p>
+      <div class="formula-box">
+        N<sub>2</sub>&Phi;<sub>2</sub> = MI<sub>1</sub><br><br>
+        Induced EMF in coil 2: &epsilon;<sub>2</sub> = &minus;M dI<sub>1</sub>/dt<br><br>
+        SI unit: Henry (H)
+      </div>
+      <p>
+        Mutual inductance is a reciprocal property: M<sub>12</sub> = M<sub>21</sub> = M. The value of M depends on the geometry of the coils, their relative orientation, and the medium between them.
+      </p>
+
+      <h3>Mutual Inductance of Two Coaxial Solenoids</h3>
+      <p>
+        For two coaxial solenoids, one inside the other (the inner solenoid of N<sub>1</sub> turns, area A, length l; the outer solenoid of N<sub>2</sub> turns, same length l):
+      </p>
+      <div class="formula-box">
+        M = &mu;<sub>0</sub>N<sub>1</sub>N<sub>2</sub>A / l
+      </div>
+
+      <h3>Coefficient of Coupling</h3>
+      <p>
+        The coefficient of coupling k describes how effectively the two coils are magnetically linked:
+      </p>
+      <div class="formula-box">
+        M = k &radic;(L<sub>1</sub>L<sub>2</sub>)<br><br>
+        0 &le; k &le; 1<br>
+        k = 1 for perfect coupling (all flux of one coil links the other)<br>
+        k = 0 for no coupling
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: AC Generator -->
+    <!-- ============================== -->
+    <div class="theory-section" id="ac-generator">
+      <h2>7. AC Generator</h2>
+
+      <h3>Principle</h3>
+      <p>
+        An AC generator (alternator) works on the principle of electromagnetic induction. A coil is rotated in a uniform magnetic field, causing a continuously changing magnetic flux through the coil, which induces an alternating EMF.
+      </p>
+
+      <h3>Construction and Working</h3>
+      <p>
+        The main components are: a rectangular coil (armature), a strong permanent magnet or electromagnet (field magnet), slip rings, and carbon brushes. As the coil rotates with angular velocity &omega;, the angle between the magnetic field and the area vector changes continuously.
+      </p>
+
+      <h3>Expression for Induced EMF</h3>
+      <p>
+        If the coil has N turns, area A, and rotates with angular velocity &omega; in a field B, the flux at time t is:
+      </p>
+      <div class="formula-box">
+        &Phi; = NBA cos(&omega;t)<br><br>
+        &epsilon; = &minus;d&Phi;/dt = NBA&omega; sin(&omega;t)<br><br>
+        &epsilon; = &epsilon;<sub>0</sub> sin(&omega;t)<br>
+        where &epsilon;<sub>0</sub> = NBA&omega; = peak EMF
+      </div>
+      <p>
+        The EMF varies sinusoidally with time. One complete rotation produces one full cycle of alternating EMF. The frequency of the AC produced equals the rotational frequency of the coil: f = &omega;/(2&pi;).
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Eddy Currents -->
+    <!-- ============================== -->
+    <div class="theory-section" id="eddy-currents">
+      <h2>8. Eddy Currents</h2>
+
+      <h3>Formation</h3>
+      <p>
+        When a bulk conductor (not a thin wire) is subjected to a changing magnetic flux, induced currents flow in closed loops within the body of the conductor. These circulating currents are called <strong>eddy currents</strong> (or Foucault currents). They flow in planes perpendicular to the magnetic field and follow Lenz's law.
+      </p>
+
+      <h3>Applications of Eddy Currents</h3>
+      <ul>
+        <li><strong>Electromagnetic braking:</strong> A metallic disc rotating in a magnetic field experiences eddy currents that oppose its motion, providing a smooth braking force. Used in trains and roller coasters.</li>
+        <li><strong>Induction furnace:</strong> A metallic body placed in a rapidly changing magnetic field heats up due to the Joule heating effect of eddy currents. Used for melting metals.</li>
+        <li><strong>Electromagnetic damping:</strong> Eddy currents damp the oscillations of a galvanometer coil quickly (dead-beat galvanometer).</li>
+        <li><strong>Induction cooktop:</strong> Alternating magnetic fields induce eddy currents in the base of a metallic cooking vessel, heating it directly.</li>
+        <li><strong>Electric power meters:</strong> The aluminium disc in energy meters rotates due to eddy currents.</li>
+        <li><strong>Metal detectors:</strong> Changes in eddy current patterns indicate the presence of metallic objects.</li>
+      </ul>
+
+      <h3>Minimization of Eddy Currents</h3>
+      <p>
+        In many devices (like transformer cores), eddy currents are undesirable as they waste energy as heat. They are minimized by:
+      </p>
+      <ul>
+        <li><strong>Lamination:</strong> The core is made of thin, insulated sheets (laminations) stacked together. This breaks the eddy current loops into smaller loops, greatly reducing their magnitude.</li>
+        <li>Using materials with high resistivity for the core.</li>
+        <li>Using ferrite cores (ceramic magnetic materials with very high resistivity) at high frequencies.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 3</div>
+        <p>
+          An AC generator has a coil of 200 turns, each of area 50 cm&sup2;. The coil rotates at 3000 rpm in a magnetic field of 0.2 T. Find the peak EMF and the RMS EMF generated.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            N = 200, A = 50 &times; 10<sup>&minus;4</sup> m&sup2; = 5 &times; 10<sup>&minus;3</sup> m&sup2;, B = 0.2 T<br>
+            Rotational speed = 3000 rpm = 3000/60 = 50 rps<br>
+            &omega; = 2&pi;f = 2&pi;(50) = 100&pi; rad/s<br><br>
+            Peak EMF: &epsilon;<sub>0</sub> = NBA&omega; = (200)(0.2)(5 &times; 10<sup>&minus;3</sup>)(100&pi;)<br>
+            &epsilon;<sub>0</sub> = 200 &times; 10<sup>&minus;3</sup> &times; 100&pi; = 20&pi;<br>
+            &epsilon;<sub>0</sub> = <strong>62.83 V</strong><br><br>
+            RMS EMF: &epsilon;<sub>rms</sub> = &epsilon;<sub>0</sub> / &radic;2 = 62.83 / 1.414 = <strong>44.43 V</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="../simulations/emi.html" class="primary-link">Simulation</a>
+      <a href="../tests/emi.html">Take a Test</a>
+      <a href="ac-circuits.html">Next: Alternating Current &rarr;</a>
+      <a href="magnetism.html">&larr; Prev: Moving Charges &amp; Magnetism</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

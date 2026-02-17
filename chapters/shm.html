@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Harmonic Motion | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Main Content -->
+  <main>
+    <div class="chapter-detail">
+
+      <div class="ch-hero">
+        <h1>Simple Harmonic Motion</h1>
+        <span class="ch-meta">Chapter 09 &mdash; Grade XI &bull; Oscillations</span>
+      </div>
+
+      <!-- Section 1: Definition & Characteristics -->
+      <div class="theory-section">
+        <h2>1. Definition &amp; Characteristics</h2>
+        <p>
+          Simple Harmonic Motion (SHM) is a special type of periodic oscillatory motion in which the
+          restoring force is directly proportional to the displacement from the mean position and is always
+          directed towards it. This is the most fundamental and widely studied type of oscillation in physics.
+        </p>
+        <p>
+          The defining condition for SHM is that the restoring force is F = &minus;kx, where k is the force
+          constant (or spring constant) and x is the displacement from equilibrium. Applying Newton&rsquo;s
+          second law, F = ma, this gives a = &minus;(k/m)x = &minus;&omega;&sup2;x, where &omega; =
+          &radic;(k/m) is the angular frequency.
+        </p>
+
+        <h3>Key Parameters</h3>
+        <ul>
+          <li><strong>Amplitude (A):</strong> the maximum displacement from the mean position.</li>
+          <li><strong>Angular frequency (&omega;):</strong> &omega; = 2&pi;/T = 2&pi;f, measured in rad/s.</li>
+          <li><strong>Time period (T):</strong> the time for one complete oscillation.</li>
+          <li><strong>Frequency (f):</strong> the number of oscillations per second, f = 1/T, in Hz.</li>
+          <li><strong>Phase (&phi;):</strong> determines the initial state of the oscillation at t = 0.</li>
+        </ul>
+        <div class="formula-box">
+          F = &minus;kx &nbsp;&nbsp;|&nbsp;&nbsp; a = &minus;&omega;&sup2;x<br>
+          &omega; = &radic;(k/m) = 2&pi;/T = 2&pi;f
+        </div>
+      </div>
+
+      <!-- Section 2: Equation of Motion -->
+      <div class="theory-section">
+        <h2>2. Equation of Motion</h2>
+        <p>
+          The general solution to the SHM equation a = &minus;&omega;&sup2;x is a sinusoidal function. The
+          displacement, velocity, and acceleration as functions of time are:
+        </p>
+        <div class="formula-box">
+          x = A sin(&omega;t + &phi;) &nbsp;&nbsp;(displacement)<br>
+          v = dx/dt = A&omega; cos(&omega;t + &phi;) &nbsp;&nbsp;(velocity)<br>
+          a = d&sup2;x/dt&sup2; = &minus;A&omega;&sup2; sin(&omega;t + &phi;) &nbsp;&nbsp;(acceleration)
+        </div>
+        <p>
+          Here A is the amplitude, &omega; is the angular frequency, and &phi; is the initial phase. The
+          velocity is maximum at the mean position (|v<sub>max</sub>| = A&omega;) and zero at the extremes.
+          The acceleration is maximum at the extremes (|a<sub>max</sub>| = A&omega;&sup2;) and zero at
+          the mean position. At any displacement x, the velocity can be expressed as
+          v = &omega;&radic;(A&sup2; &minus; x&sup2;).
+        </p>
+
+        <h3>Phase Relationships</h3>
+        <p>
+          The velocity leads the displacement by &pi;/2 (90&deg;), and the acceleration leads the velocity
+          by &pi;/2 &mdash; equivalently, the acceleration is &pi; (180&deg;) out of phase with the
+          displacement. These phase relationships are a hallmark of SHM.
+        </p>
+      </div>
+
+      <!-- Section 3: Energy in SHM -->
+      <div class="theory-section">
+        <h2>3. Energy in SHM</h2>
+        <p>
+          A particle executing SHM possesses both kinetic energy and potential energy that interconvert
+          during the oscillation. At any displacement x from the mean position:
+        </p>
+        <div class="formula-box">
+          KE = &frac12;m&omega;&sup2;(A&sup2; &minus; x&sup2;) = &frac12;k(A&sup2; &minus; x&sup2;)<br>
+          PE = &frac12;m&omega;&sup2;x&sup2; = &frac12;kx&sup2;<br>
+          TE = KE + PE = &frac12;m&omega;&sup2;A&sup2; = &frac12;kA&sup2; = constant
+        </div>
+        <p>
+          The total energy is constant throughout the motion and is proportional to the square of the
+          amplitude. At the mean position (x = 0), KE is maximum and PE is zero. At the extreme positions
+          (x = &plusmn;A), PE is maximum and KE is zero. The average KE equals the average PE, each being
+          half the total energy: &langle;KE&rangle; = &langle;PE&rangle; = &frac12;E<sub>total</sub>.
+        </p>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 1</div>
+          <p>
+            A 0.5 kg block attached to a spring of spring constant k = 200 N/m oscillates with an amplitude
+            of 0.1 m. Find the total energy and the maximum speed of the block.
+          </p>
+          <div class="solution">
+            <p>
+              Total energy: E = &frac12;kA&sup2; = &frac12; &times; 200 &times; (0.1)&sup2; = 1 J<br>
+              At mean position, all energy is kinetic:<br>
+              &frac12;mv&sup2;<sub>max</sub> = E<br>
+              v<sub>max</sub> = &radic;(2E/m) = &radic;(2 &times; 1 / 0.5) = &radic;4 = 2 m/s<br><br>
+              Alternatively: v<sub>max</sub> = A&omega; = A&radic;(k/m) = 0.1 &times; &radic;(200/0.5) = 0.1 &times; 20 = 2 m/s
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Spring-Mass System -->
+      <div class="theory-section">
+        <h2>4. Spring-Mass System</h2>
+        <p>
+          The spring-mass system is the simplest physical realisation of SHM. A block of mass m attached to
+          a spring of spring constant k, displaced from its natural length and released, executes SHM with:
+        </p>
+        <div class="formula-box">
+          T = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; f = (1/2&pi;)&radic;(k/m)
+        </div>
+
+        <h3>Springs in Series and Parallel</h3>
+        <p>
+          When springs are combined in parallel (both attached to the same block), the effective spring
+          constant is k<sub>eff</sub> = k&#8321; + k&#8322;. When in series (end-to-end), the effective
+          constant follows 1/k<sub>eff</sub> = 1/k&#8321; + 1/k&#8322;.
+        </p>
+        <div class="formula-box">
+          Parallel: k<sub>eff</sub> = k&#8321; + k&#8322;<br>
+          Series: 1/k<sub>eff</sub> = 1/k&#8321; + 1/k&#8322; &rArr; k<sub>eff</sub> = k&#8321;k&#8322;/(k&#8321; + k&#8322;)
+        </div>
+
+        <h3>Two-Body Oscillation (Reduced Mass)</h3>
+        <p>
+          When a spring connects two blocks of masses m&#8321; and m&#8322; (both free to move), the system
+          oscillates with T = 2&pi;&radic;(&mu;/k), where &mu; = m&#8321;m&#8322;/(m&#8321; + m&#8322;) is
+          the reduced mass.
+        </p>
+      </div>
+
+      <!-- Section 5: Simple Pendulum -->
+      <div class="theory-section">
+        <h2>5. Simple Pendulum</h2>
+        <p>
+          A simple pendulum consists of a point mass (bob) suspended by a massless, inextensible string of
+          length l from a fixed support. For small angular displacements (&theta; &lt;&lt; 1 radian), the
+          restoring torque is approximately proportional to &theta;, and the pendulum executes SHM with:
+        </p>
+        <div class="formula-box">
+          T = 2&pi;&radic;(l/g)<br>
+          f = (1/2&pi;)&radic;(g/l)
+        </div>
+
+        <h3>Important Points</h3>
+        <ul>
+          <li>The time period is independent of the mass of the bob and the amplitude (for small oscillations).</li>
+          <li>The equivalent length l is measured from the point of suspension to the centre of mass of the bob.</li>
+          <li>A seconds pendulum has T = 2 s, giving l = g/&pi;&sup2; &asymp; 0.994 m on Earth&rsquo;s surface.</li>
+          <li>If the pendulum oscillates in a medium of density &sigma; and the bob has density &rho;, the effective g is replaced by g(1 &minus; &sigma;/&rho;), giving a longer period.</li>
+          <li>In an accelerating lift (upward acceleration a): T = 2&pi;&radic;(l/(g+a)); in a freely falling lift: T &rarr; &infin; (no oscillation).</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 2</div>
+          <p>
+            A simple pendulum has a time period of 2 s on the surface of the Earth. What will be its time
+            period on a planet where g is 4 times that on Earth?
+          </p>
+          <div class="solution">
+            <p>
+              T = 2&pi;&radic;(l/g)<br>
+              T is proportional to 1/&radic;g (for the same length l)<br>
+              T&prime;/T = &radic;(g/g&prime;) = &radic;(g/4g) = &radic;(1/4) = 1/2<br>
+              T&prime; = T/2 = 2/2 = 1 s
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 6: Physical Pendulum -->
+      <div class="theory-section">
+        <h2>6. Physical (Compound) Pendulum</h2>
+        <p>
+          A physical pendulum is any rigid body that can oscillate about a horizontal axis that does not pass
+          through its centre of mass. If the body of mass m is pivoted at a point O at a distance l from
+          its centre of mass G, and I is the moment of inertia about the pivot, then for small oscillations:
+        </p>
+        <div class="formula-box">
+          T = 2&pi;&radic;(I / mgl)
+        </div>
+        <p>
+          Using the parallel axis theorem, I = I<sub>cm</sub> + ml&sup2;, so the period becomes
+          T = 2&pi;&radic;((I<sub>cm</sub> + ml&sup2;) / mgl). The equivalent simple pendulum length is
+          L<sub>eq</sub> = I / ml = (k&sup2;/l) + l, where k is the radius of gyration about the centre
+          of mass.
+        </p>
+
+        <h3>Centre of Oscillation</h3>
+        <p>
+          The centre of oscillation is a point at distance L<sub>eq</sub> from the pivot, on the opposite
+          side of the centre of mass. If the pendulum is instead suspended from the centre of oscillation,
+          the time period remains the same &mdash; this is the principle behind Kater&rsquo;s reversible
+          pendulum used to measure g accurately.
+        </p>
+      </div>
+
+      <!-- Section 7: Damped & Forced Oscillations -->
+      <div class="theory-section">
+        <h2>7. Damped &amp; Forced Oscillations</h2>
+
+        <h3>Damped Oscillations</h3>
+        <p>
+          In real systems, dissipative forces (friction, air resistance) act on the oscillator, causing the
+          amplitude to decrease over time. If the damping force is proportional to the velocity
+          (F<sub>d</sub> = &minus;bv), the equation of motion becomes:
+        </p>
+        <div class="formula-box">
+          m(d&sup2;x/dt&sup2;) + b(dx/dt) + kx = 0<br>
+          x(t) = A&#8320; e<sup>&minus;(b/2m)t</sup> sin(&omega;&prime;t + &phi;)<br>
+          &omega;&prime; = &radic;(&omega;&#8320;&sup2; &minus; (b/2m)&sup2;) &nbsp;&nbsp;(damped angular frequency)
+        </div>
+        <p>
+          The amplitude decays exponentially with the damping factor b/2m. The oscillation frequency
+          &omega;&prime; is slightly less than the natural frequency &omega;&#8320; = &radic;(k/m). If
+          b/2m = &omega;&#8320;, the system is critically damped and returns to equilibrium without
+          oscillating. If b/2m &gt; &omega;&#8320;, the system is overdamped.
+        </p>
+
+        <h3>Forced Oscillations &amp; Resonance</h3>
+        <p>
+          When an external periodic force F = F&#8320; cos(&omega;<sub>d</sub>t) drives a damped oscillator,
+          the system eventually oscillates at the driving frequency &omega;<sub>d</sub> with a steady
+          amplitude that depends on how close &omega;<sub>d</sub> is to the natural frequency
+          &omega;&#8320;.
+        </p>
+        <p>
+          Resonance occurs when &omega;<sub>d</sub> &asymp; &omega;&#8320;, at which the amplitude of
+          oscillation becomes maximum. The sharpness of the resonance peak depends on the damping: less
+          damping leads to a sharper, taller peak. Resonance has important applications (musical instruments,
+          radio tuning) and can be destructive (bridge collapse due to wind or marching soldiers).
+        </p>
+      </div>
+
+      <!-- Section 8: Superposition of SHM -->
+      <div class="theory-section">
+        <h2>8. Superposition of SHM</h2>
+
+        <h3>Same Frequency, Different Phase</h3>
+        <p>
+          When two SHMs of the same frequency but different amplitudes and phases are superposed along the
+          same direction, the resultant is also SHM with the same frequency. If
+          x&#8321; = A&#8321; sin(&omega;t) and x&#8322; = A&#8322; sin(&omega;t + &delta;), the resultant
+          amplitude is:
+        </p>
+        <div class="formula-box">
+          A = &radic;(A&#8321;&sup2; + A&#8322;&sup2; + 2A&#8321;A&#8322; cos&delta;)<br>
+          tan&phi; = (A&#8322; sin&delta;) / (A&#8321; + A&#8322; cos&delta;)
+        </div>
+        <p>
+          For &delta; = 0 (in phase): A = A&#8321; + A&#8322; (constructive). For &delta; = &pi;
+          (out of phase): A = |A&#8321; &minus; A&#8322;| (destructive).
+        </p>
+
+        <h3>Perpendicular SHM &amp; Lissajous Figures</h3>
+        <p>
+          When two SHMs are perpendicular to each other, the resulting path traced by the particle is called
+          a Lissajous figure. If x = A sin(&omega;t) and y = B sin(&omega;t + &delta;), the path depends
+          on the phase difference &delta;:
+        </p>
+        <ul>
+          <li>&delta; = 0 or &pi;: straight line (y = &plusmn;(B/A)x)</li>
+          <li>&delta; = &pi;/2: ellipse; if A = B, a circle</li>
+          <li>Other values of &delta;: general ellipse</li>
+        </ul>
+        <p>
+          When the two frequencies are different, the Lissajous figures become more complex and their shape
+          depends on the frequency ratio. These patterns are used in oscilloscopes to compare frequencies.
+        </p>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 3</div>
+          <p>
+            Two SHMs of equal amplitude A and same frequency are superposed along the same line with a phase
+            difference of 120&deg;. Find the amplitude of the resultant SHM.
+          </p>
+          <div class="solution">
+            <p>
+              A<sub>R</sub> = &radic;(A&sup2; + A&sup2; + 2A&sup2; cos 120&deg;)<br>
+              cos 120&deg; = &minus;1/2<br>
+              A<sub>R</sub> = &radic;(A&sup2; + A&sup2; + 2A&sup2;(&minus;1/2))<br>
+              A<sub>R</sub> = &radic;(A&sup2; + A&sup2; &minus; A&sup2;)<br>
+              A<sub>R</sub> = &radic;(A&sup2;) = A<br><br>
+              The resultant amplitude equals A, the same as each individual SHM.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Formulas Summary -->
+      <div class="theory-section">
+        <h2>Key Formulas Summary</h2>
+        <div class="formula-box">
+          x = A sin(&omega;t + &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = 2&pi;/T = 2&pi;f<br>
+          v = A&omega; cos(&omega;t + &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; a = &minus;A&omega;&sup2; sin(&omega;t + &phi;)<br>
+          T<sub>spring</sub> = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; T<sub>pendulum</sub> = 2&pi;&radic;(l/g)<br>
+          E = &frac12;kA&sup2; = &frac12;m&omega;&sup2;A&sup2;<br>
+          KE = &frac12;k(A&sup2; &minus; x&sup2;) &nbsp;&nbsp;|&nbsp;&nbsp; PE = &frac12;kx&sup2;
+        </div>
+      </div>
+
+      <!-- Chapter Links -->
+      <div class="ch-links">
+        <a href="../simulations/shm-waves.html" class="primary-link">Launch Simulation &rarr;</a>
+        <a href="../tests/shm.html">Practice Test</a>
+        <a href="thermodynamics.html">&larr; Prev: Thermodynamics</a>
+        <a href="waves.html">Next: Waves &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a>
+        <a href="../lectures.html">Lectures</a>
+        <a href="../notes.html">Notes</a>
+        <a href="../books.html">Books</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

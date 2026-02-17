@@ -15,27 +15,14 @@
 </head>
 <body>
   <!-- Splash Screen -->
-  <div class="splash-screen" id="splash">
-    <div class="splash-pendulum">
-      <div class="sp-pivot"></div>
-      <div class="sp-arm">
-        <div class="sp-rod"></div>
-        <div class="sp-bob"></div>
-      </div>
-    </div>
-    <div class="splash-brand">Axomiya Engineer</div>
-  </div>
-  <script>
-    (function(){if(sessionStorage.getItem('ae-splash')){document.getElementById('splash').style.display='none';}else{sessionStorage.setItem('ae-splash','1');setTimeout(function(){document.getElementById('splash').classList.add('fade-out');setTimeout(function(){document.getElementById('splash').style.display='none';},400);},1000);}})();
-  </script>
-
-  <div class="bg-grid"></div>
+  <div class="splash-screen" id="splash"></div>
+<div class="bg-grid"></div>
   <canvas id="particles-canvas"></canvas>
 
   <!-- Navigation -->
   <nav class="navbar scrolled">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">
+      <a href="index.html" class="nav-logo" id="nav-logo">
         <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
         <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
       </a>
@@ -65,6 +52,7 @@
         </div>
         <div class="nav-item"><a href="books.html" class="nav-link">Books</a></div>
         <div class="nav-item"><a href="simulations.html" class="nav-link">Simulations</a></div>
+        <div class="nav-item"><a href="tests.html" class="nav-link">Tests</a></div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
 
         <button class="auth-btn" id="auth-login-btn">
@@ -87,12 +75,22 @@
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
 
   <!-- Page Header -->
   <div class="page-header">
-    <div class="breadcrumb">
-      <a href="index.html">Home</a> <span>/</span> <span>Chapters</span>
-    </div>
     <h1>Physics <span class="text-gradient">Chapter Guide</span></h1>
     <p>Complete chapter-wise breakdown for Grade XI and XII &mdash; key concepts, important formulas, and direct links to interactive simulations.</p>
   </div>
@@ -132,15 +130,16 @@
                   <li>Motion under gravity &mdash; free fall</li>
                   <li>Projectile motion &mdash; time of flight, range, maximum height</li>
                   <li>Relative velocity in 1D and 2D</li>
-                  <li>Motion in a plane &mdash; vector treatment</li>
                 </ul>
                 <div class="formula-box">
                   v = u + at &nbsp;&nbsp;|&nbsp;&nbsp; s = ut + &frac12;at&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; v&sup2; = u&sup2; + 2as<br>
-                  Range R = (u&sup2; sin2&theta;) / g &nbsp;&nbsp;|&nbsp;&nbsp; T = 2u sin&theta; / g &nbsp;&nbsp;|&nbsp;&nbsp; H = u&sup2; sin&sup2;&theta; / 2g
+                  R = (u&sup2; sin2&theta;)/g &nbsp;&nbsp;|&nbsp;&nbsp; T = 2u sin&theta;/g &nbsp;&nbsp;|&nbsp;&nbsp; H = u&sup2; sin&sup2;&theta;/2g
                 </div>
-                <a href="simulations/kinematics.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/kinematics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/kinematics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/kinematics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -165,15 +164,16 @@
                   <li>Free body diagrams and constraint equations</li>
                   <li>Static and kinetic friction; angle of repose</li>
                   <li>Circular motion dynamics &mdash; centripetal force, banking of roads</li>
-                  <li>Motion in a lift; pseudo forces in non-inertial frames</li>
                 </ul>
                 <div class="formula-box">
                   F = ma &nbsp;&nbsp;|&nbsp;&nbsp; p = mv &nbsp;&nbsp;|&nbsp;&nbsp; J = F&Delta;t = &Delta;p<br>
-                  f = &mu;N &nbsp;&nbsp;|&nbsp;&nbsp; F<sub>c</sub> = mv&sup2;/r &nbsp;&nbsp;|&nbsp;&nbsp; tan&theta; = v&sup2;/rg (banking)
+                  f = &mu;N &nbsp;&nbsp;|&nbsp;&nbsp; F<sub>c</sub> = mv&sup2;/r &nbsp;&nbsp;|&nbsp;&nbsp; tan&theta; = v&sup2;/rg
                 </div>
-                <a href="simulations/newtons-laws.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/newtons-laws.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/newtons-laws.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/newtons-laws.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -189,24 +189,25 @@
                 <p>
                   Energy is the currency of the universe. This chapter introduces the scalar concepts of work
                   and energy, the powerful work-energy theorem, conservation laws, and the mechanics of
-                  elastic and inelastic collisions in one and two dimensions.
+                  elastic and inelastic collisions.
                 </p>
                 <ul>
                   <li>Work done by a constant and variable force</li>
                   <li>Kinetic energy and the work-energy theorem</li>
                   <li>Potential energy &mdash; gravitational and elastic</li>
                   <li>Conservation of mechanical energy</li>
-                  <li>Conservative and non-conservative forces</li>
                   <li>Power &mdash; instantaneous and average</li>
                   <li>Elastic and inelastic collisions; coefficient of restitution</li>
                 </ul>
                 <div class="formula-box">
-                  W = F &middot; d &middot; cos&theta; &nbsp;&nbsp;|&nbsp;&nbsp; KE = &frac12;mv&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; PE = mgh<br>
-                  W<sub>net</sub> = &Delta;KE &nbsp;&nbsp;|&nbsp;&nbsp; P = dW/dt = F &middot; v &nbsp;&nbsp;|&nbsp;&nbsp; e = (v&#8322; &minus; v&#8321;)/(u&#8321; &minus; u&#8322;)
+                  W = Fd cos&theta; &nbsp;&nbsp;|&nbsp;&nbsp; KE = &frac12;mv&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; PE = mgh<br>
+                  W<sub>net</sub> = &Delta;KE &nbsp;&nbsp;|&nbsp;&nbsp; P = F &middot; v &nbsp;&nbsp;|&nbsp;&nbsp; e = (v&#8322; &minus; v&#8321;)/(u&#8321; &minus; u&#8322;)
                 </div>
-                <a href="simulations/work-power-energy.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/work-power-energy.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/work-power-energy.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/work-power-energy.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -221,129 +222,221 @@
               <div class="accordion-content">
                 <p>
                   Rotational motion extends Newton&rsquo;s laws into the angular domain. This chapter covers
-                  torque, moment of inertia, angular momentum conservation, and the fascinating physics
-                  of rolling motion &mdash; essential for understanding everything from spinning tops to planetary orbits.
+                  torque, moment of inertia, angular momentum conservation, and rolling motion.
                 </p>
                 <ul>
                   <li>Angular displacement, velocity, and acceleration</li>
-                  <li>Torque and its relation to angular acceleration (&tau; = I&alpha;)</li>
-                  <li>Moment of inertia &mdash; discrete and continuous bodies</li>
+                  <li>Torque (&tau; = I&alpha;) and moment of inertia</li>
                   <li>Parallel and perpendicular axis theorems</li>
                   <li>Angular momentum and its conservation</li>
-                  <li>Rotational kinetic energy</li>
-                  <li>Rolling motion without slipping &mdash; combined translational and rotational</li>
+                  <li>Rolling motion without slipping</li>
                 </ul>
                 <div class="formula-box">
-                  &tau; = r &times; F = I&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; L = I&omega; &nbsp;&nbsp;|&nbsp;&nbsp; KE<sub>rot</sub> = &frac12;I&omega;&sup2;<br>
-                  I<sub>parallel</sub> = I<sub>cm</sub> + Md&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>cm</sub> = R&omega; (rolling) &nbsp;&nbsp;|&nbsp;&nbsp; KE<sub>total</sub> = &frac12;mv&sup2;(1 + k&sup2;/R&sup2;)
+                  &tau; = I&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; L = I&omega; &nbsp;&nbsp;|&nbsp;&nbsp; KE<sub>rot</sub> = &frac12;I&omega;&sup2;<br>
+                  I = I<sub>cm</sub> + Md&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>cm</sub> = R&omega;
                 </div>
-                <a href="simulations/rotational-motion.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/rotational-motion.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/rotational-motion.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/rotational-motion.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Ch 5 - Fluid Dynamics -->
+          <!-- Ch 5 - Gravitation -->
           <div class="accordion-item">
             <div class="accordion-header">
-              <h3><span class="ch-num">05</span> Fluid Dynamics</h3>
+              <h3><span class="ch-num">05</span> Gravitation</h3>
               <span class="toggle-icon">&#9660;</span>
             </div>
             <div class="accordion-body">
               <div class="accordion-content">
                 <p>
-                  Fluids &mdash; both liquids and gases &mdash; obey elegant principles that explain everything
-                  from hydraulic lifts to airplane wings. This chapter explores pressure, buoyancy,
-                  fluid flow, and viscosity with applications that bridge theory and daily life.
+                  Newton&rsquo;s law of universal gravitation explains everything from falling apples to orbiting
+                  satellites. This chapter covers gravitational fields, potentials, Kepler&rsquo;s laws, and
+                  the physics of escape velocity and orbital mechanics.
                 </p>
                 <ul>
-                  <li>Pressure and Pascal&rsquo;s law; hydraulic machines</li>
-                  <li>Variation of pressure with depth</li>
-                  <li>Archimedes&rsquo; principle and buoyancy</li>
-                  <li>Streamline and turbulent flow; Reynolds number</li>
-                  <li>Equation of continuity (A&#8321;v&#8321; = A&#8322;v&#8322;)</li>
-                  <li>Bernoulli&rsquo;s theorem and its applications</li>
-                  <li>Viscosity, Stokes&rsquo; law, and terminal velocity</li>
-                  <li>Surface tension and capillarity</li>
+                  <li>Newton&rsquo;s law of gravitation &mdash; F = GMm/r&sup2;</li>
+                  <li>Gravitational field and potential</li>
+                  <li>Variation of g with height, depth, and latitude</li>
+                  <li>Escape velocity and orbital velocity</li>
+                  <li>Kepler&rsquo;s laws of planetary motion</li>
+                  <li>Satellites and geostationary orbits</li>
                 </ul>
                 <div class="formula-box">
-                  P = F/A &nbsp;&nbsp;|&nbsp;&nbsp; P = P&#8320; + &rho;gh &nbsp;&nbsp;|&nbsp;&nbsp; F<sub>b</sub> = &rho;Vg<br>
-                  P + &frac12;&rho;v&sup2; + &rho;gh = const (Bernoulli) &nbsp;&nbsp;|&nbsp;&nbsp; F = 6&pi;&eta;rv (Stokes)
+                  F = GMm/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; g = GM/R&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>e</sub> = &radic;(2gR)<br>
+                  v<sub>o</sub> = &radic;(gR) &nbsp;&nbsp;|&nbsp;&nbsp; T&sup2; &prop; r&sup3; &nbsp;&nbsp;|&nbsp;&nbsp; E = &minus;GMm/2r
                 </div>
-                <a href="simulations/fluid-dynamics.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/gravitation.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/gravitation.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/gravitation.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Ch 6 - Heat & Thermodynamics -->
+          <!-- Ch 6 - Mechanical Properties of Solids -->
           <div class="accordion-item">
             <div class="accordion-header">
-              <h3><span class="ch-num">06</span> Heat &amp; Thermodynamics</h3>
+              <h3><span class="ch-num">06</span> Mechanical Properties of Solids</h3>
+              <span class="toggle-icon">&#9660;</span>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content">
+                <p>
+                  How materials deform under stress is central to engineering. This chapter introduces
+                  elasticity, stress-strain relationships, and the moduli that characterise different materials.
+                </p>
+                <ul>
+                  <li>Stress (tensile, compressive, shear) and strain</li>
+                  <li>Hooke&rsquo;s law and the stress-strain curve</li>
+                  <li>Young&rsquo;s modulus, Bulk modulus, Shear modulus</li>
+                  <li>Poisson&rsquo;s ratio</li>
+                  <li>Elastic potential energy</li>
+                </ul>
+                <div class="formula-box">
+                  &sigma; = F/A &nbsp;&nbsp;|&nbsp;&nbsp; &epsilon; = &Delta;L/L &nbsp;&nbsp;|&nbsp;&nbsp; Y = &sigma;/&epsilon;<br>
+                  B = &minus;V&Delta;P/&Delta;V &nbsp;&nbsp;|&nbsp;&nbsp; U = &frac12;&sigma;&epsilon;V
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/mechanical-properties.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/mechanical-properties.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/hookes-law.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ch 7 - Fluid Mechanics -->
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <h3><span class="ch-num">07</span> Fluid Mechanics</h3>
+              <span class="toggle-icon">&#9660;</span>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content">
+                <p>
+                  Fluids obey elegant principles that explain everything from hydraulic lifts to airplane wings.
+                  This chapter explores pressure, buoyancy, fluid flow, and viscosity.
+                </p>
+                <ul>
+                  <li>Pressure and Pascal&rsquo;s law; hydraulic machines</li>
+                  <li>Archimedes&rsquo; principle and buoyancy</li>
+                  <li>Equation of continuity and Bernoulli&rsquo;s theorem</li>
+                  <li>Viscosity, Stokes&rsquo; law, and terminal velocity</li>
+                  <li>Surface tension and capillarity</li>
+                </ul>
+                <div class="formula-box">
+                  P = P&#8320; + &rho;gh &nbsp;&nbsp;|&nbsp;&nbsp; F<sub>b</sub> = &rho;Vg<br>
+                  P + &frac12;&rho;v&sup2; + &rho;gh = const &nbsp;&nbsp;|&nbsp;&nbsp; F = 6&pi;&eta;rv
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/fluid-mechanics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/fluid-mechanics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/fluid-dynamics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ch 8 - Heat & Thermodynamics -->
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <h3><span class="ch-num">08</span> Heat &amp; Thermodynamics</h3>
               <span class="toggle-icon">&#9660;</span>
             </div>
             <div class="accordion-body">
               <div class="accordion-content">
                 <p>
                   Thermodynamics governs the flow of heat and the transformation of energy. From the
-                  microscopic world of gas molecules (Kinetic Theory) to the macroscopic laws that
-                  dictate engines and refrigerators, this chapter is a cornerstone of both JEE and NEET.
+                  microscopic world of gas molecules to the macroscopic laws of engines and refrigerators.
                 </p>
                 <ul>
                   <li>Thermal expansion &mdash; linear, area, and volume</li>
                   <li>Calorimetry and specific heat capacity</li>
-                  <li>Kinetic Theory of Gases &mdash; pressure, temperature, RMS speed</li>
-                  <li>Degrees of freedom and law of equipartition of energy</li>
+                  <li>Kinetic Theory of Gases &mdash; RMS speed, degrees of freedom</li>
                   <li>First Law of Thermodynamics (&Delta;U = Q &minus; W)</li>
                   <li>Thermodynamic processes &mdash; isothermal, adiabatic, isobaric, isochoric</li>
                   <li>Second Law &mdash; Carnot engine, entropy</li>
-                  <li>Heat transfer &mdash; conduction, convection, radiation; Newton&rsquo;s law of cooling</li>
+                  <li>Heat transfer &mdash; conduction, convection, radiation</li>
                 </ul>
                 <div class="formula-box">
-                  &Delta;L = L&alpha;&Delta;T &nbsp;&nbsp;|&nbsp;&nbsp; PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>rms</sub> = &radic;(3RT/M)<br>
-                  &Delta;U = Q &minus; W &nbsp;&nbsp;|&nbsp;&nbsp; W = &int;PdV &nbsp;&nbsp;|&nbsp;&nbsp; &eta;<sub>Carnot</sub> = 1 &minus; T&#8322;/T&#8321;
+                  PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>rms</sub> = &radic;(3RT/M)<br>
+                  &Delta;U = Q &minus; W &nbsp;&nbsp;|&nbsp;&nbsp; &eta;<sub>Carnot</sub> = 1 &minus; T&#8322;/T&#8321;
                 </div>
-                <a href="simulations/thermodynamics.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/thermodynamics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/thermodynamics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/thermodynamics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Ch 7 - SHM & Waves -->
+          <!-- Ch 9 - Simple Harmonic Motion -->
           <div class="accordion-item">
             <div class="accordion-header">
-              <h3><span class="ch-num">07</span> Simple Harmonic Motion &amp; Waves</h3>
+              <h3><span class="ch-num">09</span> Simple Harmonic Motion</h3>
               <span class="toggle-icon">&#9660;</span>
             </div>
             <div class="accordion-body">
               <div class="accordion-content">
                 <p>
-                  Oscillations and waves are ubiquitous in nature &mdash; from a pendulum&rsquo;s swing to the
-                  propagation of sound and light. This chapter builds from the simplicity of SHM to
-                  the richness of wave superposition, standing waves, and beats.
+                  Oscillations are ubiquitous in nature. This chapter covers the defining condition of SHM,
+                  energy in oscillating systems, spring-mass and pendulum systems, and resonance.
                 </p>
                 <ul>
-                  <li>Simple Harmonic Motion &mdash; definition, characteristics, energy</li>
+                  <li>SHM &mdash; definition, characteristics, energy</li>
                   <li>Spring-mass system (T = 2&pi;&radic;(m/k))</li>
                   <li>Simple pendulum (T = 2&pi;&radic;(l/g))</li>
                   <li>Damped and forced oscillations; resonance</li>
+                  <li>Superposition of SHM</li>
+                </ul>
+                <div class="formula-box">
+                  x = A sin(&omega;t + &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = 2&pi;/T<br>
+                  T<sub>spring</sub> = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; T<sub>pendulum</sub> = 2&pi;&radic;(l/g) &nbsp;&nbsp;|&nbsp;&nbsp; E = &frac12;kA&sup2;
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/shm.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/shm.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/shm-waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ch 10 - Waves -->
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <h3><span class="ch-num">10</span> Waves</h3>
+              <span class="toggle-icon">&#9660;</span>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content">
+                <p>
+                  Waves carry energy through space and matter. This chapter builds from the wave equation
+                  to superposition, standing waves, beats, and the Doppler effect for sound.
+                </p>
+                <ul>
                   <li>Transverse and longitudinal waves</li>
                   <li>Wave equation: y = A sin(&omega;t &minus; kx)</li>
-                  <li>Principle of superposition; interference</li>
-                  <li>Standing waves and harmonics; beats</li>
+                  <li>Speed of waves in strings and air</li>
+                  <li>Standing waves and harmonics</li>
+                  <li>Beats (f<sub>beat</sub> = |f&#8321; &minus; f&#8322;|)</li>
                   <li>Doppler effect for sound</li>
                 </ul>
                 <div class="formula-box">
-                  x = A sin(&omega;t + &phi;) &nbsp;&nbsp;|&nbsp;&nbsp; &omega; = 2&pi;/T = 2&pi;f<br>
-                  T<sub>spring</sub> = 2&pi;&radic;(m/k) &nbsp;&nbsp;|&nbsp;&nbsp; T<sub>pendulum</sub> = 2&pi;&radic;(l/g)<br>
-                  v = f&lambda; &nbsp;&nbsp;|&nbsp;&nbsp; f<sub>beat</sub> = |f&#8321; &minus; f&#8322;| &nbsp;&nbsp;|&nbsp;&nbsp; f' = f(v &plusmn; v<sub>o</sub>)/(v &plusmn; v<sub>s</sub>)
+                  v = f&lambda; &nbsp;&nbsp;|&nbsp;&nbsp; v = &radic;(T/&mu;) (string)<br>
+                  f<sub>beat</sub> = |f&#8321; &minus; f&#8322;| &nbsp;&nbsp;|&nbsp;&nbsp; f' = f(v &plusmn; v<sub>o</sub>)/(v &mp; v<sub>s</sub>)
                 </div>
-                <a href="simulations/shm-waves.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -384,9 +477,11 @@
                   F = kq&#8321;q&#8322;/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; E = kq/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; V = kq/r<br>
                   &oint; E &middot; dA = Q<sub>enc</sub>/&epsilon;&#8320; (Gauss) &nbsp;&nbsp;|&nbsp;&nbsp; C = &epsilon;&#8320;A/d &nbsp;&nbsp;|&nbsp;&nbsp; U = &frac12;CV&sup2;
                 </div>
-                <a href="simulations/electrostatics.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/electrostatics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/electrostatics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/electrostatics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -418,9 +513,11 @@
                   V = IR &nbsp;&nbsp;|&nbsp;&nbsp; R = &rho;l/A &nbsp;&nbsp;|&nbsp;&nbsp; P = VI = I&sup2;R = V&sup2;/R<br>
                   &Sigma;I<sub>in</sub> = &Sigma;I<sub>out</sub> (KCL) &nbsp;&nbsp;|&nbsp;&nbsp; &Sigma;V = 0 (KVL) &nbsp;&nbsp;|&nbsp;&nbsp; R&#8321;/R&#8322; = R&#8323;/R&#8324; (Wheatstone)
                 </div>
-                <a href="simulations/current-electricity.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/current-electricity.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/current-electricity.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/current-electricity.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -452,9 +549,11 @@
                   dB = (&mu;&#8320;/4&pi;)(Idl &times; r&#770;)/r&sup2; (Biot-Savart) &nbsp;&nbsp;|&nbsp;&nbsp; &oint; B &middot; dl = &mu;&#8320;I<sub>enc</sub> (Ampere)<br>
                   &tau; = NIAB sin&theta; &nbsp;&nbsp;|&nbsp;&nbsp; F/l = &mu;&#8320;I&#8321;I&#8322;/2&pi;d
                 </div>
-                <a href="simulations/magnetism.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/magnetism.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/magnetism.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/magnetism.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -486,9 +585,11 @@
                   &epsilon; = Blv (motional EMF) &nbsp;&nbsp;|&nbsp;&nbsp; &epsilon; = &minus;L(dI/dt) &nbsp;&nbsp;|&nbsp;&nbsp; U = &frac12;LI&sup2;<br>
                   M = &mu;&#8320;N&#8321;N&#8322;A/l (mutual inductance for solenoids)
                 </div>
-                <a href="simulations/emi.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/emi.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/emi.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/emi.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -521,9 +622,11 @@
                   X<sub>L</sub> = &omega;L &nbsp;&nbsp;|&nbsp;&nbsp; X<sub>C</sub> = 1/&omega;C &nbsp;&nbsp;|&nbsp;&nbsp; f<sub>res</sub> = 1/(2&pi;&radic;LC)<br>
                   P<sub>avg</sub> = V<sub>rms</sub>I<sub>rms</sub>cos&phi; &nbsp;&nbsp;|&nbsp;&nbsp; V&#8321;/V&#8322; = N&#8321;/N&#8322; (transformer)
                 </div>
-                <a href="simulations/ac-circuits.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/ac-circuits.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/ac-circuits.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/ac-circuits.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -552,9 +655,11 @@
                   c = 1/&radic;(&mu;&#8320;&epsilon;&#8320;) = 3 &times; 10&sup8; m/s &nbsp;&nbsp;|&nbsp;&nbsp; c = f&lambda;<br>
                   E&#8320;/B&#8320; = c &nbsp;&nbsp;|&nbsp;&nbsp; I = &frac12;&epsilon;&#8320;cE&#8320;&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; p = U/c (momentum)
                 </div>
-                <a href="simulations/em-waves.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/em-waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/em-waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/em-waves.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -586,9 +691,11 @@
                   1/v &minus; 1/u = 1/f (lens) &nbsp;&nbsp;|&nbsp;&nbsp; P = 1/f (dioptre)<br>
                   &delta;<sub>min</sub> = (n &minus; 1)A (thin prism) &nbsp;&nbsp;|&nbsp;&nbsp; sin&theta;<sub>c</sub> = n&#8322;/n&#8321; (TIR)
                 </div>
-                <a href="simulations/ray-optics.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/ray-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/ray-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/ray-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -618,9 +725,11 @@
                   Maxima: d sin&theta; = n&lambda; &nbsp;&nbsp;|&nbsp;&nbsp; Minima: d sin&theta; = (n+&frac12;)&lambda;<br>
                   I = I&#8320; cos&sup2;&theta; (Malus) &nbsp;&nbsp;|&nbsp;&nbsp; tan&theta;<sub>B</sub> = n (Brewster)
                 </div>
-                <a href="simulations/wave-optics.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/wave-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/wave-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/wave-optics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>
@@ -652,9 +761,11 @@
                   &lambda; = h/mv = h/p (de Broglie) &nbsp;&nbsp;|&nbsp;&nbsp; E<sub>n</sub> = &minus;13.6/n&sup2; eV (hydrogen)<br>
                   N = N&#8320;e<sup>&minus;&lambda;t</sup> &nbsp;&nbsp;|&nbsp;&nbsp; t<sub>&frac12;</sub> = 0.693/&lambda; &nbsp;&nbsp;|&nbsp;&nbsp; E = &Delta;mc&sup2;
                 </div>
-                <a href="simulations/modern-physics.html" class="btn btn-outline" style="margin-top: 12px; padding: 10px 20px; font-size: 0.84rem;">
-                  Launch Simulation &rarr;
-                </a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                  <a href="chapters/modern-physics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Read Full Theory &rarr;</a>
+                  <a href="tests/modern-physics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Take Test &rarr;</a>
+                  <a href="simulations/modern-physics.html" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.84rem;">Simulation &rarr;</a>
+                </div>
               </div>
             </div>
           </div>

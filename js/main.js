@@ -239,9 +239,15 @@ function animateCounters() {
 
 // --- Initialize Everything ---
 document.addEventListener('DOMContentLoaded', () => {
-  // Particles
+  // Particles — delay init if splash is playing
   const canvas = document.getElementById('particles-canvas');
-  if (canvas) new ParticleSystem(canvas);
+  if (canvas) {
+    if (document.querySelector('.nav-logo.splash-phase-1')) {
+      setTimeout(() => new ParticleSystem(canvas), 3600);
+    } else {
+      new ParticleSystem(canvas);
+    }
+  }
 
   initNavbar();
   initScrollReveal();

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moving Charges &amp; Magnetism | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>Moving Charges &amp; Magnetism</h1>
+      <div class="ch-meta">Grade XII &mdash; Chapter 03</div>
+      <div class="ch-nav">
+        <a href="#magnetic-force">Magnetic Force on Charge</a>
+        <a href="#motion-in-magnetic-field">Motion in B Field</a>
+        <a href="#force-on-conductor">Force on Conductor</a>
+        <a href="#biot-savart-law">Biot-Savart Law</a>
+        <a href="#amperes-law">Ampere's Law</a>
+        <a href="#parallel-conductors">Parallel Conductors</a>
+        <a href="#galvanometer">Galvanometer</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Magnetic Force on Moving Charge -->
+    <!-- ============================== -->
+    <div class="theory-section" id="magnetic-force">
+      <h2>1. Magnetic Force on a Moving Charge</h2>
+
+      <h3>Force on a Charge in a Magnetic Field</h3>
+      <p>
+        A charge <em>q</em> moving with velocity <strong>v</strong> in a magnetic field <strong>B</strong> experiences a force given by:
+      </p>
+      <div class="formula-box">
+        <strong>F</strong> = q(<strong>v</strong> &times; <strong>B</strong>)<br><br>
+        Magnitude: F = qvB sin&theta;<br>
+        where &theta; = angle between <strong>v</strong> and <strong>B</strong>
+      </div>
+      <p>
+        Key properties of the magnetic force:
+      </p>
+      <ul>
+        <li>The force is always <strong>perpendicular</strong> to both the velocity and the magnetic field.</li>
+        <li>The force does <strong>no work</strong> on the charge (since <strong>F</strong> &perp; <strong>v</strong>), so it cannot change the kinetic energy or speed of the charge &mdash; only its direction.</li>
+        <li>If <strong>v</strong> is parallel to <strong>B</strong> (&theta; = 0&deg; or 180&deg;), the force is zero.</li>
+        <li>The force is maximum when <strong>v</strong> is perpendicular to <strong>B</strong> (&theta; = 90&deg;).</li>
+        <li>A stationary charge (v = 0) experiences no magnetic force.</li>
+      </ul>
+
+      <h3>Lorentz Force</h3>
+      <p>
+        When both electric and magnetic fields are present, the total electromagnetic force on a charge is called the Lorentz force:
+      </p>
+      <div class="formula-box">
+        <strong>F</strong> = q(<strong>E</strong> + <strong>v</strong> &times; <strong>B</strong>)
+      </div>
+      <p>
+        The electric force q<strong>E</strong> acts along (or against) the electric field and can do work on the charge. The magnetic force q(<strong>v</strong> &times; <strong>B</strong>) acts perpendicular to the velocity and does no work. Together, they determine the trajectory of a charged particle in combined fields.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Motion in Magnetic Field -->
+    <!-- ============================== -->
+    <div class="theory-section" id="motion-in-magnetic-field">
+      <h2>2. Motion of a Charged Particle in a Magnetic Field</h2>
+
+      <h3>Circular Motion (v perpendicular to B)</h3>
+      <p>
+        When a charged particle enters a uniform magnetic field with its velocity perpendicular to the field, the magnetic force provides the centripetal force for circular motion. The particle moves in a circle of radius r in the plane perpendicular to <strong>B</strong>.
+      </p>
+      <div class="formula-box">
+        qvB = mv&sup2; / r<br><br>
+        Radius: r = mv / (qB)<br>
+        Time period: T = 2&pi;m / (qB)<br>
+        Frequency: f = qB / (2&pi;m)<br>
+        Angular frequency: &omega; = qB / m (cyclotron frequency)
+      </div>
+      <p>
+        A remarkable feature is that the time period and frequency are <strong>independent of the speed</strong> of the particle and the radius of the orbit. This property is the basis of the cyclotron.
+      </p>
+
+      <h3>Helical Motion (v at angle to B)</h3>
+      <p>
+        When the velocity has components both parallel and perpendicular to <strong>B</strong>, the perpendicular component causes circular motion while the parallel component remains unchanged. The particle traces a <strong>helix</strong> (spiral path) along the direction of <strong>B</strong>.
+      </p>
+      <div class="formula-box">
+        v<sub>&perp;</sub> = v sin&theta;, &nbsp; v<sub>&parallel;</sub> = v cos&theta;<br><br>
+        Radius of helix: r = mv sin&theta; / (qB)<br>
+        Pitch of helix: p = v<sub>&parallel;</sub> &times; T = 2&pi;mv cos&theta; / (qB)
+      </div>
+
+      <h3>Velocity Selector</h3>
+      <p>
+        A velocity selector uses crossed electric and magnetic fields (perpendicular to each other and to the velocity of the particle) to select particles of a specific velocity. For the particle to pass undeflected:
+      </p>
+      <div class="formula-box">
+        qE = qvB<br>
+        v = E / B
+      </div>
+      <p>
+        Particles with this specific velocity pass straight through, while faster or slower particles are deflected.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 1</div>
+        <p>
+          A proton (m = 1.67 &times; 10<sup>&minus;27</sup> kg, q = 1.6 &times; 10<sup>&minus;19</sup> C) moves with a speed of 10<sup>6</sup> m/s perpendicular to a magnetic field of 0.1 T. Find the radius of its circular orbit, the time period, and the kinetic energy.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            m = 1.67 &times; 10<sup>&minus;27</sup> kg, q = 1.6 &times; 10<sup>&minus;19</sup> C, v = 10<sup>6</sup> m/s, B = 0.1 T<br><br>
+            Radius: r = mv/(qB) = (1.67 &times; 10<sup>&minus;27</sup>)(10<sup>6</sup>) / [(1.6 &times; 10<sup>&minus;19</sup>)(0.1)]<br>
+            r = 1.67 &times; 10<sup>&minus;21</sup> / 1.6 &times; 10<sup>&minus;20</sup> = <strong>0.104 m &asymp; 10.4 cm</strong><br><br>
+            Time period: T = 2&pi;m/(qB) = 2&pi;(1.67 &times; 10<sup>&minus;27</sup>) / [(1.6 &times; 10<sup>&minus;19</sup>)(0.1)]<br>
+            T = 10.49 &times; 10<sup>&minus;27</sup> / 1.6 &times; 10<sup>&minus;20</sup> = <strong>6.56 &times; 10<sup>&minus;7</sup> s &asymp; 0.656 &mu;s</strong><br><br>
+            Kinetic energy: KE = &frac12;mv&sup2; = &frac12;(1.67 &times; 10<sup>&minus;27</sup>)(10<sup>6</sup>)&sup2;<br>
+            KE = <strong>8.35 &times; 10<sup>&minus;16</sup> J &asymp; 5.22 keV</strong><br>
+            (Note: KE remains constant since the magnetic force does no work.)
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Force on Current-Carrying Conductor -->
+    <!-- ============================== -->
+    <div class="theory-section" id="force-on-conductor">
+      <h2>3. Force on a Current-Carrying Conductor</h2>
+
+      <h3>Force on a Straight Conductor</h3>
+      <p>
+        A current-carrying conductor placed in a magnetic field experiences a force because the magnetic field exerts a force on the moving charges (drift electrons) within the conductor. For a straight conductor of length l carrying current I in a uniform field <strong>B</strong>:
+      </p>
+      <div class="formula-box">
+        <strong>F</strong> = I(<strong>l</strong> &times; <strong>B</strong>)<br><br>
+        Magnitude: F = BIl sin&theta;<br>
+        where &theta; = angle between the current direction and <strong>B</strong>
+      </div>
+      <p>
+        The direction of force is given by Fleming's left-hand rule: point the index finger along the magnetic field, the middle finger along the current, and the thumb gives the direction of the force.
+      </p>
+
+      <h3>Torque on a Current Loop</h3>
+      <p>
+        A rectangular current loop of N turns, each of area A, carrying current I, placed in a uniform magnetic field <strong>B</strong>, experiences a torque:
+      </p>
+      <div class="formula-box">
+        <strong>&tau;</strong> = NI<strong>A</strong> &times; <strong>B</strong> = <strong>m</strong> &times; <strong>B</strong><br><br>
+        Magnitude: &tau; = NIAB sin&theta;<br>
+        where &theta; = angle between the normal to the loop and <strong>B</strong>,<br>
+        and <strong>m</strong> = NI<strong>A</strong> is the magnetic dipole moment
+      </div>
+      <p>
+        The torque is maximum when the plane of the loop is parallel to the field (&theta; = 90&deg;) and zero when the plane is perpendicular to the field (&theta; = 0&deg;, equilibrium position).
+      </p>
+
+      <h3>Magnetic Dipole Moment</h3>
+      <div class="formula-box">
+        m = NIA<br>
+        SI unit: A m&sup2; (or equivalently, J/T)
+      </div>
+      <p>
+        The direction of the magnetic moment is along the normal to the loop, given by the right-hand thumb rule: curl the fingers in the direction of current flow, and the thumb points in the direction of <strong>m</strong>.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Biot-Savart Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="biot-savart-law">
+      <h2>4. Biot-Savart Law</h2>
+
+      <h3>Statement</h3>
+      <p>
+        The Biot-Savart law gives the magnetic field d<strong>B</strong> produced at a point P by a small current element Id<strong>l</strong> of a conductor carrying current I:
+      </p>
+      <div class="formula-box">
+        d<strong>B</strong> = (&mu;<sub>0</sub> / 4&pi;) &times; (Id<strong>l</strong> &times; <strong>r&#770;</strong>) / r&sup2;<br><br>
+        Magnitude: dB = (&mu;<sub>0</sub> / 4&pi;) &times; (I dl sin&theta;) / r&sup2;<br><br>
+        where &mu;<sub>0</sub> = 4&pi; &times; 10<sup>&minus;7</sup> T m A<sup>&minus;1</sup> (permeability of free space)
+      </div>
+
+      <h3>Magnetic Field of a Long Straight Wire</h3>
+      <p>
+        For an infinitely long straight wire carrying current I, the magnetic field at a perpendicular distance r from the wire is:
+      </p>
+      <div class="formula-box">
+        B = &mu;<sub>0</sub>I / (2&pi;r)
+      </div>
+      <p>
+        The field lines are concentric circles around the wire. The direction is given by the right-hand thumb rule: point the thumb along the current, and the curled fingers give the direction of <strong>B</strong>.
+      </p>
+
+      <h3>Magnetic Field at the Centre of a Circular Loop</h3>
+      <p>
+        For a circular loop of N turns, radius R, carrying current I, the field at the centre is:
+      </p>
+      <div class="formula-box">
+        B = &mu;<sub>0</sub>NI / (2R)
+      </div>
+
+      <h3>Magnetic Field on the Axis of a Circular Loop</h3>
+      <div class="formula-box">
+        B = &mu;<sub>0</sub>NIR&sup2; / [2(R&sup2; + x&sup2;)<sup>3/2</sup>]<br><br>
+        At centre (x = 0): B = &mu;<sub>0</sub>NI / (2R)<br>
+        For x &gt;&gt; R: B &asymp; &mu;<sub>0</sub>NIR&sup2; / (2x&sup3;) = &mu;<sub>0</sub>m / (2&pi;x&sup3;)
+      </div>
+
+      <h3>Magnetic Field of a Solenoid</h3>
+      <p>
+        A solenoid is a long coil of wire wound in a helix. For an ideal solenoid (length &gt;&gt; radius), the field inside is uniform and parallel to the axis:
+      </p>
+      <div class="formula-box">
+        Inside: B = &mu;<sub>0</sub>nI<br>
+        where n = N/L = number of turns per unit length<br><br>
+        Outside an ideal solenoid: B = 0<br>
+        At the ends: B = &mu;<sub>0</sub>nI / 2
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Ampere's Circuital Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="amperes-law">
+      <h2>5. Ampere's Circuital Law</h2>
+
+      <h3>Statement</h3>
+      <p>
+        Ampere's circuital law states that the line integral of the magnetic field <strong>B</strong> around any closed loop (Amperian loop) is equal to &mu;<sub>0</sub> times the total current enclosed by that loop.
+      </p>
+      <div class="formula-box">
+        &oint; <strong>B</strong> &middot; d<strong>l</strong> = &mu;<sub>0</sub> I<sub>enc</sub>
+      </div>
+      <p>
+        This law is the magnetic analogue of Gauss's law in electrostatics. Like Gauss's law, it is always true but is most useful when there is sufficient symmetry to simplify the line integral.
+      </p>
+
+      <h3>Application: Solenoid</h3>
+      <p>
+        Consider a rectangular Amperian loop with one side inside the solenoid (length l along the axis) and the other outside. The field outside is essentially zero for an ideal solenoid, so:
+      </p>
+      <div class="formula-box">
+        Bl = &mu;<sub>0</sub>(nl)I<br>
+        B = &mu;<sub>0</sub>nI
+      </div>
+
+      <h3>Application: Toroid</h3>
+      <p>
+        A toroid is a solenoid bent into a closed ring shape. Using a circular Amperian loop of radius r passing through the interior of the toroid (where r is the distance from the centre of the toroid):
+      </p>
+      <div class="formula-box">
+        Inside the toroid: B(2&pi;r) = &mu;<sub>0</sub>NI<br>
+        B = &mu;<sub>0</sub>NI / (2&pi;r)<br><br>
+        Outside the toroid: B = 0<br>
+        In the central cavity: B = 0
+      </div>
+      <p>
+        Unlike a solenoid, the field inside a toroid varies with the radius (it is not perfectly uniform) but is approximately uniform if the cross-section is small compared to the toroid radius.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 2</div>
+        <p>
+          A solenoid of length 50 cm has 500 turns and carries a current of 2 A. Find the magnetic field inside the solenoid. If this solenoid is bent into a toroid of mean radius 10 cm, find the field inside the toroid.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            <em>Solenoid:</em><br>
+            n = N/L = 500/0.50 = 1000 turns/m, I = 2 A<br>
+            B = &mu;<sub>0</sub>nI = (4&pi; &times; 10<sup>&minus;7</sup>)(1000)(2)<br>
+            B = 8&pi; &times; 10<sup>&minus;4</sup> = <strong>2.51 &times; 10<sup>&minus;3</sup> T &asymp; 25.1 Gauss</strong><br><br>
+            <em>Toroid:</em><br>
+            N = 500, I = 2 A, r = 0.10 m<br>
+            B = &mu;<sub>0</sub>NI / (2&pi;r) = (4&pi; &times; 10<sup>&minus;7</sup>)(500)(2) / (2&pi; &times; 0.10)<br>
+            B = (4&pi; &times; 10<sup>&minus;7</sup> &times; 1000) / (0.2&pi;)<br>
+            B = 4000 &times; 10<sup>&minus;7</sup> / 0.2 = <strong>2.0 &times; 10<sup>&minus;3</sup> T = 20 Gauss</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Force Between Parallel Conductors -->
+    <!-- ============================== -->
+    <div class="theory-section" id="parallel-conductors">
+      <h2>6. Force Between Parallel Current-Carrying Conductors</h2>
+
+      <h3>Derivation</h3>
+      <p>
+        Consider two long, straight, parallel conductors separated by a distance <em>d</em>, carrying currents I<sub>1</sub> and I<sub>2</sub> respectively. The magnetic field produced by conductor 1 at the location of conductor 2 is B<sub>1</sub> = &mu;<sub>0</sub>I<sub>1</sub>/(2&pi;d). This field exerts a force on conductor 2.
+      </p>
+      <div class="formula-box">
+        Force per unit length: F/l = &mu;<sub>0</sub>I<sub>1</sub>I<sub>2</sub> / (2&pi;d)
+      </div>
+      <ul>
+        <li><strong>Parallel currents</strong> (same direction): The conductors <strong>attract</strong> each other.</li>
+        <li><strong>Anti-parallel currents</strong> (opposite directions): The conductors <strong>repel</strong> each other.</li>
+      </ul>
+
+      <h3>Definition of the Ampere</h3>
+      <p>
+        The SI unit of current, the ampere, is defined using this force: One ampere is that steady current which, when flowing in each of two infinitely long, straight, parallel conductors placed 1 metre apart in vacuum, produces a force of 2 &times; 10<sup>&minus;7</sup> N per metre of length between them.
+      </p>
+      <div class="formula-box">
+        F/l = &mu;<sub>0</sub>I<sub>1</sub>I<sub>2</sub> / (2&pi;d)<br>
+        For I<sub>1</sub> = I<sub>2</sub> = 1 A, d = 1 m:<br>
+        F/l = (4&pi; &times; 10<sup>&minus;7</sup>)(1)(1) / (2&pi; &times; 1) = 2 &times; 10<sup>&minus;7</sup> N/m
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Moving Coil Galvanometer -->
+    <!-- ============================== -->
+    <div class="theory-section" id="galvanometer">
+      <h2>7. Moving Coil Galvanometer</h2>
+
+      <h3>Principle and Working</h3>
+      <p>
+        A moving coil galvanometer works on the principle that a current-carrying coil placed in a magnetic field experiences a torque. The coil is suspended between the poles of a strong permanent magnet (radial field design ensures the field is always parallel to the plane of the coil). A restoring torque is provided by a spring.
+      </p>
+      <p>
+        At equilibrium, the magnetic torque equals the restoring torque:
+      </p>
+      <div class="formula-box">
+        NIAB = k&phi;<br><br>
+        where N = number of turns, A = area of coil, B = magnetic field,<br>
+        k = torsional constant of spring, &phi; = deflection angle<br><br>
+        &phi; = (NAB/k) &times; I &nbsp; &rArr; &nbsp; &phi; &propto; I
+      </div>
+
+      <h3>Current Sensitivity</h3>
+      <div class="formula-box">
+        Current sensitivity = &phi;/I = NAB/k &nbsp; (deflection per unit current)
+      </div>
+
+      <h3>Voltage Sensitivity</h3>
+      <div class="formula-box">
+        Voltage sensitivity = &phi;/V = NAB/(kR<sub>G</sub>) &nbsp; (where R<sub>G</sub> = galvanometer resistance)
+      </div>
+
+      <h3>Conversion to Ammeter</h3>
+      <p>
+        To convert a galvanometer into an ammeter, a low resistance (shunt) S is connected in <strong>parallel</strong> with the galvanometer:
+      </p>
+      <div class="formula-box">
+        S = I<sub>g</sub>R<sub>G</sub> / (I &minus; I<sub>g</sub>)<br><br>
+        where I<sub>g</sub> = full-scale deflection current of galvanometer,<br>
+        I = desired maximum current of ammeter
+      </div>
+
+      <h3>Conversion to Voltmeter</h3>
+      <p>
+        To convert a galvanometer into a voltmeter, a high resistance R is connected in <strong>series</strong> with the galvanometer:
+      </p>
+      <div class="formula-box">
+        R = V/I<sub>g</sub> &minus; R<sub>G</sub><br><br>
+        where V = desired maximum voltage reading
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 3</div>
+        <p>
+          A galvanometer has a resistance of 50 &Omega; and gives full-scale deflection for a current of 1 mA. How can it be converted into (a) an ammeter of range 0&ndash;5 A, and (b) a voltmeter of range 0&ndash;10 V?
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            R<sub>G</sub> = 50 &Omega;, I<sub>g</sub> = 1 mA = 10<sup>&minus;3</sup> A<br><br>
+            <em>(a) Ammeter (range 0&ndash;5 A):</em><br>
+            Shunt S = I<sub>g</sub>R<sub>G</sub> / (I &minus; I<sub>g</sub>)<br>
+            S = (10<sup>&minus;3</sup>)(50) / (5 &minus; 10<sup>&minus;3</sup>)<br>
+            S = 0.05 / 4.999 &asymp; <strong>0.01 &Omega;</strong><br>
+            Connect S = 0.01 &Omega; in parallel with the galvanometer.<br><br>
+            <em>(b) Voltmeter (range 0&ndash;10 V):</em><br>
+            R = V/I<sub>g</sub> &minus; R<sub>G</sub><br>
+            R = 10 / (10<sup>&minus;3</sup>) &minus; 50<br>
+            R = 10000 &minus; 50 = <strong>9950 &Omega;</strong><br>
+            Connect R = 9950 &Omega; in series with the galvanometer.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="../simulations/magnetism.html" class="primary-link">Simulation</a>
+      <a href="../tests/magnetism.html">Take a Test</a>
+      <a href="emi.html">Next: Electromagnetic Induction &rarr;</a>
+      <a href="current-electricity.html">&larr; Prev: Current Electricity</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

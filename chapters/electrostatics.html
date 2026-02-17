@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrostatics | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>Electrostatics &amp; Capacitance</h1>
+      <div class="ch-meta">Grade XII &mdash; Chapter 01</div>
+      <div class="ch-nav">
+        <a href="#electric-charge">Electric Charge</a>
+        <a href="#coulombs-law">Coulomb's Law</a>
+        <a href="#electric-field">Electric Field</a>
+        <a href="#gauss-law">Gauss's Law</a>
+        <a href="#electric-potential">Electric Potential</a>
+        <a href="#capacitance">Capacitance</a>
+        <a href="#energy-in-capacitor">Energy in Capacitor</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Electric Charge -->
+    <!-- ============================== -->
+    <div class="theory-section" id="electric-charge">
+      <h2>1. Electric Charge</h2>
+
+      <h3>What is Electric Charge?</h3>
+      <p>
+        Electric charge is an intrinsic property of matter that causes it to experience a force when placed near other electrically charged matter. There are exactly two types of electric charge: <strong>positive</strong> and <strong>negative</strong>. Like charges repel and unlike charges attract. The SI unit of charge is the <strong>coulomb (C)</strong>.
+      </p>
+
+      <h3>Properties of Electric Charge</h3>
+      <ul>
+        <li><strong>Additivity:</strong> Charges are scalars and add algebraically. The total charge of a system is the algebraic sum of all individual charges: Q = q<sub>1</sub> + q<sub>2</sub> + q<sub>3</sub> + ...</li>
+        <li><strong>Conservation:</strong> The total electric charge of an isolated system is always conserved. Charge can neither be created nor destroyed &mdash; it can only be transferred from one body to another.</li>
+        <li><strong>Quantization:</strong> Charge always occurs in integral multiples of the elementary charge <em>e</em> = 1.6 &times; 10<sup>&minus;19</sup> C. Thus, q = ne where n is an integer (positive or negative).</li>
+        <li><strong>Charge is invariant:</strong> The charge on a body does not change with its speed. It is a relativistic invariant.</li>
+      </ul>
+
+      <h3>Methods of Charging</h3>
+      <p>
+        There are three primary methods by which a body can acquire electric charge:
+      </p>
+      <ul>
+        <li><strong>Friction:</strong> When two dissimilar materials are rubbed together, electrons transfer from one to the other. The body that loses electrons becomes positively charged and the one that gains becomes negatively charged. Example: rubbing a glass rod with silk.</li>
+        <li><strong>Conduction:</strong> When a charged body is brought into direct contact with an uncharged conductor, charge flows from the charged body to the uncharged one until both reach the same potential.</li>
+        <li><strong>Induction:</strong> A charged body brought near (but not touching) a conductor causes a redistribution of charges in the conductor. By grounding the conductor while the charged body is nearby and then removing the ground, a net charge opposite to the inducing charge is left on the conductor.</li>
+      </ul>
+
+      <div class="formula-box">
+        Quantization of charge: q = ne &nbsp; (n = 0, &plusmn;1, &plusmn;2, ...)<br>
+        Elementary charge: e = 1.6 &times; 10<sup>&minus;19</sup> C<br>
+        Charge of electron: &minus;e = &minus;1.6 &times; 10<sup>&minus;19</sup> C<br>
+        Charge of proton: +e = +1.6 &times; 10<sup>&minus;19</sup> C
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Coulomb's Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="coulombs-law">
+      <h2>2. Coulomb's Law</h2>
+
+      <h3>Statement</h3>
+      <p>
+        Coulomb's law states that the electrostatic force between two point charges is directly proportional to the product of the magnitudes of the charges and inversely proportional to the square of the distance between them. The force acts along the line joining the two charges.
+      </p>
+
+      <div class="formula-box">
+        F = k q<sub>1</sub>q<sub>2</sub> / r&sup2;<br><br>
+        where k = 1/(4&pi;&epsilon;<sub>0</sub>) = 9 &times; 10<sup>9</sup> N m&sup2; C<sup>&minus;2</sup><br>
+        &epsilon;<sub>0</sub> = 8.854 &times; 10<sup>&minus;12</sup> C&sup2; N<sup>&minus;1</sup> m<sup>&minus;2</sup> (permittivity of free space)
+      </div>
+
+      <h3>Vector Form</h3>
+      <p>
+        The force on charge q<sub>1</sub> due to charge q<sub>2</sub> in vector form is:
+      </p>
+      <div class="formula-box">
+        <strong>F</strong><sub>12</sub> = k q<sub>1</sub>q<sub>2</sub> / r&sup2; &nbsp; <strong>r&#770;</strong><sub>12</sub>
+      </div>
+      <p>
+        Here <strong>r&#770;</strong><sub>12</sub> is the unit vector pointing from q<sub>2</sub> to q<sub>1</sub>. If both charges have the same sign, the force is repulsive (along <strong>r&#770;</strong><sub>12</sub>); if opposite signs, the force is attractive (opposite to <strong>r&#770;</strong><sub>12</sub>).
+      </p>
+
+      <h3>Superposition Principle</h3>
+      <p>
+        The total force on a charge due to several other charges is the <strong>vector sum</strong> of the individual forces exerted by each charge independently. The force between any two charges is unaffected by the presence of other charges.
+      </p>
+      <div class="formula-box">
+        <strong>F</strong><sub>net</sub> = <strong>F</strong><sub>1</sub> + <strong>F</strong><sub>2</sub> + <strong>F</strong><sub>3</sub> + ... = &sum; k q q<sub>i</sub> / r<sub>i</sub>&sup2; &nbsp; <strong>r&#770;</strong><sub>i</sub>
+      </div>
+
+      <h3>Effect of Medium</h3>
+      <p>
+        When charges are placed in a medium with dielectric constant (relative permittivity) &kappa;, the force is reduced by a factor of &kappa;:
+      </p>
+      <div class="formula-box">
+        F<sub>medium</sub> = F<sub>vacuum</sub> / &kappa; = k q<sub>1</sub>q<sub>2</sub> / (&kappa; r&sup2;)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 1</div>
+        <p>
+          Two point charges q<sub>1</sub> = +3 &mu;C and q<sub>2</sub> = &minus;4 &mu;C are placed 30 cm apart in vacuum. Find the magnitude of the electrostatic force between them. Also find the force if the medium has a dielectric constant &kappa; = 2.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            q<sub>1</sub> = 3 &times; 10<sup>&minus;6</sup> C, q<sub>2</sub> = 4 &times; 10<sup>&minus;6</sup> C, r = 0.30 m<br><br>
+            F = k q<sub>1</sub>q<sub>2</sub> / r&sup2; = (9 &times; 10<sup>9</sup>)(3 &times; 10<sup>&minus;6</sup>)(4 &times; 10<sup>&minus;6</sup>) / (0.30)&sup2;<br>
+            F = (9 &times; 10<sup>9</sup>)(12 &times; 10<sup>&minus;12</sup>) / 0.09<br>
+            F = 108 &times; 10<sup>&minus;3</sup> / 0.09 = <strong>1.2 N</strong> (attractive)<br><br>
+            In medium: F<sub>medium</sub> = F / &kappa; = 1.2 / 2 = <strong>0.6 N</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Electric Field -->
+    <!-- ============================== -->
+    <div class="theory-section" id="electric-field">
+      <h2>3. Electric Field</h2>
+
+      <h3>Definition</h3>
+      <p>
+        The electric field at a point in space is defined as the electrostatic force experienced by a unit positive test charge placed at that point. The test charge must be vanishingly small so that it does not disturb the source charge distribution.
+      </p>
+      <div class="formula-box">
+        <strong>E</strong> = <strong>F</strong> / q<sub>0</sub><br><br>
+        SI unit: N/C or V/m
+      </div>
+
+      <h3>Electric Field Due to a Point Charge</h3>
+      <p>
+        The electric field at a distance <em>r</em> from a point charge <em>Q</em> is directed radially outward (for positive Q) or radially inward (for negative Q).
+      </p>
+      <div class="formula-box">
+        E = kQ / r&sup2; = Q / (4&pi;&epsilon;<sub>0</sub>r&sup2;)
+      </div>
+
+      <h3>Electric Field Due to an Electric Dipole</h3>
+      <p>
+        An electric dipole consists of two equal and opposite charges +q and &minus;q separated by a small distance 2a. The <strong>dipole moment</strong> is <strong>p</strong> = q &times; 2a, directed from the negative charge to the positive charge.
+      </p>
+      <div class="formula-box">
+        Axial point (on the axis, distance r from centre, r &gt;&gt; a):<br>
+        E<sub>axial</sub> = 2kp / r&sup3; = p / (2&pi;&epsilon;<sub>0</sub>r&sup3;)<br><br>
+        Equatorial point (on perpendicular bisector, distance r from centre, r &gt;&gt; a):<br>
+        E<sub>equatorial</sub> = kp / r&sup3; = p / (4&pi;&epsilon;<sub>0</sub>r&sup3;)<br><br>
+        Note: E<sub>axial</sub> = 2 E<sub>equatorial</sub>
+      </div>
+
+      <h3>Electric Field Due to a Uniformly Charged Ring</h3>
+      <p>
+        For a uniformly charged ring of total charge Q and radius R, the electric field at a point on the axis at distance x from the centre is:
+      </p>
+      <div class="formula-box">
+        E = kQx / (R&sup2; + x&sup2;)<sup>3/2</sup><br><br>
+        At the centre (x = 0): E = 0<br>
+        Maximum E occurs at x = R / &radic;2
+      </div>
+
+      <h3>Electric Field Due to an Infinite Plane Sheet of Charge</h3>
+      <p>
+        For an infinite plane sheet with uniform surface charge density &sigma;, the electric field is uniform and perpendicular to the sheet:
+      </p>
+      <div class="formula-box">
+        E = &sigma; / (2&epsilon;<sub>0</sub>) &nbsp; (on each side of the sheet)<br><br>
+        For two parallel sheets with charges +&sigma; and &minus;&sigma;:<br>
+        Between the sheets: E = &sigma; / &epsilon;<sub>0</sub><br>
+        Outside: E = 0
+      </div>
+
+      <h3>Electric Field Due to a Uniformly Charged Sphere</h3>
+      <div class="formula-box">
+        Conducting sphere (charge Q, radius R):<br>
+        Outside (r &gt; R): E = kQ / r&sup2;<br>
+        On the surface (r = R): E = kQ / R&sup2; = &sigma; / &epsilon;<sub>0</sub><br>
+        Inside (r &lt; R): E = 0<br><br>
+        Non-conducting sphere (uniform volume charge density &rho;):<br>
+        Outside (r &gt; R): E = kQ / r&sup2;<br>
+        Inside (r &lt; R): E = kQr / R&sup3; = &rho;r / (3&epsilon;<sub>0</sub>)
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Gauss's Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="gauss-law">
+      <h2>4. Gauss's Law</h2>
+
+      <h3>Electric Flux</h3>
+      <p>
+        Electric flux through a surface is a measure of the number of electric field lines passing through that surface. For a uniform field <strong>E</strong> making an angle &theta; with the area vector <strong>A</strong>:
+      </p>
+      <div class="formula-box">
+        &Phi;<sub>E</sub> = <strong>E</strong> &middot; <strong>A</strong> = EA cos&theta;<br>
+        SI unit: N m&sup2; C<sup>&minus;1</sup> (or V m)
+      </div>
+
+      <h3>Statement of Gauss's Law</h3>
+      <p>
+        Gauss's law states that the total electric flux through any closed surface (Gaussian surface) is equal to 1/&epsilon;<sub>0</sub> times the total charge enclosed within that surface.
+      </p>
+      <div class="formula-box">
+        &oint; <strong>E</strong> &middot; d<strong>A</strong> = Q<sub>enc</sub> / &epsilon;<sub>0</sub>
+      </div>
+      <p>
+        Important points about Gauss's law:
+      </p>
+      <ul>
+        <li>The electric field <strong>E</strong> on the Gaussian surface is due to <em>all</em> charges (inside and outside), but the flux depends only on the <em>enclosed</em> charge.</li>
+        <li>Gauss's law is valid for any closed surface, but it is most useful when there is sufficient symmetry (spherical, cylindrical, or planar) to simplify the integral.</li>
+        <li>Charges outside the Gaussian surface contribute zero net flux through it.</li>
+      </ul>
+
+      <h3>Applications of Gauss's Law</h3>
+
+      <p><strong>1. Infinite Line Charge (linear charge density &lambda;):</strong></p>
+      <p>
+        Using a cylindrical Gaussian surface of radius r and length l coaxial with the line charge:
+      </p>
+      <div class="formula-box">
+        E = &lambda; / (2&pi;&epsilon;<sub>0</sub>r) = 2k&lambda; / r<br>
+        (radially outward for +&lambda;)
+      </div>
+
+      <p><strong>2. Infinite Plane Sheet (surface charge density &sigma;):</strong></p>
+      <p>
+        Using a cylindrical Gaussian surface (pillbox) straddling the sheet:
+      </p>
+      <div class="formula-box">
+        E = &sigma; / (2&epsilon;<sub>0</sub>)<br>
+        (perpendicular to the sheet, away from it)
+      </div>
+
+      <p><strong>3. Uniformly Charged Sphere (total charge Q, radius R):</strong></p>
+      <div class="formula-box">
+        Outside (r &gt; R): E = Q / (4&pi;&epsilon;<sub>0</sub>r&sup2;) = kQ / r&sup2;<br>
+        On surface (r = R): E = Q / (4&pi;&epsilon;<sub>0</sub>R&sup2;)<br>
+        Inside conducting sphere: E = 0<br>
+        Inside non-conducting sphere (r &lt; R): E = Qr / (4&pi;&epsilon;<sub>0</sub>R&sup3;)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 2</div>
+        <p>
+          A uniformly charged solid sphere of radius R = 10 cm has a total charge Q = 50 nC. Find the electric field at (a) r = 5 cm (inside) and (b) r = 20 cm (outside).
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Q = 50 &times; 10<sup>&minus;9</sup> C, R = 0.10 m<br><br>
+            (a) Inside (r = 0.05 m):<br>
+            E = kQr / R&sup3; = (9 &times; 10<sup>9</sup>)(50 &times; 10<sup>&minus;9</sup>)(0.05) / (0.10)&sup3;<br>
+            E = (9 &times; 10<sup>9</sup>)(2.5 &times; 10<sup>&minus;9</sup>) / 10<sup>&minus;3</sup><br>
+            E = 22.5 / 10<sup>&minus;3</sup> = <strong>22,500 N/C = 2.25 &times; 10<sup>4</sup> N/C</strong><br><br>
+            (b) Outside (r = 0.20 m):<br>
+            E = kQ / r&sup2; = (9 &times; 10<sup>9</sup>)(50 &times; 10<sup>&minus;9</sup>) / (0.20)&sup2;<br>
+            E = 450 / 0.04 = <strong>11,250 N/C = 1.125 &times; 10<sup>4</sup> N/C</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Electric Potential -->
+    <!-- ============================== -->
+    <div class="theory-section" id="electric-potential">
+      <h2>5. Electric Potential</h2>
+
+      <h3>Definition</h3>
+      <p>
+        The electric potential at a point is defined as the work done by an external agent in bringing a unit positive charge from infinity to that point (against the electric field) without any acceleration.
+      </p>
+      <div class="formula-box">
+        V = W / q = kQ / r &nbsp; (for a point charge Q at distance r)<br>
+        SI unit: Volt (V) = J/C
+      </div>
+
+      <h3>Potential Difference</h3>
+      <p>
+        The potential difference between two points A and B is the work done per unit positive charge in moving the charge from B to A:
+      </p>
+      <div class="formula-box">
+        V<sub>A</sub> &minus; V<sub>B</sub> = W<sub>B&rarr;A</sub> / q = &minus; &int;<sub>B</sub><sup>A</sup> <strong>E</strong> &middot; d<strong>l</strong>
+      </div>
+
+      <h3>Relation Between Electric Field and Potential</h3>
+      <p>
+        The electric field is the negative gradient of the electric potential. In one dimension:
+      </p>
+      <div class="formula-box">
+        E = &minus;dV/dr<br><br>
+        In three dimensions: <strong>E</strong> = &minus;&nabla;V = &minus;(&part;V/&part;x <strong>i</strong> + &part;V/&part;y <strong>j</strong> + &part;V/&part;z <strong>k</strong>)
+      </div>
+      <p>
+        This means the electric field points in the direction of <em>decreasing</em> potential and is stronger where the potential changes more rapidly.
+      </p>
+
+      <h3>Equipotential Surfaces</h3>
+      <p>
+        An equipotential surface is a surface on which the electric potential is the same at every point. Key properties:
+      </p>
+      <ul>
+        <li>No work is done in moving a charge along an equipotential surface.</li>
+        <li>Electric field lines are always perpendicular to equipotential surfaces.</li>
+        <li>Equipotential surfaces never intersect each other.</li>
+        <li>For a point charge, equipotential surfaces are concentric spheres.</li>
+        <li>For a uniform field, they are planes perpendicular to the field.</li>
+        <li>Closer spacing of equipotential surfaces indicates a stronger electric field.</li>
+      </ul>
+
+      <h3>Potential Due to a Dipole</h3>
+      <div class="formula-box">
+        V = kp cos&theta; / r&sup2; &nbsp; (at distance r, angle &theta; from dipole axis, r &gt;&gt; a)<br><br>
+        On the axis (&theta; = 0): V = kp / r&sup2;<br>
+        On the equatorial line (&theta; = 90&deg;): V = 0
+      </div>
+
+      <h3>Potential Energy of a System of Charges</h3>
+      <div class="formula-box">
+        For two charges: U = kq<sub>1</sub>q<sub>2</sub> / r<br>
+        For three charges: U = k(q<sub>1</sub>q<sub>2</sub>/r<sub>12</sub> + q<sub>2</sub>q<sub>3</sub>/r<sub>23</sub> + q<sub>1</sub>q<sub>3</sub>/r<sub>13</sub>)
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Capacitance -->
+    <!-- ============================== -->
+    <div class="theory-section" id="capacitance">
+      <h2>6. Capacitance</h2>
+
+      <h3>Definition</h3>
+      <p>
+        A capacitor is a device that stores electric charge and energy. The capacitance of a capacitor is defined as the ratio of the charge on one of its plates to the potential difference between them.
+      </p>
+      <div class="formula-box">
+        C = Q / V<br>
+        SI unit: Farad (F) = C/V
+      </div>
+
+      <h3>Parallel Plate Capacitor</h3>
+      <p>
+        A parallel plate capacitor consists of two large parallel conducting plates, each of area A, separated by a distance d. The electric field between the plates is uniform: E = &sigma;/&epsilon;<sub>0</sub> = Q/(&epsilon;<sub>0</sub>A).
+      </p>
+      <div class="formula-box">
+        C = &epsilon;<sub>0</sub>A / d<br><br>
+        With dielectric of constant &kappa;: C = &kappa;&epsilon;<sub>0</sub>A / d
+      </div>
+
+      <h3>Capacitors in Series</h3>
+      <p>
+        When capacitors are connected in series, the charge on each capacitor is the same, but the voltage divides. The equivalent capacitance is always less than the smallest individual capacitance.
+      </p>
+      <div class="formula-box">
+        1/C<sub>eq</sub> = 1/C<sub>1</sub> + 1/C<sub>2</sub> + 1/C<sub>3</sub> + ...<br><br>
+        For two capacitors: C<sub>eq</sub> = C<sub>1</sub>C<sub>2</sub> / (C<sub>1</sub> + C<sub>2</sub>)
+      </div>
+
+      <h3>Capacitors in Parallel</h3>
+      <p>
+        When capacitors are connected in parallel, the voltage across each capacitor is the same, but the charge divides. The equivalent capacitance is the sum of individual capacitances.
+      </p>
+      <div class="formula-box">
+        C<sub>eq</sub> = C<sub>1</sub> + C<sub>2</sub> + C<sub>3</sub> + ...
+      </div>
+
+      <h3>Capacitance of Spherical and Cylindrical Capacitors</h3>
+      <div class="formula-box">
+        Isolated sphere of radius R: C = 4&pi;&epsilon;<sub>0</sub>R<br><br>
+        Spherical capacitor (radii a and b, b &gt; a): C = 4&pi;&epsilon;<sub>0</sub>ab / (b &minus; a)<br><br>
+        Cylindrical capacitor (radii a and b, length l): C = 2&pi;&epsilon;<sub>0</sub>l / ln(b/a)
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Energy in Capacitor -->
+    <!-- ============================== -->
+    <div class="theory-section" id="energy-in-capacitor">
+      <h2>7. Energy Stored in a Capacitor</h2>
+
+      <h3>Energy Formulae</h3>
+      <p>
+        The energy stored in a charged capacitor is equal to the work done in charging it. Since the voltage builds up from 0 to V as charge accumulates from 0 to Q, the average voltage during charging is V/2:
+      </p>
+      <div class="formula-box">
+        U = &frac12;CV&sup2; = &frac12;QV = Q&sup2; / (2C)
+      </div>
+
+      <h3>Energy Density</h3>
+      <p>
+        The energy is stored in the electric field between the plates. The energy per unit volume (energy density) is:
+      </p>
+      <div class="formula-box">
+        u = &frac12;&epsilon;<sub>0</sub>E&sup2;<br><br>
+        With dielectric: u = &frac12;&kappa;&epsilon;<sub>0</sub>E&sup2;
+      </div>
+
+      <h3>Effect of Dielectrics</h3>
+      <p>
+        When a dielectric slab of constant &kappa; is inserted between the plates of a capacitor:
+      </p>
+      <ul>
+        <li><strong>Battery connected (V constant):</strong> C increases by factor &kappa;, Q increases by factor &kappa;, energy U increases by factor &kappa;.</li>
+        <li><strong>Battery disconnected (Q constant):</strong> C increases by factor &kappa;, V decreases by factor &kappa;, energy U decreases by factor &kappa;.</li>
+      </ul>
+
+      <h3>Force Between Capacitor Plates</h3>
+      <p>
+        The two plates of a parallel plate capacitor attract each other. The force per unit area (electrostatic pressure) is:
+      </p>
+      <div class="formula-box">
+        Force per unit area = &sigma;&sup2; / (2&epsilon;<sub>0</sub>) = &frac12;&epsilon;<sub>0</sub>E&sup2;<br><br>
+        Total force: F = Q&sup2; / (2&epsilon;<sub>0</sub>A)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 3</div>
+        <p>
+          A parallel plate capacitor has plates of area 200 cm&sup2; separated by 2 mm. It is charged to 100 V and then disconnected from the battery. A dielectric slab of thickness 2 mm and dielectric constant &kappa; = 5 is then inserted between the plates. Find the capacitance, charge, voltage, and energy before and after inserting the dielectric.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            A = 200 &times; 10<sup>&minus;4</sup> m&sup2; = 2 &times; 10<sup>&minus;2</sup> m&sup2;, d = 2 &times; 10<sup>&minus;3</sup> m, V<sub>0</sub> = 100 V<br><br>
+            <em>Before dielectric:</em><br>
+            C<sub>0</sub> = &epsilon;<sub>0</sub>A/d = (8.854 &times; 10<sup>&minus;12</sup>)(2 &times; 10<sup>&minus;2</sup>) / (2 &times; 10<sup>&minus;3</sup>) = 8.854 &times; 10<sup>&minus;11</sup> F &asymp; <strong>88.54 pF</strong><br>
+            Q = C<sub>0</sub>V<sub>0</sub> = (88.54 &times; 10<sup>&minus;12</sup>)(100) = <strong>8.854 nC</strong><br>
+            U<sub>0</sub> = &frac12;C<sub>0</sub>V<sub>0</sub>&sup2; = &frac12;(88.54 &times; 10<sup>&minus;12</sup>)(10<sup>4</sup>) = <strong>4.427 &times; 10<sup>&minus;7</sup> J</strong><br><br>
+            <em>After dielectric (battery disconnected, Q constant):</em><br>
+            C = &kappa;C<sub>0</sub> = 5 &times; 88.54 = <strong>442.7 pF</strong><br>
+            Q remains = <strong>8.854 nC</strong><br>
+            V = Q/C = 8.854 &times; 10<sup>&minus;9</sup> / 442.7 &times; 10<sup>&minus;12</sup> = <strong>20 V</strong><br>
+            U = &frac12;QV = &frac12;(8.854 &times; 10<sup>&minus;9</sup>)(20) = <strong>8.854 &times; 10<sup>&minus;8</sup> J</strong><br><br>
+            Energy decreased by factor 5 (energy goes into pulling the dielectric in).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="../simulations/electrostatics.html" class="primary-link">Simulation</a>
+      <a href="../tests/electrostatics.html">Take a Test</a>
+      <a href="current-electricity.html">Next: Current Electricity &rarr;</a>
+      <a href="../chapters.html">&larr; All Chapters</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

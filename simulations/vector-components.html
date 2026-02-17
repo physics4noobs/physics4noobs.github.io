@@ -16,24 +16,11 @@
 </head>
 <body>
   <!-- Splash Screen -->
-  <div class="splash-screen" id="splash">
-    <div class="splash-pendulum">
-      <div class="sp-pivot"></div>
-      <div class="sp-arm">
-        <div class="sp-rod"></div>
-        <div class="sp-bob"></div>
-      </div>
-    </div>
-    <div class="splash-brand">Axomiya Engineer</div>
-  </div>
-  <script>
-    (function(){if(sessionStorage.getItem('ae-splash')){document.getElementById('splash').style.display='none';}else{sessionStorage.setItem('ae-splash','1');setTimeout(function(){document.getElementById('splash').classList.add('fade-out');setTimeout(function(){document.getElementById('splash').style.display='none';},400);},1000);}})();
-  </script>
-
-  <div class="bg-grid"></div>
+  <div class="splash-screen" id="splash"></div>
+<div class="bg-grid"></div>
   <nav class="navbar scrolled">
     <div class="nav-container">
-      <a href="../index.html" class="nav-logo">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
         <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
         <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
       </a>
@@ -49,11 +36,21 @@
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
 
   <div class="sim-page-container">
-    <div class="breadcrumb" style="justify-content: flex-start; margin-top: 20px;">
-      <a href="../index.html">Home</a><span>/</span><a href="../simulations.html">Simulations</a><span>/</span><span>Kinematics</span>
-    </div>
     <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#128208; Vector Components</h1>
     <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Kinematics</p>
 

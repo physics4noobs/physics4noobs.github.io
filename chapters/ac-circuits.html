@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alternating Current | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>Alternating Current</h1>
+      <div class="ch-meta">Grade XII &mdash; Chapter 05</div>
+      <div class="ch-nav">
+        <a href="#ac-basics">AC Basics</a>
+        <a href="#ac-through-rlc">AC Through R, L, C</a>
+        <a href="#series-lcr">Series LCR Circuit</a>
+        <a href="#resonance">Resonance</a>
+        <a href="#power-in-ac">Power in AC</a>
+        <a href="#transformers">Transformers</a>
+        <a href="#lc-oscillations">LC Oscillations</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: AC Basics -->
+    <!-- ============================== -->
+    <div class="theory-section" id="ac-basics">
+      <h2>1. AC Basics</h2>
+
+      <h3>Alternating Current and Voltage</h3>
+      <p>
+        An alternating current (AC) is one that varies sinusoidally with time, periodically reversing direction. Unlike direct current (DC) which flows in one direction, AC continuously oscillates. Most electricity supplied to homes and industries is AC.
+      </p>
+      <div class="formula-box">
+        V = V<sub>0</sub> sin(&omega;t) &nbsp; or &nbsp; V = V<sub>0</sub> sin(2&pi;ft)<br>
+        I = I<sub>0</sub> sin(&omega;t + &phi;)<br><br>
+        where V<sub>0</sub> = peak (maximum) voltage,<br>
+        I<sub>0</sub> = peak (maximum) current,<br>
+        &omega; = angular frequency = 2&pi;f,<br>
+        f = frequency (Hz), &phi; = phase difference
+      </div>
+
+      <h3>Peak, RMS, and Average Values</h3>
+      <p>
+        Since AC varies continuously, we need different ways to characterize its magnitude:
+      </p>
+      <div class="formula-box">
+        <strong>Peak value:</strong> V<sub>0</sub> (or I<sub>0</sub>) &mdash; maximum value<br><br>
+        <strong>RMS (Root Mean Square) value:</strong><br>
+        V<sub>rms</sub> = V<sub>0</sub> / &radic;2 &asymp; 0.707 V<sub>0</sub><br>
+        I<sub>rms</sub> = I<sub>0</sub> / &radic;2 &asymp; 0.707 I<sub>0</sub><br><br>
+        <strong>Average value</strong> (over half cycle):<br>
+        V<sub>avg</sub> = 2V<sub>0</sub> / &pi; &asymp; 0.637 V<sub>0</sub><br>
+        I<sub>avg</sub> = 2I<sub>0</sub> / &pi; &asymp; 0.637 I<sub>0</sub><br><br>
+        Average over full cycle = 0 (positive and negative halves cancel)
+      </div>
+      <p>
+        The RMS value is the most important measure of AC because it gives the equivalent DC value that would produce the same heating effect. When we say "230 V AC supply," we mean V<sub>rms</sub> = 230 V, so V<sub>0</sub> = 230&radic;2 &asymp; 325.3 V. Similarly, for Indian household supply at 50 Hz, &omega; = 100&pi; rad/s.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: AC Through R, L, C -->
+    <!-- ============================== -->
+    <div class="theory-section" id="ac-through-rlc">
+      <h2>2. AC Through Pure R, L, and C</h2>
+
+      <h3>AC Through a Pure Resistor</h3>
+      <p>
+        When an AC voltage V = V<sub>0</sub> sin(&omega;t) is applied across a pure resistance R, the current is:
+      </p>
+      <div class="formula-box">
+        I = V<sub>0</sub> sin(&omega;t) / R = I<sub>0</sub> sin(&omega;t)<br><br>
+        The current is <strong>in phase</strong> with the voltage (phase difference &phi; = 0).
+      </div>
+
+      <h3>AC Through a Pure Inductor</h3>
+      <p>
+        When an AC voltage is applied across a pure inductance L, the back-EMF opposes the change in current. The result is:
+      </p>
+      <div class="formula-box">
+        I = (V<sub>0</sub> / &omega;L) sin(&omega;t &minus; &pi;/2) = I<sub>0</sub> sin(&omega;t &minus; &pi;/2)<br><br>
+        Inductive reactance: X<sub>L</sub> = &omega;L = 2&pi;fL<br>
+        SI unit: Ohm (&Omega;)<br><br>
+        The current <strong>lags behind</strong> the voltage by &pi;/2 (90&deg;).
+      </div>
+      <p>
+        Inductive reactance increases with frequency: at high frequencies, an inductor strongly opposes AC. At DC (f = 0), X<sub>L</sub> = 0 and the inductor behaves like a short circuit.
+      </p>
+
+      <h3>AC Through a Pure Capacitor</h3>
+      <p>
+        When an AC voltage is applied across a pure capacitance C:
+      </p>
+      <div class="formula-box">
+        I = V<sub>0</sub>&omega;C sin(&omega;t + &pi;/2) = I<sub>0</sub> sin(&omega;t + &pi;/2)<br><br>
+        Capacitive reactance: X<sub>C</sub> = 1/(&omega;C) = 1/(2&pi;fC)<br>
+        SI unit: Ohm (&Omega;)<br><br>
+        The current <strong>leads</strong> the voltage by &pi;/2 (90&deg;).
+      </div>
+      <p>
+        Capacitive reactance decreases with frequency: at high frequencies, a capacitor easily passes AC. At DC (f = 0), X<sub>C</sub> = &infin; and the capacitor blocks current completely (open circuit).
+      </p>
+
+      <h3>Phasor Diagrams</h3>
+      <p>
+        Phasors are rotating vectors used to represent sinusoidally varying quantities. The length of the phasor represents the amplitude, and the angle with the reference axis represents the phase. Key phasor relationships:
+      </p>
+      <ul>
+        <li><strong>Resistor:</strong> V<sub>R</sub> and I are in phase (same direction).</li>
+        <li><strong>Inductor:</strong> V<sub>L</sub> leads I by 90&deg; (V<sub>L</sub> phasor is 90&deg; ahead of I).</li>
+        <li><strong>Capacitor:</strong> V<sub>C</sub> lags I by 90&deg; (V<sub>C</sub> phasor is 90&deg; behind I).</li>
+      </ul>
+      <p>
+        A useful mnemonic: <strong>"CIVIL"</strong> &mdash; in a <strong>C</strong>apacitor, <strong>I</strong> leads <strong>V</strong>; in an inductor (<strong>L</strong>), <strong>V</strong> leads <strong>I</strong>.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Series LCR Circuit -->
+    <!-- ============================== -->
+    <div class="theory-section" id="series-lcr">
+      <h2>3. Series LCR Circuit</h2>
+
+      <h3>Impedance</h3>
+      <p>
+        In a series LCR circuit (R, L, and C connected in series) driven by an AC source, the same current flows through all three elements. The voltage drops across each element are:
+      </p>
+      <ul>
+        <li>V<sub>R</sub> = IR (in phase with I)</li>
+        <li>V<sub>L</sub> = IX<sub>L</sub> (leads I by 90&deg;)</li>
+        <li>V<sub>C</sub> = IX<sub>C</sub> (lags I by 90&deg;)</li>
+      </ul>
+      <p>
+        Since V<sub>L</sub> and V<sub>C</sub> are 180&deg; apart, the net reactive voltage is |V<sub>L</sub> &minus; V<sub>C</sub>|. The total voltage (by phasor addition) is:
+      </p>
+      <div class="formula-box">
+        V = &radic;[V<sub>R</sub>&sup2; + (V<sub>L</sub> &minus; V<sub>C</sub>)&sup2;] = I &times; Z<br><br>
+        Impedance: Z = &radic;[R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;]<br><br>
+        Z = &radic;[R&sup2; + (&omega;L &minus; 1/&omega;C)&sup2;]<br>
+        SI unit: Ohm (&Omega;)
+      </div>
+
+      <h3>Phase Angle</h3>
+      <p>
+        The phase angle &phi; between the applied voltage and the current is:
+      </p>
+      <div class="formula-box">
+        tan&phi; = (X<sub>L</sub> &minus; X<sub>C</sub>) / R = (&omega;L &minus; 1/&omega;C) / R
+      </div>
+      <ul>
+        <li>If X<sub>L</sub> &gt; X<sub>C</sub>: &phi; &gt; 0, circuit is <strong>inductive</strong> (voltage leads current).</li>
+        <li>If X<sub>C</sub> &gt; X<sub>L</sub>: &phi; &lt; 0, circuit is <strong>capacitive</strong> (current leads voltage).</li>
+        <li>If X<sub>L</sub> = X<sub>C</sub>: &phi; = 0, circuit is at <strong>resonance</strong> (purely resistive).</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 1</div>
+        <p>
+          A series LCR circuit has R = 100 &Omega;, L = 0.5 H, and C = 10 &mu;F. It is connected to a 200 V, 50 Hz AC source. Find the impedance, current, and phase angle. Also find the voltage across each element.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            R = 100 &Omega;, L = 0.5 H, C = 10 &times; 10<sup>&minus;6</sup> F, V<sub>rms</sub> = 200 V, f = 50 Hz<br>
+            &omega; = 2&pi;f = 100&pi; rad/s<br><br>
+            X<sub>L</sub> = &omega;L = 100&pi; &times; 0.5 = 50&pi; &asymp; 157.08 &Omega;<br>
+            X<sub>C</sub> = 1/(&omega;C) = 1/(100&pi; &times; 10<sup>&minus;5</sup>) = 10<sup>5</sup>/(100&pi;) = 1000/&pi; &asymp; 318.31 &Omega;<br><br>
+            X<sub>L</sub> &minus; X<sub>C</sub> = 157.08 &minus; 318.31 = &minus;161.23 &Omega;<br><br>
+            Impedance: Z = &radic;(100&sup2; + 161.23&sup2;) = &radic;(10000 + 25995) = &radic;35995 &asymp; <strong>189.99 &Omega;</strong><br><br>
+            Current: I<sub>rms</sub> = V<sub>rms</sub>/Z = 200/189.99 &asymp; <strong>1.053 A</strong><br><br>
+            Phase angle: tan&phi; = &minus;161.23/100 = &minus;1.6123<br>
+            &phi; = tan<sup>&minus;1</sup>(&minus;1.6123) &asymp; <strong>&minus;58.2&deg;</strong> (capacitive &mdash; current leads voltage)<br><br>
+            Voltages:<br>
+            V<sub>R</sub> = IR = 1.053 &times; 100 = <strong>105.3 V</strong><br>
+            V<sub>L</sub> = IX<sub>L</sub> = 1.053 &times; 157.08 = <strong>165.4 V</strong><br>
+            V<sub>C</sub> = IX<sub>C</sub> = 1.053 &times; 318.31 = <strong>335.2 V</strong><br><br>
+            Note: V<sub>L</sub> and V<sub>C</sub> can individually exceed the source voltage!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Resonance -->
+    <!-- ============================== -->
+    <div class="theory-section" id="resonance">
+      <h2>4. Resonance in Series LCR Circuit</h2>
+
+      <h3>Resonance Condition</h3>
+      <p>
+        Resonance occurs when the inductive reactance equals the capacitive reactance: X<sub>L</sub> = X<sub>C</sub>. At this condition, the impedance is minimum (Z = R), the current is maximum (I = V/R), and the circuit behaves as a purely resistive circuit.
+      </p>
+      <div class="formula-box">
+        At resonance: &omega;L = 1/(&omega;C)<br><br>
+        Resonant frequency: &omega;<sub>0</sub> = 1 / &radic;(LC)<br>
+        f<sub>res</sub> = 1 / (2&pi;&radic;LC)<br><br>
+        At resonance: Z = R, &nbsp; I<sub>max</sub> = V/R, &nbsp; &phi; = 0
+      </div>
+
+      <h3>Quality Factor (Q-factor)</h3>
+      <p>
+        The quality factor measures the sharpness of resonance. A high Q-factor means a narrow, sharp resonance peak (very selective circuit), while a low Q-factor means a broad, flat resonance (less selective).
+      </p>
+      <div class="formula-box">
+        Q = &omega;<sub>0</sub>L / R = 1 / (&omega;<sub>0</sub>CR) = (1/R)&radic;(L/C)<br><br>
+        Q = V<sub>L</sub>/V (at resonance) = V<sub>C</sub>/V (at resonance)
+      </div>
+      <p>
+        At resonance, the voltage across L or C can be Q times the source voltage. This is called <strong>voltage magnification</strong>. For high-Q circuits, this can be dangerously large.
+      </p>
+
+      <h3>Bandwidth and Sharpness</h3>
+      <p>
+        The bandwidth of a resonant circuit is the range of frequencies over which the current is at least 1/&radic;2 of its maximum value (half-power bandwidth):
+      </p>
+      <div class="formula-box">
+        Bandwidth: &Delta;&omega; = R / L &nbsp; or &nbsp; &Delta;f = R / (2&pi;L)<br><br>
+        Q = &omega;<sub>0</sub> / &Delta;&omega; = f<sub>0</sub> / &Delta;f
+      </div>
+      <p>
+        A high Q-factor implies a narrow bandwidth (sharp resonance), which is desirable in radio tuning circuits for selecting a specific station.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Power in AC -->
+    <!-- ============================== -->
+    <div class="theory-section" id="power-in-ac">
+      <h2>5. Power in AC Circuits</h2>
+
+      <h3>Instantaneous and Average Power</h3>
+      <p>
+        The instantaneous power in an AC circuit is P(t) = V(t) &times; I(t). Since both V and I are sinusoidal, the power fluctuates. The quantity of practical interest is the <strong>average power</strong> over one complete cycle:
+      </p>
+      <div class="formula-box">
+        P<sub>avg</sub> = V<sub>rms</sub> I<sub>rms</sub> cos&phi;<br><br>
+        where cos&phi; = R/Z is the <strong>power factor</strong>
+      </div>
+
+      <h3>Power Factor</h3>
+      <p>
+        The power factor cos&phi; determines what fraction of the apparent power (V<sub>rms</sub>I<sub>rms</sub>) is actually dissipated as useful power:
+      </p>
+      <div class="formula-box">
+        cos&phi; = R / Z = R / &radic;[R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;]
+      </div>
+      <ul>
+        <li><strong>Pure resistor:</strong> &phi; = 0, cos&phi; = 1, P = V<sub>rms</sub>I<sub>rms</sub> (maximum power dissipation).</li>
+        <li><strong>Pure inductor or capacitor:</strong> &phi; = &plusmn;90&deg;, cos&phi; = 0, P = 0 (no power dissipation).</li>
+        <li><strong>At resonance:</strong> cos&phi; = 1, P = V&sup2;<sub>rms</sub>/R (maximum power for given source).</li>
+        <li>A low power factor in industrial AC circuits means higher current for the same real power, leading to greater transmission losses. Power factor correction (adding capacitors) is therefore important.</li>
+      </ul>
+
+      <h3>Wattless Current</h3>
+      <p>
+        The component of current that does not contribute to power dissipation is called the wattless (or reactive) current. It oscillates energy back and forth between the source and the reactive elements (L and C).
+      </p>
+      <div class="formula-box">
+        Wattless current = I<sub>rms</sub> sin&phi;<br>
+        Power (active) current = I<sub>rms</sub> cos&phi;<br><br>
+        Apparent power = V<sub>rms</sub>I<sub>rms</sub> (unit: VA)<br>
+        Real power = V<sub>rms</sub>I<sub>rms</sub> cos&phi; (unit: W)<br>
+        Reactive power = V<sub>rms</sub>I<sub>rms</sub> sin&phi; (unit: VAR)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 2</div>
+        <p>
+          A series LCR circuit with R = 50 &Omega; is at resonance with a 100 V RMS AC source. The quality factor is Q = 10. Find the RMS current, the power dissipated, the voltage across the inductor, and the power factor.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            At resonance: Z = R = 50 &Omega;, V<sub>rms</sub> = 100 V, Q = 10<br><br>
+            Current: I<sub>rms</sub> = V<sub>rms</sub>/R = 100/50 = <strong>2 A</strong><br><br>
+            Power dissipated: P = V<sub>rms</sub>I<sub>rms</sub>cos&phi; = V&sup2;<sub>rms</sub>/R = (100)&sup2;/50 = <strong>200 W</strong><br>
+            (At resonance, cos&phi; = 1)<br><br>
+            Voltage across inductor: V<sub>L</sub> = Q &times; V<sub>rms</sub> = 10 &times; 100 = <strong>1000 V</strong><br>
+            (Similarly V<sub>C</sub> = 1000 V, but 180&deg; out of phase with V<sub>L</sub>, so they cancel)<br><br>
+            Power factor: cos&phi; = <strong>1</strong> (at resonance)
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Transformers -->
+    <!-- ============================== -->
+    <div class="theory-section" id="transformers">
+      <h2>6. Transformers</h2>
+
+      <h3>Principle</h3>
+      <p>
+        A transformer works on the principle of mutual induction. It consists of two coils (primary and secondary) wound on the same soft iron core. An alternating current in the primary coil creates a changing magnetic flux in the core, which induces an alternating EMF in the secondary coil.
+      </p>
+
+      <h3>Transformer Equation</h3>
+      <div class="formula-box">
+        V<sub>s</sub> / V<sub>p</sub> = N<sub>s</sub> / N<sub>p</sub> = k (turns ratio)<br><br>
+        For an ideal transformer (100% efficient):<br>
+        V<sub>p</sub>I<sub>p</sub> = V<sub>s</sub>I<sub>s</sub> &nbsp; (power in = power out)<br>
+        I<sub>s</sub> / I<sub>p</sub> = N<sub>p</sub> / N<sub>s</sub> = 1/k
+      </div>
+
+      <h3>Step-Up and Step-Down Transformers</h3>
+      <ul>
+        <li><strong>Step-up transformer</strong> (k &gt; 1): N<sub>s</sub> &gt; N<sub>p</sub>, V<sub>s</sub> &gt; V<sub>p</sub>, I<sub>s</sub> &lt; I<sub>p</sub>. Increases voltage, decreases current.</li>
+        <li><strong>Step-down transformer</strong> (k &lt; 1): N<sub>s</sub> &lt; N<sub>p</sub>, V<sub>s</sub> &lt; V<sub>p</sub>, I<sub>s</sub> &gt; I<sub>p</sub>. Decreases voltage, increases current.</li>
+      </ul>
+
+      <h3>Energy Losses in Transformers</h3>
+      <p>
+        Real transformers are not 100% efficient. The main sources of energy loss are:
+      </p>
+      <ul>
+        <li><strong>Copper losses (I&sup2;R losses):</strong> Heating of the windings due to their resistance. Minimized by using thick copper wires.</li>
+        <li><strong>Iron losses (core losses):</strong> These include:
+          <ul>
+            <li><strong>Eddy current losses:</strong> Eddy currents in the core dissipate energy. Minimized by using a laminated core.</li>
+            <li><strong>Hysteresis losses:</strong> Energy lost in repeatedly magnetizing and demagnetizing the core. Minimized by using soft iron or special alloys with narrow hysteresis loops.</li>
+          </ul>
+        </li>
+        <li><strong>Flux leakage:</strong> Not all flux from the primary links with the secondary. Minimized by winding coils tightly over each other and using a closed core.</li>
+      </ul>
+      <div class="formula-box">
+        Efficiency: &eta; = P<sub>output</sub> / P<sub>input</sub> = V<sub>s</sub>I<sub>s</sub> / (V<sub>p</sub>I<sub>p</sub>)<br>
+        Typical large power transformers: &eta; &gt; 95%
+      </div>
+
+      <h3>Long-Distance Power Transmission</h3>
+      <p>
+        Transformers are crucial for efficient long-distance power transmission. Power is transmitted at high voltage (and correspondingly low current) to minimize I&sup2;R losses in the transmission lines. At the generating station, a step-up transformer increases the voltage; at the consumer end, step-down transformers reduce it to safe levels.
+      </p>
+      <div class="formula-box">
+        Power loss in transmission: P<sub>loss</sub> = I&sup2;R = (P/V)&sup2; &times; R<br><br>
+        Doubling the transmission voltage reduces the power loss by a factor of 4.
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: LC Oscillations -->
+    <!-- ============================== -->
+    <div class="theory-section" id="lc-oscillations">
+      <h2>7. LC Oscillations</h2>
+
+      <h3>Principle</h3>
+      <p>
+        When a charged capacitor is connected to an inductor, the charge oscillates back and forth between the capacitor plates, producing an oscillating current. This is an electromagnetic analogue of a mechanical spring-mass system.
+      </p>
+
+      <h3>Charge Oscillation</h3>
+      <p>
+        If the capacitor is initially charged to Q<sub>0</sub> and then connected to an inductor L, the charge on the capacitor at time t is:
+      </p>
+      <div class="formula-box">
+        q(t) = Q<sub>0</sub> cos(&omega;t)<br><br>
+        where &omega; = 1 / &radic;(LC)<br>
+        Frequency: f = 1 / (2&pi;&radic;LC)<br>
+        Time period: T = 2&pi;&radic;(LC)
+      </div>
+
+      <h3>Current</h3>
+      <div class="formula-box">
+        I(t) = dq/dt = &minus;Q<sub>0</sub>&omega; sin(&omega;t) = &minus;I<sub>0</sub> sin(&omega;t)<br><br>
+        where I<sub>0</sub> = Q<sub>0</sub>&omega; = Q<sub>0</sub> / &radic;(LC) = peak current
+      </div>
+
+      <h3>Energy Exchange</h3>
+      <p>
+        Energy continuously oscillates between the electric field of the capacitor and the magnetic field of the inductor. At any instant:
+      </p>
+      <div class="formula-box">
+        Energy in capacitor: U<sub>E</sub> = q&sup2; / (2C) = Q<sub>0</sub>&sup2; cos&sup2;(&omega;t) / (2C)<br><br>
+        Energy in inductor: U<sub>B</sub> = &frac12;LI&sup2; = Q<sub>0</sub>&sup2; sin&sup2;(&omega;t) / (2C)<br><br>
+        Total energy: U = U<sub>E</sub> + U<sub>B</sub> = Q<sub>0</sub>&sup2; / (2C) = constant
+      </div>
+      <ul>
+        <li>When the capacitor is fully charged (q = Q<sub>0</sub>): all energy is in the electric field (U<sub>E</sub> = max, U<sub>B</sub> = 0, I = 0).</li>
+        <li>When the capacitor is fully discharged (q = 0): all energy is in the magnetic field (U<sub>E</sub> = 0, U<sub>B</sub> = max, I = I<sub>0</sub>).</li>
+        <li>The total energy of the system remains constant (in the ideal case with no resistance).</li>
+      </ul>
+
+      <h3>Analogy with Mechanical Oscillations</h3>
+      <p>
+        The LC oscillation is mathematically identical to simple harmonic motion of a spring-mass system. The correspondences are:
+      </p>
+      <ul>
+        <li>Charge q &harr; Displacement x</li>
+        <li>Current I &harr; Velocity v</li>
+        <li>Inductance L &harr; Mass m</li>
+        <li>1/C &harr; Spring constant k</li>
+        <li>Magnetic energy &frac12;LI&sup2; &harr; Kinetic energy &frac12;mv&sup2;</li>
+        <li>Electric energy q&sup2;/(2C) &harr; Potential energy &frac12;kx&sup2;</li>
+      </ul>
+
+      <h3>Damped Oscillations</h3>
+      <p>
+        In a real circuit, the resistance R of the coil and connecting wires causes energy dissipation (as I&sup2;R heating), and the oscillations gradually die out. This is analogous to a damped harmonic oscillator. The charge decays as:
+      </p>
+      <div class="formula-box">
+        q(t) = Q<sub>0</sub> e<sup>&minus;Rt/(2L)</sup> cos(&omega;'t)<br><br>
+        where &omega;' = &radic;(1/LC &minus; R&sup2;/4L&sup2;)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 3</div>
+        <p>
+          An LC circuit has L = 20 mH and C = 50 &mu;F. The capacitor is initially charged to 100 &mu;C. Find the resonant frequency, peak current, and the total energy of the circuit.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            L = 20 &times; 10<sup>&minus;3</sup> H, C = 50 &times; 10<sup>&minus;6</sup> F, Q<sub>0</sub> = 100 &times; 10<sup>&minus;6</sup> C<br><br>
+            &omega; = 1/&radic;(LC) = 1/&radic;(20 &times; 10<sup>&minus;3</sup> &times; 50 &times; 10<sup>&minus;6</sup>)<br>
+            &omega; = 1/&radic;(10<sup>&minus;6</sup>) = 1/10<sup>&minus;3</sup> = <strong>1000 rad/s</strong><br><br>
+            Frequency: f = &omega;/(2&pi;) = 1000/(2&pi;) &asymp; <strong>159.15 Hz</strong><br><br>
+            Peak current: I<sub>0</sub> = Q<sub>0</sub>&omega; = (100 &times; 10<sup>&minus;6</sup>)(1000) = <strong>0.1 A = 100 mA</strong><br><br>
+            Total energy: U = Q<sub>0</sub>&sup2;/(2C) = (100 &times; 10<sup>&minus;6</sup>)&sup2; / (2 &times; 50 &times; 10<sup>&minus;6</sup>)<br>
+            U = 10<sup>&minus;8</sup> / (10<sup>&minus;4</sup>) = <strong>10<sup>&minus;4</sup> J = 0.1 mJ</strong><br><br>
+            Verification: &frac12;LI<sub>0</sub>&sup2; = &frac12;(0.02)(0.01) = 10<sup>&minus;4</sup> J (matches)
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="../simulations/ac-circuits.html" class="primary-link">Simulation</a>
+      <a href="../tests/ac-circuits.html">Take a Test</a>
+      <a href="em-waves.html">Next: Electromagnetic Waves &rarr;</a>
+      <a href="emi.html">&larr; Prev: Electromagnetic Induction</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

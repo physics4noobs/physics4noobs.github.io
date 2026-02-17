@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravitation DTS | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Gravitation &mdash; Daily Test Series</h1>
+      <div class="test-meta">Grade XI &bull; 15 Questions &bull; 90 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">90:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">Two particles of masses 10 kg and 40 kg are separated by 1 m. The gravitational force between them is (G = 6.67 &times; 10<sup>&minus;11</sup> N&middot;m&sup2;/kg&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2.668 &times; 10<sup>&minus;8</sup> N</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 6.67 &times; 10<sup>&minus;11</sup> N</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2.668 &times; 10<sup>&minus;8</sup> N</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 6.67 &times; 10<sup>&minus;9</sup> N</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> F = Gm<sub>1</sub>m<sub>2</sub>/r&sup2; = 6.67 &times; 10<sup>&minus;11</sup> &times; 10 &times; 40 / 1&sup2; = 6.67 &times; 400 &times; 10<sup>&minus;11</sup> = 2.668 &times; 10<sup>&minus;8</sup> N.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">The acceleration due to gravity at a height equal to the radius of the Earth (R) above its surface is (g<sub>0</sub> = acceleration at surface):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> g<sub>0</sub>/2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> g<sub>0</sub>/4</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> g<sub>0</sub>/8</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> g<sub>0</sub>/16</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> g at height h: g' = g<sub>0</sub>R&sup2;/(R + h)&sup2;. For h = R: g' = g<sub>0</sub>R&sup2;/(2R)&sup2; = g<sub>0</sub>/4.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">The escape velocity from the surface of the Earth is approximately (R = 6400 km, g = 9.8 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 11.2 km/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 7.9 km/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 3.2 km/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 22.4 km/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> v<sub>e</sub> = &radic;(2gR) = &radic;(2 &times; 9.8 &times; 6.4 &times; 10<sup>6</sup>) = &radic;(1.2544 &times; 10<sup>8</sup>) &approx; 11.2 &times; 10<sup>3</sup> m/s = 11.2 km/s.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">The orbital velocity of a satellite close to the Earth's surface is approximately:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 11.2 km/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 3.1 km/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 5.6 km/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 7.9 km/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> v<sub>o</sub> = &radic;(gR) = &radic;(9.8 &times; 6.4 &times; 10<sup>6</sup>) &approx; 7.9 &times; 10<sup>3</sup> m/s = 7.9 km/s. Also v<sub>o</sub> = v<sub>e</sub>/&radic;2 = 11.2/1.414 &approx; 7.9 km/s.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">The gravitational potential energy of a mass m at a distance r from the centre of the Earth (r &gt; R) is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> GMm/r</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &minus;GMm/r</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &minus;GMm/r&sup2;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> GMm/r&sup2;</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The gravitational PE is U = &minus;GMm/r. The negative sign indicates that the system is bound.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">If the radius of the Earth were to shrink by 2% keeping mass the same, the value of g on the surface would:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Decrease by 2%</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Decrease by 4%</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Increase by 4%</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Increase by 2%</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> g = GM/R&sup2;. So &Delta;g/g = &minus;2(&Delta;R/R). If R decreases by 2%, &Delta;R/R = &minus;0.02, then &Delta;g/g = &minus;2(&minus;0.02) = +0.04 = 4% increase.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">The time period of a geostationary satellite is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 24 hours</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 12 hours</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 48 hours</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 6 hours</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> A geostationary satellite orbits with the same angular velocity as the Earth's rotation, so its time period is 24 hours.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">The value of g at a depth d below the surface of the Earth (uniform density assumed) is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> g<sub>0</sub>(1 + d/R)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> g<sub>0</sub>R&sup2;/(R &minus; d)&sup2;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> g<sub>0</sub>d/R</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> g<sub>0</sub>(1 &minus; d/R)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Inside the Earth, g' = g<sub>0</sub>(1 &minus; d/R). At the centre (d = R), g = 0, consistent with this formula.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">A planet has twice the mass and twice the radius of the Earth. The escape velocity from this planet compared to Earth is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2 times</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Same</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &radic;2 times</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Half</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> v<sub>e</sub> = &radic;(2GM/R). For the planet: v' = &radic;(2G(2M)/(2R)) = &radic;(2GM/R) = v<sub>e</sub>. The escape velocity is the same.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">According to Kepler's third law, if the orbital radius of a planet is doubled, its time period becomes:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2 times</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 4 times</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2&radic;2 times</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 8 times</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> T&sup2; &prop; r&sup3;. If r' = 2r, then T'&sup2; = T&sup2; &times; (2)&sup3; = 8T&sup2;, so T' = T&radic;8 = 2&radic;2 T.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 11</div>
+      <div class="q-text">The total energy of a satellite of mass m in a circular orbit of radius r around the Earth (mass M) is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &minus;GMm/(2r)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &minus;GMm/r</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> GMm/(2r)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> GMm/r</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> KE = GMm/(2r), PE = &minus;GMm/r. Total energy E = KE + PE = GMm/(2r) &minus; GMm/r = &minus;GMm/(2r).</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 12</div>
+      <div class="q-text">The gravitational field intensity at the centre of a uniform spherical shell is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> GM/R&sup2;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Zero</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> GM/2R&sup2;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2GM/R&sup2;</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By the shell theorem, the gravitational field inside a uniform spherical shell is zero everywhere, including at the centre.</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 13</div>
+      <div class="q-text">If the distance between two masses is tripled, the gravitational force between them becomes:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1/3 of the original</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 3 times the original</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1/6 of the original</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1/9 of the original</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> F &prop; 1/r&sup2;. If r becomes 3r, F' = F/(3)&sup2; = F/9.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 14</div>
+      <div class="q-text">The minimum energy required to launch a body of mass m from the surface of the Earth to infinity is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> mgR</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2mgR</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> mgR/2</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> mg/R</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Energy = GMm/R. Since g = GM/R&sup2;, GM = gR&sup2;. So energy = gR&sup2;m/R = mgR.</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 15</div>
+      <div class="q-text">Two satellites A and B orbit the Earth at radii r and 4r respectively. The ratio of their orbital speeds v<sub>A</sub>/v<sub>B</sub> is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1 : 2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 4 : 1</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2 : 1</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1 : 4</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Orbital speed v = &radic;(GM/r). So v<sub>A</sub>/v<sub>B</sub> = &radic;(r<sub>B</sub>/r<sub>A</sub>) = &radic;(4r/r) = 2. The ratio is 2 : 1.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    var totalSeconds = 90 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>

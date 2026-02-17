@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Physics | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>Modern Physics</h1>
+      <div class="ch-meta">Grade XII &mdash; Chapter 09</div>
+      <div class="ch-nav">
+        <a href="#photoelectric-effect">Photoelectric Effect</a>
+        <a href="#wave-particle-duality">Wave-Particle Duality</a>
+        <a href="#bohrs-model">Bohr's Atomic Model</a>
+        <a href="#x-rays">X-Rays</a>
+        <a href="#nuclear-physics">Nuclear Physics</a>
+        <a href="#radioactivity">Radioactivity</a>
+        <a href="#nuclear-reactions">Nuclear Reactions</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Photoelectric Effect -->
+    <!-- ============================== -->
+    <div class="theory-section" id="photoelectric-effect">
+      <h2>1. Photoelectric Effect</h2>
+
+      <h3>The Phenomenon</h3>
+      <p>
+        The <strong>photoelectric effect</strong> is the emission of electrons from a metal surface when light of sufficiently high frequency falls on it. The emitted electrons are called <strong>photoelectrons</strong>. This phenomenon was first observed by Heinrich Hertz in 1887 and was explained by Albert Einstein in 1905, for which he received the Nobel Prize.
+      </p>
+
+      <h3>Experimental Observations</h3>
+      <ul>
+        <li>For a given metal, there exists a minimum frequency of light below which no photoelectrons are emitted, regardless of the intensity of light. This is called the <strong>threshold frequency</strong> (f<sub>0</sub>).</li>
+        <li>The maximum kinetic energy of the emitted photoelectrons depends on the frequency of incident light, not on its intensity.</li>
+        <li>Increasing the intensity of light (above the threshold frequency) increases the number of photoelectrons (photocurrent) but not their maximum kinetic energy.</li>
+        <li>The photoelectric emission is instantaneous &mdash; there is no observable time lag (less than 10<sup>&minus;9</sup> s).</li>
+      </ul>
+
+      <h3>Einstein's Photoelectric Equation</h3>
+      <p>
+        Einstein explained the photoelectric effect using the quantum (photon) theory of light. Each photon has energy E = hf, where h is Planck's constant. When a photon strikes a metal surface, it can transfer all its energy to a single electron. Part of this energy is used to overcome the binding energy of the electron (called the <strong>work function</strong>, &phi;), and the rest appears as kinetic energy of the emitted electron.
+      </p>
+      <div class="formula-box">
+        KE<sub>max</sub> = hf &minus; &phi;<br><br>
+        where:<br>
+        KE<sub>max</sub> = maximum kinetic energy of the photoelectron<br>
+        h = Planck's constant = 6.626 &times; 10<sup>&minus;34</sup> J&middot;s<br>
+        f = frequency of incident light<br>
+        &phi; = work function of the metal = hf<sub>0</sub><br><br>
+        Also: KE<sub>max</sub> = h(f &minus; f<sub>0</sub>)
+      </div>
+
+      <h3>Stopping Potential</h3>
+      <p>
+        The <strong>stopping potential</strong> (V<sub>0</sub>) is the minimum negative potential applied to the collector plate that just stops the most energetic photoelectrons.
+      </p>
+      <div class="formula-box">
+        eV<sub>0</sub> = KE<sub>max</sub> = hf &minus; &phi;<br><br>
+        V<sub>0</sub> = (h/e)f &minus; &phi;/e
+      </div>
+
+      <h3>Important Graphs</h3>
+      <p>
+        <strong>V<sub>0</sub> vs f graph:</strong> A straight line with slope h/e and x-intercept at f<sub>0</sub> (threshold frequency). The y-intercept is &minus;&phi;/e. For different metals, the lines are parallel (same slope h/e) but have different intercepts (different work functions).
+      </p>
+      <p>
+        <strong>Photocurrent (I) vs voltage (V) graph:</strong> At zero voltage, there is some photocurrent. As the collector voltage increases (positive), the current increases and saturates at the <strong>saturation current</strong> (all emitted electrons reach the collector). As the voltage becomes negative (retarding potential), the current decreases and becomes zero at V = &minus;V<sub>0</sub>. Increasing intensity increases the saturation current but does not change V<sub>0</sub>.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 1</div>
+        <p>
+          Light of frequency 6 &times; 10<sup>14</sup> Hz is incident on a metal surface whose work function is 2.0 eV. Find the maximum kinetic energy and the stopping potential of the emitted photoelectrons. (h = 6.63 &times; 10<sup>&minus;34</sup> J&middot;s, 1 eV = 1.6 &times; 10<sup>&minus;19</sup> J)
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Energy of incident photon:<br>
+            E = hf = 6.63 &times; 10<sup>&minus;34</sup> &times; 6 &times; 10<sup>14</sup> = 3.978 &times; 10<sup>&minus;19</sup> J<br>
+            E = 3.978 &times; 10<sup>&minus;19</sup> / 1.6 &times; 10<sup>&minus;19</sup> = 2.486 eV &asymp; 2.49 eV<br><br>
+            Maximum kinetic energy:<br>
+            KE<sub>max</sub> = hf &minus; &phi; = 2.49 &minus; 2.0 = <strong>0.49 eV</strong><br><br>
+            Stopping potential:<br>
+            eV<sub>0</sub> = KE<sub>max</sub><br>
+            V<sub>0</sub> = KE<sub>max</sub>/e = 0.49 eV / e = <strong>0.49 V</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Wave-Particle Duality -->
+    <!-- ============================== -->
+    <div class="theory-section" id="wave-particle-duality">
+      <h2>2. Wave-Particle Duality</h2>
+
+      <h3>de Broglie Hypothesis</h3>
+      <p>
+        In 1924, Louis de Broglie proposed that just as light exhibits both wave and particle properties, <strong>all matter also has a wave nature</strong>. He postulated that every moving particle has an associated wave called a <strong>matter wave</strong> or <strong>de Broglie wave</strong>. The wavelength of this wave is inversely proportional to the momentum of the particle.
+      </p>
+      <div class="formula-box">
+        de Broglie wavelength: &lambda; = h / p = h / (mv)<br><br>
+        where:<br>
+        &lambda; = de Broglie wavelength<br>
+        h = Planck's constant<br>
+        p = momentum of the particle<br>
+        m = mass of the particle<br>
+        v = velocity of the particle
+      </div>
+
+      <h3>de Broglie Wavelength in Terms of Energy</h3>
+      <p>
+        For a particle with kinetic energy K:
+      </p>
+      <div class="formula-box">
+        &lambda; = h / &radic;(2mK)<br><br>
+        For an electron accelerated through potential V:<br>
+        K = eV, so &lambda; = h / &radic;(2meV)<br><br>
+        Numerically for electrons: &lambda; = 1.226 / &radic;V nm &nbsp; (V in volts)
+      </div>
+      <p>
+        For a particle in thermal equilibrium at temperature T:
+      </p>
+      <div class="formula-box">
+        &lambda; = h / &radic;(3mkT) &nbsp; (using average KE = 3kT/2)
+      </div>
+
+      <h3>Davisson-Germer Experiment</h3>
+      <p>
+        In 1927, Clinton Davisson and Lester Germer experimentally confirmed de Broglie's hypothesis by demonstrating the <strong>diffraction of electrons</strong>. They directed a beam of electrons at a nickel crystal and observed that the reflected electrons showed an intensity pattern consistent with diffraction &mdash; a phenomenon exclusive to waves. The measured wavelength matched the de Broglie prediction.
+      </p>
+      <ul>
+        <li>Electrons accelerated through 54 V produced a diffraction peak at 50&deg;.</li>
+        <li>The measured wavelength was 1.65 A, closely matching the de Broglie prediction of &lambda; = 1.226/&radic;54 = 1.67 A.</li>
+        <li>This experiment proved that particles like electrons exhibit wave behaviour, establishing wave-particle duality as a fundamental principle of quantum mechanics.</li>
+      </ul>
+
+      <h3>Key Points about Matter Waves</h3>
+      <ul>
+        <li>Matter waves are not electromagnetic waves. They are probability waves (quantum mechanical waves).</li>
+        <li>The de Broglie wavelength is significant only for microscopic particles (electrons, protons, etc.). For macroscopic objects, &lambda; is negligibly small.</li>
+        <li>Heavier and faster particles have shorter de Broglie wavelengths.</li>
+        <li>The wave nature of electrons is used in electron microscopes, which have much higher resolution than optical microscopes.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Bohr's Atomic Model -->
+    <!-- ============================== -->
+    <div class="theory-section" id="bohrs-model">
+      <h2>3. Bohr's Atomic Model</h2>
+
+      <h3>Postulates</h3>
+      <p>
+        Niels Bohr proposed his model of the hydrogen atom in 1913 to explain the discrete line spectrum of hydrogen. The key postulates are:
+      </p>
+      <ul>
+        <li><strong>Quantized orbits:</strong> Electrons revolve around the nucleus in certain definite circular orbits called <strong>stationary orbits</strong> (or allowed orbits) without radiating energy.</li>
+        <li><strong>Angular momentum quantization:</strong> The angular momentum of the electron in a stationary orbit is an integral multiple of h/(2&pi;): L = mvr = nh/(2&pi;), where n = 1, 2, 3, ... is the principal quantum number.</li>
+        <li><strong>Energy transitions:</strong> An electron can jump from one orbit to another. When it jumps from a higher energy orbit (n<sub>2</sub>) to a lower energy orbit (n<sub>1</sub>), it emits a photon of energy hf = E<sub>n2</sub> &minus; E<sub>n1</sub>. When it absorbs a photon of the right energy, it jumps to a higher orbit.</li>
+      </ul>
+
+      <h3>Results for Hydrogen-like Atoms</h3>
+      <p>
+        For a hydrogen-like atom with atomic number Z (single electron orbiting a nucleus of charge Ze):
+      </p>
+      <div class="formula-box">
+        Radius of n-th orbit: r<sub>n</sub> = n&sup2; a<sub>0</sub> / Z<br>
+        where a<sub>0</sub> = 0.529 A = Bohr radius (radius of first orbit of hydrogen)<br><br>
+        Velocity in n-th orbit: v<sub>n</sub> = v<sub>1</sub> Z / n<br>
+        where v<sub>1</sub> = 2.18 &times; 10<sup>6</sup> m/s = c/137<br><br>
+        Energy of n-th orbit: E<sub>n</sub> = &minus;13.6 Z&sup2; / n&sup2; eV<br><br>
+        Kinetic energy: KE<sub>n</sub> = +13.6 Z&sup2; / n&sup2; eV<br>
+        Potential energy: PE<sub>n</sub> = &minus;27.2 Z&sup2; / n&sup2; eV<br>
+        Total energy: E<sub>n</sub> = &minus;13.6 Z&sup2; / n&sup2; eV<br><br>
+        Note: E<sub>n</sub> = &minus;KE<sub>n</sub> = PE<sub>n</sub>/2 (virial theorem)
+      </div>
+
+      <h3>Spectral Series of Hydrogen</h3>
+      <p>
+        When an electron transitions from orbit n<sub>2</sub> to n<sub>1</sub>, it emits a photon with wavelength given by the Rydberg formula:
+      </p>
+      <div class="formula-box">
+        1/&lambda; = RZ&sup2; [1/n<sub>1</sub>&sup2; &minus; 1/n<sub>2</sub>&sup2;]<br><br>
+        where R = 1.097 &times; 10<sup>7</sup> m<sup>&minus;1</sup> = Rydberg constant
+      </div>
+      <p>
+        The different series are named after their discoverers:
+      </p>
+      <ul>
+        <li><strong>Lyman series:</strong> n<sub>1</sub> = 1, n<sub>2</sub> = 2, 3, 4, ... (ultraviolet region)</li>
+        <li><strong>Balmer series:</strong> n<sub>1</sub> = 2, n<sub>2</sub> = 3, 4, 5, ... (visible region, partially UV)</li>
+        <li><strong>Paschen series:</strong> n<sub>1</sub> = 3, n<sub>2</sub> = 4, 5, 6, ... (infrared region)</li>
+        <li><strong>Brackett series:</strong> n<sub>1</sub> = 4, n<sub>2</sub> = 5, 6, 7, ... (infrared region)</li>
+        <li><strong>Pfund series:</strong> n<sub>1</sub> = 5, n<sub>2</sub> = 6, 7, 8, ... (far infrared region)</li>
+      </ul>
+      <p>
+        The number of spectral lines emitted when an electron falls from level n to the ground state is n(n&minus;1)/2.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 2</div>
+        <p>
+          Calculate the wavelength of the first line of the Balmer series of hydrogen. (R = 1.097 &times; 10<sup>7</sup> m<sup>&minus;1</sup>)
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            For the Balmer series: n<sub>1</sub> = 2. The first line corresponds to n<sub>2</sub> = 3.<br><br>
+            1/&lambda; = R [1/n<sub>1</sub>&sup2; &minus; 1/n<sub>2</sub>&sup2;] = 1.097 &times; 10<sup>7</sup> [1/4 &minus; 1/9]<br>
+            1/&lambda; = 1.097 &times; 10<sup>7</sup> &times; (9 &minus; 4)/36<br>
+            1/&lambda; = 1.097 &times; 10<sup>7</sup> &times; 5/36<br>
+            1/&lambda; = 1.524 &times; 10<sup>6</sup> m<sup>&minus;1</sup><br><br>
+            &lambda; = 1 / (1.524 &times; 10<sup>6</sup>) = 6.56 &times; 10<sup>&minus;7</sup> m = <strong>656 nm</strong><br><br>
+            This is the H-alpha line, which lies in the red part of the visible spectrum.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: X-Rays -->
+    <!-- ============================== -->
+    <div class="theory-section" id="x-rays">
+      <h2>4. X-Rays</h2>
+
+      <h3>Production of X-Rays</h3>
+      <p>
+        X-rays are produced when high-energy electrons (accelerated through a high voltage V, typically 30&ndash;100 kV) strike a heavy metal target (such as tungsten, molybdenum, or copper) in a <strong>Coolidge tube</strong>. The Coolidge tube consists of:
+      </p>
+      <ul>
+        <li>A heated filament (cathode) that emits electrons by thermionic emission.</li>
+        <li>A high potential difference between cathode and anode to accelerate the electrons.</li>
+        <li>A heavy metal target (anode) that the electrons strike.</li>
+        <li>A vacuum enclosure to prevent electron scattering by air molecules.</li>
+      </ul>
+
+      <h3>Continuous X-Ray Spectrum (Bremsstrahlung)</h3>
+      <p>
+        When a fast-moving electron is decelerated by the electric field of a target nucleus, it loses kinetic energy, which is emitted as X-ray photons. This produces a <strong>continuous spectrum</strong> of X-rays with all wavelengths above a certain minimum value. The minimum wavelength (maximum frequency) corresponds to the case where the electron loses all its kinetic energy in a single collision.
+      </p>
+      <div class="formula-box">
+        Minimum wavelength (cut-off wavelength):<br>
+        &lambda;<sub>min</sub> = hc / eV<br><br>
+        Numerically: &lambda;<sub>min</sub> (in A) = 12400 / V (in volts)<br><br>
+        where V = accelerating voltage
+      </div>
+      <p>
+        The minimum wavelength depends only on the accelerating voltage, not on the target material.
+      </p>
+
+      <h3>Characteristic X-Ray Spectrum</h3>
+      <p>
+        In addition to the continuous spectrum, sharp intensity peaks appear at specific wavelengths that depend on the target material. These are called <strong>characteristic X-rays</strong>. They are produced when an incident electron knocks out an inner-shell electron from a target atom, and an electron from a higher shell fills the vacancy, emitting an X-ray photon of a definite energy.
+      </p>
+      <ul>
+        <li><strong>K-series:</strong> Vacancy in the K-shell (n=1) is filled by electrons from L (K&alpha;), M (K&beta;), N (K&gamma;) shells.</li>
+        <li><strong>L-series:</strong> Vacancy in the L-shell (n=2) is filled by electrons from M (L&alpha;), N (L&beta;) shells.</li>
+      </ul>
+
+      <h3>Moseley's Law</h3>
+      <p>
+        Henry Moseley (1913) discovered that the square root of the frequency of characteristic X-rays varies linearly with the atomic number Z of the target element:
+      </p>
+      <div class="formula-box">
+        &radic;f = a(Z &minus; b)<br><br>
+        where a and b are constants that depend on the spectral line.<br>
+        For K&alpha; line: b &asymp; 1<br>
+        For L&alpha; line: b &asymp; 7.4
+      </div>
+      <p>
+        Moseley's law established the importance of atomic number (rather than atomic weight) as the fundamental property of an element and helped correct the ordering of elements in the periodic table.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Nuclear Physics -->
+    <!-- ============================== -->
+    <div class="theory-section" id="nuclear-physics">
+      <h2>5. Nuclear Physics</h2>
+
+      <h3>Composition of the Nucleus</h3>
+      <p>
+        The nucleus of an atom contains protons (positively charged) and neutrons (electrically neutral), collectively called <strong>nucleons</strong>. The nucleus is described by:
+      </p>
+      <ul>
+        <li><strong>Atomic number (Z):</strong> Number of protons in the nucleus.</li>
+        <li><strong>Mass number (A):</strong> Total number of nucleons (protons + neutrons). A = Z + N, where N is the number of neutrons.</li>
+        <li><strong>Nuclear radius:</strong> R = R<sub>0</sub> A<sup>1/3</sup>, where R<sub>0</sub> &asymp; 1.2 &times; 10<sup>&minus;15</sup> m = 1.2 fm.</li>
+        <li><strong>Nuclear density:</strong> Approximately constant for all nuclei, &rho; &asymp; 2.3 &times; 10<sup>17</sup> kg/m&sup3;.</li>
+      </ul>
+
+      <h3>Mass Defect</h3>
+      <p>
+        The mass of a nucleus is always less than the sum of the masses of its individual nucleons. This difference is called the <strong>mass defect</strong>:
+      </p>
+      <div class="formula-box">
+        &Delta;m = [Z m<sub>p</sub> + (A &minus; Z) m<sub>n</sub>] &minus; M<sub>nucleus</sub><br><br>
+        where m<sub>p</sub> = mass of proton, m<sub>n</sub> = mass of neutron, M<sub>nucleus</sub> = mass of the nucleus
+      </div>
+
+      <h3>Binding Energy</h3>
+      <p>
+        The mass defect corresponds to energy (by Einstein's mass-energy equivalence) that was released when the nucleons came together to form the nucleus. This energy is called the <strong>binding energy</strong> &mdash; it is the minimum energy required to completely separate all the nucleons of a nucleus.
+      </p>
+      <div class="formula-box">
+        Binding Energy: BE = &Delta;m &times; c&sup2;<br><br>
+        In atomic mass units: 1 u = 931.5 MeV/c&sup2;<br>
+        So: BE (MeV) = &Delta;m (in u) &times; 931.5
+      </div>
+
+      <h3>Binding Energy per Nucleon Curve</h3>
+      <p>
+        The <strong>binding energy per nucleon</strong> (BE/A) is a measure of nuclear stability. The BE/A vs A curve reveals:
+      </p>
+      <ul>
+        <li>BE/A is low for very light nuclei (e.g., deuterium: ~1.1 MeV).</li>
+        <li>It rises steeply for light nuclei, with peaks at He-4 (7.07 MeV), C-12, O-16 (especially stable, "magic numbers").</li>
+        <li>It reaches a maximum of about <strong>8.75 MeV per nucleon</strong> for iron-56 (Fe-56) and nickel-62, making them the most stable nuclei.</li>
+        <li>It gradually decreases for heavier nuclei (e.g., U-238: ~7.6 MeV per nucleon).</li>
+        <li>This curve explains why <strong>fusion</strong> of light nuclei and <strong>fission</strong> of heavy nuclei both release energy &mdash; in both cases, the products have higher BE/A (greater stability) than the reactants.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Radioactivity -->
+    <!-- ============================== -->
+    <div class="theory-section" id="radioactivity">
+      <h2>6. Radioactivity</h2>
+
+      <h3>Types of Radioactive Decay</h3>
+      <p>
+        <strong>Radioactivity</strong> is the spontaneous disintegration of unstable nuclei with the emission of particles and/or radiation. There are three main types:
+      </p>
+      <p>
+        <strong>Alpha (&alpha;) decay:</strong> The nucleus emits a helium-4 nucleus (2 protons + 2 neutrons). The parent nucleus loses 2 protons and 2 neutrons.
+      </p>
+      <div class="formula-box">
+        <sup>A</sup><sub>Z</sub>X &rarr; <sup>A&minus;4</sup><sub>Z&minus;2</sub>Y + <sup>4</sup><sub>2</sub>He<br><br>
+        Example: <sup>238</sup><sub>92</sub>U &rarr; <sup>234</sup><sub>90</sub>Th + <sup>4</sup><sub>2</sub>He
+      </div>
+      <p>
+        <strong>Beta (&beta;<sup>&minus;</sup>) decay:</strong> A neutron in the nucleus converts to a proton, emitting an electron and an antineutrino.
+      </p>
+      <div class="formula-box">
+        <sup>A</sup><sub>Z</sub>X &rarr; <sup>A</sup><sub>Z+1</sub>Y + e<sup>&minus;</sup> + &nu;&#772;<sub>e</sub><br><br>
+        Example: <sup>14</sup><sub>6</sub>C &rarr; <sup>14</sup><sub>7</sub>N + e<sup>&minus;</sup> + &nu;&#772;<sub>e</sub>
+      </div>
+      <p>
+        <strong>Gamma (&gamma;) decay:</strong> An excited nucleus transitions to a lower energy state by emitting a high-energy photon (gamma ray). Neither Z nor A changes.
+      </p>
+      <div class="formula-box">
+        <sup>A</sup><sub>Z</sub>X* &rarr; <sup>A</sup><sub>Z</sub>X + &gamma;
+      </div>
+
+      <h3>Properties Comparison</h3>
+      <ul>
+        <li><strong>&alpha; particles:</strong> Charge +2e, mass 4u, low penetration (stopped by paper), high ionizing power, deflected in electric/magnetic fields.</li>
+        <li><strong>&beta; particles:</strong> Charge &minus;e, negligible mass, moderate penetration (stopped by aluminium sheet), moderate ionizing power, strongly deflected in fields.</li>
+        <li><strong>&gamma; rays:</strong> No charge, no mass, high penetration (attenuated by thick lead), low ionizing power, not deflected by fields.</li>
+      </ul>
+
+      <h3>Radioactive Decay Law</h3>
+      <p>
+        The number of radioactive atoms that decay per unit time is proportional to the number of radioactive atoms present at that instant. This leads to an exponential decay:
+      </p>
+      <div class="formula-box">
+        dN/dt = &minus;&lambda;N<br><br>
+        N(t) = N<sub>0</sub> e<sup>&minus;&lambda;t</sup><br><br>
+        where:<br>
+        N<sub>0</sub> = initial number of radioactive atoms<br>
+        N(t) = number remaining at time t<br>
+        &lambda; = decay constant (probability of decay per unit time)
+      </div>
+
+      <h3>Half-Life</h3>
+      <p>
+        The <strong>half-life</strong> (t<sub>&frac12;</sub>) is the time required for half the radioactive atoms to decay.
+      </p>
+      <div class="formula-box">
+        t<sub>&frac12;</sub> = ln 2 / &lambda; = 0.693 / &lambda;<br><br>
+        After n half-lives: N = N<sub>0</sub> / 2<sup>n</sup> = N<sub>0</sub> (1/2)<sup>n</sup>
+      </div>
+
+      <h3>Mean Life</h3>
+      <div class="formula-box">
+        Mean life: &tau; = 1/&lambda; = t<sub>&frac12;</sub> / 0.693 &asymp; 1.44 t<sub>&frac12;</sub>
+      </div>
+
+      <h3>Activity</h3>
+      <p>
+        The <strong>activity</strong> (or rate of decay) of a radioactive sample is the number of disintegrations per unit time:
+      </p>
+      <div class="formula-box">
+        Activity: A = &lambda;N = &lambda;N<sub>0</sub> e<sup>&minus;&lambda;t</sup> = A<sub>0</sub> e<sup>&minus;&lambda;t</sup><br><br>
+        SI unit: becquerel (Bq) = 1 disintegration per second<br>
+        Older unit: curie (Ci) = 3.7 &times; 10<sup>10</sup> disintegrations per second
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 3</div>
+        <p>
+          A radioactive sample has a half-life of 10 days. How long will it take for 75% of the sample to decay?
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            If 75% has decayed, 25% remains. So N/N<sub>0</sub> = 1/4 = (1/2)&sup2;<br><br>
+            This means 2 half-lives have elapsed:<br>
+            t = 2 &times; t<sub>&frac12;</sub> = 2 &times; 10 = <strong>20 days</strong><br><br>
+            Alternatively, using the decay law:<br>
+            N/N<sub>0</sub> = e<sup>&minus;&lambda;t</sup> = 1/4<br>
+            &lambda;t = ln 4 = 2 ln 2<br>
+            t = 2 ln 2 / &lambda; = 2 &times; t<sub>&frac12;</sub> = <strong>20 days</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Nuclear Reactions -->
+    <!-- ============================== -->
+    <div class="theory-section" id="nuclear-reactions">
+      <h2>7. Nuclear Reactions</h2>
+
+      <h3>Mass-Energy Equivalence</h3>
+      <p>
+        Einstein's famous equation E = mc&sup2; establishes the equivalence of mass and energy. In nuclear reactions, a measurable amount of mass is converted into energy (or vice versa). The energy released (or absorbed) in a nuclear reaction is called the <strong>Q-value</strong>:
+      </p>
+      <div class="formula-box">
+        Q = (mass of reactants &minus; mass of products) &times; c&sup2;<br><br>
+        Q &gt; 0: exoergic reaction (energy released)<br>
+        Q &lt; 0: endoergic reaction (energy absorbed)
+      </div>
+
+      <h3>Nuclear Fission</h3>
+      <p>
+        <strong>Nuclear fission</strong> is the splitting of a heavy nucleus into two lighter nuclei (of comparable masses) with the release of a large amount of energy and typically 2&ndash;3 neutrons. The most important fission reaction is:
+      </p>
+      <div class="formula-box">
+        <sup>235</sup><sub>92</sub>U + <sup>1</sup><sub>0</sub>n &rarr; <sup>141</sup><sub>56</sub>Ba + <sup>92</sup><sub>36</sub>Kr + 3 <sup>1</sup><sub>0</sub>n + Q<br><br>
+        Energy released per fission of U-235 &asymp; 200 MeV
+      </div>
+      <p>
+        The neutrons released can cause further fission of other U-235 nuclei, leading to a <strong>chain reaction</strong>. The minimum mass of fissile material needed to sustain a chain reaction is called the <strong>critical mass</strong>.
+      </p>
+      <ul>
+        <li><strong>Uncontrolled chain reaction:</strong> Used in nuclear weapons (atomic bombs).</li>
+        <li><strong>Controlled chain reaction:</strong> Used in nuclear reactors for power generation. Control rods (cadmium or boron) absorb excess neutrons. Moderators (heavy water, graphite) slow down neutrons to increase fission probability.</li>
+      </ul>
+
+      <h3>Nuclear Fusion</h3>
+      <p>
+        <strong>Nuclear fusion</strong> is the combining of two light nuclei to form a heavier nucleus with the release of energy. Fusion requires extremely high temperatures (millions of degrees) to overcome the electrostatic repulsion between the positively charged nuclei. This is why fusion reactions are also called <strong>thermonuclear reactions</strong>.
+      </p>
+      <div class="formula-box">
+        Proton-proton chain (in the Sun):<br>
+        4 <sup>1</sup><sub>1</sub>H &rarr; <sup>4</sup><sub>2</sub>He + 2 e<sup>+</sup> + 2 &nu;<sub>e</sub> + 26.7 MeV<br><br>
+        Deuterium-Tritium fusion (easiest to achieve on Earth):<br>
+        <sup>2</sup><sub>1</sub>H + <sup>3</sup><sub>1</sub>H &rarr; <sup>4</sup><sub>2</sub>He + <sup>1</sup><sub>0</sub>n + 17.6 MeV
+      </div>
+
+      <h3>Fission vs Fusion</h3>
+      <ul>
+        <li>Fission splits heavy nuclei; fusion combines light nuclei. Both release energy because the products have higher binding energy per nucleon.</li>
+        <li>Energy per nucleon released in fusion (&sim;7 MeV) is much greater than in fission (&sim;0.85 MeV).</li>
+        <li>Fusion produces less radioactive waste and uses abundant fuel (hydrogen isotopes), but achieving the required conditions (temperature &gt; 10<sup>7</sup> K) remains a major engineering challenge.</li>
+        <li>Fusion is the energy source of stars, including our Sun.</li>
+        <li>Uncontrolled fusion is used in hydrogen bombs (thermonuclear weapons).</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 4</div>
+        <p>
+          Calculate the energy released in the fusion reaction: <sup>2</sup><sub>1</sub>H + <sup>2</sup><sub>1</sub>H &rarr; <sup>3</sup><sub>2</sub>He + <sup>1</sup><sub>0</sub>n.<br>
+          Given: m(<sup>2</sup><sub>1</sub>H) = 2.01410 u, m(<sup>3</sup><sub>2</sub>He) = 3.01603 u, m(<sup>1</sup><sub>0</sub>n) = 1.00866 u. (1 u = 931.5 MeV)
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Mass of reactants = 2 &times; 2.01410 = 4.02820 u<br>
+            Mass of products = 3.01603 + 1.00866 = 4.02469 u<br><br>
+            Mass defect: &Delta;m = 4.02820 &minus; 4.02469 = 0.00351 u<br><br>
+            Energy released: Q = &Delta;m &times; 931.5 MeV<br>
+            Q = 0.00351 &times; 931.5 = <strong>3.27 MeV</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="../simulations/modern-physics.html" class="primary-link">Simulation</a>
+      <a href="../tests/modern-physics.html">Take a Test</a>
+      <a href="wave-optics.html">&larr; Prev: Wave Optics</a>
+      <a href="../chapters.html">All Chapters</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waves | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Main Content -->
+  <main>
+    <div class="chapter-detail">
+
+      <div class="ch-hero">
+        <h1>Waves</h1>
+        <span class="ch-meta">Chapter 10 &mdash; Grade XI &bull; Wave Motion</span>
+      </div>
+
+      <!-- Section 1: Types of Waves -->
+      <div class="theory-section">
+        <h2>1. Types of Waves</h2>
+        <p>
+          A wave is a disturbance that transfers energy from one point to another without the net transport
+          of matter. Waves are classified in several ways based on their nature and behaviour.
+        </p>
+
+        <h3>Transverse vs. Longitudinal</h3>
+        <ul>
+          <li><strong>Transverse waves:</strong> the particles of the medium oscillate perpendicular to the direction of wave propagation. Examples: waves on a string, electromagnetic waves.</li>
+          <li><strong>Longitudinal waves:</strong> the particles oscillate along (parallel to) the direction of wave propagation, creating compressions and rarefactions. Examples: sound waves in air, pressure waves in fluids.</li>
+        </ul>
+
+        <h3>Mechanical vs. Electromagnetic</h3>
+        <ul>
+          <li><strong>Mechanical waves:</strong> require a material medium for propagation (sound, water waves, seismic waves).</li>
+          <li><strong>Electromagnetic waves:</strong> do not require a medium and can travel through vacuum (light, radio waves, X-rays).</li>
+        </ul>
+
+        <h3>Progressive vs. Stationary</h3>
+        <ul>
+          <li><strong>Progressive (travelling) waves:</strong> transport energy continuously from one region to another. Every particle has the same amplitude.</li>
+          <li><strong>Stationary (standing) waves:</strong> formed by the superposition of two identical progressive waves travelling in opposite directions. They do not transport energy. Particles at different positions have different amplitudes.</li>
+        </ul>
+      </div>
+
+      <!-- Section 2: Wave Equation -->
+      <div class="theory-section">
+        <h2>2. Wave Equation</h2>
+        <p>
+          A sinusoidal progressive wave travelling in the positive x-direction is described by:
+        </p>
+        <div class="formula-box">
+          y = A sin(&omega;t &minus; kx)
+        </div>
+        <p>
+          Here y is the displacement of the medium particle at position x and time t, A is the amplitude,
+          &omega; = 2&pi;f = 2&pi;/T is the angular frequency, and k = 2&pi;/&lambda; is the wave number
+          (angular wave number). For a wave travelling in the negative x-direction, the equation becomes
+          y = A sin(&omega;t + kx).
+        </p>
+
+        <h3>Wave Speed (Phase Velocity)</h3>
+        <p>
+          The speed at which a particular phase of the wave (e.g., a crest) moves is the phase velocity:
+        </p>
+        <div class="formula-box">
+          v = f&lambda; = &omega;/k = &lambda;/T
+        </div>
+        <p>
+          The wave speed depends on the properties of the medium, not on the frequency or amplitude of the
+          wave (for non-dispersive media).
+        </p>
+      </div>
+
+      <!-- Section 3: Speed of Waves -->
+      <div class="theory-section">
+        <h2>3. Speed of Waves in Different Media</h2>
+
+        <h3>Transverse Waves in a Stretched String</h3>
+        <p>
+          The speed of a transverse wave on a string depends on the tension T in the string and its linear
+          mass density &mu; (mass per unit length):
+        </p>
+        <div class="formula-box">
+          v = &radic;(T/&mu;)
+        </div>
+        <p>
+          A tighter string (higher T) or a lighter string (lower &mu;) produces a faster wave. This is why
+          tuning a guitar string by tightening it raises the pitch.
+        </p>
+
+        <h3>Longitudinal Waves (Sound) in a Gas</h3>
+        <p>
+          Newton initially derived the speed of sound in air assuming isothermal conditions, giving
+          v = &radic;(P/&rho;), but this underestimated the observed speed. Laplace corrected this by noting
+          that sound propagation is an adiabatic process:
+        </p>
+        <div class="formula-box">
+          v = &radic;(&gamma;P/&rho;) &nbsp;&nbsp;(Laplace correction)<br>
+          Using PV = nRT: v = &radic;(&gamma;RT/M)
+        </div>
+
+        <h3>Effect of Temperature</h3>
+        <p>
+          Since v &propto; &radic;T (for an ideal gas at constant composition), the speed of sound increases
+          with temperature. At temperature T (in Kelvin):
+        </p>
+        <div class="formula-box">
+          v<sub>T</sub> = v&#8320; &radic;(T/T&#8320;)<br>
+          Approximately: v &asymp; (331 + 0.6t) m/s &nbsp;&nbsp;(t in &deg;C, near room temperature)
+        </div>
+      </div>
+
+      <!-- Section 4: Superposition Principle -->
+      <div class="theory-section">
+        <h2>4. Superposition Principle</h2>
+        <p>
+          The principle of superposition states that when two or more waves overlap in a region, the
+          resultant displacement at any point is the algebraic sum of the displacements due to each wave
+          individually: y = y&#8321; + y&#8322; + y&#8323; + &hellip;
+        </p>
+
+        <h3>Interference</h3>
+        <p>
+          When two coherent waves (same frequency, constant phase difference) superpose, they produce an
+          interference pattern. The nature of interference at a point depends on the path difference
+          (&Delta;x) between the two waves:
+        </p>
+        <ul>
+          <li><strong>Constructive interference:</strong> path difference = n&lambda; (n = 0, 1, 2, &hellip;). The waves add up to maximum amplitude.</li>
+          <li><strong>Destructive interference:</strong> path difference = (n + &frac12;)&lambda;. The waves cancel, giving minimum (or zero) amplitude.</li>
+        </ul>
+        <div class="formula-box">
+          Constructive: &Delta;x = n&lambda; &nbsp;&nbsp;(phase diff = 2n&pi;)<br>
+          Destructive: &Delta;x = (2n+1)&lambda;/2 &nbsp;&nbsp;(phase diff = (2n+1)&pi;)<br>
+          I<sub>max</sub> = (A&#8321; + A&#8322;)&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; I<sub>min</sub> = (A&#8321; &minus; A&#8322;)&sup2;
+        </div>
+      </div>
+
+      <!-- Section 5: Standing Waves -->
+      <div class="theory-section">
+        <h2>5. Standing Waves</h2>
+        <p>
+          Standing waves are formed when two identical progressive waves travelling in opposite directions
+          superpose. The resulting wave does not propagate &mdash; it oscillates in place with fixed points
+          of zero displacement (nodes) and maximum displacement (antinodes).
+        </p>
+        <div class="formula-box">
+          y = 2A sin(kx) cos(&omega;t) &nbsp;&nbsp;(standing wave equation)<br>
+          Nodes at: x = n&lambda;/2 &nbsp;&nbsp;(n = 0, 1, 2, &hellip;)<br>
+          Antinodes at: x = (2n+1)&lambda;/4
+        </div>
+
+        <h3>Vibrations of a Stretched String (Fixed at Both Ends)</h3>
+        <p>
+          A string of length L fixed at both ends supports standing waves only at specific resonant
+          frequencies. The ends must be nodes. The allowed wavelengths and frequencies are:
+        </p>
+        <div class="formula-box">
+          &lambda;<sub>n</sub> = 2L/n &nbsp;&nbsp;|&nbsp;&nbsp; f<sub>n</sub> = nv/2L = (n/2L)&radic;(T/&mu;)<br>
+          n = 1, 2, 3, &hellip; (1st harmonic = fundamental, 2nd harmonic = 1st overtone, &hellip;)
+        </div>
+
+        <h3>Organ Pipes</h3>
+        <p>
+          For a pipe open at both ends, both ends are displacement antinodes, and all harmonics are present:
+        </p>
+        <div class="formula-box">
+          Open pipe: f<sub>n</sub> = nv/2L &nbsp;&nbsp;(n = 1, 2, 3, &hellip; &mdash; all harmonics)
+        </div>
+        <p>
+          For a pipe closed at one end, the closed end is a node and the open end is an antinode. Only odd
+          harmonics are present:
+        </p>
+        <div class="formula-box">
+          Closed pipe: f<sub>n</sub> = nv/4L &nbsp;&nbsp;(n = 1, 3, 5, &hellip; &mdash; odd harmonics only)
+        </div>
+        <p>
+          The fundamental frequency of a closed pipe is half that of an open pipe of the same length.
+        </p>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 1</div>
+          <p>
+            A string of length 1 m is fixed at both ends. The speed of transverse waves on the string is
+            400 m/s. Find the first three resonant frequencies.
+          </p>
+          <div class="solution">
+            <p>
+              f<sub>n</sub> = nv / 2L<br>
+              f&#8321; = 1 &times; 400 / (2 &times; 1) = 200 Hz &nbsp;&nbsp;(fundamental)<br>
+              f&#8322; = 2 &times; 400 / (2 &times; 1) = 400 Hz &nbsp;&nbsp;(2nd harmonic)<br>
+              f&#8323; = 3 &times; 400 / (2 &times; 1) = 600 Hz &nbsp;&nbsp;(3rd harmonic)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 6: Beats -->
+      <div class="theory-section">
+        <h2>6. Beats</h2>
+        <p>
+          Beats are a phenomenon that occurs when two waves of slightly different frequencies superpose.
+          The resultant sound has an amplitude that varies periodically &mdash; alternately waxing (getting
+          louder) and waning (getting softer). The beat frequency equals the absolute difference between the
+          two frequencies:
+        </p>
+        <div class="formula-box">
+          f<sub>beat</sub> = |f&#8321; &minus; f&#8322;|
+        </div>
+        <p>
+          If two tuning forks of frequencies 256 Hz and 260 Hz are sounded together, we hear 4 beats per
+          second. The ear can typically detect beats when f<sub>beat</sub> &lt; 6&ndash;7 Hz; above this,
+          the fluctuations merge into a rough, continuous sound.
+        </p>
+
+        <h3>Practical Uses of Beats</h3>
+        <ul>
+          <li>Tuning musical instruments: a musician adjusts one string until the beat frequency with a reference tone becomes zero.</li>
+          <li>Determining an unknown frequency: if loading wax on a tuning fork decreases its frequency and the beat frequency decreases, the unknown fork was originally of higher frequency.</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 2</div>
+          <p>
+            Two tuning forks A and B produce 5 beats per second. Fork A has a frequency of 512 Hz. When
+            fork B is loaded with a small piece of wax, the beat frequency becomes 3 beats per second. Find
+            the original frequency of fork B.
+          </p>
+          <div class="solution">
+            <p>
+              f<sub>beat</sub> = |f<sub>A</sub> &minus; f<sub>B</sub>| = 5<br>
+              So f<sub>B</sub> = 512 + 5 = 517 Hz or f<sub>B</sub> = 512 &minus; 5 = 507 Hz.<br><br>
+              Loading wax on B decreases its frequency. If f<sub>B</sub> = 517 Hz, after loading it
+              decreases towards 512, so beats should decrease &mdash; and they do (from 5 to 3). This is
+              consistent.<br><br>
+              If f<sub>B</sub> = 507 Hz, decreasing it further moves it further from 512, so beats should
+              increase &mdash; contradicting the observation.<br><br>
+              Therefore, f<sub>B</sub> = 517 Hz.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 7: Doppler Effect -->
+      <div class="theory-section">
+        <h2>7. Doppler Effect</h2>
+        <p>
+          The Doppler effect is the change in the observed frequency (or wavelength) of a wave when there
+          is relative motion between the source and the observer. For sound waves in a medium where the
+          wave speed is v:
+        </p>
+        <div class="formula-box">
+          f&prime; = f &times; (v &plusmn; v<sub>o</sub>) / (v &mp; v<sub>s</sub>)
+        </div>
+
+        <h3>Sign Convention</h3>
+        <p>
+          Take the direction from source to observer as positive. Then:
+        </p>
+        <ul>
+          <li>v<sub>o</sub> is positive when the observer moves towards the source (numerator: v + v<sub>o</sub>).</li>
+          <li>v<sub>o</sub> is negative when the observer moves away from the source (numerator: v &minus; v<sub>o</sub>).</li>
+          <li>v<sub>s</sub> is positive when the source moves towards the observer (denominator: v &minus; v<sub>s</sub>).</li>
+          <li>v<sub>s</sub> is negative when the source moves away from the observer (denominator: v + v<sub>s</sub>).</li>
+        </ul>
+
+        <h3>Special Cases</h3>
+
+        <h3>Source Moving, Observer Stationary</h3>
+        <p>
+          When only the source moves towards a stationary observer:
+          f&prime; = f &times; v / (v &minus; v<sub>s</sub>). The observed frequency increases (pitch rises)
+          as the source approaches. When the source recedes: f&prime; = f &times; v / (v + v<sub>s</sub>).
+        </p>
+
+        <h3>Observer Moving, Source Stationary</h3>
+        <p>
+          When only the observer moves towards a stationary source:
+          f&prime; = f &times; (v + v<sub>o</sub>) / v. The observed frequency increases. When the observer
+          recedes: f&prime; = f &times; (v &minus; v<sub>o</sub>) / v.
+        </p>
+
+        <h3>Both Moving</h3>
+        <p>
+          The general formula f&prime; = f (v &plusmn; v<sub>o</sub>) / (v &mp; v<sub>s</sub>) handles all
+          cases. The upper signs apply when source and observer approach each other; the lower signs when
+          they recede from each other.
+        </p>
+
+        <h3>Applications</h3>
+        <ul>
+          <li>Police radar and speed guns use the Doppler effect with electromagnetic waves.</li>
+          <li>Medical ultrasound (Doppler echocardiography) measures blood flow velocity.</li>
+          <li>Astronomical redshift/blueshift reveals whether stars and galaxies are moving towards or away from Earth.</li>
+          <li>SONAR systems detect underwater objects using reflected sound waves.</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 3</div>
+          <p>
+            A train moves towards a stationary observer at 30 m/s, sounding a horn of frequency 500 Hz. The
+            speed of sound in air is 340 m/s. What frequency does the observer hear? What frequency does the
+            observer hear after the train passes?
+          </p>
+          <div class="solution">
+            <p>
+              Approaching: v<sub>o</sub> = 0, v<sub>s</sub> = 30 m/s (towards observer)<br>
+              f&prime; = f &times; v / (v &minus; v<sub>s</sub>) = 500 &times; 340 / (340 &minus; 30)<br>
+              f&prime; = 500 &times; 340 / 310 &asymp; 548.4 Hz<br><br>
+              Receding: v<sub>s</sub> = 30 m/s (away from observer)<br>
+              f&prime; = f &times; v / (v + v<sub>s</sub>) = 500 &times; 340 / (340 + 30)<br>
+              f&prime; = 500 &times; 340 / 370 &asymp; 459.5 Hz<br><br>
+              The observer hears a higher pitch (548.4 Hz) as the train approaches and a lower pitch
+              (459.5 Hz) as it recedes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Formulas Summary -->
+      <div class="theory-section">
+        <h2>Key Formulas Summary</h2>
+        <div class="formula-box">
+          y = A sin(&omega;t &minus; kx) &nbsp;&nbsp;|&nbsp;&nbsp; v = f&lambda; = &omega;/k<br>
+          v<sub>string</sub> = &radic;(T/&mu;) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>sound</sub> = &radic;(&gamma;P/&rho;) = &radic;(&gamma;RT/M)<br>
+          f<sub>n</sub> = nv/2L (string, open pipe) &nbsp;&nbsp;|&nbsp;&nbsp; f<sub>n</sub> = nv/4L (closed pipe, odd n)<br>
+          f<sub>beat</sub> = |f&#8321; &minus; f&#8322;|<br>
+          f&prime; = f(v &plusmn; v<sub>o</sub>) / (v &mp; v<sub>s</sub>) &nbsp;&nbsp;(Doppler effect)
+        </div>
+      </div>
+
+      <!-- Chapter Links -->
+      <div class="ch-links">
+        <a href="../simulations/waves.html" class="primary-link">Launch Simulation &rarr;</a>
+        <a href="../tests/waves.html">Practice Test</a>
+        <a href="shm.html">&larr; Prev: SHM</a>
+        <a href="../chapters.html">All Chapters &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a>
+        <a href="../lectures.html">Lectures</a>
+        <a href="../notes.html">Notes</a>
+        <a href="../books.html">Books</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

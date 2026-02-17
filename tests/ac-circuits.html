@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AC Circuits DTS | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>AC Circuits &mdash; Daily Test Series</h1>
+      <div class="test-meta">Grade XII &bull; 15 Questions &bull; 90 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">90:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">The RMS value of an alternating voltage given by V = 200 sin(314t) is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 200 V</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 200&radic;2 V</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 100&radic;2 V</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 100 V</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> V<sub>0</sub> = 200 V. V<sub>rms</sub> = V<sub>0</sub>/&radic;2 = 200/&radic;2 = 100&radic;2 V &approx; 141.4 V.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">In a pure capacitive AC circuit, the current:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Leads the voltage by 90&deg;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Lags the voltage by 90&deg;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Is in phase with the voltage</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Leads the voltage by 45&deg;</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In a pure capacitive circuit, the current leads the voltage by &pi;/2 (90&deg;). This is because the capacitor must charge before a potential difference appears across it.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">An LCR series circuit has L = 0.1 H, C = 10 &mu;F, and R = 50 &Omega;. The resonant frequency is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 50/&pi; Hz</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 50&radic;10/&pi; Hz</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 100/&pi; Hz</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 500/&pi; Hz</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> f<sub>0</sub> = 1/(2&pi;&radic;LC) = 1/(2&pi;&radic;(0.1 &times; 10 &times; 10<sup>&minus;6</sup>)) = 1/(2&pi;&radic;(10<sup>&minus;6</sup>)) = 1/(2&pi; &times; 10<sup>&minus;3</sup>) = 1000/(2&pi;) = 500/&pi; Hz. Wait, let me recalculate: &radic;(0.1 &times; 10<sup>&minus;5</sup>) = &radic;(10<sup>&minus;6</sup>) = 10<sup>&minus;3</sup>. So f<sub>0</sub> = 1/(2&pi; &times; 10<sup>&minus;3</sup>) = 500/&pi; Hz. The answer is D.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">The impedance of a series LCR circuit at resonance is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &radic;(R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Zero</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> X<sub>L</sub> + X<sub>C</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> R</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> At resonance, X<sub>L</sub> = X<sub>C</sub>, so the impedance Z = &radic;(R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;) = &radic;(R&sup2; + 0) = R. The impedance is minimum and equals the resistance.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">A transformer has 500 primary turns and 5000 secondary turns. If the primary voltage is 220 V, the secondary voltage is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2200 V</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 22 V</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 440 V</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 11000 V</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> V<sub>s</sub>/V<sub>p</sub> = N<sub>s</sub>/N<sub>p</sub>. So V<sub>s</sub> = V<sub>p</sub> &times; N<sub>s</sub>/N<sub>p</sub> = 220 &times; 5000/500 = 220 &times; 10 = 2200 V.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">The power factor of a series RLC circuit at resonance is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 0</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 1</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 0.5</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &radic;2</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Power factor cos&phi; = R/Z. At resonance Z = R, so cos&phi; = R/R = 1. The voltage and current are in phase, and maximum power is transferred.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">The reactance of a capacitor of 50 &mu;F at 50 Hz is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 100/&pi; &Omega;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 200&pi; &Omega;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 200/&pi; &Omega;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 100&pi; &Omega;</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> X<sub>C</sub> = 1/(2&pi;fC) = 1/(2&pi; &times; 50 &times; 50 &times; 10<sup>&minus;6</sup>) = 1/(5000&pi; &times; 10<sup>&minus;6</sup>) = 10<sup>6</sup>/(5000&pi;) = 200/&pi; &Omega; &approx; 63.7 &Omega;.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">In a pure inductive AC circuit, the average power dissipated over a complete cycle is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> V<sub>rms</sub> &times; I<sub>rms</sub></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> V<sub>rms</sub>&sup2; / X<sub>L</sub></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> I<sub>rms</sub>&sup2; &times; X<sub>L</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Zero</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In a pure inductor, the phase difference between V and I is 90&deg;. Average power P = V<sub>rms</sub>I<sub>rms</sub>cos&phi; = V<sub>rms</sub>I<sub>rms</sub>cos90&deg; = 0. Energy is alternately stored in and released from the magnetic field.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">The impedance of a series circuit with R = 30 &Omega;, X<sub>L</sub> = 60 &Omega;, and X<sub>C</sub> = 20 &Omega; is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 50 &Omega;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 110 &Omega;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 70 &Omega;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 40 &Omega;</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Z = &radic;(R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;) = &radic;(30&sup2; + (60 &minus; 20)&sup2;) = &radic;(900 + 1600) = &radic;2500 = 50 &Omega;.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">A step-down transformer reduces 2200 V to 220 V. If the secondary coil has 50 turns, the number of turns in the primary coil is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 5</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 500</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 5000</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 250</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> N<sub>p</sub>/N<sub>s</sub> = V<sub>p</sub>/V<sub>s</sub>. So N<sub>p</sub> = N<sub>s</sub> &times; V<sub>p</sub>/V<sub>s</sub> = 50 &times; 2200/220 = 50 &times; 10 = 500 turns.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 11</div>
+      <div class="q-text">The quality factor (Q-factor) of a series LCR circuit is given by:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> R/(&omega;<sub>0</sub>L)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &omega;<sub>0</sub>R/L</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &omega;<sub>0</sub>L/R</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> R&omega;<sub>0</sub>C</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The Q-factor = &omega;<sub>0</sub>L/R = 1/(R&omega;<sub>0</sub>C) = (1/R)&radic;(L/C). It measures the sharpness of resonance. Higher Q means sharper resonance peak.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 12</div>
+      <div class="q-text">The frequency of AC mains in India is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 50 Hz</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 60 Hz</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 100 Hz</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 220 Hz</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The AC mains frequency in India is 50 Hz (angular frequency &omega; = 2&pi; &times; 50 = 100&pi; rad/s).</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 13</div>
+      <div class="q-text">The inductive reactance of a 2 H inductor at 50 Hz is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 100 &Omega;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 50&pi; &Omega;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 100&pi; &Omega;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 200&pi; &Omega;</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> X<sub>L</sub> = 2&pi;fL = 2&pi; &times; 50 &times; 2 = 200&pi; &Omega; &approx; 628 &Omega;.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 14</div>
+      <div class="q-text">An ideal transformer is based on the principle of:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Self-induction</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Mutual induction</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Eddy currents</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Electromagnetic waves</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> A transformer works on the principle of mutual induction. An alternating current in the primary coil creates a changing magnetic flux that induces an EMF in the secondary coil.</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 15</div>
+      <div class="q-text">In an AC circuit, the wattless component of current is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> I cos&phi;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> I tan&phi;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> I sin&phi;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> I/cos&phi;</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The wattless (reactive) component of current is I sin&phi;, which contributes zero average power. The power (wattful) component is I cos&phi;. Only the component in phase with voltage contributes to real power dissipation.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    var totalSeconds = 90 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>

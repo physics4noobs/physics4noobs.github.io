@@ -16,24 +16,11 @@
 </head>
 <body>
   <!-- Splash Screen -->
-  <div class="splash-screen" id="splash">
-    <div class="splash-pendulum">
-      <div class="sp-pivot"></div>
-      <div class="sp-arm">
-        <div class="sp-rod"></div>
-        <div class="sp-bob"></div>
-      </div>
-    </div>
-    <div class="splash-brand">Axomiya Engineer</div>
-  </div>
-  <script>
-    (function(){if(sessionStorage.getItem('ae-splash')){document.getElementById('splash').style.display='none';}else{sessionStorage.setItem('ae-splash','1');setTimeout(function(){document.getElementById('splash').classList.add('fade-out');setTimeout(function(){document.getElementById('splash').style.display='none';},400);},1000);}})();
-  </script>
-
-  <div class="bg-grid"></div>
+  <div class="splash-screen" id="splash"></div>
+<div class="bg-grid"></div>
   <nav class="navbar scrolled">
     <div class="nav-container">
-      <a href="../index.html" class="nav-logo">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
         <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
         <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
       </a>
@@ -49,10 +36,21 @@
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
 
   <style>
-    /* Override site theme — minimalist monochrome */
-    body { background: #0a0a0a !important; }
     .bg-grid, #particles-canvas { display: none !important; }
 
     .sim-wrapper {
@@ -65,60 +63,66 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .sim-header h1 {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #e0e0e0;
-      letter-spacing: 2px;
+      font-family: 'Nova Square', sans-serif;
+      font-size: clamp(1.3rem, 2vw, 1.8rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }
 
-    .sim-header .sim-btns {
-      display: flex;
-      gap: 8px;
-    }
-
     .sim-btn {
-      padding: 8px 20px;
-      font-size: 0.82rem;
-      font-weight: 500;
-      font-family: 'Inter', sans-serif;
-      color: #e0e0e0;
-      background: transparent;
-      border: 1px solid #333;
-      border-radius: 4px;
+      padding: 10px 24px;
+      font-size: clamp(0.85rem, 1vw, 1rem);
+      font-weight: 600;
+      font-family: 'Delius', cursive;
+      color: var(--color-primary);
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: var(--transition-fast);
       letter-spacing: 0.5px;
     }
 
     .sim-btn:hover {
-      background: #e0e0e0;
-      color: #0a0a0a;
-      border-color: #e0e0e0;
+      background: var(--color-primary);
+      color: var(--bg-primary);
+      border-color: var(--color-primary);
+      box-shadow: var(--glow-primary);
     }
 
     .sim-btn.primary {
-      background: #e0e0e0;
-      color: #0a0a0a;
-      border-color: #e0e0e0;
+      background: var(--color-primary);
+      color: var(--bg-primary);
+      border-color: var(--color-primary);
     }
 
     .sim-btn.primary:hover {
-      background: #fff;
+      box-shadow: var(--glow-primary);
+      filter: brightness(1.1);
     }
 
-    /* Canvas */
+    .sim-main-row {
+      display: flex;
+      gap: 0;
+    }
+
     .canvas-wrap {
-      width: 100%;
-      border: 1px solid #222;
-      border-radius: 6px;
+      flex: 1;
+      border: 1px solid var(--border-subtle);
+      border-right: none;
+      border-radius: var(--radius-md) 0 0 0;
       overflow: hidden;
-      background: #111;
+      background: var(--bg-secondary);
+      box-shadow: inset 0 0 60px rgba(0, 212, 255, 0.02);
     }
 
     .canvas-wrap canvas {
@@ -126,16 +130,77 @@
       width: 100%;
     }
 
+    .side-graph {
+      width: 380px;
+      min-width: 300px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-left: 1px solid rgba(0, 212, 255, 0.1);
+      border-radius: 0 var(--radius-md) 0 0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-graph h3 {
+      font-family: 'Nova Square', sans-serif;
+      font-size: clamp(0.75rem, 1vw, 0.95rem);
+      font-weight: 600;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .side-graph canvas {
+      width: 100%;
+      flex: 1;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Legend */
+    .legend-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      min-height: 18px;
+    }
+
+    .legend-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
     /* Controls */
     .controls-bar {
       display: flex;
       align-items: center;
-      gap: 32px;
-      padding: 16px 20px;
-      background: #161616;
-      border: 1px solid #222;
-      border-top: none;
-      border-radius: 0 0 6px 6px;
+      gap: clamp(16px, 2vw, 32px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-top: 1px solid rgba(0, 212, 255, 0.06);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
       flex-wrap: wrap;
     }
 
@@ -146,197 +211,283 @@
     }
 
     .control-group label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: #888;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.85rem, 1vw, 1.05rem);
+      color: var(--text-muted);
       white-space: nowrap;
     }
 
+    .control-group input[type="range"] {
+      width: clamp(100px, 10vw, 160px);
+      -webkit-appearance: none;
+      background: var(--border-subtle);
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+      transition: box-shadow 0.2s;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 14px rgba(0, 212, 255, 0.7);
+    }
+
+    .control-group input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+
     .control-group .val {
-      color: #e0e0e0;
-      font-weight: 600;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.88rem, 1vw, 1.05rem);
+      color: var(--text-primary);
       min-width: 36px;
       text-align: right;
     }
 
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 3px;
-      background: #333;
-      border-radius: 2px;
-      outline: none;
-      width: 140px;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 14px;
-      height: 14px;
-      background: #e0e0e0;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-
-    input[type="range"]::-moz-range-thumb {
-      width: 14px;
-      height: 14px;
-      background: #e0e0e0;
-      border-radius: 50%;
-      cursor: pointer;
-      border: none;
-    }
-
-    /* Data Panel */
+    /* Data panel */
     .data-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: #222;
-      border: 1px solid #222;
-      border-radius: 6px;
-      overflow: hidden;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
       margin-top: 16px;
     }
 
-    .data-col {
-      padding: 20px 24px;
-      background: #161616;
+    .data-panel h3 {
+      font-family: 'Nova Square', sans-serif;
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
     }
 
-    .data-col h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #555;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0 32px;
     }
 
     .data-row {
       display: flex;
       justify-content: space-between;
-      padding: 6px 0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      border-bottom: 1px solid #1e1e1e;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .data-row:last-child { border-bottom: none; }
-    .data-row .data-label { color: #888; }
-    .data-row .data-value { color: #e0e0e0; font-weight: 500; }
+    .data-row:last-child {
+      border-bottom: none;
+    }
 
-    /* Q&A Section */
+    .data-label {
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.88rem, 1vw, 1.05rem);
+      color: var(--text-muted);
+    }
+
+    .data-value {
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.92rem, 1.1vw, 1.1rem);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: 'Nova Square', sans-serif;
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: 'Delius', cursive;
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
     .qa-section {
-      margin-top: 40px;
-      padding-bottom: 60px;
+      margin-top: 32px;
     }
 
     .qa-section h2 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
+      font-family: 'Nova Square', sans-serif;
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
       font-weight: 600;
-      color: #e0e0e0;
-      letter-spacing: 2px;
+      color: var(--color-secondary);
       text-transform: uppercase;
+      letter-spacing: 2px;
       margin-bottom: 16px;
     }
 
     .qa-item {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 6px;
-      margin-bottom: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
       overflow: hidden;
+      transition: var(--transition-fast);
     }
 
-    .qa-question {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 20px;
+    .qa-item:hover {
+      border-color: rgba(0, 212, 255, 0.15);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      color: #ccc;
-      transition: background 0.15s ease;
-      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
     }
 
-    .qa-question:hover { background: #1a1a1a; }
-
-    .qa-question .qa-arrow {
-      font-size: 0.7rem;
-      color: #555;
-      transition: transform 0.2s ease;
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
     }
 
-    .qa-item.open .qa-arrow { transform: rotate(180deg); color: #e0e0e0; }
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
 
-    .qa-answer {
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease;
     }
 
-    .qa-item.open .qa-answer { max-height: 300px; }
-
-    .qa-answer-inner {
-      padding: 0 20px 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      color: #888;
-      line-height: 1.7;
+    .qa-item.open .qa-a {
+      max-height: 300px;
     }
 
-    .qa-answer-inner strong { color: #e0e0e0; }
-
-    /* Legend (drawn inside canvas but we also show color chips) */
-    .legend-bar {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 10px 20px;
-      background: #131313;
-      border: 1px solid #222;
-      border-top: none;
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: 'Delius', cursive;
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
     }
 
-    .legend-chip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: #888;
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
     }
 
-    .legend-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      overflow-y: auto;
     }
 
+    #simArea:fullscreen .side-graph,
+    #simArea:-webkit-full-screen .side-graph {
+      width: 420px;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    #simArea:fullscreen .data-panel,
+    #simArea:-webkit-full-screen .data-panel {
+      margin-top: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .side-graph { width: 100%; border-left: 1px solid var(--border-subtle); border-top: none; border-radius: 0; min-height: 250px; }
+      .canvas-wrap { border-radius: var(--radius-md) var(--radius-md) 0 0; border-right: 1px solid var(--border-subtle); }
+    }
     @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
       .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
-      .controls-bar { gap: 16px; }
-      input[type="range"] { width: 100px; }
-      .data-panel { grid-template-columns: 1fr; }
+      .controls-bar { gap: 12px; padding: 12px; }
+      .control-group input[type="range"] { width: 80px; }
     }
   </style>
 
   <div class="sim-wrapper">
+    <div id="simArea">
     <div class="sim-header">
       <h1>Projectile Motion</h1>
-      <div class="sim-btns">
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
         <button class="sim-btn primary" id="launchBtn">Launch</button>
         <button class="sim-btn" id="resetBtn">Reset</button>
       </div>
     </div>
 
-    <div class="canvas-wrap">
-      <canvas id="simCanvas"></canvas>
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div class="side-graph">
+        <h3>Height vs Time</h3>
+        <canvas id="graphCanvas"></canvas>
+      </div>
     </div>
     <div class="legend-bar" id="legendBar"></div>
 
@@ -344,23 +495,20 @@
       <div class="control-group">
         <label>u</label>
         <input type="range" id="velSlider" min="5" max="100" value="50">
-        <label><span class="val" id="velVal">50</span> m/s</label>
+        <span class="val" id="velVal">50</span><label>m/s</label>
       </div>
       <div class="control-group">
         <label>&theta;</label>
         <input type="range" id="angleSlider" min="5" max="85" value="45">
-        <label><span class="val" id="angleVal">45</span>&deg;</label>
+        <span class="val" id="angleVal">45</span><label>&deg;</label>
       </div>
     </div>
 
     <div class="data-panel">
-      <div class="data-col">
-        <h3>Parameters</h3>
-        <div class="data-row"><span class="data-label">u</span><span class="data-value" id="d-u">&mdash;</span></div>
-        <div class="data-row"><span class="data-label">&theta;</span><span class="data-value" id="d-theta">&mdash;</span></div>
-      </div>
-      <div class="data-col">
-        <h3>Data</h3>
+      <h3>Data</h3>
+      <div class="data-grid">
+        <div class="data-row"><span class="data-label">Initial Velocity (u)</span><span class="data-value" id="d-u">&mdash;</span></div>
+        <div class="data-row"><span class="data-label">Launch Angle (&theta;)</span><span class="data-value" id="d-theta">&mdash;</span></div>
         <div class="data-row"><span class="data-label">Time of Flight</span><span class="data-value" id="d-tof">&mdash;</span></div>
         <div class="data-row"><span class="data-label">Range</span><span class="data-value" id="d-range">&mdash;</span></div>
         <div class="data-row"><span class="data-label">Max Height</span><span class="data-value" id="d-hmax">&mdash;</span></div>
@@ -368,56 +516,64 @@
         <div class="data-row"><span class="data-label">U<sub>y</sub></span><span class="data-value" id="d-uy">&mdash;</span></div>
       </div>
     </div>
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Range</span>
+          R = u&sup2; sin(2&theta;) / g
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Max Height</span>
+          H = u&sup2; sin&sup2;&theta; / 2g
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Time of Flight</span>
+          T = 2u sin&theta; / g
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Trajectory</span>
+          y = x tan&theta; &minus; gx&sup2; / 2u&sup2;cos&sup2;&theta;
+        </div>
+      </div>
+    </div>
 
     <div class="qa-section">
       <h2>Test Your Understanding</h2>
 
       <div class="qa-item">
-        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
-          <span>At what angle is the range maximum?</span>
-          <span class="qa-arrow">&#9660;</span>
-        </div>
-        <div class="qa-answer"><div class="qa-answer-inner">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">At what angle is the range maximum?</div>
+        <div class="qa-a"><div class="qa-a-inner">
           <strong>45&deg;</strong>. Range = u&sup2; sin(2&theta;) / g. The function sin(2&theta;) reaches its maximum value of 1 when 2&theta; = 90&deg;, which means &theta; = 45&deg;.
         </div></div>
       </div>
 
       <div class="qa-item">
-        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
-          <span>When are the ranges of two projectiles equal?</span>
-          <span class="qa-arrow">&#9660;</span>
-        </div>
-        <div class="qa-answer"><div class="qa-answer-inner">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">When are the ranges of two projectiles equal?</div>
+        <div class="qa-a"><div class="qa-a-inner">
           When launched at <strong>complementary angles</strong> (&theta; and 90&deg;&minus;&theta;) with the same speed. This is because sin(2&theta;) = sin(2(90&deg;&minus;&theta;)). For example, 30&deg; and 60&deg; give equal ranges. Try it in the simulation!
         </div></div>
       </div>
 
       <div class="qa-item">
-        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
-          <span>What happens to time of flight as angle increases?</span>
-          <span class="qa-arrow">&#9660;</span>
-        </div>
-        <div class="qa-answer"><div class="qa-answer-inner">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens to time of flight as angle increases?</div>
+        <div class="qa-a"><div class="qa-a-inner">
           It <strong>increases</strong>. Time of flight T = 2u sin&theta; / g. As &theta; goes from 0&deg; to 90&deg;, sin&theta; increases from 0 to 1, so T increases. A vertically launched projectile stays in the air the longest.
         </div></div>
       </div>
 
       <div class="qa-item">
-        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
-          <span>At what angle is maximum height equal to the range?</span>
-          <span class="qa-arrow">&#9660;</span>
-        </div>
-        <div class="qa-answer"><div class="qa-answer-inner">
-          At <strong>&theta; = tan&sup2;&sup1;(4) &approx; 76&deg;</strong>. Setting H<sub>max</sub> = R gives u&sup2;sin&sup2;&theta;/2g = u&sup2;sin(2&theta;)/g. Simplifying: sin&theta;/2 = 2cos&theta;, so tan&theta; = 4.
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">At what angle is maximum height equal to the range?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          At <strong>&theta; = tan<sup>&minus;1</sup>(4) &approx; 76&deg;</strong>. Setting H<sub>max</sub> = R gives u&sup2;sin&sup2;&theta;/2g = u&sup2;sin(2&theta;)/g. Simplifying: sin&theta;/2 = 2cos&theta;, so tan&theta; = 4.
         </div></div>
       </div>
 
       <div class="qa-item">
-        <div class="qa-question" onclick="this.parentElement.classList.toggle('open')">
-          <span>What is the shape of a projectile's trajectory?</span>
-          <span class="qa-arrow">&#9660;</span>
-        </div>
-        <div class="qa-answer"><div class="qa-answer-inner">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What is the shape of a projectile's trajectory?</div>
+        <div class="qa-a"><div class="qa-a-inner">
           A <strong>parabola</strong>. Eliminating time from the equations of motion: y = x tan&theta; &minus; gx&sup2; / (2u&sup2;cos&sup2;&theta;). This is quadratic in x, which is the equation of a parabola.
         </div></div>
       </div>
@@ -425,13 +581,50 @@
   </div>
 
   <script>
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        canvasBg: isLight ? '#eaebf2' : '#08081a',
+        grid: isLight ? 'rgba(0,120,200,0.04)' : 'rgba(0,212,255,0.025)',
+        axis: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)',
+        axisLabel: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.3)',
+        tickText: isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.25)',
+        cannonBody: isLight ? '#888' : '#555',
+        cannonStroke: isLight ? '#555' : '#888',
+        cannonMuzzle: isLight ? '#777' : '#444',
+        cannonBase: isLight ? '#777' : '#444',
+        cannonBaseStroke: isLight ? '#444' : '#666',
+        cannonHub: isLight ? '#555' : '#333',
+        cannonGlow: isLight ? 'rgba(0,100,180,0.15)' : 'rgba(0,212,255,0.15)',
+        // graph
+        graphBg: isLight ? '#f0f0f8' : '#0a0a22',
+        graphGrid: isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)',
+        graphAxis: isLight ? '#ccc' : '#2a2a50',
+        graphTick: isLight ? '#999' : '#555',
+        graphLabel: isLight ? '#888' : '#6b6b85',
+        graphCurve: '#00d4ff',
+        graphPeak: isLight ? '#cc2266' : '#FF4A6E',
+        graphDot: isLight ? '#0099cc' : '#fff',
+        graphDotGlow: isLight ? '#0099cc' : '#00d4ff',
+        noDataText: isLight ? '#bbb' : '#555',
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); drawScene(); drawGraph(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === STATE ===
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
+    const graphCanvas = document.getElementById('graphCanvas');
+    const graphCtx = graphCanvas.getContext('2d');
     const G = 9.8;
 
     const COLORS = ['#4A9EFF','#FF4A6E','#4AFF8B','#FFB84A','#B44AFF','#FF4AD4','#4AFFF0','#FFF04A'];
     let colorIndex = 0;
-    let launches = []; // {trail:[], color, active, vx, vy, t, u, angle, done}
+    let launches = [];
     let animId = null;
 
     const velSlider = document.getElementById('velSlider');
@@ -443,33 +636,45 @@
     velSlider.oninput = function() { velVal.textContent = this.value; drawScene(); };
     angleSlider.oninput = function() { angleVal.textContent = this.value; drawScene(); };
 
-    // --- Canvas sizing ---
+    // === CANVAS SIZING ===
     const PADDING = 50;
     let originX, originY, scaleX, scaleY, canvasW, canvasH;
 
     function resizeCanvas() {
       const wrap = canvas.parentElement;
       const w = wrap.clientWidth;
-      const h = Math.max(400, window.innerHeight * 0.6);
-      canvas.width = w * (window.devicePixelRatio || 1);
-      canvas.height = h * (window.devicePixelRatio || 1);
+      const h = Math.min(Math.max(350, window.innerHeight * 0.55), window.innerHeight * 0.55);
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
       canvas.style.width = w + 'px';
       canvas.style.height = h + 'px';
-      ctx.setTransform(window.devicePixelRatio || 1, 0, 0, window.devicePixelRatio || 1, 0, 0);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       canvasW = w;
       canvasH = h;
       originX = PADDING;
       originY = canvasH - PADDING;
-      // Scale: 100 m/s at 45deg gives range ~1020m. We want that to fill ~80% of width
-      const maxRange = (100 * 100) / G; // ~1020m at 45 deg
+      const maxRange = (100 * 100) / G;
       scaleX = (canvasW - PADDING * 2) * 0.8 / maxRange;
-      scaleY = scaleX; // keep aspect ratio
+      scaleY = scaleX;
+
+      // Resize graph canvas
+      const gWrap = graphCanvas.parentElement;
+      const gw = gWrap.clientWidth - 32;
+      const gh = h;
+      graphCanvas.width = gw * dpr;
+      graphCanvas.height = gh * dpr;
+      graphCanvas.style.width = gw + 'px';
+      graphCanvas.style.height = gh + 'px';
+      graphCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
       drawScene();
+      drawGraph();
     }
 
     window.addEventListener('resize', resizeCanvas);
 
-    // --- Audio ---
+    // === AUDIO ===
     let audioCtx = null;
     function playBoom() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -484,7 +689,6 @@
       gain.connect(audioCtx.destination);
       osc.start(audioCtx.currentTime);
       osc.stop(audioCtx.currentTime + 0.2);
-      // Add a noise burst for "crack"
       const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.08, audioCtx.sampleRate);
       const data = buf.getChannelData(0);
       for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 3);
@@ -498,13 +702,15 @@
       noise.start(audioCtx.currentTime);
     }
 
-    // --- Drawing ---
+    // === DRAWING — MAIN CANVAS ===
+    const fs = () => Math.max(1, canvasW / 700);
+
     function drawBg() {
-      ctx.fillStyle = '#111';
+      ctx.fillStyle = tc.canvasBg;
       ctx.fillRect(0, 0, canvasW, canvasH);
 
       // Grid
-      ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+      ctx.strokeStyle = tc.grid;
       ctx.lineWidth = 1;
       for (let x = PADDING; x < canvasW - PADDING; x += 50) {
         ctx.beginPath(); ctx.moveTo(x, PADDING / 2); ctx.lineTo(x, originY); ctx.stroke();
@@ -514,36 +720,36 @@
       }
 
       // Axes
-      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.strokeStyle = tc.axis;
       ctx.lineWidth = 1;
-      // X axis
       ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(canvasW - PADDING / 2, originY); ctx.stroke();
-      // Y axis
       ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(originX, PADDING / 2); ctx.stroke();
 
       // Tick marks
-      ctx.fillStyle = 'rgba(255,255,255,0.25)';
-      ctx.font = '9px Inter, sans-serif';
+      ctx.fillStyle = tc.tickText;
+      ctx.font = (9 * fs()) + 'px Delius, cursive';
       ctx.textAlign = 'center';
       const tickSpacingM = getTickSpacing();
       for (let m = tickSpacingM; m * scaleX + originX < canvasW - PADDING; m += tickSpacingM) {
         const px = originX + m * scaleX;
+        ctx.strokeStyle = tc.axis;
         ctx.beginPath(); ctx.moveTo(px, originY); ctx.lineTo(px, originY + 4); ctx.stroke();
-        ctx.fillText(m + 'm', px, originY + 14);
+        ctx.fillText(m + 'm', px, originY + 14 * fs());
       }
       ctx.textAlign = 'right';
       for (let m = tickSpacingM; originY - m * scaleY > PADDING; m += tickSpacingM) {
         const py = originY - m * scaleY;
+        ctx.strokeStyle = tc.axis;
         ctx.beginPath(); ctx.moveTo(originX - 4, py); ctx.lineTo(originX, py); ctx.stroke();
         ctx.fillText(m + 'm', originX - 6, py + 3);
       }
 
       // Axis labels
-      ctx.fillStyle = 'rgba(255,255,255,0.3)';
-      ctx.font = '11px Inter, sans-serif';
+      ctx.fillStyle = tc.axisLabel;
+      ctx.font = (11 * fs()) + 'px Delius, cursive';
       ctx.textAlign = 'center';
-      ctx.fillText('x', canvasW - PADDING / 2 + 10, originY + 4);
-      ctx.fillText('y', originX, PADDING / 2 - 8);
+      ctx.fillText('x (m)', canvasW - PADDING / 2 + 10, originY + 4);
+      ctx.fillText('y (m)', originX, PADDING / 2 - 8);
     }
 
     function getTickSpacing() {
@@ -561,35 +767,35 @@
       const barrelLen = 28;
       const barrelW = 10;
 
+      // Subtle glow
       ctx.save();
+      ctx.shadowColor = tc.cannonGlow;
+      ctx.shadowBlur = 8;
       ctx.translate(cx, cy);
       ctx.rotate(-rad);
 
-      // Barrel
-      ctx.fillStyle = '#555';
-      ctx.strokeStyle = '#888';
+      ctx.fillStyle = tc.cannonBody;
+      ctx.strokeStyle = tc.cannonStroke;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.roundRect(-4, -barrelW / 2, barrelLen, barrelW, 2);
       ctx.fill();
       ctx.stroke();
 
-      // Muzzle
-      ctx.fillStyle = '#444';
+      ctx.fillStyle = tc.cannonMuzzle;
       ctx.fillRect(barrelLen - 4, -barrelW / 2 - 2, 6, barrelW + 4);
 
       ctx.restore();
 
       // Base (wheel)
-      ctx.fillStyle = '#444';
-      ctx.strokeStyle = '#666';
+      ctx.fillStyle = tc.cannonBase;
+      ctx.strokeStyle = tc.cannonBaseStroke;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(cx, cy, 12, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
-      // Hub
-      ctx.fillStyle = '#333';
+      ctx.fillStyle = tc.cannonHub;
       ctx.beginPath();
       ctx.arc(cx, cy, 4, 0, Math.PI * 2);
       ctx.fill();
@@ -598,9 +804,12 @@
     function drawTrails() {
       for (let l of launches) {
         if (l.trail.length < 2) continue;
-        ctx.strokeStyle = l.done
-          ? hexToRgba(l.color, 0.35)
-          : l.color;
+        ctx.save();
+        if (!l.done) {
+          ctx.shadowColor = l.color;
+          ctx.shadowBlur = 6;
+        }
+        ctx.strokeStyle = l.done ? hexToRgba(l.color, 0.35) : l.color;
         ctx.lineWidth = 2;
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
@@ -610,6 +819,29 @@
           ctx.lineTo(l.trail[i].px, l.trail[i].py);
         }
         ctx.stroke();
+        ctx.restore();
+
+        // Peak marker
+        if (l.peakIdx !== undefined && l.trail[l.peakIdx]) {
+          const pk = l.trail[l.peakIdx];
+          ctx.save();
+          ctx.fillStyle = l.done ? hexToRgba(l.color, 0.5) : l.color;
+          ctx.beginPath();
+          ctx.moveTo(pk.px, pk.py - 6);
+          ctx.lineTo(pk.px + 4, pk.py);
+          ctx.lineTo(pk.px, pk.py + 6);
+          ctx.lineTo(pk.px - 4, pk.py);
+          ctx.closePath();
+          ctx.fill();
+          // Height label
+          if (l.hmax) {
+            ctx.font = (9 * fs()) + 'px Delius, cursive';
+            ctx.fillStyle = l.done ? hexToRgba(l.color, 0.5) : l.color;
+            ctx.textAlign = 'center';
+            ctx.fillText(l.hmax.toFixed(1) + 'm', pk.px, pk.py - 10);
+          }
+          ctx.restore();
+        }
       }
     }
 
@@ -617,10 +849,14 @@
       for (let l of launches) {
         if (l.done || l.trail.length === 0) continue;
         const last = l.trail[l.trail.length - 1];
+        ctx.save();
+        ctx.shadowColor = l.color;
+        ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.arc(last.px, last.py, 5, 0, Math.PI * 2);
         ctx.fillStyle = l.color;
         ctx.fill();
+        ctx.restore();
       }
     }
 
@@ -638,7 +874,149 @@
       drawCannon(parseInt(angleSlider.value));
     }
 
-    // --- Physics ---
+    // === DRAWING — GRAPH ===
+    function drawGraph() {
+      const W = graphCanvas.width / (window.devicePixelRatio || 1);
+      const H = graphCanvas.height / (window.devicePixelRatio || 1);
+      const PL = 50, PR = 18, PT = 22, PB = 40;
+
+      graphCtx.fillStyle = tc.graphBg;
+      graphCtx.fillRect(0, 0, W, H);
+
+      const plotW = W - PL - PR;
+      const plotH = H - PT - PB;
+
+      // Find the last (most recent) launch for graph
+      const last = launches.length > 0 ? launches[launches.length - 1] : null;
+
+      if (!last) {
+        // No data
+        graphCtx.fillStyle = tc.noDataText;
+        graphCtx.font = '13px Delius, cursive';
+        graphCtx.textAlign = 'center';
+        graphCtx.fillText('Launch a projectile', W / 2, H / 2 - 10);
+        graphCtx.fillText('to see the graph', W / 2, H / 2 + 10);
+        return;
+      }
+
+      const tof = 2 * last.vy / G;
+      const hmax = last.vy * last.vy / (2 * G);
+      const tMax = Math.max(tof * 1.1, 1);
+      const hMax = Math.max(hmax * 1.2, 1);
+
+      // Grid
+      graphCtx.strokeStyle = tc.graphGrid;
+      graphCtx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = PT + plotH * (1 - i / 4);
+        graphCtx.beginPath(); graphCtx.moveTo(PL, y); graphCtx.lineTo(PL + plotW, y); graphCtx.stroke();
+      }
+      for (let i = 0; i <= 5; i++) {
+        const x = PL + plotW * i / 5;
+        graphCtx.beginPath(); graphCtx.moveTo(x, PT); graphCtx.lineTo(x, PT + plotH); graphCtx.stroke();
+      }
+
+      // Axes frame
+      graphCtx.strokeStyle = tc.graphAxis;
+      graphCtx.lineWidth = 1.5;
+      graphCtx.beginPath();
+      graphCtx.moveTo(PL, PT);
+      graphCtx.lineTo(PL, PT + plotH);
+      graphCtx.lineTo(PL + plotW, PT + plotH);
+      graphCtx.stroke();
+
+      // Axis labels
+      graphCtx.fillStyle = tc.graphLabel;
+      graphCtx.font = '11px Delius, cursive';
+      graphCtx.textAlign = 'center';
+      graphCtx.fillText('Time (s)', PL + plotW / 2, H - 6);
+      graphCtx.save();
+      graphCtx.translate(12, PT + plotH / 2);
+      graphCtx.rotate(-Math.PI / 2);
+      graphCtx.fillText('Height (m)', 0, 0);
+      graphCtx.restore();
+
+      // Tick values
+      graphCtx.fillStyle = tc.graphTick;
+      graphCtx.font = '10px Delius, cursive';
+      graphCtx.textAlign = 'center';
+      for (let i = 0; i <= 5; i++) {
+        const t = (tMax * i / 5).toFixed(1);
+        graphCtx.fillText(t, PL + plotW * i / 5, PT + plotH + 16);
+      }
+      graphCtx.textAlign = 'right';
+      for (let i = 0; i <= 4; i++) {
+        const h = (hMax * i / 4).toFixed(0);
+        graphCtx.fillText(h, PL - 6, PT + plotH * (1 - i / 4) + 4);
+      }
+
+      // Plot the theoretical H vs T curve
+      graphCtx.strokeStyle = tc.graphCurve;
+      graphCtx.lineWidth = 2.5;
+      graphCtx.shadowColor = tc.graphCurve;
+      graphCtx.shadowBlur = 6;
+      graphCtx.beginPath();
+      for (let i = 0; i <= 200; i++) {
+        const t = tof * i / 200;
+        const h = last.vy * t - 0.5 * G * t * t;
+        const px = PL + (t / tMax) * plotW;
+        const py = PT + plotH - (h / hMax) * plotH;
+        if (i === 0) graphCtx.moveTo(px, py); else graphCtx.lineTo(px, py);
+      }
+      graphCtx.stroke();
+      graphCtx.shadowBlur = 0;
+
+      // Peak marker
+      const tPeak = last.vy / G;
+      const peakX = PL + (tPeak / tMax) * plotW;
+      const peakY = PT + plotH - (hmax / hMax) * plotH;
+
+      // Peak dashed lines
+      graphCtx.strokeStyle = tc.graphPeak;
+      graphCtx.lineWidth = 1;
+      graphCtx.setLineDash([4, 4]);
+      graphCtx.beginPath();
+      graphCtx.moveTo(peakX, peakY);
+      graphCtx.lineTo(peakX, PT + plotH);
+      graphCtx.stroke();
+      graphCtx.beginPath();
+      graphCtx.moveTo(PL, peakY);
+      graphCtx.lineTo(peakX, peakY);
+      graphCtx.stroke();
+      graphCtx.setLineDash([]);
+
+      // Peak dot
+      graphCtx.fillStyle = tc.graphPeak;
+      graphCtx.beginPath();
+      graphCtx.arc(peakX, peakY, 4, 0, Math.PI * 2);
+      graphCtx.fill();
+
+      // Peak label
+      graphCtx.fillStyle = tc.graphPeak;
+      graphCtx.font = '10px Delius, cursive';
+      graphCtx.textAlign = 'left';
+      graphCtx.fillText('H=' + hmax.toFixed(1) + 'm', peakX + 8, peakY - 4);
+
+      // Current position dot (if active)
+      if (last.active && last.trail.length > 0) {
+        const currentT = last.t;
+        const currentH = last.vy * currentT - 0.5 * G * currentT * currentT;
+        if (currentH >= 0) {
+          const cx = PL + (currentT / tMax) * plotW;
+          const cy = PT + plotH - (currentH / hMax) * plotH;
+          graphCtx.save();
+          graphCtx.shadowColor = tc.graphDotGlow;
+          graphCtx.shadowBlur = 10;
+          graphCtx.fillStyle = tc.graphDot;
+          graphCtx.beginPath();
+          graphCtx.arc(cx, cy, 5, 0, Math.PI * 2);
+          graphCtx.fill();
+          graphCtx.restore();
+        }
+      }
+    }
+
+    // === PHYSICS ===
     function toScreen(x, y) {
       return { px: originX + x * scaleX, py: originY - y * scaleY };
     }
@@ -652,31 +1030,30 @@
       const color = COLORS[colorIndex % COLORS.length];
       colorIndex++;
 
+      const hmax = vy * vy / (2 * G);
       const proj = {
-        u, angle, vx, vy, t: 0, color,
+        u, angle, vx, vy, t: 0, color, hmax,
         trail: [],
         active: true,
-        done: false
+        done: false,
+        peakIdx: undefined,
+        peakReached: false
       };
       launches.push(proj);
 
       // Update data panel
       const tof = (2 * u * Math.sin(rad) / G).toFixed(2);
       const range = (u * u * Math.sin(2 * rad) / G).toFixed(1);
-      const hmax = (u * u * Math.sin(rad) * Math.sin(rad) / (2 * G)).toFixed(1);
       document.getElementById('d-u').textContent = u + ' m/s';
       document.getElementById('d-theta').textContent = angle + '\u00B0';
       document.getElementById('d-tof').textContent = tof + ' s';
       document.getElementById('d-range').textContent = range + ' m';
-      document.getElementById('d-hmax').textContent = hmax + ' m';
+      document.getElementById('d-hmax').textContent = hmax.toFixed(1) + ' m';
       document.getElementById('d-ux').textContent = vx.toFixed(1) + ' m/s';
       document.getElementById('d-uy').textContent = vy.toFixed(1) + ' m/s';
 
-      // Update legend
       updateLegend();
-
       playBoom();
-
       if (!animId) animate();
     }
 
@@ -699,8 +1076,13 @@
         const x = l.vx * l.t;
         const y = l.vy * l.t - 0.5 * G * l.t * l.t;
 
+        // Track peak
+        if (!l.peakReached && y < (l.trail.length > 0 ? (l.vy * (l.t - 0.025) - 0.5 * G * (l.t - 0.025) * (l.t - 0.025)) : 0)) {
+          l.peakReached = true;
+          l.peakIdx = Math.max(0, l.trail.length - 1);
+        }
+
         if (y <= 0 && l.t > 0.05) {
-          // Land at y=0
           const tLand = 2 * l.vy / G;
           const xLand = l.vx * tLand;
           l.trail.push(toScreen(xLand, 0));
@@ -713,6 +1095,7 @@
       }
 
       drawScene();
+      drawGraph();
 
       if (anyActive) {
         animId = requestAnimationFrame(animate);
@@ -734,13 +1117,28 @@
       document.getElementById('d-ux').innerHTML = '&mdash;';
       document.getElementById('d-uy').innerHTML = '&mdash;';
       drawScene();
+      drawGraph();
     }
 
-    // --- Event listeners ---
+    // === FULLSCREEN ===
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      const el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(resizeCanvas, 100);
+      setTimeout(resizeCanvas, 300);
+    });
+
+    // === EVENT LISTENERS ===
     document.getElementById('launchBtn').addEventListener('click', launchProjectile);
     document.getElementById('resetBtn').addEventListener('click', resetSim);
 
-    // Keyboard shortcut
     document.addEventListener('keydown', function(e) {
       if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
         e.preventDefault();

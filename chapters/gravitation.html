@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravitation | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Main Content -->
+  <main>
+    <div class="chapter-detail">
+
+      <div class="ch-hero">
+        <h1>Gravitation</h1>
+        <span class="ch-meta">Chapter 05 &mdash; Grade XI &mdash; Mechanics</span>
+      </div>
+
+      <!-- 1. Newton's Law of Gravitation -->
+      <div class="theory-section">
+        <h2>1. Newton&rsquo;s Law of Universal Gravitation</h2>
+        <p>
+          Every particle in the universe attracts every other particle with a force that is directly
+          proportional to the product of their masses and inversely proportional to the square of the
+          distance between them. This is Newton&rsquo;s Law of Universal Gravitation, one of the most
+          fundamental laws of classical physics.
+        </p>
+        <div class="formula-box">
+          F = GMm / r&sup2;
+        </div>
+        <p>
+          Here, <strong>G</strong> is the universal gravitational constant with the value
+          G = 6.674 &times; 10<sup>&minus;11</sup> N m&sup2; kg<sup>&minus;2</sup>. The force is always
+          attractive and acts along the line joining the centres of the two masses.
+        </p>
+
+        <h3>Vector Form</h3>
+        <p>
+          In vector notation, the gravitational force exerted by mass M on mass m is:
+        </p>
+        <div class="formula-box">
+          <strong>F</strong> = &minus;(GMm / r&sup2;) <strong>r&#770;</strong>
+        </div>
+        <p>
+          The negative sign indicates that the force is attractive &mdash; it is directed from mass m
+          towards mass M, opposite to the unit vector <strong>r&#770;</strong> pointing from M to m.
+          Gravitation obeys the principle of superposition: the net force on a particle is the vector
+          sum of the individual gravitational forces due to all other particles.
+        </p>
+      </div>
+
+      <!-- 2. Gravitational Field & Potential -->
+      <div class="theory-section">
+        <h2>2. Gravitational Field &amp; Potential</h2>
+
+        <h3>Gravitational Field Intensity</h3>
+        <p>
+          The gravitational field intensity (or gravitational field strength) at a point is the force
+          experienced per unit mass placed at that point. For a point mass M at distance r:
+        </p>
+        <div class="formula-box">
+          g = GM / r&sup2;
+        </div>
+        <p>
+          The field is a vector quantity directed radially inward towards the mass creating it. Inside
+          a uniform spherical shell, the gravitational field is zero (Shell Theorem). Outside the
+          shell, the field behaves as though all the mass were concentrated at the centre.
+        </p>
+
+        <h3>Gravitational Potential</h3>
+        <p>
+          Gravitational potential at a point is defined as the work done per unit mass in bringing a
+          test mass from infinity to that point. For a point mass M at distance r:
+        </p>
+        <div class="formula-box">
+          V = &minus;GM / r
+        </div>
+        <p>
+          The potential is a scalar quantity and is always negative (since work is done by the
+          gravitational field when bringing the mass from infinity). The reference point is at infinity
+          where V = 0.
+        </p>
+
+        <h3>Relation Between Field and Potential</h3>
+        <div class="formula-box">
+          E = &minus;dV/dr
+        </div>
+        <p>
+          The gravitational field intensity is the negative gradient of the gravitational potential.
+          This means the field points in the direction of decreasing potential, and equipotential
+          surfaces are always perpendicular to the field lines.
+        </p>
+      </div>
+
+      <!-- 3. Acceleration due to Gravity -->
+      <div class="theory-section">
+        <h2>3. Acceleration due to Gravity</h2>
+
+        <h3>At the Surface of the Earth</h3>
+        <p>
+          The acceleration due to gravity at the surface of the Earth is obtained by applying Newton&rsquo;s
+          law to an object at the surface:
+        </p>
+        <div class="formula-box">
+          g = GM / R&sup2;
+        </div>
+        <p>
+          where M is the mass of the Earth and R is its radius. The standard value is approximately
+          g = 9.8 m/s&sup2;.
+        </p>
+
+        <h3>Variation with Height</h3>
+        <p>
+          At a height h above the Earth&rsquo;s surface, the acceleration due to gravity decreases.
+          The exact expression is g' = GM/(R + h)&sup2;. For h &laquo; R, the approximate formula is:
+        </p>
+        <div class="formula-box">
+          g' = g(1 &minus; 2h/R) &nbsp;&nbsp;(for h &laquo; R)
+        </div>
+
+        <h3>Variation with Depth</h3>
+        <p>
+          At a depth d below the Earth&rsquo;s surface (assuming uniform density), only the mass of
+          the sphere of radius (R &minus; d) contributes to gravity:
+        </p>
+        <div class="formula-box">
+          g' = g(1 &minus; d/R)
+        </div>
+        <p>
+          At the centre of the Earth (d = R), the acceleration due to gravity becomes zero.
+        </p>
+
+        <h3>Variation with Latitude</h3>
+        <p>
+          Due to the Earth&rsquo;s rotation, the effective acceleration due to gravity varies with
+          latitude &lambda;. The apparent weight is reduced at the equator compared to the poles:
+        </p>
+        <div class="formula-box">
+          g' = g &minus; &omega;&sup2;R cos&sup2;&lambda;
+        </div>
+        <p>
+          At the poles (&lambda; = 90&deg;), g' = g (maximum). At the equator (&lambda; = 0&deg;),
+          g' = g &minus; &omega;&sup2;R (minimum). The Earth&rsquo;s oblate shape also contributes to
+          this variation since the poles are closer to the centre.
+        </p>
+      </div>
+
+      <!-- 4. Gravitational PE -->
+      <div class="theory-section">
+        <h2>4. Gravitational Potential Energy</h2>
+        <p>
+          The gravitational potential energy of a system of two masses M and m separated by a distance
+          r is defined as the work done in assembling the system by bringing the masses from infinity
+          to their current positions:
+        </p>
+        <div class="formula-box">
+          U = &minus;GMm / r
+        </div>
+        <p>
+          The reference point is at infinity where U = 0. The negative sign signifies that the system
+          is bound &mdash; energy must be supplied to separate the masses to infinity. As the masses
+          come closer, the potential energy decreases (becomes more negative), and this loss appears
+          as kinetic energy.
+        </p>
+        <p>
+          Near the Earth&rsquo;s surface, for small heights h compared to R, the familiar expression
+          U = mgh is an approximation of the general formula.
+        </p>
+      </div>
+
+      <!-- 5. Escape Velocity -->
+      <div class="theory-section">
+        <h2>5. Escape Velocity</h2>
+        <p>
+          Escape velocity is the minimum velocity that must be given to an object at the surface of a
+          planet so that it can escape the gravitational pull of the planet and reach infinity with
+          zero velocity. Using conservation of energy:
+        </p>
+        <div class="formula-box">
+          &frac12;mv<sub>e</sub>&sup2; &minus; GMm/R = 0<br><br>
+          v<sub>e</sub> = &radic;(2GM/R) = &radic;(2gR)
+        </div>
+        <p>
+          For Earth, v<sub>e</sub> &approx; 11.2 km/s. The escape velocity is independent of the mass
+          of the escaping object and of the direction of projection. It depends only on the mass and
+          radius of the planet (or equivalently, on g and R).
+        </p>
+        <ul>
+          <li>Escape velocity does not depend on the mass or direction of the projected body</li>
+          <li>For Earth: v<sub>e</sub> &approx; 11.2 km/s</li>
+          <li>If v &lt; v<sub>e</sub>, the object will return back (bound trajectory)</li>
+          <li>If v = v<sub>e</sub>, the object just escapes (parabolic trajectory)</li>
+          <li>If v &gt; v<sub>e</sub>, the object escapes with residual KE (hyperbolic trajectory)</li>
+        </ul>
+      </div>
+
+      <!-- 6. Orbital Motion -->
+      <div class="theory-section">
+        <h2>6. Orbital Motion &amp; Kepler&rsquo;s Laws</h2>
+
+        <h3>Orbital Velocity</h3>
+        <p>
+          For a satellite in a circular orbit of radius r around the Earth, the gravitational force
+          provides the centripetal acceleration. Equating these:
+        </p>
+        <div class="formula-box">
+          GMm/r&sup2; = mv<sub>o</sub>&sup2;/r<br><br>
+          v<sub>o</sub> = &radic;(GM/r) = &radic;(gR&sup2;/r)
+        </div>
+        <p>
+          For an orbit close to the Earth&rsquo;s surface (r &approx; R), v<sub>o</sub> = &radic;(gR)
+          &approx; 7.9 km/s. Note that v<sub>e</sub> = &radic;2 &times; v<sub>o</sub>.
+        </p>
+
+        <h3>Time Period of Orbit</h3>
+        <div class="formula-box">
+          T = 2&pi;r / v<sub>o</sub> = 2&pi;&radic;(r&sup3; / GM)
+        </div>
+
+        <h3>Kepler&rsquo;s Laws of Planetary Motion</h3>
+        <ul>
+          <li><strong>First Law (Law of Orbits):</strong> All planets move in elliptical orbits with the Sun at one focus.</li>
+          <li><strong>Second Law (Law of Areas):</strong> The line joining a planet and the Sun sweeps out equal areas in equal intervals of time (conservation of angular momentum).</li>
+          <li><strong>Third Law (Law of Periods):</strong> The square of the orbital period is proportional to the cube of the semi-major axis of the orbit: T&sup2; &propto; r&sup3;.</li>
+        </ul>
+        <div class="formula-box">
+          T&sup2; = (4&pi;&sup2; / GM) r&sup3; &nbsp;&nbsp;&rArr;&nbsp;&nbsp; T&sup2; &propto; r&sup3;
+        </div>
+      </div>
+
+      <!-- 7. Satellites -->
+      <div class="theory-section">
+        <h2>7. Satellites</h2>
+
+        <h3>Geostationary Orbits</h3>
+        <p>
+          A geostationary satellite orbits the Earth in the equatorial plane with the same angular
+          velocity as the Earth&rsquo;s rotation. Its period is exactly 24 hours, and it appears
+          stationary relative to the Earth&rsquo;s surface. The orbital radius is approximately
+          42,164 km from the Earth&rsquo;s centre (about 35,786 km above the surface).
+        </p>
+
+        <h3>Energy of a Satellite</h3>
+        <p>
+          For a satellite of mass m in a circular orbit of radius r around Earth (mass M):
+        </p>
+        <ul>
+          <li>Kinetic Energy: KE = GMm / 2r</li>
+          <li>Potential Energy: PE = &minus;GMm / r</li>
+          <li>Total Energy: E = KE + PE = &minus;GMm / 2r</li>
+        </ul>
+        <div class="formula-box">
+          E = &minus;GMm / 2r
+        </div>
+        <p>
+          The total energy is negative, indicating that the satellite is in a bound state. The
+          magnitude of total energy equals the kinetic energy, and |PE| = 2 &times; KE.
+        </p>
+
+        <h3>Binding Energy</h3>
+        <p>
+          The binding energy of a satellite is the minimum energy required to free it from its orbit
+          (i.e., take it to infinity with zero velocity). It equals the magnitude of the total energy:
+        </p>
+        <div class="formula-box">
+          Binding Energy = GMm / 2r
+        </div>
+      </div>
+
+      <!-- Key Formulas Summary -->
+      <div class="theory-section">
+        <h2>Key Formulas Summary</h2>
+        <div class="formula-box">
+          F = GMm/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; g = GM/R&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; V = &minus;GM/r<br>
+          g' = g(1 &minus; 2h/R) &nbsp;&nbsp;|&nbsp;&nbsp; g' = g(1 &minus; d/R)<br>
+          v<sub>e</sub> = &radic;(2gR) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>o</sub> = &radic;(gR) &nbsp;(near surface)<br>
+          T&sup2; &propto; r&sup3; &nbsp;&nbsp;|&nbsp;&nbsp; E = &minus;GMm/2r
+        </div>
+      </div>
+
+      <!-- Solved Examples -->
+      <div class="theory-section">
+        <h2>Solved Examples</h2>
+
+        <div class="example-box">
+          <div class="ex-label">Example 1</div>
+          <p>
+            Calculate the escape velocity from the surface of the Earth. Given: g = 9.8 m/s&sup2;,
+            R = 6.4 &times; 10&sup3; km.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Escape velocity: v<sub>e</sub> = &radic;(2gR)<br><br>
+              v<sub>e</sub> = &radic;(2 &times; 9.8 &times; 6.4 &times; 10&sup6;)<br>
+              v<sub>e</sub> = &radic;(2 &times; 9.8 &times; 6,400,000)<br>
+              v<sub>e</sub> = &radic;(125,440,000)<br>
+              v<sub>e</sub> = 11,200 m/s &approx; 11.2 km/s
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 2</div>
+          <p>
+            A satellite orbits the Earth at a height equal to the radius of the Earth (h = R).
+            Find its orbital velocity and time period. Given: g = 9.8 m/s&sup2;, R = 6400 km.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Orbital radius: r = R + h = R + R = 2R<br><br>
+              Orbital velocity: v<sub>o</sub> = &radic;(GM/r) = &radic;(gR&sup2;/2R) = &radic;(gR/2)<br>
+              v<sub>o</sub> = &radic;(9.8 &times; 6.4 &times; 10&sup6; / 2)<br>
+              v<sub>o</sub> = &radic;(31,360,000) &approx; 5,600 m/s &approx; 5.6 km/s<br><br>
+              Time period: T = 2&pi;r / v<sub>o</sub> = 2&pi; &times; 2 &times; 6.4 &times; 10&sup6; / 5600<br>
+              T = 2&pi; &times; 12,800,000 / 5600 &approx; 14,360 s &approx; 4.0 hours
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 3</div>
+          <p>
+            At what depth below the surface of the Earth is the acceleration due to gravity reduced
+            to 75% of its value at the surface? Given: R = 6400 km.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using g' = g(1 &minus; d/R), set g' = 0.75g:<br><br>
+              0.75g = g(1 &minus; d/R)<br>
+              0.75 = 1 &minus; d/R<br>
+              d/R = 0.25<br>
+              d = 0.25 &times; 6400 = 1600 km<br><br>
+              The acceleration due to gravity is reduced to 75% of its surface value at a depth
+              of 1600 km below the surface.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter Links -->
+      <div class="ch-links">
+        <a href="../simulations/gravitation.html" class="primary-link">Launch Simulation &rarr;</a>
+        <a href="../tests/gravitation.html">Take Chapter Test</a>
+        <a href="rotational-motion.html">&larr; Previous: Rotational Motion</a>
+        <a href="mechanical-properties.html">Next: Mechanical Properties &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a>
+        <a href="../lectures.html">Lectures</a>
+        <a href="../notes.html">Notes</a>
+        <a href="../books.html">Books</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

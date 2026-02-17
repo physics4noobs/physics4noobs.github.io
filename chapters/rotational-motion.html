@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotational Motion | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f52c;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+    <div class="ch-hero">
+      <h1>Rotational Motion</h1>
+      <span class="ch-meta">GRADE XI | CHAPTER 04</span>
+    </div>
+
+    <!-- Section 1: Angular Kinematics -->
+    <div class="theory-section">
+      <h2>1. Angular Kinematics</h2>
+      <p>
+        Rotational motion is the motion of a body about a fixed axis. Just as linear kinematics describes
+        translational motion using displacement, velocity, and acceleration, angular kinematics uses their
+        rotational counterparts: angular displacement, angular velocity, and angular acceleration.
+      </p>
+      <h3>Angular Displacement (&theta;)</h3>
+      <p>
+        Angular displacement is the angle swept by the radius vector of a rotating body. It is measured in
+        radians (rad). The relationship between linear and angular displacement is: s = r&theta;, where s is the
+        arc length and r is the radius of the circular path.
+      </p>
+      <h3>Angular Velocity (&omega;)</h3>
+      <p>
+        Angular velocity is the rate of change of angular displacement:
+      </p>
+      <div class="formula-box">
+        &omega; = d&theta;/dt &nbsp;&nbsp;(instantaneous)<br>
+        &omega;<sub>avg</sub> = &Delta;&theta;/&Delta;t<br>
+        Relation to linear velocity: v = r&omega; &nbsp;&nbsp;(tangential velocity)
+      </div>
+      <p>
+        The direction of &omega; is along the axis of rotation, given by the right-hand rule: curl the fingers
+        of the right hand in the direction of rotation, and the thumb points in the direction of &omega;.
+      </p>
+      <h3>Angular Acceleration (&alpha;)</h3>
+      <div class="formula-box">
+        &alpha; = d&omega;/dt = d&sup2;&theta;/dt&sup2;<br>
+        Relation to linear (tangential) acceleration: a<sub>t</sub> = r&alpha;
+      </div>
+      <h3>Equations of Rotational Motion (constant &alpha;)</h3>
+      <p>
+        Analogous to the three kinematic equations for constant linear acceleration:
+      </p>
+      <div class="formula-box">
+        &omega; = &omega;<sub>0</sub> + &alpha;t &nbsp;&nbsp;(cf. v = u + at)<br>
+        &theta; = &omega;<sub>0</sub>t + &frac12;&alpha;t&sup2; &nbsp;&nbsp;(cf. s = ut + &frac12;at&sup2;)<br>
+        &omega;&sup2; = &omega;<sub>0</sub>&sup2; + 2&alpha;&theta; &nbsp;&nbsp;(cf. v&sup2; = u&sup2; + 2as)
+      </div>
+    </div>
+
+    <!-- Section 2: Torque -->
+    <div class="theory-section">
+      <h2>2. Torque</h2>
+      <p>
+        <strong>Torque</strong> (or moment of force) is the rotational analogue of force. It is the tendency of a force
+        to cause or change the rotational motion of a body. Torque is defined as the cross product of the
+        position vector and the force vector:
+      </p>
+      <div class="formula-box">
+        &tau; = r &times; F<br>
+        |&tau;| = rF sin&theta; = r&perp;F = rF&perp;<br>
+        SI unit: Newton-metre (N&middot;m)
+      </div>
+      <p>
+        where &theta; is the angle between r and F, r&perp; = r sin&theta; is the <strong>moment arm</strong> (perpendicular
+        distance from the axis to the line of action of the force), and F&perp; = F sin&theta; is the component
+        of force perpendicular to r.
+      </p>
+      <h3>Couple</h3>
+      <p>
+        A <strong>couple</strong> consists of two equal and opposite parallel forces whose lines of action do not
+        coincide. A couple produces pure rotation (no translation). The torque of a couple is:
+      </p>
+      <div class="formula-box">
+        &tau;<sub>couple</sub> = F &times; d &nbsp;&nbsp;(where d is the perpendicular distance between the two forces)
+      </div>
+      <p>
+        The torque of a couple is the same about any point in the plane.
+      </p>
+      <h3>Conditions for Equilibrium</h3>
+      <p>
+        For a rigid body to be in complete equilibrium, two conditions must be simultaneously satisfied:
+      </p>
+      <ul>
+        <li><strong>Translational equilibrium:</strong> &Sigma;F = 0 (net force is zero &mdash; no linear acceleration).</li>
+        <li><strong>Rotational equilibrium:</strong> &Sigma;&tau; = 0 about any point (net torque is zero &mdash; no angular acceleration).</li>
+      </ul>
+    </div>
+
+    <!-- Section 3: Moment of Inertia -->
+    <div class="theory-section">
+      <h2>3. Moment of Inertia</h2>
+      <p>
+        The <strong>moment of inertia</strong> (I) is the rotational analogue of mass. It measures the resistance
+        of a body to angular acceleration, just as mass measures resistance to linear acceleration.
+        Newton&rsquo;s second law for rotation is:
+      </p>
+      <div class="formula-box">
+        &tau;<sub>net</sub> = I&alpha; &nbsp;&nbsp;(analogous to F = ma)
+      </div>
+      <h3>For Discrete Particles</h3>
+      <p>
+        For a system of point masses m<sub>1</sub>, m<sub>2</sub>, &hellip;, m<sub>n</sub> at perpendicular distances
+        r<sub>1</sub>, r<sub>2</sub>, &hellip;, r<sub>n</sub> from the axis of rotation:
+      </p>
+      <div class="formula-box">
+        I = &Sigma; m<sub>i</sub>r<sub>i</sub>&sup2; = m<sub>1</sub>r<sub>1</sub>&sup2; + m<sub>2</sub>r<sub>2</sub>&sup2; + &hellip; + m<sub>n</sub>r<sub>n</sub>&sup2;
+      </div>
+      <h3>For Continuous Bodies</h3>
+      <p>
+        For a continuous body, the summation is replaced by integration:
+        I = &int; r&sup2; dm, where dm is an infinitesimal mass element at distance r from the axis.
+      </p>
+      <h3>Standard Moments of Inertia</h3>
+      <div class="formula-box">
+        Thin rod (about center, perpendicular): I = ML&sup2;/12<br>
+        Thin rod (about end, perpendicular): I = ML&sup2;/3<br>
+        Ring (about axis through center): I = MR&sup2;<br>
+        Ring (about diameter): I = MR&sup2;/2<br>
+        Solid disc/cylinder (about axis): I = MR&sup2;/2<br>
+        Solid disc (about diameter): I = MR&sup2;/4<br>
+        Solid sphere (about diameter): I = 2MR&sup2;/5<br>
+        Hollow sphere (about diameter): I = 2MR&sup2;/3<br>
+        Hollow cylinder (about axis): I = MR&sup2; (thin-walled) or M(R<sub>1</sub>&sup2; + R<sub>2</sub>&sup2;)/2 (thick-walled)
+      </div>
+      <p>
+        The <strong>radius of gyration</strong> k is defined by I = Mk&sup2;, so k = &radic;(I/M). It represents the
+        effective distance from the axis at which the entire mass may be considered concentrated.
+      </p>
+    </div>
+
+    <!-- Section 4: Theorems -->
+    <div class="theory-section">
+      <h2>4. Parallel and Perpendicular Axis Theorems</h2>
+      <h3>Parallel Axis Theorem</h3>
+      <p>
+        The moment of inertia of a body about any axis is equal to its moment of inertia about a parallel
+        axis through the centre of mass, plus the product of the total mass and the square of the
+        perpendicular distance between the two axes:
+      </p>
+      <div class="formula-box">
+        I = I<sub>cm</sub> + Md&sup2;
+      </div>
+      <p>
+        where I<sub>cm</sub> is the moment of inertia about the centre-of-mass axis, M is the total mass, and
+        d is the distance between the two parallel axes. This theorem is valid for any body and any pair
+        of parallel axes. The moment of inertia is <em>minimum</em> about the axis through the centre of mass.
+      </p>
+      <p>
+        <strong>Application:</strong> Moment of inertia of a rod about one end = ML&sup2;/12 + M(L/2)&sup2; = ML&sup2;/3.
+      </p>
+      <h3>Perpendicular Axis Theorem</h3>
+      <p>
+        For a <strong>planar (2D/laminar) body</strong>, the moment of inertia about an axis perpendicular
+        to the plane is equal to the sum of the moments of inertia about two mutually perpendicular axes
+        in the plane that intersect at the point where the perpendicular axis passes through:
+      </p>
+      <div class="formula-box">
+        I<sub>z</sub> = I<sub>x</sub> + I<sub>y</sub>
+      </div>
+      <p>
+        This theorem applies <em>only</em> to flat (planar) bodies like discs, rings, and flat plates. It does
+        NOT apply to 3D bodies like spheres or cylinders (about their length).
+      </p>
+      <p>
+        <strong>Application:</strong> For a disc, I<sub>axis</sub> = MR&sup2;/2. By symmetry, the two diameters are
+        equivalent: I<sub>d1</sub> = I<sub>d2</sub>. Using the perpendicular axis theorem:
+        MR&sup2;/2 = 2I<sub>diameter</sub>, so I<sub>diameter</sub> = MR&sup2;/4.
+      </p>
+    </div>
+
+    <!-- Section 5: Angular Momentum -->
+    <div class="theory-section">
+      <h2>5. Angular Momentum</h2>
+      <p>
+        Angular momentum is the rotational analogue of linear momentum. For a rigid body rotating about a
+        fixed axis with moment of inertia I and angular velocity &omega;:
+      </p>
+      <div class="formula-box">
+        L = I&omega; &nbsp;&nbsp;(for rotation about a fixed axis)<br>
+        L = r &times; p = r &times; mv &nbsp;&nbsp;(for a particle)<br>
+        |L| = mvr sin&theta; = mvr&perp;
+      </div>
+      <p>
+        The relation between torque and angular momentum (analogous to F = dp/dt):
+      </p>
+      <div class="formula-box">
+        &tau;<sub>net</sub> = dL/dt
+      </div>
+      <h3>Conservation of Angular Momentum</h3>
+      <p>
+        If the <strong>net external torque</strong> on a system is zero, the total angular momentum of the system
+        remains constant:
+      </p>
+      <div class="formula-box">
+        If &tau;<sub>ext</sub> = 0, then L = I&omega; = constant<br>
+        I<sub>1</sub>&omega;<sub>1</sub> = I<sub>2</sub>&omega;<sub>2</sub>
+      </div>
+      <h3>The Ice Skater Effect</h3>
+      <p>
+        When an ice skater spins with arms outstretched and then pulls their arms in, their moment of inertia
+        decreases (mass moves closer to the axis). Since no external torque acts (ideally), angular momentum is
+        conserved, and the angular velocity increases dramatically. This is why figure skaters spin faster with
+        arms tucked in and slow down when arms are extended.
+      </p>
+      <p>
+        Other examples: a diver tucking during a somersault, a spinning neutron star (pulsar) contracting and
+        spinning faster, a cat twisting to land on its feet.
+      </p>
+    </div>
+
+    <!-- Section 6: Rotational Kinetic Energy -->
+    <div class="theory-section">
+      <h2>6. Rotational Kinetic Energy</h2>
+      <p>
+        A rotating body possesses kinetic energy due to its rotational motion. For a body rotating about a
+        fixed axis with moment of inertia I and angular velocity &omega;:
+      </p>
+      <div class="formula-box">
+        KE<sub>rot</sub> = &frac12;I&omega;&sup2;
+      </div>
+      <p>
+        This is analogous to translational KE = &frac12;mv&sup2;. The rotational kinetic energy can also be expressed
+        in terms of angular momentum: KE<sub>rot</sub> = L&sup2;/2I.
+      </p>
+      <p>
+        The <strong>work-energy theorem for rotation</strong> states that the net work done by torques equals the
+        change in rotational kinetic energy:
+      </p>
+      <div class="formula-box">
+        W = &int; &tau; d&theta; = &Delta;KE<sub>rot</sub> = &frac12;I&omega;<sub>f</sub>&sup2; &minus; &frac12;I&omega;<sub>i</sub>&sup2;
+      </div>
+      <p>
+        Power in rotational motion: P = &tau;&omega; (analogous to P = Fv).
+      </p>
+    </div>
+
+    <!-- Section 7: Rolling Motion -->
+    <div class="theory-section">
+      <h2>7. Rolling Motion</h2>
+      <p>
+        Rolling is a combination of translational and rotational motion. A body that rolls without slipping
+        has a special constraint that connects its translational and rotational quantities.
+      </p>
+      <h3>Condition for Rolling Without Slipping</h3>
+      <div class="formula-box">
+        v<sub>cm</sub> = R&omega; &nbsp;&nbsp;(no-slip condition)<br>
+        a<sub>cm</sub> = R&alpha; &nbsp;&nbsp;(differentiating the above)
+      </div>
+      <p>
+        At the contact point with the ground, the velocity is zero (v<sub>contact</sub> = v<sub>cm</sub> &minus; R&omega; = 0).
+        This is the instantaneous axis of rotation.
+      </p>
+      <h3>Total Kinetic Energy of a Rolling Body</h3>
+      <p>
+        The total kinetic energy is the sum of translational and rotational kinetic energies:
+      </p>
+      <div class="formula-box">
+        KE<sub>total</sub> = KE<sub>trans</sub> + KE<sub>rot</sub> = &frac12;mv<sub>cm</sub>&sup2; + &frac12;I<sub>cm</sub>&omega;&sup2;<br>
+        Using v<sub>cm</sub> = R&omega; and I<sub>cm</sub> = Mk&sup2;:<br>
+        KE<sub>total</sub> = &frac12;mv<sub>cm</sub>&sup2;(1 + k&sup2;/R&sup2;)
+      </div>
+      <p>
+        where k is the radius of gyration. The ratio KE<sub>rot</sub>/KE<sub>total</sub> = k&sup2;/(R&sup2; + k&sup2;) and
+        KE<sub>trans</sub>/KE<sub>total</sub> = R&sup2;/(R&sup2; + k&sup2;).
+      </p>
+      <h3>Rolling on an Incline</h3>
+      <p>
+        For a body of mass M, radius R, and radius of gyration k rolling without slipping down an incline
+        of angle &theta;:
+      </p>
+      <div class="formula-box">
+        Acceleration: a = g sin&theta; / (1 + k&sup2;/R&sup2;)<br>
+        Velocity at bottom (from height h): v = &radic;[2gh / (1 + k&sup2;/R&sup2;)]<br>
+        Time to reach bottom (from rest, length L): t = &radic;[2L(1 + k&sup2;/R&sup2;) / (g sin&theta;)]
+      </div>
+      <p>
+        The friction required for rolling (not sliding): f = Mg sin&theta; / (1 + R&sup2;/k&sup2;). For rolling to occur
+        without slipping, this friction must not exceed &mu;<sub>s</sub>N = &mu;<sub>s</sub>Mg cos&theta;, which gives the
+        condition: tan&theta; &le; &mu;<sub>s</sub>(1 + R&sup2;/k&sup2;).
+      </p>
+      <h3>Comparison of Rolling Bodies on an Incline</h3>
+      <p>
+        Since acceleration a = g sin&theta; / (1 + k&sup2;/R&sup2;), the body with the smallest k&sup2;/R&sup2; has the
+        largest acceleration and reaches the bottom first. Ranking (fastest to slowest):
+      </p>
+      <ul>
+        <li><strong>Solid sphere:</strong> k&sup2;/R&sup2; = 2/5, &nbsp; a = 5g sin&theta;/7 &nbsp; (fastest)</li>
+        <li><strong>Solid cylinder / disc:</strong> k&sup2;/R&sup2; = 1/2, &nbsp; a = 2g sin&theta;/3</li>
+        <li><strong>Hollow sphere:</strong> k&sup2;/R&sup2; = 2/3, &nbsp; a = 3g sin&theta;/5</li>
+        <li><strong>Hollow cylinder / ring:</strong> k&sup2;/R&sup2; = 1, &nbsp; a = g sin&theta;/2 &nbsp; (slowest)</li>
+      </ul>
+      <p>
+        This ranking is <em>independent of mass and radius</em> &mdash; it depends only on the shape (mass distribution).
+        A small solid sphere beats a large hollow cylinder every time.
+      </p>
+    </div>
+
+    <!-- Solved Examples -->
+    <div class="theory-section">
+      <h2>Solved Examples</h2>
+
+      <div class="example-box">
+        <div class="ex-label">Example 1 &mdash; Moment of Inertia using Parallel Axis Theorem</div>
+        <p>
+          A uniform solid disc of mass 5 kg and radius 0.2 m rotates about an axis tangent to its rim and
+          perpendicular to its plane. Find the moment of inertia about this axis.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong> The moment of inertia of the disc about an axis through the centre and perpendicular
+            to its plane is:
+          </p>
+          <p>
+            I<sub>cm</sub> = MR&sup2;/2 = 5 &times; (0.2)&sup2;/2 = 5 &times; 0.04/2 = 0.1 kg&middot;m&sup2;
+          </p>
+          <p>
+            The tangent axis is at distance d = R = 0.2 m from the centre-of-mass axis. By the parallel axis theorem:
+          </p>
+          <p>
+            I = I<sub>cm</sub> + Md&sup2; = 0.1 + 5 &times; (0.2)&sup2; = 0.1 + 5 &times; 0.04 = 0.1 + 0.2 = <strong>0.3 kg&middot;m&sup2;</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 2 &mdash; Conservation of Angular Momentum</div>
+        <p>
+          A turntable of moment of inertia 4 kg&middot;m&sup2; rotates at 2 rev/s. A disc of moment of inertia
+          1 kg&middot;m&sup2; is dropped coaxially onto the turntable. Find the common angular velocity after the
+          disc is placed.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong> No external torque acts on the system (the internal friction between the disc
+            and turntable is an internal force). Angular momentum is conserved:
+          </p>
+          <p>
+            I<sub>1</sub>&omega;<sub>1</sub> = (I<sub>1</sub> + I<sub>2</sub>)&omega;<sub>f</sub><br>
+            4 &times; 2 = (4 + 1) &times; &omega;<sub>f</sub><br>
+            8 = 5&omega;<sub>f</sub><br>
+            &omega;<sub>f</sub> = 8/5 = <strong>1.6 rev/s</strong>
+          </p>
+          <p>
+            KE lost = &frac12;I<sub>1</sub>&omega;<sub>1</sub>&sup2; &minus; &frac12;(I<sub>1</sub> + I<sub>2</sub>)&omega;<sub>f</sub>&sup2;
+            = &frac12; &times; 4 &times; (2 &times; 2&pi;)&sup2; &minus; &frac12; &times; 5 &times; (1.6 &times; 2&pi;)&sup2;.
+            This energy is dissipated as heat due to friction between the surfaces.
+          </p>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 3 &mdash; Rolling on an Incline</div>
+        <p>
+          A solid sphere, a solid cylinder, and a hollow sphere, all having the same mass and radius, are
+          released simultaneously from the top of a frictionless incline of height 3 m. They all roll without
+          slipping. Find the speed of each at the bottom. Which reaches first? (g = 10 m/s&sup2;)
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong> Using energy conservation for rolling: mgh = &frac12;mv&sup2;(1 + k&sup2;/R&sup2;)
+          </p>
+          <p>
+            v = &radic;[2gh / (1 + k&sup2;/R&sup2;)]
+          </p>
+          <p>
+            <strong>Solid sphere</strong> (k&sup2;/R&sup2; = 2/5):<br>
+            v = &radic;[2 &times; 10 &times; 3 / (1 + 2/5)] = &radic;[60/1.4] = &radic;42.86 &asymp; <strong>6.55 m/s</strong>
+          </p>
+          <p>
+            <strong>Solid cylinder</strong> (k&sup2;/R&sup2; = 1/2):<br>
+            v = &radic;[60 / 1.5] = &radic;40 &asymp; <strong>6.32 m/s</strong>
+          </p>
+          <p>
+            <strong>Hollow sphere</strong> (k&sup2;/R&sup2; = 2/3):<br>
+            v = &radic;[60 / (5/3)] = &radic;36 = <strong>6.0 m/s</strong>
+          </p>
+          <p>
+            The solid sphere has the highest speed and the greatest acceleration, so it <strong>reaches first</strong>.
+            Order: solid sphere, then solid cylinder, then hollow sphere. This ranking is independent of mass and
+            radius &mdash; only the shape (mass distribution) matters.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Formulas Summary -->
+    <div class="theory-section">
+      <h2>Key Formulas Summary</h2>
+      <div class="formula-box">
+        &omega; = &omega;<sub>0</sub> + &alpha;t &nbsp;&nbsp;|&nbsp;&nbsp; &theta; = &omega;<sub>0</sub>t + &frac12;&alpha;t&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; &omega;&sup2; = &omega;<sub>0</sub>&sup2; + 2&alpha;&theta;<br>
+        &tau; = r &times; F = I&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; L = I&omega; &nbsp;&nbsp;|&nbsp;&nbsp; &tau; = dL/dt<br>
+        KE<sub>rot</sub> = &frac12;I&omega;&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; P = &tau;&omega;<br>
+        I = I<sub>cm</sub> + Md&sup2; (parallel axis) &nbsp;&nbsp;|&nbsp;&nbsp; I<sub>z</sub> = I<sub>x</sub> + I<sub>y</sub> (perpendicular axis, planar bodies)<br>
+        v<sub>cm</sub> = R&omega; (rolling) &nbsp;&nbsp;|&nbsp;&nbsp; KE<sub>total</sub> = &frac12;mv&sup2;(1 + k&sup2;/R&sup2;)<br>
+        a<sub>incline</sub> = g sin&theta; / (1 + k&sup2;/R&sup2;)
+      </div>
+    </div>
+
+    <!-- Chapter Links -->
+    <div class="ch-links">
+      <a href="../simulations/rotational-motion.html" class="primary-link">Launch Simulation</a>
+      <a href="../tests/rotational-motion.html">Take Chapter Test</a>
+      <a href="gravitation.html">Next: Gravitation &rarr;</a>
+      <a href="work-power-energy.html">&larr; Prev: Work, Power &amp; Energy</a>
+      <a href="../chapters.html">Back to Chapters</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a>
+        <a href="../lectures.html">Lectures</a>
+        <a href="../notes.html">Notes</a>
+        <a href="../books.html">Books</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

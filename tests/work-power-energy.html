@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Power Energy DTS | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Work, Power &amp; Energy &mdash; Daily Test Series</h1>
+      <div class="test-meta">Grade XI &bull; 15 Questions &bull; 90 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">90:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">A force of 10 N acts on a body and displaces it by 5 m at an angle of 60&deg; with the force. The work done is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 50 J</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 25 J</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 25&radic;3 J</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 10 J</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> W = Fd cos&theta; = 10 &times; 5 &times; cos60&deg; = 50 &times; 0.5 = 25 J.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">A spring of spring constant 200 N/m is compressed by 0.1 m. The potential energy stored in the spring is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2 J</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 20 J</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1 J</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 0.1 J</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> PE = &frac12;kx&sup2; = &frac12; &times; 200 &times; (0.1)&sup2; = &frac12; &times; 200 &times; 0.01 = 1 J.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">A body of mass 2 kg moving with velocity 10 m/s is brought to rest by a constant force. The work done by the force is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &minus;100 J</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 100 J</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &minus;200 J</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 200 J</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By work-energy theorem, W = &Delta;KE = &frac12;mv<sup>2</sup><sub>f</sub> &minus; &frac12;mv<sup>2</sup><sub>i</sub> = 0 &minus; &frac12; &times; 2 &times; 100 = &minus;100 J.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">A pump lifts 200 kg of water per minute to a height of 10 m. The power of the pump is (g = 10 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 200 W</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2000 W</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 20000 W</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 333.3 W</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> P = mgh/t = 200 &times; 10 &times; 10/60 = 20000/60 = 333.3 W.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">A ball of mass 1 kg is dropped from a height of 20 m. Its kinetic energy just before hitting the ground is (g = 10 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 100 J</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 200 J</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 20 J</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 400 J</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By conservation of energy, all PE converts to KE: KE = mgh = 1 &times; 10 &times; 20 = 200 J.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">Two bodies of masses 1 kg and 4 kg have equal kinetic energies. The ratio of their momenta is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1 : 4</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 4 : 1</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1 : 2</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2 : 1</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> KE = p&sup2;/(2m), so p = &radic;(2mKE). For equal KE: p<sub>1</sub>/p<sub>2</sub> = &radic;(m<sub>1</sub>/m<sub>2</sub>) = &radic;(1/4) = 1/2. Ratio is 1 : 2.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">A ball of mass 0.5 kg moving at 6 m/s collides head-on with a stationary ball of mass 0.5 kg. If the collision is perfectly elastic, the velocity of the first ball after collision is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 0 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 6 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 3 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &minus;6 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In a perfectly elastic head-on collision between equal masses, the first body comes to rest and the second moves with the velocity of the first. So v<sub>1</sub> = 0 m/s.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">A body of mass 2 kg moving at 4 m/s collides with a stationary body of mass 2 kg. They stick together after collision. The loss in kinetic energy is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 0 J</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 4 J</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 16 J</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 8 J</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By conservation of momentum: (2)(4) = (2+2)v, v = 2 m/s. KE<sub>i</sub> = &frac12;(2)(16) = 16 J. KE<sub>f</sub> = &frac12;(4)(4) = 8 J. Loss = 16 &minus; 8 = 8 J.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">A car of mass 1000 kg moves at 36 km/h on a level road. If the engine is switched off and the car comes to rest in 100 m due to friction, the coefficient of friction is (g = 10 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 0.1</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 0.05</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 0.5</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 0.2</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> v = 36 km/h = 10 m/s. By work-energy theorem: &frac12;mv&sup2; = &mu;mgd. So &mu; = v&sup2;/(2gd) = 100/(2 &times; 10 &times; 100) = 100/2000 = 0.05.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">A block of mass 5 kg slides down a frictionless incline of height 4 m and then moves on a rough horizontal surface (&mu; = 0.5) until it stops. The distance travelled on the rough surface is (g = 10 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 4 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 16 m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 8 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2 m</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By energy conservation: mgh = &mu;mgd. So d = h/&mu; = 4/0.5 = 8 m.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 11</div>
+      <div class="q-text">The kinetic energy of a body is increased by 300%. The percentage increase in its momentum is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 100%</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 150%</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 300%</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 200%</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> p = &radic;(2mKE). If KE becomes 4 &times; KE (300% increase), p' = &radic;(2m &times; 4KE) = 2p. Percentage increase = (2p &minus; p)/p &times; 100 = 100%.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 12</div>
+      <div class="q-text">A force F = 3x&sup2; + 2x + 1 (in N) acts on a particle. The work done in displacing the particle from x = 0 to x = 2 m is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 10 J</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 14 J</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 18 J</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 12 J</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> W = &int;F dx from 0 to 2 = &int;(3x&sup2; + 2x + 1)dx = [x&sup3; + x&sup2; + x] from 0 to 2 = (8 + 4 + 2) &minus; 0 = 14 J.</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 13</div>
+      <div class="q-text">An engine develops 20 kW of power. The maximum speed at which a 1000 kg car can be driven on a level road against a resistance of 500 N is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 20 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 10 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 50 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 40 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> At maximum speed, the engine force equals resistance. P = Fv, so v = P/F = 20000/500 = 40 m/s.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 14</div>
+      <div class="q-text">A bullet of mass 20 g moving at 500 m/s strikes a wooden block and penetrates 25 cm before stopping. The average resistive force of the block is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 10000 N</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 5000 N</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2500 N</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1000 N</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By work-energy theorem: F &times; d = &frac12;mv&sup2;. F = mv&sup2;/(2d) = (0.02 &times; 250000)/(2 &times; 0.25) = 5000/0.5 = 10000 N.</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 15</div>
+      <div class="q-text">A particle of mass m is attached to a light string of length l and released from a horizontal position. The speed of the particle at the lowest point is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &radic;(gl)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &radic;(gl/2)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &radic;(2gl)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &radic;(3gl)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The string is horizontal initially, so the height fallen = l (the length of string). By conservation of energy: mgl = &frac12;mv&sup2;, so v = &radic;(2gl).</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    var totalSeconds = 90 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electromagnetic Waves | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>Electromagnetic Waves</h1>
+      <div class="ch-meta">Grade XII &mdash; Chapter 06</div>
+      <div class="ch-nav">
+        <a href="#displacement-current">Displacement Current</a>
+        <a href="#maxwells-equations">Maxwell's Equations</a>
+        <a href="#em-wave-properties">EM Wave Properties</a>
+        <a href="#em-spectrum">EM Spectrum</a>
+        <a href="#energy-momentum">Energy &amp; Momentum</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Displacement Current -->
+    <!-- ============================== -->
+    <div class="theory-section" id="displacement-current">
+      <h2>1. Displacement Current</h2>
+
+      <h3>The Problem with Ampere's Law</h3>
+      <p>
+        Ampere's circuital law in its original form states that the line integral of the magnetic field <strong>B</strong> around a closed loop equals &mu;<sub>0</sub> times the conduction current <em>I</em> enclosed by the loop. However, James Clerk Maxwell identified a fundamental inconsistency: consider a parallel plate capacitor being charged by a current. If we draw an Amperian loop around the wire, the enclosed conduction current is <em>I</em>. But if we draw a surface that passes between the capacitor plates (where no charge flows), the enclosed conduction current is zero. This contradicts the uniqueness of the result, since both surfaces are bounded by the same loop.
+      </p>
+
+      <h3>Maxwell's Correction</h3>
+      <p>
+        Maxwell resolved this paradox by introducing the concept of <strong>displacement current</strong>. Between the capacitor plates, although no charges flow, the electric field is changing with time. Maxwell postulated that a changing electric field produces the same magnetic effects as a conduction current. He defined the displacement current as:
+      </p>
+      <div class="formula-box">
+        I<sub>d</sub> = &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt
+      </div>
+      <p>
+        where &Phi;<sub>E</sub> is the electric flux through the surface. The displacement current is not a current in the conventional sense (no charges flow); rather, it is a current-equivalent that arises from a time-varying electric field. Between the capacitor plates, the displacement current exactly equals the conduction current flowing in the connecting wires.
+      </p>
+
+      <h3>Ampere-Maxwell Law</h3>
+      <p>
+        With the addition of the displacement current, Ampere's law is modified to the <strong>Ampere-Maxwell law</strong>:
+      </p>
+      <div class="formula-box">
+        &oint; <strong>B</strong> &middot; d<strong>l</strong> = &mu;<sub>0</sub>(I<sub>c</sub> + I<sub>d</sub>) = &mu;<sub>0</sub> I<sub>c</sub> + &mu;<sub>0</sub> &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt
+      </div>
+      <p>
+        This modified law is consistent for all surfaces bounded by a given Amperian loop. The total current (conduction + displacement) passing through any surface bounded by the loop is always the same. This was one of Maxwell's greatest contributions to physics, as it led directly to the prediction of electromagnetic waves.
+      </p>
+      <ul>
+        <li>Displacement current exists wherever the electric field is changing with time, even in empty space.</li>
+        <li>In a region of space with no conduction current, a time-varying electric field still produces a magnetic field.</li>
+        <li>The converse is also true: a time-varying magnetic field produces an electric field (Faraday's law).</li>
+        <li>These two effects together sustain electromagnetic waves that propagate through free space.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Maxwell's Equations -->
+    <!-- ============================== -->
+    <div class="theory-section" id="maxwells-equations">
+      <h2>2. Maxwell's Equations</h2>
+
+      <p>
+        Maxwell unified electricity, magnetism, and optics into a single theoretical framework through four fundamental equations. These equations, taken together, completely describe all classical electromagnetic phenomena.
+      </p>
+
+      <h3>Gauss's Law for Electricity</h3>
+      <p>
+        The total electric flux through any closed surface is equal to 1/&epsilon;<sub>0</sub> times the total charge enclosed within that surface.
+      </p>
+      <div class="formula-box">
+        &oint; <strong>E</strong> &middot; d<strong>A</strong> = Q<sub>enclosed</sub> / &epsilon;<sub>0</sub>
+      </div>
+      <p>
+        This law implies that electric field lines originate from positive charges and terminate on negative charges. Electric charges are the sources and sinks of electric field lines.
+      </p>
+
+      <h3>Gauss's Law for Magnetism</h3>
+      <p>
+        The total magnetic flux through any closed surface is always zero.
+      </p>
+      <div class="formula-box">
+        &oint; <strong>B</strong> &middot; d<strong>A</strong> = 0
+      </div>
+      <p>
+        This equation reflects the fact that magnetic monopoles do not exist. Magnetic field lines always form closed loops &mdash; they have no beginning or end. Every magnetic north pole is always accompanied by a south pole.
+      </p>
+
+      <h3>Faraday's Law of Electromagnetic Induction</h3>
+      <p>
+        A time-varying magnetic flux through a surface bounded by a closed loop induces an electromotive force (and hence an electric field) around that loop.
+      </p>
+      <div class="formula-box">
+        &oint; <strong>E</strong> &middot; d<strong>l</strong> = &minus; d&Phi;<sub>B</sub>/dt
+      </div>
+      <p>
+        The negative sign embodies Lenz's law: the induced EMF opposes the change in magnetic flux. This equation shows that a changing magnetic field creates an electric field, even in empty space.
+      </p>
+
+      <h3>Ampere-Maxwell Law</h3>
+      <p>
+        The line integral of the magnetic field around a closed loop equals &mu;<sub>0</sub> times the sum of the conduction current and the displacement current passing through any surface bounded by the loop.
+      </p>
+      <div class="formula-box">
+        &oint; <strong>B</strong> &middot; d<strong>l</strong> = &mu;<sub>0</sub> I<sub>c</sub> + &mu;<sub>0</sub> &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt
+      </div>
+      <p>
+        This equation shows that magnetic fields are produced both by conduction currents and by time-varying electric fields. Together, Faraday's law and the Ampere-Maxwell law establish the beautiful symmetry: a changing <strong>E</strong> creates <strong>B</strong>, and a changing <strong>B</strong> creates <strong>E</strong>. This mutual generation is the mechanism that sustains electromagnetic waves.
+      </p>
+
+      <ul>
+        <li>Maxwell's equations are the foundation of all classical electrodynamics, optics, and electric circuits.</li>
+        <li>In free space (no charges, no currents), the equations predict transverse waves travelling at speed c = 1/&radic;(&mu;<sub>0</sub>&epsilon;<sub>0</sub>).</li>
+        <li>Maxwell calculated this speed and found it to be approximately 3 &times; 10<sup>8</sup> m/s, which matched the known speed of light &mdash; leading him to conclude that light is an electromagnetic wave.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: EM Wave Properties -->
+    <!-- ============================== -->
+    <div class="theory-section" id="em-wave-properties">
+      <h2>3. Electromagnetic Wave Properties</h2>
+
+      <h3>Nature of EM Waves</h3>
+      <p>
+        Electromagnetic waves are <strong>transverse waves</strong> consisting of oscillating electric and magnetic fields that are mutually perpendicular to each other and to the direction of propagation. Unlike mechanical waves (sound, water waves), EM waves do not require a material medium &mdash; they can propagate through vacuum.
+      </p>
+
+      <h3>Key Characteristics</h3>
+      <ul>
+        <li><strong>Transverse nature:</strong> The electric field <strong>E</strong>, the magnetic field <strong>B</strong>, and the direction of propagation <strong>v</strong> are mutually perpendicular: <strong>E</strong> &perp; <strong>B</strong> &perp; <strong>v</strong>.</li>
+        <li><strong>Self-sustaining:</strong> A time-varying electric field generates a magnetic field (Ampere-Maxwell law), and a time-varying magnetic field generates an electric field (Faraday's law). Once initiated, the wave sustains itself without any external agency.</li>
+        <li><strong>Speed in vacuum:</strong> All electromagnetic waves travel at the same speed in vacuum, regardless of frequency or wavelength.</li>
+        <li><strong>No charge or mass:</strong> EM waves carry no charge. They carry energy and momentum.</li>
+        <li><strong>Direction of propagation:</strong> Given by the cross product <strong>E</strong> &times; <strong>B</strong>.</li>
+      </ul>
+
+      <div class="formula-box">
+        Speed of EM waves in vacuum: c = 1 / &radic;(&mu;<sub>0</sub> &epsilon;<sub>0</sub>) &asymp; 3 &times; 10<sup>8</sup> m/s<br><br>
+        Relation between E and B amplitudes: E<sub>0</sub> / B<sub>0</sub> = c<br><br>
+        At any instant: E / B = c<br><br>
+        Fundamental wave relation: c = f &lambda;
+      </div>
+
+      <h3>Mathematical Representation</h3>
+      <p>
+        For a plane electromagnetic wave travelling in the +x direction with the electric field oscillating along y and the magnetic field along z:
+      </p>
+      <div class="formula-box">
+        E<sub>y</sub> = E<sub>0</sub> sin(kx &minus; &omega;t)<br>
+        B<sub>z</sub> = B<sub>0</sub> sin(kx &minus; &omega;t)<br><br>
+        where k = 2&pi;/&lambda; (wave number), &omega; = 2&pi;f (angular frequency)<br>
+        E<sub>0</sub> = c B<sub>0</sub>
+      </div>
+      <p>
+        The electric and magnetic fields oscillate in phase &mdash; they reach their maxima and minima simultaneously at any given point in space.
+      </p>
+
+      <h3>Speed in a Medium</h3>
+      <p>
+        In a material medium with relative permittivity &epsilon;<sub>r</sub> and relative permeability &mu;<sub>r</sub>, the speed of EM waves is:
+      </p>
+      <div class="formula-box">
+        v = 1 / &radic;(&mu; &epsilon;) = c / &radic;(&mu;<sub>r</sub> &epsilon;<sub>r</sub>)<br><br>
+        Refractive index: n = c / v = &radic;(&mu;<sub>r</sub> &epsilon;<sub>r</sub>)
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: EM Spectrum -->
+    <!-- ============================== -->
+    <div class="theory-section" id="em-spectrum">
+      <h2>4. Electromagnetic Spectrum</h2>
+
+      <p>
+        The electromagnetic spectrum is the entire range of electromagnetic radiation, classified by frequency (or equivalently, wavelength). All EM waves travel at the same speed in vacuum (c = 3 &times; 10<sup>8</sup> m/s) but differ in frequency and wavelength. The spectrum is continuous &mdash; there are no sharp boundaries between regions. The classification is based on the method of production and detection.
+      </p>
+
+      <h3>Radio Waves</h3>
+      <p>
+        <strong>Frequency:</strong> &lt; 10<sup>9</sup> Hz (up to ~300 MHz for FM, up to ~1 GHz broadly).<br>
+        <strong>Wavelength:</strong> &gt; 0.3 m (can be kilometres long).<br>
+        <strong>Source:</strong> Oscillating circuits (LC oscillators), antennas.<br>
+        <strong>Uses:</strong> AM/FM radio broadcasting, television signals, radar, cellular communication.<br>
+        <strong>Detection:</strong> Antennas, tuned receivers.
+      </p>
+
+      <h3>Microwaves</h3>
+      <p>
+        <strong>Frequency:</strong> 10<sup>9</sup> Hz to 10<sup>12</sup> Hz (1 GHz to 1 THz).<br>
+        <strong>Wavelength:</strong> 0.3 m to 0.3 mm.<br>
+        <strong>Source:</strong> Klystrons, magnetrons, Gunn diodes.<br>
+        <strong>Uses:</strong> Microwave ovens (2.45 GHz resonance of water molecules), satellite communication, Wi-Fi, Bluetooth, RADAR.<br>
+        <strong>Detection:</strong> Point-contact diodes, bolometers.
+      </p>
+
+      <h3>Infrared Radiation</h3>
+      <p>
+        <strong>Frequency:</strong> 10<sup>12</sup> Hz to 4 &times; 10<sup>14</sup> Hz.<br>
+        <strong>Wavelength:</strong> 0.3 mm to 750 nm.<br>
+        <strong>Source:</strong> Hot bodies, sun, incandescent lamps, LED devices.<br>
+        <strong>Uses:</strong> Night vision equipment, TV remote controls, physiotherapy, greenhouse heating, thermal imaging.<br>
+        <strong>Detection:</strong> Thermopiles, bolometers, infrared photographic film.
+      </p>
+
+      <h3>Visible Light</h3>
+      <p>
+        <strong>Frequency:</strong> 4 &times; 10<sup>14</sup> Hz to 7.5 &times; 10<sup>14</sup> Hz.<br>
+        <strong>Wavelength:</strong> 750 nm (red) to 400 nm (violet).<br>
+        <strong>Source:</strong> Sun, stars, lamps, lasers, LEDs.<br>
+        <strong>Uses:</strong> Vision, photography, illumination, optical communication (fibre optics).<br>
+        <strong>Detection:</strong> Human eye, photocells, photographic film.
+      </p>
+
+      <h3>Ultraviolet Radiation</h3>
+      <p>
+        <strong>Frequency:</strong> 7.5 &times; 10<sup>14</sup> Hz to 10<sup>17</sup> Hz.<br>
+        <strong>Wavelength:</strong> 400 nm to 1 nm.<br>
+        <strong>Source:</strong> Sun, mercury vapour lamps, very hot bodies (T &gt; 3000 K).<br>
+        <strong>Uses:</strong> Sterilization, LASIK eye surgery, water purification, detection of forged documents, fluorescence studies.<br>
+        <strong>Detection:</strong> Photocells, UV sensitive photographic film.
+      </p>
+
+      <h3>X-Rays</h3>
+      <p>
+        <strong>Frequency:</strong> 10<sup>16</sup> Hz to 10<sup>19</sup> Hz.<br>
+        <strong>Wavelength:</strong> 10 nm to 10<sup>&minus;3</sup> nm.<br>
+        <strong>Source:</strong> Bombardment of high-energy electrons on heavy metal targets (Coolidge tube), synchrotron radiation.<br>
+        <strong>Uses:</strong> Medical diagnostics (bone fractures), CT scans, crystallography (Bragg diffraction), airport security screening, industrial quality control.<br>
+        <strong>Detection:</strong> Photographic plates, Geiger-Muller counters, fluorescent screens.
+      </p>
+
+      <h3>Gamma Rays</h3>
+      <p>
+        <strong>Frequency:</strong> &gt; 10<sup>19</sup> Hz.<br>
+        <strong>Wavelength:</strong> &lt; 10<sup>&minus;3</sup> nm (less than 10<sup>&minus;12</sup> m).<br>
+        <strong>Source:</strong> Nuclear reactions (radioactive decay), cosmic events, matter-antimatter annihilation.<br>
+        <strong>Uses:</strong> Cancer treatment (radiotherapy), food irradiation, sterilization of medical equipment, study of nuclear structure.<br>
+        <strong>Detection:</strong> Geiger-Muller counters, scintillation detectors.
+      </p>
+
+      <p>
+        <strong>Key points for the exam:</strong>
+      </p>
+      <ul>
+        <li>The order of increasing frequency: Radio &lt; Microwave &lt; Infrared &lt; Visible &lt; Ultraviolet &lt; X-rays &lt; Gamma rays.</li>
+        <li>The order of increasing wavelength is the reverse of the above.</li>
+        <li>All EM waves travel at speed c in vacuum. In a medium, the speed is less than c.</li>
+        <li>The photon energy E = hf = hc/&lambda; increases with frequency. Hence, gamma rays are the most energetic and radio waves are the least energetic.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Energy & Momentum -->
+    <!-- ============================== -->
+    <div class="theory-section" id="energy-momentum">
+      <h2>5. Energy &amp; Momentum of EM Waves</h2>
+
+      <h3>Energy in EM Waves</h3>
+      <p>
+        Electromagnetic waves carry energy. The energy is stored equally in the oscillating electric and magnetic fields. The energy density (energy per unit volume) at any point is:
+      </p>
+      <div class="formula-box">
+        Energy density in E field: u<sub>E</sub> = &frac12; &epsilon;<sub>0</sub> E&sup2;<br>
+        Energy density in B field: u<sub>B</sub> = B&sup2; / (2&mu;<sub>0</sub>)<br>
+        Total energy density: u = u<sub>E</sub> + u<sub>B</sub> = &epsilon;<sub>0</sub> E&sup2; = B&sup2; / &mu;<sub>0</sub>
+      </div>
+      <p>
+        Since u<sub>E</sub> = u<sub>B</sub> at every instant, the electric and magnetic fields contribute equally to the total energy of an EM wave.
+      </p>
+
+      <h3>Intensity</h3>
+      <p>
+        The intensity of an EM wave is the average energy crossing a unit area perpendicular to the direction of propagation per unit time. It equals the average energy density multiplied by the speed of the wave.
+      </p>
+      <div class="formula-box">
+        Intensity: I = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2;<br><br>
+        Also: I = c &lt;u&gt; = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2; = E<sub>0</sub>&sup2; / (2&mu;<sub>0</sub>c) = c B<sub>0</sub>&sup2; / (2&mu;<sub>0</sub>)<br><br>
+        Using E<sub>rms</sub>: I = &epsilon;<sub>0</sub> c E<sub>rms</sub>&sup2;
+      </div>
+
+      <h3>Momentum &amp; Radiation Pressure</h3>
+      <p>
+        Electromagnetic waves carry momentum as well as energy. When an EM wave is absorbed by a surface, it transfers momentum to the surface, exerting a force (and hence a pressure) called <strong>radiation pressure</strong>. The momentum carried by an EM wave of energy U is:
+      </p>
+      <div class="formula-box">
+        Momentum: p = U / c &nbsp; (total absorption)<br>
+        Momentum: p = 2U / c &nbsp; (total reflection)<br><br>
+        Radiation pressure (absorption): P = I / c<br>
+        Radiation pressure (reflection): P = 2I / c
+      </div>
+      <p>
+        The factor of 2 for reflection arises because the incoming wave has momentum U/c in one direction, and the reflected wave has momentum U/c in the opposite direction, so the total momentum change is 2U/c.
+      </p>
+      <ul>
+        <li>Radiation pressure is very small for ordinary light sources but can be significant for intense laser beams or in astrophysical contexts (e.g., radiation pressure from stars affects interstellar dust).</li>
+        <li>The concept of radiation pressure provides direct evidence that EM waves carry momentum.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 1</div>
+        <p>
+          The electric field in a plane electromagnetic wave is given by E = 300 sin(5 &times; 10<sup>6</sup> t &minus; 1.67 &times; 10<sup>&minus;2</sup> x) V/m. Find the amplitude of the magnetic field, the frequency, the wavelength, and the speed of the wave.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Comparing with E = E<sub>0</sub> sin(&omega;t &minus; kx):<br>
+            E<sub>0</sub> = 300 V/m, &omega; = 5 &times; 10<sup>6</sup> rad/s, k = 1.67 &times; 10<sup>&minus;2</sup> rad/m<br><br>
+            Amplitude of magnetic field:<br>
+            B<sub>0</sub> = E<sub>0</sub> / c = 300 / (3 &times; 10<sup>8</sup>) = <strong>10<sup>&minus;6</sup> T = 1 &mu;T</strong><br><br>
+            Frequency:<br>
+            f = &omega; / (2&pi;) = 5 &times; 10<sup>6</sup> / (2&pi;) &asymp; <strong>7.96 &times; 10<sup>5</sup> Hz &asymp; 796 kHz</strong><br><br>
+            Wavelength:<br>
+            &lambda; = 2&pi; / k = 2&pi; / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; <strong>376 m</strong><br><br>
+            Speed:<br>
+            v = &omega; / k = 5 &times; 10<sup>6</sup> / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; <strong>3 &times; 10<sup>8</sup> m/s = c</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 2</div>
+        <p>
+          A laser beam has a cross-sectional area of 2 mm&sup2; and a power of 1 mW. Calculate: (a) the intensity of the beam, (b) the amplitude of the electric field, and (c) the radiation pressure on a perfectly reflecting surface.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Power P = 1 mW = 1 &times; 10<sup>&minus;3</sup> W, Area A = 2 mm&sup2; = 2 &times; 10<sup>&minus;6</sup> m&sup2;<br><br>
+            <em>(a) Intensity:</em><br>
+            I = P / A = (1 &times; 10<sup>&minus;3</sup>) / (2 &times; 10<sup>&minus;6</sup>) = <strong>500 W/m&sup2;</strong><br><br>
+            <em>(b) Amplitude of electric field:</em><br>
+            I = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2;<br>
+            E<sub>0</sub>&sup2; = 2I / (&epsilon;<sub>0</sub> c) = 2 &times; 500 / (8.85 &times; 10<sup>&minus;12</sup> &times; 3 &times; 10<sup>8</sup>)<br>
+            E<sub>0</sub>&sup2; = 1000 / (2.655 &times; 10<sup>&minus;3</sup>) = 3.77 &times; 10<sup>5</sup><br>
+            E<sub>0</sub> &asymp; <strong>614 V/m</strong><br><br>
+            <em>(c) Radiation pressure (perfectly reflecting surface):</em><br>
+            P<sub>rad</sub> = 2I / c = 2 &times; 500 / (3 &times; 10<sup>8</sup>) = <strong>3.33 &times; 10<sup>&minus;6</sup> Pa</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="../simulations/em-waves.html" class="primary-link">Simulation</a>
+      <a href="../tests/em-waves.html">Take a Test</a>
+      <a href="ray-optics.html">Next: Ray Optics &rarr;</a>
+      <a href="ac-circuits.html">&larr; Prev: AC Circuits</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

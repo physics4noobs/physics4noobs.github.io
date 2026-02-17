@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work, Power &amp; Energy | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f52c;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+    <div class="ch-hero">
+      <h1>Work, Power &amp; Energy</h1>
+      <span class="ch-meta">GRADE XI | CHAPTER 03</span>
+    </div>
+
+    <!-- Section 1: Work Done -->
+    <div class="theory-section">
+      <h2>1. Work Done by a Force</h2>
+      <p>
+        In physics, <strong>work</strong> is done when a force displaces a body in its direction of application.
+        Work is a scalar quantity with the SI unit Joule (J). Unlike everyday usage, work has a precise
+        mathematical definition that distinguishes between positive, negative, and zero work.
+      </p>
+      <h3>Work by a Constant Force</h3>
+      <p>
+        When a constant force F acts on a body and displaces it through a distance d, the work done is:
+      </p>
+      <div class="formula-box">
+        W = F &middot; d &middot; cos&theta;<br>
+        W = F &middot; d (vector dot product)
+      </div>
+      <p>
+        where &theta; is the angle between the force vector and the displacement vector.
+      </p>
+      <ul>
+        <li><strong>Positive work (&theta; &lt; 90&deg;):</strong> Force has a component along displacement. Example: pulling a box forward.</li>
+        <li><strong>Negative work (&theta; &gt; 90&deg;):</strong> Force has a component opposing displacement. Example: friction on a sliding body, or gravity on a body thrown upward.</li>
+        <li><strong>Zero work (&theta; = 90&deg;):</strong> Force is perpendicular to displacement. Example: centripetal force in circular motion, normal force on a body moving on a horizontal surface.</li>
+      </ul>
+      <h3>Work by a Variable Force</h3>
+      <p>
+        When the force varies with position, work is calculated using integration. The work done by a variable
+        force F(x) in displacing the body from position x<sub>1</sub> to x<sub>2</sub> is:
+      </p>
+      <div class="formula-box">
+        W = &int; F(x) dx &nbsp;&nbsp;(from x<sub>1</sub> to x<sub>2</sub>)<br>
+        In 3D: W = &int; F &middot; dr = &int; (F<sub>x</sub>dx + F<sub>y</sub>dy + F<sub>z</sub>dz)
+      </div>
+      <p>
+        Graphically, the work done equals the <strong>area under the force-displacement (F-x) curve</strong>.
+        This is particularly useful for spring force problems where F = &minus;kx.
+      </p>
+      <p>
+        <strong>Work done by a spring:</strong> W = &minus;&frac12;k(x<sub>2</sub>&sup2; &minus; x<sub>1</sub>&sup2;).
+        When stretching from natural length (x<sub>1</sub> = 0) to extension x: W<sub>spring</sub> = &minus;&frac12;kx&sup2;
+        (negative, as the spring opposes the displacement). The external agent does W<sub>ext</sub> = +&frac12;kx&sup2;.
+      </p>
+    </div>
+
+    <!-- Section 2: Work-Energy Theorem -->
+    <div class="theory-section">
+      <h2>2. Work-Energy Theorem</h2>
+      <p>
+        The <strong>Work-Energy Theorem</strong> is one of the most powerful tools in mechanics. It states that the
+        net work done by all forces (both conservative and non-conservative) on a body equals the change in its
+        kinetic energy:
+      </p>
+      <div class="formula-box">
+        W<sub>net</sub> = &Delta;KE = KE<sub>f</sub> &minus; KE<sub>i</sub> = &frac12;mv<sub>f</sub>&sup2; &minus; &frac12;mv<sub>i</sub>&sup2;
+      </div>
+      <p>
+        This theorem is valid in all inertial reference frames. It provides a scalar equation (no direction
+        involved), making it extremely useful when force and acceleration analysis using Newton&rsquo;s second law
+        becomes complicated &mdash; for example, problems with curved paths, variable forces, or when only speeds
+        (not directions) are required.
+      </p>
+      <p>
+        The net work includes work done by all forces: gravity, normal force, friction, applied force, spring force, etc.
+        Alternatively, W<sub>net</sub> = W<sub>gravity</sub> + W<sub>friction</sub> + W<sub>normal</sub> + W<sub>applied</sub> + W<sub>spring</sub> + &hellip;
+      </p>
+    </div>
+
+    <!-- Section 3: Kinetic Energy -->
+    <div class="theory-section">
+      <h2>3. Kinetic Energy</h2>
+      <p>
+        Kinetic energy is the energy a body possesses by virtue of its motion. For a body of mass m moving with
+        speed v:
+      </p>
+      <div class="formula-box">
+        KE = &frac12;mv&sup2;
+      </div>
+      <p>
+        Key properties of kinetic energy:
+      </p>
+      <ul>
+        <li>KE is always <strong>non-negative</strong> (KE &ge; 0). It is zero only when the body is at rest.</li>
+        <li>KE is a <strong>scalar</strong> quantity &mdash; it depends on speed, not direction.</li>
+        <li>KE is a <strong>frame-dependent</strong> quantity &mdash; different observers may measure different KE values for the same body.</li>
+        <li>KE is related to momentum: KE = p&sup2;/2m, where p = mv. This relation is useful in momentum-energy combined problems.</li>
+        <li>If two bodies have the same momentum, the lighter body has greater KE. If they have the same KE, the heavier body has greater momentum.</li>
+      </ul>
+    </div>
+
+    <!-- Section 4: Potential Energy -->
+    <div class="theory-section">
+      <h2>4. Potential Energy</h2>
+      <p>
+        Potential energy is the energy stored in a body by virtue of its position or configuration in a force field.
+        It is defined only for <strong>conservative forces</strong>.
+      </p>
+      <h3>Gravitational Potential Energy</h3>
+      <p>
+        For a body of mass m at height h above a chosen reference level (where PE = 0):
+      </p>
+      <div class="formula-box">
+        PE = mgh &nbsp;&nbsp;(near Earth&rsquo;s surface, where g is approximately constant)<br>
+        PE = &minus;GMm/r &nbsp;&nbsp;(general, with reference at infinity)
+      </div>
+      <p>
+        The choice of reference level is arbitrary &mdash; only the <em>change</em> in PE has physical significance.
+      </p>
+      <h3>Elastic Potential Energy</h3>
+      <p>
+        Energy stored in a spring (or any elastic body) when deformed from its natural length:
+      </p>
+      <div class="formula-box">
+        PE<sub>spring</sub> = &frac12;kx&sup2;
+      </div>
+      <p>
+        where k is the spring constant and x is the extension or compression from the natural length.
+      </p>
+      <h3>Potential Energy Graphs and Equilibrium</h3>
+      <p>
+        The force-potential energy relationship is F = &minus;dU/dx. Points where dU/dx = 0 correspond to equilibrium positions:
+      </p>
+      <ul>
+        <li><strong>Stable equilibrium:</strong> U is a minimum (d&sup2;U/dx&sup2; &gt; 0). The particle, if slightly displaced, returns to the equilibrium position. Example: a ball at the bottom of a bowl.</li>
+        <li><strong>Unstable equilibrium:</strong> U is a maximum (d&sup2;U/dx&sup2; &lt; 0). A slight displacement causes the particle to move away. Example: a ball balanced on top of a hill.</li>
+        <li><strong>Neutral equilibrium:</strong> U is constant (d&sup2;U/dx&sup2; = 0). The particle remains in equilibrium wherever it is placed. Example: a ball on a flat surface.</li>
+      </ul>
+    </div>
+
+    <!-- Section 5: Conservation of Energy -->
+    <div class="theory-section">
+      <h2>5. Conservation of Energy</h2>
+      <h3>Conservative vs Non-Conservative Forces</h3>
+      <p>
+        A <strong>conservative force</strong> is one where the work done depends only on the initial and final
+        positions, not on the path taken. Equivalently, the work done in a closed path is zero. Examples:
+        gravity, spring force, electrostatic force.
+      </p>
+      <p>
+        A <strong>non-conservative force</strong> is path-dependent. Examples: friction, air resistance, viscous force.
+        These forces dissipate mechanical energy into heat, sound, or deformation.
+      </p>
+      <h3>Conservation of Mechanical Energy</h3>
+      <p>
+        If only conservative forces do work on a system, the total mechanical energy (KE + PE) remains constant:
+      </p>
+      <div class="formula-box">
+        KE<sub>i</sub> + PE<sub>i</sub> = KE<sub>f</sub> + PE<sub>f</sub><br>
+        &frac12;mv<sub>i</sub>&sup2; + mgh<sub>i</sub> = &frac12;mv<sub>f</sub>&sup2; + mgh<sub>f</sub> &nbsp;&nbsp;(for gravity alone)<br>
+        &frac12;mv<sub>i</sub>&sup2; + &frac12;kx<sub>i</sub>&sup2; = &frac12;mv<sub>f</sub>&sup2; + &frac12;kx<sub>f</sub>&sup2; &nbsp;&nbsp;(for spring alone)
+      </div>
+      <p>
+        When non-conservative forces (like friction) are present, mechanical energy is not conserved, but total
+        energy is. The work done by non-conservative forces equals the change in mechanical energy:
+      </p>
+      <div class="formula-box">
+        W<sub>nc</sub> = &Delta;KE + &Delta;PE = (KE<sub>f</sub> + PE<sub>f</sub>) &minus; (KE<sub>i</sub> + PE<sub>i</sub>)<br>
+        W<sub>friction</sub> = &minus;f<sub>k</sub> &times; d &nbsp;&nbsp;(always negative, reducing mechanical energy)
+      </div>
+    </div>
+
+    <!-- Section 6: Power -->
+    <div class="theory-section">
+      <h2>6. Power</h2>
+      <p>
+        Power is the rate at which work is done, or equivalently, the rate of energy transfer. The SI unit
+        is Watt (W), where 1 W = 1 J/s.
+      </p>
+      <div class="formula-box">
+        Average power: P<sub>avg</sub> = W / t = &Delta;E / &Delta;t<br>
+        Instantaneous power: P = dW/dt = F &middot; v = Fv cos&theta;<br>
+        1 horsepower (hp) = 746 W
+      </div>
+      <p>
+        For a vehicle moving at constant velocity v against a resistive force f, the engine must supply
+        power P = fv. The maximum speed of a vehicle with engine power P and resistive force f is v<sub>max</sub> = P/f.
+      </p>
+      <p>
+        For a vehicle starting from rest with constant power P, the acceleration decreases with increasing velocity
+        (since P = mav, we get a = P/mv). The velocity as a function of time for constant power is:
+        v = &radic;(2Pt/m).
+      </p>
+    </div>
+
+    <!-- Section 7: Collisions -->
+    <div class="theory-section">
+      <h2>7. Collisions</h2>
+      <p>
+        A collision is a short-duration interaction between two or more bodies in which the impulsive
+        forces are much larger than any external forces. During a collision, <strong>momentum is always conserved</strong>
+        (assuming no external impulsive force). Energy conservation depends on the type of collision.
+      </p>
+      <h3>Types of Collisions</h3>
+      <ul>
+        <li><strong>Perfectly Elastic:</strong> Both momentum and kinetic energy are conserved. The coefficient of restitution e = 1. Example: collision between ideal billiard balls, collisions at atomic/molecular scale.</li>
+        <li><strong>Perfectly Inelastic:</strong> Momentum is conserved but maximum kinetic energy is lost. The bodies stick together after collision (e = 0). Example: a bullet embedding in a block.</li>
+        <li><strong>Inelastic:</strong> Momentum is conserved, but some kinetic energy is lost (0 &lt; e &lt; 1). This is the most common type of collision in real life.</li>
+      </ul>
+      <h3>Coefficient of Restitution</h3>
+      <div class="formula-box">
+        e = (velocity of separation) / (velocity of approach)<br>
+        e = (v<sub>2</sub> &minus; v<sub>1</sub>) / (u<sub>1</sub> &minus; u<sub>2</sub>)<br>
+        e = 1 (perfectly elastic) &nbsp;|&nbsp; e = 0 (perfectly inelastic) &nbsp;|&nbsp; 0 &lt; e &lt; 1 (inelastic)
+      </div>
+      <h3>1D Elastic Collision Formulas</h3>
+      <p>
+        For two bodies of masses m<sub>1</sub> and m<sub>2</sub> with initial velocities u<sub>1</sub> and u<sub>2</sub>
+        undergoing a perfectly elastic head-on collision:
+      </p>
+      <div class="formula-box">
+        v<sub>1</sub> = [(m<sub>1</sub> &minus; m<sub>2</sub>)u<sub>1</sub> + 2m<sub>2</sub>u<sub>2</sub>] / (m<sub>1</sub> + m<sub>2</sub>)<br>
+        v<sub>2</sub> = [(m<sub>2</sub> &minus; m<sub>1</sub>)u<sub>2</sub> + 2m<sub>1</sub>u<sub>1</sub>] / (m<sub>1</sub> + m<sub>2</sub>)
+      </div>
+      <p>
+        <strong>Special cases:</strong>
+      </p>
+      <ul>
+        <li>Equal masses (m<sub>1</sub> = m<sub>2</sub>): The bodies exchange velocities. v<sub>1</sub> = u<sub>2</sub>, v<sub>2</sub> = u<sub>1</sub>.</li>
+        <li>Target at rest (u<sub>2</sub> = 0), m<sub>1</sub> &gt;&gt; m<sub>2</sub>: The heavy body continues nearly unchanged; the light body flies off at approximately 2u<sub>1</sub>.</li>
+        <li>Target at rest (u<sub>2</sub> = 0), m<sub>1</sub> &lt;&lt; m<sub>2</sub>: The light body bounces back with approximately the same speed; the heavy body barely moves.</li>
+      </ul>
+      <h3>2D Collisions (Oblique)</h3>
+      <p>
+        In 2D collisions, momentum is conserved along both x and y axes independently. For an oblique elastic
+        collision of equal masses with one initially at rest, the two bodies move at right angles to each other
+        after the collision. The coefficient of restitution applies along the line of impact only.
+      </p>
+      <h3>Perfectly Inelastic Collision</h3>
+      <div class="formula-box">
+        m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub> = (m<sub>1</sub> + m<sub>2</sub>)v<br>
+        v = (m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub>) / (m<sub>1</sub> + m<sub>2</sub>)<br>
+        Loss in KE = &frac12; &middot; (m<sub>1</sub>m<sub>2</sub>)/(m<sub>1</sub> + m<sub>2</sub>) &middot; (u<sub>1</sub> &minus; u<sub>2</sub>)&sup2;
+      </div>
+    </div>
+
+    <!-- Solved Examples -->
+    <div class="theory-section">
+      <h2>Solved Examples</h2>
+
+      <div class="example-box">
+        <div class="ex-label">Example 1 &mdash; Work-Energy Theorem</div>
+        <p>
+          A body of mass 2 kg is initially at rest on a smooth horizontal surface. A horizontal force F = (3 + 2x) N
+          acts on it, where x is in metres. Find the speed of the body when it has been displaced 4 m from the initial position.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong> Using the work-energy theorem: W<sub>net</sub> = &Delta;KE.
+          </p>
+          <p>
+            W = &int; F dx (from 0 to 4) = &int; (3 + 2x) dx (from 0 to 4)<br>
+            W = [3x + x&sup2;] from 0 to 4 = (12 + 16) &minus; (0) = 28 J
+          </p>
+          <p>
+            Since the surface is smooth and force is horizontal, W<sub>net</sub> = 28 J.<br>
+            &frac12;mv&sup2; &minus; 0 = 28<br>
+            &frac12; &times; 2 &times; v&sup2; = 28<br>
+            v&sup2; = 28<br>
+            v = &radic;28 = 2&radic;7 &asymp; <strong>5.29 m/s</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 2 &mdash; Conservation of Energy on an Incline</div>
+        <p>
+          A block of mass 1 kg slides down a frictionless incline of height 5 m starting from rest. Find the
+          speed at the bottom. If the horizontal surface at the bottom has a coefficient of kinetic friction
+          &mu;<sub>k</sub> = 0.2, how far does the block travel before stopping? (g = 10 m/s&sup2;)
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong> On the frictionless incline, using conservation of energy:
+          </p>
+          <p>
+            mgh = &frac12;mv&sup2;<br>
+            v = &radic;(2gh) = &radic;(2 &times; 10 &times; 5) = &radic;100 = <strong>10 m/s</strong>
+          </p>
+          <p>
+            On the rough horizontal surface, applying the work-energy theorem:<br>
+            W<sub>friction</sub> = &Delta;KE<br>
+            &minus;&mu;<sub>k</sub>mg &times; d = 0 &minus; &frac12;mv&sup2;<br>
+            d = v&sup2; / (2&mu;<sub>k</sub>g) = 100 / (2 &times; 0.2 &times; 10) = 100/4 = <strong>25 m</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 3 &mdash; Perfectly Inelastic Collision</div>
+        <p>
+          A bullet of mass 20 g moving at 500 m/s strikes a stationary wooden block of mass 4.98 kg and
+          embeds itself in the block. Find the velocity of the block-bullet system after the collision and
+          the loss in kinetic energy.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong> This is a perfectly inelastic collision (e = 0). Using conservation of momentum:
+          </p>
+          <p>
+            m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub> = (m<sub>1</sub> + m<sub>2</sub>)v<br>
+            0.02 &times; 500 + 4.98 &times; 0 = (0.02 + 4.98) &times; v<br>
+            10 = 5v<br>
+            v = <strong>2 m/s</strong>
+          </p>
+          <p>
+            KE<sub>initial</sub> = &frac12; &times; 0.02 &times; 500&sup2; = 2500 J<br>
+            KE<sub>final</sub> = &frac12; &times; 5 &times; 2&sup2; = 10 J<br>
+            Loss in KE = 2500 &minus; 10 = <strong>2490 J</strong>
+          </p>
+          <p>
+            The fractional loss = 2490/2500 = 99.6%. In perfectly inelastic collisions, when one body is much
+            heavier, almost all kinetic energy is lost.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Formulas Summary -->
+    <div class="theory-section">
+      <h2>Key Formulas Summary</h2>
+      <div class="formula-box">
+        W = Fd cos&theta; &nbsp;&nbsp;|&nbsp;&nbsp; W = &int; F &middot; dx (variable force)<br>
+        KE = &frac12;mv&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; KE = p&sup2;/2m<br>
+        PE<sub>grav</sub> = mgh &nbsp;&nbsp;|&nbsp;&nbsp; PE<sub>spring</sub> = &frac12;kx&sup2;<br>
+        W<sub>net</sub> = &Delta;KE (Work-Energy Theorem)<br>
+        P = dW/dt = Fv cos&theta; &nbsp;&nbsp;|&nbsp;&nbsp; 1 hp = 746 W<br>
+        e = (v<sub>2</sub> &minus; v<sub>1</sub>) / (u<sub>1</sub> &minus; u<sub>2</sub>) (coefficient of restitution)<br>
+        Loss in KE (perfectly inelastic) = &frac12;(m<sub>1</sub>m<sub>2</sub>)/(m<sub>1</sub>+m<sub>2</sub>) &middot; (u<sub>1</sub>&minus;u<sub>2</sub>)&sup2;
+      </div>
+    </div>
+
+    <!-- Chapter Links -->
+    <div class="ch-links">
+      <a href="../simulations/work-power-energy.html" class="primary-link">Launch Simulation</a>
+      <a href="../tests/work-power-energy.html">Take Chapter Test</a>
+      <a href="rotational-motion.html">Next: Rotational Motion &rarr;</a>
+      <a href="newtons-laws.html">&larr; Prev: Newton&rsquo;s Laws</a>
+      <a href="../chapters.html">Back to Chapters</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a>
+        <a href="../lectures.html">Lectures</a>
+        <a href="../notes.html">Notes</a>
+        <a href="../books.html">Books</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

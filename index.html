@@ -19,19 +19,7 @@
 <body>
 
   <!-- Splash Screen -->
-  <div class="splash-screen" id="splash">
-    <div class="splash-pendulum">
-      <div class="sp-pivot"></div>
-      <div class="sp-arm">
-        <div class="sp-rod"></div>
-        <div class="sp-bob"></div>
-      </div>
-    </div>
-    <div class="splash-brand">Axomiya Engineer</div>
-  </div>
-  <script>
-    (function(){if(sessionStorage.getItem('ae-splash')){document.getElementById('splash').style.display='none';}else{sessionStorage.setItem('ae-splash','1');setTimeout(function(){document.getElementById('splash').classList.add('fade-out');setTimeout(function(){document.getElementById('splash').style.display='none';},400);},1000);}})();
-  </script>
+  <div class="splash-screen" id="splash"></div>
 
   <!-- Background -->
   <div class="bg-grid"></div>
@@ -40,7 +28,7 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">
+      <a href="index.html" class="nav-logo" id="nav-logo">
         <div class="logo-icon">
           <div class="logo-pendulum">
             <div class="pendulum-mount"></div>
@@ -99,6 +87,9 @@
         <div class="nav-item">
           <a href="simulations.html" class="nav-link">Simulations</a>
         </div>
+        <div class="nav-item">
+          <a href="tests.html" class="nav-link">Tests</a>
+        </div>
 
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
 
@@ -125,6 +116,19 @@
       </button>
     </div>
   </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
 
   <!-- Hero -->
   <section class="hero">

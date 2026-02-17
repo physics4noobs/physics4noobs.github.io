@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ray Optics | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>Ray Optics</h1>
+      <div class="ch-meta">Grade XII &mdash; Chapter 07</div>
+      <div class="ch-nav">
+        <a href="#reflection">Reflection</a>
+        <a href="#mirror-formula">Mirror Formula</a>
+        <a href="#refraction">Refraction</a>
+        <a href="#total-internal-reflection">Total Internal Reflection</a>
+        <a href="#lenses">Lenses</a>
+        <a href="#prism">Prism</a>
+        <a href="#optical-instruments">Optical Instruments</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Reflection -->
+    <!-- ============================== -->
+    <div class="theory-section" id="reflection">
+      <h2>1. Reflection of Light</h2>
+
+      <h3>Laws of Reflection</h3>
+      <p>
+        When a ray of light strikes a smooth surface, it bounces back into the same medium. This phenomenon is called <strong>reflection</strong>. The two fundamental laws of reflection are:
+      </p>
+      <ul>
+        <li>The incident ray, the reflected ray, and the normal to the reflecting surface at the point of incidence all lie in the same plane.</li>
+        <li>The angle of incidence equals the angle of reflection: <em>i</em> = <em>r</em>.</li>
+      </ul>
+      <p>
+        These laws hold for all types of reflecting surfaces &mdash; plane, concave, or convex. At each point of a curved surface, the normal is drawn perpendicular to the tangent at that point.
+      </p>
+
+      <h3>Plane Mirrors</h3>
+      <p>
+        A plane mirror forms a <strong>virtual, erect, laterally inverted</strong> image of the same size as the object. Key properties:
+      </p>
+      <ul>
+        <li>The image is formed as far behind the mirror as the object is in front: image distance = object distance.</li>
+        <li>The image is laterally inverted (left-right reversal).</li>
+        <li>Magnification m = +1 (same size, erect).</li>
+        <li>If the mirror rotates by angle &theta;, the reflected ray rotates by 2&theta;.</li>
+        <li>Minimum length of mirror to see full image of a person = half the person's height.</li>
+        <li>Two plane mirrors inclined at angle &theta; produce n images where n = (360&deg;/&theta;) &minus; 1 (if 360/&theta; is even) or depends on object position (if odd).</li>
+      </ul>
+
+      <h3>Spherical Mirrors</h3>
+      <p>
+        Spherical mirrors are portions of a sphere with one reflecting surface. A <strong>concave mirror</strong> has the reflecting surface on the inner (cave) side, and a <strong>convex mirror</strong> has it on the outer side.
+      </p>
+      <ul>
+        <li><strong>Centre of curvature (C):</strong> The centre of the sphere of which the mirror is a part.</li>
+        <li><strong>Radius of curvature (R):</strong> The radius of that sphere.</li>
+        <li><strong>Pole (P):</strong> The geometric centre of the mirror surface.</li>
+        <li><strong>Principal axis:</strong> The line joining P and C.</li>
+        <li><strong>Focus (F):</strong> The point on the principal axis where parallel rays (paraxial) converge (concave) or appear to diverge from (convex) after reflection. f = R/2.</li>
+      </ul>
+      <p>
+        <strong>Concave mirror:</strong> Can form real or virtual images depending on object position. Used in torches, headlights, shaving mirrors, solar furnaces, satellite dishes.
+      </p>
+      <p>
+        <strong>Convex mirror:</strong> Always forms virtual, erect, and diminished images. Used as rear-view mirrors in vehicles (wider field of view).
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Mirror Formula -->
+    <!-- ============================== -->
+    <div class="theory-section" id="mirror-formula">
+      <h2>2. Mirror Formula &amp; Magnification</h2>
+
+      <h3>Sign Convention (Cartesian)</h3>
+      <p>
+        The New Cartesian Sign Convention is used for spherical mirrors:
+      </p>
+      <ul>
+        <li>All distances are measured from the pole (P) of the mirror.</li>
+        <li>Distances measured in the direction of the incident light (towards the mirror) are taken as <strong>negative</strong>.</li>
+        <li>Distances measured against the direction of incident light (away from the mirror, behind it) are taken as <strong>positive</strong>.</li>
+        <li>Heights above the principal axis are positive; below are negative.</li>
+      </ul>
+      <p>
+        With this convention: for a concave mirror, f and R are negative; for a convex mirror, f and R are positive. Object distance u is always negative (object is on the same side as incident light).
+      </p>
+
+      <h3>Mirror Formula</h3>
+      <div class="formula-box">
+        1/v + 1/u = 1/f<br><br>
+        where:<br>
+        v = image distance (from pole)<br>
+        u = object distance (from pole)<br>
+        f = focal length (= R/2)
+      </div>
+
+      <h3>Magnification</h3>
+      <div class="formula-box">
+        Linear magnification: m = h<sub>i</sub> / h<sub>o</sub> = &minus; v / u<br><br>
+        m &gt; 0: image is erect (virtual for mirrors)<br>
+        m &lt; 0: image is inverted (real for mirrors)<br>
+        |m| &gt; 1: image is magnified<br>
+        |m| &lt; 1: image is diminished<br>
+        |m| = 1: image is same size as object
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 1</div>
+        <p>
+          An object is placed 30 cm in front of a concave mirror of focal length 20 cm. Find the position, nature, and magnification of the image.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Using sign convention: u = &minus;30 cm, f = &minus;20 cm<br><br>
+            Mirror formula: 1/v + 1/u = 1/f<br>
+            1/v + 1/(&minus;30) = 1/(&minus;20)<br>
+            1/v = &minus;1/20 + 1/30 = (&minus;3 + 2)/60 = &minus;1/60<br>
+            v = <strong>&minus;60 cm</strong><br><br>
+            The image is formed 60 cm in front of the mirror (same side as the object), so it is <strong>real</strong>.<br><br>
+            Magnification: m = &minus;v/u = &minus;(&minus;60)/(&minus;30) = &minus;2<br>
+            |m| = 2 &gt; 1, and m is negative, so the image is <strong>real, inverted, and magnified (2 times)</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Refraction -->
+    <!-- ============================== -->
+    <div class="theory-section" id="refraction">
+      <h2>3. Refraction of Light</h2>
+
+      <h3>Snell's Law</h3>
+      <p>
+        When light passes from one transparent medium to another, it changes direction at the interface. This bending of light is called <strong>refraction</strong>. Snell's law relates the angles of incidence and refraction to the refractive indices of the two media:
+      </p>
+      <div class="formula-box">
+        n<sub>1</sub> sin &theta;<sub>1</sub> = n<sub>2</sub> sin &theta;<sub>2</sub><br><br>
+        or equivalently: sin &theta;<sub>1</sub> / sin &theta;<sub>2</sub> = n<sub>2</sub> / n<sub>1</sub> = <sup>1</sup>n<sub>2</sub> (relative refractive index)
+      </div>
+      <p>
+        When light goes from a rarer medium (lower n) to a denser medium (higher n), it bends towards the normal (&theta;<sub>2</sub> &lt; &theta;<sub>1</sub>). When it goes from denser to rarer, it bends away from the normal (&theta;<sub>2</sub> &gt; &theta;<sub>1</sub>).
+      </p>
+
+      <h3>Real and Apparent Depth</h3>
+      <p>
+        When an object is submerged in a denser medium and viewed from a rarer medium (e.g., looking at a coin in water from air), the object appears to be closer to the surface than it actually is.
+      </p>
+      <div class="formula-box">
+        Apparent depth = Real depth / n<br><br>
+        where n = refractive index of the denser medium relative to the rarer medium.<br>
+        Shift = Real depth &times; (1 &minus; 1/n)
+      </div>
+
+      <h3>Lateral Shift</h3>
+      <p>
+        When a light ray passes through a parallel-sided glass slab, the emergent ray is parallel to the incident ray but shifted sideways. This sideways displacement is called the <strong>lateral shift</strong>.
+      </p>
+      <div class="formula-box">
+        Lateral shift: d = t sin(i &minus; r) / cos r<br><br>
+        where t = thickness of the slab, i = angle of incidence, r = angle of refraction inside the slab.
+      </div>
+      <p>
+        The lateral shift increases with the thickness of the slab, the angle of incidence, and the refractive index of the slab material. At normal incidence (i = 0), there is no lateral shift.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Total Internal Reflection -->
+    <!-- ============================== -->
+    <div class="theory-section" id="total-internal-reflection">
+      <h2>4. Total Internal Reflection</h2>
+
+      <h3>Critical Angle</h3>
+      <p>
+        When light travels from a denser medium to a rarer medium and the angle of incidence exceeds a certain value called the <strong>critical angle</strong>, the light is completely reflected back into the denser medium instead of being refracted. This phenomenon is called <strong>total internal reflection (TIR)</strong>.
+      </p>
+      <p>
+        The critical angle &theta;<sub>c</sub> is the angle of incidence in the denser medium for which the angle of refraction in the rarer medium is 90&deg;.
+      </p>
+      <div class="formula-box">
+        sin &theta;<sub>c</sub> = n<sub>2</sub> / n<sub>1</sub> &nbsp; (where n<sub>1</sub> &gt; n<sub>2</sub>)<br><br>
+        For a medium of refractive index n relative to air: sin &theta;<sub>c</sub> = 1/n
+      </div>
+
+      <h3>Conditions for TIR</h3>
+      <ul>
+        <li>Light must travel from a denser medium to a rarer medium (n<sub>1</sub> &gt; n<sub>2</sub>).</li>
+        <li>The angle of incidence must be greater than the critical angle (&theta;<sub>i</sub> &gt; &theta;<sub>c</sub>).</li>
+      </ul>
+
+      <h3>Applications of Total Internal Reflection</h3>
+      <p>
+        <strong>Optical Fibre:</strong> An optical fibre consists of a thin glass or plastic core surrounded by a cladding of lower refractive index. Light enters one end and undergoes repeated total internal reflections as it propagates along the fibre, with negligible energy loss. Optical fibres are used in telecommunications, medical endoscopy, and decorative lighting.
+      </p>
+      <p>
+        <strong>Mirage:</strong> On hot days, layers of air near the ground are hotter and less dense (lower refractive index) than the layers above. Light from a distant object travelling downward gets progressively refracted away from the normal until TIR occurs, creating an inverted image that appears as a pool of water on the road.
+      </p>
+      <p>
+        <strong>Diamond Brilliance:</strong> Diamond has a very high refractive index (n &asymp; 2.42), giving a small critical angle (&theta;<sub>c</sub> &asymp; 24.4&deg;). Light entering a well-cut diamond undergoes multiple total internal reflections before emerging, producing the characteristic sparkle and brilliance.
+      </p>
+      <p>
+        <strong>Totally Reflecting Prisms:</strong> Right-angled isosceles prisms (45&deg;-90&deg;-45&deg;) made of glass (n = 1.5, &theta;<sub>c</sub> &asymp; 42&deg;) are used in periscopes, binoculars, and SLR cameras to achieve total internal reflection with nearly 100% efficiency, superior to metallic mirrors.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Lenses -->
+    <!-- ============================== -->
+    <div class="theory-section" id="lenses">
+      <h2>5. Lenses</h2>
+
+      <h3>Thin Lens Formula</h3>
+      <p>
+        A thin lens is one whose thickness is negligible compared to its radius of curvature. Using the Cartesian sign convention:
+      </p>
+      <div class="formula-box">
+        Thin Lens Formula: 1/v &minus; 1/u = 1/f<br><br>
+        where:<br>
+        v = image distance<br>
+        u = object distance<br>
+        f = focal length (positive for convex lens, negative for concave lens)
+      </div>
+      <p>
+        A <strong>convex (converging) lens</strong> has a positive focal length and can form both real and virtual images. A <strong>concave (diverging) lens</strong> has a negative focal length and always forms virtual, erect, and diminished images.
+      </p>
+
+      <h3>Magnification</h3>
+      <div class="formula-box">
+        Linear magnification: m = h<sub>i</sub> / h<sub>o</sub> = v / u
+      </div>
+
+      <h3>Power of a Lens</h3>
+      <p>
+        The power of a lens is defined as the reciprocal of its focal length (in metres). The SI unit of power is the <strong>dioptre (D)</strong>.
+      </p>
+      <div class="formula-box">
+        P = 1/f &nbsp; (f in metres, P in dioptres)<br><br>
+        Convex lens: P &gt; 0 (converging)<br>
+        Concave lens: P &lt; 0 (diverging)
+      </div>
+
+      <h3>Lens Maker's Equation</h3>
+      <p>
+        The lens maker's equation relates the focal length of a thin lens to the refractive index of the lens material and the radii of curvature of its two surfaces:
+      </p>
+      <div class="formula-box">
+        1/f = (n &minus; 1) [1/R<sub>1</sub> &minus; 1/R<sub>2</sub>]<br><br>
+        where n = refractive index of the lens material relative to the surrounding medium,<br>
+        R<sub>1</sub> = radius of curvature of the first surface (facing the object),<br>
+        R<sub>2</sub> = radius of curvature of the second surface.
+      </div>
+
+      <h3>Combination of Thin Lenses</h3>
+      <p>
+        When two or more thin lenses are placed in contact, the equivalent focal length and power are:
+      </p>
+      <div class="formula-box">
+        1/f<sub>eq</sub> = 1/f<sub>1</sub> + 1/f<sub>2</sub> + 1/f<sub>3</sub> + ...<br><br>
+        P<sub>eq</sub> = P<sub>1</sub> + P<sub>2</sub> + P<sub>3</sub> + ...
+      </div>
+      <p>
+        For two lenses separated by distance d:
+      </p>
+      <div class="formula-box">
+        1/f<sub>eq</sub> = 1/f<sub>1</sub> + 1/f<sub>2</sub> &minus; d/(f<sub>1</sub> f<sub>2</sub>)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 2</div>
+        <p>
+          A convex lens of focal length 15 cm forms an image of an object placed 25 cm from it. Find the image position, nature, and magnification.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            u = &minus;25 cm, f = +15 cm<br><br>
+            Using the thin lens formula: 1/v &minus; 1/u = 1/f<br>
+            1/v &minus; 1/(&minus;25) = 1/15<br>
+            1/v + 1/25 = 1/15<br>
+            1/v = 1/15 &minus; 1/25 = (5 &minus; 3)/75 = 2/75<br>
+            v = <strong>+37.5 cm</strong><br><br>
+            Since v is positive, the image is formed on the other side of the lens &mdash; it is <strong>real</strong>.<br><br>
+            Magnification: m = v/u = 37.5/(&minus;25) = &minus;1.5<br>
+            The image is <strong>real, inverted, and magnified (1.5 times)</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Prism -->
+    <!-- ============================== -->
+    <div class="theory-section" id="prism">
+      <h2>6. Refraction Through a Prism</h2>
+
+      <h3>Deviation by a Prism</h3>
+      <p>
+        When a ray of light enters a prism, it refracts at the first surface, travels through the prism, and refracts again at the second surface. The angle between the incident ray and the emergent ray is called the <strong>angle of deviation (&delta;)</strong>.
+      </p>
+      <div class="formula-box">
+        &delta; = (i<sub>1</sub> + i<sub>2</sub>) &minus; A<br><br>
+        where i<sub>1</sub> = angle of incidence, i<sub>2</sub> = angle of emergence, A = angle of the prism (refracting angle).<br><br>
+        Also: r<sub>1</sub> + r<sub>2</sub> = A &nbsp; (r<sub>1</sub>, r<sub>2</sub> are angles of refraction at the two surfaces)
+      </div>
+
+      <h3>Minimum Deviation</h3>
+      <p>
+        As the angle of incidence increases from a small value, the deviation first decreases, reaches a minimum value &delta;<sub>m</sub>, and then increases. At minimum deviation, the ray passes symmetrically through the prism, meaning:
+      </p>
+      <ul>
+        <li>i<sub>1</sub> = i<sub>2</sub> = i (angle of incidence equals angle of emergence)</li>
+        <li>r<sub>1</sub> = r<sub>2</sub> = r = A/2 (the refracted ray inside the prism is parallel to the base)</li>
+      </ul>
+      <div class="formula-box">
+        &delta;<sub>m</sub> = 2i &minus; A, &nbsp; so &nbsp; i = (A + &delta;<sub>m</sub>)/2<br><br>
+        Refractive index: n = sin[(A + &delta;<sub>m</sub>)/2] / sin(A/2)
+      </div>
+      <p>
+        This formula is one of the most accurate methods for measuring the refractive index of a material.
+      </p>
+
+      <h3>Thin Prism Approximation</h3>
+      <p>
+        For a prism with a small refracting angle A (thin prism), the deviation is approximately:
+      </p>
+      <div class="formula-box">
+        &delta; = (n &minus; 1) A &nbsp; (for small A)
+      </div>
+
+      <h3>Dispersion</h3>
+      <p>
+        The splitting of white light into its constituent colours on passing through a prism is called <strong>dispersion</strong>. Different colours (wavelengths) have slightly different refractive indices in the prism material &mdash; violet light is refracted the most and red the least.
+      </p>
+      <div class="formula-box">
+        Dispersive power: &omega; = (&delta;<sub>V</sub> &minus; &delta;<sub>R</sub>) / &delta;<sub>Y</sub> = (n<sub>V</sub> &minus; n<sub>R</sub>) / (n<sub>Y</sub> &minus; 1)<br><br>
+        Angular dispersion = &delta;<sub>V</sub> &minus; &delta;<sub>R</sub> = (n<sub>V</sub> &minus; n<sub>R</sub>) A
+      </div>
+
+      <h3>Rainbow Formation</h3>
+      <p>
+        Rainbows are formed by the dispersion and total internal reflection of sunlight in water droplets. A <strong>primary rainbow</strong> (one internal reflection) shows colours from violet (inner) to red (outer) at about 42&deg; from the anti-solar point. A <strong>secondary rainbow</strong> (two internal reflections) appears at about 51&deg; with reversed colour order (red inner, violet outer) and is fainter.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Optical Instruments -->
+    <!-- ============================== -->
+    <div class="theory-section" id="optical-instruments">
+      <h2>7. Optical Instruments</h2>
+
+      <h3>The Human Eye</h3>
+      <p>
+        The human eye is a natural optical instrument. The eye lens (a convex lens of variable focal length) forms a real, inverted image on the retina. The ability of the eye to adjust its focal length is called <strong>accommodation</strong>. The <strong>near point</strong> (least distance of distinct vision) for a normal eye is 25 cm, and the <strong>far point</strong> is at infinity.
+      </p>
+      <p>
+        <strong>Defects of vision:</strong>
+      </p>
+      <ul>
+        <li><strong>Myopia (short-sightedness):</strong> The image of distant objects is formed before the retina. The far point is finite. Corrected using a concave (diverging) lens of focal length f = &minus;(far point distance).</li>
+        <li><strong>Hypermetropia (long-sightedness):</strong> The image of nearby objects is formed behind the retina. The near point is farther than 25 cm. Corrected using a convex (converging) lens. Power: P = 1/f = 1/d &minus; 1/D, where d = 25 cm and D = actual near point.</li>
+        <li><strong>Presbyopia:</strong> Age-related loss of accommodation, leading to difficulty in seeing both near and far objects. Corrected using bifocal lenses.</li>
+        <li><strong>Astigmatism:</strong> The cornea is not perfectly spherical, causing blurred vision. Corrected using cylindrical lenses.</li>
+      </ul>
+
+      <h3>Simple Microscope (Magnifying Glass)</h3>
+      <p>
+        A convex lens of short focal length used to view small objects. The object is placed between F and the lens.
+      </p>
+      <div class="formula-box">
+        Magnifying power (image at near point, D = 25 cm): m = 1 + D/f<br>
+        Magnifying power (image at infinity): m = D/f
+      </div>
+
+      <h3>Compound Microscope</h3>
+      <p>
+        Consists of two convex lenses: the <strong>objective</strong> (short focal length f<sub>o</sub>, small aperture) and the <strong>eyepiece</strong> (moderate focal length f<sub>e</sub>, larger aperture). The object is placed just beyond F<sub>o</sub>; the objective forms a real, magnified, intermediate image which acts as the object for the eyepiece.
+      </p>
+      <div class="formula-box">
+        Magnifying power: m = m<sub>o</sub> &times; m<sub>e</sub><br><br>
+        Image at near point: m = &minus;(L/f<sub>o</sub>) &times; (1 + D/f<sub>e</sub>)<br>
+        Image at infinity: m = &minus;(L/f<sub>o</sub>) &times; (D/f<sub>e</sub>)<br><br>
+        where L = length of the microscope tube (distance between the lenses, approximately)
+      </div>
+
+      <h3>Astronomical Telescope (Refracting)</h3>
+      <p>
+        Used to view distant objects (stars, planets). Consists of an <strong>objective</strong> (large focal length f<sub>o</sub>, large aperture to collect more light) and an <strong>eyepiece</strong> (short focal length f<sub>e</sub>). The objective forms a real, inverted, diminished image of the distant object at its focal point, which is viewed by the eyepiece.
+      </p>
+      <div class="formula-box">
+        Magnifying power (image at infinity, normal adjustment): m = &minus;f<sub>o</sub> / f<sub>e</sub><br>
+        Length of telescope (normal adjustment): L = f<sub>o</sub> + f<sub>e</sub><br><br>
+        Magnifying power (image at near point): m = &minus;(f<sub>o</sub>/f<sub>e</sub>)(1 + f<sub>e</sub>/D)
+      </div>
+      <p>
+        The image formed by an astronomical telescope is <strong>inverted</strong>. A <strong>terrestrial telescope</strong> uses an additional erecting lens (or prism system) to produce an erect image.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 3</div>
+        <p>
+          The objective of an astronomical telescope has a focal length of 100 cm and the eyepiece has a focal length of 5 cm. Calculate the magnifying power and the length of the telescope in normal adjustment.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            f<sub>o</sub> = 100 cm, f<sub>e</sub> = 5 cm<br><br>
+            Magnifying power (normal adjustment): m = &minus;f<sub>o</sub>/f<sub>e</sub> = &minus;100/5 = <strong>&minus;20</strong><br>
+            The magnitude is 20, and the negative sign indicates an inverted image.<br><br>
+            Length of telescope: L = f<sub>o</sub> + f<sub>e</sub> = 100 + 5 = <strong>105 cm</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="../simulations/ray-optics.html" class="primary-link">Simulation</a>
+      <a href="../tests/ray-optics.html">Take a Test</a>
+      <a href="wave-optics.html">Next: Wave Optics &rarr;</a>
+      <a href="em-waves.html">&larr; Prev: EM Waves</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

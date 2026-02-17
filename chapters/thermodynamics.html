@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heat &amp; Thermodynamics | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link active">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-name" id="auth-user-name"></span>
+          <div class="dropdown">
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Main Content -->
+  <main>
+    <div class="chapter-detail">
+
+      <div class="ch-hero">
+        <h1>Heat &amp; Thermodynamics</h1>
+        <span class="ch-meta">Chapter 08 &mdash; Grade XI &bull; Thermal Physics</span>
+      </div>
+
+      <!-- Section 1: Heat & Temperature -->
+      <div class="theory-section">
+        <h2>1. Heat &amp; Temperature</h2>
+        <p>
+          Heat is energy in transit due to a temperature difference, while temperature is a measure of the
+          average kinetic energy of molecules. The Zeroth Law of Thermodynamics establishes the concept of
+          thermal equilibrium: if two systems are each in thermal equilibrium with a third system, then they
+          are in thermal equilibrium with each other. This law provides the foundation for temperature
+          measurement using thermometers.
+        </p>
+
+        <h3>Temperature Scales</h3>
+        <p>
+          Three principal temperature scales are used in physics. The Celsius scale sets 0&deg;C at the
+          freezing point of water and 100&deg;C at its boiling point. The Fahrenheit scale uses 32&deg;F and
+          212&deg;F for the same reference points. The Kelvin scale is the SI unit of temperature, with
+          0 K representing absolute zero &mdash; the lowest possible temperature where molecular motion
+          ceases entirely.
+        </p>
+        <div class="formula-box">
+          T(K) = T(&deg;C) + 273.15<br>
+          T(&deg;F) = (9/5) T(&deg;C) + 32<br>
+          T(&deg;C) = (5/9) [T(&deg;F) &minus; 32]
+        </div>
+
+        <h3>Thermal Expansion</h3>
+        <p>
+          When a solid is heated, its dimensions increase. The fractional change is proportional to the
+          temperature change, governed by the coefficient of thermal expansion. For linear expansion, the
+          change in length is &Delta;L = L&alpha;&Delta;T, where &alpha; is the coefficient of linear
+          expansion. For area expansion, &Delta;A = 2&alpha;A&Delta;T, and for volume expansion,
+          &Delta;V = 3&alpha;V&Delta;T (equivalently &Delta;V = &gamma;V&Delta;T, where &gamma; = 3&alpha;
+          for isotropic solids).
+        </p>
+        <div class="formula-box">
+          &Delta;L = L&alpha;&Delta;T &nbsp;&nbsp;(linear expansion)<br>
+          &Delta;A = 2&alpha; A &Delta;T &nbsp;&nbsp;(area expansion)<br>
+          &Delta;V = &gamma; V &Delta;T &nbsp;&nbsp;(volume expansion, &gamma; &asymp; 3&alpha;)
+        </div>
+      </div>
+
+      <!-- Section 2: Calorimetry -->
+      <div class="theory-section">
+        <h2>2. Calorimetry</h2>
+        <p>
+          Calorimetry is the science of measuring heat exchange. When two bodies at different temperatures are
+          brought into thermal contact within an insulated system, heat flows from the hotter body to the
+          cooler one until thermal equilibrium is reached. The principle of calorimetry states that heat lost
+          by the hot body equals heat gained by the cold body.
+        </p>
+
+        <h3>Specific Heat Capacity</h3>
+        <p>
+          The specific heat capacity (c) of a substance is the amount of heat required to raise the
+          temperature of 1 kg of that substance by 1 K (or 1&deg;C). The heat absorbed or released during
+          a temperature change is given by Q = mc&Delta;T.
+        </p>
+
+        <h3>Latent Heat &amp; Phase Changes</h3>
+        <p>
+          During a phase change (solid &rarr; liquid or liquid &rarr; gas), the temperature remains constant
+          even though heat is being supplied. The latent heat of fusion (L<sub>f</sub>) is the heat per unit
+          mass required to change a solid into a liquid at its melting point, while the latent heat of
+          vaporisation (L<sub>v</sub>) applies to the liquid-gas transition. The heat involved is Q = mL.
+        </p>
+        <p>
+          The water equivalent of a body is the mass of water that would absorb or release the same amount of
+          heat as the body for a given temperature change. It equals mc/c<sub>water</sub>, where c is the
+          specific heat of the body.
+        </p>
+        <div class="formula-box">
+          Q = mc&Delta;T &nbsp;&nbsp;(temperature change)<br>
+          Q = mL &nbsp;&nbsp;(phase change, L = latent heat)<br>
+          Water equivalent W = mc / c<sub>water</sub>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 1</div>
+          <p>
+            A 200 g copper block (c = 390 J/kg&middot;K) at 150&deg;C is dropped into 500 g of water
+            (c = 4200 J/kg&middot;K) at 20&deg;C in a calorimeter. Find the final equilibrium temperature.
+          </p>
+          <div class="solution">
+            <p>
+              Heat lost by copper = Heat gained by water<br>
+              m<sub>Cu</sub> c<sub>Cu</sub> (T<sub>Cu</sub> &minus; T<sub>f</sub>) = m<sub>w</sub> c<sub>w</sub> (T<sub>f</sub> &minus; T<sub>w</sub>)<br>
+              0.2 &times; 390 &times; (150 &minus; T<sub>f</sub>) = 0.5 &times; 4200 &times; (T<sub>f</sub> &minus; 20)<br>
+              78 (150 &minus; T<sub>f</sub>) = 2100 (T<sub>f</sub> &minus; 20)<br>
+              11700 &minus; 78 T<sub>f</sub> = 2100 T<sub>f</sub> &minus; 42000<br>
+              53700 = 2178 T<sub>f</sub><br>
+              T<sub>f</sub> &asymp; 24.7&deg;C
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Kinetic Theory of Gases -->
+      <div class="theory-section">
+        <h2>3. Kinetic Theory of Gases</h2>
+        <p>
+          The kinetic theory of gases models a gas as a large number of tiny molecules in constant random
+          motion. It provides a microscopic explanation for macroscopic properties like pressure and
+          temperature.
+        </p>
+
+        <h3>Ideal Gas Equation</h3>
+        <p>
+          An ideal gas obeys the equation PV = nRT, where P is pressure, V is volume, n is the number of
+          moles, R = 8.314 J/(mol&middot;K) is the universal gas constant, and T is the absolute temperature.
+          For N molecules, PV = Nk<sub>B</sub>T, where k<sub>B</sub> = R/N<sub>A</sub> is the Boltzmann
+          constant.
+        </p>
+
+        <h3>Assumptions of Kinetic Theory</h3>
+        <ul>
+          <li>Gas consists of a very large number of identical molecules in random motion.</li>
+          <li>The size of molecules is negligible compared to the average intermolecular separation.</li>
+          <li>Molecules exert no forces on each other except during brief elastic collisions.</li>
+          <li>Collisions with the walls of the container are perfectly elastic.</li>
+          <li>The time of collision is negligible compared to the time between collisions.</li>
+        </ul>
+
+        <h3>Pressure from Molecular Motion</h3>
+        <p>
+          The pressure exerted by an ideal gas can be derived from the momentum transfer during molecular
+          collisions with the walls. The result is P = (1/3)&rho;v&sup2;<sub>rms</sub>, where &rho; is the
+          gas density and v<sub>rms</sub> is the root mean square speed of the molecules.
+        </p>
+
+        <h3>Molecular Speeds</h3>
+        <p>
+          The Maxwell-Boltzmann distribution gives three characteristic speeds for gas molecules.
+          The RMS speed is v<sub>rms</sub> = &radic;(3RT/M), the mean speed is v<sub>avg</sub> =
+          &radic;(8RT/&pi;M), and the most probable speed is v<sub>mp</sub> = &radic;(2RT/M), where M is the
+          molar mass. Their ratio is v<sub>mp</sub> : v<sub>avg</sub> : v<sub>rms</sub> =
+          1 : 1.128 : 1.224.
+        </p>
+        <div class="formula-box">
+          PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; P = &frac13;&rho;v&sup2;<sub>rms</sub><br>
+          v<sub>rms</sub> = &radic;(3RT/M) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>avg</sub> = &radic;(8RT/&pi;M) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>mp</sub> = &radic;(2RT/M)
+        </div>
+      </div>
+
+      <!-- Section 4: Degrees of Freedom -->
+      <div class="theory-section">
+        <h2>4. Degrees of Freedom &amp; Equipartition of Energy</h2>
+        <p>
+          The degrees of freedom (f) of a gas molecule represent the number of independent ways in which the
+          molecule can possess energy. By the law of equipartition of energy, each degree of freedom
+          contributes &frac12;k<sub>B</sub>T to the average energy of one molecule, or &frac12;RT per mole.
+        </p>
+
+        <h3>Degrees of Freedom by Molecular Type</h3>
+        <ul>
+          <li><strong>Monatomic</strong> (He, Ne, Ar): 3 translational DOF &rArr; f = 3</li>
+          <li><strong>Diatomic</strong> (H&#8322;, O&#8322;, N&#8322;) at moderate T: 3 translational + 2 rotational DOF &rArr; f = 5</li>
+          <li><strong>Polyatomic / Non-linear</strong> (H&#8322;O, CH&#8324;): 3 translational + 3 rotational DOF &rArr; f = 6 (vibrational modes add at high T)</li>
+        </ul>
+
+        <h3>Molar Heat Capacities</h3>
+        <p>
+          Using the equipartition theorem, the molar heat capacity at constant volume is
+          C<sub>v</sub> = (f/2)R and at constant pressure is C<sub>p</sub> = C<sub>v</sub> + R = ((f+2)/2)R.
+          The heat capacity ratio (adiabatic index) is &gamma; = C<sub>p</sub>/C<sub>v</sub> = (f+2)/f.
+        </p>
+        <div class="formula-box">
+          C<sub>v</sub> = (f/2)R &nbsp;&nbsp;|&nbsp;&nbsp; C<sub>p</sub> = C<sub>v</sub> + R = ((f+2)/2)R<br>
+          &gamma; = C<sub>p</sub>/C<sub>v</sub> = (f+2)/f<br>
+          Monatomic: C<sub>v</sub> = 3R/2, &gamma; = 5/3 &asymp; 1.67<br>
+          Diatomic: C<sub>v</sub> = 5R/2, &gamma; = 7/5 = 1.4<br>
+          Polyatomic: C<sub>v</sub> = 3R, &gamma; = 4/3 &asymp; 1.33
+        </div>
+      </div>
+
+      <!-- Section 5: First Law of Thermodynamics -->
+      <div class="theory-section">
+        <h2>5. First Law of Thermodynamics</h2>
+        <p>
+          The first law of thermodynamics is a statement of energy conservation applied to thermal systems.
+          It states that the change in internal energy of a system equals the heat supplied to it minus the
+          work done by the system on its surroundings:
+        </p>
+        <div class="formula-box">
+          &Delta;U = Q &minus; W
+        </div>
+        <p>
+          Here &Delta;U is the change in internal energy, Q is the heat added to the system, and W is the
+          work done by the system. Internal energy is a state function &mdash; it depends only on the current
+          state (temperature, for an ideal gas) and not on how the system reached that state.
+        </p>
+
+        <h3>Sign Convention</h3>
+        <ul>
+          <li>Q &gt; 0: heat is absorbed by the system; Q &lt; 0: heat is released.</li>
+          <li>W &gt; 0: work is done by the system (expansion); W &lt; 0: work is done on the system (compression).</li>
+          <li>&Delta;U &gt; 0: internal energy (and temperature, for an ideal gas) increases.</li>
+        </ul>
+        <p>
+          For an ideal gas, the internal energy depends only on temperature: U = nC<sub>v</sub>T, and
+          therefore &Delta;U = nC<sub>v</sub>&Delta;T for any process.
+        </p>
+      </div>
+
+      <!-- Section 6: Thermodynamic Processes -->
+      <div class="theory-section">
+        <h2>6. Thermodynamic Processes</h2>
+
+        <h3>Isothermal Process (T = constant)</h3>
+        <p>
+          In an isothermal process the temperature stays constant, so &Delta;U = 0 and therefore Q = W.
+          For an ideal gas, PV = constant (Boyle&rsquo;s law). The work done is:
+        </p>
+        <div class="formula-box">
+          W = nRT ln(V&#8322;/V&#8321;) &nbsp;&nbsp;(isothermal)
+        </div>
+
+        <h3>Adiabatic Process (Q = 0)</h3>
+        <p>
+          In an adiabatic process no heat enters or leaves the system. All the work done comes at the expense
+          of internal energy: &Delta;U = &minus;W. The relations governing an adiabatic process for an ideal
+          gas are:
+        </p>
+        <div class="formula-box">
+          PV<sup>&gamma;</sup> = constant<br>
+          TV<sup>&gamma;&minus;1</sup> = constant<br>
+          T<sup>&gamma;</sup> P<sup>1&minus;&gamma;</sup> = constant<br>
+          W = (P&#8321;V&#8321; &minus; P&#8322;V&#8322;) / (&gamma; &minus; 1) = nC<sub>v</sub>(T&#8321; &minus; T&#8322;)
+        </div>
+
+        <h3>Isobaric Process (P = constant)</h3>
+        <p>
+          At constant pressure, the work done by the gas is simply W = P&Delta;V = P(V&#8322; &minus; V&#8321;).
+          The heat supplied is Q = nC<sub>p</sub>&Delta;T.
+        </p>
+        <div class="formula-box">
+          W = P&Delta;V &nbsp;&nbsp;|&nbsp;&nbsp; Q = nC<sub>p</sub>&Delta;T &nbsp;&nbsp;(isobaric)
+        </div>
+
+        <h3>Isochoric Process (V = constant)</h3>
+        <p>
+          At constant volume, no expansion or compression occurs, so W = 0. All the heat supplied goes into
+          changing the internal energy: Q = &Delta;U = nC<sub>v</sub>&Delta;T.
+        </p>
+        <div class="formula-box">
+          W = 0 &nbsp;&nbsp;|&nbsp;&nbsp; Q = &Delta;U = nC<sub>v</sub>&Delta;T &nbsp;&nbsp;(isochoric)
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 2</div>
+          <p>
+            Two moles of an ideal diatomic gas (&gamma; = 7/5) at 300 K undergo an adiabatic expansion where
+            the volume doubles. Find the final temperature.
+          </p>
+          <div class="solution">
+            <p>
+              For an adiabatic process: TV<sup>&gamma;&minus;1</sup> = constant<br>
+              T&#8321; V&#8321;<sup>&gamma;&minus;1</sup> = T&#8322; V&#8322;<sup>&gamma;&minus;1</sup><br>
+              T&#8322; = T&#8321; (V&#8321;/V&#8322;)<sup>&gamma;&minus;1</sup><br>
+              T&#8322; = 300 &times; (1/2)<sup>0.4</sup><br>
+              (1/2)<sup>0.4</sup> = 2<sup>&minus;0.4</sup> &asymp; 0.7579<br>
+              T&#8322; &asymp; 300 &times; 0.758 &asymp; 227.4 K
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 7: Second Law & Carnot Engine -->
+      <div class="theory-section">
+        <h2>7. Second Law of Thermodynamics &amp; Carnot Engine</h2>
+
+        <h3>Kelvin-Planck Statement</h3>
+        <p>
+          It is impossible to construct a heat engine that operates in a cycle and converts all the heat
+          absorbed from a single reservoir entirely into work &mdash; some heat must always be rejected to a
+          cold reservoir.
+        </p>
+
+        <h3>Clausius Statement</h3>
+        <p>
+          It is impossible for heat to flow spontaneously from a colder body to a hotter body without the
+          expenditure of external work.
+        </p>
+
+        <h3>Carnot Cycle &amp; Efficiency</h3>
+        <p>
+          The Carnot engine is an ideal reversible engine operating between two temperature reservoirs. It
+          consists of four steps: isothermal expansion (absorb Q&#8321; at T&#8321;), adiabatic expansion
+          (cool from T&#8321; to T&#8322;), isothermal compression (reject Q&#8322; at T&#8322;), and
+          adiabatic compression (heat from T&#8322; back to T&#8321;). The Carnot efficiency sets an upper
+          bound for all real engines operating between the same two temperatures:
+        </p>
+        <div class="formula-box">
+          &eta;<sub>Carnot</sub> = 1 &minus; T&#8322;/T&#8321; = (T&#8321; &minus; T&#8322;)/T&#8321;<br>
+          &eta; = W/Q&#8321; = (Q&#8321; &minus; Q&#8322;)/Q&#8321;
+        </div>
+
+        <h3>Refrigerator &amp; Coefficient of Performance</h3>
+        <p>
+          A refrigerator extracts heat Q&#8322; from a cold reservoir and rejects Q&#8321; to a hot
+          reservoir, consuming work W = Q&#8321; &minus; Q&#8322;. Its coefficient of performance (COP) is:
+        </p>
+        <div class="formula-box">
+          COP = Q&#8322;/W = Q&#8322;/(Q&#8321; &minus; Q&#8322;) = T&#8322;/(T&#8321; &minus; T&#8322;) &nbsp;&nbsp;(Carnot refrigerator)
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Solved Example 3</div>
+          <p>
+            A Carnot engine operates between a source at 600 K and a sink at 300 K. If the engine absorbs
+            1000 J of heat per cycle, find the efficiency and work output per cycle.
+          </p>
+          <div class="solution">
+            <p>
+              &eta; = 1 &minus; T&#8322;/T&#8321; = 1 &minus; 300/600 = 0.5 = 50%<br>
+              W = &eta; &times; Q&#8321; = 0.5 &times; 1000 = 500 J<br>
+              Q&#8322; = Q&#8321; &minus; W = 1000 &minus; 500 = 500 J (rejected to sink)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 8: Heat Transfer -->
+      <div class="theory-section">
+        <h2>8. Heat Transfer</h2>
+
+        <h3>Conduction</h3>
+        <p>
+          Heat conduction is the transfer of thermal energy through a material without any bulk motion of
+          the material itself. It occurs due to molecular collisions and is most effective in solids,
+          especially metals. The rate of heat flow through a uniform rod is given by Fourier&rsquo;s law:
+        </p>
+        <div class="formula-box">
+          dQ/dt = KA (dT/dx)<br>
+          For a uniform rod: dQ/dt = KA (T&#8321; &minus; T&#8322;) / L
+        </div>
+        <p>
+          Here K is the thermal conductivity of the material, A is the cross-sectional area, dT/dx is the
+          temperature gradient, and L is the length of the rod.
+        </p>
+
+        <h3>Convection</h3>
+        <p>
+          Convection is the transfer of heat by actual bulk movement of a fluid (liquid or gas). Natural
+          convection occurs due to buoyancy forces from density differences caused by temperature variations.
+          Forced convection involves an external agency (fan, pump) driving the fluid flow. Convection is the
+          primary mode of heat transfer in fluids.
+        </p>
+
+        <h3>Radiation</h3>
+        <p>
+          Thermal radiation is the emission of electromagnetic waves by all bodies at any temperature above
+          absolute zero. Unlike conduction and convection, radiation does not require any medium and can
+          travel through a vacuum.
+        </p>
+        <div class="formula-box">
+          P = &sigma;AT<sup>4</sup> &nbsp;&nbsp;(Stefan-Boltzmann law, for a black body)<br>
+          P = &sigma;A&epsilon;T<sup>4</sup> &nbsp;&nbsp;(for a grey body, &epsilon; = emissivity)<br>
+          &sigma; = 5.67 &times; 10<sup>&minus;8</sup> W m<sup>&minus;2</sup> K<sup>&minus;4</sup>
+        </div>
+
+        <h3>Newton&rsquo;s Law of Cooling</h3>
+        <p>
+          For small temperature differences between a body and its surroundings, the rate of cooling is
+          approximately proportional to the temperature difference:
+        </p>
+        <div class="formula-box">
+          dT/dt = &minus;k (T &minus; T<sub>s</sub>)<br>
+          T(t) = T<sub>s</sub> + (T&#8320; &minus; T<sub>s</sub>) e<sup>&minus;kt</sup>
+        </div>
+        <p>
+          Here T<sub>s</sub> is the surrounding temperature, T&#8320; is the initial temperature of the body,
+          and k is a positive constant that depends on the surface area, emissivity, and heat capacity.
+        </p>
+      </div>
+
+      <!-- Key Formulas Summary -->
+      <div class="theory-section">
+        <h2>Key Formulas Summary</h2>
+        <div class="formula-box">
+          PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>rms</sub> = &radic;(3RT/M)<br>
+          &Delta;U = Q &minus; W &nbsp;&nbsp;|&nbsp;&nbsp; &eta;<sub>Carnot</sub> = 1 &minus; T&#8322;/T&#8321;<br>
+          &Delta;L = L&alpha;&Delta;T &nbsp;&nbsp;|&nbsp;&nbsp; Q = mc&Delta;T &nbsp;&nbsp;|&nbsp;&nbsp; Q = mL<br>
+          C<sub>v</sub> = (f/2)R &nbsp;&nbsp;|&nbsp;&nbsp; C<sub>p</sub> = C<sub>v</sub> + R &nbsp;&nbsp;|&nbsp;&nbsp; &gamma; = C<sub>p</sub>/C<sub>v</sub><br>
+          P = &sigma;AT<sup>4</sup> &nbsp;&nbsp;|&nbsp;&nbsp; dQ/dt = KA(dT/dx)
+        </div>
+      </div>
+
+      <!-- Chapter Links -->
+      <div class="ch-links">
+        <a href="../simulations/thermodynamics.html" class="primary-link">Launch Simulation &rarr;</a>
+        <a href="../tests/thermodynamics.html">Practice Test</a>
+        <a href="fluid-mechanics.html">&larr; Prev: Fluid Mechanics</a>
+        <a href="shm.html">Next: SHM &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a>
+        <a href="../lectures.html">Lectures</a>
+        <a href="../notes.html">Notes</a>
+        <a href="../books.html">Books</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

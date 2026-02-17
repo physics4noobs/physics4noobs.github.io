@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluid Mechanics DTS | Axomiya Engineer</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="../about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="../chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="../lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="../notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="../notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="../simulations.html" class="nav-link">Simulations</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash'),l=document.getElementById('nav-logo');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');
+        l.classList.add('splash-phase-1');
+        setTimeout(function(){l.classList.remove('splash-phase-1');l.classList.add('splash-phase-2');},1500);
+        setTimeout(function(){s.classList.add('fade-out');l.classList.remove('splash-phase-2');l.classList.add('splash-phase-3');},3000);
+        setTimeout(function(){s.style.display='none';l.classList.remove('splash-phase-3');},3600);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Fluid Mechanics &mdash; Daily Test Series</h1>
+      <div class="test-meta">Grade XI &bull; 15 Questions &bull; 90 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">90:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">The pressure at the bottom of a lake of depth 10 m is (atmospheric pressure = 1.013 &times; 10<sup>5</sup> Pa, density of water = 1000 kg/m&sup3;, g = 9.8 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1.993 &times; 10<sup>5</sup> Pa</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 0.98 &times; 10<sup>5</sup> Pa</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1.013 &times; 10<sup>5</sup> Pa</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2.993 &times; 10<sup>5</sup> Pa</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> P = P<sub>atm</sub> + &rho;gh = 1.013 &times; 10<sup>5</sup> + 1000 &times; 9.8 &times; 10 = 1.013 &times; 10<sup>5</sup> + 0.98 &times; 10<sup>5</sup> = 1.993 &times; 10<sup>5</sup> Pa.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">In a hydraulic press, the area of the small piston is 10 cm&sup2; and the area of the large piston is 200 cm&sup2;. A force of 50 N is applied on the small piston. The force on the large piston is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 50 N</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 500 N</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1000 N</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2500 N</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By Pascal's law: F<sub>1</sub>/A<sub>1</sub> = F<sub>2</sub>/A<sub>2</sub>. F<sub>2</sub> = F<sub>1</sub> &times; A<sub>2</sub>/A<sub>1</sub> = 50 &times; 200/10 = 1000 N.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">A wooden block of density 600 kg/m&sup3; floats in water. The fraction of the block submerged is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 0.4</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 0.6</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 0.8</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1.0</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For a floating body, fraction submerged = &rho;<sub>body</sub>/&rho;<sub>liquid</sub> = 600/1000 = 0.6 or 60%.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">Water flows through a pipe of cross-sectional area 4 cm&sup2; at 2 m/s. If the pipe narrows to 2 cm&sup2;, the speed of water is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 3 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 4 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By equation of continuity: A<sub>1</sub>v<sub>1</sub> = A<sub>2</sub>v<sub>2</sub>. v<sub>2</sub> = A<sub>1</sub>v<sub>1</sub>/A<sub>2</sub> = 4 &times; 2/2 = 4 m/s.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">The speed of efflux of a liquid through an orifice at a depth h below the surface is (Torricelli's theorem):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &radic;(2gh)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &radic;(gh)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2gh</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &radic;(gh/2)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By Torricelli's theorem (applying Bernoulli's equation), the speed of efflux v = &radic;(2gh), analogous to a body falling from height h.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">A body weighs 100 N in air and 75 N when fully immersed in water. The buoyant force on the body is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 100 N</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 25 N</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 75 N</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 175 N</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Buoyant force = Weight in air &minus; Weight in water = 100 &minus; 75 = 25 N.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">A sphere of radius r falls through a viscous fluid. The terminal velocity is proportional to:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> r</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> r&sup3;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> r&sup2;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1/r</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Terminal velocity v<sub>t</sub> = 2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>l</sub>)g/(9&eta;). So v<sub>t</sub> &prop; r&sup2;.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">Water is flowing through a horizontal pipe. At point A the velocity is 2 m/s and pressure is 2 &times; 10<sup>5</sup> Pa. At point B the velocity is 4 m/s. The pressure at B is (&rho; = 1000 kg/m&sup3;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1.94 &times; 10<sup>5</sup> Pa</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2.06 &times; 10<sup>5</sup> Pa</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1.5 &times; 10<sup>5</sup> Pa</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2.5 &times; 10<sup>5</sup> Pa</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By Bernoulli's theorem (same height): P<sub>A</sub> + &frac12;&rho;v<sub>A</sub>&sup2; = P<sub>B</sub> + &frac12;&rho;v<sub>B</sub>&sup2;. P<sub>B</sub> = P<sub>A</sub> + &frac12;&rho;(v<sub>A</sub>&sup2; &minus; v<sub>B</sub>&sup2;) = 2 &times; 10<sup>5</sup> + &frac12;(1000)(4 &minus; 16) = 2 &times; 10<sup>5</sup> &minus; 6000 = 1.94 &times; 10<sup>5</sup> Pa.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">A U-tube manometer contains mercury. One arm is open and the other is connected to a gas supply. If the mercury level in the open arm is 10 cm higher, the gauge pressure of the gas is (&rho;<sub>Hg</sub> = 13600 kg/m&sup3;, g = 9.8 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1360 Pa</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 9800 Pa</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1.013 &times; 10<sup>5</sup> Pa</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 13328 Pa</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Gauge pressure = &rho;gh = 13600 &times; 9.8 &times; 0.10 = 13328 Pa.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">An ice cube floats in a glass of water filled to the brim. When the ice melts completely, the water level:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Rises</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Remains the same</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Falls</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> First rises then falls</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> When floating, the ice displaces a volume of water equal to its own weight. When it melts, the resulting water occupies exactly the volume that was displaced. So the water level remains the same.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 11</div>
+      <div class="q-text">The Reynolds number for a flow to be laminar in a pipe should be less than:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 500</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 1000</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2000</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 4000</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For flow in a pipe, the critical Reynolds number is approximately 2000. Below this value, the flow is generally laminar.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 12</div>
+      <div class="q-text">A tank is filled with water to a height of 5 m. The velocity of efflux from a small hole at the bottom is (g = 10 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 10 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 5 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &radic;50 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 20 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> v = &radic;(2gh) = &radic;(2 &times; 10 &times; 5) = &radic;100 = 10 m/s.</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 13</div>
+      <div class="q-text">An object of density 800 kg/m&sup3; and volume 0.01 m&sup3; is placed in a liquid of density 1200 kg/m&sup3;. The buoyant force on the object is (g = 10 m/s&sup2;):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 80 N</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 120 N</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 96 N</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 40 N</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Since &rho;<sub>object</sub> &lt; &rho;<sub>liquid</sub>, the object floats. Weight of object = &rho;<sub>obj</sub>Vg = 800 &times; 0.01 &times; 10 = 80 N. For floating, buoyant force = weight = 80 N. But if fully submerged (as stated), buoyant force = &rho;<sub>liquid</sub>Vg = 1200 &times; 0.01 &times; 10 = 120 N. Since the object is placed in the liquid, the maximum buoyant force when fully submerged is 120 N.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 14</div>
+      <div class="q-text">The surface tension of a liquid is 0.07 N/m. The excess pressure inside a soap bubble of radius 0.01 m is (soap bubble has two surfaces):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 7 Pa</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 14 Pa</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 21 Pa</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 28 Pa</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For a soap bubble (two surfaces): &Delta;P = 4T/r = 4 &times; 0.07/0.01 = 28 Pa.</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 15</div>
+      <div class="q-text">Two drops of mercury of equal radii r merge to form a single drop. The radius of the new drop is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> r</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2r</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2<sup>1/3</sup>r</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &radic;2 r</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Volume is conserved: 2 &times; (4/3)&pi;r&sup3; = (4/3)&pi;R&sup3;. So R&sup3; = 2r&sup3;, giving R = 2<sup>1/3</sup>r.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+          <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a><a href="../lectures.html">Lectures</a><a href="../notes.html">Notes</a><a href="../books.html">Books</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Axomiya Engineer. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    var totalSeconds = 90 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
