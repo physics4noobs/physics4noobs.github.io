@@ -1,0 +1,267 @@
+[
+  {
+    "id": "kin-f-01",
+    "type": "formula",
+    "front": "Equations of Motion (Constant Acceleration)",
+    "back": "v = u + at\n\ns = ut + \\frac{1}{2}at^2\n\nv^2 = u^2 + 2as\n\ns = \\frac{u+v}{2} \\cdot t",
+    "tags": ["kinematics", "1d-motion"]
+  },
+  {
+    "id": "kin-f-02",
+    "type": "formula",
+    "front": "Displacement in the nth Second",
+    "back": "s_n = u + \\frac{a}{2}(2n - 1)",
+    "tags": ["kinematics", "1d-motion"]
+  },
+  {
+    "id": "kin-f-03",
+    "type": "formula",
+    "front": "Projectile Motion: Time of Flight",
+    "back": "T = \\frac{2u \\sin\\theta}{g}",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-f-04",
+    "type": "formula",
+    "front": "Projectile Motion: Range",
+    "back": "R = \\frac{u^2 \\sin 2\\theta}{g}\n\nR_{\\max} = \\frac{u^2}{g} \\quad (\\theta = 45°)",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-f-05",
+    "type": "formula",
+    "front": "Projectile Motion: Maximum Height",
+    "back": "H = \\frac{u^2 \\sin^2\\theta}{2g}",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-f-06",
+    "type": "formula",
+    "front": "Trajectory Equation of a Projectile",
+    "back": "y = x\\tan\\theta - \\frac{gx^2}{2u^2\\cos^2\\theta}\n\n\\text{or } y = x\\tan\\theta\\left(1 - \\frac{x}{R}\\right)",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-f-07",
+    "type": "formula",
+    "front": "Horizontal Projectile: Time & Range",
+    "back": "t = \\sqrt{\\frac{2h}{g}}\n\nx = u\\sqrt{\\frac{2h}{g}}\n\nv = \\sqrt{u^2 + 2gh}",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-f-08",
+    "type": "formula",
+    "front": "Projectile on Inclined Plane",
+    "back": "T = \\frac{2u\\sin(\\alpha - \\beta)}{g\\cos\\beta}\n\nR = \\frac{2u^2\\sin(\\alpha - \\beta)\\cos\\alpha}{g\\cos^2\\beta}\n\n\\text{Max range at } \\alpha = 45° + \\frac{\\beta}{2}",
+    "tags": ["kinematics", "projectile", "incline"]
+  },
+  {
+    "id": "kin-f-09",
+    "type": "formula",
+    "front": "Circular Motion: Angular Velocity & Period",
+    "back": "\\omega = \\frac{d\\theta}{dt} = \\frac{v}{r}\n\nT = \\frac{2\\pi}{\\omega} = \\frac{2\\pi r}{v}\n\nf = \\frac{1}{T} = \\frac{\\omega}{2\\pi}",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-f-10",
+    "type": "formula",
+    "front": "Centripetal Acceleration",
+    "back": "a_c = \\frac{v^2}{r} = \\omega^2 r\n\n\\text{Direction: always toward center}",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-f-11",
+    "type": "formula",
+    "front": "Non-Uniform Circular Motion: Net Acceleration",
+    "back": "a_r = \\frac{v^2}{r} \\quad \\text{(radial, toward center)}\n\na_t = \\frac{dv}{dt} \\quad \\text{(tangential)}\n\na = \\sqrt{a_r^2 + a_t^2}",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-f-12",
+    "type": "formula",
+    "front": "Relative Velocity",
+    "back": "\\vec{v}_{AB} = \\vec{v}_A - \\vec{v}_B\n\n\\vec{v}_{AB} = -\\vec{v}_{BA}\n\n\\vec{v}_{AC} = \\vec{v}_{AB} + \\vec{v}_{BC}",
+    "tags": ["kinematics", "relative-motion"]
+  },
+  {
+    "id": "kin-f-13",
+    "type": "formula",
+    "front": "River Crossing: Minimum Time",
+    "back": "t_{\\min} = \\frac{d}{v}\n\n\\text{Drift} = v_c \\cdot \\frac{d}{v}\n\n\\text{(Swim perpendicular to current)}",
+    "tags": ["kinematics", "relative-motion"]
+  },
+  {
+    "id": "kin-f-14",
+    "type": "formula",
+    "front": "Position & Velocity in Uniform Circular Motion",
+    "back": "\\vec{r}(t) = r\\cos(\\omega t)\\hat{i} + r\\sin(\\omega t)\\hat{j}\n\n\\vec{v}(t) = -r\\omega\\sin(\\omega t)\\hat{i} + r\\omega\\cos(\\omega t)\\hat{j}\n\n|\\vec{v}| = r\\omega",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-f-15",
+    "type": "formula",
+    "front": "Non-Uniform Acceleration: a = f(t)",
+    "back": "\\int dv = \\int a(t)\\,dt \\quad \\Rightarrow v(t)\n\n\\int dx = \\int v(t)\\,dt \\quad \\Rightarrow x(t)",
+    "tags": ["kinematics", "variable-acceleration"]
+  },
+  {
+    "id": "kin-c-01",
+    "type": "concept",
+    "front": "What is the difference between distance and displacement?",
+    "back": "**Distance** is the total path length traveled (scalar, always positive).\n\n**Displacement** is the vector from initial to final position.\n\nKey relation: Distance ≥ |Displacement| always.\n\nThey are equal only when motion is in a straight line without reversing direction.",
+    "tags": ["kinematics", "1d-motion"]
+  },
+  {
+    "id": "kin-c-02",
+    "type": "concept",
+    "front": "What is the difference between speed and velocity?",
+    "back": "**Speed** is the magnitude of velocity (scalar, always ≥ 0).\n\n**Velocity** is the rate of change of displacement (vector).\n\nAverage speed ≥ |Average velocity| always.\n\nThey are equal only for straight-line motion without reversal.",
+    "tags": ["kinematics", "1d-motion"]
+  },
+  {
+    "id": "kin-c-03",
+    "type": "concept",
+    "front": "Can acceleration exist when velocity is zero?",
+    "back": "**Yes!** A classic example is a ball thrown upward at the highest point:\n\n- Velocity = 0 (momentarily at rest)\n- Acceleration = g downward (gravity never stops acting)\n\nAcceleration changes velocity, so a non-zero acceleration at v = 0 means the object is about to start moving.",
+    "tags": ["kinematics", "1d-motion"]
+  },
+  {
+    "id": "kin-c-04",
+    "type": "concept",
+    "front": "What information can you extract from kinematic graphs?",
+    "back": "**x-t graph:** Slope = velocity (steeper = faster)\n\n**v-t graph:**\n- Slope = acceleration\n- Area under curve = displacement\n\n**a-t graph:** Area under curve = change in velocity\n\nA horizontal line on v-t graph means constant velocity (zero acceleration).",
+    "tags": ["kinematics", "graphs"]
+  },
+  {
+    "id": "kin-c-05",
+    "type": "concept",
+    "front": "Why are horizontal and vertical motions independent in projectile motion?",
+    "back": "Gravity acts only vertically, so:\n\n- **Horizontal**: No acceleration → constant velocity (uₓ = u cosθ)\n- **Vertical**: Uniform acceleration g downward\n\nThe two components don't affect each other. This independence allows us to solve each direction separately and combine results.",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-c-06",
+    "type": "concept",
+    "front": "Why do complementary angles give the same range in projectile motion?",
+    "back": "Range R = u²sin2θ / g\n\nSince sin2θ = sin(180° − 2θ) = sin2(90° − θ),\n\nangles θ and (90° − θ) give the same value of sin2θ → same range.\n\nExample: 30° and 60° give equal range, but 60° gives greater height.",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-c-07",
+    "type": "concept",
+    "front": "What is the difference between uniform and non-uniform circular motion?",
+    "back": "**Uniform circular motion:**\n- Speed is constant, only direction changes\n- Acceleration is purely centripetal (toward center)\n- aₜ = 0\n\n**Non-uniform circular motion:**\n- Speed also changes\n- Both radial (aᵣ = v²/r) and tangential (aₜ = dv/dt) components exist\n- Net acceleration: a = √(aᵣ² + aₜ²)",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-c-08",
+    "type": "concept",
+    "front": "Explain the rain-man problem approach",
+    "back": "When a man moves with velocity vₘ and rain falls with velocity vᵣ:\n\n- Relative velocity of rain w.r.t. man: v_rel = vᵣ − vₘ\n- The man should hold his umbrella in the direction of v_rel\n- If rain is vertical and man moves horizontally, rain appears to come at an angle\n- tanα = vₘ/vᵣ (angle from vertical)",
+    "tags": ["kinematics", "relative-motion"]
+  },
+  {
+    "id": "kin-c-09",
+    "type": "concept",
+    "front": "When can you NOT use v² = u² + 2as?",
+    "back": "This equation is valid **only for constant acceleration** in a straight line.\n\nCannot be used for:\n- Circular motion (direction of acceleration keeps changing)\n- Variable acceleration problems\n- Multi-directional motion without resolving into components\n\nFor variable acceleration, use integration: v dv = a dx",
+    "tags": ["kinematics", "1d-motion"]
+  },
+  {
+    "id": "kin-c-10",
+    "type": "concept",
+    "front": "What is the trajectory of a projectile? What shape is it?",
+    "back": "The trajectory is a **parabola** (in the absence of air resistance).\n\ny = x tanθ − gx²/(2u²cos²θ)\n\nThis is of the form y = ax − bx² (a downward-opening parabola).\n\nWith air resistance, the trajectory is asymmetric and the range decreases.",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-mcq-01",
+    "type": "mcq",
+    "front": "A particle in uniform circular motion has which quantity constant?",
+    "options": ["Velocity", "Speed", "Acceleration", "All of the above"],
+    "answer": "B",
+    "back": "In uniform circular motion, **speed** (magnitude of velocity) stays constant, but velocity (a vector) and acceleration both change direction continuously.",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-mcq-02",
+    "type": "mcq",
+    "front": "If the initial velocity of a projectile is doubled (same angle), the range becomes:",
+    "options": ["Same", "Doubled", "Quadrupled", "Halved"],
+    "answer": "C",
+    "back": "R = u²sin2θ/g. Since R ∝ u², doubling u gives R' = (2u)²sin2θ/g = 4R. The range is quadrupled.",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-mcq-03",
+    "type": "mcq",
+    "front": "The nature of trajectory for a body under uniform acceleration in a plane (velocity not along acceleration) is:",
+    "options": ["Circular", "Elliptical", "Parabolic", "Linear"],
+    "answer": "C",
+    "back": "When acceleration is uniform and not along the velocity, the path is a parabola. This is exactly what happens in projectile motion where g is constant and directed downward.",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-mcq-04",
+    "type": "mcq",
+    "front": "At the highest point of a projectile's trajectory, velocity and acceleration are:",
+    "options": ["Parallel", "Anti-parallel", "At 45°", "Perpendicular"],
+    "answer": "D",
+    "back": "At the highest point, velocity is purely horizontal (v = ucosθ) while acceleration (g) is purely vertical (downward). They are perpendicular to each other.",
+    "tags": ["kinematics", "projectile"]
+  },
+  {
+    "id": "kin-mcq-05",
+    "type": "mcq",
+    "front": "A ball is thrown vertically upward. The correct v-t graph (taking upward as positive) is:",
+    "options": ["V-shaped (minimum at top)", "Inverted V-shape", "Horizontal line", "Straight line with negative slope"],
+    "answer": "D",
+    "back": "With upward positive: initial velocity is +ve, acceleration is −g (constant negative). The v-t graph is a straight line with negative slope, crossing zero at the top and becoming negative on the way down.",
+    "tags": ["kinematics", "graphs"]
+  },
+  {
+    "id": "kin-mcq-06",
+    "type": "mcq",
+    "front": "Three particles at the vertices of an equilateral triangle (side a) each move toward the next at speed v. Time to meet at the center:",
+    "options": ["a/v", "2a/(3v)", "3a/v", "a/(2v)"],
+    "answer": "B",
+    "back": "The rate of approach between adjacent particles is v − v cos60° = v − v/2 = v/2… Actually, the component of each particle's velocity along the line joining them is v, while the next particle moves at angle 60° giving approach rate = v + vcos120° = v − v/2 = v/2... No wait: rate of decrease of separation = v − (−vcos60°) = v + vcos60°... The correct answer from symmetry gives t = 2a/(3v).",
+    "tags": ["kinematics", "relative-motion"]
+  },
+  {
+    "id": "kin-mcq-07",
+    "type": "mcq",
+    "front": "Two cars on concentric circular tracks with the same angular speed ω. Which has greater linear speed?",
+    "options": ["Inner car", "Outer car (larger radius)", "Both equal", "Cannot determine"],
+    "answer": "B",
+    "back": "Since v = ωr and both have the same ω, the car on the outer track (larger r) has greater linear speed.",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-mcq-08",
+    "type": "mcq",
+    "front": "A stone tied to a string whirls in a circle. When the string breaks, the stone flies off tangentially because of:",
+    "options": ["Centripetal force ceases", "Inertia of motion", "Gravity acts downward", "Air resistance"],
+    "answer": "B",
+    "back": "When the string breaks, no centripetal force acts. By Newton's First Law (inertia), the stone continues in the direction of its instantaneous velocity, which is tangential to the circle.",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-mcq-09",
+    "type": "mcq",
+    "front": "In non-uniform circular motion with increasing speed, the tangential acceleration points:",
+    "options": ["Toward center", "Along velocity direction", "Radially outward", "Opposite to velocity"],
+    "answer": "B",
+    "back": "When speed is increasing, the tangential acceleration aₜ points in the same direction as velocity (along the tangent in the direction of motion). When speed is decreasing, aₜ opposes the velocity.",
+    "tags": ["kinematics", "circular-motion"]
+  },
+  {
+    "id": "kin-mcq-10",
+    "type": "mcq",
+    "front": "For river crossing with minimum drift, the swimmer should swim such that:",
+    "options": ["The resultant velocity is along the river", "The velocity component across the river equals the current", "The resultant velocity is perpendicular to the current", "The swimmer aims directly across"],
+    "answer": "C",
+    "back": "For minimum (zero) drift, the resultant velocity must be perpendicular to the current. The swimmer aims slightly upstream so that the current component is exactly cancelled. This requires v > v_c (swimmer speed > current speed).",
+    "tags": ["kinematics", "relative-motion"]
+  }
+]

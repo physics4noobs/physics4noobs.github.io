@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcards | Axomiya Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="js/firebase-config.js"></script>
+  <script defer src="js/auth.js"></script>
+  <style>
+    /* --- Flashcard Page Styles --- */
+    .fc-wrapper {
+      max-width: 700px;
+      margin: 120px auto 60px;
+      padding: 0 20px;
+    }
+    .fc-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .fc-header h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .fc-header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Chapter Chips */
+    #fc-chapter-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .fc-chip {
+      padding: 10px 20px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-glass);
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .fc-chip:hover {
+      background: var(--bg-glass-hover);
+      border-color: var(--color-primary);
+      color: var(--text-primary);
+    }
+    .fc-chip.active {
+      background: rgba(0, 212, 255, 0.12);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      box-shadow: var(--glow-primary);
+    }
+
+    /* Progress Bar */
+    .fc-progress {
+      margin-bottom: 20px;
+    }
+    .fc-progress-bar {
+      height: 6px;
+      background: var(--bg-glass);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .fc-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      border-radius: 3px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .fc-progress-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Flip Card */
+    .fc-card-container {
+      perspective: 1200px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      min-height: 320px;
+    }
+    .fc-card {
+      position: relative;
+      width: 100%;
+      min-height: 320px;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .fc-card.flipped {
+      transform: rotateY(180deg);
+    }
+    .fc-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+      max-height: 500px;
+    }
+    .fc-front {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .fc-back {
+      background: var(--bg-card);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transform: rotateY(180deg);
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
+    }
+
+    /* Card Type Badge */
+    .fc-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .fc-type-formula {
+      background: rgba(0, 212, 255, 0.12);
+      color: var(--color-primary);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+    }
+    .fc-type-concept {
+      background: rgba(124, 58, 237, 0.12);
+      color: var(--color-secondary);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+    }
+    .fc-type-mcq {
+      background: rgba(0, 255, 170, 0.1);
+      color: var(--color-accent);
+      border: 1px solid rgba(0, 255, 170, 0.2);
+    }
+
+    /* Front content */
+    .fc-front-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+    .fc-tap-hint {
+      margin-top: 20px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      opacity: 0.6;
+    }
+
+    /* MCQ Options on front */
+    .fc-options {
+      margin-top: 18px;
+    }
+    .fc-opt {
+      padding: 10px 16px;
+      margin-bottom: 8px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      transition: var(--transition-fast);
+    }
+    .fc-opt-label {
+      font-family: var(--font-display);
+      color: var(--color-primary);
+      margin-right: 6px;
+      font-weight: 600;
+    }
+
+    /* Back content */
+    .fc-back-content {
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    .fc-back-content p {
+      margin-bottom: 6px;
+    }
+    .fc-back-content strong {
+      color: var(--color-primary);
+    }
+    .fc-back-content code {
+      background: rgba(0, 212, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--color-accent);
+    }
+    .fc-math {
+      margin: 8px 0;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    .fc-answer {
+      text-align: center;
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: rgba(0, 255, 170, 0.08);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0, 255, 170, 0.15);
+      color: var(--color-accent);
+    }
+
+    /* Rating Buttons */
+    .fc-rating {
+      display: none;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .fc-rate-btn {
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      min-width: 80px;
+      text-align: center;
+    }
+    .fc-rate-btn:active { transform: scale(0.95); }
+
+    .fc-rate-again {
+      background: rgba(255, 45, 117, 0.12);
+      color: var(--color-rose);
+      border-color: rgba(255, 45, 117, 0.25);
+    }
+    .fc-rate-again:hover { background: rgba(255, 45, 117, 0.2); box-shadow: 0 0 15px rgba(255, 45, 117, 0.2); }
+
+    .fc-rate-hard {
+      background: rgba(255, 107, 53, 0.12);
+      color: var(--color-warning);
+      border-color: rgba(255, 107, 53, 0.25);
+    }
+    .fc-rate-hard:hover { background: rgba(255, 107, 53, 0.2); box-shadow: 0 0 15px rgba(255, 107, 53, 0.2); }
+
+    .fc-rate-good {
+      background: rgba(0, 255, 170, 0.1);
+      color: var(--color-accent);
+      border-color: rgba(0, 255, 170, 0.2);
+    }
+    .fc-rate-good:hover { background: rgba(0, 255, 170, 0.18); box-shadow: 0 0 15px rgba(0, 255, 170, 0.2); }
+
+    .fc-rate-easy {
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--color-primary);
+      border-color: rgba(0, 212, 255, 0.2);
+    }
+    .fc-rate-easy:hover { background: rgba(0, 212, 255, 0.18); box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
+
+    /* Session Stats */
+    .fc-stats {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      padding: 16px;
+      background: var(--bg-glass);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+    .fc-stat {
+      text-align: center;
+    }
+    .fc-stat-value {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--color-primary);
+    }
+    .fc-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Done message */
+    .fc-done {
+      text-align: center;
+      padding: 48px 20px;
+      display: none;
+    }
+    .fc-done-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+    .fc-done h2 {
+      font-family: var(--font-display);
+      color: var(--color-accent);
+      margin-bottom: 8px;
+    }
+    .fc-done p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .fc-reset-btn {
+      padding: 10px 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-glass);
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .fc-reset-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--text-primary);
+    }
+
+    /* Empty state */
+    .fc-empty {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 48px 20px;
+      display: none;
+    }
+
+    /* Keyboard hints */
+    .fc-keyboard-hints {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      opacity: 0.5;
+    }
+    .fc-keyboard-hints kbd {
+      background: var(--bg-glass);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .fc-wrapper { margin-top: 100px; padding: 0 14px; }
+      .fc-header h1 { font-size: 1.5rem; }
+      .fc-face { padding: 24px 18px; }
+      .fc-front-title { font-size: 1.05rem; }
+      .fc-math { font-size: 0.95rem; }
+      .fc-rate-btn { padding: 10px 16px; min-width: 65px; font-size: 0.78rem; }
+      .fc-stats { gap: 16px; padding: 12px; }
+      .fc-stat-value { font-size: 1.1rem; }
+      .fc-keyboard-hints { display: none; }
+      .fc-card-container { min-height: 280px; }
+      .fc-card { min-height: 280px; }
+    }
+
+    /* KaTeX overrides */
+    .katex { font-size: 1.15em; }
+    .fc-back .katex { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-pendulum"><div class="sp-mount"></div><div class="sp-pivot"></div><div class="sp-arm"><div class="sp-rod"></div><div class="sp-bob"><div class="sp-glow"></div></div></div></div><div class="splash-logo">Axomiya Engineer</div><div class="splash-tagline">Lets Make Physics Fun</div></div>
+  <div class="bg-grid"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item"><a href="index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="about.html" class="nav-link">About Me</a></div>
+        <div class="nav-item">
+          <button class="nav-link">Chapters <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="chapters.html#grade-xi"><div class="dd-icon">XI</div> Grade XI</a>
+            <a href="chapters.html#grade-xii"><div class="dd-icon">XII</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Lectures <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="lectures.html#grade-xi"><div class="dd-icon">&#127891;</div> Grade XI</a>
+            <a href="lectures.html#grade-xii"><div class="dd-icon">&#127891;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <button class="nav-link">Notes <span class="arrow">&#9660;</span></button>
+          <div class="dropdown">
+            <a href="notes.html#grade-xi"><div class="dd-icon">&#128221;</div> Grade XI</a>
+            <a href="notes.html#grade-xii"><div class="dd-icon">&#128221;</div> Grade XII</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="books.html" class="nav-link">Books</a></div>
+        <div class="nav-item"><a href="simulations.html" class="nav-link">Simulations</a></div>
+        <div class="nav-item"><a href="flashcards.html" class="nav-link">Flashcards</a></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Flashcard Content -->
+  <div class="fc-wrapper">
+    <div class="fc-header">
+      <h1>Physics Flashcards</h1>
+      <p>Spaced repetition for JEE Physics revision</p>
+    </div>
+
+    <!-- Chapter Selector -->
+    <div id="fc-chapter-selector"></div>
+
+    <!-- Session Stats -->
+    <div class="fc-stats">
+      <div class="fc-stat">
+        <div class="fc-stat-value" id="fc-stat-reviewed">0</div>
+        <div class="fc-stat-label">Reviewed</div>
+      </div>
+      <div class="fc-stat">
+        <div class="fc-stat-value" id="fc-stat-streak">0</div>
+        <div class="fc-stat-label">Streak</div>
+      </div>
+      <div class="fc-stat">
+        <div class="fc-stat-value" id="fc-stat-accuracy">&mdash;</div>
+        <div class="fc-stat-label">Accuracy</div>
+      </div>
+    </div>
+
+    <!-- Card Area -->
+    <div id="fc-card-area" style="display:none;">
+      <!-- Progress Bar -->
+      <div class="fc-progress">
+        <div class="fc-progress-bar">
+          <div class="fc-progress-fill" id="fc-progress-fill"></div>
+        </div>
+        <div class="fc-progress-text" id="fc-progress-text"></div>
+      </div>
+
+      <!-- Flip Card -->
+      <div class="fc-card-container">
+        <div class="fc-card" id="fc-card">
+          <div class="fc-face fc-front" id="fc-front"></div>
+          <div class="fc-face fc-back" id="fc-back"></div>
+        </div>
+      </div>
+
+      <!-- Rating Buttons -->
+      <div class="fc-rating" id="fc-rating-btns">
+        <button class="fc-rate-btn fc-rate-again" data-quality="0">Again</button>
+        <button class="fc-rate-btn fc-rate-hard" data-quality="2">Hard</button>
+        <button class="fc-rate-btn fc-rate-good" data-quality="4">Good</button>
+        <button class="fc-rate-btn fc-rate-easy" data-quality="5">Easy</button>
+      </div>
+
+      <div class="fc-keyboard-hints">
+        <kbd>Space</kbd> flip &nbsp; <kbd>1</kbd> Again &nbsp; <kbd>2</kbd> Hard &nbsp; <kbd>3</kbd> Good &nbsp; <kbd>4</kbd> Easy
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="fc-empty" id="fc-empty">Select a chapter to start reviewing flashcards.</div>
+
+    <!-- Done Message -->
+    <div class="fc-done" id="fc-done">
+      <div class="fc-done-icon">&#10024;</div>
+      <h2>All Done!</h2>
+      <p>You've reviewed all due cards for this chapter. Come back later for more.</p>
+      <button class="fc-reset-btn" id="fc-reset-btn">Reset Progress</button>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/flashcards.js"></script>
+</body>
+</html>

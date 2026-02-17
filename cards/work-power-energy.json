@@ -1,0 +1,281 @@
+[
+  {
+    "id": "wpe-f-01",
+    "type": "formula",
+    "front": "Work Done by a Constant Force",
+    "back": "W = Fs\\cos\\theta = \\vec{F} \\cdot \\vec{s}\n\nW > 0 \\text{ if } \\theta < 90°\n\nW = 0 \\text{ if } \\theta = 90°\n\nW < 0 \\text{ if } \\theta > 90°",
+    "tags": ["wpe", "work"]
+  },
+  {
+    "id": "wpe-f-02",
+    "type": "formula",
+    "front": "Work Done by a Variable Force",
+    "back": "W = \\int_{x_1}^{x_2} F(x)\\,dx\n\n\\text{or } W = \\int \\vec{F} \\cdot d\\vec{s}\n\n\\text{Area under F-x graph = Work done}",
+    "tags": ["wpe", "work"]
+  },
+  {
+    "id": "wpe-f-03",
+    "type": "formula",
+    "front": "Kinetic Energy",
+    "back": "KE = \\frac{1}{2}mv^2\n\n\\text{Always } \\geq 0\n\n\\text{Relation with momentum: } KE = \\frac{p^2}{2m}",
+    "tags": ["wpe", "energy"]
+  },
+  {
+    "id": "wpe-f-04",
+    "type": "formula",
+    "front": "Gravitational Potential Energy",
+    "back": "PE = mgh\n\n\\text{Reference level is arbitrary}\n\n\\text{Change in PE is independent of path}",
+    "tags": ["wpe", "energy"]
+  },
+  {
+    "id": "wpe-f-05",
+    "type": "formula",
+    "front": "Elastic Potential Energy (Spring)",
+    "back": "PE = \\frac{1}{2}kx^2\n\n\\text{where } k = \\text{spring constant (N/m)}\n\nx = \\text{extension or compression from natural length}",
+    "tags": ["wpe", "energy", "spring"]
+  },
+  {
+    "id": "wpe-f-06",
+    "type": "formula",
+    "front": "Work-Energy Theorem",
+    "back": "W_{net} = \\Delta KE = \\frac{1}{2}m v_f^2 - \\frac{1}{2}m v_i^2\n\n\\text{Net work by ALL forces = change in KE}",
+    "tags": ["wpe", "work", "energy"]
+  },
+  {
+    "id": "wpe-f-07",
+    "type": "formula",
+    "front": "Conservation of Mechanical Energy",
+    "back": "\\text{Conservative forces only:}\n\nKE_i + PE_i = KE_f + PE_f\n\n\\text{With non-conservative forces:}\n\nW_{nc} = \\Delta KE + \\Delta PE",
+    "tags": ["wpe", "conservation"]
+  },
+  {
+    "id": "wpe-f-08",
+    "type": "formula",
+    "front": "Power",
+    "back": "P = \\frac{W}{t} \\quad \\text{(average)}\n\nP = \\frac{dW}{dt} = \\vec{F} \\cdot \\vec{v} = Fv\\cos\\theta\n\n1\\text{ HP} = 746\\text{ W}\n\n1\\text{ kWh} = 3.6 \\times 10^6\\text{ J}",
+    "tags": ["wpe", "power"]
+  },
+  {
+    "id": "wpe-f-09",
+    "type": "formula",
+    "front": "Force from Potential Energy",
+    "back": "F(x) = -\\frac{dU}{dx}\n\n\\vec{F} = -\\nabla U = -\\left(\\frac{\\partial U}{\\partial x}\\hat{i} + \\frac{\\partial U}{\\partial y}\\hat{j} + \\frac{\\partial U}{\\partial z}\\hat{k}\\right)",
+    "tags": ["wpe", "energy", "conservative"]
+  },
+  {
+    "id": "wpe-f-10",
+    "type": "formula",
+    "front": "Vertical Circular Motion: Critical Speeds",
+    "back": "v_{top} = \\sqrt{gr} \\quad \\text{(minimum at top)}\n\nv_{bottom} = \\sqrt{5gr} \\quad \\text{(minimum at bottom)}\n\n\\text{Minimum height to complete loop: } h = \\frac{5r}{2}",
+    "tags": ["wpe", "circular-motion"]
+  },
+  {
+    "id": "wpe-f-11",
+    "type": "formula",
+    "front": "Tension in Vertical Circle",
+    "back": "T_{bottom} = mg + \\frac{mv^2}{r}\n\nT_{top} = \\frac{mv^2}{r} - mg\n\nT_{bottom} - T_{top} = 6mg",
+    "tags": ["wpe", "circular-motion"]
+  },
+  {
+    "id": "wpe-f-12",
+    "type": "formula",
+    "front": "Conservation of Momentum (Collisions)",
+    "back": "m_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2\n\n\\text{Always conserved if } F_{ext} = 0",
+    "tags": ["wpe", "collisions"]
+  },
+  {
+    "id": "wpe-f-13",
+    "type": "formula",
+    "front": "Coefficient of Restitution",
+    "back": "e = \\frac{v_2 - v_1}{u_1 - u_2} = \\frac{\\text{relative velocity of separation}}{\\text{relative velocity of approach}}\n\n0 \\leq e \\leq 1",
+    "tags": ["wpe", "collisions"]
+  },
+  {
+    "id": "wpe-f-14",
+    "type": "formula",
+    "front": "Perfectly Inelastic Collision",
+    "back": "v_{common} = \\frac{m_1 u_1 + m_2 u_2}{m_1 + m_2}\n\ne = 0 \\quad \\text{(objects stick together)}\n\n\\Delta KE = \\frac{1}{2}\\frac{m_1 m_2}{m_1+m_2}(u_1 - u_2)^2",
+    "tags": ["wpe", "collisions"]
+  },
+  {
+    "id": "wpe-f-15",
+    "type": "formula",
+    "front": "Centre of Mass",
+    "back": "x_{cm} = \\frac{\\sum m_i x_i}{\\sum m_i}\n\n\\vec{v}_{cm} = \\frac{\\sum m_i \\vec{v}_i}{M}\n\n\\vec{a}_{cm} = \\frac{\\vec{F}_{ext}}{M}",
+    "tags": ["wpe", "centre-of-mass"]
+  },
+  {
+    "id": "wpe-f-16",
+    "type": "formula",
+    "front": "Energy Loss in Collision",
+    "back": "\\Delta KE = \\frac{1}{2}\\frac{m_1 m_2}{m_1 + m_2}(1 - e^2)(u_1 - u_2)^2\n\ne = 1: \\text{ no loss (elastic)}\n\ne = 0: \\text{ maximum loss (perfectly inelastic)}",
+    "tags": ["wpe", "collisions"]
+  },
+  {
+    "id": "wpe-f-17",
+    "type": "formula",
+    "front": "Ball Bouncing: Height After n Bounces",
+    "back": "h_n = e^{2n} h_0\n\ne = \\sqrt{\\frac{h_1}{h_0}} \\quad \\text{(from single bounce)}\n\ne^n = \\sqrt{\\frac{h_n}{h_0}}",
+    "tags": ["wpe", "collisions"]
+  },
+  {
+    "id": "wpe-c-01",
+    "type": "concept",
+    "front": "What is the difference between conservative and non-conservative forces?",
+    "back": "**Conservative forces:**\n- Work is path-independent (depends only on initial & final positions)\n- Have an associated potential energy function\n- Examples: gravity, spring force, electrostatic force\n- Mechanical energy is conserved\n\n**Non-conservative forces:**\n- Work depends on the path taken\n- No potential energy function\n- Examples: friction, air resistance, applied force\n- Convert mechanical energy to heat/sound",
+    "tags": ["wpe", "conservative"]
+  },
+  {
+    "id": "wpe-c-02",
+    "type": "concept",
+    "front": "When is the Work-Energy Theorem applicable?",
+    "back": "The Work-Energy Theorem (W_net = ΔKE) is **always** valid — for all forces (conservative or not), all paths, and all reference frames.\n\nIt accounts for ALL forces:\nW_gravity + W_friction + W_applied + ... = ΔKE\n\nThis is more general than energy conservation, which only works when all forces are conservative.",
+    "tags": ["wpe", "work"]
+  },
+  {
+    "id": "wpe-c-03",
+    "type": "concept",
+    "front": "Can work done be negative? When?",
+    "back": "**Yes!** Work W = Fs cosθ is negative when θ > 90°.\n\nExamples:\n- **Friction** always does negative work on a sliding object (opposes motion, θ = 180°)\n- **Gravity** does negative work when lifting an object upward\n- **Braking force** does negative work, reducing KE\n\nNegative work means the force removes energy from the object.",
+    "tags": ["wpe", "work"]
+  },
+  {
+    "id": "wpe-c-04",
+    "type": "concept",
+    "front": "Explain the three cases of motion in a vertical circle",
+    "back": "For a particle at the bottom with speed v:\n\n**Case 1: v ≥ √(5gr)** — Completes the full circle. String stays taut.\n\n**Case 2: v < √(2gr)** — Oscillates like a pendulum. Doesn't reach the horizontal level.\n\n**Case 3: √(2gr) < v < √(5gr)** — Leaves the circular path above the horizontal. String goes slack (T = 0), then follows a parabolic trajectory.",
+    "tags": ["wpe", "circular-motion"]
+  },
+  {
+    "id": "wpe-c-05",
+    "type": "concept",
+    "front": "What is the difference between elastic and inelastic collisions?",
+    "back": "**Elastic (e = 1):**\n- Both momentum AND kinetic energy conserved\n- Objects bounce apart\n- Equal masses: velocities interchange\n\n**Perfectly Inelastic (e = 0):**\n- Only momentum conserved\n- Objects stick together\n- Maximum KE loss\n\n**Partially Inelastic (0 < e < 1):**\n- Momentum conserved, some KE lost\n- Most real collisions are this type",
+    "tags": ["wpe", "collisions"]
+  },
+  {
+    "id": "wpe-c-06",
+    "type": "concept",
+    "front": "Why does the centre of mass velocity stay constant in an isolated system?",
+    "back": "From Newton's Second Law for a system:\n\na_cm = F_ext / M_total\n\nIf F_ext = 0 (isolated system), then a_cm = 0, so v_cm = constant.\n\nInternal forces (like collision forces) are equal and opposite (Newton's 3rd Law), so they cancel out and don't affect the CM motion.\n\nThis is the basis of conservation of momentum.",
+    "tags": ["wpe", "centre-of-mass"]
+  },
+  {
+    "id": "wpe-c-07",
+    "type": "concept",
+    "front": "What is the relationship between KE and momentum?",
+    "back": "KE = p²/(2m)  and  p = √(2mKE)\n\nImplications:\n- If two objects have **same KE**: the lighter one has less momentum (p ∝ √m)\n- If two objects have **same momentum**: the lighter one has more KE (KE ∝ 1/m)\n- If KE increases by 300% (4× KE), momentum doubles (100% increase)",
+    "tags": ["wpe", "energy", "momentum"]
+  },
+  {
+    "id": "wpe-c-08",
+    "type": "concept",
+    "front": "What happens to KE and momentum when a rocket explodes mid-air?",
+    "back": "**Momentum:** Conserved (no external horizontal force; explosion forces are internal)\n\n**Kinetic Energy:** Increases! The chemical energy stored in the explosive is converted to kinetic energy of the fragments.\n\nThis is the opposite of an inelastic collision — internal energy is released rather than absorbed.",
+    "tags": ["wpe", "collisions", "conservation"]
+  },
+  {
+    "id": "wpe-c-09",
+    "type": "concept",
+    "front": "Why does the normal force do no work on a block sliding on a level surface?",
+    "back": "Work = F·s·cosθ\n\nThe normal force is **perpendicular** to the displacement (θ = 90°).\n\ncos 90° = 0, so W = 0.\n\nSimilarly, centripetal force does no work in circular motion because it's always perpendicular to the velocity.",
+    "tags": ["wpe", "work"]
+  },
+  {
+    "id": "wpe-c-10",
+    "type": "concept",
+    "front": "What is the significance of the area under an F-x graph?",
+    "back": "The area under a Force vs. Displacement graph equals the **work done** by that force.\n\n- Positive area (above x-axis) → positive work\n- Negative area (below x-axis) → negative work\n- For a spring: F = kx, area = ½kx² = elastic PE stored\n\nThis is the graphical interpretation of W = ∫F dx.",
+    "tags": ["wpe", "work"]
+  },
+  {
+    "id": "wpe-mcq-01",
+    "type": "mcq",
+    "front": "A person holding a suitcase walks on a horizontal platform. The work done by the person on the suitcase is:",
+    "options": ["Positive", "Negative", "Zero", "Depends on speed"],
+    "answer": "C",
+    "back": "The force (upward, holding the suitcase) is perpendicular to the displacement (horizontal). Since cos 90° = 0, the work done is zero.",
+    "tags": ["wpe", "work"]
+  },
+  {
+    "id": "wpe-mcq-02",
+    "type": "mcq",
+    "front": "If two objects of different masses have the same KE, their momenta are in the ratio:",
+    "options": ["Equal to mass ratio", "Equal to mass² ratio", "Equal to √(mass) ratio", "Inversely proportional to mass"],
+    "answer": "C",
+    "back": "p = √(2mKE). For same KE: p₁/p₂ = √(m₁/m₂). Momentum is proportional to the square root of mass when KE is constant.",
+    "tags": ["wpe", "energy", "momentum"]
+  },
+  {
+    "id": "wpe-mcq-03",
+    "type": "mcq",
+    "front": "An object on end of a string is held horizontal and released. The tension at the lowest point is:",
+    "options": ["mg/2", "mg", "2mg", "3mg"],
+    "answer": "D",
+    "back": "At the lowest point: T − mg = mv²/r\n\nUsing energy conservation from horizontal position: v² = 2gr\n\nT = mg + mv²/r = mg + m(2gr)/r = mg + 2mg = 3mg",
+    "tags": ["wpe", "circular-motion"]
+  },
+  {
+    "id": "wpe-mcq-04",
+    "type": "mcq",
+    "front": "Two springs A (k_A = 2k_B) and B are stretched by the same force. If A stores energy E, energy in B is:",
+    "options": ["E/2", "2E", "E", "E/4"],
+    "answer": "B",
+    "back": "Energy stored = F²/(2k). For the same force F:\n\nE_A = F²/(2k_A) = E\nE_B = F²/(2k_B) = F²/(2 × k_A/2) = F²/k_A = 2E\n\nThe softer spring stores more energy when stretched by the same force.",
+    "tags": ["wpe", "spring", "energy"]
+  },
+  {
+    "id": "wpe-mcq-05",
+    "type": "mcq",
+    "front": "In an elastic collision between equal masses (one at rest), the angle between final velocities is always:",
+    "options": ["0°", "45°", "90°", "180°"],
+    "answer": "C",
+    "back": "For an oblique elastic collision between equal masses (one initially at rest), the final velocities are always perpendicular (90° apart). This follows from simultaneous conservation of momentum and kinetic energy.",
+    "tags": ["wpe", "collisions"]
+  },
+  {
+    "id": "wpe-mcq-06",
+    "type": "mcq",
+    "front": "A ball falls from height h₀ and bounces n times. The height after n bounces h_n relates to e by:",
+    "options": ["eⁿ = √(hₙ/h₀)", "eⁿ = √(h₀/hₙ)", "ne = √(hₙ/h₀)", "√(ne) = √(hₙ/h₀)"],
+    "answer": "A",
+    "back": "After each bounce, the speed is multiplied by e.\n\nAfter n bounces: vₙ = eⁿv₀\n\nSince h ∝ v², hₙ = e²ⁿ h₀\n\nTherefore eⁿ = √(hₙ/h₀)",
+    "tags": ["wpe", "collisions"]
+  },
+  {
+    "id": "wpe-mcq-07",
+    "type": "mcq",
+    "front": "When KE increases uniformly with time (KE ∝ t), the net force must be:",
+    "options": ["Constant", "Proportional to t", "Proportional to 1/√t", "Proportional to √t"],
+    "answer": "C",
+    "back": "If KE = ct, then ½mv² = ct → v = √(2ct/m) ∝ √t\n\na = dv/dt ∝ 1/(2√t) ∝ 1/√t\n\nF = ma ∝ 1/√t\n\nThe force must decrease as 1/√t to maintain a constant rate of KE increase.",
+    "tags": ["wpe", "power", "energy"]
+  },
+  {
+    "id": "wpe-mcq-08",
+    "type": "mcq",
+    "front": "A block must slide up a frictionless rise of height h. The minimum speed at the base is:",
+    "options": ["½√(4gh)", "√(gh)/2", "√(2gh)", "2√(2gh)"],
+    "answer": "C",
+    "back": "Using energy conservation: ½mv² = mgh\n\nv = √(2gh)\n\nThis is the minimum speed needed to convert all KE into PE to reach height h.",
+    "tags": ["wpe", "conservation"]
+  },
+  {
+    "id": "wpe-mcq-09",
+    "type": "mcq",
+    "front": "A heavy particle on a string with M ≫ m. Tension at top = mw, at bottom = nw. The relation is:",
+    "options": ["m + n = 6", "m/n = 2", "m − n = −6", "n − m = 6"],
+    "answer": "C",
+    "back": "At bottom: T_bottom = mg + mv²_bottom/r → n·mg units\nAt top: T_top = mv²_top/r − mg → m·mg units\n\nUsing energy conservation and subtracting:\nT_bottom − T_top = 6mg\nn − m = 6 → m − n = −6",
+    "tags": ["wpe", "circular-motion"]
+  },
+  {
+    "id": "wpe-mcq-10",
+    "type": "mcq",
+    "front": "In a perfectly inelastic collision between mass M (moving) and mass m (at rest), the fraction of KE lost is:",
+    "options": ["m/(M+m)", "M/(M+m)", "Mm/(M+m)²", "1 − m/(M+m)"],
+    "answer": "A",
+    "back": "Initial KE = ½Mu²\n\nFinal KE = ½(M+m)v² where v = Mu/(M+m)\n\nFinal KE = M²u²/[2(M+m)]\n\nFraction lost = 1 − M/(M+m) = m/(M+m)",
+    "tags": ["wpe", "collisions"]
+  }
+]

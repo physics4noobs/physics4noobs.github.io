@@ -1,0 +1,267 @@
+[
+  {
+    "id": "nlm-f-01",
+    "type": "formula",
+    "front": "Newton's Second Law",
+    "back": "\\vec{F} = m\\vec{a}\n\n\\vec{F} = \\frac{d\\vec{P}}{dt}\n\n\\text{where } \\vec{P} = m\\vec{v}",
+    "tags": ["newtons-laws", "fundamentals"]
+  },
+  {
+    "id": "nlm-f-02",
+    "type": "formula",
+    "front": "Linear Momentum & Impulse-Momentum Theorem",
+    "back": "\\vec{P} = m\\vec{v}\n\n\\vec{J} = \\Delta\\vec{P} = \\vec{F}_{avg} \\cdot \\Delta t\n\n\\vec{J} = \\int \\vec{F}\\,dt",
+    "tags": ["newtons-laws", "momentum"]
+  },
+  {
+    "id": "nlm-f-03",
+    "type": "formula",
+    "front": "Atwood Machine",
+    "back": "a = \\frac{(m_2 - m_1)}{(m_1 + m_2)}\\,g\n\nT = \\frac{2m_1 m_2}{m_1 + m_2}\\,g",
+    "tags": ["newtons-laws", "pulley"]
+  },
+  {
+    "id": "nlm-f-04",
+    "type": "formula",
+    "front": "Block on Inclined Plane (Components)",
+    "back": "\\text{Along incline: } mg\\sin\\theta\n\n\\text{Normal force: } N = mg\\cos\\theta\n\n\\text{Acceleration (frictionless): } a = g\\sin\\theta",
+    "tags": ["newtons-laws", "incline"]
+  },
+  {
+    "id": "nlm-f-05",
+    "type": "formula",
+    "front": "Static & Kinetic Friction",
+    "back": "f_s \\leq \\mu_s N \\quad \\text{(static, self-adjusting)}\n\nf_k = \\mu_k N \\quad \\text{(kinetic, constant)}\n\n\\mu_s > \\mu_k \\text{ for same surfaces}",
+    "tags": ["newtons-laws", "friction"]
+  },
+  {
+    "id": "nlm-f-06",
+    "type": "formula",
+    "front": "Friction on Incline: Acceleration",
+    "back": "\\text{Sliding down: } a = g(\\sin\\theta - \\mu\\cos\\theta)\n\n\\text{Pushed up: } a = g(\\sin\\theta + \\mu\\cos\\theta)\n\n\\text{Condition to slide: } \\tan\\theta > \\mu_s",
+    "tags": ["newtons-laws", "friction", "incline"]
+  },
+  {
+    "id": "nlm-f-07",
+    "type": "formula",
+    "front": "Minimum Force to Move a Block (Angled Push)",
+    "back": "F = \\frac{\\mu mg}{\\cos\\theta + \\mu\\sin\\theta}\n\n\\text{Optimal angle: } \\theta = \\tan^{-1}(\\mu)\n\nF_{\\min} = \\frac{\\mu mg}{\\sqrt{1 + \\mu^2}}",
+    "tags": ["newtons-laws", "friction"]
+  },
+  {
+    "id": "nlm-f-08",
+    "type": "formula",
+    "front": "Centripetal Force",
+    "back": "F_c = \\frac{mv^2}{r} = m\\omega^2 r\n\na_c = \\frac{v^2}{r} = \\omega^2 r",
+    "tags": ["newtons-laws", "circular-motion"]
+  },
+  {
+    "id": "nlm-f-09",
+    "type": "formula",
+    "front": "Conical Pendulum",
+    "back": "T\\cos\\theta = mg\n\nT\\sin\\theta = m\\omega^2 r\n\n\\text{Period: } \\tau = 2\\pi\\sqrt{\\frac{\\ell\\cos\\theta}{g}}\n\nr = \\ell\\sin\\theta",
+    "tags": ["newtons-laws", "circular-motion"]
+  },
+  {
+    "id": "nlm-f-10",
+    "type": "formula",
+    "front": "Banked Curve (No Friction)",
+    "back": "\\tan\\theta = \\frac{v^2}{Rg}\n\n\\text{Speed for no friction: } v = \\sqrt{Rg\\tan\\theta}",
+    "tags": ["newtons-laws", "circular-motion"]
+  },
+  {
+    "id": "nlm-f-11",
+    "type": "formula",
+    "front": "Maximum Speed on Level Curve (Friction)",
+    "back": "v_{\\max} = \\sqrt{\\mu g R}\n\n\\text{Friction provides centripetal force: } \\mu mg = \\frac{mv^2}{R}",
+    "tags": ["newtons-laws", "circular-motion", "friction"]
+  },
+  {
+    "id": "nlm-f-12",
+    "type": "formula",
+    "front": "Pseudo Force in Non-Inertial Frames",
+    "back": "\\vec{F}_{pseudo} = -m\\vec{A}\n\n\\text{where } \\vec{A} = \\text{acceleration of frame}\n\n\\text{Direction: opposite to frame's acceleration}",
+    "tags": ["newtons-laws", "pseudo-force"]
+  },
+  {
+    "id": "nlm-f-13",
+    "type": "formula",
+    "front": "Elevator Scale Problem",
+    "back": "\\text{Going up with acceleration } a:\n\nN = m(g + a) \\quad \\text{(feels heavier)}\n\n\\text{Going down with acceleration } a:\n\nN = m(g - a) \\quad \\text{(feels lighter)}\n\n\\text{Free fall: } N = 0 \\quad \\text{(weightlessness)}",
+    "tags": ["newtons-laws", "applications"]
+  },
+  {
+    "id": "nlm-f-14",
+    "type": "formula",
+    "front": "Block on Accelerating Wedge (No Sliding)",
+    "back": "\\tan\\theta = \\frac{A}{g}\n\n\\text{where } A = \\text{horizontal acceleration of wedge}\n\n\\text{Total force: } F = (M + m)A",
+    "tags": ["newtons-laws", "pseudo-force"]
+  },
+  {
+    "id": "nlm-f-15",
+    "type": "formula",
+    "front": "Equilibrium Conditions",
+    "back": "\\sum F_x = 0 \\quad \\text{and} \\quad \\sum F_y = 0\n\n\\text{Static: object at rest}\n\\text{Dynamic: constant velocity}\n\n\\text{Both have } \\vec{a} = 0",
+    "tags": ["newtons-laws", "fundamentals"]
+  },
+  {
+    "id": "nlm-c-01",
+    "type": "concept",
+    "front": "State Newton's Three Laws of Motion",
+    "back": "**First Law (Inertia):** An object at rest or in uniform motion stays that way unless acted upon by a net external force.\n\n**Second Law:** F = ma (rate of change of momentum equals net force).\n\n**Third Law:** For every action, there is an equal and opposite reaction (forces act on different bodies).",
+    "tags": ["newtons-laws", "fundamentals"]
+  },
+  {
+    "id": "nlm-c-02",
+    "type": "concept",
+    "front": "What is the difference between action-reaction pairs and balanced forces?",
+    "back": "**Action-reaction pairs:**\n- Act on **different** bodies\n- Always equal & opposite\n- Never cancel each other\n\n**Balanced forces:**\n- Act on the **same** body\n- Can cancel each other (equilibrium)\n\nExample: A book on a table — weight and normal force are balanced forces (same body), not action-reaction pairs.",
+    "tags": ["newtons-laws", "fundamentals"]
+  },
+  {
+    "id": "nlm-c-03",
+    "type": "concept",
+    "front": "What is the difference between static and kinetic friction?",
+    "back": "**Static friction:**\n- Acts when surfaces are NOT sliding\n- Self-adjusting: f_s ≤ μ_sN\n- Can be zero or up to its maximum value\n\n**Kinetic friction:**\n- Acts when surfaces ARE sliding\n- Constant: f_k = μ_kN\n- Always opposes relative velocity\n\nμ_s > μ_k for the same pair of surfaces.",
+    "tags": ["newtons-laws", "friction"]
+  },
+  {
+    "id": "nlm-c-04",
+    "type": "concept",
+    "front": "What is centripetal force? Is it a new type of force?",
+    "back": "Centripetal force is **not** a new force — it's the net radial force that causes circular motion.\n\nIt can be provided by:\n- Tension (string)\n- Normal force (walls of a turn)\n- Friction (car on road)\n- Gravity (orbital motion)\n\nIt always points toward the center and equals mv²/r.",
+    "tags": ["newtons-laws", "circular-motion"]
+  },
+  {
+    "id": "nlm-c-05",
+    "type": "concept",
+    "front": "What are pseudo forces and when do they appear?",
+    "back": "Pseudo forces appear in **non-inertial (accelerating) reference frames**.\n\n- Magnitude: mA (mass × frame acceleration)\n- Direction: opposite to frame's acceleration\n- Not a \"real\" force — no agent exerts it\n- Used to apply Newton's laws in accelerating frames\n\nExample: You feel pushed back in an accelerating car — that's a pseudo force in your (accelerating) frame.",
+    "tags": ["newtons-laws", "pseudo-force"]
+  },
+  {
+    "id": "nlm-c-06",
+    "type": "concept",
+    "front": "How do you draw a Free Body Diagram (FBD)?",
+    "back": "1. **Isolate** the body of interest\n2. Draw **all forces** acting on it:\n   - Weight (mg, downward)\n   - Normal force (perpendicular to surface)\n   - Friction (along surface, opposing motion/tendency)\n   - Tension (along string, away from body)\n   - Applied forces\n3. Do NOT include forces the body exerts on others\n4. Choose axes aligned with acceleration direction\n5. Apply ΣF = ma along each axis",
+    "tags": ["newtons-laws", "applications"]
+  },
+  {
+    "id": "nlm-c-07",
+    "type": "concept",
+    "front": "What is the string constraint in pulley systems?",
+    "back": "For an inextensible string, the total length is constant.\n\n- Differentiating the length equation twice gives the **acceleration constraint**\n- For a simple Atwood machine: a₁ = −a₂\n- For a movable pulley: a₁ + a₂ = 2a_pulley\n- Tension is the same throughout a massless string over a frictionless pulley.",
+    "tags": ["newtons-laws", "pulley"]
+  },
+  {
+    "id": "nlm-c-08",
+    "type": "concept",
+    "front": "What determines whether a block slides on an incline?",
+    "back": "A block slides when the component of gravity along the incline exceeds maximum static friction:\n\nmg sinθ > μ_s mg cosθ\n\ntanθ > μ_s\n\nIf tanθ = μ_s → block is on the verge of sliding.\nIf tanθ < μ_s → block stays stationary.\n\nThe **angle of repose** is θ_r = tan⁻¹(μ_s).",
+    "tags": ["newtons-laws", "friction", "incline"]
+  },
+  {
+    "id": "nlm-c-09",
+    "type": "concept",
+    "front": "Why does apparent weight change in an elevator?",
+    "back": "The scale reads the **normal force** N, not the actual weight mg.\n\nApplying Newton's 2nd law (taking up as positive):\nN − mg = ma\nN = m(g + a)\n\n- **Accelerating up** (a > 0): N > mg → feels heavier\n- **Accelerating down** (a > 0): N = m(g − a) → feels lighter\n- **Free fall** (a = g): N = 0 → weightlessness\n- **Constant velocity**: N = mg → normal weight",
+    "tags": ["newtons-laws", "applications"]
+  },
+  {
+    "id": "nlm-c-10",
+    "type": "concept",
+    "front": "What is the banking of roads? Why is it done?",
+    "back": "Banking tilts the road surface inward on curves so the **normal force** has a horizontal component toward the center.\n\nAt the designed speed (tanθ = v²/Rg):\n- No friction needed — normal force alone provides centripetal force\n\nAbove designed speed: friction acts inward (down the slope)\nBelow designed speed: friction acts outward (up the slope)\n\nBanking reduces dependence on friction for safe turning.",
+    "tags": ["newtons-laws", "circular-motion"]
+  },
+  {
+    "id": "nlm-mcq-01",
+    "type": "mcq",
+    "front": "Action and reaction forces:",
+    "options": ["Act on the same body", "Act on different bodies", "Are always in the same direction", "Can cancel each other"],
+    "answer": "B",
+    "back": "Action-reaction pairs (Newton's Third Law) always act on **different** bodies. Since they act on different objects, they never cancel each other.",
+    "tags": ["newtons-laws", "fundamentals"]
+  },
+  {
+    "id": "nlm-mcq-02",
+    "type": "mcq",
+    "front": "The coefficient of static friction is always:",
+    "options": ["Greater than kinetic friction coefficient", "Less than kinetic friction coefficient", "Equal to kinetic friction coefficient", "Zero"],
+    "answer": "A",
+    "back": "For the same pair of surfaces, μ_s > μ_k. It takes more force to start sliding (overcome static friction) than to keep sliding (kinetic friction).",
+    "tags": ["newtons-laws", "friction"]
+  },
+  {
+    "id": "nlm-mcq-03",
+    "type": "mcq",
+    "front": "For uniform circular motion, the centripetal force is directed:",
+    "options": ["Along the velocity direction", "Perpendicular to velocity, toward center", "Opposite to velocity", "Radially outward"],
+    "answer": "B",
+    "back": "Centripetal force is always directed toward the center of the circle, which is perpendicular to the instantaneous velocity (tangent to the circle). This force changes direction, not speed.",
+    "tags": ["newtons-laws", "circular-motion"]
+  },
+  {
+    "id": "nlm-mcq-04",
+    "type": "mcq",
+    "front": "A stone is thrown vertically upward. At the highest point:",
+    "options": ["Velocity and acceleration are both zero", "Velocity is zero, acceleration is non-zero", "Both are non-zero", "Cannot be determined"],
+    "answer": "B",
+    "back": "At the highest point, velocity is momentarily zero, but acceleration due to gravity (g = 9.8 m/s² downward) is always acting. If acceleration were also zero, the stone would stay at the top forever!",
+    "tags": ["newtons-laws", "fundamentals"]
+  },
+  {
+    "id": "nlm-mcq-05",
+    "type": "mcq",
+    "front": "A lift accelerating upward at 2 m/s². The apparent weight of a 60 kg person is (g = 10 m/s²):",
+    "options": ["600 N", "720 N", "480 N", "660 N"],
+    "answer": "B",
+    "back": "N = m(g + a) = 60(10 + 2) = 60 × 12 = 720 N. When accelerating upward, the person feels heavier because the floor must push harder to accelerate them.",
+    "tags": ["newtons-laws", "applications"]
+  },
+  {
+    "id": "nlm-mcq-06",
+    "type": "mcq",
+    "front": "A block slides down a frictionless incline. The component of gravity perpendicular to the incline is:",
+    "options": ["mg sinθ", "mg cosθ", "mg tanθ", "mg"],
+    "answer": "B",
+    "back": "The weight mg is resolved into:\n- Along incline (causing motion): mg sinθ\n- Perpendicular to incline (balanced by normal force): mg cosθ\n\nSo the normal force N = mg cosθ on a frictionless incline.",
+    "tags": ["newtons-laws", "incline"]
+  },
+  {
+    "id": "nlm-mcq-07",
+    "type": "mcq",
+    "front": "A pendulum in a train accelerating at a = g makes angle θ with vertical. θ equals:",
+    "options": ["0°", "45°", "60°", "90°"],
+    "answer": "B",
+    "back": "In the train's frame, pseudo force = mg (horizontal). Weight = mg (vertical).\n\ntanθ = pseudo force / weight = mg/mg = 1\n\nθ = tan⁻¹(1) = 45°",
+    "tags": ["newtons-laws", "pseudo-force"]
+  },
+  {
+    "id": "nlm-mcq-08",
+    "type": "mcq",
+    "front": "The maximum static friction force:",
+    "options": ["Depends on velocity", "Is proportional to normal force", "Is independent of contact area", "Both B and C"],
+    "answer": "D",
+    "back": "Maximum static friction f_max = μ_s N is proportional to the normal force and independent of the area of contact (Amontons' law). It does not depend on velocity (that's kinetic friction's domain).",
+    "tags": ["newtons-laws", "friction"]
+  },
+  {
+    "id": "nlm-mcq-09",
+    "type": "mcq",
+    "front": "In an Atwood machine with m₁ = 4 kg and m₂ = 6 kg, the acceleration is (g = 10 m/s²):",
+    "options": ["1 m/s²", "2 m/s²", "3 m/s²", "5 m/s²"],
+    "answer": "B",
+    "back": "a = (m₂ − m₁)g/(m₁ + m₂) = (6 − 4) × 10 / (4 + 6) = 20/10 = 2 m/s².\n\nThe heavier mass accelerates downward at 2 m/s².",
+    "tags": ["newtons-laws", "pulley"]
+  },
+  {
+    "id": "nlm-mcq-10",
+    "type": "mcq",
+    "front": "For circular motion at constant speed, the kinetic energy:",
+    "options": ["Increases", "Remains constant", "Decreases", "Becomes zero"],
+    "answer": "B",
+    "back": "In uniform circular motion, speed is constant → KE = ½mv² is constant. The centripetal force is perpendicular to velocity, so it does zero work. No work done = no change in KE.",
+    "tags": ["newtons-laws", "circular-motion"]
+  }
+]
