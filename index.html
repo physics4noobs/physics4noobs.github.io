@@ -9,15 +9,28 @@
     /* Splash screen — self-contained, zero dependencies */
     body{margin:0;background:#050510}
     [data-theme="light"] body{background:#f5f5fa}
-    .splash-screen{position:fixed;inset:0;z-index:9999;background:#050510;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;opacity:1;transition:opacity .5s ease}
+    .splash-screen{position:fixed;inset:0;z-index:9999;background:#050510;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;opacity:1;transition:opacity .5s ease}
     .splash-screen.fade-out{opacity:0;pointer-events:none}
     [data-theme="light"] .splash-screen{background:#f5f5fa}
-    .splash-logo{font-family:system-ui,sans-serif;font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,#00d4ff,#00ffaa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:splashIn .6s ease-out both}
-    .splash-tagline{font-family:system-ui,sans-serif;font-size:.7rem;letter-spacing:4px;color:#6b6b85;text-transform:uppercase;animation:splashIn .6s ease-out .3s both}
+
+    /* Pendulum in splash — scaled up version */
+    .splash-pendulum{width:80px;height:80px;position:relative;margin-bottom:24px;animation:splashIn .5s ease-out both}
+    .splash-pendulum .sp-mount{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:36px;height:4px;background:linear-gradient(90deg,#3a3a50,#6b6b85 40%,rgba(255,255,255,.25) 50%,#6b6b85 60%,#3a3a50);border-radius:2px}
+    .splash-pendulum .sp-pivot{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:#6b6b85;border-radius:50%;z-index:2}
+    .splash-pendulum .sp-arm{position:absolute;top:9px;left:50%;transform-origin:top center;animation:splashSwing 1.8s cubic-bezier(.4,0,.6,1) infinite alternate}
+    .splash-pendulum .sp-rod{width:2px;height:38px;background:linear-gradient(180deg,rgba(255,255,255,.3),#00d4ff 30%,rgba(0,212,255,.2) 90%);margin:0 auto;border-radius:1px;box-shadow:0 0 6px rgba(0,212,255,.15)}
+    .splash-pendulum .sp-bob{width:20px;height:20px;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.7),#00d4ff 45%,rgba(0,140,180,.9) 75%,rgba(0,60,80,.8));border-radius:50%;margin:-1px auto 0;box-shadow:0 0 14px #00d4ff,0 0 30px rgba(0,212,255,.4),0 0 50px rgba(0,212,255,.15);position:relative}
+    .splash-pendulum .sp-glow{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:16px;height:8px;background:radial-gradient(ellipse,rgba(0,212,255,.3),transparent 70%);filter:blur(3px)}
+    [data-theme="light"] .splash-pendulum .sp-mount{background:linear-gradient(90deg,#bbb,#ddd 40%,#fff 50%,#ddd 60%,#bbb)}
+    [data-theme="light"] .splash-pendulum .sp-pivot{background:#bbb}
+
+    .splash-logo{font-family:system-ui,sans-serif;font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,#00d4ff,#00ffaa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:splashIn .6s ease-out .15s both;margin-bottom:10px}
+    .splash-tagline{font-family:system-ui,sans-serif;font-size:.7rem;letter-spacing:4px;color:#6b6b85;text-transform:uppercase;animation:splashIn .6s ease-out .3s both;margin-bottom:24px}
     .splash-bar{width:120px;height:2px;background:#111;border-radius:2px;overflow:hidden;animation:splashIn .6s ease-out .5s both}
     .splash-bar-fill{width:0;height:100%;background:linear-gradient(90deg,#00d4ff,#00ffaa);animation:splashFill 1.5s ease-in-out .6s forwards}
     [data-theme="light"] .splash-bar{background:#ddd}
     @keyframes splashIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes splashSwing{0%{transform:translateX(-50%) rotate(-30deg)}100%{transform:translateX(-50%) rotate(30deg)}}
     @keyframes splashFill{to{width:100%}}
   </style>
   <script src="js/theme.js"></script>
@@ -35,6 +48,14 @@
 
   <!-- Splash Screen -->
   <div class="splash-screen" id="splash">
+    <div class="splash-pendulum">
+      <div class="sp-mount"></div>
+      <div class="sp-pivot"></div>
+      <div class="sp-arm">
+        <div class="sp-rod"></div>
+        <div class="sp-bob"><div class="sp-glow"></div></div>
+      </div>
+    </div>
     <div class="splash-logo">Axomiya Engineer</div>
     <div class="splash-tagline">Lets Make Physics Fun</div>
     <div class="splash-bar"><div class="splash-bar-fill"></div></div>
