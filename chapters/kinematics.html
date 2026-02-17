@@ -97,7 +97,12 @@
         <a href="#acceleration">Acceleration</a>
         <a href="#equations-of-motion">Equations of Motion</a>
         <a href="#graphical-analysis">Graphical Analysis</a>
+        <a href="#non-uniform-acceleration">Non-Uniform Acceleration</a>
         <a href="#projectile-motion">Projectile Motion</a>
+        <a href="#horizontal-projectile">Horizontal Projectile</a>
+        <a href="#projectile-inclined-plane">Projectile on Incline</a>
+        <a href="#circular-motion">Circular Motion</a>
+        <a href="#non-uniform-circular-motion">Non-Uniform Circular Motion</a>
         <a href="#relative-motion">Relative Motion</a>
       </div>
     </div>
@@ -141,6 +146,43 @@
       <p>
         Path length is another term for distance. Consider a particle that moves from point A to point B along a curved path and then from B to C. The path length is the sum of the arc lengths AB and BC. The displacement, however, is the vector from A to C directly. In circular motion, after completing one full revolution, the path length equals the circumference 2&pi;r but the displacement is zero.
       </p>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 200" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Number line showing path A to C to B with distance (curved path) and displacement (straight arrow)</title>
+          <defs>
+            <marker id="arrow-disp" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="var(--color-primary)"/>
+            </marker>
+          </defs>
+          <line x1="30" y1="110" x2="470" y2="110" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <line x1="70" y1="105" x2="70" y2="115" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="70" y="130" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">0</text>
+          <line x1="130" y1="105" x2="130" y2="115" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="130" y="130" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">2</text>
+          <line x1="190" y1="105" x2="190" y2="115" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="190" y="130" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">4</text>
+          <line x1="250" y1="105" x2="250" y2="115" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="250" y="130" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">6</text>
+          <line x1="310" y1="105" x2="310" y2="115" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="310" y="130" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">8</text>
+          <line x1="370" y1="105" x2="370" y2="115" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="370" y="130" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">10</text>
+          <circle cx="130" cy="110" r="6" fill="var(--color-primary)"/>
+          <text x="130" y="155" fill="var(--color-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">A (x=2)</text>
+          <circle cx="310" cy="110" r="6" fill="var(--color-secondary)"/>
+          <text x="310" y="155" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">C (x=8)</text>
+          <circle cx="160" cy="110" r="6" fill="var(--color-accent)"/>
+          <text x="160" y="155" fill="var(--color-accent)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">B (x=3)</text>
+          <path d="M 130 100 Q 220 30 310 100" fill="none" stroke="var(--color-secondary)" stroke-width="2" stroke-dasharray="6,3"/>
+          <text x="220" y="40" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">6 m</text>
+          <path d="M 310 95 Q 235 20 160 95" fill="none" stroke="var(--color-secondary)" stroke-width="2" stroke-dasharray="6,3"/>
+          <text x="235" y="18" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">5 m</text>
+          <text x="370" y="30" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="13">Distance = 11 m</text>
+          <line x1="130" y1="175" x2="155" y2="175" stroke="var(--color-primary)" stroke-width="2.5" marker-end="url(#arrow-disp)"/>
+          <text x="250" y="180" fill="var(--color-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13">Displacement = +1 m</text>
+        </svg>
+      </div>
 
       <div class="example-box">
         <div class="ex-label">Solved Example 1</div>
@@ -227,6 +269,35 @@
         <li>Instantaneous speed = |instantaneous velocity| always.</li>
         <li>A body can have varying velocity but constant speed (e.g., uniform circular motion).</li>
       </ul>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 160" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Split-journey diagram showing two path segments with different speeds and total distance</title>
+          <defs>
+            <marker id="arrow-sj" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="var(--color-primary)"/>
+            </marker>
+            <marker id="arrow-sj-acc" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="var(--color-accent)"/>
+            </marker>
+            <marker id="arrow-sj-sec" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="var(--color-secondary)"/>
+            </marker>
+          </defs>
+          <circle cx="50" cy="70" r="7" fill="var(--color-primary)"/>
+          <text x="50" y="100" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">Start</text>
+          <circle cx="250" cy="70" r="7" fill="var(--color-secondary)"/>
+          <text x="250" y="100" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">Mid</text>
+          <circle cx="450" cy="70" r="7" fill="var(--color-accent)"/>
+          <text x="450" y="100" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">End</text>
+          <line x1="57" y1="70" x2="240" y2="70" stroke="var(--color-primary)" stroke-width="2.5" marker-end="url(#arrow-sj)"/>
+          <text x="150" y="55" fill="var(--color-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13">d&#8321; at v&#8321;</text>
+          <line x1="257" y1="70" x2="440" y2="70" stroke="var(--color-accent)" stroke-width="2.5" marker-end="url(#arrow-sj-acc)"/>
+          <text x="350" y="55" fill="var(--color-accent)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13">d&#8322; at v&#8322;</text>
+          <line x1="50" y1="130" x2="442" y2="130" stroke="var(--color-secondary)" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrow-sj-sec)"/>
+          <text x="250" y="150" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">Total distance = d&#8321; + d&#8322;</text>
+        </svg>
+      </div>
 
       <div class="example-box">
         <div class="ex-label">Solved Example 3</div>
@@ -316,6 +387,40 @@
         Time to reach max height: t = u/g<br>
         Maximum height: H = u&sup2;/(2g)<br>
         Total time of flight: T = 2u/g
+      </div>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 180" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Two scenarios: (a) velocity and acceleration same direction (speeding up), (b) opposite directions (slowing down)</title>
+          <defs>
+            <marker id="arrow-vel" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="var(--color-primary)"/>
+            </marker>
+            <marker id="arrow-acc-fwd" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="var(--color-accent)"/>
+            </marker>
+            <marker id="arrow-acc-rev" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+              <path d="M8,0 L0,3 L8,6" fill="var(--color-accent)"/>
+            </marker>
+          </defs>
+          <line x1="250" y1="10" x2="250" y2="170" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+          <text x="125" y="25" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">(a) Speeding Up</text>
+          <rect x="80" y="65" width="30" height="30" rx="4" fill="var(--bg-secondary)" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <line x1="115" y1="75" x2="195" y2="75" stroke="var(--color-primary)" stroke-width="3" marker-end="url(#arrow-vel)"/>
+          <text x="155" y="65" fill="var(--color-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13">v</text>
+          <line x1="115" y1="90" x2="180" y2="90" stroke="var(--color-accent)" stroke-width="3" marker-end="url(#arrow-acc-fwd)"/>
+          <text x="148" y="108" fill="var(--color-accent)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13">a</text>
+          <text x="125" y="145" fill="var(--color-accent)" text-anchor="middle" font-family="Inter, sans-serif" font-size="12">v and a same direction</text>
+          <text x="125" y="162" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="12">|v| increases</text>
+          <text x="375" y="25" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">(b) Slowing Down</text>
+          <rect x="330" y="65" width="30" height="30" rx="4" fill="var(--bg-secondary)" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <line x1="365" y1="75" x2="445" y2="75" stroke="var(--color-primary)" stroke-width="3" marker-end="url(#arrow-vel)"/>
+          <text x="405" y="65" fill="var(--color-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13">v</text>
+          <line x1="330" y1="90" x2="280" y2="90" stroke="var(--color-accent)" stroke-width="3" marker-end="url(#arrow-acc-rev)"/>
+          <text x="305" y="108" fill="var(--color-accent)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13">a</text>
+          <text x="375" y="145" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="12">v and a opposite directions</text>
+          <text x="375" y="162" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="12">|v| decreases</text>
+        </svg>
       </div>
 
       <div class="example-box">
@@ -511,6 +616,37 @@
         a-t graph: Area = &Delta;v (change in velocity)
       </div>
 
+      <div style="margin: 20px auto; max-width: 600px;">
+        <svg viewBox="0 0 600 200" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 600px;">
+          <title>Three-panel graph: x-t parabola, v-t straight line with shaded area, a-t horizontal line for UAM</title>
+          <text x="90" y="18" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600">x-t Graph</text>
+          <line x1="30" y1="170" x2="170" y2="170" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <line x1="30" y1="170" x2="30" y2="30" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="100" y="190" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">t</text>
+          <text x="18" y="100" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">x</text>
+          <path d="M 30 165 Q 70 140 90 110 Q 110 70 150 35" fill="none" stroke="var(--color-primary)" stroke-width="2.5"/>
+          <line x1="80" y1="130" x2="120" y2="85" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+          <text x="125" y="80" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="11">slope = v</text>
+          <text x="310" y="18" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600">v-t Graph</text>
+          <line x1="240" y1="170" x2="390" y2="170" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <line x1="240" y1="170" x2="240" y2="30" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="315" y="190" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">t</text>
+          <text x="228" y="100" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">v</text>
+          <polygon points="240,170 240,145 370,50 370,170" fill="var(--color-accent)" opacity="0.15"/>
+          <line x1="240" y1="145" x2="370" y2="50" stroke="var(--color-accent)" stroke-width="2.5"/>
+          <text x="232" y="143" fill="var(--color-accent)" text-anchor="end" font-family="Inter, sans-serif" font-size="11">u</text>
+          <text x="310" y="135" fill="var(--color-accent)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">Area = &Delta;x</text>
+          <text x="520" y="18" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600">a-t Graph</text>
+          <line x1="450" y1="170" x2="590" y2="170" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <line x1="450" y1="170" x2="450" y2="30" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="520" y="190" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">t</text>
+          <text x="438" y="100" fill="var(--text-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">a</text>
+          <rect x="450" y="90" width="120" height="80" fill="var(--color-secondary)" opacity="0.12"/>
+          <line x1="450" y1="90" x2="570" y2="90" stroke="var(--color-secondary)" stroke-width="2.5"/>
+          <text x="510" y="140" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11">Area = &Delta;v</text>
+        </svg>
+      </div>
+
       <div class="example-box">
         <div class="ex-label">Solved Example 9</div>
         <p>
@@ -550,227 +686,699 @@
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 6: Projectile Motion -->
+    <!-- SECTION 6: Non-Uniform Acceleration -->
     <!-- ============================== -->
-    <div class="theory-section" id="projectile-motion">
-      <h2>6. Projectile Motion</h2>
+    <div class="theory-section" id="non-uniform-acceleration">
+      <h2>6. Non-Uniform Acceleration</h2>
 
       <p>
-        A <strong>projectile</strong> is any object that is given an initial velocity and then moves under the influence of gravity alone (air resistance neglected). The path of a projectile is called its <strong>trajectory</strong> and is a parabola. Projectile motion is essentially a combination of two simultaneous independent motions: uniform velocity in the horizontal direction and uniformly accelerated motion (under gravity) in the vertical direction.
+        When the acceleration of a particle is <strong>not constant</strong>, the standard kinematic equations (v = u + at, s = ut + &frac12;at&sup2;, v&sup2; = u&sup2; + 2as) are <em>not valid</em>. Instead, we must use <strong>calculus</strong> &mdash; differentiation and integration &mdash; to relate acceleration, velocity, and position.
       </p>
 
-      <h3>Setting Up the Equations</h3>
-      <p>
-        Consider a projectile launched from the origin with initial speed <em>u</em> at angle <em>&theta;</em> with the horizontal. Taking upward as positive y and horizontal as positive x:
-      </p>
+      <h3>Case 1: Acceleration as a Function of Time &mdash; a = f(t)</h3>
+      <p>Integrate successively to obtain velocity and then position.</p>
       <div class="formula-box">
-        Horizontal: u<sub>x</sub> = u cos&theta;, &nbsp; a<sub>x</sub> = 0<br>
-        &nbsp;&nbsp; x = (u cos&theta;) t<br>
-        &nbsp;&nbsp; v<sub>x</sub> = u cos&theta; &nbsp; (constant throughout)<br><br>
-        Vertical: u<sub>y</sub> = u sin&theta;, &nbsp; a<sub>y</sub> = &minus;g<br>
-        &nbsp;&nbsp; y = (u sin&theta;) t &minus; &frac12;g t&sup2;<br>
-        &nbsp;&nbsp; v<sub>y</sub> = u sin&theta; &minus; g t
+        Given: a(t) = f(t)<br><br>
+        Velocity: v(t) = v<sub>0</sub> + &int;<sub>0</sub><sup>t</sup> a(t&prime;) dt&prime;<br><br>
+        Position: x(t) = x<sub>0</sub> + &int;<sub>0</sub><sup>t</sup> v(t&prime;) dt&prime;
       </div>
 
-      <h3>Time of Flight</h3>
-      <p>
-        The time of flight is the total time the projectile remains in the air. For a projectile launched from and landing on the same horizontal level, set y = 0:
-      </p>
+      <h3>Case 2: Acceleration as a Function of Position &mdash; a = f(x)</h3>
+      <p>Use the relation a = v (dv/dx) to convert to a separable differential equation.</p>
       <div class="formula-box">
-        T = 2u sin&theta; / g
+        Given: a(x) = f(x)<br><br>
+        v dv = a(x) dx<br><br>
+        &frac12;(v&sup2; &minus; v<sub>0</sub>&sup2;) = &int;<sub>x<sub>0</sub></sub><sup>x</sup> f(x&prime;) dx&prime;
       </div>
 
-      <h3>Maximum Height</h3>
-      <p>
-        At the highest point, the vertical component of velocity becomes zero (v<sub>y</sub> = 0). The time to reach maximum height is T/2 = u sin&theta; / g.
-      </p>
+      <h3>Case 3: Acceleration as a Function of Velocity &mdash; a = f(v)</h3>
+      <p>Separate variables depending on what is needed.</p>
       <div class="formula-box">
-        H = u&sup2; sin&sup2;&theta; / (2g)
+        Given: a(v) = f(v)<br><br>
+        To find v vs t: &nbsp; t = &int;<sub>v<sub>0</sub></sub><sup>v</sup> dv&prime; / f(v&prime;)<br><br>
+        To find v vs x: &nbsp; x &minus; x<sub>0</sub> = &int;<sub>v<sub>0</sub></sub><sup>v</sup> v&prime; dv&prime; / f(v&prime;)
       </div>
+      <p>This case commonly arises in problems involving resistive forces (drag), where the retarding force depends on speed.</p>
 
-      <h3>Horizontal Range</h3>
-      <p>
-        The range is the horizontal distance covered during the entire time of flight.
-      </p>
-      <div class="formula-box">
-        R = u&sup2; sin 2&theta; / g
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 140" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Integration chain flowchart: a(t) integrates to v(t) integrates to x(t), with differentiation arrows in reverse</title>
+          <defs>
+            <marker id="arrow-fc-right" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="var(--color-primary)"/>
+            </marker>
+            <marker id="arrow-fc-left" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+              <path d="M8,0 L0,3 L8,6" fill="var(--color-secondary)"/>
+            </marker>
+          </defs>
+          <rect x="30" y="40" width="110" height="50" rx="8" fill="var(--bg-secondary)" stroke="var(--color-primary)" stroke-width="2"/>
+          <text x="85" y="70" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">a(t)</text>
+          <rect x="195" y="40" width="110" height="50" rx="8" fill="var(--bg-secondary)" stroke="var(--color-accent)" stroke-width="2"/>
+          <text x="250" y="70" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">v(t)</text>
+          <rect x="360" y="40" width="110" height="50" rx="8" fill="var(--bg-secondary)" stroke="var(--color-secondary)" stroke-width="2"/>
+          <text x="415" y="70" fill="var(--text-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600">x(t)</text>
+          <line x1="140" y1="55" x2="190" y2="55" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrow-fc-right)"/>
+          <text x="165" y="48" fill="var(--color-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="500">&int; dt</text>
+          <line x1="305" y1="55" x2="355" y2="55" stroke="var(--color-primary)" stroke-width="2" marker-end="url(#arrow-fc-right)"/>
+          <text x="330" y="48" fill="var(--color-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="500">&int; dt</text>
+          <line x1="360" y1="80" x2="310" y2="80" stroke="var(--color-secondary)" stroke-width="2" marker-end="url(#arrow-fc-left)"/>
+          <text x="335" y="105" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="500">d/dt</text>
+          <line x1="195" y1="80" x2="145" y2="80" stroke="var(--color-secondary)" stroke-width="2" marker-end="url(#arrow-fc-left)"/>
+          <text x="170" y="105" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="500">d/dt</text>
+          <text x="165" y="130" fill="var(--color-primary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="500">Integration</text>
+          <text x="335" y="130" fill="var(--color-secondary)" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="500">Differentiation</text>
+        </svg>
       </div>
-
-      <h3>Trajectory Equation</h3>
-      <p>
-        Eliminating time from the horizontal and vertical equations, we get the equation of the trajectory:
-      </p>
-      <div class="formula-box">
-        y = x tan&theta; &minus; g x&sup2; / (2u&sup2; cos&sup2;&theta;)
-      </div>
-      <p>
-        This is the equation of a parabola, confirming that the trajectory of a projectile (in the absence of air resistance) is parabolic.
-      </p>
-
-      <h3>Complementary Angles &amp; Maximum Range</h3>
-      <p>
-        Two important results for competitive exams:
-      </p>
-      <ul>
-        <li><strong>Complementary angle property:</strong> The range is the same for two angles of projection &theta; and (90&deg; &minus; &theta;). For example, 30&deg; and 60&deg; give the same range. However, the maximum heights and times of flight are different.</li>
-        <li><strong>Maximum range:</strong> Since R = u&sup2; sin 2&theta; / g, R is maximum when sin 2&theta; = 1, i.e., 2&theta; = 90&deg;, giving <strong>&theta; = 45&deg;</strong>. The maximum range is R<sub>max</sub> = u&sup2;/g.</li>
-      </ul>
-      <div class="formula-box">
-        R<sub>max</sub> = u&sup2; / g &nbsp; (at &theta; = 45&deg;)<br>
-        R(&theta;) = R(90&deg; &minus; &theta;)
-      </div>
-
-      <h3>Projectile Launched from a Height</h3>
-      <p>
-        When a projectile is launched horizontally from a height <em>h</em> above the ground (e.g., thrown from a cliff), the initial vertical velocity is zero. Here:
-      </p>
-      <div class="formula-box">
-        Horizontal throw from height h:<br>
-        u<sub>x</sub> = u, &nbsp; u<sub>y</sub> = 0<br>
-        Time to reach ground: t = &radic;(2h/g)<br>
-        Range: R = u &times; &radic;(2h/g)<br>
-        Speed at impact: v = &radic;(u&sup2; + 2gh)
-      </div>
-      <p>
-        For a projectile launched at an angle from a height, use the full equations with appropriate initial conditions and set y = &minus;h to find the time of landing.
-      </p>
 
       <div class="example-box">
         <div class="ex-label">Solved Example 11</div>
         <p>
-          A ball is projected with a speed of 20 m/s at an angle of 60&deg; with the horizontal. Find the time of flight, maximum height, and range. Take g = 10 m/s&sup2;.
+          A particle starts from rest at the origin. Its acceleration is a(t) = (2t &minus; 2) m/s&sup2;. Find v(t), x(t), and the displacement from t = 2 s to t = 4 s.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            u = 20 m/s, &theta; = 60&deg;, g = 10 m/s&sup2;<br><br>
-            Time of flight: T = 2u sin&theta; / g = 2(20) sin60&deg; / 10 = 40 &times; (&radic;3/2) / 10 = 2&radic;3 &asymp; <strong>3.46 s</strong><br><br>
-            Maximum height: H = u&sup2; sin&sup2;&theta; / (2g) = (400)(sin&sup2;60&deg;) / 20 = 400 &times; (3/4) / 20 = 300/20 = <strong>15 m</strong><br><br>
-            Range: R = u&sup2; sin 2&theta; / g = 400 &times; sin120&deg; / 10 = 400 &times; (&radic;3/2) / 10 = 200&radic;3/10 = 20&radic;3 &asymp; <strong>34.64 m</strong>
-          </p>
-        </div>
-      </div>
-
-      <div class="example-box">
-        <div class="ex-label">Solved Example 12</div>
-        <p>
-          A stone is thrown horizontally from the top of a tower of height 80 m with a speed of 15 m/s. Find the time to reach the ground, the horizontal distance from the base of the tower, and the velocity with which it strikes the ground. Take g = 10 m/s&sup2;.
-        </p>
-        <div class="solution">
-          <p>
-            <strong>Solution:</strong><br>
-            h = 80 m, u<sub>x</sub> = 15 m/s, u<sub>y</sub> = 0<br><br>
-            Time to reach ground: t = &radic;(2h/g) = &radic;(2 &times; 80/10) = &radic;16 = <strong>4 s</strong><br><br>
-            Horizontal distance: R = u<sub>x</sub> &times; t = 15 &times; 4 = <strong>60 m</strong><br><br>
-            Vertical velocity at impact: v<sub>y</sub> = gt = 10 &times; 4 = 40 m/s<br>
-            Resultant velocity: v = &radic;(v<sub>x</sub>&sup2; + v<sub>y</sub>&sup2;) = &radic;(225 + 1600) = &radic;1825 &asymp; <strong>42.72 m/s</strong><br>
-            Angle with horizontal: tan&alpha; = v<sub>y</sub>/v<sub>x</sub> = 40/15 = 8/3, &alpha; = tan<sup>&minus;1</sup>(8/3) &asymp; 69.44&deg; below horizontal.
+            Given: a(t) = 2t &minus; 2, v(0) = 0, x(0) = 0<br><br>
+            <em>Finding v(t):</em><br>
+            v(t) = &int;(2t &minus; 2) dt = t&sup2; &minus; 2t + C<br>
+            v(0) = 0 &rArr; C = 0, so v(t) = <strong>t&sup2; &minus; 2t</strong> m/s<br><br>
+            <em>Finding x(t):</em><br>
+            x(t) = &int;(t&sup2; &minus; 2t) dt = t&sup3;/3 &minus; t&sup2; + C&prime;<br>
+            x(0) = 0 &rArr; C&prime; = 0, so x(t) = <strong>t&sup3;/3 &minus; t&sup2;</strong> m<br><br>
+            <em>Displacement from t = 2 to t = 4:</em><br>
+            x(4) = 64/3 &minus; 16 = 16/3 m<br>
+            x(2) = 8/3 &minus; 4 = &minus;4/3 m<br>
+            &Delta;x = 16/3 &minus; (&minus;4/3) = 20/3 &asymp; <strong>6.67 m</strong>
           </p>
         </div>
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 7: Relative Motion -->
+    <!-- SECTION 7: Projectile Motion -->
+    <!-- ============================== -->
+    <div class="theory-section" id="projectile-motion">
+      <h2>7. Projectile Motion</h2>
+
+      <p>A <strong>projectile</strong> is any object that is given an initial velocity and then moves under the influence of gravity alone (neglecting air resistance). The path followed by a projectile is called its <strong>trajectory</strong>, and it is always a <strong>parabola</strong>.</p>
+
+      <p>Consider a projectile launched from the origin with initial speed <strong>u</strong> at angle <strong>&theta;</strong> with the horizontal. We resolve the motion into two independent components:</p>
+
+      <ul>
+        <li><strong>Horizontal (x-axis):</strong> No acceleration &rarr; a<sub>x</sub> = 0, constant velocity u cos&theta;</li>
+        <li><strong>Vertical (y-axis):</strong> Acceleration due to gravity &rarr; a<sub>y</sub> = &minus;g (taking upward as positive)</li>
+      </ul>
+
+      <h3>Equations of Motion for a Projectile</h3>
+
+      <div class="formula-box">
+        <strong>Horizontal:</strong><br>
+        x = (u cos&theta;) t<br>
+        v<sub>x</sub> = u cos&theta; (constant)<br><br>
+        <strong>Vertical:</strong><br>
+        y = (u sin&theta;) t &minus; &frac12;gt&sup2;<br>
+        v<sub>y</sub> = u sin&theta; &minus; gt
+      </div>
+
+      <h3>Time of Flight (T)</h3>
+
+      <p>The projectile returns to the same vertical level (y = 0) when:</p>
+
+      <div class="formula-box">
+        T = 2u sin&theta; / g
+      </div>
+
+      <p>The time to reach maximum height is exactly half the total time of flight: t<sub>peak</sub> = T/2 = u sin&theta; / g.</p>
+
+      <h3>Maximum Height (H)</h3>
+
+      <p>At the highest point, v<sub>y</sub> = 0. Using v<sub>y</sub>&sup2; = u<sub>y</sub>&sup2; &minus; 2gH:</p>
+
+      <div class="formula-box">
+        H = u&sup2; sin&sup2;&theta; / (2g)
+      </div>
+
+      <h3>Horizontal Range (R)</h3>
+
+      <p>The horizontal distance covered during the total time of flight:</p>
+
+      <div class="formula-box">
+        R = u&sup2; sin 2&theta; / g
+      </div>
+
+      <p><strong>Maximum range</strong> occurs when sin 2&theta; = 1, i.e., &theta; = 45&deg;, giving R<sub>max</sub> = u&sup2;/g.</p>
+
+      <h3>Equation of Trajectory</h3>
+
+      <p>Eliminating time from x = u cos&theta; &middot; t and y = u sin&theta; &middot; t &minus; &frac12;gt&sup2;:</p>
+
+      <div class="formula-box">
+        y = x tan&theta; &minus; gx&sup2; / (2u&sup2; cos&sup2;&theta;)<br>
+        or equivalently: y = x tan&theta; (1 &minus; x/R)
+      </div>
+
+      <p>This is the equation of a parabola opening downward.</p>
+
+      <h3>Complementary Angles of Projection</h3>
+
+      <p>Since sin 2&theta; = sin(180&deg; &minus; 2&theta;) = sin 2(90&deg; &minus; &theta;), two complementary angles <strong>&theta;</strong> and <strong>(90&deg; &minus; &theta;)</strong> give the <strong>same range</strong> but different maximum heights and times of flight.</p>
+
+      <ul>
+        <li>For &theta; and (90&deg; &minus; &theta;): R<sub>1</sub> = R<sub>2</sub></li>
+        <li>H<sub>1</sub> + H<sub>2</sub> = u&sup2;/(2g)</li>
+        <li>T<sub>1</sub>/T<sub>2</sub> = tan&theta;</li>
+        <li>R = 4&radic;(H<sub>1</sub> H<sub>2</sub>)</li>
+      </ul>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 320" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Projectile Motion: Parabolic trajectory with launch angle, velocity vectors, maximum height H, and range R</title>
+          <defs>
+            <marker id="arrow-pm" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-primary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-pm-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-accent)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-pm-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-secondary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+          </defs>
+          <rect width="500" height="320" fill="var(--bg-secondary)" rx="8"/>
+          <line x1="40" y1="270" x2="470" y2="270" stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <path d="M 60,270 C 60,270 120,60 250,30 C 380,60 440,270 440,270" fill="none" stroke="var(--color-primary)" stroke-width="2.5"/>
+          <circle cx="60" cy="270" r="4" fill="var(--color-primary)"/>
+          <text x="48" y="292" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">O</text>
+          <circle cx="440" cy="270" r="4" fill="var(--color-primary)"/>
+          <line x1="60" y1="270" x2="130" y2="195" stroke="var(--color-accent)" stroke-width="2.5" marker-end="url(#arrow-pm-green)"/>
+          <text x="70" y="218" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="13" font-weight="bold">u</text>
+          <path d="M 90,270 A 30,30 0 0,0 75,250" fill="none" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <text x="95" y="262" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="12">&theta;</text>
+          <line x1="60" y1="275" x2="125" y2="275" stroke="var(--color-secondary)" stroke-width="1.8" marker-end="url(#arrow-pm-purple)"/>
+          <text x="68" y="298" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="11">u cos&theta;</text>
+          <line x1="55" y1="270" x2="55" y2="205" stroke="var(--color-secondary)" stroke-width="1.8" marker-end="url(#arrow-pm-purple)"/>
+          <text x="4" y="245" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="11">u sin&theta;</text>
+          <line x1="250" y1="30" x2="310" y2="30" stroke="var(--color-accent)" stroke-width="2.5" marker-end="url(#arrow-pm-green)"/>
+          <text x="263" y="22" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="12">v = u cos&theta;</text>
+          <circle cx="250" cy="30" r="4" fill="var(--color-accent)"/>
+          <line x1="440" y1="270" x2="480" y2="220" stroke="var(--color-accent)" stroke-width="2.5" marker-end="url(#arrow-pm-green)"/>
+          <text x="460" y="232" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="13" font-weight="bold">u</text>
+          <line x1="250" y1="30" x2="250" y2="270" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="255" y="155" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">H</text>
+          <line x1="60" y1="280" x2="440" y2="280" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <line x1="60" y1="276" x2="60" y2="284" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <line x1="440" y1="276" x2="440" y2="284" stroke="var(--text-secondary)" stroke-width="1.5"/>
+          <text x="240" y="300" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">R</text>
+        </svg>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 12</div>
+        <p>A ball is projected with an initial speed of 20 m/s at an angle of 60&deg; with the horizontal. Find the time of flight, maximum height, and horizontal range. (Take g = 10 m/s&sup2;)</p>
+        <div class="solution">
+          <p>
+            <strong>Given:</strong> u = 20 m/s, &theta; = 60&deg;, g = 10 m/s&sup2;<br><br>
+            <strong>Time of Flight:</strong><br>
+            T = 2u sin&theta; / g = 2(20) sin 60&deg; / 10 = 40 &times; (&radic;3/2) / 10 = 2&radic;3 &asymp; <strong>3.46 s</strong><br><br>
+            <strong>Maximum Height:</strong><br>
+            H = u&sup2; sin&sup2;&theta; / (2g) = (400 &times; 3/4) / 20 = 300/20 = <strong>15 m</strong><br><br>
+            <strong>Horizontal Range:</strong><br>
+            R = u&sup2; sin 2&theta; / g = 400 &times; sin 120&deg; / 10 = 400 &times; (&radic;3/2) / 10 = 20&radic;3 &asymp; <strong>34.64 m</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Horizontal Projectile -->
+    <!-- ============================== -->
+    <div class="theory-section" id="horizontal-projectile">
+      <h2>8. Horizontal Projectile</h2>
+
+      <p>A special case of projectile motion occurs when an object is launched <strong>horizontally</strong> from a certain height <strong>h</strong> above the ground. Common examples include a ball rolling off the edge of a table, a stone thrown horizontally from a cliff, or a package dropped from a moving airplane.</p>
+
+      <p>In this case, the initial conditions are:</p>
+      <ul>
+        <li>Initial horizontal velocity: v<sub>x</sub> = u (constant throughout)</li>
+        <li>Initial vertical velocity: v<sub>y0</sub> = 0</li>
+        <li>Horizontal acceleration: a<sub>x</sub> = 0</li>
+        <li>Vertical acceleration: a<sub>y</sub> = g (downward)</li>
+      </ul>
+
+      <h3>Key Formulas</h3>
+
+      <div class="formula-box">
+        Time to reach ground: t = &radic;(2h/g)<br>
+        Horizontal distance (Range): x = u&radic;(2h/g)<br>
+        Final velocity at impact: v = &radic;(u&sup2; + 2gh)<br>
+        Angle below horizontal at impact: tan&alpha; = &radic;(2gh) / u
+      </div>
+
+      <h3>Derivation</h3>
+
+      <p><strong>Vertical motion:</strong> Starting from rest vertically, h = &frac12;gt&sup2; &rarr; t = &radic;(2h/g)</p>
+      <p><strong>Horizontal motion:</strong> x = ut = u&radic;(2h/g)</p>
+      <p><strong>Final velocity components:</strong> v<sub>x</sub> = u, &nbsp; v<sub>y</sub> = gt = &radic;(2gh)</p>
+      <p><strong>Resultant:</strong> v = &radic;(v<sub>x</sub>&sup2; + v<sub>y</sub>&sup2;) = &radic;(u&sup2; + 2gh)</p>
+      <p><strong>Trajectory equation:</strong> y = gx&sup2;/(2u&sup2;) &mdash; a parabola (with y-axis pointing down from launch point).</p>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 350" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Horizontal Projectile: Ball launched horizontally from a cliff showing parabolic path, height h, and range x</title>
+          <defs>
+            <marker id="arrow-hp" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-primary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-hp-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-accent)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-hp-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-secondary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+          </defs>
+          <rect width="500" height="350" fill="var(--bg-secondary)" rx="8"/>
+          <rect x="40" y="50" width="80" height="260" fill="var(--text-secondary)" opacity="0.15" rx="2"/>
+          <line x1="120" y1="50" x2="120" y2="310" stroke="var(--text-secondary)" stroke-width="2"/>
+          <line x1="40" y1="50" x2="120" y2="50" stroke="var(--text-secondary)" stroke-width="2"/>
+          <line x1="120" y1="310" x2="470" y2="310" stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <circle cx="120" cy="50" r="5" fill="var(--color-primary)"/>
+          <line x1="120" y1="50" x2="195" y2="50" stroke="var(--color-accent)" stroke-width="2.5" marker-end="url(#arrow-hp-green)"/>
+          <text x="145" y="42" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">u &rarr;</text>
+          <path d="M 120,50 C 200,50 280,130 340,200 C 380,245 410,285 430,310" fill="none" stroke="var(--color-primary)" stroke-width="2.5"/>
+          <circle cx="200" cy="80" r="3" fill="var(--color-primary)" opacity="0.5"/>
+          <circle cx="270" cy="140" r="3" fill="var(--color-primary)" opacity="0.5"/>
+          <circle cx="330" cy="210" r="3" fill="var(--color-primary)" opacity="0.5"/>
+          <circle cx="385" cy="270" r="3" fill="var(--color-primary)" opacity="0.5"/>
+          <circle cx="430" cy="310" r="5" fill="var(--color-primary)"/>
+          <line x1="100" y1="50" x2="100" y2="310" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <line x1="95" y1="50" x2="105" y2="50" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <line x1="95" y1="310" x2="105" y2="310" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <text x="80" y="185" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="15" font-weight="bold">h</text>
+          <line x1="120" y1="325" x2="430" y2="325" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <line x1="120" y1="320" x2="120" y2="330" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <line x1="430" y1="320" x2="430" y2="330" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <text x="265" y="342" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="15" font-weight="bold">x</text>
+          <line x1="430" y1="310" x2="480" y2="310" stroke="var(--color-secondary)" stroke-width="2" marker-end="url(#arrow-hp-purple)"/>
+          <text x="448" y="303" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="11">v<tspan baseline-shift="sub" font-size="9">x</tspan> = u</text>
+          <line x1="430" y1="310" x2="470" y2="335" stroke="var(--color-accent)" stroke-width="2.5" marker-end="url(#arrow-hp-green)"/>
+          <text x="460" y="330" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="13" font-weight="bold">v</text>
+        </svg>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 13</div>
+        <p>A stone is thrown horizontally from the top of an 80 m high tower with a velocity of 15 m/s. Find the time taken to reach the ground, the horizontal distance from the base, and the velocity at impact. (g = 10 m/s&sup2;)</p>
+        <div class="solution">
+          <p>
+            <strong>Given:</strong> h = 80 m, u = 15 m/s, g = 10 m/s&sup2;<br><br>
+            <strong>Time:</strong> t = &radic;(2h/g) = &radic;(160/10) = &radic;16 = <strong>4 s</strong><br><br>
+            <strong>Range:</strong> x = ut = 15 &times; 4 = <strong>60 m</strong><br><br>
+            <strong>Velocity at impact:</strong><br>
+            v<sub>y</sub> = gt = 10 &times; 4 = 40 m/s<br>
+            v = &radic;(15&sup2; + 40&sup2;) = &radic;(225 + 1600) = &radic;1825 &asymp; <strong>42.72 m/s</strong><br>
+            Angle: tan&alpha; = 40/15 = 8/3, &alpha; &asymp; <strong>69.44&deg; below horizontal</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 9: Projectile on Inclined Plane -->
+    <!-- ============================== -->
+    <div class="theory-section" id="projectile-inclined-plane">
+      <h2>9. Projectile on Inclined Plane</h2>
+
+      <p>When a projectile is launched from the surface of an <strong>inclined plane</strong> making angle <strong>&beta;</strong> with the horizontal, it is convenient to analyze the motion using axes along and perpendicular to the incline.</p>
+
+      <p>Let the projectile be launched with speed <strong>u</strong> at angle <strong>&alpha;</strong> from the horizontal (so the angle from the incline surface is &alpha; &minus; &beta;).</p>
+
+      <h3>Acceleration Components</h3>
+
+      <div class="formula-box">
+        Along incline (x&prime;-axis): a<sub>x&prime;</sub> = &minus;g sin&beta;<br>
+        Perpendicular to incline (y&prime;-axis): a<sub>y&prime;</sub> = &minus;g cos&beta;
+      </div>
+
+      <h3>Key Formulas</h3>
+
+      <div class="formula-box">
+        Time of Flight: T = 2u sin(&alpha; &minus; &beta;) / (g cos&beta;)<br>
+        Range on Incline: R = 2u&sup2; sin(&alpha; &minus; &beta;) cos&alpha; / (g cos&sup2;&beta;)<br>
+        Angle for Maximum Range: &alpha; = 45&deg; + &beta;/2<br>
+        Maximum Range: R<sub>max</sub> = u&sup2; / [g(1 + sin&beta;)]
+      </div>
+
+      <h3>Important Notes</h3>
+      <ul>
+        <li>When &beta; = 0, all formulas reduce to the standard projectile motion equations.</li>
+        <li>&alpha; is measured from the <strong>horizontal</strong>, not from the incline surface.</li>
+        <li>For maximum range, the launch angle from the incline surface is &alpha; &minus; &beta; = 45&deg; &minus; &beta;/2.</li>
+        <li>For a projectile launched <strong>down</strong> the incline, replace &beta; with &minus;&beta;.</li>
+      </ul>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 350" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Projectile on Inclined Plane: trajectory on incline at angle beta, launch at angle alpha from horizontal</title>
+          <defs>
+            <marker id="arrow-ip" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-primary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-ip-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-accent)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-ip-dim" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--text-secondary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+          </defs>
+          <rect width="500" height="350" fill="var(--bg-secondary)" rx="8"/>
+          <line x1="50" y1="300" x2="430" y2="140" stroke="var(--text-primary)" stroke-width="2.5"/>
+          <polygon points="50,300 430,140 430,300" fill="var(--text-secondary)" opacity="0.08"/>
+          <line x1="100" y1="280" x2="240" y2="280" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="4,3"/>
+          <path d="M 160,280 A 60,60 0 0,0 148,258" fill="none" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <text x="165" y="272" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="13" font-weight="bold">&beta;</text>
+          <circle cx="100" cy="280" r="5" fill="var(--color-primary)"/>
+          <text x="82" y="296" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">O</text>
+          <line x1="100" y1="280" x2="220" y2="230" stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-ip-dim)"/>
+          <text x="218" y="222" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12">x&prime;</text>
+          <line x1="100" y1="280" x2="55" y2="170" stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-ip-dim)"/>
+          <text x="42" y="165" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12">y&prime;</text>
+          <line x1="100" y1="280" x2="180" y2="180" stroke="var(--color-accent)" stroke-width="2.5" marker-end="url(#arrow-ip-green)"/>
+          <text x="148" y="205" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">u</text>
+          <path d="M 140,280 A 40,40 0 0,0 127,244" fill="none" stroke="var(--color-accent)" stroke-width="1.5"/>
+          <text x="140" y="260" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="13" font-weight="bold">&alpha;</text>
+          <path d="M 100,280 C 120,200 200,130 300,180 C 340,195 360,210 370,220" fill="none" stroke="var(--color-primary)" stroke-width="2.5"/>
+          <circle cx="370" cy="220" r="5" fill="var(--color-primary)"/>
+          <line x1="110" y1="288" x2="374" y2="228" stroke="var(--color-secondary)" stroke-width="1.5"/>
+          <text x="250" y="272" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="15" font-weight="bold">R</text>
+          <line x1="440" y1="60" x2="440" y2="120" stroke="var(--text-primary)" stroke-width="2" marker-end="url(#arrow-ip)"/>
+          <text x="448" y="95" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="13" font-weight="bold">g</text>
+        </svg>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 14</div>
+        <p>A projectile is launched at 60&deg; from the horizontal on an inclined plane that makes 30&deg; with the horizontal. If the initial speed is 20 m/s, find the time of flight and range on the incline. (g = 10 m/s&sup2;)</p>
+        <div class="solution">
+          <p>
+            <strong>Given:</strong> &alpha; = 60&deg;, &beta; = 30&deg;, u = 20 m/s, g = 10 m/s&sup2;<br><br>
+            <strong>Time of Flight:</strong><br>
+            T = 2u sin(&alpha; &minus; &beta;) / (g cos&beta;) = 2(20) sin 30&deg; / (10 cos 30&deg;)<br>
+            T = 40 &times; 0.5 / (10 &times; &radic;3/2) = 20 / (5&radic;3) = 4/&radic;3 &asymp; <strong>2.31 s</strong><br><br>
+            <strong>Range on Incline:</strong><br>
+            R = 2u&sup2; sin(&alpha; &minus; &beta;) cos&alpha; / (g cos&sup2;&beta;)<br>
+            R = 2(400) &times; sin 30&deg; &times; cos 60&deg; / (10 &times; cos&sup2; 30&deg;)<br>
+            R = 800 &times; 0.5 &times; 0.5 / (10 &times; 0.75) = 200 / 7.5 &asymp; <strong>26.67 m</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 10: Circular Motion -->
+    <!-- ============================== -->
+    <div class="theory-section" id="circular-motion">
+      <h2>10. Circular Motion</h2>
+
+      <p><strong>Circular motion</strong> is the motion of a body along a circular path at a constant distance from a fixed point called the <strong>center</strong>. The velocity is always <strong>tangent</strong> to the circle.</p>
+
+      <p>In <strong>Uniform Circular Motion (UCM)</strong>, speed remains constant but <strong>velocity direction changes continuously</strong>. This means the particle is accelerated even though its speed is constant. The acceleration is directed toward the center &mdash; <strong>centripetal acceleration</strong>.</p>
+
+      <h3>Fundamental Quantities</h3>
+
+      <div class="formula-box">
+        Angular velocity: &omega; = d&theta;/dt = v/r &nbsp;(rad/s)<br>
+        Period: T = 2&pi;/&omega; = 2&pi;r/v<br>
+        Frequency: f = 1/T = &omega;/(2&pi;) &nbsp;(Hz)<br>
+        Linear velocity: v = r&omega;<br>
+        Centripetal acceleration: a<sub>c</sub> = v&sup2;/r = &omega;&sup2;r &nbsp;(toward center)
+      </div>
+
+      <h3>Position and Velocity in UCM</h3>
+
+      <div class="formula-box">
+        Position: <strong>r</strong>(t) = r cos(&omega;t) <strong>&icirc;</strong> + r sin(&omega;t) <strong>&jcirc;</strong><br>
+        Velocity: <strong>v</strong>(t) = &minus;r&omega; sin(&omega;t) <strong>&icirc;</strong> + r&omega; cos(&omega;t) <strong>&jcirc;</strong><br>
+        Speed: |<strong>v</strong>| = r&omega; (constant)<br>
+        Acceleration: <strong>a</strong>(t) = &minus;&omega;&sup2;<strong>r</strong>(t) &nbsp;(toward center)
+      </div>
+
+      <h3>Important Points for JEE</h3>
+      <ul>
+        <li>In UCM, speed is constant but velocity changes direction &mdash; the motion is <strong>accelerated</strong>.</li>
+        <li>v&sup2; = u&sup2; + 2as <strong>cannot</strong> be used directly for circular motion (acceleration direction keeps changing).</li>
+        <li>Centripetal acceleration is always <strong>perpendicular to velocity</strong> &mdash; it changes direction, not magnitude.</li>
+        <li>Angular displacement in time t: &theta; = &omega;t (for uniform circular motion).</li>
+      </ul>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 400" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Uniform Circular Motion: particle on circle with velocity tangent, centripetal acceleration toward center, angle theta</title>
+          <defs>
+            <marker id="arrow-cm" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-primary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-cm-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-accent)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-cm-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-secondary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+          </defs>
+          <rect width="500" height="400" fill="var(--bg-secondary)" rx="8"/>
+          <circle cx="250" cy="200" r="140" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <circle cx="250" cy="200" r="4" fill="var(--text-primary)"/>
+          <text x="255" y="218" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">O</text>
+          <line x1="250" y1="200" x2="400" y2="200" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="3,3"/>
+          <circle cx="349" cy="101" r="7" fill="var(--color-primary)"/>
+          <text x="358" y="97" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">P</text>
+          <line x1="250" y1="200" x2="345" y2="105" stroke="var(--text-primary)" stroke-width="2"/>
+          <text x="280" y="165" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="13">r</text>
+          <path d="M 290,200 A 40,40 0 0,0 278,172" fill="none" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <text x="292" y="188" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="13">&theta;</text>
+          <line x1="349" y1="101" x2="419" y2="30" stroke="var(--color-accent)" stroke-width="2.5" marker-end="url(#arrow-cm-green)"/>
+          <text x="400" y="48" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">v</text>
+          <line x1="345" y1="105" x2="290" y2="158" stroke="var(--color-primary)" stroke-width="2.5" marker-end="url(#arrow-cm)"/>
+          <text x="295" y="145" fill="var(--color-primary)" font-family="Inter, sans-serif" font-size="13" font-weight="bold">a<tspan baseline-shift="sub" font-size="10">c</tspan></text>
+          <path d="M 390,195 A 140,140 0 0,0 355,105" fill="none" stroke="var(--color-secondary)" stroke-width="2" marker-end="url(#arrow-cm-purple)"/>
+          <text x="395" y="150" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="13" font-weight="bold">&omega;</text>
+          <text x="155" y="375" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12">v &perp; r &nbsp;&nbsp;|&nbsp;&nbsp; a<tspan baseline-shift="sub" font-size="9">c</tspan> = v&sup2;/r toward O</text>
+        </svg>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 15</div>
+        <p>A particle moves in a circle of radius 2 m with a constant angular velocity of 3 rad/s. Find the linear speed, centripetal acceleration, period, and frequency.</p>
+        <div class="solution">
+          <p>
+            <strong>Given:</strong> r = 2 m, &omega; = 3 rad/s<br><br>
+            <strong>Linear speed:</strong> v = r&omega; = 2 &times; 3 = <strong>6 m/s</strong><br><br>
+            <strong>Centripetal acceleration:</strong> a<sub>c</sub> = v&sup2;/r = 36/2 = <strong>18 m/s&sup2;</strong><br>
+            (Also: a<sub>c</sub> = &omega;&sup2;r = 9 &times; 2 = 18 m/s&sup2; &checkmark;)<br><br>
+            <strong>Period:</strong> T = 2&pi;/&omega; = 2&pi;/3 &asymp; <strong>2.09 s</strong><br><br>
+            <strong>Frequency:</strong> f = &omega;/(2&pi;) = 3/(2&pi;) &asymp; <strong>0.48 Hz</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 11: Non-Uniform Circular Motion -->
+    <!-- ============================== -->
+    <div class="theory-section" id="non-uniform-circular-motion">
+      <h2>11. Non-Uniform Circular Motion</h2>
+
+      <p>When a particle moves along a circular path with <strong>changing speed</strong>, both the magnitude and direction of velocity change, resulting in <strong>two components of acceleration</strong>:</p>
+
+      <ul>
+        <li><strong>Radial (centripetal) acceleration a<sub>r</sub></strong>: directed toward the center, changes the <strong>direction</strong> of velocity.</li>
+        <li><strong>Tangential acceleration a<sub>t</sub></strong>: along the tangent, changes the <strong>speed</strong>.</li>
+      </ul>
+
+      <h3>Key Formulas</h3>
+
+      <div class="formula-box">
+        Radial acceleration: a<sub>r</sub> = v&sup2;/r &nbsp;(toward center)<br>
+        Tangential acceleration: a<sub>t</sub> = dv/dt &nbsp;(along tangent)<br>
+        Net acceleration: a = &radic;(a<sub>r</sub>&sup2; + a<sub>t</sub>&sup2;)<br>
+        Angle of net acceleration with radius: tan&alpha; = a<sub>t</sub>/a<sub>r</sub>
+      </div>
+
+      <h3>Important Points</h3>
+      <ul>
+        <li>Speed <strong>increasing</strong>: a<sub>t</sub> is in the direction of velocity.</li>
+        <li>Speed <strong>decreasing</strong>: a<sub>t</sub> is opposite to velocity.</li>
+        <li>Centripetal acceleration is <strong>always present</strong> and <strong>always toward the center</strong>.</li>
+        <li>Tangential acceleration is present <strong>only when speed changes</strong>.</li>
+        <li>At max/min speed: a<sub>t</sub> = 0, only centripetal remains.</li>
+        <li>Since a<sub>r</sub> &perp; a<sub>t</sub>, net acceleration uses the Pythagorean theorem.</li>
+      </ul>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 500 400" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Non-Uniform Circular Motion: radial, tangential, and net acceleration vectors with right angle between components</title>
+          <defs>
+            <marker id="arrow-nu" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-primary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-nu-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-accent)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-nu-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-secondary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+          </defs>
+          <rect width="500" height="400" fill="var(--bg-secondary)" rx="8"/>
+          <circle cx="230" cy="210" r="140" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <circle cx="230" cy="210" r="4" fill="var(--text-primary)"/>
+          <text x="215" y="228" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">O</text>
+          <circle cx="300" cy="89" r="7" fill="var(--color-primary)"/>
+          <text x="312" y="85" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">P</text>
+          <line x1="230" y1="210" x2="296" y2="93" stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="297" y1="92" x2="248" y2="170" stroke="var(--color-primary)" stroke-width="3" marker-end="url(#arrow-nu)"/>
+          <text x="250" y="135" fill="var(--color-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">a<tspan baseline-shift="sub" font-size="10">r</tspan></text>
+          <line x1="300" y1="89" x2="380" y2="42" stroke="var(--color-accent)" stroke-width="3" marker-end="url(#arrow-nu-green)"/>
+          <text x="370" y="35" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">a<tspan baseline-shift="sub" font-size="10">t</tspan></text>
+          <line x1="300" y1="89" x2="331" y2="120" stroke="var(--color-secondary)" stroke-width="3" marker-end="url(#arrow-nu-purple)"/>
+          <text x="338" y="120" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">a</text>
+          <path d="M 292,96 L 285,89 L 292,82" fill="none" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <rect x="30" y="340" width="12" height="12" fill="var(--color-primary)" rx="2"/>
+          <text x="48" y="351" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12">a<tspan baseline-shift="sub" font-size="9">r</tspan> = v&sup2;/r (radial)</text>
+          <rect x="190" y="340" width="12" height="12" fill="var(--color-accent)" rx="2"/>
+          <text x="208" y="351" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12">a<tspan baseline-shift="sub" font-size="9">t</tspan> = dv/dt (tangential)</text>
+          <rect x="370" y="340" width="12" height="12" fill="var(--color-secondary)" rx="2"/>
+          <text x="388" y="351" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12">a (net)</text>
+          <text x="130" y="380" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="11">tan&alpha; = a<tspan baseline-shift="sub" font-size="8">t</tspan>/a<tspan baseline-shift="sub" font-size="8">r</tspan> &nbsp;&nbsp;|&nbsp;&nbsp; a = &radic;(a<tspan baseline-shift="sub" font-size="8">r</tspan>&sup2; + a<tspan baseline-shift="sub" font-size="8">t</tspan>&sup2;)</text>
+        </svg>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Solved Example 16</div>
+        <p>A particle moves in a circle of radius 4 m. At a certain instant, its speed is 8 m/s and is increasing at 6 m/s&sup2;. Find a<sub>r</sub>, a<sub>t</sub>, net acceleration, and the angle of the net acceleration with the radius.</p>
+        <div class="solution">
+          <p>
+            <strong>Given:</strong> r = 4 m, v = 8 m/s, dv/dt = 6 m/s&sup2;<br><br>
+            <strong>Radial acceleration:</strong> a<sub>r</sub> = v&sup2;/r = 64/4 = <strong>16 m/s&sup2;</strong><br><br>
+            <strong>Tangential acceleration:</strong> a<sub>t</sub> = <strong>6 m/s&sup2;</strong><br><br>
+            <strong>Net acceleration:</strong> a = &radic;(16&sup2; + 6&sup2;) = &radic;(256 + 36) = &radic;292 &asymp; <strong>17.09 m/s&sup2;</strong><br><br>
+            <strong>Angle with radius:</strong> tan&alpha; = 6/16 = 3/8, &alpha; = tan<sup>&minus;1</sup>(3/8) &asymp; <strong>20.56&deg;</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 12: Relative Motion -->
     <!-- ============================== -->
     <div class="theory-section" id="relative-motion">
-      <h2>7. Relative Motion</h2>
+      <h2>12. Relative Motion</h2>
 
-      <p>
-        Motion is always described with respect to a <strong>frame of reference</strong>. The velocity of object A as observed from (or relative to) object B is called the <strong>relative velocity</strong> of A with respect to B. This concept is fundamental in solving problems where multiple objects are in motion simultaneously.
-      </p>
+      <p>The velocity of an object is always measured with respect to a <strong>frame of reference</strong>. The <strong>relative velocity</strong> of object A with respect to object B is:</p>
+
+      <div class="formula-box">
+        <strong>v</strong><sub>AB</sub> = <strong>v</strong><sub>A</sub> &minus; <strong>v</strong><sub>B</sub><br>
+        Property: <strong>v</strong><sub>AB</sub> = &minus;<strong>v</strong><sub>BA</sub>
+      </div>
 
       <h3>Relative Velocity in 1-D</h3>
-      <p>
-        If two objects A and B move along the same straight line with velocities v<sub>A</sub> and v<sub>B</sub> respectively, the velocity of A relative to B is:
-      </p>
+      <p>If two objects A and B move along the same straight line with velocities v<sub>A</sub> and v<sub>B</sub>:</p>
       <div class="formula-box">
-        v<sub>AB</sub> = v<sub>A</sub> &minus; v<sub>B</sub><br><br>
-        If they move in the same direction: |v<sub>AB</sub>| = |v<sub>A</sub> &minus; v<sub>B</sub>|<br>
-        If they move in opposite directions: |v<sub>AB</sub>| = |v<sub>A</sub>| + |v<sub>B</sub>| &nbsp; (approach speed)
+        Same direction: |v<sub>AB</sub>| = |v<sub>A</sub> &minus; v<sub>B</sub>|<br>
+        Opposite directions: |v<sub>AB</sub>| = |v<sub>A</sub>| + |v<sub>B</sub>| &nbsp;(approach speed)
       </div>
-      <p>
-        When two trains of lengths L<sub>1</sub> and L<sub>2</sub> pass each other, the total distance to be covered is L<sub>1</sub> + L<sub>2</sub>. The time depends on whether they are moving in the same or opposite directions, which determines the relative speed.
-      </p>
 
       <h3>Relative Velocity in 2-D</h3>
-      <p>
-        In two dimensions, the relative velocity is found by vector subtraction:
-      </p>
       <div class="formula-box">
-        <strong>v</strong><sub>AB</sub> = <strong>v</strong><sub>A</sub> &minus; <strong>v</strong><sub>B</sub><br><br>
         |<strong>v</strong><sub>AB</sub>| = &radic;(v<sub>A</sub>&sup2; + v<sub>B</sub>&sup2; &minus; 2 v<sub>A</sub> v<sub>B</sub> cos&theta;)<br>
         where &theta; is the angle between <strong>v</strong><sub>A</sub> and <strong>v</strong><sub>B</sub>
       </div>
 
       <h3>Rain-Man Problem</h3>
-      <p>
-        A classic problem type in relative motion. Rain falls vertically downward with velocity <strong>v</strong><sub>R</sub> and a man walks horizontally with velocity <strong>v</strong><sub>M</sub>. The velocity of rain as seen by the man (relative velocity) is:
-      </p>
+      <p>Rain falls vertically with velocity <strong>v</strong><sub>R</sub> and a man moves horizontally with velocity <strong>v</strong><sub>M</sub>:</p>
       <div class="formula-box">
-        <strong>v</strong><sub>RM</sub> = <strong>v</strong><sub>R</sub> &minus; <strong>v</strong><sub>M</sub><br><br>
+        <strong>v</strong><sub>RM</sub> = <strong>v</strong><sub>R</sub> &minus; <strong>v</strong><sub>M</sub><br>
         |<strong>v</strong><sub>RM</sub>| = &radic;(v<sub>R</sub>&sup2; + v<sub>M</sub>&sup2;)<br>
         Angle with vertical: tan&alpha; = v<sub>M</sub> / v<sub>R</sub>
       </div>
-      <p>
-        The man must tilt his umbrella at angle &alpha; from the vertical (in the direction of his motion) to stay dry. If the man runs faster, the rain appears to come more from the front; if he stands still, the rain appears perfectly vertical.
-      </p>
+      <p>The man must tilt his umbrella at angle &alpha; from the vertical (in the direction of his motion) to stay dry.</p>
+
+      <div style="margin: 20px auto; max-width: 500px;">
+        <svg viewBox="0 0 400 350" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+          <title>Rain-Man Problem: Vector triangle showing rain velocity, man velocity, and relative velocity</title>
+          <defs>
+            <marker id="arrow-rm" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-primary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-rm-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-accent)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-rm-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-secondary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+          </defs>
+          <rect width="400" height="350" fill="var(--bg-secondary)" rx="8"/>
+          <text x="200" y="30" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Rain-Man Vector Triangle</text>
+          <circle cx="200" cy="70" r="4" fill="var(--text-primary)"/>
+          <line x1="200" y1="70" x2="200" y2="250" stroke="var(--color-primary)" stroke-width="3" marker-end="url(#arrow-rm)"/>
+          <text x="210" y="165" fill="var(--color-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">v<tspan baseline-shift="sub" font-size="10">R</tspan></text>
+          <line x1="200" y1="255" x2="100" y2="255" stroke="var(--color-accent)" stroke-width="3" marker-end="url(#arrow-rm-green)"/>
+          <text x="140" y="278" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">&minus;v<tspan baseline-shift="sub" font-size="10">M</tspan></text>
+          <line x1="200" y1="70" x2="100" y2="255" stroke="var(--color-secondary)" stroke-width="3" marker-end="url(#arrow-rm-purple)"/>
+          <text x="120" y="165" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">v<tspan baseline-shift="sub" font-size="10">RM</tspan></text>
+          <path d="M 200,110 A 40,40 0 0,0 185,118" fill="none" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <text x="178" y="112" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="13">&theta;</text>
+          <rect x="100" y="243" width="10" height="10" fill="none" stroke="var(--text-primary)" stroke-width="1.2"/>
+          <text x="200" y="310" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">v<tspan baseline-shift="sub" font-size="9">RM</tspan> = v<tspan baseline-shift="sub" font-size="9">R</tspan> &minus; v<tspan baseline-shift="sub" font-size="9">M</tspan></text>
+          <text x="200" y="330" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">tan&theta; = v<tspan baseline-shift="sub" font-size="9">M</tspan>/v<tspan baseline-shift="sub" font-size="9">R</tspan></text>
+        </svg>
+      </div>
 
       <h3>River-Boat Problem</h3>
-      <p>
-        When a boat tries to cross a river flowing with velocity <strong>v</strong><sub>r</sub>, and the boat can move with velocity <strong>v</strong><sub>b</sub> in still water, there are two important cases:
-      </p>
-      <p>
-        <strong>Case 1: Shortest path (straight across).</strong> The boat must aim upstream at an angle such that the river's current component is exactly cancelled. This requires v<sub>b</sub> > v<sub>r</sub>.
-      </p>
+      <p>River of width <strong>d</strong>, current velocity <strong>v<sub>r</sub></strong>, boat speed <strong>v<sub>b</sub></strong> in still water:</p>
+
+      <p><strong>Case 1: Shortest Time</strong> &mdash; Point the boat straight across.</p>
       <div class="formula-box">
-        Shortest path: Boat aims at angle &theta; upstream where sin&theta; = v<sub>r</sub>/v<sub>b</sub><br>
-        Effective speed across river = &radic;(v<sub>b</sub>&sup2; &minus; v<sub>r</sub>&sup2;)<br>
-        Time to cross = d / &radic;(v<sub>b</sub>&sup2; &minus; v<sub>r</sub>&sup2;) &nbsp; (d = river width)
-      </div>
-      <p>
-        <strong>Case 2: Shortest time.</strong> The boat aims straight across the river (perpendicular to the bank). It will be carried downstream by the current.
-      </p>
-      <div class="formula-box">
-        Shortest time: Boat aims perpendicular to the bank<br>
-        Time to cross = d / v<sub>b</sub><br>
+        Time = d / v<sub>b</sub><br>
         Drift downstream = v<sub>r</sub> &times; (d / v<sub>b</sub>)
       </div>
 
+      <p><strong>Case 2: Shortest Path (straight across)</strong> &mdash; Aim upstream. Requires v<sub>b</sub> &gt; v<sub>r</sub>.</p>
+      <div class="formula-box">
+        sin&theta; = v<sub>r</sub>/v<sub>b</sub> &nbsp;(angle upstream)<br>
+        Effective speed = &radic;(v<sub>b</sub>&sup2; &minus; v<sub>r</sub>&sup2;)<br>
+        Time = d / &radic;(v<sub>b</sub>&sup2; &minus; v<sub>r</sub>&sup2;)
+      </div>
+
+      <div style="margin: 20px auto; max-width: 600px;">
+        <svg viewBox="0 0 600 400" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 600px;">
+          <title>River-Boat Problem: top view showing shortest time path (with drift) and shortest path (angled upstream)</title>
+          <defs>
+            <marker id="arrow-rb" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-primary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-rb-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-accent)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-rb-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--color-secondary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+            <marker id="arrow-rb-dim" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" fill="var(--text-secondary)"><polygon points="0 0, 8 3, 0 6"/></marker>
+          </defs>
+          <rect width="600" height="400" fill="var(--bg-secondary)" rx="8"/>
+          <rect x="80" y="60" width="440" height="260" fill="var(--color-primary)" opacity="0.06" rx="4"/>
+          <line x1="80" y1="60" x2="80" y2="320" stroke="var(--text-primary)" stroke-width="2.5"/>
+          <line x1="520" y1="60" x2="520" y2="320" stroke="var(--text-primary)" stroke-width="2.5"/>
+          <text x="55" y="50" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">Bank A</text>
+          <text x="545" y="50" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">Bank B</text>
+          <line x1="80" y1="340" x2="520" y2="340" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <line x1="80" y1="335" x2="80" y2="345" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <line x1="520" y1="335" x2="520" y2="345" stroke="var(--text-primary)" stroke-width="1.5"/>
+          <text x="300" y="358" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="14" font-weight="bold">d</text>
+          <line x1="200" y1="80" x2="200" y2="130" stroke="var(--text-secondary)" stroke-width="1.5" marker-end="url(#arrow-rb-dim)"/>
+          <line x1="300" y1="80" x2="300" y2="130" stroke="var(--text-secondary)" stroke-width="1.5" marker-end="url(#arrow-rb-dim)"/>
+          <line x1="400" y1="80" x2="400" y2="130" stroke="var(--text-secondary)" stroke-width="1.5" marker-end="url(#arrow-rb-dim)"/>
+          <text x="310" y="115" fill="var(--text-secondary)" font-family="Inter, sans-serif" font-size="12">v<tspan baseline-shift="sub" font-size="9">r</tspan> (current)</text>
+          <circle cx="80" cy="190" r="6" fill="var(--color-primary)"/>
+          <text x="50" y="195" fill="var(--text-primary)" font-family="Inter, sans-serif" font-size="12" font-weight="bold">Start</text>
+          <line x1="80" y1="190" x2="520" y2="290" stroke="var(--color-accent)" stroke-width="2.5" stroke-dasharray="8,4"/>
+          <circle cx="520" cy="290" r="5" fill="var(--color-accent)"/>
+          <line x1="525" y1="190" x2="525" y2="290" stroke="var(--color-accent)" stroke-width="1.5"/>
+          <line x1="522" y1="190" x2="528" y2="190" stroke="var(--color-accent)" stroke-width="1.5"/>
+          <line x1="522" y1="290" x2="528" y2="290" stroke="var(--color-accent)" stroke-width="1.5"/>
+          <text x="540" y="245" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="12" font-weight="bold">drift</text>
+          <text x="310" y="270" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="12" font-weight="bold" transform="rotate(12, 310, 270)">Shortest Time</text>
+          <line x1="80" y1="190" x2="520" y2="190" stroke="var(--color-secondary)" stroke-width="2.5"/>
+          <circle cx="520" cy="190" r="5" fill="var(--color-secondary)"/>
+          <line x1="80" y1="190" x2="180" y2="150" stroke="var(--color-secondary)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-rb-purple)"/>
+          <text x="115" y="155" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="11">v<tspan baseline-shift="sub" font-size="8">b</tspan> (aim)</text>
+          <text x="310" y="183" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="12" font-weight="bold">Shortest Path</text>
+          <text x="100" y="385" fill="var(--color-accent)" font-family="Inter, sans-serif" font-size="11">- - - Shortest time: t = d/v<tspan baseline-shift="sub" font-size="8">b</tspan></text>
+          <text x="340" y="385" fill="var(--color-secondary)" font-family="Inter, sans-serif" font-size="11">&mdash; Shortest path: t = d/&radic;(v<tspan baseline-shift="sub" font-size="8">b</tspan>&sup2; &minus; v<tspan baseline-shift="sub" font-size="8">r</tspan>&sup2;)</text>
+        </svg>
+      </div>
+
       <div class="example-box">
-        <div class="ex-label">Solved Example 13</div>
-        <p>
-          Rain falls vertically with a speed of 30 m/s. A man rides a bicycle at 10 m/s. At what angle with the vertical should he hold his umbrella to keep dry?
-        </p>
+        <div class="ex-label">Solved Example 17</div>
+        <p>Rain is falling vertically downward at 30 m/s. A man walks horizontally at 10 m/s. At what angle should he hold his umbrella?</p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
-            v<sub>R</sub> = 30 m/s (downward), v<sub>M</sub> = 10 m/s (horizontal)<br><br>
-            The relative velocity of rain with respect to the man makes an angle &alpha; with the vertical where:<br>
-            tan&alpha; = v<sub>M</sub> / v<sub>R</sub> = 10/30 = 1/3<br>
-            &alpha; = tan<sup>&minus;1</sup>(1/3) &asymp; <strong>18.43&deg;</strong><br><br>
-            He must hold the umbrella at about 18.43&deg; from the vertical, tilted towards the direction of his motion.
+            <strong>Given:</strong> v<sub>R</sub> = 30 m/s, v<sub>M</sub> = 10 m/s<br><br>
+            |v<sub>RM</sub>| = &radic;(900 + 100) = &radic;1000 = 10&radic;10 &asymp; 31.62 m/s<br><br>
+            tan&theta; = v<sub>M</sub>/v<sub>R</sub> = 10/30 = 1/3<br>
+            &theta; = tan<sup>&minus;1</sup>(1/3) &asymp; <strong>18.43&deg; from the vertical</strong> (toward his direction of motion)
           </p>
         </div>
       </div>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 14</div>
-        <p>
-          A river 400 m wide flows at 3 m/s. A boat that can move at 5 m/s in still water wants to cross the river. Find: (a) the shortest time to cross and the drift, and (b) the time to cross along the shortest path.
-        </p>
+        <div class="ex-label">Solved Example 18</div>
+        <p>A river is 400 m wide with a current of 3 m/s. A boat can travel at 5 m/s in still water. Find: (a) the shortest time to cross and the drift, (b) the time to cross by the shortest path.</p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
-            d = 400 m, v<sub>r</sub> = 3 m/s, v<sub>b</sub> = 5 m/s<br><br>
-            <em>(a) Shortest time:</em><br>
-            Time = d / v<sub>b</sub> = 400/5 = <strong>80 s</strong><br>
+            <strong>Given:</strong> d = 400 m, v<sub>r</sub> = 3 m/s, v<sub>b</sub> = 5 m/s<br><br>
+            <strong>(a) Shortest time:</strong><br>
+            t = d/v<sub>b</sub> = 400/5 = <strong>80 s</strong><br>
             Drift = v<sub>r</sub> &times; t = 3 &times; 80 = <strong>240 m</strong><br><br>
-            <em>(b) Shortest path (straight across):</em><br>
-            Since v<sub>b</sub> > v<sub>r</sub>, the boat can go straight across by aiming upstream.<br>
-            sin&theta; = v<sub>r</sub>/v<sub>b</sub> = 3/5, so &theta; = 37&deg; upstream of the perpendicular.<br>
-            Effective speed = &radic;(v<sub>b</sub>&sup2; &minus; v<sub>r</sub>&sup2;) = &radic;(25 &minus; 9) = &radic;16 = 4 m/s<br>
-            Time = d / 4 = 400/4 = <strong>100 s</strong>
+            <strong>(b) Shortest path:</strong><br>
+            v<sub>eff</sub> = &radic;(v<sub>b</sub>&sup2; &minus; v<sub>r</sub>&sup2;) = &radic;(25 &minus; 9) = &radic;16 = 4 m/s<br>
+            t = d/v<sub>eff</sub> = 400/4 = <strong>100 s</strong>
           </p>
         </div>
       </div>

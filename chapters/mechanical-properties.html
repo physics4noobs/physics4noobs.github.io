@@ -96,10 +96,23 @@
       <div class="ch-hero">
         <h1>Mechanical Properties of Solids</h1>
         <span class="ch-meta">Chapter 06 &mdash; Grade XI &mdash; Properties of Matter</span>
+        <div class="ch-nav">
+          <a href="#elasticity">Elasticity</a>
+          <a href="#stress-strain">Stress &amp; Strain</a>
+          <a href="#hookes-law">Hooke's Law</a>
+          <a href="#elastic-moduli">Elastic Moduli</a>
+          <a href="#poissons-ratio">Poisson's Ratio</a>
+          <a href="#elastic-pe">Elastic PE</a>
+          <a href="#applications">Applications</a>
+          <a href="#torsion">Torsion</a>
+          <a href="#thermal-expansion">Thermal Expansion</a>
+          <a href="#thermal-applications">Thermal Applications</a>
+          <a href="#stress-strain-curve">Stress-Strain Curve</a>
+        </div>
       </div>
 
       <!-- 1. Elasticity & Plasticity -->
-      <div class="theory-section">
+      <div class="theory-section" id="elasticity">
         <h2>1. Elasticity &amp; Plasticity</h2>
         <p>
           When an external force (called a deforming force) is applied to a body, the body undergoes
@@ -121,7 +134,7 @@
       </div>
 
       <!-- 2. Stress & Strain -->
-      <div class="theory-section">
+      <div class="theory-section" id="stress-strain">
         <h2>2. Stress &amp; Strain</h2>
 
         <h3>Stress</h3>
@@ -157,7 +170,7 @@
       </div>
 
       <!-- 3. Hooke's Law -->
-      <div class="theory-section">
+      <div class="theory-section" id="hookes-law">
         <h2>3. Hooke&rsquo;s Law</h2>
         <p>
           Hooke&rsquo;s Law states that within the elastic limit, stress is directly proportional to
@@ -180,7 +193,7 @@
       </div>
 
       <!-- 4. Elastic Moduli -->
-      <div class="theory-section">
+      <div class="theory-section" id="elastic-moduli">
         <h2>4. Elastic Moduli</h2>
 
         <h3>Young&rsquo;s Modulus (Y)</h3>
@@ -225,7 +238,7 @@
       </div>
 
       <!-- 5. Poisson's Ratio -->
-      <div class="theory-section">
+      <div class="theory-section" id="poissons-ratio">
         <h2>5. Poisson&rsquo;s Ratio</h2>
         <p>
           When a rod is stretched along its length, it contracts in the lateral (perpendicular)
@@ -253,7 +266,7 @@
       </div>
 
       <!-- 6. Elastic PE -->
-      <div class="theory-section">
+      <div class="theory-section" id="elastic-pe">
         <h2>6. Elastic Potential Energy</h2>
         <p>
           When a body is deformed within the elastic limit, work is done by the deforming force and
@@ -280,9 +293,292 @@
         </p>
       </div>
 
-      <!-- 7. Stress-Strain Curve -->
-      <div class="theory-section">
-        <h2>7. Stress-Strain Curve</h2>
+      <!-- 7. Applications of Elasticity -->
+      <div class="theory-section" id="applications">
+        <h2>7. Applications of Elasticity</h2>
+
+        <h3>Elongation of a Wire Under Its Own Weight</h3>
+        <p>
+          For a uniform wire or rod of mass M, length l, cross-sectional area A, and Young&rsquo;s
+          modulus Y hanging vertically, the stress varies linearly from Mg/A at the support to zero
+          at the free end. This is equivalent to a concentrated load of M/2 acting at the center.
+        </p>
+        <div class="formula-box">
+          &Delta;l = Mgl / (2AY) = (&rho; g l&sup2;) / (2Y)
+        </div>
+        <p>
+          where &rho; is the density of the material. The elongation is proportional to the square
+          of the length.
+        </p>
+
+        <h3>Thermal Stress in Constrained Rods</h3>
+        <p>
+          When a rod is clamped between two rigid supports and the temperature changes by &Delta;T,
+          the rod tries to expand or contract but cannot. A thermal stress is developed that opposes
+          the thermal deformation.
+        </p>
+        <div class="formula-box">
+          &sigma;<sub>thermal</sub> = Y &times; &alpha; &times; &Delta;T<br><br>
+          F<sub>thermal</sub> = Y &times; A &times; &alpha; &times; &Delta;T
+        </div>
+        <p>
+          If temperature increases, the stress is compressive (the material tries to expand but is prevented).
+          If temperature decreases, the stress is tensile (the material tries to contract but is prevented).
+        </p>
+
+        <h3>Wire Supporting a Load at Angle</h3>
+        <p>
+          When a wire of length 2l and radius r is stretched taut between two fixed points and a
+          mass m is hung from the midpoint, producing a vertical depression d:
+        </p>
+        <div class="formula-box">
+          d = l &times; (mg / (&pi;r&sup2;Y))&sup;(1/3)
+        </div>
+
+        <h3>Natural Length from Two Tension Measurements</h3>
+        <p>
+          If a wire has length l<sub>1</sub> at tension T<sub>1</sub> and length l<sub>2</sub> at
+          tension T<sub>2</sub>, the natural (unstretched) length can be determined:
+        </p>
+        <div class="formula-box">
+          l<sub>0</sub> = (l<sub>1</sub> T<sub>2</sub> &minus; l<sub>2</sub> T<sub>1</sub>) / (T<sub>2</sub> &minus; T<sub>1</sub>)
+        </div>
+
+        <h3>Two Wires Supporting a Rod</h3>
+        <p>
+          When a rod is supported by two wires of different materials:
+        </p>
+        <ul>
+          <li><strong>Equal stress condition:</strong> &sigma;<sub>1</sub> = &sigma;<sub>2</sub>, giving F<sub>1</sub>/A<sub>1</sub> = F<sub>2</sub>/A<sub>2</sub></li>
+          <li><strong>Equal strain condition:</strong> &epsilon;<sub>1</sub> = &epsilon;<sub>2</sub>, giving F<sub>1</sub>/(A<sub>1</sub>Y<sub>1</sub>) = F<sub>2</sub>/(A<sub>2</sub>Y<sub>2</sub>)</li>
+        </ul>
+      </div>
+
+      <!-- 8. Torsion of a Cylinder -->
+      <div class="theory-section" id="torsion">
+        <h2>8. Torsion of a Cylinder</h2>
+        <p>
+          When a cylinder (or wire) is fixed at one end and twisted at the other end by an angle &theta;,
+          it exerts a restoring torque opposing the twist. This restoring torque is directly proportional
+          to the angle of twist and is analogous to the restoring force in a spring.
+        </p>
+
+        <h3>Restoring Torque</h3>
+        <div class="formula-box">
+          &tau; = (&pi; &eta; r&sup4;) / (2l) &times; &theta; = C &times; &theta;
+        </div>
+        <p>
+          where:
+        </p>
+        <ul>
+          <li>&eta; = modulus of rigidity (shear modulus)</li>
+          <li>r = radius of the cylinder</li>
+          <li>l = length of the cylinder</li>
+          <li>&theta; = angle of twist (in radians)</li>
+          <li>C = (&pi; &eta; r&sup4;) / (2l) is the <strong>torsional rigidity</strong></li>
+        </ul>
+
+        <h3>Hollow vs. Solid Shaft</h3>
+        <p>
+          A hollow shaft is stronger than a solid shaft of the same mass and material. For a hollow
+          shaft with outer radius r<sub>2</sub> and inner radius r<sub>1</sub>:
+        </p>
+        <div class="formula-box">
+          &tau; = (&pi; &eta; (r<sub>2</sub>&sup4; &minus; r<sub>1</sub>&sup4;)) / (2l) &times; &theta;
+        </div>
+        <p>
+          For equal volume of material, the hollow shaft requires more torque to produce the same twist,
+          making it more resistant to torsional deformation and more efficient for engineering applications.
+        </p>
+
+        <h3>Worked Example: Cylinder Twist</h3>
+        <p>
+          <strong>Example:</strong> A cylinder of length 1.5 m and diameter 4 cm is fixed at one end.
+          A tangential force of 4 &times; 10&sup5; N is applied at the other end (perpendicular to a radius).
+          Calculate the twist if the modulus of rigidity is 6 &times; 10&sup10; N/m&sup2;.
+        </p>
+        <p>
+          <strong>Solution:</strong><br>
+          Applied torque &tau; = F &times; r = 4 &times; 10&sup5; &times; 0.02 = 8 &times; 10&sup3; N&middot;m<br><br>
+          Equating to restoring torque:<br>
+          &theta; = (2l F) / (&pi; &eta; r&sup3;)<br>
+          &theta; = (2 &times; 1.5 &times; 4 &times; 10&sup5;) / (&pi; &times; 6 &times; 10&sup10; &times; (0.02)&sup3;)<br>
+          &theta; = (1.2 &times; 10&sup6;) / (1.508 &times; 10&sup6;) &approx; 0.796 radians (&asymp; 45.6&deg;)
+        </p>
+      </div>
+
+      <!-- 9. Thermal Expansion -->
+      <div class="theory-section" id="thermal-expansion">
+        <h2>9. Thermal Expansion</h2>
+        <p>
+          When a solid is heated, its length, surface area, and volume increase due to increased
+          oscillation of atoms about their equilibrium positions. Three coefficients describe this
+          expansion: &alpha; (linear), &beta; (superficial/areal), and &gamma; (volumetric/cubical).
+        </p>
+
+        <h3>Linear Expansion</h3>
+        <div class="formula-box">
+          l<sub>2</sub> = l<sub>1</sub>(1 + &alpha; &Delta;T)
+        </div>
+        <p>
+          where &alpha; is the coefficient of linear expansion and &Delta;T = T<sub>2</sub> &minus; T<sub>1</sub>.
+        </p>
+
+        <h3>Superficial (Areal) Expansion</h3>
+        <div class="formula-box">
+          A<sub>2</sub> = A<sub>1</sub>(1 + &beta; &Delta;T)
+        </div>
+        <p>
+          where &beta; is the coefficient of superficial expansion.
+        </p>
+
+        <h3>Volume (Cubical) Expansion</h3>
+        <div class="formula-box">
+          V<sub>2</sub> = V<sub>1</sub>(1 + &gamma; &Delta;T)
+        </div>
+        <p>
+          where &gamma; is the coefficient of cubical (volumetric) expansion.
+        </p>
+
+        <h3>Relation Between Coefficients</h3>
+        <div class="formula-box">
+          &beta; = 2&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; &gamma; = 3&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; 6&alpha; = 3&beta; = 2&gamma;
+        </div>
+        <p>
+          These relations hold for isotropic materials where expansion is uniform in all directions.
+        </p>
+
+        <h3>Density Change with Temperature</h3>
+        <p>
+          As temperature increases, volume increases but mass remains constant, so density decreases:
+        </p>
+        <div class="formula-box">
+          d<sub>2</sub> = d<sub>1</sub> / (1 + &gamma; &Delta;T)
+        </div>
+        <p>
+          For small values of &gamma; &Delta;T: d<sub>2</sub> &approx; d<sub>1</sub> (1 &minus; &gamma; &Delta;T)
+        </p>
+
+        <h3>Anomalous Expansion of Water</h3>
+        <p>
+          Water exhibits anomalous expansion: it contracts from 0&deg;C to 4&deg;C and expands above 4&deg;C.
+          The maximum density of water occurs at 4&deg;C. This unusual behavior has important ecological
+          consequences, allowing aquatic life to survive under ice in winter.
+        </p>
+
+        <h3>Coefficients Are Small But Important</h3>
+        <p>
+          Typical values: &alpha; &sim; 10<sup>&minus;5</sup> to 10<sup>&minus;6</sup> / &deg;C for solids.
+          Though small, these coefficients have significant engineering implications, especially in
+          precision instruments, structural design, and thermometer calibration.
+        </p>
+      </div>
+
+      <!-- 10. Thermal Expansion Applications -->
+      <div class="theory-section" id="thermal-applications">
+        <h2>10. Thermal Expansion Applications</h2>
+        <p>
+          Thermal expansion creates practical challenges and opportunities in engineering and everyday life.
+          Understanding these applications is essential for proper design and troubleshooting.
+        </p>
+
+        <h3>Heated Metallic Scale Calibration</h3>
+        <p>
+          When a metallic scale is heated, all markings expand proportionally. Each division becomes larger
+          than the true unit. This must be corrected when taking measurements with a heated scale:
+        </p>
+        <div class="formula-box">
+          Actual length = Reading &times; (1 + &alpha; &Delta;T)
+        </div>
+        <p>
+          A heated scale underestimates true length (reads less), while a cooled scale overestimates
+          (reads more).
+        </p>
+
+        <h3>Constant Length Difference Between Two Rods</h3>
+        <p>
+          For the difference in lengths of two rods to remain constant at all temperatures, their
+          expansions must compensate each other:
+        </p>
+        <div class="formula-box">
+          l<sub>1</sub> &times; &alpha;<sub>1</sub> = l<sub>2</sub> &times; &alpha;<sub>2</sub>
+        </div>
+        <p>
+          This principle is used in designing composite structures where different materials must
+          maintain precise dimensional relationships.
+        </p>
+
+        <h3>Pendulum Clock Temperature Effects</h3>
+        <p>
+          The time period of a simple pendulum is T = 2&pi;&radic;(l/g). When temperature rises by &Delta;T,
+          the pendulum length increases, so the time period increases and the clock runs slow (loses time):
+        </p>
+        <div class="formula-box">
+          &Delta;t = &frac12; &times; &alpha; &times; &Delta;T &times; 86400 seconds (per day)
+        </div>
+        <p>
+          If temperature rises: clock loses time (runs slow)<br>
+          If temperature falls: clock gains time (runs fast)<br>
+          This is why precision pendulum clocks require temperature compensation.
+        </p>
+
+        <h3>Bimetallic Strip Thermostats</h3>
+        <p>
+          A bimetallic strip consists of two strips of different metals (different &alpha; values) bonded
+          together. On heating, the strip bends toward the metal with the smaller &alpha; (since the other
+          metal expands more and forms the outer arc of the bend). This property is used in:
+        </p>
+        <ul>
+          <li>Automatic thermostats that turn heating/cooling on and off</li>
+          <li>Temperature-sensing devices</li>
+          <li>Thermal circuit breakers</li>
+        </ul>
+
+        <h3>Expansion of Liquids</h3>
+        <p>
+          Liquids expand only in volume (no linear or areal expansion). Two types of expansion coefficients
+          are defined:
+        </p>
+        <div class="formula-box">
+          &gamma;<sub>apparent</sub> = &gamma;<sub>liquid</sub> &minus; &gamma;<sub>vessel</sub><br><br>
+          &gamma;<sub>real</sub> = &gamma;<sub>apparent</sub> + &gamma;<sub>vessel</sub>
+        </div>
+        <p>
+          The apparent expansion is what we observe (the liquid level rise in the container), while the
+          real expansion is the actual expansion of the liquid itself. The vessel expands too, reducing
+          the observed volume change.
+        </p>
+
+        <h3>Liquid Overflow from Heated Container</h3>
+        <p>
+          When a container full of liquid is heated by &Delta;T, some liquid will overflow if the
+          container cannot expand enough to accommodate it:
+        </p>
+        <div class="formula-box">
+          Volume overflow = V &times; (&gamma;<sub>liquid</sub> &minus; &gamma;<sub>vessel</sub>) &times; &Delta;T
+        </div>
+
+        <h3>Worked Example: Mercury Overflow from Glass Flask</h3>
+        <p>
+          <strong>Example:</strong> A glass flask of volume 1000 cm&sup3; at 0&deg;C is filled completely with mercury.
+          When heated to 100&deg;C, 15.2 cm&sup3; of mercury overflows. If &gamma;<sub>Hg</sub> = 1.82 &times; 10<sup>&minus;4</sup>/&deg;C,
+          find the coefficient of linear expansion of glass.
+        </p>
+        <p>
+          <strong>Solution:</strong><br>
+          Mercury overflow = V (&gamma;<sub>Hg</sub> &minus; &gamma;<sub>glass</sub>) &Delta;T<br>
+          15.2 = 1000 (1.82 &times; 10<sup>&minus;4</sup> &minus; &gamma;<sub>glass</sub>) &times; 100<br><br>
+          15.2 / (1000 &times; 100) = 1.82 &times; 10<sup>&minus;4</sup> &minus; &gamma;<sub>glass</sub><br>
+          1.52 &times; 10<sup>&minus;4</sup> = 1.82 &times; 10<sup>&minus;4</sup> &minus; &gamma;<sub>glass</sub><br>
+          &gamma;<sub>glass</sub> = 3.0 &times; 10<sup>&minus;5</sup> / &deg;C<br><br>
+          Since &gamma; = 3&alpha;:<br>
+          &alpha;<sub>glass</sub> = &gamma; / 3 = 1.0 &times; 10<sup>&minus;5</sup> / &deg;C
+        </p>
+      </div>
+
+      <!-- 11. Stress-Strain Curve -->
+      <div class="theory-section" id="stress-strain-curve">
+        <h2>11. Stress-Strain Curve</h2>
         <p>
           The stress-strain curve is the most informative representation of a material&rsquo;s
           mechanical behaviour. For a typical ductile material (like mild steel), the curve exhibits
@@ -313,10 +609,20 @@
       <div class="theory-section">
         <h2>Key Formulas Summary</h2>
         <div class="formula-box">
+          <strong>Elasticity &amp; Stress-Strain:</strong><br>
           &sigma; = F/A &nbsp;&nbsp;|&nbsp;&nbsp; &epsilon; = &Delta;L/L &nbsp;&nbsp;|&nbsp;&nbsp; Stress = E &times; Strain<br>
           Y = &sigma;/&epsilon; = FL/A&Delta;L &nbsp;&nbsp;|&nbsp;&nbsp; B = &minus;V&Delta;P/&Delta;V &nbsp;&nbsp;|&nbsp;&nbsp; G = (F/A)/&theta;<br>
           U = &frac12; &times; &sigma; &times; &epsilon; &times; V = &frac12; &times; Y &times; &epsilon;&sup2; &times; V<br>
-          Y = 2G(1 + &sigma;<sub>P</sub>) &nbsp;&nbsp;|&nbsp;&nbsp; Y = 3B(1 &minus; 2&sigma;<sub>P</sub>)
+          Y = 2G(1 + &sigma;<sub>P</sub>) &nbsp;&nbsp;|&nbsp;&nbsp; Y = 3B(1 &minus; 2&sigma;<sub>P</sub>)<br><br>
+          <strong>Applications of Elasticity:</strong><br>
+          &Delta;l = Mgl/(2AY) &nbsp;&nbsp;|&nbsp;&nbsp; &sigma;<sub>thermal</sub> = Y&alpha;&Delta;T<br>
+          &tau; = (pi&eta;r&sup4;)/(2l) &times; &theta; &nbsp;&nbsp;|&nbsp;&nbsp; l<sub>0</sub> = (l<sub>1</sub>T<sub>2</sub> &minus; l<sub>2</sub>T<sub>1</sub>)/(T<sub>2</sub>&minus;T<sub>1</sub>)<br><br>
+          <strong>Thermal Expansion:</strong><br>
+          l<sub>2</sub> = l<sub>1</sub>(1 + &alpha;&Delta;T) &nbsp;&nbsp;|&nbsp;&nbsp; A<sub>2</sub> = A<sub>1</sub>(1 + &beta;&Delta;T) &nbsp;&nbsp;|&nbsp;&nbsp; V<sub>2</sub> = V<sub>1</sub>(1 + &gamma;&Delta;T)<br>
+          &beta; = 2&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; &gamma; = 3&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; d<sub>2</sub> = d<sub>1</sub>/(1 + &gamma;&Delta;T)<br>
+          Actual = Reading(1 + &alpha;&Delta;T) &nbsp;&nbsp;|&nbsp;&nbsp; l<sub>1</sub>&alpha;<sub>1</sub> = l<sub>2</sub>&alpha;<sub>2</sub><br>
+          &Delta;t = &frac12;&alpha;&Delta;T &times; 86400 s &nbsp;&nbsp;|&nbsp;&nbsp; &gamma;<sub>real</sub> = &gamma;<sub>apparent</sub> + &gamma;<sub>vessel</sub><br>
+          Overflow = V(&gamma;<sub>liq</sub> &minus; &gamma;<sub>vessel</sub>)&Delta;T
         </div>
       </div>
 
@@ -362,6 +668,50 @@
               &Delta;V = &minus;5 &times; 10<sup>&minus;8</sup> m&sup3; = &minus;0.05 mm&sup3;<br><br>
               The volume decreases by 5 &times; 10<sup>&minus;8</sup> m&sup3; (the negative sign
               indicates compression).
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 3</div>
+          <p>
+            An iron rod (Y = 2 &times; 10<sup>11</sup> Pa, &alpha; = 12 &times; 10<sup>&minus;6</sup> / &deg;C) of length 1 m
+            and cross-sectional area 1 cm&sup2; is heated from 20&deg;C to 120&deg;C while being held rigid.
+            Calculate (i) the thermal stress, and (ii) the compressive force.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Given: Y = 2 &times; 10<sup>11</sup> Pa, &alpha; = 12 &times; 10<sup>&minus;6</sup> / &deg;C,
+              &Delta;T = 100&deg;C, A = 1 cm&sup2; = 10<sup>&minus;4</sup> m&sup2;<br><br>
+              (i) Thermal stress:<br>
+              &sigma; = Y &times; &alpha; &times; &Delta;T<br>
+              &sigma; = 2 &times; 10<sup>11</sup> &times; 12 &times; 10<sup>&minus;6</sup> &times; 100<br>
+              &sigma; = 2.4 &times; 10<sup>8</sup> Pa<br><br>
+              (ii) Compressive force:<br>
+              F = &sigma; &times; A = 2.4 &times; 10<sup>8</sup> &times; 10<sup>&minus;4</sup><br>
+              F = 2.4 &times; 10<sup>4</sup> N = 24 kN
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 4</div>
+          <p>
+            A brass pendulum clock has a time period of 2 seconds at 20&deg;C. The coefficient of linear
+            expansion for brass is &alpha; = 18 &times; 10<sup>&minus;6</sup> / &deg;C. How much time does the clock
+            lose in one day if the temperature increases to 40&deg;C?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Given: T = 2 s at 20&deg;C, &alpha; = 18 &times; 10<sup>&minus;6</sup> / &deg;C, &Delta;T = 20&deg;C<br><br>
+              Time lost per day:<br>
+              &Delta;t = &frac12; &times; &alpha; &times; &Delta;T &times; 86400<br>
+              &Delta;t = &frac12; &times; 18 &times; 10<sup>&minus;6</sup> &times; 20 &times; 86400<br>
+              &Delta;t = &frac12; &times; 18 &times; 10<sup>&minus;6</sup> &times; 1.728 &times; 10<sup>6</sup><br>
+              &Delta;t = 15.55 seconds<br><br>
+              The clock loses approximately 15.55 seconds per day (runs slow).
             </p>
           </div>
         </div>

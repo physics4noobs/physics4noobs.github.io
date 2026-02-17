@@ -96,11 +96,32 @@
       <div class="ch-hero">
         <h1>Fluid Mechanics</h1>
         <span class="ch-meta">Chapter 07 &mdash; Grade XI &mdash; Properties of Matter</span>
+        <div class="ch-nav">
+          <a href="#pressure">Pressure</a>
+          <a href="#thrust">Thrust</a>
+          <a href="#pascals-law">Pascal's Law</a>
+          <a href="#archimedes">Archimedes</a>
+          <a href="#floating-bodies">Floating Bodies</a>
+          <a href="#continuity">Continuity</a>
+          <a href="#bernoulli">Bernoulli</a>
+          <a href="#venturi-meter">Venturi Meter</a>
+          <a href="#pitot-tube">Pitot Tube</a>
+          <a href="#efflux">Efflux</a>
+          <a href="#surface-tension">Surface Tension</a>
+          <a href="#angle-of-contact">Contact Angle</a>
+          <a href="#excess-pressure">Excess Pressure</a>
+          <a href="#capillarity">Capillarity</a>
+          <a href="#viscosity">Viscosity</a>
+          <a href="#reynolds-number">Reynolds Number</a>
+          <a href="#poiseuille">Poiseuille's Law</a>
+          <a href="#stokes-law">Stokes' Law</a>
+          <a href="#rotating-fluids">Rotating Fluids</a>
+        </div>
       </div>
 
-      <!-- 1. Pressure -->
-      <div class="theory-section">
-        <h2>1. Pressure</h2>
+      <!-- 1. Pressure in a Stationary Liquid -->
+      <div class="theory-section" id="pressure">
+        <h2>1. Pressure in a Stationary Liquid</h2>
         <p>
           Pressure is defined as the normal force acting per unit area of a surface. It is a scalar
           quantity (though force is a vector, pressure acts equally in all directions at a point in
@@ -122,9 +143,62 @@
         </ul>
       </div>
 
-      <!-- 2. Pascal's Law -->
-      <div class="theory-section">
-        <h2>2. Pascal&rsquo;s Law</h2>
+      <!-- 2. Thrust on a Surface -->
+      <div class="theory-section" id="thrust">
+        <h2>2. Thrust on a Surface</h2>
+        <p>
+          Thrust is the total force exerted by a fluid on a surface. For uniform pressure on a horizontal
+          surface (e.g., the bottom of a tank), thrust is simply the pressure multiplied by the area.
+          For non-uniform pressure (e.g., on a vertical wall), we must integrate the pressure over the
+          entire surface.
+        </p>
+
+        <h3>Thrust on Horizontal Surfaces</h3>
+        <div class="formula-box">
+          F = PA
+        </div>
+        <p>
+          For a horizontal surface at depth h, the pressure is P = &rho;gh (assuming gauge pressure),
+          so the thrust is F = &rho;ghA.
+        </p>
+
+        <h3>Thrust on Vertical Walls</h3>
+        <p>
+          For a vertical wall submerged in a liquid, the pressure increases linearly with depth.
+          Consider a small area dA at depth y. The pressure at that depth is P(y) = &rho;gy, and the
+          thrust on the small area is dF = P(y) dA = &rho;gy dA. Integrating over the entire wall of
+          height h:
+        </p>
+        <div class="formula-box">
+          F = &int;&#8320;<sup>h</sup> &rho;gy dA = &rho;g &times; h&sup2; / 2
+        </div>
+        <p>
+          The point of application of this thrust (center of pressure) is located at a depth of 2h/3
+          below the free surface, not at the centroid (which would be at h/2).
+        </p>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Tank Thrust</div>
+          <p>
+            A vertical rectangular tank wall is 4 m wide and 5 m deep, filled with water (&rho; = 1000 kg/m&sup3;).
+            Calculate the total thrust on the wall and the depth of its center of pressure.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Total thrust: F = &rho;g h&sup2; &times; width / 2<br>
+              F = 1000 &times; 9.8 &times; 25 &times; 4 / 2<br>
+              F = 1000 &times; 9.8 &times; 50<br>
+              F = 490,000 N = 490 kN<br><br>
+              Depth of center of pressure: d = 2h/3 = 2 &times; 5 / 3 = 3.33 m below surface
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Pascal's Law / Hydraulic Press -->
+      <div class="theory-section" id="pascals-law">
+        <h2>3. Hydraulic Press &amp; Pascal&rsquo;s Law</h2>
         <p>
           Pascal&rsquo;s Law states that a change in pressure applied to an enclosed fluid is
           transmitted undiminished to every portion of the fluid and to the walls of the containing
@@ -145,43 +219,31 @@
           The mechanical advantage is the ratio A&#8322;/A&#8321;. Although the force is amplified,
           the work done on both sides is the same (conservation of energy): F&#8321;d&#8321; = F&#8322;d&#8322;.
         </p>
-      </div>
 
-      <!-- 3. Hydrostatic Pressure -->
-      <div class="theory-section">
-        <h2>3. Hydrostatic Pressure</h2>
-        <p>
-          In a fluid at rest, pressure increases with depth due to the weight of the fluid above.
-          The pressure at a depth h below the surface of a fluid of density &rho; is:
-        </p>
-        <div class="formula-box">
-          P = P&#8320; + &rho;gh
+        <div class="example-box">
+          <div class="ex-label">Example 1: Hydraulic Lift</div>
+          <p>
+            In a hydraulic lift, the area of the small piston is 10 cm&sup2; and the area of the large
+            piston is 1000 cm&sup2;. If a force of 50 N is applied on the small piston, what is the
+            maximum weight that can be lifted by the large piston?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              By Pascal&rsquo;s Law: F&#8321;/A&#8321; = F&#8322;/A&#8322;<br><br>
+              F&#8322; = F&#8321; &times; (A&#8322; / A&#8321;)<br>
+              F&#8322; = 50 &times; (1000 / 10)<br>
+              F&#8322; = 50 &times; 100<br>
+              F&#8322; = 5000 N<br><br>
+              The large piston can lift a maximum weight of 5000 N (approximately 510 kg).
+            </p>
+          </div>
         </div>
-        <p>
-          where P&#8320; is the pressure at the surface (usually atmospheric pressure), &rho; is the
-          fluid density, g is the acceleration due to gravity, and h is the depth. This shows that
-          pressure at a given depth depends only on the depth and the fluid density, not on the shape
-          of the container.
-        </p>
-
-        <h3>Hydrostatic Paradox</h3>
-        <p>
-          The pressure at the bottom of a container depends only on the height of the fluid column,
-          not on the shape or volume of the container. Containers of different shapes but the same
-          base area and fluid height exert the same pressure on the base &mdash; this is the
-          hydrostatic paradox.
-        </p>
-
-        <h3>Measurement Instruments</h3>
-        <ul>
-          <li><strong>Manometer:</strong> A U-tube device used to measure the gauge pressure of a gas. The pressure difference is &Delta;P = &rho;g&Delta;h, where &Delta;h is the height difference of the manometer liquid.</li>
-          <li><strong>Barometer:</strong> A mercury barometer measures atmospheric pressure. At sea level, the mercury column stands at 760 mm, giving P<sub>atm</sub> = &rho;<sub>Hg</sub> &times; g &times; 0.76 m.</li>
-        </ul>
       </div>
 
-      <!-- 4. Archimedes' Principle -->
-      <div class="theory-section">
-        <h2>4. Archimedes&rsquo; Principle</h2>
+      <!-- 4. Archimedes' Principle & Buoyancy -->
+      <div class="theory-section" id="archimedes">
+        <h2>4. Archimedes&rsquo; Principle &amp; Buoyancy</h2>
         <p>
           Archimedes&rsquo; Principle states that when a body is partially or wholly immersed in a
           fluid, it experiences an upward buoyant force equal to the weight of the fluid displaced
@@ -204,20 +266,75 @@
           amount of the buoyant force:
         </p>
         <div class="formula-box">
-          W<sub>apparent</sub> = W &minus; F<sub>b</sub> = &rho;<sub>body</sub>Vg &minus; &rho;<sub>fluid</sub>Vg = (&rho;<sub>body</sub> &minus; &rho;<sub>fluid</sub>)Vg
+          W<sub>apparent</sub> = W &minus; F<sub>b</sub> = (&rho;<sub>body</sub> &minus; &rho;<sub>fluid</sub>)Vg
         </div>
       </div>
 
-      <!-- 5. Equation of Continuity -->
-      <div class="theory-section">
-        <h2>5. Equation of Continuity</h2>
+      <!-- 5. Floating Bodies -->
+      <div class="theory-section" id="floating-bodies">
+        <h2>5. Floating Bodies</h2>
+        <p>
+          For a floating body in equilibrium, the buoyant force equals the weight of the body. If the body
+          has total volume V and density &rho;<sub>body</sub>, and the fluid has density &rho;<sub>fluid</sub>,
+          the fraction of the body that is submerged is determined by the balance of forces.
+        </p>
+
+        <h3>Floating Condition</h3>
+        <div class="formula-box">
+          V<sub>submerged</sub> &times; &rho;<sub>fluid</sub> = V &times; &rho;<sub>body</sub><br><br>
+          Fraction submerged = &rho;<sub>body</sub> / &rho;<sub>fluid</sub><br>
+          Fraction above surface = 1 &minus; &rho;<sub>body</sub> / &rho;<sub>fluid</sub>
+        </div>
+
+        <h3>Two Immiscible Liquids</h3>
+        <p>
+          When a body floats on two immiscible liquids (e.g., oil and water), the buoyancy from both
+          liquids must be considered:
+        </p>
+        <div class="formula-box">
+          V&#8321; &times; &rho;&#8321; + V&#8322; &times; &rho;&#8322; = V &times; &rho;<sub>body</sub>
+        </div>
+        <p>
+          where V&#8321; and V&#8322; are the volumes immersed in liquids 1 and 2 respectively.
+        </p>
+
+        <h3>Hydrometer</h3>
+        <p>
+          A hydrometer is a floating instrument used to measure the density or relative density of a
+          liquid. It sinks deeper in less dense liquids and floats higher in denser liquids, with a
+          calibrated scale indicating the density.
+        </p>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Sphere in Two Liquids</div>
+          <p>
+            A wooden sphere of volume 0.1 m&sup3; and density 600 kg/m&sup3; is floating on water
+            (&rho; = 1000 kg/m&sup3;). What is the volume of the sphere that is submerged?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using the floating condition:<br>
+              V<sub>submerged</sub> &times; &rho;<sub>water</sub> = V &times; &rho;<sub>sphere</sub><br>
+              V<sub>submerged</sub> &times; 1000 = 0.1 &times; 600<br>
+              V<sub>submerged</sub> = 60 / 1000 = 0.06 m&sup3;<br><br>
+              Fraction submerged = 0.06 / 0.1 = 0.6 or 60%<br>
+              Fraction above water = 1 &minus; 0.6 = 0.4 or 40%
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Equation of Continuity -->
+      <div class="theory-section" id="continuity">
+        <h2>6. Equation of Continuity</h2>
         <p>
           For a steady, incompressible fluid flow through a tube of varying cross-section, the
           mass flow rate must remain constant. Since the fluid is incompressible (&rho; = constant),
           the volume flow rate is conserved:
         </p>
         <div class="formula-box">
-          A&#8321;v&#8321; = A&#8322;v&#8322; = constant
+          A&#8321;v&#8321; = A&#8322;v&#8322; = Q (constant)
         </div>
         <p>
           This means that where the tube narrows (smaller A), the fluid speeds up (larger v), and
@@ -230,25 +347,11 @@
           <li><strong>Streamline (Laminar) Flow:</strong> Fluid particles follow smooth, well-defined paths (streamlines). Adjacent layers slide smoothly past each other. Occurs at low velocities.</li>
           <li><strong>Turbulent Flow:</strong> Fluid particles move in irregular, chaotic paths with eddies and vortices. Occurs at high velocities.</li>
         </ul>
-
-        <h3>Reynolds Number</h3>
-        <p>
-          The Reynolds number (Re) is a dimensionless quantity that predicts whether flow will be
-          laminar or turbulent:
-        </p>
-        <div class="formula-box">
-          Re = &rho;vD / &eta;
-        </div>
-        <p>
-          where D is the characteristic length (e.g., pipe diameter) and &eta; is the dynamic viscosity.
-          For flow in a pipe, Re &lt; 2000 indicates laminar flow, Re &gt; 4000 indicates turbulent
-          flow, and 2000 &lt; Re &lt; 4000 is the transition region.
-        </p>
       </div>
 
-      <!-- 6. Bernoulli's Theorem -->
-      <div class="theory-section">
-        <h2>6. Bernoulli&rsquo;s Theorem</h2>
+      <!-- 7. Bernoulli's Theorem -->
+      <div class="theory-section" id="bernoulli">
+        <h2>7. Bernoulli&rsquo;s Theorem</h2>
         <p>
           Bernoulli&rsquo;s theorem is a statement of conservation of energy for a flowing fluid.
           For an ideal (incompressible, non-viscous) fluid in steady flow, the sum of pressure
@@ -260,157 +363,20 @@
         </div>
         <p>
           This equation shows that where the fluid velocity increases (as in a constriction), the
-          pressure decreases, and vice versa.
+          pressure decreases, and vice versa. This is the principle behind many applications in
+          fluid dynamics.
         </p>
 
-        <h3>Applications</h3>
+        <h3>Applications of Bernoulli's Theorem</h3>
         <ul>
           <li><strong>Venturi Meter:</strong> A device to measure fluid flow rate. The pressure drop across a constriction is related to the velocity (and hence flow rate) by Bernoulli&rsquo;s equation.</li>
           <li><strong>Lift on an Airfoil:</strong> Air moves faster over the curved upper surface of an airplane wing than the flat lower surface, creating lower pressure above and higher pressure below &mdash; resulting in an upward lift force.</li>
           <li><strong>Magnus Effect:</strong> A spinning ball moving through air experiences a lateral force because the spin creates a pressure difference on opposite sides of the ball, causing it to curve.</li>
           <li><strong>Atomiser / Spray Gun:</strong> High-speed air flowing over a tube reduces pressure at the top, drawing liquid up and atomising it into a fine spray.</li>
         </ul>
-      </div>
-
-      <!-- 7. Viscosity -->
-      <div class="theory-section">
-        <h2>7. Viscosity</h2>
-        <p>
-          Viscosity is the property of a fluid that opposes the relative motion between adjacent
-          fluid layers. It is the internal friction of fluids. Newton&rsquo;s law of viscosity states
-          that the viscous force between two parallel layers is:
-        </p>
-        <div class="formula-box">
-          F = &eta;A (dv/dy)
-        </div>
-        <p>
-          where &eta; is the coefficient of dynamic viscosity (SI unit: Pa&middot;s or N&middot;s/m&sup2;),
-          A is the area of the layers, and dv/dy is the velocity gradient perpendicular to the flow
-          direction. Fluids that obey this linear relationship are called Newtonian fluids.
-        </p>
-
-        <h3>Stokes&rsquo; Law</h3>
-        <p>
-          When a small sphere moves through a viscous fluid at low speed, the viscous drag force
-          acting on it is:
-        </p>
-        <div class="formula-box">
-          F = 6&pi;&eta;rv
-        </div>
-        <p>
-          where r is the radius of the sphere and v is its velocity. This is valid for streamline
-          flow (low Reynolds number).
-        </p>
-
-        <h3>Terminal Velocity</h3>
-        <p>
-          When a sphere falls through a viscous fluid, it accelerates initially. As its velocity
-          increases, the viscous drag increases until it balances gravity. At this point, the sphere
-          falls with a constant velocity called the terminal velocity:
-        </p>
-        <div class="formula-box">
-          v<sub>t</sub> = 2r&sup2;(&rho;<sub>sphere</sub> &minus; &rho;<sub>fluid</sub>)g / (9&eta;)
-        </div>
-
-        <h3>Poiseuille&rsquo;s Equation</h3>
-        <p>
-          For laminar flow of a viscous fluid through a horizontal cylindrical pipe of radius R and
-          length L, the volume flow rate is:
-        </p>
-        <div class="formula-box">
-          Q = &pi;&Delta;P R<sup>4</sup> / (8&eta;L)
-        </div>
-        <p>
-          This shows that flow rate is extremely sensitive to the pipe radius (proportional to R<sup>4</sup>).
-          Doubling the radius increases the flow rate by a factor of 16. This has important
-          implications in blood flow and engineering pipe design.
-        </p>
-      </div>
-
-      <!-- 8. Surface Tension -->
-      <div class="theory-section">
-        <h2>8. Surface Tension</h2>
-        <p>
-          Surface tension is the property of a liquid surface that makes it behave like a stretched
-          elastic membrane. It arises because molecules at the surface experience a net inward force
-          (they have neighbours only on one side), minimising the surface area.
-        </p>
-        <div class="formula-box">
-          T = F / l
-        </div>
-        <p>
-          where T is the surface tension (N/m) and F is the force acting along a length l of an
-          imaginary line on the surface. Surface tension can also be defined as the surface energy
-          per unit area (J/m&sup2;).
-        </p>
-
-        <h3>Excess Pressure</h3>
-        <ul>
-          <li><strong>Inside a liquid drop (sphere):</strong> &Delta;P = 2T / R</li>
-          <li><strong>Inside a soap bubble:</strong> &Delta;P = 4T / R (because a soap bubble has two surfaces &mdash; inner and outer)</li>
-        </ul>
-        <div class="formula-box">
-          Liquid drop: &Delta;P = 2T/R &nbsp;&nbsp;|&nbsp;&nbsp; Soap bubble: &Delta;P = 4T/R
-        </div>
-
-        <h3>Capillarity</h3>
-        <p>
-          Capillarity is the rise or fall of a liquid in a narrow tube (capillary). It occurs due to
-          the competition between adhesive forces (liquid-tube) and cohesive forces (liquid-liquid).
-          The height of capillary rise is:
-        </p>
-        <div class="formula-box">
-          h = 2T cos&theta; / (r&rho;g)
-        </div>
-        <p>
-          where &theta; is the contact angle, r is the radius of the capillary tube, &rho; is the
-          liquid density, and g is the acceleration due to gravity.
-        </p>
-        <ul>
-          <li>If &theta; &lt; 90&deg; (e.g., water in glass): The meniscus is concave, and liquid rises in the tube.</li>
-          <li>If &theta; &gt; 90&deg; (e.g., mercury in glass): The meniscus is convex, and liquid falls in the tube.</li>
-          <li>If &theta; = 90&deg;: No capillary rise or fall.</li>
-        </ul>
-      </div>
-
-      <!-- Key Formulas Summary -->
-      <div class="theory-section">
-        <h2>Key Formulas Summary</h2>
-        <div class="formula-box">
-          P = F/A &nbsp;&nbsp;|&nbsp;&nbsp; P = P&#8320; + &rho;gh &nbsp;&nbsp;|&nbsp;&nbsp; F&#8321;/A&#8321; = F&#8322;/A&#8322; (Pascal)<br>
-          F<sub>b</sub> = &rho;Vg (Archimedes) &nbsp;&nbsp;|&nbsp;&nbsp; A&#8321;v&#8321; = A&#8322;v&#8322; (Continuity)<br>
-          P + &frac12;&rho;v&sup2; + &rho;gh = const (Bernoulli)<br>
-          F = 6&pi;&eta;rv (Stokes) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>t</sub> = 2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>f</sub>)g / 9&eta;<br>
-          T = F/l &nbsp;&nbsp;|&nbsp;&nbsp; h = 2T cos&theta; / r&rho;g (Capillarity)
-        </div>
-      </div>
-
-      <!-- Solved Examples -->
-      <div class="theory-section">
-        <h2>Solved Examples</h2>
 
         <div class="example-box">
-          <div class="ex-label">Example 1</div>
-          <p>
-            In a hydraulic lift, the area of the small piston is 10 cm&sup2; and the area of the large
-            piston is 1000 cm&sup2;. If a force of 50 N is applied on the small piston, what is the
-            maximum weight that can be lifted by the large piston?
-          </p>
-          <div class="solution">
-            <p>
-              <strong>Solution:</strong><br>
-              By Pascal&rsquo;s Law: F&#8321;/A&#8321; = F&#8322;/A&#8322;<br><br>
-              F&#8322; = F&#8321; &times; (A&#8322; / A&#8321;)<br>
-              F&#8322; = 50 &times; (1000 / 10)<br>
-              F&#8322; = 50 &times; 100<br>
-              F&#8322; = 5000 N<br><br>
-              The large piston can lift a maximum weight of 5000 N (approximately 510 kg).
-            </p>
-          </div>
-        </div>
-
-        <div class="example-box">
-          <div class="ex-label">Example 2</div>
+          <div class="ex-label">Example 2: Bernoulli's Equation</div>
           <p>
             Water flows through a horizontal pipe of varying cross-section. At a point where the
             cross-sectional area is 40 cm&sup2;, the velocity is 2 m/s and the pressure is
@@ -436,9 +402,500 @@
             </p>
           </div>
         </div>
+      </div>
+
+      <!-- 8. Venturi Meter -->
+      <div class="theory-section" id="venturi-meter">
+        <h2>8. Venturi Meter</h2>
+        <p>
+          A Venturi meter is a device used to measure the flow rate of a fluid in a pipe. It consists
+          of a constriction (narrow tube) connected to the main pipe. By measuring the pressure
+          difference between the main pipe and the constriction, we can determine the flow velocity
+          and hence the volume flow rate using Bernoulli's equation.
+        </p>
+
+        <h3>Venturi Meter with Same Liquid Manometer</h3>
+        <p>
+          When the manometer fluid is the same as the flowing liquid, the pressure difference &Delta;P
+          is directly related to the height difference &Delta;h in the manometer:
+        </p>
+        <div class="formula-box">
+          Q = A&#8321; A&#8322; &radic;(2g&Delta;h / (A&#8321;&sup2; &minus; A&#8322;&sup2;))
+        </div>
+        <p>
+          where A&#8321; is the area of the main pipe, A&#8322; is the area of the constriction, and
+          &Delta;h is the height difference in the manometer.
+        </p>
+
+        <h3>Venturi Meter with Different Manometer Liquid</h3>
+        <p>
+          If the manometer fluid has a different density &rho;<sub>m</sub> than the flowing liquid
+          with density &rho;:
+        </p>
+        <div class="formula-box">
+          Q = A&#8321; A&#8322; &radic;(2g&Delta;h&rho;<sub>m</sub> / (&rho;(A&#8321;&sup2; &minus; A&#8322;&sup2;)))
+        </div>
+      </div>
+
+      <!-- 9. Pitot Tube -->
+      <div class="theory-section" id="pitot-tube">
+        <h2>9. Pitot Tube</h2>
+        <p>
+          A Pitot tube is a simple device used to measure the velocity of a fluid (liquid or gas).
+          It consists of a tube bent at right angles, with one end pointing upstream into the flow.
+          The fluid decelerates at the stagnation point (nose of the tube), and the pressure increase
+          is related to the velocity by Bernoulli's equation.
+        </p>
+
+        <h3>Pitot Tube for Liquids</h3>
+        <p>
+          For a liquid flowing with velocity V, using Bernoulli's equation between the stagnation
+          point and the free stream:
+        </p>
+        <div class="formula-box">
+          V = &radic;(2gh)
+        </div>
+        <p>
+          where h is the height difference in the manometer connected to the Pitot tube.
+        </p>
+
+        <h3>Pitot Tube for Gases</h3>
+        <p>
+          For gases (where density is much lower), the pressure difference must account for the gas
+          density &rho; and the manometer liquid density &rho;<sub>m</sub>:
+        </p>
+        <div class="formula-box">
+          V = &radic;(2gh&rho;<sub>m</sub> / &rho;)
+        </div>
 
         <div class="example-box">
-          <div class="ex-label">Example 3</div>
+          <div class="ex-label">Example: Pitot Tube in Water</div>
+          <p>
+            A Pitot tube is inserted into a water pipe. The manometer shows a height difference of
+            0.5 m. What is the velocity of water in the pipe?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using the Pitot tube formula for liquids:<br>
+              V = &radic;(2gh)<br>
+              V = &radic;(2 &times; 9.8 &times; 0.5)<br>
+              V = &radic;(9.8)<br>
+              V = 3.13 m/s
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Velocity of Efflux (Torricelli's Theorem) -->
+      <div class="theory-section" id="efflux">
+        <h2>10. Velocity of Efflux (Torricelli&rsquo;s Theorem)</h2>
+        <p>
+          When a liquid flows out of a hole in the bottom or side of a container, the velocity of
+          efflux (the speed at which it leaves) can be found using Bernoulli's equation. Torricelli&rsquo;s
+          theorem states that the velocity of efflux through a small hole is the same as the velocity
+          that a body would acquire if falling freely from a height h equal to the depth of the hole.
+        </p>
+
+        <h3>Efflux Velocity</h3>
+        <div class="formula-box">
+          V = &radic;(2gh)
+        </div>
+        <p>
+          where h is the height of the liquid column above the hole.
+        </p>
+
+        <h3>Horizontal Range of Efflux</h3>
+        <p>
+          When liquid effluxes horizontally from a hole at height h below the surface, it travels as a
+          projectile. The horizontal range R (for a hole at height h below the surface of a container
+          of height H) is:
+        </p>
+        <div class="formula-box">
+          R = 2&radic;(h(H &minus; h))
+        </div>
+        <p>
+          The range is maximum when h = H/2, giving R<sub>max</sub> = H.
+        </p>
+
+        <h3>Reaction Force</h3>
+        <p>
+          The jet of liquid exiting creates a reaction force on the container. If the liquid exits
+          with velocity V from an orifice of area a, and the container has liquid density &rho;:
+        </p>
+        <div class="formula-box">
+          F = 2&rho;agh
+        </div>
+
+        <h3>Time to Empty</h3>
+        <p>
+          For a container of cross-sectional area A with a hole of area a at the bottom, the time to
+          completely empty a liquid column of height H is:
+        </p>
+        <div class="formula-box">
+          t = (A / a) &radic;(2H / g)
+        </div>
+
+        <h3>Sealed Container with Pressure</h3>
+        <p>
+          If the container is sealed and has pressure P&#8320; inside (with external pressure P<sub>atm</sub>):
+        </p>
+        <div class="formula-box">
+          V = &radic;(2gh + 2(P&#8320; &minus; P<sub>atm</sub>) / &rho;)
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Tank Efflux</div>
+          <p>
+            A water tank of height 10 m and cross-sectional area 2 m&sup2; has a hole of area 0.01 m&sup2;
+            at the bottom. How long will it take to empty the tank?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using the time to empty formula:<br>
+              t = (A / a) &radic;(2H / g)<br>
+              t = (2 / 0.01) &times; &radic;(2 &times; 10 / 9.8)<br>
+              t = 200 &times; &radic;(20 / 9.8)<br>
+              t = 200 &times; &radic;(2.04)<br>
+              t = 200 &times; 1.43<br>
+              t ≈ 286 seconds ≈ 4.77 minutes
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. Surface Tension -->
+      <div class="theory-section" id="surface-tension">
+        <h2>11. Surface Tension</h2>
+        <p>
+          Surface tension is the property of a liquid surface that makes it behave like a stretched
+          elastic membrane. It arises because molecules at the surface experience a net inward force
+          (they have neighbours only on one side), minimising the surface area.
+        </p>
+        <div class="formula-box">
+          T = F / l
+        </div>
+        <p>
+          where T is the surface tension (N/m) and F is the force acting along a length l of an
+          imaginary line on the surface. Surface tension can also be defined as the surface energy
+          per unit area (J/m&sup2;).
+        </p>
+
+        <h3>Factors Affecting Surface Tension</h3>
+        <ul>
+          <li>Surface tension decreases with increasing temperature.</li>
+          <li>Adding detergents or soaps reduces the surface tension of water.</li>
+          <li>Different liquids have different surface tensions; mercury has much higher surface tension than water.</li>
+        </ul>
+      </div>
+
+      <!-- 12. Angle of Contact -->
+      <div class="theory-section" id="angle-of-contact">
+        <h2>12. Angle of Contact</h2>
+        <p>
+          The angle of contact (or contact angle) &theta; is the angle between the liquid surface and the
+          solid surface at the three-phase contact line (where solid, liquid, and gas meet). It depends
+          on the relative strengths of adhesive forces (between liquid and solid) and cohesive forces
+          (within the liquid).
+        </p>
+
+        <h3>Types of Contact Angles</h3>
+        <ul>
+          <li><strong>Acute angle (&theta; &lt; 90°):</strong> Adhesion &gt; cohesion. Example: water on glass. The meniscus is concave, and the liquid &quot;wets&quot; the surface.</li>
+          <li><strong>Obtuse angle (&theta; &gt; 90°):</strong> Cohesion &gt; adhesion. Example: mercury on glass. The meniscus is convex, and the liquid does not wet the surface.</li>
+          <li><strong>Right angle (&theta; = 90°):</strong> Adhesion = cohesion. The meniscus is flat.</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Contact Angle</div>
+          <p>
+            Water on clean glass has a contact angle of approximately 0°, while mercury on glass has
+            a contact angle of approximately 140°. This explains why water spreads on glass while
+            mercury forms beads.
+          </p>
+        </div>
+      </div>
+
+      <!-- 13. Excess Pressure -->
+      <div class="theory-section" id="excess-pressure">
+        <h2>13. Excess Pressure</h2>
+        <p>
+          Excess pressure is the additional pressure inside a curved interface due to surface tension.
+          The pressure difference across a curved interface is given by the Young-Laplace equation,
+          which depends on the surface tension and the radius of curvature.
+        </p>
+
+        <h3>Excess Pressure in a Liquid Drop</h3>
+        <p>
+          For a spherical liquid drop of radius R suspended in air, the excess pressure inside the
+          drop over the outside pressure is:
+        </p>
+        <div class="formula-box">
+          &Delta;P = 2T / R
+        </div>
+
+        <h3>Excess Pressure in a Soap Bubble</h3>
+        <p>
+          A soap bubble has two surfaces (inner and outer), each contributing to the excess pressure:
+        </p>
+        <div class="formula-box">
+          &Delta;P = 4T / R
+        </div>
+
+        <h3>Air Bubble in a Liquid</h3>
+        <p>
+          For an air bubble of radius R in a liquid at depth h below the surface:
+        </p>
+        <div class="formula-box">
+          P<sub>bubble</sub> = P<sub>atm</sub> + &rho;gh + 2T / R
+        </div>
+
+        <h3>Double Bubble</h3>
+        <p>
+          When two soap bubbles of radii r&#8321; and r&#8322; merge into a single bubble, the radius of
+          the resulting bubble is related by:
+        </p>
+        <div class="formula-box">
+          r = (r&#8321; r&#8322;) / (r&#8322; &minus; r&#8321;)
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Soap Bubble Pressure</div>
+          <p>
+            A soap bubble of radius 2 cm is formed in air. The surface tension of soap solution is
+            0.025 N/m. Calculate the excess pressure inside the bubble.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              For a soap bubble (two surfaces):<br>
+              &Delta;P = 4T / R<br>
+              &Delta;P = 4 &times; 0.025 / 0.02<br>
+              &Delta;P = 0.1 / 0.02<br>
+              &Delta;P = 5 Pa
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14. Capillarity -->
+      <div class="theory-section" id="capillarity">
+        <h2>14. Capillarity</h2>
+        <p>
+          Capillarity is the rise or fall of a liquid in a narrow tube (capillary tube). It occurs due to
+          the competition between adhesive forces (liquid-tube wall) and cohesive forces (liquid-liquid).
+          The height to which the liquid rises (or falls) in a capillary tube is given by:
+        </p>
+        <div class="formula-box">
+          h = (2T cos &theta;) / (r &rho; g)
+        </div>
+        <p>
+          where T is surface tension, &theta; is the contact angle, r is the radius of the capillary,
+          &rho; is the liquid density, and g is the acceleration due to gravity.
+        </p>
+
+        <h3>Rise vs. Fall</h3>
+        <ul>
+          <li>If &theta; &lt; 90° (e.g., water in glass): cos &theta; &gt; 0, and the liquid rises in the tube (capillary rise).</li>
+          <li>If &theta; &gt; 90° (e.g., mercury in glass): cos &theta; &lt; 0, and the liquid falls in the tube (capillary depression).</li>
+        </ul>
+
+        <h3>Insufficient Capillary Length</h3>
+        <p>
+          If the capillary tube is not tall enough for the full rise, the liquid will rise as much as
+          it can, and the meniscus will adjust its radius to balance the forces. The contact angle
+          remains the same, but the effective height is limited by the tube length.
+        </p>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Capillary Rise in Glass</div>
+          <p>
+            Water rises in a glass capillary tube of radius 0.5 mm to a height of 30 mm. Calculate the
+            surface tension of water. (Assume cos &theta; = 1 for water on glass, &rho; = 1000 kg/m&sup3;,
+            g = 9.8 m/s&sup2;)
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using h = (2T cos &theta;) / (r &rho; g):<br>
+              0.03 = (2 &times; T &times; 1) / (0.0005 &times; 1000 &times; 9.8)<br>
+              0.03 = 2T / 4.9<br>
+              T = 0.03 &times; 4.9 / 2<br>
+              T = 0.147 / 2<br>
+              T ≈ 0.073 N/m
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15. Viscosity -->
+      <div class="theory-section" id="viscosity">
+        <h2>15. Viscosity</h2>
+        <p>
+          Viscosity is the property of a fluid that opposes the relative motion between adjacent
+          fluid layers. It is the internal friction of fluids. Newton&rsquo;s law of viscosity states
+          that the viscous force between two parallel layers is:
+        </p>
+        <div class="formula-box">
+          F = &eta; A (dv/dy)
+        </div>
+        <p>
+          where &eta; is the coefficient of dynamic viscosity (SI unit: Pa&middot;s or N&middot;s/m&sup2;),
+          A is the area of the layers, and dv/dy is the velocity gradient perpendicular to the flow
+          direction. Fluids that obey this linear relationship are called Newtonian fluids.
+        </p>
+
+        <h3>Kinematic Viscosity</h3>
+        <p>
+          The kinematic viscosity is defined as &nu; = &eta; / &rho;, where &rho; is the fluid density.
+          Its SI unit is m&sup2;/s.
+        </p>
+      </div>
+
+      <!-- 16. Reynolds Number -->
+      <div class="theory-section" id="reynolds-number">
+        <h2>16. Reynolds Number</h2>
+        <p>
+          The Reynolds number (Re) is a dimensionless quantity that predicts whether fluid flow will be
+          laminar or turbulent. It is the ratio of inertial forces to viscous forces:
+        </p>
+        <div class="formula-box">
+          Re = (&rho; V D) / &eta;
+        </div>
+        <p>
+          where &rho; is the fluid density, V is the flow velocity, D is the characteristic length
+          (e.g., pipe diameter), and &eta; is the dynamic viscosity.
+        </p>
+
+        <h3>Flow Classification</h3>
+        <ul>
+          <li><strong>Re &lt; 2000:</strong> Laminar flow &mdash; smooth, orderly flow with layers sliding past each other.</li>
+          <li><strong>2000 &le; Re &le; 4000:</strong> Transition region &mdash; flow can be either laminar or turbulent.</li>
+          <li><strong>Re &gt; 4000:</strong> Turbulent flow &mdash; chaotic, irregular flow with eddies and vortices.</li>
+        </ul>
+
+        <h3>Critical Velocity</h3>
+        <p>
+          The critical velocity is the velocity at which the flow transitions from laminar to turbulent.
+          For flow in a pipe, the critical Reynolds number is approximately 2000, so:
+        </p>
+        <div class="formula-box">
+          V<sub>critical</sub> = (2000 &eta;) / (&rho; D)
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Reynolds Number in a Pipe</div>
+          <p>
+            Water with density 1000 kg/m&sup3; and viscosity 0.001 Pa&middot;s flows through a pipe of
+            diameter 0.01 m at velocity 2 m/s. Calculate the Reynolds number and determine if the
+            flow is laminar or turbulent.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Re = (&rho; V D) / &eta;<br>
+              Re = (1000 &times; 2 &times; 0.01) / 0.001<br>
+              Re = 20 / 0.001<br>
+              Re = 20,000<br><br>
+              Since Re = 20,000 &gt; 4000, the flow is turbulent.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 17. Poiseuille's Formula -->
+      <div class="theory-section" id="poiseuille">
+        <h2>17. Poiseuille&rsquo;s Formula</h2>
+        <p>
+          Poiseuille&rsquo;s equation describes the volume flow rate of a viscous fluid in laminar flow
+          through a horizontal cylindrical pipe. It shows that flow rate is extremely sensitive to the
+          pipe radius, varying with the fourth power of the radius.
+        </p>
+        <div class="formula-box">
+          Q = (&pi; &Delta;P R<sup>4</sup>) / (8 &eta; L)
+        </div>
+        <p>
+          where &Delta;P is the pressure difference between the ends of the pipe, R is the radius,
+          &eta; is the dynamic viscosity, and L is the length of the pipe.
+        </p>
+
+        <h3>Fluid Resistance</h3>
+        <p>
+          The resistance to flow can be defined as:
+        </p>
+        <div class="formula-box">
+          R<sub>flow</sub> = &Delta;P / Q = (8 &eta; L) / (&pi; R<sup>4</sup>)
+        </div>
+
+        <h3>Series and Parallel Combinations</h3>
+        <ul>
+          <li><strong>Series:</strong> R<sub>total</sub> = R&#8321; + R&#8322; + ... (resistances add)</li>
+          <li><strong>Parallel:</strong> 1/R<sub>total</sub> = 1/R&#8321; + 1/R&#8322; + ... (reciprocals add)</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Three Capillaries in Series</div>
+          <p>
+            Three identical capillary tubes, each with radius 1 mm and length 10 cm, are connected in
+            series. A fluid with viscosity 0.01 Pa&middot;s is flowing through them under a pressure
+            difference of 1000 Pa. Calculate the volume flow rate.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              For one capillary:<br>
+              R = (8 &eta; L) / (&pi; R<sup>4</sup>)<br>
+              R = (8 &times; 0.01 &times; 0.1) / (&pi; &times; (0.001)<sup>4</sup>)<br>
+              R = 0.008 / (&pi; &times; 10<sup>&minus;12</sup>)<br>
+              R ≈ 2.55 &times; 10<sup>9</sup> Pa&middot;s/m&sup3;<br><br>
+              For three in series:<br>
+              R<sub>total</sub> = 3R = 7.65 &times; 10<sup>9</sup> Pa&middot;s/m&sup3;<br><br>
+              Q = &Delta;P / R<sub>total</sub><br>
+              Q = 1000 / (7.65 &times; 10<sup>9</sup>)<br>
+              Q ≈ 1.31 &times; 10<sup>&minus;7</sup> m&sup3;/s
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 18. Stokes' Law & Terminal Velocity -->
+      <div class="theory-section" id="stokes-law">
+        <h2>18. Stokes&rsquo; Law &amp; Terminal Velocity</h2>
+        <p>
+          When a small sphere moves through a viscous fluid at low speed (low Reynolds number), the
+          viscous drag force acting on it is given by Stokes&rsquo; Law:
+        </p>
+        <div class="formula-box">
+          F = 6&pi;&eta;rv
+        </div>
+        <p>
+          where r is the radius of the sphere, v is its velocity, and &eta; is the dynamic viscosity.
+          This is valid only for laminar flow (Re &lt; 1).
+        </p>
+
+        <h3>Terminal Velocity</h3>
+        <p>
+          When a sphere falls through a viscous fluid, it accelerates initially. As its velocity
+          increases, the viscous drag increases until it balances the gravitational force minus the
+          buoyant force. At this point, the sphere falls with a constant velocity called the terminal velocity:
+        </p>
+        <div class="formula-box">
+          v<sub>t</sub> = (2r&sup2;(&rho;<sub>sphere</sub> &minus; &rho;<sub>fluid</sub>)g) / (9&eta;)
+        </div>
+
+        <h3>Combining Drops</h3>
+        <p>
+          When two identical liquid drops combine to form a single drop, the volume doubles but the
+          surface area decreases. The terminal velocity of the combined drop is related to the
+          terminal velocity of a single drop by:
+        </p>
+        <div class="formula-box">
+          v<sub>t,combined</sub> = v<sub>t,single</sub> &times; 2<sup>2/3</sup>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 3: Terminal Velocity</div>
           <p>
             A steel ball of radius 2 mm and density 8000 kg/m&sup3; is dropped in a container of
             glycerine (density = 1300 kg/m&sup3;, viscosity &eta; = 0.83 Pa&middot;s). Find the
@@ -448,15 +905,303 @@
             <p>
               <strong>Solution:</strong><br>
               Using the terminal velocity formula:<br>
-              v<sub>t</sub> = 2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>f</sub>)g / (9&eta;)<br><br>
+              v<sub>t</sub> = (2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>f</sub>)g) / (9&eta;)<br><br>
               Given: r = 2 mm = 2 &times; 10<sup>&minus;3</sup> m, &rho;<sub>s</sub> = 8000 kg/m&sup3;,
               &rho;<sub>f</sub> = 1300 kg/m&sup3;, &eta; = 0.83 Pa&middot;s, g = 9.8 m/s&sup2;<br><br>
-              v<sub>t</sub> = 2 &times; (2 &times; 10<sup>&minus;3</sup>)&sup2; &times; (8000 &minus; 1300) &times; 9.8 / (9 &times; 0.83)<br>
-              v<sub>t</sub> = 2 &times; 4 &times; 10<sup>&minus;6</sup> &times; 6700 &times; 9.8 / 7.47<br>
-              v<sub>t</sub> = 2 &times; 4 &times; 10<sup>&minus;6</sup> &times; 65,660 / 7.47<br>
-              v<sub>t</sub> = 525,280 &times; 10<sup>&minus;6</sup> / 7.47<br>
-              v<sub>t</sub> = 0.5253 / 7.47<br>
-              v<sub>t</sub> &approx; 0.070 m/s &approx; 7.0 cm/s
+              v<sub>t</sub> = (2 &times; (2 &times; 10<sup>&minus;3</sup>)&sup2; &times; (8000 &minus; 1300) &times; 9.8) / (9 &times; 0.83)<br>
+              v<sub>t</sub> = (2 &times; 4 &times; 10<sup>&minus;6</sup> &times; 6700 &times; 9.8) / 7.47<br>
+              v<sub>t</sub> = (525.28 &times; 10<sup>&minus;3</sup>) / 7.47<br>
+              v<sub>t</sub> ≈ 0.070 m/s ≈ 7.0 cm/s
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 19. Rotating Fluids -->
+      <div class="theory-section" id="rotating-fluids">
+        <h2>19. Rotating Fluids</h2>
+        <p>
+          When a fluid container rotates about a vertical axis with constant angular velocity &omega;,
+          the liquid surface forms a paraboloid. This topic explores the pressure distribution and
+          surface shape in rotating fluids, important in applications like centrifuges and spinning containers.
+        </p>
+
+        <h3>Pressure Distribution in Rotating Fluids</h3>
+        <p>
+          In a rotating reference frame, the fluid experiences a centrifugal force. The pressure at
+          a point at distance r from the axis and depth z below the surface is:
+        </p>
+        <div class="formula-box">
+          P = P<sub>0</sub> + &frac12;&rho;&omega;&sup2;r&sup2; + &rho;gz
+        </div>
+        <p>
+          where P<sub>0</sub> is the pressure at the axis and surface level.
+        </p>
+
+        <h3>Free Surface Shape</h3>
+        <p>
+          The free surface of a rotating fluid forms a paraboloid of revolution. At a distance r from
+          the rotation axis, the surface height y above the minimum point (at the axis) is:
+        </p>
+        <div class="formula-box">
+          y = (&omega;&sup2; r&sup2;) / (2g)
+        </div>
+        <p>
+          This parabolic shape arises because at the free surface, the pressure is constant, and the
+          effect of centrifugal acceleration must be balanced by the change in gravitational potential energy.
+        </p>
+
+        <h3>Applications</h3>
+        <ul>
+          <li><strong>Centrifuge:</strong> Used to separate particles of different densities by rotating them at high angular velocities.</li>
+          <li><strong>Spinning bucket:</strong> The water surface forms a paraboloid when a bucket of water is spun rapidly.</li>
+          <li><strong>Rotating machinery:</strong> Understanding pressure distribution in rotating fluids is important for pump and turbine design.</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="ex-label">Example: Rotating Water Container</div>
+          <p>
+            A cylindrical container of water rotates about its vertical axis with an angular velocity of
+            10 rad/s. At the center (r = 0), the water depth is 0.5 m. Calculate the height of the water
+            surface at a radial distance of 0.2 m from the axis.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              The free surface height relative to the lowest point is:<br>
+              y = (&omega;&sup2; r&sup2;) / (2g)<br>
+              y = (10&sup2; &times; 0.2&sup2;) / (2 &times; 9.8)<br>
+              y = (100 &times; 0.04) / 19.6<br>
+              y = 4 / 19.6<br>
+              y ≈ 0.204 m<br><br>
+              So the water surface rises by about 0.2 m from the center to a radius of 0.2 m.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Formulas Summary -->
+      <div class="theory-section">
+        <h2>Key Formulas Summary</h2>
+        <div class="formula-box">
+          <strong>Pressure & Hydrostatics:</strong><br>
+          P = F/A &nbsp;&nbsp;|&nbsp;&nbsp; P = P<sub>0</sub> + &rho;gh &nbsp;&nbsp;|&nbsp;&nbsp; F<sub>b</sub> = &rho;Vg<br><br>
+          <strong>Pascal's Law & Hydraulics:</strong><br>
+          F&#8321;/A&#8321; = F&#8322;/A&#8322; &nbsp;&nbsp;|&nbsp;&nbsp; Thrust on vertical wall: F = &rho;gh&sup2;/2<br><br>
+          <strong>Fluids in Motion:</strong><br>
+          A&#8321;v&#8321; = A&#8322;v&#8322; (Continuity) &nbsp;&nbsp;|&nbsp;&nbsp; P + &frac12;&rho;v&sup2; + &rho;gh = const (Bernoulli)<br><br>
+          <strong>Efflux & Applications:</strong><br>
+          V = &radic;(2gh) (Torricelli) &nbsp;&nbsp;|&nbsp;&nbsp; Q = (A&#8321;A&#8322;/&radic;(A&#8321;&sup2;&minus;A&#8322;&sup2;)) &radic;(2gh) (Venturi)<br><br>
+          <strong>Reynolds Number & Flow Classification:</strong><br>
+          Re = &rho;VD/&eta; &nbsp;&nbsp;|&nbsp;&nbsp; Re &lt; 2000 (laminar) &nbsp;&nbsp;|&nbsp;&nbsp; Re &gt; 4000 (turbulent)<br><br>
+          <strong>Surface Tension & Capillarity:</strong><br>
+          T = F/l &nbsp;&nbsp;|&nbsp;&nbsp; Drop: &Delta;P = 2T/R &nbsp;&nbsp;|&nbsp;&nbsp; Bubble: &Delta;P = 4T/R<br>
+          h = (2T cos &theta;)/(r&rho;g) (Capillary rise)<br><br>
+          <strong>Viscosity & Stokes' Law:</strong><br>
+          F = &eta;A(dv/dy) &nbsp;&nbsp;|&nbsp;&nbsp; F = 6&pi;&eta;rv (Stokes)<br>
+          v<sub>t</sub> = (2r&sup2;(&rho;<sub>s</sub>&minus;&rho;<sub>f</sub>)g)/(9&eta;) (Terminal velocity)<br><br>
+          <strong>Poiseuille's Formula:</strong><br>
+          Q = (&pi;&Delta;P R<sup>4;)/(8&eta;L) &nbsp;&nbsp;|&nbsp;&nbsp; R<sub>flow</sub> = (8&eta;L)/(&pi;R<sup>4</sup>)<br><br>
+          <strong>Rotating Fluids:</strong><br>
+          P = P<sub>0</sub> + &frac12;&rho;&omega;&sup2;r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; y = (&omega;&sup2;r&sup2;)/(2g) (Free surface)
+        </div>
+      </div>
+
+      <!-- Solved Examples -->
+      <div class="theory-section">
+        <h2>Solved Examples</h2>
+
+        <div class="example-box">
+          <div class="ex-label">Example 1: Hydraulic Lift</div>
+          <p>
+            In a hydraulic lift, the area of the small piston is 10 cm&sup2; and the area of the large
+            piston is 1000 cm&sup2;. If a force of 50 N is applied on the small piston, what is the
+            maximum weight that can be lifted by the large piston?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              By Pascal&rsquo;s Law: F&#8321;/A&#8321; = F&#8322;/A&#8322;<br><br>
+              F&#8322; = F&#8321; &times; (A&#8322; / A&#8321;)<br>
+              F&#8322; = 50 &times; (1000 / 10)<br>
+              F&#8322; = 50 &times; 100<br>
+              F&#8322; = 5000 N<br><br>
+              The large piston can lift a maximum weight of 5000 N (approximately 510 kg).
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 2: Bernoulli's Equation</div>
+          <p>
+            Water flows through a horizontal pipe of varying cross-section. At a point where the
+            cross-sectional area is 40 cm&sup2;, the velocity is 2 m/s and the pressure is
+            3 &times; 10<sup>4</sup> Pa. Find the pressure at another point where the area is
+            20 cm&sup2;. (Density of water = 1000 kg/m&sup3;)
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Step 1: Find v&#8322; using the equation of continuity:<br>
+              A&#8321;v&#8321; = A&#8322;v&#8322;<br>
+              40 &times; 2 = 20 &times; v&#8322;<br>
+              v&#8322; = 4 m/s<br><br>
+              Step 2: Apply Bernoulli&rsquo;s equation (horizontal pipe, so h&#8321; = h&#8322;):<br>
+              P&#8321; + &frac12;&rho;v&#8321;&sup2; = P&#8322; + &frac12;&rho;v&#8322;&sup2;<br>
+              P&#8322; = P&#8321; + &frac12;&rho;(v&#8321;&sup2; &minus; v&#8322;&sup2;)<br>
+              P&#8322; = 3 &times; 10<sup>4</sup> + &frac12; &times; 1000 &times; (4 &minus; 16)<br>
+              P&#8322; = 30,000 + 500 &times; (&minus;12)<br>
+              P&#8322; = 30,000 &minus; 6,000<br>
+              P&#8322; = 24,000 Pa = 2.4 &times; 10<sup>4</sup> Pa<br><br>
+              The pressure at the narrower section is 2.4 &times; 10<sup>4</sup> Pa.
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 3: Terminal Velocity</div>
+          <p>
+            A steel ball of radius 2 mm and density 8000 kg/m&sup3; is dropped in a container of
+            glycerine (density = 1300 kg/m&sup3;, viscosity &eta; = 0.83 Pa&middot;s). Find the
+            terminal velocity of the ball.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using the terminal velocity formula:<br>
+              v<sub>t</sub> = (2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>f</sub>)g) / (9&eta;)<br><br>
+              Given: r = 2 mm = 2 &times; 10<sup>&minus;3</sup> m, &rho;<sub>s</sub> = 8000 kg/m&sup3;,
+              &rho;<sub>f</sub> = 1300 kg/m&sup3;, &eta; = 0.83 Pa&middot;s, g = 9.8 m/s&sup2;<br><br>
+              v<sub>t</sub> = (2 &times; (2 &times; 10<sup>&minus;3</sup>)&sup2; &times; (8000 &minus; 1300) &times; 9.8) / (9 &times; 0.83)<br>
+              v<sub>t</sub> = (2 &times; 4 &times; 10<sup>&minus;6</sup> &times; 6700 &times; 9.8) / 7.47<br>
+              v<sub>t</sub> ≈ 0.070 m/s ≈ 7.0 cm/s
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 4: Capillary Rise</div>
+          <p>
+            Water rises in a glass capillary tube of radius 0.5 mm to a height of 30 mm. Calculate
+            the surface tension of water. (Assume cos &theta; = 1 for water on glass, &rho; = 1000 kg/m&sup3;,
+            g = 9.8 m/s&sup2;)
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using h = (2T cos &theta;) / (r &rho; g):<br>
+              0.03 = (2 &times; T &times; 1) / (0.0005 &times; 1000 &times; 9.8)<br>
+              0.03 = 2T / 4.9<br>
+              T = 0.03 &times; 4.9 / 2<br>
+              T ≈ 0.073 N/m
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 5: Reynolds Number</div>
+          <p>
+            Water with density 1000 kg/m&sup3; and viscosity 0.001 Pa&middot;s flows through a pipe of
+            diameter 0.01 m at velocity 2 m/s. Calculate the Reynolds number and determine if the
+            flow is laminar or turbulent.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Re = (&rho; V D) / &eta;<br>
+              Re = (1000 &times; 2 &times; 0.01) / 0.001<br>
+              Re = 20 / 0.001 = 20,000<br><br>
+              Since Re = 20,000 &gt; 4000, the flow is turbulent.
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 6: Pitot Tube</div>
+          <p>
+            A Pitot tube is inserted into a water pipe. The manometer shows a height difference of
+            0.5 m. What is the velocity of water in the pipe?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using the Pitot tube formula for liquids:<br>
+              V = &radic;(2gh)<br>
+              V = &radic;(2 &times; 9.8 &times; 0.5)<br>
+              V = &radic;(9.8)<br>
+              V ≈ 3.13 m/s
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 7: Floating Body</div>
+          <p>
+            A wooden sphere of volume 0.1 m&sup3; and density 600 kg/m&sup3; is floating on water
+            (&rho; = 1000 kg/m&sup3;). What is the volume of the sphere that is submerged?
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Using the floating condition:<br>
+              V<sub>submerged</sub> &times; &rho;<sub>water</sub> = V &times; &rho;<sub>sphere</sub><br>
+              V<sub>submerged</sub> &times; 1000 = 0.1 &times; 600<br>
+              V<sub>submerged</sub> = 0.06 m&sup3;<br><br>
+              Fraction submerged = 0.06 / 0.1 = 60%
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 8: Soap Bubble Excess Pressure</div>
+          <p>
+            A soap bubble of radius 2 cm is formed in air. The surface tension of soap solution is
+            0.025 N/m. Calculate the excess pressure inside the bubble.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              For a soap bubble (two surfaces):<br>
+              &Delta;P = 4T / R<br>
+              &Delta;P = 4 &times; 0.025 / 0.02<br>
+              &Delta;P = 0.1 / 0.02 = 5 Pa
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 9: Tank Thrust</div>
+          <p>
+            A vertical rectangular tank wall is 4 m wide and 5 m deep, filled with water (&rho; = 1000 kg/m&sup3;).
+            Calculate the total thrust on the wall and the depth of its center of pressure.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              Total thrust: F = &rho;g h&sup2; &times; width / 2<br>
+              F = 1000 &times; 9.8 &times; 25 &times; 4 / 2<br>
+              F = 490,000 N = 490 kN<br><br>
+              Depth of center of pressure: d = 2h/3 = 2 &times; 5 / 3 ≈ 3.33 m below surface
+            </p>
+          </div>
+        </div>
+
+        <div class="example-box">
+          <div class="ex-label">Example 10: Rotating Fluid Container</div>
+          <p>
+            A cylindrical container of water rotates about its vertical axis with an angular velocity of
+            10 rad/s. At the center (r = 0), the water depth is 0.5 m. Calculate the height of the water
+            surface at a radial distance of 0.2 m from the axis.
+          </p>
+          <div class="solution">
+            <p>
+              <strong>Solution:</strong><br>
+              The free surface height relative to the lowest point is:<br>
+              y = (&omega;&sup2; r&sup2;) / (2g)<br>
+              y = (10&sup2; &times; 0.2&sup2;) / (2 &times; 9.8)<br>
+              y = (100 &times; 0.04) / 19.6<br>
+              y = 4 / 19.6 ≈ 0.204 m<br><br>
+              The water surface rises by about 0.2 m from the center.
             </p>
           </div>
         </div>

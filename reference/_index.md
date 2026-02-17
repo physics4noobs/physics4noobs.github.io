@@ -91,3 +91,35 @@ Each chapter file contains:
 
 ## What Was Skipped
 - Solution PDFs (~200 files) - Answer keys provide correct answers; solutions read only if needed later
+
+## Agent Strategy for Remaining Sessions (3-6)
+
+### Priority: Speed + Low Cost
+- Use **haiku model** for ALL reading and writing agents
+- **Read**: Theory PDFs, Question PDFs, Answer Key PDFs
+- **Skip**: Solution PDFs (never read these)
+
+### Anti-Context-Overflow Rules (Session 2 failed once due to overflow)
+1. **One section per agent** — each haiku agent writes only ONE section then exits (never multiple)
+2. **Never pass full file content** into agent prompts — only line numbers and anchor strings for Edit
+3. **Sequential batches** — don't launch next batch until previous completes (no stacking context)
+4. **Pre-write content in the prompt** — agents just append via Edit, no large-scale reading/generating
+5. **Read PDFs in chunks** with offset/limit, never whole files at once
+6. **Separate reader agents from writer agents** — reader extracts questions, writer appends them
+
+### Batch Structure (7 batches per session, 3 files in parallel per batch)
+1. **Answer Keys** — tables with 15 Q per row for each level + JEE archives
+2. **Level 0 (Easy)** — CBSE pattern: VSA, SA-I, SA-II, LA (~20-27 questions)
+3. **Level 1** — 3 DTS subsections, 15 MCQs each = 45 questions, `####` headings, Q1-45
+4. **Level 2** — DTS NAT (Q46-60) + harder MCQ sections (Q61-75/90), multi-correct with `**\*N.**`
+5. **Level 3 (Hard)** — ~12-18 subjective problems, continuous numbering from Level 2
+6. **Miscellaneous + JEE Main Archive** — Misc Q1-10 (reset numbering), JEE Main ~35-43 Q with `[Year]` + `**Ans: X**` + answer key table
+7. **JEE Advanced Archive** — organized by type (Single correct, Multi-correct, Assertion-Reason, Match Matrix, NAT, Fill-in-blanks, True/False) + answer key table
+
+### Format Rules (from gravitation.md template)
+- `**N.**` numbering, `**\*N.**` for multi-correct
+- Options inline: `(A) ... (B) ... (C) ... (D) ...`
+- `---` between major sections
+- `*Source: DTS-X (topic)*` italic under level headings
+- Answer key tables: 15 per row, `| Q# | 1 | 2 | ... | 15 |`
+- JEE archives: `**Ans: X**` after each question
