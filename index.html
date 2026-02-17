@@ -4,20 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Axomiya Engineer | Physics JEE & NEET</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <style>
-    /* Critical splash CSS — renders immediately without waiting for style.css */
+    /* Critical CSS — renders splash immediately, no external dependencies */
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{background:#050510;overflow-x:hidden;min-height:100vh}
+    [data-theme="light"] body{background:#f5f5fa}
+    a{text-decoration:none;color:inherit}
+
+    /* Splash overlay */
     .splash-screen{position:fixed;inset:0;z-index:9999;background:#050510;transition:opacity .6s ease,visibility .6s ease}
     .splash-screen.fade-out{opacity:0;visibility:hidden}
     [data-theme="light"] .splash-screen{background:#f5f5fa}
-    .nav-logo.splash-phase-1{position:fixed!important;z-index:10000;top:50%;left:50%;transform:translate(-50%,-50%) scale(2.5);display:flex;flex-direction:column;gap:16px;align-items:center;animation:splashFadeIn .5s ease-out both}
-    .nav-logo.splash-phase-1 .pendulum-mount,.nav-logo.splash-phase-1 .brand-tag{opacity:0}
-    .nav-logo.splash-phase-1 .pendulum-arm{animation:splashSwingWide 1.2s cubic-bezier(.4,0,.6,1) infinite alternate!important}
-    .nav-logo.splash-phase-1 .pendulum-bob{box-shadow:0 0 15px #00d4ff,0 0 35px rgba(0,212,255,.5),0 0 60px rgba(0,212,255,.2),inset 0 -2px 3px rgba(0,0,0,.3),inset 0 1px 2px rgba(255,255,255,.2)}
+
+    /* Nav logo base */
+    .nav-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:.45rem;color:#f0f0f5;text-transform:uppercase}
+    .nav-logo .logo-icon{width:42px;height:42px;position:relative;display:flex;align-items:center;justify-content:center}
+
+    /* Pendulum */
     .logo-pendulum{width:42px;height:42px;position:relative}
     .logo-pendulum .pendulum-mount{position:absolute;top:2px;left:50%;transform:translateX(-50%);width:20px;height:3px;background:linear-gradient(90deg,#6b6b85,#a0a0b8 40%,rgba(255,255,255,.35) 50%,#a0a0b8 60%,#6b6b85);border-radius:1px}
     .logo-pendulum .pendulum-pivot{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:2px;height:2px;background:#a0a0b8;border-radius:50%;z-index:2}
@@ -25,13 +29,40 @@
     .logo-pendulum .pendulum-rod{width:1.5px;height:22px;background:linear-gradient(180deg,rgba(255,255,255,.4),#00d4ff 30%,rgba(0,212,255,.3) 90%);margin:0 auto;border-radius:1px;box-shadow:0 0 3px rgba(0,212,255,.15)}
     .logo-pendulum .pendulum-bob{width:11px;height:11px;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.7),#00d4ff 45%,rgba(0,140,180,.9) 75%,rgba(0,60,80,.8));border-radius:50%;margin:-1px auto 0;box-shadow:0 0 8px #00d4ff,0 0 18px rgba(0,212,255,.3),inset 0 -2px 3px rgba(0,0,0,.3),inset 0 1px 2px rgba(255,255,255,.2);position:relative}
     .logo-pendulum .bob-glow{position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:8px;height:4px;background:radial-gradient(ellipse,rgba(0,212,255,.25),transparent 70%);filter:blur(2px)}
+
+    /* Logo text */
     .nav-logo .logo-text{display:flex;flex-direction:column;line-height:1.1}
     .nav-logo .logo-text .brand-name{font-family:'Orbitron',sans-serif;font-size:.85rem;background:linear-gradient(135deg,#00d4ff,#00ffaa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+    .nav-logo .logo-text .brand-tag{font-size:.55rem;font-weight:400;letter-spacing:3px;color:#6b6b85}
+
+    /* Splash Phase 1 — big centered logo */
+    .nav-logo.splash-phase-1{position:fixed!important;z-index:10000;top:50%;left:50%;transform:translate(-50%,-50%) scale(2.5);flex-direction:column;gap:16px;align-items:center;animation:splashFadeIn .5s ease-out both}
+    .nav-logo.splash-phase-1 .pendulum-mount,.nav-logo.splash-phase-1 .brand-tag{opacity:0}
+    .nav-logo.splash-phase-1 .pendulum-arm{animation:splashSwingWide 1.2s cubic-bezier(.4,0,.6,1) infinite alternate!important}
+    .nav-logo.splash-phase-1 .pendulum-bob{box-shadow:0 0 15px #00d4ff,0 0 35px rgba(0,212,255,.5),0 0 60px rgba(0,212,255,.2),inset 0 -2px 3px rgba(0,0,0,.3),inset 0 1px 2px rgba(255,255,255,.2)}
+
+    /* Splash Phase 2 — shrink to navbar */
+    .nav-logo.splash-phase-2{position:fixed!important;z-index:10000;flex-direction:row;gap:12px;align-items:center;animation:splashMorphToNav 1.5s cubic-bezier(.4,0,.2,1) forwards}
+    .nav-logo.splash-phase-2 .pendulum-arm{animation:splashSwingDecel 1.5s ease-out forwards!important}
+    .nav-logo.splash-phase-2 .pendulum-mount{animation:splashElFadeIn .4s ease-out .8s both}
+    .nav-logo.splash-phase-2 .brand-tag{animation:splashElFadeIn .4s ease-out 1s both}
+
+    /* Splash Phase 3 — settled in navbar */
+    .nav-logo.splash-phase-3{position:fixed!important;z-index:10000;top:15px;left:2rem;transform:scale(1)}
+    .nav-logo.splash-phase-3 .pendulum-arm{animation:pendulumSwing 2.4s cubic-bezier(.4,0,.6,1) infinite alternate!important}
+
     @keyframes splashFadeIn{0%{opacity:0;transform:translate(-50%,-50%) scale(2.2)}100%{opacity:1;transform:translate(-50%,-50%) scale(2.5)}}
     @keyframes splashSwingWide{0%{transform:translateX(-50%) rotate(-35deg)}100%{transform:translateX(-50%) rotate(35deg)}}
     @keyframes pendulumSwing{0%{transform:translateX(-50%) rotate(-25deg)}100%{transform:translateX(-50%) rotate(25deg)}}
+    @keyframes splashMorphToNav{0%{top:50%;left:50%;transform:translate(-50%,-50%) scale(2.5)}40%{top:35%;left:50%;transform:translate(-50%,-50%) scale(1.8)}100%{top:15px;left:2rem;transform:translate(0,0) scale(1)}}
+    @keyframes splashSwingDecel{0%{transform:translateX(-50%) rotate(-30deg)}25%{transform:translateX(-50%) rotate(15deg)}50%{transform:translateX(-50%) rotate(-8deg)}75%{transform:translateX(-50%) rotate(3deg)}100%{transform:translateX(-50%) rotate(0deg)}}
+    @keyframes splashElFadeIn{0%{opacity:0;transform:translateY(4px)}100%{opacity:1;transform:translateY(0)}}
   </style>
   <script src="js/theme.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
