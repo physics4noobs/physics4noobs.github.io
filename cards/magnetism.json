@@ -1,0 +1,267 @@
+[
+  {
+    "id": "mag-f-01",
+    "type": "formula",
+    "front": "Biot-Savart Law: magnetic field due to current element",
+    "back": "d\\vec{B} = \\frac{\\mu_0}{4\\pi} \\frac{I(d\\vec{l} \\times \\hat{r})}{r^2}\n\nMagnitude: dB = \\frac{\\mu_0}{4\\pi} \\frac{I \\, dl \\sin\\theta}{r^2}\n\n\\mu_0 = 4\\pi \\times 10^{-7} \\text{ T}\\cdot\\text{m/A}",
+    "tags": ["magnetism", "biot-savart"]
+  },
+  {
+    "id": "mag-f-02",
+    "type": "formula",
+    "front": "Magnetic field due to infinite straight wire at distance r",
+    "back": "B = \\frac{\\mu_0 I}{2\\pi r}\n\nDerived by integrating Biot-Savart from -\\infty to +\\infty.\nField lines are concentric circles; direction by right-hand rule.",
+    "tags": ["magnetism", "straight-wire"]
+  },
+  {
+    "id": "mag-f-03",
+    "type": "formula",
+    "front": "Magnetic field at center of circular loop (N turns, radius R)",
+    "back": "B = \\frac{\\mu_0 N I}{2R}\n\nField is perpendicular to loop plane.\nDirection: curl fingers along current, thumb gives \\vec{B}.",
+    "tags": ["magnetism", "circular-loop"]
+  },
+  {
+    "id": "mag-f-04",
+    "type": "formula",
+    "front": "Magnetic field on axis of circular loop at distance x from center",
+    "back": "B = \\frac{\\mu_0 N I R^2}{2(x^2 + R^2)^{3/2}}\n\nAt center (x = 0): B = \\frac{\\mu_0 N I}{2R}\n\nFor x \\gg R: B \\approx \\frac{\\mu_0 N I R^2}{2x^3} (dipole-like falloff)",
+    "tags": ["magnetism", "circular-loop", "axis"]
+  },
+  {
+    "id": "mag-f-05",
+    "type": "formula",
+    "front": "Magnetic field at center of a current-carrying arc subtending angle \\theta",
+    "back": "B = \\frac{\\mu_0 I \\theta}{4\\pi R}\n\nwhere \\theta is in radians.\n\nFull circle (\\theta = 2\\pi): B = \\frac{\\mu_0 I}{2R}\nSemicircle (\\theta = \\pi): B = \\frac{\\mu_0 I}{4R}",
+    "tags": ["magnetism", "arc", "circular-loop"]
+  },
+  {
+    "id": "mag-f-06",
+    "type": "formula",
+    "front": "Magnetic field inside a long solenoid",
+    "back": "B = \\mu_0 n I = \\frac{\\mu_0 N I}{l}\n\nn = \\frac{N}{l} = turns per unit length\n\n**Inside**: uniform, independent of position or radius\n**Outside**: approximately zero\n**At end**: B_{\\text{end}} = \\frac{\\mu_0 n I}{2}",
+    "tags": ["magnetism", "solenoid"]
+  },
+  {
+    "id": "mag-f-07",
+    "type": "formula",
+    "front": "Magnetic field inside a toroid at radius r from center",
+    "back": "B = \\frac{\\mu_0 N I}{2\\pi r}\n\nField exists **only inside** the toroid.\nB = 0 outside and at the geometric center.\nField lines are concentric circles within the toroid.",
+    "tags": ["magnetism", "toroid"]
+  },
+  {
+    "id": "mag-f-08",
+    "type": "formula",
+    "front": "Ampere's Circuital Law",
+    "back": "\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_{\\text{enc}}\n\nLine integral of B around any closed Amperian loop equals \\mu_0 times the net current threading through the loop.\n\nUseful when current distribution has high symmetry.",
+    "tags": ["magnetism", "ampere-law"]
+  },
+  {
+    "id": "mag-f-09",
+    "type": "formula",
+    "front": "Lorentz force on a moving charged particle in magnetic field",
+    "back": "\\vec{F} = q(\\vec{v} \\times \\vec{B})\n\nMagnitude: F = qvB\\sin\\theta\n\n**Key**: Force is always \\perp to \\vec{v}, so magnetic force does **no work** and cannot change speed, only direction.",
+    "tags": ["magnetism", "lorentz-force"]
+  },
+  {
+    "id": "mag-f-10",
+    "type": "formula",
+    "front": "Radius and time period of circular motion of charge in uniform B",
+    "back": "r = \\frac{mv}{qB} \\quad T = \\frac{2\\pi m}{qB} \\quad f = \\frac{qB}{2\\pi m}\n\nDerived from: qvB = \\frac{mv^2}{r}\n\n**T and f are independent of v and r** (cyclotron principle).",
+    "tags": ["magnetism", "circular-motion", "cyclotron"]
+  },
+  {
+    "id": "mag-f-11",
+    "type": "formula",
+    "front": "Force on a straight current-carrying conductor in uniform B",
+    "back": "\\vec{F} = I(\\vec{l} \\times \\vec{B})\n\nMagnitude: F = BIl\\sin\\theta\n\nMaximum when \\vec{l} \\perp \\vec{B}; zero when \\vec{l} \\parallel \\vec{B}.",
+    "tags": ["magnetism", "conductor-force"]
+  },
+  {
+    "id": "mag-f-12",
+    "type": "formula",
+    "front": "Force per unit length between two parallel current-carrying wires",
+    "back": "\\frac{F}{l} = \\frac{\\mu_0 I_1 I_2}{2\\pi d}\n\n**Same direction** currents: **attractive**\n**Opposite direction** currents: **repulsive**\n\nDefines the ampere: 1 A produces 2 \\times 10^{-7} N/m between wires 1 m apart.",
+    "tags": ["magnetism", "parallel-wires"]
+  },
+  {
+    "id": "mag-f-13",
+    "type": "formula",
+    "front": "Magnetic dipole moment of a current loop",
+    "back": "\\vec{M} = NI\\vec{A}\n\nMagnitude: M = NIA\n\nN = number of turns, I = current, A = area of loop.\nDirection: perpendicular to loop plane (right-hand rule).\nIndependent of loop shape.",
+    "tags": ["magnetism", "dipole-moment"]
+  },
+  {
+    "id": "mag-f-14",
+    "type": "formula",
+    "front": "Torque on a magnetic dipole in uniform field",
+    "back": "\\vec{\\tau} = \\vec{M} \\times \\vec{B}\n\nMagnitude: \\tau = MB\\sin\\theta = NIAB\\sin\\theta\n\nPotential energy: U = -\\vec{M} \\cdot \\vec{B} = -MB\\cos\\theta\n\nStable equilibrium at \\theta = 0; unstable at \\theta = \\pi.",
+    "tags": ["magnetism", "torque", "dipole"]
+  },
+  {
+    "id": "mag-f-15",
+    "type": "formula",
+    "front": "Moving coil galvanometer: deflection and sensitivity",
+    "back": "At equilibrium: NIAB = C\\phi\n\n\\phi = \\frac{NIAB}{C}\n\n**Current sensitivity**: \\frac{\\phi}{I} = \\frac{NAB}{C}\n\n**Voltage sensitivity**: \\frac{\\phi}{V} = \\frac{NAB}{CR}\n\nC = torsional spring constant, R = coil resistance.",
+    "tags": ["magnetism", "galvanometer"]
+  },
+  {
+    "id": "mag-c-01",
+    "type": "concept",
+    "front": "How does Biot-Savart Law compare to Coulomb's Law?",
+    "back": "**Biot-Savart vs Coulomb's Law:**\n\n- Both follow **inverse-square** dependence (1/r^2)\n- Coulomb: source is **stationary charge**; Biot-Savart: source is **current element** (moving charge)\n- Coulomb's field is **radial** (along line joining source and point); Biot-Savart field is **perpendicular** to both dl and r\n- Coulomb obeys superposition; Biot-Savart also obeys superposition\n- Coulomb's law is for **electrostatics**; Biot-Savart is for **magnetostatics**\n- Biot-Savart involves a cross product, making B inherently more complex in direction",
+    "tags": ["magnetism", "biot-savart", "comparison"]
+  },
+  {
+    "id": "mag-c-02",
+    "type": "concept",
+    "front": "Explain the various right-hand rules used in magnetism.",
+    "back": "**Right-Hand Rules in Magnetism:**\n\n1. **Straight wire**: Thumb along current, curled fingers give circular B field direction\n2. **Loop/Solenoid**: Curl fingers along current flow, thumb points along B inside\n3. **Cross product** (F = qv x B): Fingers along v, curl toward B, thumb gives F for +q\n4. **Negative charges**: Reverse the force direction (or use left hand)\n5. **Ampere's law**: Curl fingers along loop direction, thumb gives positive current sense\n\nAll rules stem from the vector cross product and the convention for its direction.",
+    "tags": ["magnetism", "right-hand-rule"]
+  },
+  {
+    "id": "mag-c-03",
+    "type": "concept",
+    "front": "When can Ampere's Circuital Law be used directly to find B? Give examples.",
+    "back": "**Ampere's Law Applications:**\n\nRequires **high symmetry** so that B is constant on the Amperian loop and parallel to dl:\n\n1. **Infinite straight wire**: circular loop of radius r gives B = mu_0 I/(2 pi r)\n2. **Infinite solenoid**: rectangular loop gives B = mu_0 n I inside\n3. **Toroid**: circular loop gives B = mu_0 NI/(2 pi r) inside\n4. **Infinite conducting sheet**: rectangular loop gives B = mu_0 K/2\n\n**Cannot** be used directly for finite wires, single loops, or irregular geometries -- use Biot-Savart instead.",
+    "tags": ["magnetism", "ampere-law", "applications"]
+  },
+  {
+    "id": "mag-c-04",
+    "type": "concept",
+    "front": "How does a velocity selector work?",
+    "back": "**Velocity Selector:**\n\nCrossed E and B fields are arranged perpendicular to each other and to the particle velocity.\n\n- Electric force: F_E = qE (deflects one way)\n- Magnetic force: F_B = qvB (deflects opposite way)\n- Undeflected when: qE = qvB, so **v = E/B**\n\nOnly particles with speed v = E/B pass through undeviated.\nFaster particles bend toward B-force side; slower toward E-force side.\n\nUsed in mass spectrometers and Thomson's e/m experiment.",
+    "tags": ["magnetism", "velocity-selector", "applications"]
+  },
+  {
+    "id": "mag-c-05",
+    "type": "concept",
+    "front": "Explain the working principle of a cyclotron.",
+    "back": "**Cyclotron Principle:**\n\nA cyclotron accelerates charged particles using:\n1. **Magnetic field (B)**: bends particle into semicircles between two D-shaped electrodes (\"dees\")\n2. **Oscillating electric field**: accelerates particle across the gap between dees\n\n**Key insight**: Time period T = 2 pi m/(qB) is **independent of speed and radius**.\nSo the oscillating frequency stays constant (cyclotron frequency = qB/(2 pi m)).\n\nAs particle gains energy, radius increases (r = mv/qB) but T stays the same.\n\n**Limitation**: At relativistic speeds, mass increases and T changes, causing desynchronization.",
+    "tags": ["magnetism", "cyclotron", "applications"]
+  },
+  {
+    "id": "mag-c-06",
+    "type": "concept",
+    "front": "How is a galvanometer converted into an ammeter and a voltmeter?",
+    "back": "**Galvanometer Conversions:**\n\n**To Ammeter** (measure large current):\n- Connect **low resistance shunt S in parallel**\n- S = I_g R_g / (I - I_g), where I_g = full-scale deflection current\n- Most current bypasses through shunt; ammeter resistance is very low\n\n**To Voltmeter** (measure voltage):\n- Connect **high resistance R in series**\n- R = V/I_g - R_g\n- Limits current to I_g at full-scale voltage V; voltmeter resistance is very high\n\n**Ideal ammeter**: zero resistance. **Ideal voltmeter**: infinite resistance.",
+    "tags": ["magnetism", "galvanometer", "ammeter", "voltmeter"]
+  },
+  {
+    "id": "mag-c-07",
+    "type": "concept",
+    "front": "Compare diamagnetic, paramagnetic, and ferromagnetic materials.",
+    "back": "**Magnetic Material Comparison:**\n\n| Property | Diamagnetic | Paramagnetic | Ferromagnetic |\n|---|---|---|---|\n| Susceptibility (chi) | Small, negative (~-10^-5) | Small, positive (~10^-4) | Very large, positive (~10^3) |\n| Permanent dipole? | No | Yes (random) | Yes (domain-aligned) |\n| Effect of B | Weakly repelled | Weakly attracted | Strongly attracted |\n| Temperature | Independent | chi decreases (Curie law) | Loses above Curie temp |\n| Examples | Cu, Bi, H2O | Al, Mn, O2 | Fe, Co, Ni |\n| Hysteresis | No | No | Yes |",
+    "tags": ["magnetism", "materials", "diamagnetic", "paramagnetic", "ferromagnetic"]
+  },
+  {
+    "id": "mag-c-08",
+    "type": "concept",
+    "front": "What is magnetic hysteresis? Why does it matter?",
+    "back": "**Magnetic Hysteresis:**\n\nThe B-H curve of a ferromagnet forms a **closed loop** because magnetization depends on field history, not just current field.\n\n**Key terms:**\n- **Retentivity (B_r)**: B remaining when H is reduced to zero\n- **Coercivity (H_c)**: reverse H needed to reduce B to zero\n- **Saturation**: all domains aligned, B plateaus\n\n**Practical importance:**\n- **Permanent magnets**: need high retentivity, high coercivity (steel)\n- **Transformer cores**: need low hysteresis loss (soft iron -- narrow loop)\n- **Area of loop** = energy lost as heat per cycle\n- Hysteresis loss = problem in AC applications",
+    "tags": ["magnetism", "hysteresis", "ferromagnetic"]
+  },
+  {
+    "id": "mag-c-09",
+    "type": "concept",
+    "front": "What are the three elements of Earth's magnetic field at any location?",
+    "back": "**Earth's Magnetic Elements:**\n\n1. **Declination (delta)**: Angle between geographic north and magnetic north in the horizontal plane\n2. **Dip / Inclination (I)**: Angle between total field B and the horizontal\n   - I = 0 at magnetic equator (B is horizontal)\n   - I = 90 deg at magnetic poles (B is vertical)\n3. **Horizontal component (B_H)**: B_H = B cos I\n\n**Relations:**\n- B_V = B sin I (vertical component)\n- B = sqrt(B_H^2 + B_V^2)\n- tan I = B_V / B_H\n\nMagnetic north pole of Earth is near geographic south pole.",
+    "tags": ["magnetism", "earth-magnetism"]
+  },
+  {
+    "id": "mag-c-10",
+    "type": "concept",
+    "front": "How does magnetic shielding work?",
+    "back": "**Magnetic Shielding:**\n\nA hollow shell of **high-permeability ferromagnetic material** (e.g., mu-metal, soft iron) diverts external magnetic field lines through its walls, leaving the interior nearly field-free.\n\n**Mechanism:**\n- Field lines prefer the high-mu material over air (path of least reluctance)\n- Lines concentrate in the shell walls instead of passing through the cavity\n- Interior field is greatly reduced\n\n**Applications:**\n- Shielding sensitive instruments (galvanometers, CRT tubes)\n- Protecting electronic components from stray fields\n\n**Note**: Unlike electrostatic shielding (any conductor works), magnetic shielding requires high-permeability material.",
+    "tags": ["magnetism", "shielding", "applications"]
+  },
+  {
+    "id": "mag-mcq-01",
+    "type": "mcq",
+    "front": "A circular loop of radius R carries current I. The ratio of magnetic field at the center to the field on the axis at distance R from the center is:",
+    "options": ["1 : 1", "2\\sqrt{2} : 1", "2 : 1", "\\sqrt{2} : 1"],
+    "answer": "B",
+    "back": "**Answer: B**\n\nAt center: B_0 = \\frac{\\mu_0 I}{2R}\n\nAt x = R: B = \\frac{\\mu_0 I R^2}{2(R^2 + R^2)^{3/2}} = \\frac{\\mu_0 I R^2}{2(2R^2)^{3/2}} = \\frac{\\mu_0 I}{2R} \\times \\frac{1}{2\\sqrt{2}}\n\nRatio: B_0 / B = 2\\sqrt{2} : 1",
+    "tags": ["magnetism", "biot-savart", "circular-loop"]
+  },
+  {
+    "id": "mag-mcq-02",
+    "type": "mcq",
+    "front": "A proton and an alpha particle (charge 2e, mass 4m_p) enter a uniform magnetic field with the same velocity perpendicular to B. The ratio of their radii r_p : r_alpha is:",
+    "options": ["1 : 2", "1 : 1", "2 : 1", "1 : 4"],
+    "answer": "A",
+    "back": "**Answer: A (1 : 2)**\n\nr = \\frac{mv}{qB}\n\nr_p = \\frac{m_p v}{eB}, \\quad r_\\alpha = \\frac{4m_p v}{2eB} = \\frac{2m_p v}{eB}\n\nr_p : r_\\alpha = 1 : 2\n\nThe alpha particle traces a larger circle because its mass-to-charge ratio (m/q = 2m_p/e) is double that of the proton (m/q = m_p/e).",
+    "tags": ["magnetism", "circular-motion", "particle"]
+  },
+  {
+    "id": "mag-mcq-03",
+    "type": "mcq",
+    "front": "A current I flows through a wire bent into a regular hexagon of side a. The magnetic field at the center of the hexagon is:",
+    "options": ["\\frac{\\mu_0 I}{2\\pi a}", "\\frac{\\sqrt{3} \\mu_0 I}{\\pi a}", "\\frac{3\\mu_0 I}{\\pi a}", "\\frac{\\mu_0 I}{\\sqrt{3} \\pi a}"],
+    "answer": "B",
+    "back": "**Answer: B**\n\nEach side subtends 60 deg at center. Perpendicular distance from center to each side: d = \\frac{\\sqrt{3}}{2}a\n\nField due to one side (finite wire): B_1 = \\frac{\\mu_0 I}{4\\pi d}(\\sin 30° + \\sin 30°) = \\frac{\\mu_0 I}{4\\pi \\cdot \\frac{\\sqrt{3}}{2}a} \\times 1 = \\frac{\\mu_0 I}{2\\sqrt{3}\\pi a}\n\nTotal for 6 sides (all fields point same direction): B = 6 \\times \\frac{\\mu_0 I}{2\\sqrt{3}\\pi a} = \\frac{3\\mu_0 I}{\\sqrt{3}\\pi a} = \\frac{\\sqrt{3}\\mu_0 I}{\\pi a}",
+    "tags": ["magnetism", "biot-savart", "numerical"]
+  },
+  {
+    "id": "mag-mcq-04",
+    "type": "mcq",
+    "front": "A charged particle moves in a helical path in a uniform magnetic field. If the pitch of the helix is equal to the circumference of the circular component, the angle between v and B is:",
+    "options": ["30 deg", "45 deg", "60 deg", "90 deg"],
+    "answer": "B",
+    "back": "**Answer: B (45 deg)**\n\nPitch: P = v\\cos\\theta \\times \\frac{2\\pi m}{qB}\n\nCircumference: C = 2\\pi r = 2\\pi \\times \\frac{mv\\sin\\theta}{qB} = \\frac{2\\pi m v\\sin\\theta}{qB}\n\nSetting P = C:\nv\\cos\\theta \\times \\frac{2\\pi m}{qB} = \\frac{2\\pi m v\\sin\\theta}{qB}\n\n\\cos\\theta = \\sin\\theta \\implies \\theta = 45°",
+    "tags": ["magnetism", "helical-motion", "particle"]
+  },
+  {
+    "id": "mag-mcq-05",
+    "type": "mcq",
+    "front": "Two long parallel wires separated by 0.1 m carry currents of 5 A and 10 A in the same direction. The force per unit length on each wire is:",
+    "options": ["10^{-4} N/m, attractive", "10^{-4} N/m, repulsive", "10^{-5} N/m, attractive", "10^{-5} N/m, repulsive"],
+    "answer": "A",
+    "back": "**Answer: A**\n\n\\frac{F}{l} = \\frac{\\mu_0 I_1 I_2}{2\\pi d} = \\frac{4\\pi \\times 10^{-7} \\times 5 \\times 10}{2\\pi \\times 0.1}\n\n= \\frac{2 \\times 10^{-5} \\times 50}{0.1} = \\frac{200 \\times 10^{-7}}{0.2} = 10^{-4} \\text{ N/m}\n\nSame direction currents attract each other.",
+    "tags": ["magnetism", "parallel-wires", "numerical"]
+  },
+  {
+    "id": "mag-mcq-06",
+    "type": "mcq",
+    "front": "An electron enters a region of uniform B field perpendicular to its velocity. The kinetic energy of the electron:",
+    "options": ["Increases steadily", "Decreases steadily", "Remains constant", "Oscillates"],
+    "answer": "C",
+    "back": "**Answer: C (Remains constant)**\n\nThe magnetic force F = q(v x B) is always perpendicular to the velocity.\n\nWork done: dW = F . ds = F . v dt = 0 (since F perp v)\n\nSince no work is done, kinetic energy (and speed) remain constant. The magnetic field only changes the **direction** of motion, not the speed. The particle moves in a circle at constant speed.",
+    "tags": ["magnetism", "lorentz-force", "energy"]
+  },
+  {
+    "id": "mag-mcq-07",
+    "type": "mcq",
+    "front": "A galvanometer with resistance 50 ohm gives full-scale deflection for 1 mA. To convert it to a voltmeter reading up to 10 V, the series resistance needed is:",
+    "options": ["9950 ohm", "10000 ohm", "950 ohm", "5000 ohm"],
+    "answer": "A",
+    "back": "**Answer: A (9950 ohm)**\n\nFor voltmeter, add series resistance R:\n\nV = I_g(R_g + R)\n\n10 = 10^{-3}(50 + R)\n\n50 + R = 10000\n\nR = 9950 \\text{ ohm}\n\nThe high series resistance limits current to I_g when the full voltage V is applied.",
+    "tags": ["magnetism", "galvanometer", "voltmeter", "numerical"]
+  },
+  {
+    "id": "mag-mcq-08",
+    "type": "mcq",
+    "front": "A galvanometer with resistance 100 ohm gives full-scale deflection for 10 mA. To convert it to an ammeter reading up to 10 A, the shunt resistance needed is approximately:",
+    "options": ["0.1 ohm", "1 ohm", "10 ohm", "100 ohm"],
+    "answer": "A",
+    "back": "**Answer: A (approximately 0.1 ohm)**\n\nShunt: S = \\frac{I_g R_g}{I - I_g} = \\frac{0.01 \\times 100}{10 - 0.01} = \\frac{1}{9.99} \\approx 0.1 \\text{ ohm}\n\nThe very low shunt resistance allows most of the 10 A to bypass the sensitive galvanometer coil.",
+    "tags": ["magnetism", "galvanometer", "ammeter", "numerical"]
+  },
+  {
+    "id": "mag-mcq-09",
+    "type": "mcq",
+    "front": "A bar magnet is placed inside a diamagnetic hollow sphere. The magnetic field lines inside the sphere:",
+    "options": ["Are denser than outside", "Are less dense (field is weakened)", "Remain unchanged", "Reverse direction"],
+    "answer": "B",
+    "back": "**Answer: B (Less dense / field weakened)**\n\nDiamagnetic materials have permeability mu < mu_0 (susceptibility chi < 0).\n\nThe induced magnetization in the diamagnetic sphere **opposes** the applied field, reducing the net field inside.\n\nThis is the basis of weak diamagnetic shielding. In contrast, a ferromagnetic shell concentrates field lines in its walls, strongly reducing the interior field (effective magnetic shielding).",
+    "tags": ["magnetism", "materials", "diamagnetic", "shielding"]
+  },
+  {
+    "id": "mag-mcq-10",
+    "type": "mcq",
+    "front": "A wire of length L carrying current I is bent into a circle. The magnetic moment of the loop is:",
+    "options": ["\\frac{IL^2}{4\\pi}", "\\frac{IL^2}{2\\pi}", "\\frac{IL}{4\\pi}", "\\frac{IL^2}{\\pi}"],
+    "answer": "A",
+    "back": "**Answer: A**\n\nCircumference = L, so radius R = \\frac{L}{2\\pi}\n\nArea = \\pi R^2 = \\pi \\times \\frac{L^2}{4\\pi^2} = \\frac{L^2}{4\\pi}\n\nMagnetic moment: M = IA = \\frac{IL^2}{4\\pi}\n\nThis is a common JEE problem testing the relationship between wire length and dipole moment.",
+    "tags": ["magnetism", "dipole-moment", "numerical"]
+  }
+]

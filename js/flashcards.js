@@ -50,7 +50,10 @@
     'fluid-mechanics': 'Fluid Mechanics',
     thermodynamics: 'Thermodynamics',
     shm: 'Simple Harmonic Motion',
-    waves: 'Waves'
+    waves: 'Waves',
+    electrostatics: 'Electrostatics',
+    'current-electricity': 'Current Electricity',
+    magnetism: 'Magnetism'
   };
   var currentChapter = null;
   var cards = [];

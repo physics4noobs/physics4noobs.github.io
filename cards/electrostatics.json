@@ -1,0 +1,267 @@
+[
+  {
+    "id": "es-f-01",
+    "type": "formula",
+    "front": "Coulomb's Law: Force between two point charges",
+    "back": "F = \\frac{1}{4\\pi\\epsilon_0} \\cdot \\frac{|q_1 q_2|}{r^2}\n\n\\frac{1}{4\\pi\\epsilon_0} = 9 \\times 10^9 \\text{ N m}^2\\text{/C}^2\n\nIn a medium with dielectric constant k:\nF = \\frac{1}{4\\pi\\epsilon_0 k} \\cdot \\frac{|q_1 q_2|}{r^2}",
+    "tags": ["electrostatics", "coulombs-law"]
+  },
+  {
+    "id": "es-f-02",
+    "type": "formula",
+    "front": "Electric Field due to a Point Charge",
+    "back": "E = \\frac{1}{4\\pi\\epsilon_0} \\cdot \\frac{q}{r^2}\n\nVector form: \\vec{E} = \\frac{q}{4\\pi\\epsilon_0 r^2} \\hat{r}\n\nDirection: away from +q, towards -q",
+    "tags": ["electrostatics", "electric-field"]
+  },
+  {
+    "id": "es-f-03",
+    "type": "formula",
+    "front": "Electric Field of a Dipole (Axial and Equatorial)",
+    "back": "**Axial point** (on dipole axis, r \\gg l):\nE_{axial} = \\frac{2p}{4\\pi\\epsilon_0 r^3}\n\n**Equatorial point** (perpendicular bisector):\nE_{eq} = \\frac{p}{4\\pi\\epsilon_0 r^3}\n\n**General point** (at angle \\theta):\nE = \\frac{p}{4\\pi\\epsilon_0 r^3}\\sqrt{1 + 3\\cos^2\\theta}\n\nDipole moment: p = q \\times 2l",
+    "tags": ["electrostatics", "dipole"]
+  },
+  {
+    "id": "es-f-04",
+    "type": "formula",
+    "front": "Electric Field on Axis of a Uniformly Charged Ring",
+    "back": "E = \\frac{Qx}{4\\pi\\epsilon_0 \\left(x^2 + R^2\\right)^{3/2}}\n\nQ = total charge, R = ring radius, x = distance from center along axis\n\nMaximum field at x = \\frac{R}{\\sqrt{2}}",
+    "tags": ["electrostatics", "continuous-charge"]
+  },
+  {
+    "id": "es-f-05",
+    "type": "formula",
+    "front": "Electric Field due to a Uniformly Charged Disc",
+    "back": "E = \\frac{\\sigma}{2\\epsilon_0}\\left(1 - \\frac{x}{\\sqrt{x^2 + R^2}}\\right)\n\n\\sigma = surface charge density, R = disc radius, x = axial distance\n\nAs R \\to \\infty: E \\to \\frac{\\sigma}{2\\epsilon_0} (infinite sheet)",
+    "tags": ["electrostatics", "continuous-charge"]
+  },
+  {
+    "id": "es-f-06",
+    "type": "formula",
+    "front": "Electric Field due to Infinite Line Charge",
+    "back": "E = \\frac{\\lambda}{2\\pi\\epsilon_0 r}\n\n\\lambda = linear charge density (C/m)\nr = perpendicular distance from line\n\nDirection: radially outward for +\\lambda, inward for -\\lambda",
+    "tags": ["electrostatics", "continuous-charge"]
+  },
+  {
+    "id": "es-f-07",
+    "type": "formula",
+    "front": "Electric Field due to Infinite Plane Sheet of Charge",
+    "back": "E = \\frac{\\sigma}{2\\epsilon_0}\n\n\\sigma = surface charge density (C/m^2)\n\n**Key:** Field is uniform and independent of distance from the sheet\n\nFor two parallel sheets (+\\sigma and -\\sigma):\nE_{between} = \\frac{\\sigma}{\\epsilon_0}, \\quad E_{outside} = 0",
+    "tags": ["electrostatics", "continuous-charge"]
+  },
+  {
+    "id": "es-f-08",
+    "type": "formula",
+    "front": "Gauss's Law",
+    "back": "\\oint \\vec{E} \\cdot d\\vec{A} = \\frac{q_{enc}}{\\epsilon_0}\n\nTotal electric flux through a closed surface = \\frac{\\text{enclosed charge}}{\\epsilon_0}\n\nFor continuous distribution: q_{enc} = \\int \\rho \\, dV",
+    "tags": ["electrostatics", "gauss-law"]
+  },
+  {
+    "id": "es-f-09",
+    "type": "formula",
+    "front": "Electric Potential due to a Point Charge and Relation to Field",
+    "back": "V = \\frac{1}{4\\pi\\epsilon_0} \\cdot \\frac{q}{r}\n\nRelation to field: E = -\\frac{dV}{dr}\n\nPotential difference: V_A - V_B = -\\int_B^A \\vec{E} \\cdot d\\vec{r}\n\nFor multiple charges: V = \\sum_i \\frac{q_i}{4\\pi\\epsilon_0 r_i} (scalar sum)",
+    "tags": ["electrostatics", "potential"]
+  },
+  {
+    "id": "es-f-10",
+    "type": "formula",
+    "front": "Electric Potential Energy of a Two-Charge System",
+    "back": "U = \\frac{1}{4\\pi\\epsilon_0} \\cdot \\frac{q_1 q_2}{r}\n\nFor n charges: U = \\frac{1}{2}\\sum_{i \\neq j} \\frac{q_i q_j}{4\\pi\\epsilon_0 r_{ij}}\n\nDipole in external field: U = -pE\\cos\\theta = -\\vec{p} \\cdot \\vec{E}",
+    "tags": ["electrostatics", "potential-energy"]
+  },
+  {
+    "id": "es-f-11",
+    "type": "formula",
+    "front": "Capacitance: Parallel Plate, Spherical, and Cylindrical",
+    "back": "**Parallel plate:** C = \\frac{\\epsilon_0 A}{d}\n\n**Spherical** (radii a, b): C = \\frac{4\\pi\\epsilon_0 ab}{b - a}\n\n**Cylindrical** (radii a, b, length l): C = \\frac{2\\pi\\epsilon_0 l}{\\ln\\left(\\frac{b}{a}\\right)}\n\n**Isolated sphere:** C = 4\\pi\\epsilon_0 R",
+    "tags": ["electrostatics", "capacitance"]
+  },
+  {
+    "id": "es-f-12",
+    "type": "formula",
+    "front": "Capacitors in Series and Parallel",
+    "back": "**Series:** \\frac{1}{C_{eq}} = \\frac{1}{C_1} + \\frac{1}{C_2} + \\frac{1}{C_3} + \\cdots\n\nFor two: C_{eq} = \\frac{C_1 C_2}{C_1 + C_2}\n\n**Parallel:** C_{eq} = C_1 + C_2 + C_3 + \\cdots\n\nSeries: same charge Q, voltage divides\nParallel: same voltage V, charge divides",
+    "tags": ["electrostatics", "capacitance"]
+  },
+  {
+    "id": "es-f-13",
+    "type": "formula",
+    "front": "Energy Stored in a Capacitor",
+    "back": "U = \\frac{1}{2}CV^2 = \\frac{Q^2}{2C} = \\frac{1}{2}QV\n\nEnergy density in electric field:\nu = \\frac{1}{2}\\epsilon_0 E^2 \\text{ (in vacuum)}\nu = \\frac{1}{2}\\epsilon_0 k E^2 \\text{ (in dielectric)}",
+    "tags": ["electrostatics", "energy"]
+  },
+  {
+    "id": "es-f-14",
+    "type": "formula",
+    "front": "Force between Parallel Plate Capacitor Plates",
+    "back": "F = \\frac{Q^2}{2\\epsilon_0 A} = \\frac{\\sigma^2 A}{2\\epsilon_0} = \\frac{\\epsilon_0 A V^2}{2d^2}\n\nForce per unit area (electrostatic pressure):\nP = \\frac{\\sigma^2}{2\\epsilon_0} = \\frac{1}{2}\\epsilon_0 E^2\n\nPlates always attract each other (opposite charges)",
+    "tags": ["electrostatics", "capacitance"]
+  },
+  {
+    "id": "es-f-15",
+    "type": "formula",
+    "front": "Parallel Plate Capacitor with Dielectric Slab",
+    "back": "**Fully filled:** C = \\frac{k\\epsilon_0 A}{d}\n\n**Partially filled** (slab thickness t, dielectric k):\nC = \\frac{\\epsilon_0 A}{d - t + \\frac{t}{k}}\n\n**Multiple slabs in series:**\nC = \\frac{\\epsilon_0 A}{\\frac{d_1}{k_1} + \\frac{d_2}{k_2} + \\cdots}\n\n**Conducting slab** (thickness t): C = \\frac{\\epsilon_0 A}{d - t}",
+    "tags": ["electrostatics", "dielectric"]
+  },
+  {
+    "id": "es-c-01",
+    "type": "concept",
+    "front": "What are the key properties of electric field lines?",
+    "back": "**Properties of Electric Field Lines:**\n\n1. Originate from positive charges, terminate on negative charges\n2. Tangent at any point gives the direction of the electric field\n3. Never intersect (field direction would be ambiguous)\n4. Closer spacing means stronger field; wider spacing means weaker field\n5. Always perpendicular to conductor surfaces\n6. Form closed loops in some cases (like in changing magnetic fields) but never in pure electrostatics\n7. The number of lines is proportional to the magnitude of the charge",
+    "tags": ["electrostatics", "field-lines"]
+  },
+  {
+    "id": "es-c-02",
+    "type": "concept",
+    "front": "What are the standard applications of Gauss's Law?",
+    "back": "**Gauss's Law Applications (requires symmetry):**\n\n1. **Spherical symmetry** (point charge, sphere): Gaussian surface = concentric sphere\n2. **Cylindrical symmetry** (infinite line, cylinder): Gaussian surface = coaxial cylinder\n3. **Planar symmetry** (infinite sheet): Gaussian surface = pillbox\n\n**Key results:**\n- Outside a uniform sphere: E = \\frac{Q}{4\\pi\\epsilon_0 r^2} (behaves as point charge)\n- Inside a conducting sphere: E = 0\n- Inside a uniformly charged sphere: E = \\frac{Qr}{4\\pi\\epsilon_0 R^3} (increases linearly with r)",
+    "tags": ["electrostatics", "gauss-law"]
+  },
+  {
+    "id": "es-c-03",
+    "type": "concept",
+    "front": "What are the electrostatic properties of conductors?",
+    "back": "**Conductors in Electrostatic Equilibrium:**\n\n1. **E = 0 inside** the conductor (free charges rearrange to cancel any internal field)\n2. All excess charge resides on the **surface only**\n3. The entire conductor is an **equipotential** body\n4. Field just outside the surface: E = \\frac{\\sigma}{\\epsilon_0}, directed normal to surface\n5. Surface charge density is **highest at sharp points** (small radius of curvature)\n6. Cavity inside a conductor is completely shielded from external fields (**Faraday cage**)",
+    "tags": ["electrostatics", "conductors"]
+  },
+  {
+    "id": "es-c-04",
+    "type": "concept",
+    "front": "What are equipotential surfaces and their relationship with field lines?",
+    "back": "**Equipotential Surfaces:**\n\nSurfaces where electric potential is constant at every point.\n\n1. Always **perpendicular** to electric field lines\n2. **No work** is done in moving a charge along an equipotential surface (W = q\\Delta V = 0)\n3. Closer equipotential spacing indicates a **stronger field**\n4. Point charge: equipotentials are **concentric spheres**\n5. Uniform field: equipotentials are **parallel planes**\n6. Two field lines can never intersect an equipotential surface at the same point",
+    "tags": ["electrostatics", "potential"]
+  },
+  {
+    "id": "es-c-05",
+    "type": "concept",
+    "front": "What is dielectric polarization and how does it affect capacitors?",
+    "back": "**Dielectric Polarization:**\n\nWhen a dielectric is placed in an external field, molecular dipoles align, creating a net surface charge that produces an internal opposing field.\n\n**Effects on capacitor:**\n- Net field reduced by factor k: E = \\frac{E_0}{k}\n- Capacitance increases: C = kC_0\n\n**Battery connected:** V constant, Q increases to kQ_0, energy increases to kU_0\n**Battery disconnected:** Q constant, V decreases to V_0/k, energy decreases to U_0/k\n\nThe decrease in energy (battery disconnected) equals the work done in pulling the slab in.",
+    "tags": ["electrostatics", "dielectric"]
+  },
+  {
+    "id": "es-c-06",
+    "type": "concept",
+    "front": "How does a Van de Graaff generator work?",
+    "back": "**Van de Graaff Generator:**\n\nA device that accumulates very high voltages on a hollow metallic sphere.\n\n**Principle:** Charge sprayed onto a moving belt is carried to the interior of a hollow conductor. Inside the conductor, the charge transfers completely to the outer surface regardless of existing charge, because E = 0 inside.\n\n**Key physics:**\n1. Charge always moves to the outer surface of a conductor\n2. No upper limit on surface potential (theoretically)\n3. Limited in practice by dielectric breakdown of surrounding air (~3 \\times 10^6 V/m)\n4. Used as particle accelerators for nuclear physics experiments",
+    "tags": ["electrostatics", "van-de-graaff"]
+  },
+  {
+    "id": "es-c-07",
+    "type": "concept",
+    "front": "How does an electric dipole behave in uniform and non-uniform fields?",
+    "back": "**In Uniform Field:**\n- Net force = 0 (equal and opposite forces on +q and -q)\n- Net torque: \\tau = pE\\sin\\theta (tends to align dipole with field)\n- Potential energy: U = -pE\\cos\\theta\n- Stable equilibrium at \\theta = 0, unstable at \\theta = 180^\\circ\n\n**In Non-Uniform Field:**\n- Net force is non-zero (dipole moves toward stronger field region)\n- Both torque and translational force act\n- Force: F = p\\frac{dE}{dr} (along the field gradient)",
+    "tags": ["electrostatics", "dipole"]
+  },
+  {
+    "id": "es-c-08",
+    "type": "concept",
+    "front": "What is electrostatic shielding and how does it work?",
+    "back": "**Electrostatic Shielding (Faraday Cage):**\n\nA hollow conductor completely shields its interior from external electric fields.\n\n**How it works:**\n1. External field induces surface charges on the conductor\n2. These charges rearrange to produce a field that exactly cancels the external field inside\n3. E = 0 everywhere inside the conductor and its cavity\n4. Any charge placed inside a cavity does not affect the external field distribution\n\n**Applications:** Protecting sensitive electronics, coaxial cables, MRI rooms, lightning protection for aircraft and cars",
+    "tags": ["electrostatics", "shielding"]
+  },
+  {
+    "id": "es-c-09",
+    "type": "concept",
+    "front": "What is energy density in an electric field and why is it important?",
+    "back": "**Energy Density:**\n\nEnergy stored per unit volume in an electric field:\nu = \\frac{1}{2}\\epsilon_0 E^2 (in vacuum)\nu = \\frac{1}{2}\\epsilon_0 k E^2 (in dielectric)\n\n**Significance:**\n1. Energy is stored in the **field itself**, not on charges or plates\n2. Total energy: U = \\int u \\, dV (integrate over all space)\n3. For parallel plate capacitor: U = \\frac{1}{2}\\epsilon_0 E^2 \\times Ad confirms U = \\frac{1}{2}CV^2\n4. Higher field regions store more energy per unit volume\n5. This concept bridges electrostatics with electromagnetic wave energy",
+    "tags": ["electrostatics", "energy"]
+  },
+  {
+    "id": "es-c-10",
+    "type": "concept",
+    "front": "What happens to stored energy when capacitors are connected together?",
+    "back": "**Charge Redistribution Between Capacitors:**\n\nWhen a charged capacitor C_1 (voltage V_1) is connected to an uncharged capacitor C_2:\n\n**Common voltage:** V = \\frac{C_1 V_1}{C_1 + C_2}\n\n**Energy before:** U_i = \\frac{1}{2}C_1 V_1^2\n**Energy after:** U_f = \\frac{1}{2}(C_1 + C_2)V^2 = \\frac{C_1^2 V_1^2}{2(C_1 + C_2)}\n\n**Energy is always lost** as heat (through resistance of connecting wires, or as radiation). The loss equals:\n\\Delta U = \\frac{C_1 C_2 (V_1 - V_2)^2}{2(C_1 + C_2)}",
+    "tags": ["electrostatics", "capacitance"]
+  },
+  {
+    "id": "es-mcq-01",
+    "type": "mcq",
+    "front": "Two identical charges +Q are placed at distance d apart. A third charge q is placed at the midpoint. For the system to be in equilibrium, q must be:",
+    "options": ["q = +Q/4", "q = -Q/4", "q = -Q/2", "q = +Q/2"],
+    "answer": "B",
+    "back": "**Answer: B - q = -Q/4**\n\nFor the charge at the midpoint to be in equilibrium, net force on it is already zero by symmetry.\n\nFor one of the +Q charges to be in equilibrium:\nRepulsion from other +Q = Attraction from q\n\\frac{Q^2}{4\\pi\\epsilon_0 d^2} = \\frac{Qq}{4\\pi\\epsilon_0 (d/2)^2}\n\nQ = 4q \\Rightarrow q = -\\frac{Q}{4}\n\nThe charge must be negative to attract the +Q charges inward.",
+    "tags": ["electrostatics", "coulombs-law"]
+  },
+  {
+    "id": "es-mcq-02",
+    "type": "mcq",
+    "front": "Three charges +q, +2q, and +4q are placed at vertices of an equilateral triangle of side a. The electric potential at the centroid is:",
+    "options": ["\\frac{7q}{4\\pi\\epsilon_0 a}", "\\frac{7q\\sqrt{3}}{4\\pi\\epsilon_0 a}", "\\frac{7q}{4\\pi\\epsilon_0 a} \\times \\sqrt{3}", "\\frac{21q}{4\\pi\\epsilon_0 a}"],
+    "answer": "C",
+    "back": "**Answer: C**\n\nDistance from each vertex to centroid = \\frac{a}{\\sqrt{3}}\n\nPotential is a scalar sum:\nV = \\frac{1}{4\\pi\\epsilon_0} \\left(\\frac{q + 2q + 4q}{a/\\sqrt{3}}\\right)\n\nV = \\frac{7q\\sqrt{3}}{4\\pi\\epsilon_0 a}\n\nKey insight: potential is scalar, so no vector addition is needed. Simply sum all contributions.",
+    "tags": ["electrostatics", "superposition"]
+  },
+  {
+    "id": "es-mcq-03",
+    "type": "mcq",
+    "front": "A solid conducting sphere of radius R carries charge Q. The electric field at distance r = R/2 from the center is:",
+    "options": ["\\frac{Q}{4\\pi\\epsilon_0 R^2}", "\\frac{Q}{\\pi\\epsilon_0 R^2}", "\\frac{2Q}{4\\pi\\epsilon_0 R^2}", "Zero"],
+    "answer": "D",
+    "back": "**Answer: D - Zero**\n\nInside a solid conducting sphere, E = 0 everywhere. All charge resides on the surface, and by Gauss's law, a Gaussian surface at r = R/2 encloses no charge.\n\nNote: This is different from a uniformly charged non-conducting sphere, where E = \\frac{Qr}{4\\pi\\epsilon_0 R^3} inside.",
+    "tags": ["electrostatics", "gauss-law"]
+  },
+  {
+    "id": "es-mcq-04",
+    "type": "mcq",
+    "front": "A uniformly charged non-conducting sphere of radius R has total charge Q. The electric field at r = R/2 (inside) is:",
+    "options": ["\\frac{Q}{4\\pi\\epsilon_0 R^2}", "\\frac{Q}{8\\pi\\epsilon_0 R^2}", "\\frac{Q}{16\\pi\\epsilon_0 R^2}", "Zero"],
+    "answer": "B",
+    "back": "**Answer: B**\n\nUsing Gauss's law inside the sphere (r < R):\nE \\cdot 4\\pi r^2 = \\frac{Q_{enc}}{\\epsilon_0} = \\frac{Q(r/R)^3}{\\epsilon_0}\n\nE = \\frac{Qr}{4\\pi\\epsilon_0 R^3}\n\nAt r = R/2:\nE = \\frac{Q(R/2)}{4\\pi\\epsilon_0 R^3} = \\frac{Q}{8\\pi\\epsilon_0 R^2}\n\nField increases linearly with r inside a uniformly charged sphere.",
+    "tags": ["electrostatics", "gauss-law"]
+  },
+  {
+    "id": "es-mcq-05",
+    "type": "mcq",
+    "front": "Two point charges +4q and +q are separated by distance 3d. The point where the net electric field is zero lies:",
+    "options": ["At distance d from +4q", "At distance 2d from +4q", "At distance d from +q", "At the midpoint"],
+    "answer": "B",
+    "back": "**Answer: B - At distance 2d from +4q**\n\nThe null point lies between the charges (both positive), closer to the smaller charge.\n\nLet the point be at distance x from +4q:\n\\frac{4q}{x^2} = \\frac{q}{(3d - x)^2}\n\n4(3d - x)^2 = x^2\n2(3d - x) = x\n6d - 2x = x\nx = 2d\n\nSo the null point is at 2d from +4q (or d from +q).",
+    "tags": ["electrostatics", "superposition"]
+  },
+  {
+    "id": "es-mcq-06",
+    "type": "mcq",
+    "front": "A parallel plate capacitor has capacitance C, charge Q, and voltage V. If the plate separation is doubled while the battery remains connected, the energy stored:",
+    "options": ["Doubles", "Halves", "Remains the same", "Quadruples"],
+    "answer": "B",
+    "back": "**Answer: B - Halves**\n\nBattery connected means V = constant.\n\nNew capacitance: C' = \\frac{\\epsilon_0 A}{2d} = \\frac{C}{2}\n\nNew energy: U' = \\frac{1}{2}C'V^2 = \\frac{1}{2} \\cdot \\frac{C}{2} \\cdot V^2 = \\frac{U}{2}\n\nEnergy halves because capacitance halves while voltage stays constant.",
+    "tags": ["electrostatics", "capacitance"]
+  },
+  {
+    "id": "es-mcq-07",
+    "type": "mcq",
+    "front": "Three capacitors of 2 \\mu F, 3 \\mu F, and 6 \\mu F are connected in series. The equivalent capacitance is:",
+    "options": ["1 \\mu F", "11 \\mu F", "\\frac{6}{11} \\mu F", "6 \\mu F"],
+    "answer": "A",
+    "back": "**Answer: A - 1 \\mu F**\n\n\\frac{1}{C_{eq}} = \\frac{1}{2} + \\frac{1}{3} + \\frac{1}{6} = \\frac{3 + 2 + 1}{6} = \\frac{6}{6} = 1\n\nC_{eq} = 1 \\mu F\n\nIn series, equivalent capacitance is always less than the smallest individual capacitance.",
+    "tags": ["electrostatics", "capacitance"]
+  },
+  {
+    "id": "es-mcq-08",
+    "type": "mcq",
+    "front": "A parallel plate capacitor (C_0) is charged to voltage V_0 and disconnected. A dielectric slab (k = 3) is fully inserted. The new voltage is:",
+    "options": ["3V_0", "V_0/3", "V_0", "9V_0"],
+    "answer": "B",
+    "back": "**Answer: B - V_0/3**\n\nBattery disconnected: charge Q remains constant.\n\nNew capacitance: C = kC_0 = 3C_0\n\nNew voltage: V = \\frac{Q}{C} = \\frac{Q}{3C_0} = \\frac{V_0}{3}\n\nAlso: E reduces to E_0/3, and stored energy reduces to U_0/3. The energy decrease equals the work done by the electric field in pulling the dielectric slab inward.",
+    "tags": ["electrostatics", "dielectric"]
+  },
+  {
+    "id": "es-mcq-09",
+    "type": "mcq",
+    "front": "A charge Q is placed at the center of a cube. The electric flux through one face of the cube is:",
+    "options": ["\\frac{Q}{\\epsilon_0}", "\\frac{Q}{6\\epsilon_0}", "\\frac{Q}{4\\epsilon_0}", "\\frac{Q}{2\\epsilon_0}"],
+    "answer": "B",
+    "back": "**Answer: B - Q/(6\\epsilon_0)**\n\nBy Gauss's law, total flux through the cube = \\frac{Q}{\\epsilon_0}\n\nBy symmetry, the cube has 6 identical faces, so flux through each face:\n\\phi = \\frac{Q}{6\\epsilon_0}\n\nThis is a classic application of Gauss's law combined with symmetry arguments.",
+    "tags": ["electrostatics", "gauss-law"]
+  },
+  {
+    "id": "es-mcq-10",
+    "type": "mcq",
+    "front": "A charged capacitor of capacitance C and voltage V has its plates connected by a wire. The heat dissipated in the wire is:",
+    "options": ["\\frac{1}{2}CV^2", "CV^2", "\\frac{1}{4}CV^2", "Zero"],
+    "answer": "A",
+    "back": "**Answer: A - \\frac{1}{2}CV^2**\n\nWhen plates are connected, the capacitor fully discharges.\n\nInitial energy: U_i = \\frac{1}{2}CV^2\nFinal energy: U_f = 0 (capacitor fully discharged)\n\nBy conservation of energy, all stored energy is dissipated as heat:\nQ_{heat} = U_i - U_f = \\frac{1}{2}CV^2\n\nThis is independent of the resistance of the connecting wire.",
+    "tags": ["electrostatics", "energy"]
+  }
+]

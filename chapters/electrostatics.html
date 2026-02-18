@@ -74,20 +74,32 @@
     })();
   </script>
 
-  <!-- Chapter Content -->
+  <!-- Main Content -->
   <div class="chapter-detail">
 
     <div class="ch-hero">
       <h1>Electrostatics &amp; Capacitance</h1>
-      <div class="ch-meta">Grade XII &mdash; Chapter 01</div>
+      <span class="ch-meta">Chapter 01 &mdash; Grade XII &mdash; Electrostatics &amp; Capacitance</span>
       <div class="ch-nav">
         <a href="#electric-charge">Electric Charge</a>
         <a href="#coulombs-law">Coulomb's Law</a>
         <a href="#electric-field">Electric Field</a>
-        <a href="#gauss-law">Gauss's Law</a>
+        <a href="#field-lines">Field Lines</a>
+        <a href="#electric-dipole">Electric Dipole</a>
+        <a href="#continuous-distributions">Continuous Distributions</a>
+        <a href="#electric-flux">Electric Flux &amp; Gauss's Law</a>
+        <a href="#gauss-applications">Gauss's Law Applications</a>
         <a href="#electric-potential">Electric Potential</a>
+        <a href="#equipotential">Equipotential Surfaces</a>
+        <a href="#potential-energy">Potential Energy</a>
+        <a href="#conductors">Conductors in Electrostatics</a>
+        <a href="#dielectrics">Dielectrics &amp; Polarization</a>
         <a href="#capacitance">Capacitance</a>
-        <a href="#energy-in-capacitor">Energy in Capacitor</a>
+        <a href="#parallel-plate">Parallel Plate Capacitor</a>
+        <a href="#capacitor-combinations">Series &amp; Parallel</a>
+        <a href="#energy-capacitors">Energy in Capacitors</a>
+        <a href="#van-de-graaff">Van de Graaff Generator</a>
+        <a href="#key-formulas">Key Formulas</a>
       </div>
     </div>
 
@@ -99,25 +111,27 @@
 
       <h3>What is Electric Charge?</h3>
       <p>
-        Electric charge is an intrinsic property of matter that causes it to experience a force when placed near other electrically charged matter. There are exactly two types of electric charge: <strong>positive</strong> and <strong>negative</strong>. Like charges repel and unlike charges attract. The SI unit of charge is the <strong>coulomb (C)</strong>.
+        Electric charge is a fundamental intrinsic property of matter that causes it to experience a force when placed near other electrically charged matter. There are exactly two types of electric charge: <strong>positive</strong> and <strong>negative</strong>. Like charges repel each other while unlike charges attract. The SI unit of charge is the <strong>coulomb (C)</strong>. Charge can be produced through three primary mechanisms: friction (electrons transfer between rubbed bodies), electrostatic induction (charges redistribute in conductors near a charged body), and conduction (direct contact between a charged and an uncharged body).
       </p>
 
-      <h3>Properties of Electric Charge</h3>
+      <h3>Fundamental Properties of Electric Charge</h3>
       <ul>
         <li><strong>Additivity:</strong> Charges are scalars and add algebraically. The total charge of a system is the algebraic sum of all individual charges: Q = q<sub>1</sub> + q<sub>2</sub> + q<sub>3</sub> + ...</li>
         <li><strong>Conservation:</strong> The total electric charge of an isolated system is always conserved. Charge can neither be created nor destroyed &mdash; it can only be transferred from one body to another.</li>
         <li><strong>Quantization:</strong> Charge always occurs in integral multiples of the elementary charge <em>e</em> = 1.6 &times; 10<sup>&minus;19</sup> C. Thus, q = ne where n is an integer (positive or negative).</li>
-        <li><strong>Charge is invariant:</strong> The charge on a body does not change with its speed. It is a relativistic invariant.</li>
+        <li><strong>Relativistic invariance:</strong> The charge on a body does not change with its speed. It is a Lorentz scalar.</li>
       </ul>
 
-      <h3>Methods of Charging</h3>
+      <h3>Conductors and Insulators</h3>
       <p>
-        There are three primary methods by which a body can acquire electric charge:
+        <strong>Conductors</strong> are materials that allow electric charge to flow freely through them due to the presence of free electrons (e.g., metals, electrolytic solutions). <strong>Insulators</strong> (dielectrics) do not allow free flow of charge because their electrons are tightly bound to their atoms (e.g., glass, rubber, plastic). This distinction plays a central role in electrostatic phenomena and in the design of capacitors.
       </p>
+
+      <h3>Methods of Charging</h3>
       <ul>
-        <li><strong>Friction:</strong> When two dissimilar materials are rubbed together, electrons transfer from one to the other. The body that loses electrons becomes positively charged and the one that gains becomes negatively charged. Example: rubbing a glass rod with silk.</li>
-        <li><strong>Conduction:</strong> When a charged body is brought into direct contact with an uncharged conductor, charge flows from the charged body to the uncharged one until both reach the same potential.</li>
-        <li><strong>Induction:</strong> A charged body brought near (but not touching) a conductor causes a redistribution of charges in the conductor. By grounding the conductor while the charged body is nearby and then removing the ground, a net charge opposite to the inducing charge is left on the conductor.</li>
+        <li><strong>Friction:</strong> When two dissimilar materials are rubbed together, electrons transfer from one to the other. The body that loses electrons becomes positively charged and the one that gains becomes negatively charged.</li>
+        <li><strong>Conduction:</strong> When a charged body is brought into direct contact with an uncharged conductor, charge flows until both reach the same potential.</li>
+        <li><strong>Induction:</strong> A charged body brought near (but not touching) a conductor causes redistribution of charges. By grounding the conductor while the charged body is nearby and then removing the ground, a net charge opposite to the inducing charge remains.</li>
       </ul>
 
       <div class="formula-box">
@@ -132,59 +146,67 @@
     <!-- SECTION 2: Coulomb's Law -->
     <!-- ============================== -->
     <div class="theory-section" id="coulombs-law">
-      <h2>2. Coulomb's Law</h2>
+      <h2>2. Coulomb's Law &amp; Superposition</h2>
 
-      <h3>Statement</h3>
+      <h3>Statement of Coulomb's Law</h3>
       <p>
-        Coulomb's law states that the electrostatic force between two point charges is directly proportional to the product of the magnitudes of the charges and inversely proportional to the square of the distance between them. The force acts along the line joining the two charges.
+        Coulomb's law states that the electrostatic force between two stationary point charges is directly proportional to the product of the magnitudes of the charges and inversely proportional to the square of the distance between them. The force acts along the line joining the two charges and obeys Newton's third law.
       </p>
 
       <div class="formula-box">
-        F = k q<sub>1</sub>q<sub>2</sub> / r&sup2;<br><br>
-        where k = 1/(4&pi;&epsilon;<sub>0</sub>) = 9 &times; 10<sup>9</sup> N m&sup2; C<sup>&minus;2</sup><br>
+        F = (1/4&pi;&epsilon;<sub>0</sub>) &times; |q<sub>1</sub>q<sub>2</sub>| / r&sup2;<br><br>
+        where 1/(4&pi;&epsilon;<sub>0</sub>) = k = 9 &times; 10<sup>9</sup> N m&sup2; C<sup>&minus;2</sup><br>
         &epsilon;<sub>0</sub> = 8.854 &times; 10<sup>&minus;12</sup> C&sup2; N<sup>&minus;1</sup> m<sup>&minus;2</sup> (permittivity of free space)
       </div>
 
-      <h3>Vector Form</h3>
+      <h3>Vector Form of Coulomb's Law</h3>
       <p>
         The force on charge q<sub>1</sub> due to charge q<sub>2</sub> in vector form is:
       </p>
       <div class="formula-box">
-        <strong>F</strong><sub>12</sub> = k q<sub>1</sub>q<sub>2</sub> / r&sup2; &nbsp; <strong>r&#770;</strong><sub>12</sub>
+        <strong>F</strong><sub>12</sub> = (1/4&pi;&epsilon;<sub>0</sub>) &times; q<sub>1</sub>q<sub>2</sub> / r&sup2; &nbsp; <strong>r&#770;</strong><sub>12</sub>
       </div>
       <p>
-        Here <strong>r&#770;</strong><sub>12</sub> is the unit vector pointing from q<sub>2</sub> to q<sub>1</sub>. If both charges have the same sign, the force is repulsive (along <strong>r&#770;</strong><sub>12</sub>); if opposite signs, the force is attractive (opposite to <strong>r&#770;</strong><sub>12</sub>).
+        Here <strong>r&#770;</strong><sub>12</sub> is the unit vector from q<sub>2</sub> to q<sub>1</sub>. If both charges have the same sign, the force is repulsive (directed outward); if opposite signs, the force is attractive.
+      </p>
+
+      <h3>Comparison with Gravitational Force</h3>
+      <p>
+        Coulomb's law is structurally similar to Newton's law of gravitation. Both are inverse-square laws. However, there is a key difference: gravitational charge (mass) is always positive and the force is always attractive, whereas electric charge comes in two varieties and the force can be either attractive or repulsive.
       </p>
 
       <h3>Superposition Principle</h3>
       <p>
-        The total force on a charge due to several other charges is the <strong>vector sum</strong> of the individual forces exerted by each charge independently. The force between any two charges is unaffected by the presence of other charges.
+        The total force on a charge due to several other charges is the <strong>vector sum</strong> of the individual forces exerted by each charge independently. The force between any two charges is unaffected by the presence of other charges. This powerful principle allows us to handle any charge configuration by summing pairwise interactions.
       </p>
       <div class="formula-box">
-        <strong>F</strong><sub>net</sub> = <strong>F</strong><sub>1</sub> + <strong>F</strong><sub>2</sub> + <strong>F</strong><sub>3</sub> + ... = &sum; k q q<sub>i</sub> / r<sub>i</sub>&sup2; &nbsp; <strong>r&#770;</strong><sub>i</sub>
+        <strong>F</strong><sub>net</sub> = <strong>F</strong><sub>1</sub> + <strong>F</strong><sub>2</sub> + <strong>F</strong><sub>3</sub> + ... = &sum; (1/4&pi;&epsilon;<sub>0</sub>) &times; q q<sub>i</sub> / r<sub>i</sub>&sup2; &nbsp; <strong>r&#770;</strong><sub>i</sub>
       </div>
 
-      <h3>Effect of Medium</h3>
+      <h3>Effect of Dielectric Medium</h3>
       <p>
-        When charges are placed in a medium with dielectric constant (relative permittivity) &kappa;, the force is reduced by a factor of &kappa;:
+        When charges are placed in a medium with dielectric constant (relative permittivity) &kappa;, the electrostatic force is reduced by a factor of &kappa;:
       </p>
       <div class="formula-box">
-        F<sub>medium</sub> = F<sub>vacuum</sub> / &kappa; = k q<sub>1</sub>q<sub>2</sub> / (&kappa; r&sup2;)
+        F<sub>medium</sub> = F<sub>vacuum</sub> / &kappa; = (1/4&pi;&epsilon;<sub>0</sub>&kappa;) &times; |q<sub>1</sub>q<sub>2</sub>| / r&sup2;<br><br>
+        &kappa; = 1 for vacuum/air; &kappa; &gt; 1 for all other media
       </div>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 1</div>
+        <div class="ex-label">Example 1 &mdash; Coulomb's Law and Superposition</div>
         <p>
           Two point charges q<sub>1</sub> = +3 &mu;C and q<sub>2</sub> = &minus;4 &mu;C are placed 30 cm apart in vacuum. Find the magnitude of the electrostatic force between them. Also find the force if the medium has a dielectric constant &kappa; = 2.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            q<sub>1</sub> = 3 &times; 10<sup>&minus;6</sup> C, q<sub>2</sub> = 4 &times; 10<sup>&minus;6</sup> C, r = 0.30 m<br><br>
-            F = k q<sub>1</sub>q<sub>2</sub> / r&sup2; = (9 &times; 10<sup>9</sup>)(3 &times; 10<sup>&minus;6</sup>)(4 &times; 10<sup>&minus;6</sup>) / (0.30)&sup2;<br>
+            Given: q<sub>1</sub> = 3 &times; 10<sup>&minus;6</sup> C, q<sub>2</sub> = 4 &times; 10<sup>&minus;6</sup> C, r = 0.30 m<br><br>
+            Using Coulomb's law:<br>
+            F = k|q<sub>1</sub>q<sub>2</sub>| / r&sup2; = (9 &times; 10<sup>9</sup>)(3 &times; 10<sup>&minus;6</sup>)(4 &times; 10<sup>&minus;6</sup>) / (0.30)&sup2;<br>
             F = (9 &times; 10<sup>9</sup>)(12 &times; 10<sup>&minus;12</sup>) / 0.09<br>
-            F = 108 &times; 10<sup>&minus;3</sup> / 0.09 = <strong>1.2 N</strong> (attractive)<br><br>
-            In medium: F<sub>medium</sub> = F / &kappa; = 1.2 / 2 = <strong>0.6 N</strong>
+            F = 0.108 / 0.09 = <strong>1.2 N</strong> (attractive, since charges are opposite)<br><br>
+            In medium with &kappa; = 2:<br>
+            F<sub>medium</sub> = F / &kappa; = 1.2 / 2 = <strong>0.6 N</strong>
           </p>
         </div>
       </div>
@@ -196,321 +218,788 @@
     <div class="theory-section" id="electric-field">
       <h2>3. Electric Field</h2>
 
-      <h3>Definition</h3>
+      <h3>Definition of Electric Field</h3>
       <p>
-        The electric field at a point in space is defined as the electrostatic force experienced by a unit positive test charge placed at that point. The test charge must be vanishingly small so that it does not disturb the source charge distribution.
+        The electric field at a point in space is defined as the electrostatic force experienced by a unit positive test charge placed at that point. The test charge must be vanishingly small so that it does not disturb the source charge distribution. The electric field is a <strong>vector quantity</strong> that describes the strength and direction of the electric influence at every point in space.
       </p>
       <div class="formula-box">
-        <strong>E</strong> = <strong>F</strong> / q<sub>0</sub><br><br>
-        SI unit: N/C or V/m
+        <strong>E</strong> = <strong>F</strong> / q<sub>0</sub><br>
+        SI unit: N/C or V/m<br>
+        Force on a charge in a field: <strong>F</strong> = q<strong>E</strong>
       </div>
 
       <h3>Electric Field Due to a Point Charge</h3>
       <p>
-        The electric field at a distance <em>r</em> from a point charge <em>Q</em> is directed radially outward (for positive Q) or radially inward (for negative Q).
+        The electric field at a distance <em>r</em> from a point charge <em>Q</em> is directed radially outward (for positive Q) or radially inward (for negative Q). The field magnitude decreases as the inverse square of the distance.
       </p>
       <div class="formula-box">
-        E = kQ / r&sup2; = Q / (4&pi;&epsilon;<sub>0</sub>r&sup2;)
+        E = Q / (4&pi;&epsilon;<sub>0</sub>r&sup2;) = kQ / r&sup2;<br>
+        <strong>E</strong> = (Q / 4&pi;&epsilon;<sub>0</sub>r&sup2;) <strong>r&#770;</strong><br><br>
+        Direction: away from +Q, toward &minus;Q
       </div>
 
-      <h3>Electric Field Due to an Electric Dipole</h3>
+      <h3>Charged Particle Motion in a Uniform Electric Field</h3>
       <p>
-        An electric dipole consists of two equal and opposite charges +q and &minus;q separated by a small distance 2a. The <strong>dipole moment</strong> is <strong>p</strong> = q &times; 2a, directed from the negative charge to the positive charge.
+        A charged particle in a uniform electric field experiences a constant force and hence undergoes constant acceleration a = qE/m. If the initial velocity is parallel to the field (or zero), the motion is along a straight line. If the initial velocity is perpendicular to the field, the trajectory becomes parabolic, analogous to projectile motion under gravity.
       </p>
       <div class="formula-box">
-        Axial point (on the axis, distance r from centre, r &gt;&gt; a):<br>
-        E<sub>axial</sub> = 2kp / r&sup3; = p / (2&pi;&epsilon;<sub>0</sub>r&sup3;)<br><br>
-        Equatorial point (on perpendicular bisector, distance r from centre, r &gt;&gt; a):<br>
-        E<sub>equatorial</sub> = kp / r&sup3; = p / (4&pi;&epsilon;<sub>0</sub>r&sup3;)<br><br>
-        Note: E<sub>axial</sub> = 2 E<sub>equatorial</sub>
-      </div>
-
-      <h3>Electric Field Due to a Uniformly Charged Ring</h3>
-      <p>
-        For a uniformly charged ring of total charge Q and radius R, the electric field at a point on the axis at distance x from the centre is:
-      </p>
-      <div class="formula-box">
-        E = kQx / (R&sup2; + x&sup2;)<sup>3/2</sup><br><br>
-        At the centre (x = 0): E = 0<br>
-        Maximum E occurs at x = R / &radic;2
-      </div>
-
-      <h3>Electric Field Due to an Infinite Plane Sheet of Charge</h3>
-      <p>
-        For an infinite plane sheet with uniform surface charge density &sigma;, the electric field is uniform and perpendicular to the sheet:
-      </p>
-      <div class="formula-box">
-        E = &sigma; / (2&epsilon;<sub>0</sub>) &nbsp; (on each side of the sheet)<br><br>
-        For two parallel sheets with charges +&sigma; and &minus;&sigma;:<br>
-        Between the sheets: E = &sigma; / &epsilon;<sub>0</sub><br>
-        Outside: E = 0
-      </div>
-
-      <h3>Electric Field Due to a Uniformly Charged Sphere</h3>
-      <div class="formula-box">
-        Conducting sphere (charge Q, radius R):<br>
-        Outside (r &gt; R): E = kQ / r&sup2;<br>
-        On the surface (r = R): E = kQ / R&sup2; = &sigma; / &epsilon;<sub>0</sub><br>
-        Inside (r &lt; R): E = 0<br><br>
-        Non-conducting sphere (uniform volume charge density &rho;):<br>
-        Outside (r &gt; R): E = kQ / r&sup2;<br>
-        Inside (r &lt; R): E = kQr / R&sup3; = &rho;r / (3&epsilon;<sub>0</sub>)
+        Acceleration: a = qE / m<br>
+        If initial velocity u is perpendicular to E:<br>
+        &nbsp;&nbsp;x = ut, &nbsp; y = &frac12;(qE/m)t&sup2;<br>
+        &nbsp;&nbsp;Trajectory: y = (qE / 2mu&sup2;) x&sup2; &nbsp; (parabola)
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 4: Gauss's Law -->
+    <!-- SECTION 4: Electric Field Lines -->
     <!-- ============================== -->
-    <div class="theory-section" id="gauss-law">
-      <h2>4. Gauss's Law</h2>
+    <div class="theory-section" id="field-lines">
+      <h2>4. Electric Field Lines</h2>
 
-      <h3>Electric Flux</h3>
+      <h3>Concept of Field Lines</h3>
       <p>
-        Electric flux through a surface is a measure of the number of electric field lines passing through that surface. For a uniform field <strong>E</strong> making an angle &theta; with the area vector <strong>A</strong>:
+        Electric field lines (or lines of force) are imaginary curves whose tangent at any point gives the direction of the electric field at that point. They were introduced by Michael Faraday as a visual tool to represent the electric field pattern. The density of field lines (number per unit cross-sectional area) is proportional to the field strength.
       </p>
-      <div class="formula-box">
-        &Phi;<sub>E</sub> = <strong>E</strong> &middot; <strong>A</strong> = EA cos&theta;<br>
-        SI unit: N m&sup2; C<sup>&minus;1</sup> (or V m)
-      </div>
 
-      <h3>Statement of Gauss's Law</h3>
-      <p>
-        Gauss's law states that the total electric flux through any closed surface (Gaussian surface) is equal to 1/&epsilon;<sub>0</sub> times the total charge enclosed within that surface.
-      </p>
-      <div class="formula-box">
-        &oint; <strong>E</strong> &middot; d<strong>A</strong> = Q<sub>enc</sub> / &epsilon;<sub>0</sub>
-      </div>
-      <p>
-        Important points about Gauss's law:
-      </p>
+      <h3>Properties of Electric Field Lines</h3>
       <ul>
-        <li>The electric field <strong>E</strong> on the Gaussian surface is due to <em>all</em> charges (inside and outside), but the flux depends only on the <em>enclosed</em> charge.</li>
-        <li>Gauss's law is valid for any closed surface, but it is most useful when there is sufficient symmetry (spherical, cylindrical, or planar) to simplify the integral.</li>
-        <li>Charges outside the Gaussian surface contribute zero net flux through it.</li>
+        <li>Lines originate from positive charges and terminate on negative charges</li>
+        <li>The tangent to a field line at any point gives the direction of <strong>E</strong> at that point</li>
+        <li>Field lines <strong>never intersect</strong> each other (otherwise the field would have two directions at the same point)</li>
+        <li>Lines are always perpendicular to the surface of a conductor</li>
+        <li>Closer spacing indicates stronger field; wider spacing indicates weaker field</li>
+        <li>In a charge-free region, field lines are continuous curves</li>
+        <li>For two equal like charges, a null point exists at the midpoint where E = 0</li>
+        <li>For two opposite charges (+q and &minus;q), field lines go directly from positive to negative</li>
       </ul>
 
-      <h3>Applications of Gauss's Law</h3>
+      <div class="formula-box">
+        Superposition of electric fields from multiple point charges:<br>
+        <strong>E</strong> = <strong>E</strong><sub>1</sub> + <strong>E</strong><sub>2</sub> + <strong>E</strong><sub>3</sub> + ... (vector sum)<br><br>
+        Units: N/C (Newton per Coulomb) or V/m (Volt per metre)
+      </div>
+    </div>
 
-      <p><strong>1. Infinite Line Charge (linear charge density &lambda;):</strong></p>
+    <!-- ============================== -->
+    <!-- SECTION 5: Electric Dipole -->
+    <!-- ============================== -->
+    <div class="theory-section" id="electric-dipole">
+      <h2>5. Electric Dipole</h2>
+
+      <h3>Definition and Dipole Moment</h3>
       <p>
-        Using a cylindrical Gaussian surface of radius r and length l coaxial with the line charge:
+        An electric dipole consists of two equal and opposite charges +q and &minus;q separated by a small distance 2&ell;. The <strong>dipole moment</strong> <strong>p</strong> is a vector quantity of magnitude p = q &times; 2&ell;, directed from the negative charge to the positive charge. The dipole is the simplest system that produces a non-zero electric field at large distances while having zero net charge.
+      </p>
+
+      <div class="formula-box">
+        Dipole moment: <strong>p</strong> = q &times; 2&ell; &nbsp; (vector from &minus;q to +q)<br>
+        SI unit: C&middot;m (coulomb-metre)
+      </div>
+
+      <h3>Electric Field Due to a Dipole</h3>
+      <p>
+        The electric field of a dipole varies with both position and angle. For a short dipole (r &gt;&gt; &ell;), the field at key locations is:
       </p>
       <div class="formula-box">
-        E = &lambda; / (2&pi;&epsilon;<sub>0</sub>r) = 2k&lambda; / r<br>
-        (radially outward for +&lambda;)
+        <strong>Axial point</strong> (on the dipole axis, distance r from centre):<br>
+        E<sub>axial</sub> = 2p / (4&pi;&epsilon;<sub>0</sub>r&sup3;) = 2kp / r&sup3;<br><br>
+        <strong>Equatorial point</strong> (on the perpendicular bisector, distance r):<br>
+        E<sub>eq</sub> = p / (4&pi;&epsilon;<sub>0</sub>r&sup3;) = kp / r&sup3;<br>
+        Direction: opposite to <strong>p</strong><br><br>
+        <strong>General point</strong> (distance r, angle &theta; from dipole axis):<br>
+        E = (p / 4&pi;&epsilon;<sub>0</sub>r&sup3;) &times; &radic;(1 + 3cos&sup2;&theta;)<br><br>
+        <strong>Key relation:</strong> E<sub>axial</sub> = 2 &times; E<sub>equatorial</sub>
       </div>
 
-      <p><strong>2. Infinite Plane Sheet (surface charge density &sigma;):</strong></p>
+      <h3>Dipole in a Uniform External Electric Field</h3>
       <p>
-        Using a cylindrical Gaussian surface (pillbox) straddling the sheet:
+        When an electric dipole is placed in a uniform external field <strong>E</strong>, it experiences a torque that tends to align it with the field. There is no net translational force in a uniform field. In a non-uniform field, there is also a net force on the dipole.
       </p>
       <div class="formula-box">
-        E = &sigma; / (2&epsilon;<sub>0</sub>)<br>
-        (perpendicular to the sheet, away from it)
+        <strong>Torque:</strong> &tau; = pE sin&theta; &nbsp; or &nbsp; <strong>&tau;</strong> = <strong>p</strong> &times; <strong>E</strong><br><br>
+        <strong>Potential energy:</strong> U = &minus;pE cos&theta; = &minus;<strong>p</strong> &middot; <strong>E</strong><br><br>
+        &theta; = angle between <strong>p</strong> and <strong>E</strong>
       </div>
-
-      <p><strong>3. Uniformly Charged Sphere (total charge Q, radius R):</strong></p>
-      <div class="formula-box">
-        Outside (r &gt; R): E = Q / (4&pi;&epsilon;<sub>0</sub>r&sup2;) = kQ / r&sup2;<br>
-        On surface (r = R): E = Q / (4&pi;&epsilon;<sub>0</sub>R&sup2;)<br>
-        Inside conducting sphere: E = 0<br>
-        Inside non-conducting sphere (r &lt; R): E = Qr / (4&pi;&epsilon;<sub>0</sub>R&sup3;)
-      </div>
+      <ul>
+        <li>&theta; = 0&deg;: <strong>Stable equilibrium</strong> &mdash; minimum energy U = &minus;pE, zero torque</li>
+        <li>&theta; = 180&deg;: <strong>Unstable equilibrium</strong> &mdash; maximum energy U = +pE, zero torque</li>
+        <li>&theta; = 90&deg;: Maximum torque &tau;<sub>max</sub> = pE</li>
+      </ul>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 2</div>
+        <div class="ex-label">Example 2 &mdash; Dipole in External Field</div>
         <p>
-          A uniformly charged solid sphere of radius R = 10 cm has a total charge Q = 50 nC. Find the electric field at (a) r = 5 cm (inside) and (b) r = 20 cm (outside).
+          A dipole with moment p = 6.2 &times; 10<sup>&minus;30</sup> C&middot;m is placed in an external field of 1 &times; 10<sup>5</sup> N/C. Find the maximum torque on the dipole and the work required to rotate it from &theta; = 0&deg; to &theta; = 90&deg;.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            Q = 50 &times; 10<sup>&minus;9</sup> C, R = 0.10 m<br><br>
-            (a) Inside (r = 0.05 m):<br>
-            E = kQr / R&sup3; = (9 &times; 10<sup>9</sup>)(50 &times; 10<sup>&minus;9</sup>)(0.05) / (0.10)&sup3;<br>
-            E = (9 &times; 10<sup>9</sup>)(2.5 &times; 10<sup>&minus;9</sup>) / 10<sup>&minus;3</sup><br>
-            E = 22.5 / 10<sup>&minus;3</sup> = <strong>22,500 N/C = 2.25 &times; 10<sup>4</sup> N/C</strong><br><br>
-            (b) Outside (r = 0.20 m):<br>
-            E = kQ / r&sup2; = (9 &times; 10<sup>9</sup>)(50 &times; 10<sup>&minus;9</sup>) / (0.20)&sup2;<br>
-            E = 450 / 0.04 = <strong>11,250 N/C = 1.125 &times; 10<sup>4</sup> N/C</strong>
+            Given: p = 6.2 &times; 10<sup>&minus;30</sup> C&middot;m, E = 1 &times; 10<sup>5</sup> N/C<br><br>
+            Maximum torque (at &theta; = 90&deg;):<br>
+            &tau;<sub>max</sub> = pE sin90&deg; = pE = (6.2 &times; 10<sup>&minus;30</sup>)(10<sup>5</sup>)<br>
+            &tau;<sub>max</sub> = <strong>6.2 &times; 10<sup>&minus;25</sup> N&middot;m</strong><br><br>
+            Work done to rotate from 0&deg; to 90&deg;:<br>
+            W = &Delta;U = U(90&deg;) &minus; U(0&deg;) = (&minus;pE cos90&deg;) &minus; (&minus;pE cos0&deg;)<br>
+            W = 0 &minus; (&minus;pE) = pE = <strong>6.2 &times; 10<sup>&minus;25</sup> J</strong>
           </p>
         </div>
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 5: Electric Potential -->
+    <!-- SECTION 6: Continuous Charge Distributions -->
     <!-- ============================== -->
-    <div class="theory-section" id="electric-potential">
-      <h2>5. Electric Potential</h2>
+    <div class="theory-section" id="continuous-distributions">
+      <h2>6. Continuous Charge Distributions</h2>
 
-      <h3>Definition</h3>
+      <h3>Types of Charge Distributions</h3>
       <p>
-        The electric potential at a point is defined as the work done by an external agent in bringing a unit positive charge from infinity to that point (against the electric field) without any acceleration.
+        When charge is spread over a body rather than concentrated at discrete points, we describe it using charge densities. The total field is obtained by dividing the charge into infinitesimal elements dq, treating each as a point charge, and integrating.
       </p>
+
       <div class="formula-box">
-        V = W / q = kQ / r &nbsp; (for a point charge Q at distance r)<br>
-        SI unit: Volt (V) = J/C
+        <strong>Linear charge density:</strong> &lambda; = dq/d&ell; &nbsp; (C/m), &nbsp; dq = &lambda; dx<br>
+        <strong>Surface charge density:</strong> &sigma; = dq/dA &nbsp; (C/m&sup2;), &nbsp; dq = &sigma; dA<br>
+        <strong>Volume charge density:</strong> &rho; = dq/dV &nbsp; (C/m&sup3;), &nbsp; dq = &rho; dV
       </div>
 
-      <h3>Potential Difference</h3>
+      <h3>General Method of Calculation</h3>
       <p>
-        The potential difference between two points A and B is the work done per unit positive charge in moving the charge from B to A:
+        For any continuous distribution, the field at a point is found by integrating the contributions from all elements:
       </p>
       <div class="formula-box">
-        V<sub>A</sub> &minus; V<sub>B</sub> = W<sub>B&rarr;A</sub> / q = &minus; &int;<sub>B</sub><sup>A</sup> <strong>E</strong> &middot; d<strong>l</strong>
+        d<strong>E</strong> = (1/4&pi;&epsilon;<sub>0</sub>) &times; (dq/r&sup2;) <strong>r&#770;</strong><br>
+        <strong>E</strong> = &int; d<strong>E</strong> &nbsp; (vector integral over entire distribution)
+      </div>
+      <p>
+        The key technique is to exploit <strong>symmetry</strong>: components of d<strong>E</strong> perpendicular to the symmetry axis cancel in pairs, and only the component along the axis survives. This dramatically simplifies the integration.
+      </p>
+
+      <h3>Important Results for Symmetric Distributions</h3>
+      <div class="formula-box">
+        <strong>Infinite line charge (linear density &lambda;):</strong><br>
+        E = &lambda; / (2&pi;&epsilon;<sub>0</sub>r) &nbsp; (perpendicular to line, radially outward)<br><br>
+        <strong>Infinite plane sheet (surface density &sigma;):</strong><br>
+        E = &sigma; / (2&epsilon;<sub>0</sub>) &nbsp; (perpendicular to sheet, uniform, independent of distance)<br><br>
+        <strong>Charged ring (charge Q, radius R, on axis at distance x):</strong><br>
+        E = Qx / [4&pi;&epsilon;<sub>0</sub>(x&sup2; + R&sup2;)<sup>3/2</sup>] &nbsp; (along the axis)<br>
+        E is maximum at x = R/&radic;2<br><br>
+        <strong>Uniformly charged disc (surface density &sigma;, radius R, on axis at x):</strong><br>
+        E = (&sigma;/2&epsilon;<sub>0</sub>) [1 &minus; x/&radic;(x&sup2; + R&sup2;)]
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Electric Flux & Gauss's Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="electric-flux">
+      <h2>7. Electric Flux &amp; Gauss's Law</h2>
+
+      <h3>Electric Flux</h3>
+      <p>
+        Electric flux is a scalar quantity that measures the "flow" of electric field through a surface. Physically, it is proportional to the number of field lines passing through the surface. For a uniform field <strong>E</strong> and a flat surface of area <strong>A</strong> (with outward normal):
+      </p>
+      <div class="formula-box">
+        &Phi;<sub>E</sub> = <strong>E</strong> &middot; <strong>A</strong> = EA cos&theta;<br>
+        For a general (curved) surface: &Phi;<sub>E</sub> = &int; <strong>E</strong> &middot; d<strong>A</strong><br>
+        SI unit: N&middot;m&sup2;/C (or V&middot;m)
+      </div>
+      <p>
+        For a closed surface, outward flux is taken as positive and inward flux as negative. The net flux through a closed surface depends only on the total charge enclosed.
+      </p>
+
+      <h3>Statement of Gauss's Law</h3>
+      <p>
+        Gauss's law states that the total electric flux through any closed surface (Gaussian surface) is equal to 1/&epsilon;<sub>0</sub> times the total charge enclosed within that surface. It is one of the four Maxwell's equations of electromagnetism and is entirely equivalent to Coulomb's law for static charges.
+      </p>
+      <div class="formula-box">
+        &oint; <strong>E</strong> &middot; d<strong>A</strong> = Q<sub>enc</sub> / &epsilon;<sub>0</sub><br><br>
+        For continuous distributions: &oint; <strong>E</strong> &middot; d<strong>A</strong> = (1/&epsilon;<sub>0</sub>) &int; &rho; dV
+      </div>
+
+      <h3>Key Points about Gauss's Law</h3>
+      <ul>
+        <li>The <strong>E</strong> in the surface integral is due to <em>all</em> charges (inside and outside), but the net flux depends only on the <em>enclosed</em> charge</li>
+        <li>Gauss's law holds for any closed surface, but is computationally useful only when the charge distribution has high symmetry (spherical, cylindrical, or planar)</li>
+        <li>Charges outside the Gaussian surface contribute zero net flux through it</li>
+        <li>The Gaussian surface is an imaginary mathematical surface chosen for convenience &mdash; it need not coincide with any physical boundary</li>
+        <li>Flux is a scalar quantity and can be positive, negative, or zero</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Applications of Gauss's Law -->
+    <!-- ============================== -->
+    <div class="theory-section" id="gauss-applications">
+      <h2>8. Applications of Gauss's Law</h2>
+
+      <h3>Infinite Line Charge</h3>
+      <p>
+        For a long straight wire carrying uniform linear charge density &lambda;, choose a coaxial cylindrical Gaussian surface of radius r and length &ell;. By symmetry, <strong>E</strong> is radial and constant on the curved surface; the flat end-caps contribute no flux.
+      </p>
+      <div class="formula-box">
+        E(2&pi;r&ell;) = &lambda;&ell; / &epsilon;<sub>0</sub><br>
+        E = &lambda; / (2&pi;&epsilon;<sub>0</sub>r) &nbsp; (radially outward for +&lambda;)
+      </div>
+
+      <h3>Infinite Plane Sheet of Charge</h3>
+      <p>
+        For an infinite plane with uniform surface charge density &sigma;, use a cylindrical Gaussian surface (pillbox) straddling the sheet. By symmetry, <strong>E</strong> is perpendicular to the sheet on both sides.
+      </p>
+      <div class="formula-box">
+        E = &sigma; / (2&epsilon;<sub>0</sub>) &nbsp; (uniform, independent of distance from sheet)<br><br>
+        Between two parallel sheets with equal and opposite charges (&plusmn;&sigma;):<br>
+        Inside: E = &sigma; / &epsilon;<sub>0</sub> &nbsp;&nbsp; Outside: E = 0
+      </div>
+
+      <h3>Uniformly Charged Conducting Sphere</h3>
+      <p>
+        All charge resides on the surface. Using a spherical Gaussian surface:
+      </p>
+      <div class="formula-box">
+        Outside (r &gt; R): E = Q / (4&pi;&epsilon;<sub>0</sub>r&sup2;) &nbsp; (same as a point charge)<br>
+        On the surface (r = R): E = Q / (4&pi;&epsilon;<sub>0</sub>R&sup2;) = &sigma; / &epsilon;<sub>0</sub><br>
+        Inside (r &lt; R): E = 0
+      </div>
+
+      <h3>Uniformly Charged Non-Conducting Sphere</h3>
+      <p>
+        For a solid sphere of radius R with uniform volume charge density &rho; = 3Q/(4&pi;R&sup3;):
+      </p>
+      <div class="formula-box">
+        Outside (r &gt; R): E = Q / (4&pi;&epsilon;<sub>0</sub>r&sup2;)<br>
+        Inside (r &lt; R): E = Qr / (4&pi;&epsilon;<sub>0</sub>R&sup3;) = &rho;r / (3&epsilon;<sub>0</sub>)<br><br>
+        The field increases linearly with r inside and decreases as 1/r&sup2; outside.<br>
+        Maximum field occurs at the surface (r = R).
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 3 &mdash; Gauss's Law for Uniformly Charged Sphere</div>
+        <p>
+          A uniformly charged solid sphere of radius R = 10 cm has total charge Q = 50 nC. Find the electric field at (a) r = 5 cm (inside) and (b) r = 20 cm (outside).
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Given: Q = 50 &times; 10<sup>&minus;9</sup> C, R = 0.10 m, k = 9 &times; 10<sup>9</sup> N&middot;m&sup2;/C&sup2;<br><br>
+            <em>(a) Inside (r = 0.05 m &lt; R):</em><br>
+            E = kQr / R&sup3; = (9 &times; 10<sup>9</sup>)(50 &times; 10<sup>&minus;9</sup>)(0.05) / (0.10)&sup3;<br>
+            E = 22.5 / 10<sup>&minus;3</sup> = <strong>2.25 &times; 10<sup>4</sup> N/C</strong><br><br>
+            <em>(b) Outside (r = 0.20 m &gt; R):</em><br>
+            E = kQ / r&sup2; = (9 &times; 10<sup>9</sup>)(50 &times; 10<sup>&minus;9</sup>) / (0.20)&sup2;<br>
+            E = 450 / 0.04 = <strong>1.125 &times; 10<sup>4</sup> N/C</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 9: Electric Potential -->
+    <!-- ============================== -->
+    <div class="theory-section" id="electric-potential">
+      <h2>9. Electric Potential</h2>
+
+      <h3>Definition of Electric Potential</h3>
+      <p>
+        The electric potential at a point is defined as the work done per unit positive charge by an external agent in bringing a test charge from infinity to that point without acceleration (quasi-statically). Unlike the electric field which is a vector, the potential is a <strong>scalar quantity</strong>, making it much simpler to compute for complex charge distributions.
+      </p>
+      <div class="formula-box">
+        V = W / q<sub>0</sub> = kQ / r &nbsp; (for a point charge Q at distance r)<br>
+        SI unit: Volt (V) = J/C<br>
+        Reference: V(&infin;) = 0
+      </div>
+
+      <h3>Potential Difference and Path Independence</h3>
+      <p>
+        The potential difference between two points A and B equals the negative line integral of the electric field. Because the electrostatic force is conservative, this integral is <strong>independent of the path</strong> taken between the two points.
+      </p>
+      <div class="formula-box">
+        V<sub>A</sub> &minus; V<sub>B</sub> = &minus; &int;<sub>B</sub><sup>A</sup> <strong>E</strong> &middot; d<strong>l</strong><br><br>
+        Work done by external agent: W = q(V<sub>B</sub> &minus; V<sub>A</sub>)
       </div>
 
       <h3>Relation Between Electric Field and Potential</h3>
       <p>
-        The electric field is the negative gradient of the electric potential. In one dimension:
+        The electric field is the negative gradient of the potential. In one dimension, E = &minus;dV/dr. This means the electric field points in the direction of <strong>decreasing potential</strong> and is stronger where the potential changes more rapidly.
       </p>
       <div class="formula-box">
-        E = &minus;dV/dr<br><br>
-        In three dimensions: <strong>E</strong> = &minus;&nabla;V = &minus;(&part;V/&part;x <strong>i</strong> + &part;V/&part;y <strong>j</strong> + &part;V/&part;z <strong>k</strong>)
-      </div>
-      <p>
-        This means the electric field points in the direction of <em>decreasing</em> potential and is stronger where the potential changes more rapidly.
-      </p>
-
-      <h3>Equipotential Surfaces</h3>
-      <p>
-        An equipotential surface is a surface on which the electric potential is the same at every point. Key properties:
-      </p>
-      <ul>
-        <li>No work is done in moving a charge along an equipotential surface.</li>
-        <li>Electric field lines are always perpendicular to equipotential surfaces.</li>
-        <li>Equipotential surfaces never intersect each other.</li>
-        <li>For a point charge, equipotential surfaces are concentric spheres.</li>
-        <li>For a uniform field, they are planes perpendicular to the field.</li>
-        <li>Closer spacing of equipotential surfaces indicates a stronger electric field.</li>
-      </ul>
-
-      <h3>Potential Due to a Dipole</h3>
-      <div class="formula-box">
-        V = kp cos&theta; / r&sup2; &nbsp; (at distance r, angle &theta; from dipole axis, r &gt;&gt; a)<br><br>
-        On the axis (&theta; = 0): V = kp / r&sup2;<br>
-        On the equatorial line (&theta; = 90&deg;): V = 0
+        E = &minus;dV/dr &nbsp; (one dimension)<br><br>
+        <strong>E</strong> = &minus;&nabla;V = &minus;(&part;V/&part;x <strong>i&#770;</strong> + &part;V/&part;y <strong>j&#770;</strong> + &part;V/&part;z <strong>k&#770;</strong>) &nbsp; (three dimensions)
       </div>
 
-      <h3>Potential Energy of a System of Charges</h3>
+      <h3>Potential Due to Various Charge Configurations</h3>
       <div class="formula-box">
-        For two charges: U = kq<sub>1</sub>q<sub>2</sub> / r<br>
-        For three charges: U = k(q<sub>1</sub>q<sub>2</sub>/r<sub>12</sub> + q<sub>2</sub>q<sub>3</sub>/r<sub>23</sub> + q<sub>1</sub>q<sub>3</sub>/r<sub>13</sub>)
+        <strong>Point charge Q at distance r:</strong> V = kQ / r<br><br>
+        <strong>System of point charges (superposition):</strong><br>
+        V = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub> + ... = &sum; kq<sub>i</sub> / r<sub>i</sub> &nbsp; (scalar sum!)<br><br>
+        <strong>Dipole (distance r, angle &theta; from axis, r &gt;&gt; a):</strong><br>
+        V = kp cos&theta; / r&sup2;<br>
+        &bull; On axis (&theta; = 0&deg;): V = kp / r&sup2;<br>
+        &bull; On equatorial line (&theta; = 90&deg;): V = 0<br><br>
+        <strong>Continuous distribution:</strong> V = &int; dq / (4&pi;&epsilon;<sub>0</sub>r)<br><br>
+        <strong>Uniformly charged sphere (outside):</strong> V = kQ / r<br>
+        <strong>Uniformly charged sphere (inside, r &lt; R):</strong> V = kQ(3R&sup2; &minus; r&sup2;) / (2R&sup3;)
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 6: Capacitance -->
+    <!-- SECTION 10: Equipotential Surfaces -->
+    <!-- ============================== -->
+    <div class="theory-section" id="equipotential">
+      <h2>10. Equipotential Surfaces</h2>
+
+      <h3>Definition and Properties</h3>
+      <p>
+        An equipotential surface is a surface on which the electric potential has the same value at every point. Since the potential difference between any two points on such a surface is zero, <strong>no work is done</strong> in moving a charge along an equipotential surface.
+      </p>
+
+      <h3>Key Properties</h3>
+      <ul>
+        <li><strong>Perpendicularity:</strong> Electric field lines are always perpendicular to equipotential surfaces. If they were not, the field would have a component along the surface, which would mean work is done moving a charge along it &mdash; contradicting the definition.</li>
+        <li><strong>Non-intersection:</strong> Two equipotential surfaces never intersect (otherwise the potential would have two values at the intersection point).</li>
+        <li><strong>Point charge:</strong> Equipotential surfaces are concentric spheres centred on the charge.</li>
+        <li><strong>Uniform field:</strong> Equipotential surfaces are planes perpendicular to the field direction.</li>
+        <li><strong>Dipole:</strong> Equipotential surfaces are more complex shapes; the equatorial plane is at V = 0.</li>
+        <li><strong>Field strength:</strong> Closer spacing of equipotential surfaces indicates a stronger electric field.</li>
+      </ul>
+
+      <div class="formula-box">
+        Work done moving charge q along equipotential surface:<br>
+        W = q&Delta;V = q &times; 0 = 0<br><br>
+        Electric field is always perpendicular to equipotential surfaces:<br>
+        <strong>E</strong> &perp; equipotential surface at every point
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 11: Potential Energy -->
+    <!-- ============================== -->
+    <div class="theory-section" id="potential-energy">
+      <h2>11. Electrostatic Potential Energy</h2>
+
+      <h3>Potential Energy of a System of Charges</h3>
+      <p>
+        The electrostatic potential energy of a system of charges equals the total work done by an external agent in assembling the configuration by bringing each charge from infinity. For a conservative force, this energy depends only on the final configuration, not on the order or path of assembly.
+      </p>
+      <div class="formula-box">
+        <strong>Two point charges:</strong><br>
+        U = (1/4&pi;&epsilon;<sub>0</sub>) &times; q<sub>1</sub>q<sub>2</sub> / r<br><br>
+        <strong>Three point charges:</strong><br>
+        U = k(q<sub>1</sub>q<sub>2</sub>/r<sub>12</sub> + q<sub>2</sub>q<sub>3</sub>/r<sub>23</sub> + q<sub>1</sub>q<sub>3</sub>/r<sub>13</sub>)<br><br>
+        <strong>General (n charges):</strong><br>
+        U = &frac12; &sum;<sub>i</sub> &sum;<sub>j&ne;i</sub> kq<sub>i</sub>q<sub>j</sub> / r<sub>ij</sub>
+      </div>
+
+      <h3>Energy Conservation in Electrostatics</h3>
+      <p>
+        When a charged particle moves in an electric field, total mechanical energy is conserved. As potential energy decreases, kinetic energy increases by the same amount, and vice versa.
+      </p>
+      <div class="formula-box">
+        KE<sub>A</sub> + PE<sub>A</sub> = KE<sub>B</sub> + PE<sub>B</sub><br><br>
+        Work done by electric field: W<sub>field</sub> = q(V<sub>A</sub> &minus; V<sub>B</sub>) = &minus;&Delta;PE<br>
+        Work done by external agent: W<sub>ext</sub> = q(V<sub>B</sub> &minus; V<sub>A</sub>) = &Delta;PE
+      </div>
+
+      <h3>Energy Density of the Electric Field</h3>
+      <p>
+        The energy stored in an electric field can be expressed as an energy density (energy per unit volume) distributed throughout space. This concept is especially useful for capacitors.
+      </p>
+      <div class="formula-box">
+        Energy density: u = &frac12;&epsilon;<sub>0</sub>E&sup2; &nbsp; (in vacuum)<br>
+        u = &frac12;&epsilon;<sub>0</sub>&kappa;E&sup2; &nbsp; (in a dielectric medium)<br>
+        Total energy: U = &int; u &nbsp;dV = &int; &frac12;&epsilon;<sub>0</sub>&kappa;E&sup2; dV
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 12: Conductors in Electrostatics -->
+    <!-- ============================== -->
+    <div class="theory-section" id="conductors">
+      <h2>12. Conductors in Electrostatic Equilibrium</h2>
+
+      <h3>Key Properties</h3>
+      <p>
+        When a conductor is in electrostatic equilibrium (no current flowing), the free charges have rearranged themselves so that several remarkable properties hold:
+      </p>
+      <ul>
+        <li><strong>Zero internal field:</strong> The electric field inside the bulk of a conductor is exactly zero. Free charges rearrange until the internal field vanishes.</li>
+        <li><strong>Surface charge:</strong> All excess charge resides on the surface of the conductor. A Gaussian surface just inside the conductor surface encloses no net charge.</li>
+        <li><strong>Equipotential body:</strong> The entire conductor (surface and interior) is at the same potential.</li>
+        <li><strong>Normal field at surface:</strong> The electric field just outside the conductor surface is perpendicular to the surface and has magnitude &sigma;/&epsilon;<sub>0</sub>.</li>
+        <li><strong>Charge concentration:</strong> Surface charge density is highest at regions of greatest curvature (sharp points). This is the principle behind the lightning conductor.</li>
+      </ul>
+
+      <div class="formula-box">
+        Field inside conductor: E = 0<br>
+        Field just outside conductor surface: E = &sigma; / &epsilon;<sub>0</sub> &nbsp; (perpendicular to surface)<br>
+        Potential inside conductor: V = constant (equipotential)
+      </div>
+
+      <h3>Electrostatic Shielding</h3>
+      <p>
+        A hollow conductor shields its interior from external electric fields. Regardless of the external field, the electric field inside a hollow conducting shell is zero (provided no charge is placed inside). This principle is used in Faraday cages for protection of sensitive electronic equipment.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 13: Dielectrics & Polarization -->
+    <!-- ============================== -->
+    <div class="theory-section" id="dielectrics">
+      <h2>13. Dielectrics &amp; Polarization</h2>
+
+      <h3>Dielectric Constant</h3>
+      <p>
+        A dielectric is an insulating material that, when placed in an electric field, becomes <strong>polarized</strong>: the positive and negative charges within each molecule shift slightly in opposite directions. The dielectric constant &kappa; (relative permittivity) of the material is defined as the ratio of the capacitance with the dielectric to the capacitance without it.
+      </p>
+      <div class="formula-box">
+        &kappa; = C / C<sub>0</sub> = &epsilon; / &epsilon;<sub>0</sub><br><br>
+        Typical values: vacuum (&kappa; = 1), air (&kappa; &asymp; 1.00054),<br>
+        paper (&kappa; &asymp; 3.7), glass (&kappa; &asymp; 6), ceramic (&kappa; &asymp; 100&ndash;10,000), water (&kappa; &asymp; 80)
+      </div>
+
+      <h3>Effect of Dielectric on Electric Field</h3>
+      <p>
+        The polarization of the dielectric creates bound surface charges that produce an opposing field, thereby reducing the net field inside the dielectric by a factor of &kappa;:
+      </p>
+      <div class="formula-box">
+        E<sub>dielectric</sub> = E<sub>0</sub> / &kappa;<br>
+        V<sub>dielectric</sub> = V<sub>0</sub> / &kappa; &nbsp; (if charge is constant)<br>
+        C = &kappa;C<sub>0</sub> &nbsp; (capacitance increases)
+      </div>
+
+      <h3>Dielectric Insertion: Two Important Scenarios</h3>
+      <p><strong>Case 1: Battery remains connected (V = constant)</strong></p>
+      <ul>
+        <li>Capacitance increases: C = &kappa;C<sub>0</sub></li>
+        <li>Charge increases: Q = &kappa;Q<sub>0</sub></li>
+        <li>Energy increases: U = &kappa;U<sub>0</sub></li>
+        <li>Electric field remains the same: E = V/d (unchanged)</li>
+      </ul>
+
+      <p><strong>Case 2: Battery disconnected (Q = constant)</strong></p>
+      <ul>
+        <li>Capacitance increases: C = &kappa;C<sub>0</sub></li>
+        <li>Charge remains the same: Q = Q<sub>0</sub></li>
+        <li>Voltage decreases: V = V<sub>0</sub>/&kappa;</li>
+        <li>Electric field decreases: E = E<sub>0</sub>/&kappa;</li>
+        <li>Energy decreases: U = U<sub>0</sub>/&kappa;</li>
+      </ul>
+
+      <h3>Multiple Dielectric Slabs in Series</h3>
+      <p>
+        When slabs of different dielectrics fill the gap in series (perpendicular to the plates), the equivalent capacitance is found by treating them as capacitors in series:
+      </p>
+      <div class="formula-box">
+        C = &epsilon;<sub>0</sub>A / &sum;(d<sub>i</sub>/&kappa;<sub>i</sub>)<br><br>
+        Field relationship: &kappa;<sub>1</sub>E<sub>1</sub> = &kappa;<sub>2</sub>E<sub>2</sub> &nbsp; (D is continuous across boundaries)
+      </div>
+
+      <h3>Partially Inserted Dielectric (Parallel Configuration)</h3>
+      <p>
+        If a dielectric slab covers only part of the plate area, it creates two capacitors in parallel:
+      </p>
+      <div class="formula-box">
+        C = &kappa;&epsilon;<sub>0</sub>A<sub>1</sub>/d + &epsilon;<sub>0</sub>A<sub>2</sub>/d<br>
+        Where A<sub>1</sub> + A<sub>2</sub> = total plate area A
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 14: Capacitance -->
     <!-- ============================== -->
     <div class="theory-section" id="capacitance">
-      <h2>6. Capacitance</h2>
+      <h2>14. Capacitance &amp; Capacitor Types</h2>
 
-      <h3>Definition</h3>
+      <h3>Definition of Capacitance</h3>
       <p>
-        A capacitor is a device that stores electric charge and energy. The capacitance of a capacitor is defined as the ratio of the charge on one of its plates to the potential difference between them.
+        A capacitor is an arrangement of two conductors carrying equal and opposite charges, separated by an insulating medium. The capacitance is defined as the ratio of the magnitude of charge on either plate to the potential difference between them. Capacitance depends only on the geometry and the dielectric material &mdash; not on the voltage or charge applied.
       </p>
       <div class="formula-box">
         C = Q / V<br>
-        SI unit: Farad (F) = C/V
+        SI unit: Farad (F) = C/V<br>
+        1 &mu;F = 10<sup>&minus;6</sup> F, &nbsp; 1 nF = 10<sup>&minus;9</sup> F, &nbsp; 1 pF = 10<sup>&minus;12</sup> F
       </div>
 
-      <h3>Parallel Plate Capacitor</h3>
+      <h3>Isolated Conducting Sphere</h3>
       <p>
-        A parallel plate capacitor consists of two large parallel conducting plates, each of area A, separated by a distance d. The electric field between the plates is uniform: E = &sigma;/&epsilon;<sub>0</sub> = Q/(&epsilon;<sub>0</sub>A).
+        A single conducting sphere of radius R can be treated as a capacitor with the second conductor at infinity (earth). Its capacitance depends only on its radius.
       </p>
       <div class="formula-box">
-        C = &epsilon;<sub>0</sub>A / d<br><br>
-        With dielectric of constant &kappa;: C = &kappa;&epsilon;<sub>0</sub>A / d
+        V = Q / (4&pi;&epsilon;<sub>0</sub>R)<br>
+        C = 4&pi;&epsilon;<sub>0</sub>R<br><br>
+        For R = 1 m: C &asymp; 111 pF
       </div>
 
-      <h3>Capacitors in Series</h3>
+      <h3>Spherical Capacitor</h3>
       <p>
-        When capacitors are connected in series, the charge on each capacitor is the same, but the voltage divides. The equivalent capacitance is always less than the smallest individual capacitance.
+        Two concentric conducting spheres of radii a (inner) and b (outer) form a spherical capacitor. The field exists only between the spheres and varies as 1/r&sup2;.
       </p>
       <div class="formula-box">
-        1/C<sub>eq</sub> = 1/C<sub>1</sub> + 1/C<sub>2</sub> + 1/C<sub>3</sub> + ...<br><br>
-        For two capacitors: C<sub>eq</sub> = C<sub>1</sub>C<sub>2</sub> / (C<sub>1</sub> + C<sub>2</sub>)
+        C = 4&pi;&epsilon;<sub>0</sub>ab / (b &minus; a)<br>
+        With dielectric: C = 4&pi;&kappa;&epsilon;<sub>0</sub>ab / (b &minus; a)<br><br>
+        When b &rarr; &infin;: C = 4&pi;&epsilon;<sub>0</sub>a &nbsp; (isolated sphere)
       </div>
 
-      <h3>Capacitors in Parallel</h3>
+      <h3>Cylindrical Capacitor</h3>
       <p>
-        When capacitors are connected in parallel, the voltage across each capacitor is the same, but the charge divides. The equivalent capacitance is the sum of individual capacitances.
+        Two coaxial conducting cylinders of radii a (inner) and b (outer) and length &ell; form a cylindrical capacitor. The field is radial and varies as 1/r.
       </p>
       <div class="formula-box">
-        C<sub>eq</sub> = C<sub>1</sub> + C<sub>2</sub> + C<sub>3</sub> + ...
-      </div>
-
-      <h3>Capacitance of Spherical and Cylindrical Capacitors</h3>
-      <div class="formula-box">
-        Isolated sphere of radius R: C = 4&pi;&epsilon;<sub>0</sub>R<br><br>
-        Spherical capacitor (radii a and b, b &gt; a): C = 4&pi;&epsilon;<sub>0</sub>ab / (b &minus; a)<br><br>
-        Cylindrical capacitor (radii a and b, length l): C = 2&pi;&epsilon;<sub>0</sub>l / ln(b/a)
+        C = 2&pi;&epsilon;<sub>0</sub>&ell; / ln(b/a)<br>
+        With dielectric: C = 2&pi;&kappa;&epsilon;<sub>0</sub>&ell; / ln(b/a)<br><br>
+        Capacitance per unit length = 2&pi;&epsilon;<sub>0</sub> / ln(b/a)
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 7: Energy in Capacitor -->
+    <!-- SECTION 15: Parallel Plate Capacitor -->
     <!-- ============================== -->
-    <div class="theory-section" id="energy-in-capacitor">
-      <h2>7. Energy Stored in a Capacitor</h2>
+    <div class="theory-section" id="parallel-plate">
+      <h2>15. Parallel Plate Capacitor</h2>
 
-      <h3>Energy Formulae</h3>
+      <h3>Basic Theory</h3>
       <p>
-        The energy stored in a charged capacitor is equal to the work done in charging it. Since the voltage builds up from 0 to V as charge accumulates from 0 to Q, the average voltage during charging is V/2:
+        The parallel plate capacitor is the most common and most important capacitor geometry. It consists of two large parallel conducting plates, each of area A, separated by a distance d. When d is much smaller than the plate dimensions, the field between the plates is practically uniform and the fringing fields at the edges can be neglected.
       </p>
+
       <div class="formula-box">
-        U = &frac12;CV&sup2; = &frac12;QV = Q&sup2; / (2C)
+        Electric field between plates: E = &sigma; / &epsilon;<sub>0</sub> = Q / (&epsilon;<sub>0</sub>A)<br>
+        Potential difference: V = Ed = Qd / (&epsilon;<sub>0</sub>A)<br>
+        Capacitance: C = &epsilon;<sub>0</sub>A / d<br><br>
+        With dielectric (&kappa;): C = &kappa;&epsilon;<sub>0</sub>A / d = &kappa;C<sub>0</sub><br>
+        Field in dielectric: E = &sigma; / (&kappa;&epsilon;<sub>0</sub>)
       </div>
 
-      <h3>Energy Density</h3>
-      <p>
-        The energy is stored in the electric field between the plates. The energy per unit volume (energy density) is:
-      </p>
-      <div class="formula-box">
-        u = &frac12;&epsilon;<sub>0</sub>E&sup2;<br><br>
-        With dielectric: u = &frac12;&kappa;&epsilon;<sub>0</sub>E&sup2;
-      </div>
-
-      <h3>Effect of Dielectrics</h3>
-      <p>
-        When a dielectric slab of constant &kappa; is inserted between the plates of a capacitor:
-      </p>
+      <h3>Key Observations</h3>
       <ul>
-        <li><strong>Battery connected (V constant):</strong> C increases by factor &kappa;, Q increases by factor &kappa;, energy U increases by factor &kappa;.</li>
-        <li><strong>Battery disconnected (Q constant):</strong> C increases by factor &kappa;, V decreases by factor &kappa;, energy U decreases by factor &kappa;.</li>
+        <li>Capacitance is proportional to plate area A and inversely proportional to separation d</li>
+        <li>The field outside the plates is essentially zero (fields from the two plates cancel)</li>
+        <li>Inserting a dielectric increases C by the factor &kappa;</li>
+        <li>The net charge on the capacitor as a whole is zero; "charge on a capacitor" refers to the magnitude Q on each plate</li>
       </ul>
 
-      <h3>Force Between Capacitor Plates</h3>
-      <p>
-        The two plates of a parallel plate capacitor attract each other. The force per unit area (electrostatic pressure) is:
-      </p>
-      <div class="formula-box">
-        Force per unit area = &sigma;&sup2; / (2&epsilon;<sub>0</sub>) = &frac12;&epsilon;<sub>0</sub>E&sup2;<br><br>
-        Total force: F = Q&sup2; / (2&epsilon;<sub>0</sub>A)
-      </div>
-
       <div class="example-box">
-        <div class="ex-label">Solved Example 3</div>
+        <div class="ex-label">Example 4 &mdash; Parallel Plate Capacitor with Dielectric</div>
         <p>
-          A parallel plate capacitor has plates of area 200 cm&sup2; separated by 2 mm. It is charged to 100 V and then disconnected from the battery. A dielectric slab of thickness 2 mm and dielectric constant &kappa; = 5 is then inserted between the plates. Find the capacitance, charge, voltage, and energy before and after inserting the dielectric.
+          A parallel plate capacitor has plates of area 200 cm&sup2; separated by 2 mm. It is charged to 100 V and then disconnected from the battery. A dielectric slab (&kappa; = 5) fully filling the gap is inserted. Find the capacitance, charge, voltage, and energy before and after insertion.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            A = 200 &times; 10<sup>&minus;4</sup> m&sup2; = 2 &times; 10<sup>&minus;2</sup> m&sup2;, d = 2 &times; 10<sup>&minus;3</sup> m, V<sub>0</sub> = 100 V<br><br>
-            <em>Before dielectric:</em><br>
-            C<sub>0</sub> = &epsilon;<sub>0</sub>A/d = (8.854 &times; 10<sup>&minus;12</sup>)(2 &times; 10<sup>&minus;2</sup>) / (2 &times; 10<sup>&minus;3</sup>) = 8.854 &times; 10<sup>&minus;11</sup> F &asymp; <strong>88.54 pF</strong><br>
-            Q = C<sub>0</sub>V<sub>0</sub> = (88.54 &times; 10<sup>&minus;12</sup>)(100) = <strong>8.854 nC</strong><br>
-            U<sub>0</sub> = &frac12;C<sub>0</sub>V<sub>0</sub>&sup2; = &frac12;(88.54 &times; 10<sup>&minus;12</sup>)(10<sup>4</sup>) = <strong>4.427 &times; 10<sup>&minus;7</sup> J</strong><br><br>
-            <em>After dielectric (battery disconnected, Q constant):</em><br>
+            Given: A = 2 &times; 10<sup>&minus;2</sup> m&sup2;, d = 2 &times; 10<sup>&minus;3</sup> m, V<sub>0</sub> = 100 V, &kappa; = 5<br><br>
+            <em>Before insertion:</em><br>
+            C<sub>0</sub> = &epsilon;<sub>0</sub>A/d = (8.854 &times; 10<sup>&minus;12</sup>)(2 &times; 10<sup>&minus;2</sup>) / (2 &times; 10<sup>&minus;3</sup>) = <strong>88.54 pF</strong><br>
+            Q<sub>0</sub> = C<sub>0</sub>V<sub>0</sub> = 88.54 &times; 10<sup>&minus;12</sup> &times; 100 = <strong>8.854 nC</strong><br>
+            U<sub>0</sub> = &frac12;C<sub>0</sub>V<sub>0</sub>&sup2; = &frac12;(88.54 &times; 10<sup>&minus;12</sup>)(10<sup>4</sup>) = <strong>4.43 &times; 10<sup>&minus;7</sup> J</strong><br><br>
+            <em>After insertion (battery disconnected, Q constant):</em><br>
             C = &kappa;C<sub>0</sub> = 5 &times; 88.54 = <strong>442.7 pF</strong><br>
-            Q remains = <strong>8.854 nC</strong><br>
+            Q = <strong>8.854 nC</strong> (unchanged)<br>
             V = Q/C = 8.854 &times; 10<sup>&minus;9</sup> / 442.7 &times; 10<sup>&minus;12</sup> = <strong>20 V</strong><br>
-            U = &frac12;QV = &frac12;(8.854 &times; 10<sup>&minus;9</sup>)(20) = <strong>8.854 &times; 10<sup>&minus;8</sup> J</strong><br><br>
-            Energy decreased by factor 5 (energy goes into pulling the dielectric in).
+            U = &frac12;QV = &frac12;(8.854 &times; 10<sup>&minus;9</sup>)(20) = <strong>8.85 &times; 10<sup>&minus;8</sup> J</strong><br><br>
+            Voltage and energy both decrease by a factor of &kappa; = 5. The lost energy goes into pulling the dielectric slab into the gap (the slab is attracted inward).
           </p>
         </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 16: Capacitor Combinations -->
+    <!-- ============================== -->
+    <div class="theory-section" id="capacitor-combinations">
+      <h2>16. Capacitors in Series &amp; Parallel</h2>
+
+      <h3>Capacitors in Series</h3>
+      <p>
+        When capacitors are connected in series (end-to-end), the <strong>charge is the same</strong> on every capacitor, but the voltage divides across them. The equivalent capacitance is always less than the smallest individual capacitance.
+      </p>
+      <div class="formula-box">
+        1/C<sub>eq</sub> = 1/C<sub>1</sub> + 1/C<sub>2</sub> + 1/C<sub>3</sub> + ...<br><br>
+        For two capacitors: C<sub>eq</sub> = C<sub>1</sub>C<sub>2</sub> / (C<sub>1</sub> + C<sub>2</sub>)<br><br>
+        Voltage distribution:<br>
+        V<sub>1</sub> = [C<sub>2</sub>/(C<sub>1</sub> + C<sub>2</sub>)] &times; V<br>
+        V<sub>2</sub> = [C<sub>1</sub>/(C<sub>1</sub> + C<sub>2</sub>)] &times; V<br><br>
+        Note: The smaller capacitor gets the larger voltage share
+      </div>
+
+      <h3>Capacitors in Parallel</h3>
+      <p>
+        When capacitors are connected in parallel (same two nodes), the <strong>voltage is the same</strong> across all capacitors, but the charge divides in proportion to their capacitances.
+      </p>
+      <div class="formula-box">
+        C<sub>eq</sub> = C<sub>1</sub> + C<sub>2</sub> + C<sub>3</sub> + ...<br><br>
+        Charge distribution:<br>
+        Q<sub>i</sub> = C<sub>i</sub> &times; V &nbsp; (each capacitor stores charge proportional to its capacitance)
+      </div>
+
+      <h3>Summary: Series vs. Parallel</h3>
+      <ul>
+        <li><strong>Series:</strong> Same Q on all; voltage divides; C<sub>eq</sub> &lt; smallest C<sub>i</sub></li>
+        <li><strong>Parallel:</strong> Same V across all; charge divides; C<sub>eq</sub> &gt; largest C<sub>i</sub></li>
+        <li>Series is analogous to resistors in parallel; parallel is analogous to resistors in series (opposite rules)</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 17: Energy in Capacitors -->
+    <!-- ============================== -->
+    <div class="theory-section" id="energy-capacitors">
+      <h2>17. Energy Stored in Capacitors</h2>
+
+      <h3>Energy Storage Formulas</h3>
+      <p>
+        The energy stored in a charged capacitor is equal to the work done in charging it. As charge accumulates, the voltage builds from 0 to V, so the average voltage during charging is V/2 and the total work is &frac12;QV.
+      </p>
+      <div class="formula-box">
+        U = &frac12;CV&sup2; = &frac12;QV = Q&sup2; / (2C)
+      </div>
+      <p>
+        All three forms are equivalent. Use the form that matches the quantities held constant in your problem.
+      </p>
+
+      <h3>Energy Density in the Electric Field</h3>
+      <p>
+        The energy is stored in the electric field between the plates. The energy per unit volume (energy density) is:
+      </p>
+      <div class="formula-box">
+        u = &frac12;&epsilon;<sub>0</sub>E&sup2; &nbsp; (in vacuum)<br>
+        u = &frac12;&epsilon;<sub>0</sub>&kappa;E&sup2; &nbsp; (with dielectric)<br><br>
+        Total energy: U = &int; u &nbsp;dV = &frac12;&epsilon;<sub>0</sub>&kappa;E&sup2; &times; (Ad) &nbsp; for uniform field
+      </div>
+
+      <h3>Force Between Capacitor Plates</h3>
+      <p>
+        The two plates attract each other with a force that can be calculated from the energy method:
+      </p>
+      <div class="formula-box">
+        Force: F = Q&sup2; / (2&epsilon;<sub>0</sub>A) = &frac12;&epsilon;<sub>0</sub>E&sup2;A<br>
+        Electrostatic pressure: p = &sigma;&sup2; / (2&epsilon;<sub>0</sub>) = &frac12;&epsilon;<sub>0</sub>E&sup2;
+      </div>
+
+      <h3>Energy Budget During RC Charging</h3>
+      <p>
+        When a capacitor is charged from a battery of EMF &varepsilon; through a resistor:
+      </p>
+      <ul>
+        <li>Energy supplied by battery: W<sub>battery</sub> = Q&varepsilon; = C&varepsilon;&sup2;</li>
+        <li>Energy stored in capacitor: U = &frac12;C&varepsilon;&sup2;</li>
+        <li>Heat dissipated in resistor: H = &frac12;C&varepsilon;&sup2;</li>
+        <li><strong>Key result:</strong> Exactly half the energy from the battery is lost as heat in the resistance, regardless of the value of R</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 18: Van de Graaff Generator -->
+    <!-- ============================== -->
+    <div class="theory-section" id="van-de-graaff">
+      <h2>18. Van de Graaff Generator</h2>
+
+      <h3>Principle</h3>
+      <p>
+        The Van de Graaff generator is a device that produces very high electrostatic potentials (up to several million volts) by continuously transferring charge to a large hollow metallic sphere. It exploits two key electrostatic principles:
+      </p>
+      <ul>
+        <li><strong>Corona discharge:</strong> Sharp points on a conductor have very high surface charge density, producing intense electric fields that ionize nearby air and spray charge onto a moving belt.</li>
+        <li><strong>Charge on a hollow conductor:</strong> Any charge placed on the inner surface of a hollow conductor immediately migrates to the outer surface. This means charge can be continuously added to the sphere without limit (until electrical breakdown of the surrounding air occurs).</li>
+      </ul>
+
+      <h3>Working</h3>
+      <p>
+        A moving insulating belt transports charge from a lower spray comb (connected to a high-voltage source) to an upper collector comb inside the large metallic dome. The charge deposited on the inner surface of the dome rapidly moves to the outer surface, keeping the inner surface charge-free and ready to accept more charge. This process continues, building up enormous potential on the dome.
+      </p>
+
+      <div class="formula-box">
+        Maximum potential of sphere of radius R in air:<br>
+        V<sub>max</sub> = E<sub>breakdown</sub> &times; R<br><br>
+        Where E<sub>breakdown</sub> &asymp; 3 &times; 10<sup>6</sup> V/m for air<br>
+        For R = 1 m: V<sub>max</sub> &asymp; 3 &times; 10<sup>6</sup> V = 3 MV
+      </div>
+
+      <h3>Applications</h3>
+      <ul>
+        <li>Accelerating charged particles to high energies for nuclear physics experiments</li>
+        <li>Generating high voltages for research and testing of electrical insulation</li>
+        <li>The charged particles can be used to induce nuclear reactions and study atomic structure</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 19: Key Formulas Summary -->
+    <!-- ============================== -->
+    <div class="theory-section" id="key-formulas">
+      <h2>19. Key Formulas Summary</h2>
+
+      <h3>Charge &amp; Coulomb's Law</h3>
+      <div class="formula-box">
+        <strong>Quantization:</strong> q = ne, &nbsp; e = 1.6 &times; 10<sup>&minus;19</sup> C<br>
+        <strong>Coulomb's Law:</strong> F = kq<sub>1</sub>q<sub>2</sub>/r&sup2;, &nbsp; k = 9 &times; 10<sup>9</sup> N&middot;m&sup2;/C&sup2;<br>
+        <strong>In medium:</strong> F = kq<sub>1</sub>q<sub>2</sub>/(&kappa;r&sup2;)
+      </div>
+
+      <h3>Electric Field</h3>
+      <div class="formula-box">
+        <strong>Point charge:</strong> E = kQ/r&sup2;<br>
+        <strong>Dipole (axial):</strong> E = 2kp/r&sup3;<br>
+        <strong>Dipole (equatorial):</strong> E = kp/r&sup3;<br>
+        <strong>Infinite line:</strong> E = &lambda;/(2&pi;&epsilon;<sub>0</sub>r)<br>
+        <strong>Infinite sheet:</strong> E = &sigma;/(2&epsilon;<sub>0</sub>)<br>
+        <strong>Charged ring (axis):</strong> E = kQx/(x&sup2; + R&sup2;)<sup>3/2</sup><br>
+        <strong>Sphere (outside):</strong> E = kQ/r&sup2;<br>
+        <strong>Sphere (inside, non-conducting):</strong> E = kQr/R&sup3;
+      </div>
+
+      <h3>Gauss's Law</h3>
+      <div class="formula-box">
+        &oint;<strong>E</strong>&middot;d<strong>A</strong> = Q<sub>enc</sub>/&epsilon;<sub>0</sub><br>
+        Electric flux: &Phi; = EA cos&theta;
+      </div>
+
+      <h3>Electric Potential</h3>
+      <div class="formula-box">
+        <strong>Point charge:</strong> V = kQ/r<br>
+        <strong>Dipole:</strong> V = kp cos&theta;/r&sup2;<br>
+        <strong>Relation:</strong> E = &minus;dV/dr<br>
+        <strong>Potential energy (two charges):</strong> U = kq<sub>1</sub>q<sub>2</sub>/r
+      </div>
+
+      <h3>Dipole</h3>
+      <div class="formula-box">
+        <strong>Dipole moment:</strong> p = q &times; 2&ell;<br>
+        <strong>Torque in field:</strong> &tau; = pE sin&theta;<br>
+        <strong>Potential energy:</strong> U = &minus;pE cos&theta;
+      </div>
+
+      <h3>Capacitance</h3>
+      <div class="formula-box">
+        <strong>Definition:</strong> C = Q/V<br>
+        <strong>Parallel plate:</strong> C = &kappa;&epsilon;<sub>0</sub>A/d<br>
+        <strong>Spherical:</strong> C = 4&pi;&kappa;&epsilon;<sub>0</sub>ab/(b &minus; a)<br>
+        <strong>Cylindrical:</strong> C = 2&pi;&kappa;&epsilon;<sub>0</sub>&ell;/ln(b/a)<br>
+        <strong>Isolated sphere:</strong> C = 4&pi;&epsilon;<sub>0</sub>R<br>
+        <strong>Series:</strong> 1/C<sub>eq</sub> = 1/C<sub>1</sub> + 1/C<sub>2</sub> + ...<br>
+        <strong>Parallel:</strong> C<sub>eq</sub> = C<sub>1</sub> + C<sub>2</sub> + ...
+      </div>
+
+      <h3>Energy in Capacitors</h3>
+      <div class="formula-box">
+        <strong>Energy stored:</strong> U = &frac12;CV&sup2; = &frac12;QV = Q&sup2;/(2C)<br>
+        <strong>Energy density:</strong> u = &frac12;&epsilon;<sub>0</sub>&kappa;E&sup2;<br>
+        <strong>Force between plates:</strong> F = Q&sup2;/(2&epsilon;<sub>0</sub>A)<br>
+        <strong>Electrostatic pressure:</strong> p = &sigma;&sup2;/(2&epsilon;<sub>0</sub>)
+      </div>
+
+      <h3>Conductors</h3>
+      <div class="formula-box">
+        <strong>Field inside:</strong> E = 0<br>
+        <strong>Field at surface:</strong> E = &sigma;/&epsilon;<sub>0</sub><br>
+        <strong>Potential:</strong> V = constant throughout conductor
+      </div>
+
+      <h3>Physical Constants</h3>
+      <div class="formula-box">
+        &epsilon;<sub>0</sub> = 8.854 &times; 10<sup>&minus;12</sup> C&sup2; N<sup>&minus;1</sup> m<sup>&minus;2</sup> (permittivity of free space)<br>
+        k = 1/(4&pi;&epsilon;<sub>0</sub>) = 9 &times; 10<sup>9</sup> N&middot;m&sup2; C<sup>&minus;2</sup><br>
+        e = 1.6 &times; 10<sup>&minus;19</sup> C (elementary charge)<br>
+        E<sub>breakdown</sub> &asymp; 3 &times; 10<sup>6</sup> V/m (dielectric strength of air)
       </div>
     </div>
 
@@ -518,10 +1007,11 @@
     <!-- Bottom Navigation Links -->
     <!-- ============================== -->
     <div class="ch-links">
-      <a href="../simulations/electrostatics.html" class="primary-link">Simulation</a>
-      <a href="../tests/electrostatics.html">Take a Test</a>
+      <a href="../simulations/electrostatics.html" class="primary-link">Launch Simulation</a>
+      <a href="../tests/electrostatics.html">Take Chapter Test</a>
       <a href="current-electricity.html">Next: Current Electricity &rarr;</a>
-      <a href="../chapters.html">&larr; All Chapters</a>
+      <a href="waves.html">&larr; Prev: Waves</a>
+      <a href="../chapters.html">Back to Chapters</a>
     </div>
 
   </div>

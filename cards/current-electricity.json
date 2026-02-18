@@ -1,0 +1,267 @@
+[
+  {
+    "id": "ce-f-01",
+    "type": "formula",
+    "front": "Ohm's Law (Macroscopic Form)",
+    "back": "V = IR\n\nV = voltage (V), I = current (A), R = resistance (\\Omega)",
+    "tags": ["current-electricity", "ohm-law"]
+  },
+  {
+    "id": "ce-f-02",
+    "type": "formula",
+    "front": "Drift Velocity of Free Electrons",
+    "back": "v_d = \\frac{eE\\tau}{m} = \\frac{I}{neA}\n\ne = electron charge, E = electric field, \\tau = relaxation time, n = number density, A = cross-section area",
+    "tags": ["current-electricity", "drift-velocity"]
+  },
+  {
+    "id": "ce-f-03",
+    "type": "formula",
+    "front": "Current Density and its Relation to Electric Field",
+    "back": "j = \\frac{I}{A} = nev_d = \\sigma E\n\n\\sigma = conductivity, E = electric field\n\nMicroscopic Ohm's law: \\vec{j} = \\sigma \\vec{E}",
+    "tags": ["current-electricity", "current-density"]
+  },
+  {
+    "id": "ce-f-04",
+    "type": "formula",
+    "front": "Resistivity of a Conductor",
+    "back": "R = \\rho \\frac{l}{A}\n\n\\rho = resistivity (\\Omega \\cdot \\text{m}), l = length, A = cross-sectional area\n\nAlso: \\rho = \\frac{m}{ne^2\\tau}",
+    "tags": ["current-electricity", "resistivity"]
+  },
+  {
+    "id": "ce-f-05",
+    "type": "formula",
+    "front": "Temperature Dependence of Resistance",
+    "back": "R_T = R_0(1 + \\alpha \\Delta T)\n\n\\alpha = temperature coefficient of resistance\n\nMetals: \\alpha > 0 (R increases)\nSemiconductors: \\alpha < 0 (R decreases)",
+    "tags": ["current-electricity", "temperature-dependence"]
+  },
+  {
+    "id": "ce-f-06",
+    "type": "formula",
+    "front": "Equivalent Resistance in Series",
+    "back": "R_{eq} = R_1 + R_2 + R_3 + \\cdots + R_n\n\nSame current through all resistors.\nTotal voltage divides: V_k = \\frac{R_k}{R_{eq}} \\times V",
+    "tags": ["current-electricity", "series-resistance"]
+  },
+  {
+    "id": "ce-f-07",
+    "type": "formula",
+    "front": "Equivalent Resistance in Parallel",
+    "back": "\\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\cdots + \\frac{1}{R_n}\n\nFor two resistors: R_{eq} = \\frac{R_1 R_2}{R_1 + R_2}\n\nSame voltage across all resistors.",
+    "tags": ["current-electricity", "parallel-resistance"]
+  },
+  {
+    "id": "ce-f-08",
+    "type": "formula",
+    "front": "EMF, Internal Resistance, and Terminal Voltage",
+    "back": "I = \\frac{E}{R + r}\n\nTerminal voltage (discharging): V = E - Ir\nTerminal voltage (charging): V = E + Ir\n\nE = EMF, r = internal resistance, R = external resistance",
+    "tags": ["current-electricity", "emf", "internal-resistance"]
+  },
+  {
+    "id": "ce-f-09",
+    "type": "formula",
+    "front": "Kirchhoff's Laws (KCL and KVL)",
+    "back": "**KCL (Junction Rule):** \\sum I_{\\text{in}} = \\sum I_{\\text{out}}\n\n**KVL (Loop Rule):** \\sum \\Delta V = 0 \\text{ (around any closed loop)}\n\nSign conventions:\n- Through R in direction of I: \\Delta V = -IR\n- Through cell from - to +: \\Delta V = +E",
+    "tags": ["current-electricity", "kirchhoff-laws"]
+  },
+  {
+    "id": "ce-f-10",
+    "type": "formula",
+    "front": "Wheatstone Bridge Balance Condition",
+    "back": "\\frac{P}{Q} = \\frac{R}{S}\n\nOr equivalently: PS = QR\n\nAt balance, galvanometer current I_g = 0 and points B, D are equipotential.",
+    "tags": ["current-electricity", "wheatstone-bridge"]
+  },
+  {
+    "id": "ce-f-11",
+    "type": "formula",
+    "front": "Meter Bridge Formula",
+    "back": "\\frac{X}{R} = \\frac{l}{100 - l}\n\nX = R \\times \\frac{l}{100 - l}\n\nX = unknown resistance, R = known resistance, l = null-point length (cm) from left end",
+    "tags": ["current-electricity", "meter-bridge"]
+  },
+  {
+    "id": "ce-f-12",
+    "type": "formula",
+    "front": "Potentiometer: Sensitivity and Internal Resistance Measurement",
+    "back": "EMF measurement: E = kl \\quad (k = \\frac{V_{AB}}{L} = \\text{potential gradient})\n\nComparing EMFs: \\frac{E_1}{E_2} = \\frac{l_1}{l_2}\n\nInternal resistance: r = R\\left(\\frac{l_1}{l_2} - 1\\right)\n\nSensitivity increases when k decreases (longer wire or lower driving EMF).",
+    "tags": ["current-electricity", "potentiometer"]
+  },
+  {
+    "id": "ce-f-13",
+    "type": "formula",
+    "front": "Electrical Power Dissipated in a Resistor",
+    "back": "P = VI = I^2R = \\frac{V^2}{R}\n\nUnit: Watt (W) = J/s\n\nEnergy: 1 \\text{ kWh} = 3.6 \\times 10^6 \\text{ J}",
+    "tags": ["current-electricity", "power"]
+  },
+  {
+    "id": "ce-f-14",
+    "type": "formula",
+    "front": "Joule's Law of Heating (H = I^2Rt)",
+    "back": "H = I^2Rt = VIt = \\frac{V^2}{R}t\n\nHeat in calories: H_{\\text{cal}} = \\frac{I^2Rt}{4.18}\n\nFor temperature rise: I^2Rt = ms\\Delta T",
+    "tags": ["current-electricity", "heating-effect"]
+  },
+  {
+    "id": "ce-f-15",
+    "type": "formula",
+    "front": "Conductivity and Mobility of Charge Carriers",
+    "back": "Conductivity: \\sigma = \\frac{1}{\\rho} = \\frac{ne^2\\tau}{m}\n\nMobility: \\mu = \\frac{v_d}{E} = \\frac{e\\tau}{m}\n\nRelation: \\sigma = ne\\mu\n\nUnit of \\mu: \\text{m}^2\\text{V}^{-1}\\text{s}^{-1}",
+    "tags": ["current-electricity", "conductivity", "mobility"]
+  },
+  {
+    "id": "ce-c-01",
+    "type": "concept",
+    "front": "Explain the mechanism of drift velocity in a metallic conductor.",
+    "back": "**Drift Velocity Mechanism:**\n\nFree electrons in a metal undergo random thermal motion at ~10^5 m/s with zero average velocity.\n\nWhen an external electric field E is applied:\n1. Each electron experiences a force F = eE opposite to the field direction\n2. Between successive collisions with lattice ions, an electron accelerates and gains velocity\n3. At each collision, this gained velocity is randomized and lost\n4. The net effect is a small average velocity (~10^{-4} m/s) in the direction opposite to E\n\nThis average velocity is the **drift velocity**: v_d = eE\\tau/m\n\n**Key insight:** Current appears to flow instantly because the electric field propagates at nearly the speed of light, causing all electrons to start drifting simultaneously.",
+    "tags": ["current-electricity", "drift-velocity"]
+  },
+  {
+    "id": "ce-c-02",
+    "type": "concept",
+    "front": "Derive Ohm's law from the microscopic (free-electron) model.",
+    "back": "**Microscopic Derivation of Ohm's Law:**\n\n1. Drift velocity: v_d = eE\\tau/m\n2. Current density: j = nev_d = ne \\cdot (eE\\tau/m) = (ne^2\\tau/m) \\cdot E\n3. Define conductivity: \\sigma = ne^2\\tau/m, so j = \\sigma E\n4. Since \\rho = 1/\\sigma, we get E = \\rho j (microscopic Ohm's law)\n5. For a uniform wire: E = V/l and j = I/A\n6. Substituting: V/l = \\rho(I/A)\n7. Therefore: V = (\\rho l/A) \\cdot I = IR\n\n**Key insight:** Ohm's law holds when \\tau is independent of the applied field, which is true at moderate fields. At very high fields or in non-ohmic materials (diodes, electrolytes), this breaks down.",
+    "tags": ["current-electricity", "ohm-law", "microscopic"]
+  },
+  {
+    "id": "ce-c-03",
+    "type": "concept",
+    "front": "State and explain Kirchhoff's junction and loop rules with their physical basis.",
+    "back": "**Junction Rule (KCL):**\n- At any node: sum of currents entering = sum of currents leaving\n- Based on **conservation of charge** -- charge cannot accumulate at a junction in steady state\n- Independent equations = (number of nodes - 1)\n\n**Loop Rule (KVL):**\n- Around any closed loop: algebraic sum of all potential differences = 0\n- Based on **conservation of energy** -- a charge returning to its starting point must have the same potential energy\n- Independent equations = branches - nodes + 1\n\n**Sign conventions for KVL traversal:**\n- Through resistor along current: -IR\n- Through resistor against current: +IR\n- Through cell from - to + terminal: +E\n- Through cell from + to - terminal: -E",
+    "tags": ["current-electricity", "kirchhoff-laws"]
+  },
+  {
+    "id": "ce-c-04",
+    "type": "concept",
+    "front": "Explain the principle of Wheatstone bridge and why galvanometer current becomes zero at balance.",
+    "back": "**Wheatstone Bridge Principle:**\n\nFour resistors P, Q, R, S are arranged in a diamond with a galvanometer across the middle diagonal (B to D).\n\n**At balance (P/Q = R/S):**\n- Potential at B = Potential at D\n- Since V_B = V_D, no potential difference exists across the galvanometer\n- Therefore I_g = 0 (no current through galvanometer)\n\n**Why this works:**\n- Current splits at A: I_1 through P and I_2 through R\n- For V_B = V_D: I_1 \\cdot P = I_2 \\cdot R and I_1 \\cdot Q = I_2 \\cdot S\n- Dividing: P/Q = R/S\n\n**Advantages:**\n- Null method -- independent of galvanometer sensitivity and battery EMF\n- Very precise for measuring unknown resistance\n- Forms the basis for meter bridge and post office box",
+    "tags": ["current-electricity", "wheatstone-bridge"]
+  },
+  {
+    "id": "ce-c-05",
+    "type": "concept",
+    "front": "Why is a potentiometer preferred over a voltmeter for measuring EMF?",
+    "back": "**Potentiometer vs Voltmeter:**\n\n**Potentiometer (null method):**\n- At the balance point, galvanometer current = 0\n- Zero current means no drop across internal resistance of the source\n- Measures true EMF: V_{measured} = E (exact)\n- Effectively has infinite input resistance at balance\n\n**Voltmeter (deflection method):**\n- Must draw some current to produce deflection\n- Current causes voltage drop Ir across internal resistance\n- Reads terminal voltage: V_{measured} = E - Ir < E\n- Error depends on voltmeter resistance relative to source resistance\n\n**Conclusion:** Potentiometer is inherently more accurate because it is a null-deflection instrument that does not load the circuit. However, it is slower and requires careful adjustment to find the null point.",
+    "tags": ["current-electricity", "potentiometer", "voltmeter"]
+  },
+  {
+    "id": "ce-c-06",
+    "type": "concept",
+    "front": "How does the resistor color code work? Give the sequence and multiplier rules.",
+    "back": "**Resistor Color Code (4-band):**\n\nMnemonic: **BB ROY of Great Britain has a Very Good Wife**\n\nBlack=0, Brown=1, Red=2, Orange=3, Yellow=4, Green=5, Blue=6, Violet=7, Grey=8, White=9\n\n**Band interpretation:**\n- Band 1: First significant digit\n- Band 2: Second significant digit\n- Band 3: Multiplier (10^n)\n- Band 4: Tolerance (Gold = 5%, Silver = 10%, None = 20%)\n\n**Example:** Brown-Black-Red-Gold = 10 \\times 10^2 = 1000 \\Omega = 1 k\\Omega with 5% tolerance\n\n**Quick check:** Red-Violet-Orange = 27 \\times 10^3 = 27 k\\Omega",
+    "tags": ["current-electricity", "color-code"]
+  },
+  {
+    "id": "ce-c-07",
+    "type": "concept",
+    "front": "What is superconductivity and what are its key features?",
+    "back": "**Superconductivity:**\n\nBelow a critical temperature T_c, certain materials exhibit exactly zero electrical resistance.\n\n**Key features:**\n1. Resistivity drops abruptly to zero at T_c (not gradually)\n2. Once a current is established in a superconducting loop, it flows indefinitely without any EMF source\n3. Superconductors also exhibit the Meissner effect -- complete expulsion of magnetic field from the interior\n4. T_c depends on the material (e.g., mercury: 4.2 K, YBCO: 93 K)\n\n**Significance for JEE:**\n- Superconductors are perfect conductors: \\rho = 0, R = 0\n- Not explained by classical free-electron theory\n- Explained by BCS theory (Cooper pairs of electrons)\n- Applications: MRI magnets, maglev trains, lossless power transmission",
+    "tags": ["current-electricity", "superconductivity"]
+  },
+  {
+    "id": "ce-c-08",
+    "type": "concept",
+    "front": "How does internal resistance affect a cell's terminal voltage and power delivery?",
+    "back": "**Effect on Terminal Voltage:**\n\n- Open circuit: V = E (no current, no internal drop)\n- Discharging: V = E - Ir (terminal voltage < EMF)\n- Charging: V = E + Ir (terminal voltage > EMF)\n- Short circuit: V = 0, I_{max} = E/r\n\n**Effect on Power Delivery:**\n\n- Total power from cell: P_{total} = EI\n- Power lost internally: P_{lost} = I^2r\n- Power to external load: P_{ext} = I^2R = EI - I^2r\n\n**Maximum Power Transfer Theorem:**\nP_{ext} is maximum when R = r\nP_{max} = E^2/(4r)\nAt this point, efficiency is only 50% (half the power is wasted internally).\n\n**Practical note:** Batteries with low r deliver higher current and more stable voltage under load.",
+    "tags": ["current-electricity", "internal-resistance"]
+  },
+  {
+    "id": "ce-c-09",
+    "type": "concept",
+    "front": "Distinguish between EMF and terminal voltage of a cell.",
+    "back": "**EMF (Electromotive Force):**\n- Work done per unit charge by non-electrostatic (chemical) forces inside the cell\n- Measured in open circuit (I = 0)\n- Property of the cell itself; independent of external circuit\n- Not actually a \"force\" -- it is energy per unit charge (V)\n\n**Terminal Voltage:**\n- Actual potential difference across the cell terminals when current flows\n- Depends on current and internal resistance: V = E - Ir\n- Always less than EMF during discharge\n- Equals EMF only when I = 0\n\n**Key distinction:** EMF is the maximum voltage a cell can provide. Terminal voltage is what the external circuit actually receives after accounting for the internal resistance drop.",
+    "tags": ["current-electricity", "emf", "terminal-voltage"]
+  },
+  {
+    "id": "ce-c-10",
+    "type": "concept",
+    "front": "What are thermoelectric effects (Seebeck, Peltier, Thomson)?",
+    "back": "**Seebeck Effect:**\n- A temperature difference between two junctions of dissimilar metals produces an EMF\n- Basis of thermocouples for temperature measurement\n- EMF depends on the metals used and temperature difference\n\n**Peltier Effect (reverse of Seebeck):**\n- Passing current through a junction of two different metals causes heating or cooling at the junction\n- Direction of current determines heating vs cooling\n- Used in thermoelectric coolers\n\n**Thomson Effect:**\n- When current flows through a single conductor with a temperature gradient, heat is absorbed or evolved (beyond Joule heating)\n- Depends on direction of current relative to temperature gradient\n\n**Relation:** All three are reversible effects (unlike Joule heating which is irreversible). The Seebeck coefficient equals the difference of Peltier coefficients divided by temperature.",
+    "tags": ["current-electricity", "thermoelectric"]
+  },
+  {
+    "id": "ce-mcq-01",
+    "type": "mcq",
+    "front": "Two resistors of 3 \\Omega each are connected in series. This combination is connected in parallel with a 3 \\Omega resistor. What is the equivalent resistance?",
+    "options": ["2 \\Omega", "3 \\Omega", "4 \\Omega", "6 \\Omega"],
+    "answer": "A",
+    "back": "**Answer: A**\n\nSeries combination: 3 + 3 = 6 \\Omega\n\nParallel with 3 \\Omega:\nR_{eq} = \\frac{6 \\times 3}{6 + 3} = \\frac{18}{9} = 2 \\text{ }\\Omega\n\n**Check:** In parallel, equivalent resistance must be less than the smallest branch resistance (3 \\Omega). 2 \\Omega < 3 \\Omega. Correct.",
+    "tags": ["current-electricity", "equivalent-resistance"]
+  },
+  {
+    "id": "ce-mcq-02",
+    "type": "mcq",
+    "front": "A cell of EMF 2 V and internal resistance 0.5 \\Omega is connected to a 1.5 \\Omega external resistor. What is the terminal voltage?",
+    "options": ["0.5 V", "1.0 V", "1.5 V", "2.0 V"],
+    "answer": "C",
+    "back": "**Answer: C**\n\nCurrent: I = \\frac{E}{R + r} = \\frac{2}{1.5 + 0.5} = \\frac{2}{2} = 1 \\text{ A}\n\nTerminal voltage: V = E - Ir = 2 - 1 \\times 0.5 = 1.5 \\text{ V}\n\nAlternatively: V = IR = 1 \\times 1.5 = 1.5 \\text{ V}",
+    "tags": ["current-electricity", "emf", "internal-resistance"]
+  },
+  {
+    "id": "ce-mcq-03",
+    "type": "mcq",
+    "front": "In a Wheatstone bridge, P = 100 \\Omega, Q = 200 \\Omega, R = 40 \\Omega. What value of S balances the bridge?",
+    "options": ["20 \\Omega", "40 \\Omega", "80 \\Omega", "200 \\Omega"],
+    "answer": "C",
+    "back": "**Answer: C**\n\nBalance condition: \\frac{P}{Q} = \\frac{R}{S}\n\n\\frac{100}{200} = \\frac{40}{S}\n\nS = \\frac{40 \\times 200}{100} = 80 \\text{ }\\Omega\n\nVerification: P/Q = 1/2 and R/S = 40/80 = 1/2. Balanced.",
+    "tags": ["current-electricity", "wheatstone-bridge"]
+  },
+  {
+    "id": "ce-mcq-04",
+    "type": "mcq",
+    "front": "In a potentiometer experiment, the balancing lengths for two cells are 300 cm and 200 cm. The ratio of their EMFs is:",
+    "options": ["2:3", "3:2", "1:1", "4:3"],
+    "answer": "B",
+    "back": "**Answer: B**\n\nFor a potentiometer: E = kl (potential gradient times balancing length)\n\n\\frac{E_1}{E_2} = \\frac{l_1}{l_2} = \\frac{300}{200} = \\frac{3}{2}\n\nTherefore E_1 : E_2 = 3 : 2\n\nThis works because at balance, no current is drawn from the cell, so the full EMF appears across the balancing length.",
+    "tags": ["current-electricity", "potentiometer"]
+  },
+  {
+    "id": "ce-mcq-05",
+    "type": "mcq",
+    "front": "A 100 W bulb and a 200 W bulb are connected in series across a 220 V supply. Which bulb glows brighter?",
+    "options": ["100 W bulb", "200 W bulb", "Both glow equally", "Neither glows"],
+    "answer": "A",
+    "back": "**Answer: A**\n\nRated resistances: R_{100} = V^2/P = 220^2/100 = 484 \\Omega, R_{200} = 220^2/200 = 242 \\Omega\n\nIn series, the same current flows through both.\n\nPower dissipated: P = I^2R\n\nSince R_{100} > R_{200}, the 100 W bulb dissipates more power in series.\n\n**Key insight:** In series, the higher-rated-resistance (lower-wattage) bulb glows brighter. This is the opposite of what happens at rated voltage.\n\nIn parallel, the 200 W bulb would glow brighter (P = V^2/R, lower R means more power).",
+    "tags": ["current-electricity", "power", "series-parallel"]
+  },
+  {
+    "id": "ce-mcq-06",
+    "type": "mcq",
+    "front": "Five identical resistors each of R are connected: three in series, and this combination in parallel with the remaining two in series. What is the equivalent resistance?",
+    "options": ["\\frac{6R}{5}", "\\frac{5R}{6}", "\\frac{3R}{5}", "\\frac{5R}{3}"],
+    "answer": "A",
+    "back": "**Answer: A**\n\nBranch 1 (three in series): R_1 = 3R\nBranch 2 (two in series): R_2 = 2R\n\nParallel combination:\nR_{eq} = \\frac{R_1 \\times R_2}{R_1 + R_2} = \\frac{3R \\times 2R}{3R + 2R} = \\frac{6R^2}{5R} = \\frac{6R}{5}",
+    "tags": ["current-electricity", "equivalent-resistance"]
+  },
+  {
+    "id": "ce-mcq-07",
+    "type": "mcq",
+    "front": "Using Kirchhoff's laws in the loop shown: a 12 V battery with 1 \\Omega internal resistance drives current through 5 \\Omega and 6 \\Omega resistors in series. What is the current?",
+    "options": ["0.5 A", "1.0 A", "1.5 A", "2.0 A"],
+    "answer": "B",
+    "back": "**Answer: B**\n\nApplying KVL around the loop:\nE - IR_{int} - IR_1 - IR_2 = 0\n\n12 - I(1) - I(5) - I(6) = 0\n\n12 = I(1 + 5 + 6) = 12I\n\nI = 1.0 \\text{ A}\n\nVerification: Voltage drops = 1 + 5 + 6 = 12 V = EMF. KVL satisfied.",
+    "tags": ["current-electricity", "kirchhoff-laws"]
+  },
+  {
+    "id": "ce-mcq-08",
+    "type": "mcq",
+    "front": "A meter bridge has null point at 40 cm with X on the left and standard resistance R on the right. If a 20 \\Omega resistance is connected in parallel with X, the null point shifts to 25 cm. What is X?",
+    "options": ["10 \\Omega", "20 \\Omega", "30 \\Omega", "40 \\Omega"],
+    "answer": "B",
+    "back": "**Answer: B**\n\nFirst case: \\frac{X}{R} = \\frac{40}{60} = \\frac{2}{3} \\Rightarrow R = \\frac{3X}{2} \\quad ...(i)\n\nSecond case: X' = \\frac{20X}{20+X} (parallel combination)\n\\frac{X'}{R} = \\frac{25}{75} = \\frac{1}{3} \\Rightarrow X' = \\frac{R}{3} \\quad ...(ii)\n\nSubstitute R = 3X/2 into (ii):\n\\frac{20X}{20+X} = \\frac{X}{2}\n\nCross-multiply: 40X = X(20+X)\n40 = 20 + X \\Rightarrow X = 20 \\text{ }\\Omega\n\nVerification: R = 30 \\Omega. Check (i): 20/30 = 2/3 at 40 cm. Check (ii): X' = 20 \\times 20/40 = 10, and 10/30 = 1/3 at 25 cm.",
+    "tags": ["current-electricity", "meter-bridge"]
+  },
+  {
+    "id": "ce-mcq-09",
+    "type": "mcq",
+    "front": "For maximum power transfer from a source with EMF 10 V and internal resistance 2 \\Omega, what is the maximum power delivered to the external load?",
+    "options": ["10 W", "12.5 W", "25 W", "50 W"],
+    "answer": "B",
+    "back": "**Answer: B**\n\nMaximum power is delivered when R_{ext} = r = 2 \\Omega.\n\nP_{max} = \\frac{E^2}{4r} = \\frac{10^2}{4 \\times 2} = \\frac{100}{8} = 12.5 \\text{ W}\n\nVerification: I = E/(R+r) = 10/4 = 2.5 A\nP = I^2R = (2.5)^2 \\times 2 = 6.25 \\times 2 = 12.5 W",
+    "tags": ["current-electricity", "power", "maximum-power-transfer"]
+  },
+  {
+    "id": "ce-mcq-10",
+    "type": "mcq",
+    "front": "A potentiometer wire of length 100 cm has a resistance of 10 \\Omega. It is connected in series with a resistance R and a 2 V accumulator. A cell of EMF 10 mV balances at 40 cm. What is R?",
+    "options": ["790 \\Omega", "490 \\Omega", "990 \\Omega", "1590 \\Omega"],
+    "answer": "A",
+    "back": "**Answer: A**\n\nPotential gradient: k = V_{wire}/L\n\nResistance of wire = 10 \\Omega. Current in main circuit: I = 2/(R + 10)\n\nVoltage across wire: V_{wire} = I \\times 10 = 20/(R + 10)\n\nPotential gradient: k = V_{wire}/100 = 20/[100(R+10)] = 0.2/(R+10) V/cm\n\nAt balance: E_{cell} = k \\times l\n10 \\times 10^{-3} = \\frac{0.2}{R+10} \\times 40\n\n0.01 = \\frac{8}{R+10}\n\nR + 10 = 800\n\nR = 790 \\text{ }\\Omega",
+    "tags": ["current-electricity", "potentiometer"]
+  }
+]

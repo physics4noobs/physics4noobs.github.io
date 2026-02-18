@@ -79,393 +79,1035 @@
 
     <div class="ch-hero">
       <h1>Current Electricity</h1>
-      <div class="ch-meta">Grade XII &mdash; Chapter 02</div>
+      <span class="ch-meta">Chapter 02 &mdash; Grade XII &mdash; Current Electricity</span>
       <div class="ch-nav">
-        <a href="#electric-current">Electric Current</a>
-        <a href="#ohms-law">Ohm's Law</a>
-        <a href="#series-parallel">Series &amp; Parallel</a>
-        <a href="#kirchhoffs-laws">Kirchhoff's Laws</a>
-        <a href="#wheatstone-bridge">Wheatstone Bridge</a>
-        <a href="#potentiometer">Potentiometer</a>
-        <a href="#electrical-energy-power">Energy &amp; Power</a>
+        <a href="#section-1">Electric Current</a>
+        <a href="#section-2">Drift Velocity &amp; Mobility</a>
+        <a href="#section-3">Ohm's Law</a>
+        <a href="#section-4">Resistivity &amp; Temperature</a>
+        <a href="#section-5">Colour Code</a>
+        <a href="#section-6">Combinations of Resistors</a>
+        <a href="#section-7">EMF &amp; Internal Resistance</a>
+        <a href="#section-8">Kirchhoff's Laws</a>
+        <a href="#section-9">Wheatstone Bridge &amp; Meter Bridge</a>
+        <a href="#section-10">Potentiometer</a>
+        <a href="#section-11">Heating Effect &amp; Power</a>
+        <a href="#section-12">Thermoelectricity</a>
+        <a href="#section-13">Key Formulas</a>
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 1: Electric Current -->
+    <!-- SECTION 1: Electric Current & Resistance -->
     <!-- ============================== -->
-    <div class="theory-section" id="electric-current">
-      <h2>1. Electric Current</h2>
+    <div class="theory-section" id="section-1">
+      <h2>1. Electric Current &amp; Resistance</h2>
 
-      <h3>Definition</h3>
+      <h3>What is Electric Current?</h3>
       <p>
-        Electric current is the rate of flow of electric charge through a cross-section of a conductor. By convention, the direction of current is taken as the direction in which positive charges would flow, which is opposite to the direction of electron flow.
+        Electric current is the rate of flow of electric charge through any cross-section of a conductor.
+        When a potential difference is maintained across the ends of a conductor, free charges experience a
+        net force and begin drifting in a definite direction, constituting an electric current. The SI unit
+        of current is the <strong>ampere (A)</strong>, defined as one coulomb of charge flowing per second.
+      </p>
+      <p>
+        By convention, the direction of electric current is taken as the direction of flow of <em>positive</em>
+        charges. In metallic conductors the actual charge carriers are electrons, so conventional current flows
+        opposite to the electron drift. In electrolytes, both positive ions (cations) and negative ions (anions)
+        contribute to the current.
       </p>
       <div class="formula-box">
-        I = dQ / dt<br><br>
-        For steady current: I = Q / t<br>
-        SI unit: Ampere (A) = C/s
+        I = dQ/dt<br><br>
+        1 A = 1 C/s &nbsp;&nbsp; 1 mA = 10<sup>&minus;3</sup> A &nbsp;&nbsp; 1 &mu;A = 10<sup>&minus;6</sup> A
       </div>
 
-      <h3>Drift Velocity</h3>
+      <h3>Charge Transported</h3>
       <p>
-        In the absence of an electric field, free electrons in a conductor move randomly with high thermal velocities (of the order of 10<sup>5</sup> m/s) but with zero average displacement. When an electric field is applied, the electrons acquire a small systematic velocity superimposed on their random motion. This systematic velocity is called the <strong>drift velocity</strong> v<sub>d</sub>.
+        If the current varies with time, the total charge flowing through a cross-section between times
+        t<sub>1</sub> and t<sub>2</sub> is obtained by integration. For a steady (constant) current,
+        this simplifies to Q = It.
       </p>
       <div class="formula-box">
-        v<sub>d</sub> = eE&tau; / m<br><br>
-        where e = electron charge, E = electric field,<br>
-        &tau; = relaxation time (average time between successive collisions),<br>
-        m = electron mass
+        Q = &int;<sub>t<sub>1</sub></sub><sup>t<sub>2</sub></sup> I &middot; dt
       </div>
-      <p>
-        Typical drift velocities are of the order of 10<sup>&minus;4</sup> m/s, which is much smaller than the random thermal speed. Despite this slow drift, the electric signal travels at nearly the speed of light because the electric field is set up almost instantaneously throughout the conductor.
-      </p>
 
       <h3>Current Density</h3>
       <p>
-        Current density <strong>J</strong> is a vector quantity that gives the current per unit cross-sectional area. It is directed along the direction of current flow.
+        Current density <strong>j</strong> is the current per unit cross-sectional area of the conductor, directed
+        along the flow of positive charge. It is a vector quantity, and for a uniform conductor carrying current I
+        through area A:
       </p>
       <div class="formula-box">
-        J = I / A = nev<sub>d</sub><br><br>
-        where n = number density of free electrons (electrons per unit volume)
+        j = I/A &nbsp;&nbsp; (A/m&sup2;)
       </div>
 
-      <h3>Mobility</h3>
+      <h3>Resistance and Resistivity</h3>
       <p>
-        Mobility (&mu;) of a charge carrier is defined as the drift velocity per unit electric field:
+        <strong>Resistance</strong> (R) is the opposition a conductor offers to the flow of charge. It arises
+        because moving electrons undergo repeated collisions with the fixed ions of the crystal lattice. The
+        resistance of a conductor depends on its material, length, cross-sectional area, and temperature.
       </p>
       <div class="formula-box">
-        &mu; = v<sub>d</sub> / E = e&tau; / m<br>
-        SI unit: m&sup2; V<sup>&minus;1</sup> s<sup>&minus;1</sup>
+        R = &rho;(l/A)<br><br>
+        where &rho; = resistivity of the material (&Omega;&middot;m),<br>
+        l = length of conductor (m),<br>
+        A = cross-sectional area (m&sup2;)
       </div>
+      <p>
+        <strong>Resistivity</strong> (&rho;) is an intrinsic property of the material, independent of the shape
+        or dimensions of the conductor. It is defined as the resistance of a specimen of unit length and unit
+        cross-sectional area. The SI unit is &Omega;&middot;m. <strong>Conductivity</strong> (&sigma;) is the
+        reciprocal of resistivity: &sigma; = 1/&rho;, with SI unit S/m (siemens per metre).
+      </p>
+
+      <h3>Definition of One Ohm</h3>
+      <p>
+        One ohm (&Omega;) is the resistance of a conductor that permits a current of 1 A when a potential
+        difference of 1 V is maintained across its ends: 1 &Omega; = 1 V/A.
+      </p>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 2: Ohm's Law -->
+    <!-- SECTION 2: Drift Velocity & Mobility -->
     <!-- ============================== -->
-    <div class="theory-section" id="ohms-law">
-      <h2>2. Ohm's Law</h2>
+    <div class="theory-section" id="section-2">
+      <h2>2. Drift Velocity &amp; Mobility</h2>
 
-      <h3>Statement</h3>
+      <h3>Random Thermal Motion of Electrons</h3>
       <p>
-        Ohm's law states that the current through a conductor between two points is directly proportional to the potential difference across the two points, provided the physical conditions (temperature, mechanical strain, etc.) remain constant.
+        In a metal at any temperature above absolute zero, free electrons are in ceaseless random thermal
+        motion, much like molecules in an ideal gas. Their thermal speeds are of the order of
+        10<sup>5</sup>&ndash;10<sup>6</sup> m/s, but because the motion is completely random in all
+        directions, the <em>average</em> velocity is zero. Therefore, no net current flows in the absence of
+        an applied electric field.
+      </p>
+
+      <h3>Drift Velocity</h3>
+      <p>
+        When a potential difference is applied across a conductor, an electric field <strong>E</strong> is
+        established inside it. Each free electron experiences a force F = eE opposite to the field (since
+        the electron charge is negative). Between successive collisions with lattice ions, an electron
+        accelerates and gains a small additional velocity in the direction of the force. This additional
+        velocity is lost at each collision, but on average a slow, steady velocity develops along the field
+        direction. This average velocity is called the <strong>drift velocity</strong> (v<sub>d</sub>).
       </p>
       <div class="formula-box">
-        V = IR<br><br>
-        where R = resistance of the conductor (unit: Ohm, &Omega;)
+        v<sub>d</sub> = eE&tau;/m<br><br>
+        where e = 1.6 &times; 10<sup>&minus;19</sup> C (electron charge),<br>
+        E = electric field inside conductor (V/m),<br>
+        &tau; = relaxation time (average time between successive collisions),<br>
+        m = 9.11 &times; 10<sup>&minus;31</sup> kg (electron mass)
       </div>
-
-      <h3>Resistance</h3>
       <p>
-        Resistance is the opposition offered by a conductor to the flow of current. It depends on the material, length, cross-sectional area, and temperature of the conductor.
+        Typical drift velocities are extremely small &mdash; of the order of 10<sup>&minus;4</sup> to
+        10<sup>&minus;5</sup> m/s &mdash; yet the electric signal propagates at nearly the speed of light
+        because the electric field is established almost instantaneously throughout the conductor.
+      </p>
+
+      <h3>Relation Between Current and Drift Velocity</h3>
+      <p>
+        Consider a conductor of cross-sectional area A with n free electrons per unit volume, each carrying
+        charge e and drifting with velocity v<sub>d</sub>. In a small time dt, the charge crossing any
+        cross-section is dQ = nAev<sub>d</sub> dt, giving:
       </p>
       <div class="formula-box">
-        R = &rho;l / A<br><br>
-        where &rho; = resistivity of the material (unit: &Omega; m),<br>
-        l = length of the conductor, A = cross-sectional area
+        I = nAev<sub>d</sub><br>
+        j = nev<sub>d</sub>
       </div>
-
-      <h3>Resistivity and Conductivity</h3>
       <p>
-        Resistivity (&rho;) is an intrinsic property of the material, independent of the shape or size of the conductor. It is the resistance offered by a unit cube of the material. Conductivity (&sigma;) is the reciprocal of resistivity.
+        This shows that for a given current, a thinner conductor requires a higher drift velocity. It also
+        provides a microscopic derivation of Ohm's law: since v<sub>d</sub> &propto; E and I &propto; v<sub>d</sub>,
+        we get I &propto; V (because E = V/l).
+      </p>
+
+      <h3>Mobility</h3>
+      <p>
+        The <strong>mobility</strong> (&mu;) of a charge carrier is defined as the magnitude of drift velocity
+        per unit electric field. It characterises how easily a charge carrier moves through the material under
+        an applied field.
       </p>
       <div class="formula-box">
-        &sigma; = 1 / &rho;<br>
-        SI unit of conductivity: S/m (siemens per metre)<br><br>
-        In terms of microscopic quantities:<br>
-        &rho; = m / (ne&sup2;&tau;) &nbsp; and &nbsp; &sigma; = ne&sup2;&tau; / m
+        &mu; = v<sub>d</sub>/E = e&tau;/m<br><br>
+        SI unit: m&sup2; V<sup>&minus;1</sup> s<sup>&minus;1</sup>
       </div>
 
-      <h3>Temperature Dependence of Resistance</h3>
+      <h3>Relaxation Time</h3>
       <p>
-        For most metals, resistance increases with temperature. For small temperature changes, the variation is approximately linear:
+        The relaxation time &tau; is the average time interval between two successive collisions of a free
+        electron with the lattice ions. It can be expressed in terms of measurable quantities:
       </p>
       <div class="formula-box">
-        R<sub>T</sub> = R<sub>0</sub>(1 + &alpha;&Delta;T)<br>
-        &rho;<sub>T</sub> = &rho;<sub>0</sub>(1 + &alpha;&Delta;T)<br><br>
-        where &alpha; = temperature coefficient of resistance (unit: &deg;C<sup>&minus;1</sup> or K<sup>&minus;1</sup>)
+        &tau; = m/(ne&sup2;&rho;)
       </div>
-      <ul>
-        <li><strong>Metals:</strong> &alpha; is positive (resistance increases with temperature).</li>
-        <li><strong>Semiconductors and insulators:</strong> &alpha; is negative (resistance decreases with temperature).</li>
-        <li><strong>Alloys</strong> like manganin and constantan have very small &alpha;, making them suitable for standard resistors.</li>
-      </ul>
+      <p>
+        Since resistivity &rho; increases with temperature (for metals), &tau; decreases with temperature,
+        meaning electrons collide more frequently at higher temperatures.
+      </p>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 1</div>
+        <div class="ex-label">Example 1 &mdash; Drift Velocity of Conduction Electrons</div>
         <p>
-          A copper wire of length 2 m and cross-sectional area 1 mm&sup2; carries a current of 1 A. If the number density of free electrons in copper is n = 8.5 &times; 10<sup>28</sup> m<sup>&minus;3</sup>, find the drift velocity and the time taken by an electron to traverse the wire.
+          A copper wire of cross-sectional area 4 &times; 10<sup>&minus;6</sup> m&sup2; carries a current
+          of 20 A. If the free-electron density of copper is 8 &times; 10<sup>28</sup> m<sup>&minus;3</sup>,
+          calculate the drift velocity.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            I = 1 A, A = 1 &times; 10<sup>&minus;6</sup> m&sup2;, n = 8.5 &times; 10<sup>28</sup> m<sup>&minus;3</sup>, e = 1.6 &times; 10<sup>&minus;19</sup> C<br><br>
+            Given: n = 8 &times; 10<sup>28</sup> m<sup>&minus;3</sup>,
+            A = 4 &times; 10<sup>&minus;6</sup> m&sup2;,
+            I = 20 A, e = 1.6 &times; 10<sup>&minus;19</sup> C<br><br>
             Using I = nAev<sub>d</sub>:<br>
-            v<sub>d</sub> = I / (nAe) = 1 / [(8.5 &times; 10<sup>28</sup>)(1 &times; 10<sup>&minus;6</sup>)(1.6 &times; 10<sup>&minus;19</sup>)]<br>
-            v<sub>d</sub> = 1 / (8.5 &times; 10<sup>28</sup> &times; 1.6 &times; 10<sup>&minus;25</sup>)<br>
-            v<sub>d</sub> = 1 / (1.36 &times; 10<sup>4</sup>) = <strong>7.35 &times; 10<sup>&minus;5</sup> m/s</strong><br><br>
-            Time to traverse the wire:<br>
-            t = l / v<sub>d</sub> = 2 / (7.35 &times; 10<sup>&minus;5</sup>) = <strong>2.72 &times; 10<sup>4</sup> s &asymp; 7.55 hours</strong>
+            v<sub>d</sub> = I/(nAe)<br>
+            v<sub>d</sub> = 20 / (8 &times; 10<sup>28</sup> &times; 4 &times; 10<sup>&minus;6</sup> &times; 1.6 &times; 10<sup>&minus;19</sup>)<br>
+            v<sub>d</sub> = 20 / (5.12 &times; 10<sup>4</sup>)<br>
+            v<sub>d</sub> = <strong>3.9 &times; 10<sup>&minus;4</sup> m/s</strong>
           </p>
         </div>
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 3: Series & Parallel -->
+    <!-- SECTION 3: Ohm's Law -->
     <!-- ============================== -->
-    <div class="theory-section" id="series-parallel">
-      <h2>3. Resistors in Series &amp; Parallel</h2>
+    <div class="theory-section" id="section-3">
+      <h2>3. Ohm's Law</h2>
+
+      <h3>Statement</h3>
+      <p>
+        Ohm's law states that the current (I) flowing through a conductor is directly proportional to the
+        potential difference (V) across its ends, provided the temperature and other physical conditions
+        remain unchanged. The constant of proportionality is the resistance R of the conductor.
+      </p>
+
+      <h3>Macroscopic Form</h3>
+      <div class="formula-box">
+        V = IR<br><br>
+        V &rarr; potential difference (V)<br>
+        I &rarr; current (A)<br>
+        R &rarr; resistance (&Omega;)
+      </div>
+
+      <h3>Microscopic (Point) Form</h3>
+      <p>
+        At the microscopic level, Ohm's law relates the electric field E inside the conductor to the current
+        density j. This form is more fundamental because it applies at every point inside the material,
+        independent of geometry:
+      </p>
+      <div class="formula-box">
+        j = &sigma;E &nbsp;&nbsp; or equivalently &nbsp;&nbsp; E = &rho;j<br><br>
+        where &sigma; = conductivity (S/m), &rho; = resistivity (&Omega;&middot;m)
+      </div>
+      <p>
+        From E = V/l and j = I/A, the microscopic form directly yields the macroscopic relation
+        V = IR with R = &rho;l/A.
+      </p>
+
+      <h3>I-V Characteristics</h3>
+      <p>
+        For an <strong>ohmic</strong> conductor, the I-V graph is a straight line through the origin with
+        slope 1/R. Materials that obey Ohm's law over a wide range of voltages are called ohmic conductors
+        (e.g., metallic wires at constant temperature).
+      </p>
+
+      <h3>Limitations and Non-Ohmic Devices</h3>
+      <ul>
+        <li>Ohm's law is <em>not</em> a fundamental law of nature; it is an empirical relation valid only for ohmic materials.</li>
+        <li>Semiconductor devices (diodes, transistors), gas discharge tubes, and electrolytes are <strong>non-ohmic</strong> &mdash; their I-V curves are nonlinear.</li>
+        <li>Even metallic conductors deviate from Ohm's law at very high current densities where Joule heating raises the temperature appreciably.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Example 2 &mdash; Current from Electric Field</div>
+        <p>
+          A conductor of length 12 m and resistance 0.072 &Omega; has a uniform electric field of
+          0.12 V/m established inside it. Find the total current through the conductor.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            V = E &times; l = 0.12 &times; 12 = 1.44 V<br><br>
+            Using Ohm's law:<br>
+            I = V/R = 1.44/0.072 = <strong>20 A</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Resistivity & Temperature Dependence -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-4">
+      <h2>4. Resistivity &amp; Temperature Dependence</h2>
+
+      <h3>Classification of Materials by Resistivity</h3>
+      <p>
+        Materials are broadly classified based on their resistivity values:
+      </p>
+      <ul>
+        <li><strong>Conductors</strong> (metals): &rho; &sim; 10<sup>&minus;8</sup> to 10<sup>&minus;6</sup> &Omega;&middot;m. Examples: copper, aluminium, silver.</li>
+        <li><strong>Semiconductors</strong>: &rho; &sim; 10<sup>&minus;5</sup> to 10<sup>6</sup> &Omega;&middot;m. Examples: silicon, germanium.</li>
+        <li><strong>Insulators</strong>: &rho; &sim; 10<sup>8</sup> to 10<sup>16</sup> &Omega;&middot;m. Examples: glass, rubber, mica.</li>
+      </ul>
+
+      <h3>Temperature Dependence in Metals</h3>
+      <p>
+        In metals, resistivity increases with temperature. As temperature rises, lattice ions vibrate more
+        vigorously, increasing the frequency of collisions between conduction electrons and ions. This reduces
+        the relaxation time &tau; and increases &rho;. For moderate temperature changes, the variation is
+        approximately linear:
+      </p>
+      <div class="formula-box">
+        &rho;<sub>T</sub> = &rho;<sub>0</sub>(1 + &alpha;<sub>&rho;</sub>&Delta;T)<br><br>
+        R<sub>T</sub> = R<sub>0</sub>(1 + &alpha;<sub>R</sub>&Delta;T)<br><br>
+        where &alpha;<sub>&rho;</sub> = temperature coefficient of resistivity,<br>
+        &alpha;<sub>R</sub> = temperature coefficient of resistance,<br>
+        &Delta;T = T &minus; T<sub>0</sub>
+      </div>
+      <p>
+        The relationship between the two coefficients is &alpha;<sub>R</sub> = &alpha;<sub>&rho;</sub> &minus; &alpha;
+        (where &alpha; is the coefficient of linear expansion of the material). Since &alpha; &Lt; &alpha;<sub>&rho;</sub>
+        for metals, we have &alpha;<sub>R</sub> &asymp; &alpha;<sub>&rho;</sub> to a very good approximation.
+      </p>
+
+      <h3>Temperature Dependence in Semiconductors and Insulators</h3>
+      <p>
+        In semiconductors and insulators, resistivity <em>decreases</em> with increasing temperature. Higher
+        temperatures provide more thermal energy, which excites additional electrons from the valence band to
+        the conduction band, increasing the number of charge carriers. The increase in carrier concentration
+        far outweighs the increased collision rate, so net resistance falls.
+      </p>
+
+      <h3>Special Alloys</h3>
+      <ul>
+        <li><strong>Manganin</strong> (Cu-Mn-Ni alloy): Has a very small and nearly zero temperature coefficient. Ideal for constructing standard resistors and precision instruments.</li>
+        <li><strong>Constantan</strong> (Cu-Ni alloy): Similar low temperature coefficient; used in thermocouples and strain gauges.</li>
+        <li><strong>Nichrome</strong> (Ni-Cr alloy): High resistivity and good oxidation resistance at high temperatures; used in heating elements.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Example 3 &mdash; Temperature of a Heating Element</div>
+        <p>
+          A toaster uses a Nichrome heating element and operates on 120 V. When switched on at 0&deg;C,
+          it draws an initial current of 1.5 A. After reaching steady state, the current becomes 1.33 A.
+          The temperature coefficient of Nichrome is 0.00045 /&deg;C. Find the steady-state temperature.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            R<sub>0</sub> = V/I<sub>0</sub> = 120/1.5 = 80 &Omega; (at 0&deg;C)<br>
+            R<sub>T</sub> = V/I<sub>T</sub> = 120/1.33 = 90.23 &Omega; (at T&deg;C)<br><br>
+            Using R<sub>T</sub> = R<sub>0</sub>(1 + &alpha;T):<br>
+            90.23 = 80(1 + 0.00045 &times; T)<br>
+            1 + 0.00045T = 90.23/80 = 1.1279<br>
+            0.00045T = 0.1279<br>
+            T = 0.1279/0.00045 = <strong>284&deg;C</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Colour Code of Resistors -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-5">
+      <h2>5. Colour Code of Carbon Resistors</h2>
+
+      <h3>Reading the Colour Bands</h3>
+      <p>
+        Carbon resistors are tiny components whose resistance values cannot be printed numerically on their
+        bodies. Instead, a system of coloured bands is used. A standard four-band resistor has two significant
+        digits, a multiplier, and a tolerance band.
+      </p>
+
+      <h3>Colour Table</h3>
+      <ul>
+        <li><strong>Black</strong> = 0, <strong>Brown</strong> = 1, <strong>Red</strong> = 2, <strong>Orange</strong> = 3, <strong>Yellow</strong> = 4</li>
+        <li><strong>Green</strong> = 5, <strong>Blue</strong> = 6, <strong>Violet</strong> = 7, <strong>Grey</strong> = 8, <strong>White</strong> = 9</li>
+      </ul>
+      <p>
+        A popular mnemonic to remember the order is: <em>"B B ROY of Great Britain has a Very Good Wife."</em>
+      </p>
+
+      <h3>How to Read a Four-Band Resistor</h3>
+      <div class="formula-box">
+        Band 1: First significant digit<br>
+        Band 2: Second significant digit<br>
+        Band 3: Multiplier (power of 10)<br>
+        Band 4: Tolerance &mdash; Gold = &plusmn;5%, Silver = &plusmn;10%, No band = &plusmn;20%
+      </div>
+      <p>
+        <strong>Example:</strong> Yellow &ndash; Violet &ndash; Orange &ndash; Gold = 47 &times; 10<sup>3</sup> &Omega;
+        = 47 k&Omega; &plusmn; 5%.
+      </p>
+
+      <h3>Five-Band and SMD Resistors</h3>
+      <p>
+        Precision resistors use five bands: three significant digits, a multiplier, and a tolerance band.
+        Surface-mount (SMD) resistors use a numeric code printed directly on the component (e.g., "473" means
+        47 &times; 10<sup>3</sup> = 47 k&Omega;).
+      </p>
+
+      <h3>JEE Tip</h3>
+      <p>
+        Colour-code questions are straightforward marks in competitive exams. Remember the mnemonic and practice
+        converting colours to resistance values (and vice versa) quickly. Pay special attention to the
+        tolerance band, which is read from the <em>opposite</em> end of the resistor.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Combinations of Resistors -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-6">
+      <h2>6. Combinations of Resistors</h2>
 
       <h3>Series Combination</h3>
       <p>
-        When resistors are connected in series, the same current flows through each resistor. The total voltage is the sum of the individual voltage drops.
+        When resistors are connected end-to-end so that the same current flows through each one, they are
+        said to be in <strong>series</strong>. The total voltage across the combination equals the sum of the
+        individual voltage drops. The equivalent resistance is always <em>greater</em> than the largest
+        individual resistance.
       </p>
       <div class="formula-box">
-        R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub> + ...<br><br>
-        V = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub> + ... &nbsp; (I same through all)
+        R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub> + &hellip; + R<sub>n</sub><br><br>
+        Same current through all: I<sub>1</sub> = I<sub>2</sub> = &hellip; = I<br>
+        Voltage divides: V = V<sub>1</sub> + V<sub>2</sub> + &hellip; + V<sub>n</sub>
+      </div>
+
+      <h3>Voltage Divider Rule (Series)</h3>
+      <p>
+        For two resistors R<sub>1</sub> and R<sub>2</sub> in series connected across a total voltage V:
+      </p>
+      <div class="formula-box">
+        V<sub>1</sub> = V &times; R<sub>1</sub>/(R<sub>1</sub> + R<sub>2</sub>)<br>
+        V<sub>2</sub> = V &times; R<sub>2</sub>/(R<sub>1</sub> + R<sub>2</sub>)
       </div>
 
       <h3>Parallel Combination</h3>
       <p>
-        When resistors are connected in parallel, the voltage across each resistor is the same. The total current divides among the branches.
+        When resistors are connected across the same pair of nodes so that each has the <em>same</em>
+        potential difference across it, they are said to be in <strong>parallel</strong>. The total current
+        is the sum of the branch currents. The equivalent resistance is always <em>less</em> than the
+        smallest individual resistance.
       </p>
       <div class="formula-box">
-        1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + 1/R<sub>3</sub> + ...<br><br>
-        For two resistors: R<sub>eq</sub> = R<sub>1</sub>R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)<br><br>
-        I = I<sub>1</sub> + I<sub>2</sub> + I<sub>3</sub> + ... &nbsp; (V same across all)
+        1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + &hellip; + 1/R<sub>n</sub><br><br>
+        For two resistors: R<sub>eq</sub> = (R<sub>1</sub> &times; R<sub>2</sub>)/(R<sub>1</sub> + R<sub>2</sub>)<br><br>
+        Same voltage across all: V<sub>1</sub> = V<sub>2</sub> = &hellip; = V<br>
+        Current divides: I = I<sub>1</sub> + I<sub>2</sub> + &hellip; + I<sub>n</sub>
       </div>
 
-      <h3>Voltage Divider</h3>
+      <h3>Current Divider Rule (Parallel)</h3>
       <p>
-        For two resistors R<sub>1</sub> and R<sub>2</sub> in series across a voltage V:
+        For two resistors R<sub>1</sub> and R<sub>2</sub> in parallel with total current I entering the
+        combination:
       </p>
       <div class="formula-box">
-        V<sub>1</sub> = V &times; R<sub>1</sub> / (R<sub>1</sub> + R<sub>2</sub>)<br>
-        V<sub>2</sub> = V &times; R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+        I<sub>1</sub> = I &times; R<sub>2</sub>/(R<sub>1</sub> + R<sub>2</sub>)<br>
+        I<sub>2</sub> = I &times; R<sub>1</sub>/(R<sub>1</sub> + R<sub>2</sub>)
       </div>
+      <p>
+        Note that the <em>larger</em> current flows through the <em>smaller</em> resistance.
+      </p>
 
-      <h3>Current Divider</h3>
+      <h3>Mixed Combinations</h3>
       <p>
-        For two resistors R<sub>1</sub> and R<sub>2</sub> in parallel with total current I:
+        In complex circuits, resistors may be connected in a mixture of series and parallel. The strategy is
+        to identify groups that are purely series or purely parallel, replace each group by its equivalent,
+        and repeat until a single equivalent resistance remains. For networks that cannot be reduced this way
+        (e.g., the Wheatstone bridge), Kirchhoff's laws or star-delta transformations are needed.
       </p>
-      <div class="formula-box">
-        I<sub>1</sub> = I &times; R<sub>2</sub> / (R<sub>1</sub> + R<sub>2</sub>)<br>
-        I<sub>2</sub> = I &times; R<sub>1</sub> / (R<sub>1</sub> + R<sub>2</sub>)
+
+      <h3>Key Properties</h3>
+      <ul>
+        <li>Series connection increases the effective resistance; used in voltage dividers and current limiters.</li>
+        <li>Parallel connection decreases the effective resistance; used to distribute current and increase current-handling capacity.</li>
+        <li>For n identical resistors of resistance R each: series gives nR; parallel gives R/n.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Example 4 &mdash; Parallel Resistors</div>
+        <p>
+          Two resistances of 4 &Omega; and 12 &Omega; are connected in parallel across a 24 V supply.
+          Find the equivalent resistance, total current, and current through each resistor.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            1/R<sub>eq</sub> = 1/4 + 1/12 = 3/12 + 1/12 = 4/12<br>
+            R<sub>eq</sub> = 12/4 = <strong>3 &Omega;</strong><br><br>
+            Total current: I = V/R<sub>eq</sub> = 24/3 = <strong>8 A</strong><br><br>
+            Current through 4 &Omega;: I<sub>1</sub> = V/R<sub>1</sub> = 24/4 = 6 A<br>
+            (or by divider rule: I<sub>1</sub> = 8 &times; 12/(4 + 12) = 6 A)<br><br>
+            Current through 12 &Omega;: I<sub>2</sub> = V/R<sub>2</sub> = 24/12 = 2 A<br><br>
+            Verification: I<sub>1</sub> + I<sub>2</sub> = 6 + 2 = 8 A = I &nbsp; &#10003;
+          </p>
+        </div>
       </div>
-      <p>
-        Notice in the current divider that more current flows through the <em>smaller</em> resistance.
-      </p>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 4: Kirchhoff's Laws -->
+    <!-- SECTION 7: EMF & Internal Resistance -->
     <!-- ============================== -->
-    <div class="theory-section" id="kirchhoffs-laws">
-      <h2>4. Kirchhoff's Laws</h2>
+    <div class="theory-section" id="section-7">
+      <h2>7. EMF &amp; Internal Resistance</h2>
+
+      <h3>Electromotive Force (EMF)</h3>
+      <p>
+        An electric cell converts chemical energy into electrical energy. The <strong>electromotive force</strong>
+        (EMF, denoted E or &epsilon;) of a cell is the work done per unit positive charge by the
+        non-electrostatic (chemical) force in taking the charge from the negative terminal to the positive
+        terminal <em>inside</em> the cell. Despite its name, EMF is not a force &mdash; it has units of volts
+        and represents the energy supplied per coulomb.
+      </p>
+      <p>
+        EMF equals the potential difference across the terminals of the cell only when no current is being
+        drawn (open-circuit condition).
+      </p>
+
+      <h3>Internal Resistance</h3>
+      <p>
+        Every real cell has an internal resistance <strong>r</strong> due to the finite conductivity of its
+        electrolyte and electrodes. When the cell delivers current, some energy is dissipated inside the cell
+        itself as heat (I&sup2;r), reducing the voltage available at the external terminals.
+      </p>
+
+      <h3>Terminal Voltage</h3>
+      <div class="formula-box">
+        Discharging (current flows out): V = E &minus; Ir<br>
+        Charging (current flows in): V = E + Ir<br><br>
+        where E = EMF, I = current, r = internal resistance
+      </div>
+      <p>
+        Key observations: (i) when I = 0, terminal voltage = E; (ii) terminal voltage decreases as current
+        increases during discharge; (iii) during charging, terminal voltage exceeds the EMF.
+      </p>
+
+      <h3>Current in a Simple Circuit</h3>
+      <p>
+        For a cell of EMF E and internal resistance r connected to an external resistance R, applying
+        Kirchhoff's voltage law around the loop gives:
+      </p>
+      <div class="formula-box">
+        I = E/(R + r)
+      </div>
+
+      <h3>Cells in Series</h3>
+      <p>
+        When n cells are connected in series (same polarity order), EMFs add while internal resistances also
+        add:
+      </p>
+      <div class="formula-box">
+        E<sub>net</sub> = E<sub>1</sub> + E<sub>2</sub> + &hellip; + E<sub>n</sub><br>
+        r<sub>net</sub> = r<sub>1</sub> + r<sub>2</sub> + &hellip; + r<sub>n</sub><br><br>
+        If cells oppose: E<sub>net</sub> = |E<sub>1</sub> &minus; E<sub>2</sub>|<br>
+        (current direction determined by the cell with larger EMF)
+      </div>
+
+      <h3>Cells in Parallel</h3>
+      <p>
+        When n identical cells (each EMF E, internal resistance r) are connected in parallel across an
+        external resistance R:
+      </p>
+      <div class="formula-box">
+        E<sub>net</sub> = E &nbsp; (same as one cell)<br>
+        r<sub>net</sub> = r/n<br><br>
+        I = E/(R + r/n)
+      </div>
+      <p>
+        Parallel grouping is advantageous when the external resistance is small compared to the internal
+        resistance of each cell. Series grouping is better when R is large compared to r.
+      </p>
+
+      <h3>Mixed Grouping</h3>
+      <p>
+        For m rows in parallel, each row containing n cells in series:
+      </p>
+      <div class="formula-box">
+        I = mnE/(mR + nr)<br><br>
+        Maximum current when: R = nr/m (external resistance = total internal resistance)
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Kirchhoff's Laws -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-8">
+      <h2>8. Kirchhoff's Laws</h2>
+
+      <h3>Why Kirchhoff's Laws?</h3>
+      <p>
+        Simple series-parallel reduction cannot solve all circuits. Networks with multiple loops and batteries
+        require a systematic approach. Gustav Kirchhoff formulated two laws &mdash; one based on conservation
+        of charge and the other on conservation of energy &mdash; that together allow us to analyse any
+        electrical network, no matter how complex.
+      </p>
 
       <h3>Kirchhoff's Current Law (KCL) &mdash; Junction Rule</h3>
       <p>
-        At any junction (node) in an electrical circuit, the algebraic sum of currents entering the junction equals the algebraic sum of currents leaving it. Equivalently, the total current entering a junction equals the total current leaving it. This is a consequence of the <strong>conservation of charge</strong>.
+        At any junction (node) in a circuit, the algebraic sum of all currents is zero. In other words, the
+        total current entering a junction equals the total current leaving it. This is a direct consequence
+        of the conservation of charge: charge cannot accumulate at a node in a steady-state circuit.
       </p>
       <div class="formula-box">
-        &sum; I<sub>in</sub> = &sum; I<sub>out</sub><br><br>
-        Or equivalently: &sum; I = 0 &nbsp; (at any junction)
+        &Sigma; I<sub>in</sub> = &Sigma; I<sub>out</sub><br><br>
+        Or equivalently: &Sigma; I = 0 &nbsp; (at any junction, taking a sign convention)
       </div>
 
       <h3>Kirchhoff's Voltage Law (KVL) &mdash; Loop Rule</h3>
       <p>
-        In any closed loop of an electrical circuit, the algebraic sum of all the potential differences (including EMFs and voltage drops across resistors) is zero. This is a consequence of the <strong>conservation of energy</strong>.
+        Around any closed loop in a circuit, the algebraic sum of all potential differences (including EMFs
+        and IR drops) is zero. This follows from the conservative nature of the electrostatic field:
+        a charge returning to its starting point must have the same potential energy.
       </p>
       <div class="formula-box">
-        &sum; V = 0 &nbsp; (around any closed loop)<br><br>
-        &sum; &epsilon; = &sum; IR &nbsp; (EMFs = sum of voltage drops)
+        &Sigma; &Delta;V = 0 &nbsp; (around any closed loop)<br><br>
+        &Sigma; E = &Sigma; IR
       </div>
 
-      <h3>Sign Conventions for KVL</h3>
+      <h3>Sign Conventions for Traversing a Loop</h3>
       <ul>
         <li>Choose a direction to traverse the loop (clockwise or anticlockwise).</li>
-        <li>When traversing a resistor in the direction of assumed current: voltage drop = &minus;IR.</li>
-        <li>When traversing a resistor against the assumed current: voltage rise = +IR.</li>
-        <li>When traversing an EMF source from &minus; to + terminal: voltage rise = +&epsilon;.</li>
-        <li>When traversing an EMF source from + to &minus; terminal: voltage drop = &minus;&epsilon;.</li>
+        <li><strong>Resistor:</strong> Traversing in the direction of current &rarr; potential change = &minus;IR. Against current &rarr; +IR.</li>
+        <li><strong>Battery:</strong> Traversing from &minus; to + terminal &rarr; potential change = +E. From + to &minus; terminal &rarr; &minus;E.</li>
       </ul>
 
-      <h3>Solving Circuits with Kirchhoff's Laws</h3>
-      <p>
-        For a circuit with <em>n</em> unknowns, you need <em>n</em> independent equations. Use as many junction equations (KCL) as needed, and supplement with loop equations (KVL). For a circuit with b branches and n nodes, you need (n &minus; 1) KCL equations and (b &minus; n + 1) KVL equations.
-      </p>
+      <h3>Systematic Approach to Circuit Analysis</h3>
+      <ul>
+        <li>Step 1: Assign current variables (I<sub>1</sub>, I<sub>2</sub>, &hellip;) with assumed directions to each branch.</li>
+        <li>Step 2: Apply KCL at each independent node. Number of independent KCL equations = (number of nodes &minus; 1).</li>
+        <li>Step 3: Apply KVL to each independent loop. Number of independent loops = (number of branches &minus; number of nodes + 1).</li>
+        <li>Step 4: Solve the simultaneous equations. A negative value for any current means the actual direction is opposite to the assumed one.</li>
+      </ul>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 2</div>
+        <div class="ex-label">Example 5 &mdash; Two-Loop Circuit with Kirchhoff's Laws</div>
         <p>
-          In the circuit shown, two cells of EMF &epsilon;<sub>1</sub> = 10 V (internal resistance r<sub>1</sub> = 1 &Omega;) and &epsilon;<sub>2</sub> = 4 V (internal resistance r<sub>2</sub> = 2 &Omega;) are connected in parallel across an external resistance R = 10 &Omega;. Find the current through R.
+          Two cells E<sub>1</sub> = 10 V (r<sub>1</sub> = 1 &Omega;) and E<sub>2</sub> = 40 V
+          (r<sub>2</sub> = 2 &Omega;) are connected with an external resistance R = 15 &Omega;.
+          E<sub>2</sub> drives current through the circuit and E<sub>1</sub> opposes it. Find the
+          current through R and the terminal voltage of each cell.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            Let I<sub>1</sub> be the current from &epsilon;<sub>1</sub>, I<sub>2</sub> from &epsilon;<sub>2</sub>, and I through R.<br>
-            By KCL at the junction: I = I<sub>1</sub> + I<sub>2</sub> &nbsp; ...(i)<br><br>
-            Loop 1 (through &epsilon;<sub>1</sub> and R):<br>
-            &epsilon;<sub>1</sub> &minus; I<sub>1</sub>r<sub>1</sub> &minus; IR = 0<br>
-            10 &minus; I<sub>1</sub> &minus; 10I = 0 &nbsp; ...(ii)<br><br>
-            Loop 2 (through &epsilon;<sub>2</sub> and R):<br>
-            &epsilon;<sub>2</sub> &minus; I<sub>2</sub>r<sub>2</sub> &minus; IR = 0<br>
-            4 &minus; 2I<sub>2</sub> &minus; 10I = 0 &nbsp; ...(iii)<br><br>
-            From (ii): I<sub>1</sub> = 10 &minus; 10I<br>
-            From (iii): I<sub>2</sub> = (4 &minus; 10I) / 2 = 2 &minus; 5I<br>
-            Substituting in (i): I = (10 &minus; 10I) + (2 &minus; 5I)<br>
-            I = 12 &minus; 15I<br>
-            16I = 12<br>
-            I = <strong>0.75 A</strong>
+            Net EMF: E<sub>net</sub> = E<sub>2</sub> &minus; E<sub>1</sub> = 40 &minus; 10 = 30 V<br>
+            Total resistance: R<sub>total</sub> = R + r<sub>1</sub> + r<sub>2</sub> = 15 + 1 + 2 = 18 &Omega;<br><br>
+            Current: I = E<sub>net</sub>/R<sub>total</sub> = 30/18 = <strong>5/3 A &asymp; 1.67 A</strong><br><br>
+            Terminal voltage of E<sub>1</sub> (being charged):<br>
+            V<sub>1</sub> = E<sub>1</sub> + Ir<sub>1</sub> = 10 + (5/3)(1) = 35/3 V &asymp; 11.67 V<br><br>
+            Terminal voltage of E<sub>2</sub> (discharging):<br>
+            V<sub>2</sub> = E<sub>2</sub> &minus; Ir<sub>2</sub> = 40 &minus; (5/3)(2) = 110/3 V &asymp; 36.67 V
           </p>
         </div>
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 5: Wheatstone Bridge -->
+    <!-- SECTION 9: Wheatstone Bridge & Meter Bridge -->
     <!-- ============================== -->
-    <div class="theory-section" id="wheatstone-bridge">
-      <h2>5. Wheatstone Bridge</h2>
+    <div class="theory-section" id="section-9">
+      <h2>9. Wheatstone Bridge &amp; Meter Bridge</h2>
 
-      <h3>Principle</h3>
+      <h3>The Wheatstone Bridge</h3>
       <p>
-        A Wheatstone bridge is an arrangement of four resistances P, Q, R, and S connected in a diamond (quadrilateral) configuration. A galvanometer is connected between the junctions of P-Q and R-S. The bridge is said to be <strong>balanced</strong> when no current flows through the galvanometer.
+        The Wheatstone bridge is a network of four resistances P, Q, R, and S arranged in a quadrilateral
+        (diamond) configuration. A galvanometer G is connected across one diagonal (say between junctions B
+        and D), and a battery is connected across the other diagonal (between junctions A and C). The bridge
+        is used to measure an unknown resistance with high precision.
       </p>
 
       <h3>Balanced Condition</h3>
-      <div class="formula-box">
-        P / Q = R / S<br><br>
-        When balanced, V<sub>B</sub> = V<sub>D</sub> &nbsp; (points B and D are at equal potential)
-      </div>
       <p>
-        At balance, the galvanometer can be effectively removed from the circuit without affecting the currents in the branches. This principle is widely used in measurement of unknown resistances.
-      </p>
-
-      <h3>Meter Bridge (Slide Wire Bridge)</h3>
-      <p>
-        The meter bridge is a practical form of the Wheatstone bridge. It uses a uniform wire of length 100 cm as two of the resistances. A standard resistance S is placed in one gap and the unknown resistance R in the other. A jockey is moved along the wire to find the balance point at length l from one end.
+        The bridge is said to be <strong>balanced</strong> when no current flows through the galvanometer,
+        meaning points B and D are at the same potential. Applying Kirchhoff's laws to the balanced
+        bridge gives:
       </p>
       <div class="formula-box">
-        At balance: R / S = l / (100 &minus; l)<br>
-        Therefore: R = S &times; l / (100 &minus; l)
+        P/Q = R/S<br><br>
+        Equivalently: P &times; S = Q &times; R (product of opposite arms are equal)
       </div>
-
-      <h3>Sensitivity of Wheatstone Bridge</h3>
       <p>
-        The sensitivity of a Wheatstone bridge is highest when all four resistances are of comparable magnitude. The bridge is most sensitive when P = Q = R = S. High sensitivity means even a small imbalance produces a noticeable deflection in the galvanometer.
+        At balance, the galvanometer branch can be removed without affecting the circuit. The equivalent
+        resistance of the balanced bridge is then (P + R) in parallel with (Q + S).
       </p>
-    </div>
 
-    <!-- ============================== -->
-    <!-- SECTION 6: Potentiometer -->
-    <!-- ============================== -->
-    <div class="theory-section" id="potentiometer">
-      <h2>6. Potentiometer</h2>
-
-      <h3>Principle</h3>
-      <p>
-        A potentiometer is a device used to measure the EMF of a cell or potential difference without drawing any current from the source being measured. It works on the principle that when a constant current flows through a wire of uniform cross-section and material, the potential drop across any length of the wire is proportional to that length.
-      </p>
-      <div class="formula-box">
-        V &propto; l &nbsp; (for a uniform wire carrying constant current)<br>
-        V = (I&rho;/A) &times; l = kl<br>
-        where k = potential gradient (V/m)
-      </div>
-
-      <h3>Comparison of EMFs</h3>
-      <p>
-        Two cells with EMFs &epsilon;<sub>1</sub> and &epsilon;<sub>2</sub> are connected one at a time and their balance lengths l<sub>1</sub> and l<sub>2</sub> are found:
-      </p>
-      <div class="formula-box">
-        &epsilon;<sub>1</sub> / &epsilon;<sub>2</sub> = l<sub>1</sub> / l<sub>2</sub>
-      </div>
-
-      <h3>Internal Resistance of a Cell</h3>
-      <p>
-        A potentiometer can be used to find the internal resistance of a cell. First find the balance length l<sub>1</sub> with the cell in open circuit (EMF = &epsilon;). Then connect a known resistance R across the cell and find the new balance length l<sub>2</sub> (terminal voltage = V):
-      </p>
-      <div class="formula-box">
-        &epsilon; / V = l<sub>1</sub> / l<sub>2</sub><br>
-        Since &epsilon; = I(R + r) and V = IR:<br>
-        r = R(l<sub>1</sub> &minus; l<sub>2</sub>) / l<sub>2</sub>
-      </div>
-
-      <h3>Advantages of Potentiometer over Voltmeter</h3>
+      <h3>Key Properties</h3>
       <ul>
-        <li>At the balance point, no current is drawn from the cell being measured, so the EMF is measured accurately (no voltage drop across internal resistance).</li>
-        <li>A potentiometer has theoretically infinite resistance at balance.</li>
-        <li>It can compare EMFs with high precision.</li>
-        <li>It is a null method, which eliminates calibration errors.</li>
+        <li>The balance condition is <em>independent</em> of the battery EMF and the galvanometer resistance.</li>
+        <li>Maximum sensitivity occurs when all four resistances are of comparable magnitude (ideally P &asymp; Q &asymp; R &asymp; S).</li>
+        <li>The bridge is widely used in strain gauges, temperature sensors, and laboratory measurements.</li>
       </ul>
-    </div>
 
-    <!-- ============================== -->
-    <!-- SECTION 7: Electrical Energy & Power -->
-    <!-- ============================== -->
-    <div class="theory-section" id="electrical-energy-power">
-      <h2>7. Electrical Energy &amp; Power</h2>
-
-      <h3>Electrical Energy</h3>
+      <h3>The Meter Bridge (Slide Wire Bridge)</h3>
       <p>
-        When a current I flows through a resistor R for a time t, the electrical energy dissipated as heat is given by Joule's law:
+        The meter bridge is a practical realisation of the Wheatstone bridge principle. It uses a uniform
+        resistance wire (typically 100 cm long, made of constantan or nichrome) stretched along a metre
+        scale. A standard (known) resistance R is placed in one gap, and the unknown resistance X is placed
+        in the other. A jockey is slid along the wire to locate the null point where the galvanometer
+        shows zero deflection.
       </p>
       <div class="formula-box">
-        W = VIt = I&sup2;Rt = V&sup2;t / R
+        At balance: X/R = l<sub>1</sub>/(100 &minus; l<sub>1</sub>)<br><br>
+        Therefore: X = R &times; l<sub>1</sub>/(100 &minus; l<sub>1</sub>)<br><br>
+        where l<sub>1</sub> = length of wire on the side of X (cm)
       </div>
 
-      <h3>Electrical Power</h3>
-      <p>
-        Power is the rate at which electrical energy is dissipated or consumed:
-      </p>
-      <div class="formula-box">
-        P = VI = I&sup2;R = V&sup2; / R<br>
-        SI unit: Watt (W) = J/s
-      </div>
-
-      <h3>Maximum Power Transfer Theorem</h3>
-      <p>
-        When a cell of EMF &epsilon; and internal resistance r is connected to an external load resistance R, the power delivered to the external resistance is:
-      </p>
-      <div class="formula-box">
-        P = &epsilon;&sup2;R / (R + r)&sup2;
-      </div>
-      <p>
-        To find the value of R for maximum power, we differentiate P with respect to R and set it to zero. This gives:
-      </p>
-      <div class="formula-box">
-        For maximum power transfer: R = r<br><br>
-        P<sub>max</sub> = &epsilon;&sup2; / (4r)
-      </div>
-      <p>
-        The maximum power is transferred to the external load when the load resistance equals the internal resistance of the source. At this condition, the efficiency is 50% (half the total power is dissipated internally).
-      </p>
-
-      <h3>Combination of Bulbs</h3>
+      <h3>Sources of Error in Meter Bridge</h3>
       <ul>
-        <li><strong>Series:</strong> The bulb with higher resistance (lower wattage rating) glows brighter because P = I&sup2;R and I is the same.</li>
-        <li><strong>Parallel:</strong> The bulb with lower resistance (higher wattage rating) glows brighter because P = V&sup2;/R and V is the same.</li>
+        <li>End corrections due to contact resistance at the wire junctions.</li>
+        <li>Non-uniformity of the wire along its length.</li>
+        <li>Heating of the wire by the current flowing through it.</li>
+        <li>The null point should be obtained near the centre of the wire (l &asymp; 50 cm) for maximum sensitivity and minimum percentage error.</li>
       </ul>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 3</div>
+        <div class="ex-label">Example 6 &mdash; Meter Bridge with Parallel Resistance</div>
         <p>
-          A battery of EMF 12 V and internal resistance 2 &Omega; is connected to a variable external resistance R. Find the value of R for maximum power transfer, the maximum power delivered to R, and the efficiency at this condition.
+          Two unknown resistances X and Y are placed in the left and right gaps of a meter bridge. The
+          null point is found at 80 cm from the left. When a 100 &Omega; resistance is connected in
+          parallel across X, the null point shifts 20 cm to the left. Find X and Y.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            &epsilon; = 12 V, r = 2 &Omega;<br><br>
-            For maximum power: R = r = <strong>2 &Omega;</strong><br><br>
-            Current: I = &epsilon; / (R + r) = 12 / (2 + 2) = 3 A<br><br>
-            Power to R: P<sub>R</sub> = I&sup2;R = (3)&sup2;(2) = <strong>18 W</strong><br>
-            (Alternatively: P<sub>max</sub> = &epsilon;&sup2;/(4r) = 144/8 = 18 W)<br><br>
-            Total power from battery: P<sub>total</sub> = &epsilon;I = 12 &times; 3 = 36 W<br>
-            Power dissipated internally: P<sub>r</sub> = I&sup2;r = 9 &times; 2 = 18 W<br><br>
-            Efficiency = P<sub>R</sub> / P<sub>total</sub> = 18/36 = <strong>50%</strong>
+            From first null point: X/Y = 80/20 = 4 &nbsp; &hellip; (i)<br><br>
+            With 100 &Omega; in parallel with X:<br>
+            Equivalent resistance = 100X/(100 + X)<br>
+            New null point at 60 cm from left:<br>
+            [100X/(100 + X)] / Y = 60/40 = 3/2 &nbsp; &hellip; (ii)<br><br>
+            From (i): X = 4Y. Substituting into (ii):<br>
+            [100(4Y)/(100 + 4Y)] / Y = 3/2<br>
+            400/(100 + 4Y) = 3/2<br>
+            800 = 300 + 12Y<br>
+            Y = 500/12 = <strong>125/3 &Omega; &asymp; 41.67 &Omega;</strong><br>
+            X = 4Y = <strong>500/3 &Omega; &asymp; 166.67 &Omega;</strong>
           </p>
         </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 10: Potentiometer -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-10">
+      <h2>10. Potentiometer</h2>
+
+      <h3>Principle</h3>
+      <p>
+        The potentiometer is an instrument that measures potential difference (or EMF) without drawing any
+        current from the source under test. It works on the principle that when a steady current flows
+        through a wire of uniform cross-section and material, the potential drop across any length of the
+        wire is directly proportional to that length.
+      </p>
+      <p>
+        This makes the potentiometer a <strong>null method</strong> instrument &mdash; at balance, the
+        galvanometer reads zero, so no current is drawn from the cell being measured. This gives it a
+        significant advantage over a voltmeter, which always draws some current and therefore measures
+        the terminal voltage rather than the true EMF.
+      </p>
+
+      <h3>Potential Gradient</h3>
+      <div class="formula-box">
+        Potential gradient: k = V<sub>AB</sub>/L &nbsp; (volt per metre)<br><br>
+        Potential difference across length x: V = kx = (V<sub>AB</sub>/L) &times; x
+      </div>
+      <p>
+        where V<sub>AB</sub> is the potential difference across the full length L of the potentiometer wire,
+        maintained by an external battery (called the driver cell).
+      </p>
+
+      <h3>Comparison of EMFs of Two Cells</h3>
+      <p>
+        Connect cell 1 (EMF E<sub>1</sub>) and find balancing length l<sub>1</sub>. Then connect cell 2
+        (EMF E<sub>2</sub>) and find balancing length l<sub>2</sub>. Since E = kl at balance:
+      </p>
+      <div class="formula-box">
+        E<sub>1</sub>/E<sub>2</sub> = l<sub>1</sub>/l<sub>2</sub>
+      </div>
+
+      <h3>Measurement of Internal Resistance of a Cell</h3>
+      <p>
+        First, find the balancing length l<sub>1</sub> with the test cell in open circuit (giving E).
+        Then connect a known resistance R across the cell and find the new balancing length l<sub>2</sub>
+        (giving the terminal voltage V = IR). Since E = I(R + r) and V = IR:
+      </p>
+      <div class="formula-box">
+        E/V = l<sub>1</sub>/l<sub>2</sub><br><br>
+        r = R(l<sub>1</sub>/l<sub>2</sub> &minus; 1)
+      </div>
+
+      <h3>Conditions for Successful Balancing</h3>
+      <ul>
+        <li>The EMF of the driver cell must be <em>greater</em> than the EMF being measured; otherwise no balance point exists.</li>
+        <li>The positive terminals of both the driver cell and the test cell must be connected to the same end of the wire.</li>
+        <li>The potentiometer wire should have uniform cross-section and resistivity along its entire length.</li>
+      </ul>
+
+      <h3>Advantages of Potentiometer over Voltmeter</h3>
+      <ul>
+        <li>Measures true EMF (no current drawn at balance).</li>
+        <li>Theoretically infinite input resistance at the null point.</li>
+        <li>Null method eliminates errors due to instrument calibration.</li>
+        <li>Can compare EMFs with high precision.</li>
+      </ul>
+
+      <h3>Sensitivity of Potentiometer</h3>
+      <p>
+        The sensitivity of a potentiometer increases when the potential gradient k is decreased. This can be
+        achieved by: (i) using a longer wire, (ii) reducing the current through the wire by adding a
+        series resistance (rheostat) in the driver circuit. A smaller k means a larger balancing length for
+        the same EMF, which improves the precision of length measurement.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 11: Heating Effect & Electric Power -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-11">
+      <h2>11. Heating Effect of Current &amp; Electrical Power</h2>
+
+      <h3>Joule's Law of Heating</h3>
+      <p>
+        When current passes through a resistor, the kinetic energy gained by the charge carriers between
+        collisions is transferred to the lattice ions at each collision. This converts electrical energy
+        into thermal energy (Joule heating). The heat produced is given by Joule's law:
+      </p>
+      <div class="formula-box">
+        H = I&sup2;Rt &nbsp; (in joules)<br><br>
+        Also: H = VIt = V&sup2;t/R<br><br>
+        Heat in calories: H<sub>cal</sub> = I&sup2;Rt / 4.186
+      </div>
+      <p>
+        Joule heating is the principle behind electric heaters, toasters, electric irons, fuses, and
+        incandescent bulbs. In a bulb, only about 5% of the electrical energy is converted into visible
+        light; the rest is dissipated as heat.
+      </p>
+
+      <h3>Electric Power</h3>
+      <p>
+        Power is the rate at which electrical energy is delivered or consumed. The SI unit is the
+        <strong>watt</strong> (W), equal to one joule per second.
+      </p>
+      <div class="formula-box">
+        P = VI = I&sup2;R = V&sup2;/R<br><br>
+        1 W = 1 J/s = 1 V &times; 1 A
+      </div>
+
+      <h3>Electrical Energy and the Commercial Unit</h3>
+      <div class="formula-box">
+        Energy = Power &times; Time<br>
+        W = Pt = VIt<br><br>
+        1 kilowatt-hour (kWh) = 1000 W &times; 3600 s = 3.6 &times; 10<sup>6</sup> J<br>
+        (1 kWh is also called 1 "unit" of electricity)
+      </div>
+
+      <h3>Power Rating of Appliances</h3>
+      <p>
+        Every electrical appliance has a power rating (e.g., "100 W, 220 V") which specifies the power it
+        consumes when operated at its rated voltage. The resistance of the appliance is:
+      </p>
+      <div class="formula-box">
+        R = V<sub>rated</sub>&sup2; / P<sub>rated</sub>
+      </div>
+      <p>
+        If the actual supply voltage differs from the rated voltage, the actual power consumed changes
+        (assuming resistance remains constant):
+        P<sub>actual</sub> = V<sub>actual</sub>&sup2; / R.
+      </p>
+
+      <h3>Maximum Power Transfer Theorem</h3>
+      <p>
+        For a battery of EMF E and internal resistance r connected to external resistance R, the power
+        delivered to R is P = I&sup2;R = E&sup2;R/(R + r)&sup2;. This power is <em>maximum</em> when R = r:
+      </p>
+      <div class="formula-box">
+        P<sub>max</sub> = E&sup2;/(4r)
+      </div>
+      <p>
+        At maximum power transfer, the efficiency is only 50% (half the power is lost in internal
+        resistance). This theorem is important in electronics and communication circuits.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Example 7 &mdash; Power and Energy of an Electric Kettle</div>
+        <p>
+          An electric kettle has a resistance of 20 &Omega; and is connected to a 220 V supply.
+          Calculate the power consumed, the current, and the energy consumed in 5 minutes.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Power: P = V&sup2;/R = (220)&sup2;/20 = 48400/20 = <strong>2420 W = 2.42 kW</strong><br><br>
+            Current: I = V/R = 220/20 = <strong>11 A</strong><br><br>
+            Energy in 5 min: W = Pt = 2420 &times; (5 &times; 60) = 2420 &times; 300<br>
+            W = <strong>726,000 J = 726 kJ = 0.202 kWh</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 12: Thermoelectricity -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-12">
+      <h2>12. Thermoelectricity</h2>
+
+      <h3>The Seebeck Effect</h3>
+      <p>
+        When two dissimilar metals are joined to form a closed loop (a <strong>thermocouple</strong>) and
+        the two junctions are maintained at different temperatures, an EMF is developed in the circuit and
+        a current flows. This phenomenon, discovered by Thomas Seebeck in 1821, is called the
+        <strong>Seebeck effect</strong>. The EMF produced is called <strong>thermo-EMF</strong>.
+      </p>
+      <p>
+        The magnitude and direction of the thermo-EMF depend on the pair of metals used and the temperature
+        difference between the junctions. For small temperature differences, the thermo-EMF is approximately
+        proportional to the temperature difference.
+      </p>
+      <div class="formula-box">
+        e = &alpha;&Delta;T + &frac12;&beta;(&Delta;T)&sup2;<br><br>
+        where &alpha; and &beta; are constants depending on the pair of metals,<br>
+        &Delta;T = T<sub>hot</sub> &minus; T<sub>cold</sub>
+      </div>
+
+      <h3>Thermoelectric Series</h3>
+      <p>
+        Metals can be arranged in a <strong>thermoelectric series</strong> such that a metal earlier in the
+        series develops a positive potential at the cold junction when paired with a metal later in the
+        series. The series (partial): Bi, Ni, Co, Pd, Pt, Cu, Mn, Hg, Pb, Sn, Au, Ag, Zn, Cd, Fe, Sb, Te.
+        The farther apart two metals are in the series, the greater the thermo-EMF produced.
+      </p>
+
+      <h3>Neutral Temperature and Inversion Temperature</h3>
+      <p>
+        As the temperature of the hot junction is gradually raised (keeping the cold junction fixed), the
+        thermo-EMF first increases, reaches a maximum at the <strong>neutral temperature</strong>
+        (T<sub>n</sub>), and then decreases, becoming zero and eventually reversing direction at the
+        <strong>inversion temperature</strong> (T<sub>i</sub>).
+      </p>
+      <div class="formula-box">
+        T<sub>n</sub> = (T<sub>cold</sub> + T<sub>i</sub>)/2<br><br>
+        The neutral temperature T<sub>n</sub> is the arithmetic mean of the cold junction<br>
+        temperature and the inversion temperature.
+      </div>
+
+      <h3>The Peltier Effect</h3>
+      <p>
+        The <strong>Peltier effect</strong> is the reverse of the Seebeck effect. When a current is passed
+        through a thermocouple, one junction is heated and the other is cooled. The heat absorbed or released
+        at a junction per unit charge is called the <strong>Peltier coefficient</strong> (&pi;). The Peltier
+        effect is used in thermoelectric coolers and small refrigeration devices.
+      </p>
+      <div class="formula-box">
+        Peltier heat: Q = &pi; &times; I &times; t<br><br>
+        Peltier EMF: &pi; = dQ/(I &middot; dt) &nbsp; (volts)
+      </div>
+
+      <h3>The Thomson Effect</h3>
+      <p>
+        William Thomson (Lord Kelvin) predicted that when a current flows through a single conductor
+        with a temperature gradient along it, heat is absorbed or evolved (in addition to the Joule
+        heating). This is the <strong>Thomson effect</strong>. The Thomson coefficient (&sigma;<sub>T</sub>)
+        is the heat absorbed or released per unit current per unit temperature difference per unit time.
+      </p>
+      <div class="formula-box">
+        Thomson heat: dQ = &sigma;<sub>T</sub> &times; I &times; dT &times; dt
+      </div>
+      <p>
+        Lead (Pb) has a Thomson coefficient of nearly zero and is often used as a reference metal for
+        thermoelectric measurements.
+      </p>
+
+      <h3>Applications of Thermoelectricity</h3>
+      <ul>
+        <li><strong>Thermocouples:</strong> Used for temperature measurement, especially at extreme temperatures where mercury thermometers fail.</li>
+        <li><strong>Thermoelectric generators (TEG):</strong> Convert waste heat into electrical energy using the Seebeck effect.</li>
+        <li><strong>Peltier coolers:</strong> Solid-state cooling devices used in portable refrigerators, CPU coolers, and scientific instruments.</li>
+        <li><strong>Thermopile:</strong> Multiple thermocouples connected in series for detecting weak thermal radiation.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 13: Key Formulas Summary -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-13">
+      <h2>13. Key Formulas Summary</h2>
+
+      <h3>Current and Charge</h3>
+      <div class="formula-box">
+        I = dQ/dt &nbsp; | &nbsp; Q = &int; I dt &nbsp; | &nbsp; j = I/A &nbsp; | &nbsp; 1 A = 1 C/s
+      </div>
+
+      <h3>Drift Velocity and Mobility</h3>
+      <div class="formula-box">
+        v<sub>d</sub> = eE&tau;/m &nbsp; | &nbsp; I = nAev<sub>d</sub> &nbsp; | &nbsp; j = nev<sub>d</sub><br>
+        &mu; = v<sub>d</sub>/E = e&tau;/m &nbsp; | &nbsp; &tau; = m/(ne&sup2;&rho;)
+      </div>
+
+      <h3>Ohm's Law (Macroscopic and Microscopic)</h3>
+      <div class="formula-box">
+        V = IR &nbsp; | &nbsp; j = &sigma;E &nbsp; | &nbsp; E = &rho;j &nbsp; | &nbsp; &sigma; = 1/&rho;
+      </div>
+
+      <h3>Resistance and Resistivity</h3>
+      <div class="formula-box">
+        R = &rho;l/A &nbsp; | &nbsp; &rho;<sub>T</sub> = &rho;<sub>0</sub>(1 + &alpha;&Delta;T) &nbsp; | &nbsp; R<sub>T</sub> = R<sub>0</sub>(1 + &alpha;&Delta;T)
+      </div>
+
+      <h3>Series and Parallel Combinations</h3>
+      <div class="formula-box">
+        Series: R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + &hellip;<br>
+        Parallel: 1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + &hellip;<br>
+        Two in parallel: R<sub>eq</sub> = R<sub>1</sub>R<sub>2</sub>/(R<sub>1</sub> + R<sub>2</sub>)
+      </div>
+
+      <h3>EMF and Internal Resistance</h3>
+      <div class="formula-box">
+        V = E &minus; Ir &nbsp; (discharge) &nbsp; | &nbsp; V = E + Ir &nbsp; (charge)<br>
+        I = E/(R + r) &nbsp; | &nbsp; Series: E<sub>net</sub> = &Sigma;E, r<sub>net</sub> = &Sigma;r
+      </div>
+
+      <h3>Kirchhoff's Laws</h3>
+      <div class="formula-box">
+        KCL: &Sigma;I<sub>in</sub> = &Sigma;I<sub>out</sub> &nbsp; | &nbsp; KVL: &Sigma;&Delta;V = 0 (closed loop)
+      </div>
+
+      <h3>Wheatstone Bridge and Meter Bridge</h3>
+      <div class="formula-box">
+        Balance: P/Q = R/S &nbsp; | &nbsp; Meter Bridge: X/R = l/(100 &minus; l)
+      </div>
+
+      <h3>Potentiometer</h3>
+      <div class="formula-box">
+        k = V<sub>AB</sub>/L &nbsp; | &nbsp; E = kl &nbsp; | &nbsp; E<sub>1</sub>/E<sub>2</sub> = l<sub>1</sub>/l<sub>2</sub><br>
+        Internal resistance: r = R(l<sub>1</sub>/l<sub>2</sub> &minus; 1)
+      </div>
+
+      <h3>Heating Effect and Power</h3>
+      <div class="formula-box">
+        H = I&sup2;Rt = VIt = V&sup2;t/R<br>
+        P = VI = I&sup2;R = V&sup2;/R &nbsp; | &nbsp; 1 kWh = 3.6 &times; 10<sup>6</sup> J<br>
+        P<sub>max</sub> = E&sup2;/(4r) &nbsp; when R = r
+      </div>
+
+      <h3>Thermoelectricity</h3>
+      <div class="formula-box">
+        Seebeck: e = &alpha;&Delta;T + &frac12;&beta;(&Delta;T)&sup2;<br>
+        T<sub>n</sub> = (T<sub>cold</sub> + T<sub>i</sub>)/2 &nbsp; | &nbsp; Peltier: Q = &pi;It
+      </div>
+
+      <h3>Ammeter and Voltmeter Conversion</h3>
+      <div class="formula-box">
+        Shunt (ammeter): S = I<sub>g</sub>G/(I &minus; I<sub>g</sub>)<br>
+        Multiplier (voltmeter): R = V/I<sub>g</sub> &minus; G
+      </div>
+
+      <h3>RC Circuits</h3>
+      <div class="formula-box">
+        &tau; = RC &nbsp; | &nbsp; Charging: q = Q(1 &minus; e<sup>&minus;t/&tau;</sup>), &nbsp; i = (E/R)e<sup>&minus;t/&tau;</sup><br>
+        Discharging: q = Q<sub>0</sub>e<sup>&minus;t/&tau;</sup>, &nbsp; i = (V<sub>0</sub>/R)e<sup>&minus;t/&tau;</sup>
       </div>
     </div>
 
@@ -473,10 +1115,8 @@
     <!-- Bottom Navigation Links -->
     <!-- ============================== -->
     <div class="ch-links">
-      <a href="../simulations/current-electricity.html" class="primary-link">Simulation</a>
-      <a href="../tests/current-electricity.html">Take a Test</a>
-      <a href="magnetism.html">Next: Moving Charges &amp; Magnetism &rarr;</a>
       <a href="electrostatics.html">&larr; Prev: Electrostatics</a>
+      <a href="magnetism.html">Next: Magnetism &rarr;</a>
     </div>
 
   </div>

@@ -29,12 +29,12 @@ VMC Physics Class 11 & 12 JEE (Modules + Workbooks + Solutions)
 | Simple Harmonic Motion | `shm.md` | Done | Theory (12 concepts) + 200+ questions (L0-L3, Misc, JEE Main/Advanced archives with keys) |
 | Waves | `waves.md` | Done | Theory (wave motion, superposition, standing waves, beats, Doppler) + 200+ questions (L0-L3, Misc, JEE Main/Advanced archives with keys) |
 
-### Session 4 (Pending)
-| Chapter | File | Status |
-|---|---|---|
-| Electrostatics | `electrostatics.md` | Pending |
-| Current Electricity | `current-electricity.md` | Pending |
-| Magnetism | `magnetism.md` | Pending |
+### Session 4 (Completed)
+| Chapter | File | Status | Content |
+|---|---|---|---|
+| Electrostatics | `electrostatics.md` | Done | Theory (24 concepts: Coulomb, Gauss, potential, capacitance) + questions placeholder |
+| Current Electricity | `current-electricity.md` | Done | Theory (13 concepts: Ohm's law, Kirchhoff, Wheatstone, potentiometer) + questions placeholder |
+| Magnetism | `magnetism.md` | Done | Theory (30 concepts: Biot-Savart, Ampere, Lorentz, galvanometer, materials) + questions placeholder |
 
 ### Session 5 (Pending)
 | Chapter | File | Status |
@@ -99,18 +99,41 @@ Each chapter file contains:
 2. **Step 2: Website HTML pages** — Use reference .md → expand `chapters/{chapter}.html`
 3. **Step 3: Flashcard decks** — Create `cards/{chapter}.json` + register in `js/flashcards.js`
 
-### Priority: Speed + Low Cost
-- Use **haiku model** for ALL reading and writing agents
-- **Read**: Theory PDFs, Question PDFs, Answer Key PDFs
+### Model Selection
+- **Step 1 (Reference .md from PDFs):** Use **haiku model** — cost-effective for bulk PDF reading
+- **Step 2 (HTML page expansion):** Use **opus model** — higher quality writing for student-facing content
+- **Step 3 (Flashcard creation):** Use **opus model** — needs accurate KaTeX formatting and good MCQ quality
 - **Skip**: Solution PDFs (never read these)
+
+### 100-Image Limit (CRITICAL — Sessions 3 & 4 failed multiple times)
+Claude has a hard limit of **100 images/documents per conversation**. Each PDF page counts as 1 image. This means:
+- A single agent can read at most ~100 pages of PDFs total across its entire lifetime
+- Module PDFs are typically 30-50 pages, Workbooks 40-60 pages, Answer Keys 5-10 pages — combined they ALWAYS exceed 100
+- **NEVER give a single agent both theory PDFs AND question PDFs** — it WILL fail
+
+### Mandatory Agent Split for Step 1 (Reference .md)
+**Agent A (Theory-only):** Reads ONLY Module PDF(s) → writes theory sections to .md file
+- Read in chunks of 8 pages max (pages: "1-8", "9-16", etc.)
+- For chapters with 2 Module PDFs (e.g., Electrostatics + Capacitors), read both but stay under 100 total pages
+- Writes overview + all numbered concept sections + "Questions to be added" placeholder
+
+**Agent B (Questions-only):** Reads Workbook + Answer Key + Miscellaneous PDFs → appends questions to .md file
+- Read Answer Key first (small, ~5-10 pages)
+- Read Workbook in chunks of 8 pages
+- Read Miscellaneous/JEE archive PDF in chunks of 8 pages
+- NEVER read DTS Level 3 PDFs in the same agent — use a separate Agent C if needed
+
+**Agent C (Level 3 + JEE Advanced, if needed):** Reads DTS Level 3 PDFs + remaining JEE archives
+- Only needed if Agent B runs out of image budget
 
 ### Anti-Context-Overflow Rules (Session 2 failed once due to overflow)
 1. **One section per agent** — each haiku agent writes only ONE section then exits (never multiple)
 2. **Never pass full file content** into agent prompts — only line numbers and anchor strings for Edit
 3. **Sequential batches** — don't launch next batch until previous completes (no stacking context)
 4. **Pre-write content in the prompt** — agents just append via Edit, no large-scale reading/generating
-5. **Read PDFs in chunks** with offset/limit, never whole files at once
+5. **Read PDFs in chunks of 8 pages max** — never more than 8 pages per Read call
 6. **Separate reader agents from writer agents** — reader extracts questions, writer appends them
+7. **Always use `model: "haiku"`** on Task tool calls — never use default (Opus) for PDF reading
 
 ---
 
