@@ -218,6 +218,75 @@ function animateCounters() {
   });
 }
 
+// --- Chapter Sidebar ---
+function initChapterSidebar() {
+  var detail = document.querySelector('.chapter-detail');
+  if (!detail) return;
+
+  var chapters = [
+    { label: 'Grade XI', items: [
+      { num: '01', name: 'Kinematics', file: 'kinematics' },
+      { num: '02', name: "Newton's Laws", file: 'newtons-laws' },
+      { num: '03', name: 'Work, Power & Energy', file: 'work-power-energy' },
+      { num: '04', name: 'Rotational Motion', file: 'rotational-motion' },
+      { num: '05', name: 'Gravitation', file: 'gravitation' },
+      { num: '06', name: 'Mechanical Properties', file: 'mechanical-properties' },
+      { num: '07', name: 'Fluid Mechanics', file: 'fluid-mechanics' },
+      { num: '08', name: 'Thermodynamics', file: 'thermodynamics' },
+      { num: '09', name: 'SHM', file: 'shm' },
+      { num: '10', name: 'Waves', file: 'waves' }
+    ]},
+    { label: 'Grade XII', items: [
+      { num: '01', name: 'Electrostatics', file: 'electrostatics' },
+      { num: '02', name: 'Current Electricity', file: 'current-electricity' },
+      { num: '03', name: 'Magnetism', file: 'magnetism' },
+      { num: '04', name: 'EMI', file: 'emi' },
+      { num: '05', name: 'AC Circuits', file: 'ac-circuits' },
+      { num: '06', name: 'EM Waves', file: 'em-waves' },
+      { num: '07', name: 'Ray Optics', file: 'ray-optics' },
+      { num: '08', name: 'Wave Optics', file: 'wave-optics' },
+      { num: '09', name: 'Modern Physics', file: 'modern-physics' }
+    ]}
+  ];
+
+  // Detect current chapter from URL
+  var path = window.location.pathname;
+  var current = '';
+  chapters.forEach(function (g) {
+    g.items.forEach(function (ch) {
+      if (path.indexOf(ch.file + '.html') !== -1) current = ch.file;
+    });
+  });
+
+  // Build sidebar HTML
+  var html = '<div class="chd-sidebar-header">Chapters</div>';
+  chapters.forEach(function (g) {
+    html += '<div class="chd-sidebar-group">';
+    html += '<div class="chd-sidebar-label">' + g.label + '</div>';
+    g.items.forEach(function (ch) {
+      var active = ch.file === current ? ' chd-sidebar-active' : '';
+      html += '<a href="' + ch.file + '.html" class="chd-sidebar-item' + active + '">';
+      html += '<span class="chd-sidebar-num">' + ch.num + '</span> ' + ch.name + '</a>';
+    });
+    html += '</div>';
+  });
+
+  // Wrap existing content and inject sidebar
+  var wrapper = document.createElement('div');
+  wrapper.className = 'chd-content';
+  while (detail.firstChild) {
+    wrapper.appendChild(detail.firstChild);
+  }
+
+  var sidebar = document.createElement('nav');
+  sidebar.className = 'chd-sidebar';
+  sidebar.innerHTML = html;
+
+  detail.appendChild(wrapper);
+  detail.appendChild(sidebar);
+  detail.classList.add('chd-layout');
+}
+
 // --- Initialize Everything ---
 document.addEventListener('DOMContentLoaded', () => {
   // Particles — delay init if splash is playing
@@ -236,4 +305,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initGradeTabs();
   initSmoothScroll();
   animateCounters();
+  initChapterSidebar();
 });
