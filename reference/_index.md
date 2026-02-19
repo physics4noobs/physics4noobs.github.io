@@ -44,12 +44,12 @@ VMC Physics Class 11 & 12 JEE (Modules + Workbooks + Solutions)
 | Ray Optics | `ray-optics.md` | Done | Theory (18 concepts: mirrors, refraction, TIR, prism, lenses, aberration, instruments) + 200+ questions (L0-L2, JEE Main/Advanced archives with keys) |
 | Wave Optics | `wave-optics.md` | Done | Theory (15 concepts: YDSE, interference, diffraction, polarization, Brewster, Malus) + 170+ questions (L0-L2, JEE Main/Advanced archives with keys) |
 
-### Session 6 (Pending)
-| Chapter | File | Status |
-|---|---|---|
-| EM Waves | `em-waves.md` | Pending |
-| Modern Physics | `modern-physics.md` | Pending |
-| Supplementary (Vectors, Units, Math) | `_supplementary.md` | Pending |
+### Session 6 (Completed)
+| Chapter | File | Status | Content |
+|---|---|---|---|
+| EM Waves | `em-waves.md` | Done | Theory (16 concepts: EM spectrum, displacement current, Maxwell's equations, magnetism & matter) + 104+ questions (L0-L2, Misc, JEE Main/Advanced archives with keys) |
+| Modern Physics | `modern-physics.md` | Done | Theory (18 concepts: photoelectric effect, Bohr model, X-rays, nuclear physics, radioactivity) + 200+ questions (L0-L2, Misc, JEE Main/Advanced archives with keys) |
+| Supplementary | `_supplementary.md` | Done | Theory (24 sections: vectors, units & dimensions, basic math tools, experiments & errors) + 150+ questions (L0-L2, Misc, JEE Main archives with keys) |
 
 ## PDF Folder → Chapter Mapping
 

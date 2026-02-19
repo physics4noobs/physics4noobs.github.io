@@ -40,25 +40,48 @@
   }
 
   // --- State ---
-  var chapters = {
-    kinematics: 'Kinematics',
-    'newtons-laws': "Newton's Laws",
-    'work-power-energy': 'Work, Power & Energy',
-    gravitation: 'Gravitation',
-    'rotational-motion': 'Rotational Motion',
-    'mechanical-properties': 'Mechanical Properties',
-    'fluid-mechanics': 'Fluid Mechanics',
-    thermodynamics: 'Thermodynamics',
-    shm: 'Simple Harmonic Motion',
-    waves: 'Waves',
-    electrostatics: 'Electrostatics',
-    'current-electricity': 'Current Electricity',
-    magnetism: 'Magnetism',
-    emi: 'Electromagnetic Induction',
-    'ac-circuits': 'AC Circuits',
-    'ray-optics': 'Ray Optics',
-    'wave-optics': 'Wave Optics'
-  };
+  var chapterGroups = [
+    {
+      label: 'Grade XI',
+      chapters: {
+        kinematics: 'Kinematics',
+        'newtons-laws': "Newton's Laws",
+        'work-power-energy': 'Work, Power & Energy',
+        gravitation: 'Gravitation',
+        'rotational-motion': 'Rotational Motion',
+        'mechanical-properties': 'Mechanical Properties',
+        'fluid-mechanics': 'Fluid Mechanics',
+        thermodynamics: 'Thermodynamics',
+        shm: 'Simple Harmonic Motion',
+        waves: 'Waves'
+      }
+    },
+    {
+      label: 'Grade XII',
+      chapters: {
+        electrostatics: 'Electrostatics',
+        'current-electricity': 'Current Electricity',
+        magnetism: 'Magnetism',
+        emi: 'Electromagnetic Induction',
+        'ac-circuits': 'AC Circuits',
+        'ray-optics': 'Ray Optics',
+        'wave-optics': 'Wave Optics',
+        'em-waves': 'EM Waves',
+        'modern-physics': 'Modern Physics'
+      }
+    },
+    {
+      label: 'Supplementary',
+      chapters: {
+        supplementary: 'Vectors, Units, Math & Experiments'
+      }
+    }
+  ];
+  // Flat lookup for loadChapter
+  var chapters = {};
+  chapterGroups.forEach(function (g) {
+    Object.keys(g.chapters).forEach(function (k) { chapters[k] = g.chapters[k]; });
+  });
   var currentChapter = null;
   var cards = [];
   var progress = {};
@@ -478,14 +501,26 @@
       return;
     }
 
-    // Build chapter chips
-    Object.keys(chapters).forEach(function (key) {
-      var chip = document.createElement('button');
-      chip.className = 'fc-chip';
-      chip.dataset.chapter = key;
-      chip.textContent = chapters[key];
-      chip.addEventListener('click', function () { loadChapter(key); });
-      chapterSelector.appendChild(chip);
+    // Build chapter chips grouped by grade
+    chapterGroups.forEach(function (group) {
+      var section = document.createElement('div');
+      section.className = 'fc-chip-group';
+      var heading = document.createElement('div');
+      heading.className = 'fc-chip-group-label';
+      heading.textContent = group.label;
+      section.appendChild(heading);
+      var chipWrap = document.createElement('div');
+      chipWrap.className = 'fc-chip-wrap';
+      Object.keys(group.chapters).forEach(function (key) {
+        var chip = document.createElement('button');
+        chip.className = 'fc-chip';
+        chip.dataset.chapter = key;
+        chip.textContent = group.chapters[key];
+        chip.addEventListener('click', function () { loadChapter(key); });
+        chipWrap.appendChild(chip);
+      });
+      section.appendChild(chipWrap);
+      chapterSelector.appendChild(section);
     });
 
     // Card flip on click

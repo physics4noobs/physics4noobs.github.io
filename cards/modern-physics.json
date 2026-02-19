@@ -1,0 +1,247 @@
+[
+  {
+    "id": "mp-f-01",
+    "type": "formula",
+    "front": "Einstein's Photoelectric Equation",
+    "back": "h\\nu = W_0 + KE_{max}\n\n\\text{where: } h\\nu = \\text{photon energy, } W_0 = \\text{work function}\n\nKE_{max} = \\frac{1}{2}mv_{max}^2 = h\\nu - W_0\n\n\\text{Threshold frequency: } \\nu_0 = \\frac{W_0}{h}\n\n\\text{Maximum wavelength: } \\lambda_{max} = \\frac{hc}{W_0}\n\n\\textbf{Photon energy shortcut: } E = \\frac{12400}{\\lambda(\\text{in } \\AA)} \\text{ eV}",
+    "tags": ["modern-physics", "photoelectric-effect"]
+  },
+  {
+    "id": "mp-f-02",
+    "type": "formula",
+    "front": "Stopping Potential (Photoelectric Effect)",
+    "back": "eV_c = KE_{max} = h\\nu - W_0\n\n\\Rightarrow V_c = \\frac{h}{e}\\nu - \\frac{W_0}{e} = \\frac{h}{e}(\\nu - \\nu_0)\n\n\\text{Slope of } V_c \\text{ vs } \\nu \\text{ graph: } \\frac{h}{e} \\text{ (same for all metals)}\n\n\\textbf{Key facts:}\n\\text{- } V_c \\text{ is independent of light intensity}\n\\text{- } V_c \\text{ increases linearly with frequency}\n\\text{- Intercept on } \\nu\\text{-axis gives } \\nu_0 \\text{ (threshold frequency)}",
+    "tags": ["modern-physics", "photoelectric-effect"]
+  },
+  {
+    "id": "mp-f-03",
+    "type": "formula",
+    "front": "de Broglie Wavelength",
+    "back": "\\lambda = \\frac{h}{p} = \\frac{h}{mv} = \\frac{h}{\\sqrt{2mKE}}\n\n\\text{Electron accelerated through } V \\text{ volts:}\n\\lambda_e = \\frac{12.27}{\\sqrt{V}} \\text{ Å}\n\n\\text{Proton accelerated through } V \\text{ volts:}\n\\lambda_p = \\frac{0.286}{\\sqrt{V}} \\text{ Å}\n\n\\text{General: } \\lambda = \\frac{h}{\\sqrt{2mqV}}\n\\text{where } q = \\text{charge of particle}",
+    "tags": ["modern-physics", "matter-waves"]
+  },
+  {
+    "id": "mp-f-04",
+    "type": "formula",
+    "front": "Bohr Radius and Orbital Velocity",
+    "back": "\\text{Radius of nth orbit:}\nr_n = \\frac{n^2 \\hbar^2}{4\\pi^2 Kme^2 Z} = 0.53\\frac{n^2}{Z} \\text{ Å}\n\n\\text{Velocity in nth orbit:}\nv_n = \\frac{2\\pi K Z e^2}{n\\hbar} = 2.18 \\times 10^6 \\cdot \\frac{Z}{n} \\text{ m/s}\n\n\\text{Angular momentum (quantization condition):}\nL = n\\hbar = \\frac{nh}{2\\pi}\n\n\\text{Note: } r_n \\propto n^2/Z \\quad v_n \\propto Z/n",
+    "tags": ["modern-physics", "bohr-model"]
+  },
+  {
+    "id": "mp-f-05",
+    "type": "formula",
+    "front": "Bohr Energy Levels",
+    "back": "E_n = -\\frac{13.6 Z^2}{n^2} \\text{ eV/atom}\n\n\\text{Binding energy in nth orbit:}\nBE = \\frac{13.6 Z^2}{n^2} \\text{ eV}\n\n\\text{Ionization energy (from ground state):}\nIE = 13.6 Z^2 \\text{ eV}\n\n\\text{Energy of emitted photon:}\n\\Delta E = 13.6 Z^2 \\left(\\frac{1}{n_1^2} - \\frac{1}{n_2^2}\\right) \\text{ eV} \\quad (n_2 > n_1)\n\n\\text{For H: } E_1 = -13.6 \\text{ eV, } E_2 = -3.4 \\text{ eV, } E_3 = -1.51 \\text{ eV}",
+    "tags": ["modern-physics", "bohr-model"]
+  },
+  {
+    "id": "mp-f-06",
+    "type": "formula",
+    "front": "Rydberg Formula for Spectral Lines",
+    "back": "\\frac{1}{\\lambda} = RZ^2\\left(\\frac{1}{n_1^2} - \\frac{1}{n_2^2}\\right)\n\n\\text{where } R = 1.097 \\times 10^7 \\text{ m}^{-1} = 109677 \\text{ cm}^{-1}\n\n\\text{Spectral series for hydrogen (Z=1):}\n\\text{Lyman: } n_1=1, \\text{ UV region}\n\\text{Balmer: } n_1=2, \\text{ visible region}\n\\text{Paschen: } n_1=3, \\text{ IR region}\n\\text{Brackett: } n_1=4, \\text{ far IR}\n\\text{Pfund: } n_1=5, \\text{ far IR}\n\n\\text{Series limit: } \\lambda_{limit} = \\frac{n_1^2}{RZ^2}",
+    "tags": ["modern-physics", "spectral-series"]
+  },
+  {
+    "id": "mp-f-07",
+    "type": "formula",
+    "front": "Moseley's Law and Bragg's Law (X-rays)",
+    "back": "\\textbf{Moseley's Law:}\n\\sqrt{\\nu} = a(Z - b)\n\n\\text{For K}_\\alpha \\text{ series: } b = 1,\\quad a = 4.98 \\times 10^7 \\sqrt{\\text{Hz}}\n\n\\textbf{Bragg's Law (X-ray diffraction):}\n2d\\sin\\theta = n\\lambda\n\n\\text{where } d = \\text{interplanar spacing, } \\theta = \\text{glancing angle}\n\n\\textbf{Minimum wavelength (cutoff):}\n\\lambda_{min} = \\frac{hc}{eV} = \\frac{12400}{V(\\text{in volts})} \\text{ Å}",
+    "tags": ["modern-physics", "x-rays"]
+  },
+  {
+    "id": "mp-f-08",
+    "type": "formula",
+    "front": "Mass Defect and Binding Energy",
+    "back": "\\textbf{Mass Defect:}\n\\Delta m = [Zm_p + (A-Z)m_n] - m_{nucleus}\n\n\\textbf{Binding Energy:}\nBE = \\Delta m \\times c^2 = \\Delta m \\times 931.5 \\text{ MeV}\n\n\\text{(since } 1 \\text{ amu} = 931.5 \\text{ MeV/}c^2\\text{)}\n\n\\textbf{Binding Energy per Nucleon:}\n\\frac{BE}{A} = \\text{measure of nuclear stability}\n\n\\text{Maximum } \\frac{BE}{A} \\approx 8.8 \\text{ MeV at } A \\approx 56 \\text{ (Fe-56)}",
+    "tags": ["modern-physics", "nuclear-physics"]
+  },
+  {
+    "id": "mp-f-09",
+    "type": "formula",
+    "front": "Radioactive Decay Law",
+    "back": "\\text{Decay rate equation:} \\quad \\frac{dN}{dt} = -\\lambda N\n\n\\text{Number of nuclei at time } t\\text{:}\nN_t = N_0 e^{-\\lambda t}\n\n\\text{Activity at time } t\\text{:}\nR(t) = \\lambda N_t = \\lambda N_0 e^{-\\lambda t} = R_0 e^{-\\lambda t}\n\n\\text{Units: } 1 \\text{ Bq} = 1 \\text{ decay/s}\n\\quad\\quad\\quad 1 \\text{ Ci} = 3.7 \\times 10^{10} \\text{ Bq}",
+    "tags": ["modern-physics", "radioactivity"]
+  },
+  {
+    "id": "mp-f-10",
+    "type": "formula",
+    "front": "Half-Life and Mean Life",
+    "back": "\\textbf{Half-life:}\nt_{1/2} = \\frac{\\ln 2}{\\lambda} = \\frac{0.693}{\\lambda}\n\n\\text{After } n \\text{ half-lives: } N = \\frac{N_0}{2^n}\n\n\\textbf{Mean (average) life:}\n\\tau = \\frac{1}{\\lambda} = \\frac{t_{1/2}}{\\ln 2} = 1.44 \\times t_{1/2}\n\n\\textbf{Relationship:}\n\\lambda = \\frac{0.693}{t_{1/2}} = \\frac{1}{\\tau}\n\n\\text{Simultaneous decays: } \\lambda_{total} = \\lambda_1 + \\lambda_2",
+    "tags": ["modern-physics", "radioactivity"]
+  },
+  {
+    "id": "mp-f-11",
+    "type": "formula",
+    "front": "Radioactive Activity",
+    "back": "\\text{Activity } A = \\frac{dN}{dt} = \\lambda N\n\n\\text{At time } t\\text{: } A(t) = A_0 e^{-\\lambda t}\n\n\\text{where } A_0 = \\lambda N_0 \\text{ (initial activity)}\n\n\\text{After } n \\text{ half-lives: } A = \\frac{A_0}{2^n}\n\n\\text{Relation to number of nuclei:}\nN = \\frac{A}{\\lambda} = A \\cdot \\tau = A \\cdot \\frac{t_{1/2}}{0.693}\n\n\\text{Units: Becquerel (Bq) or Curie (Ci)}",
+    "tags": ["modern-physics", "radioactivity"]
+  },
+  {
+    "id": "mp-f-12",
+    "type": "formula",
+    "front": "Q-Value of Nuclear Reaction",
+    "back": "\\text{For reaction: } a + X \\rightarrow Y + b\n\nQ = (m_a + m_X - m_Y - m_b) \\times 931.5 \\text{ MeV}\n\nQ = (m_{initial} - m_{final}) \\times c^2\n\n\\text{If } Q > 0 \\text{: Exothermic (energy released, spontaneous)}\n\\text{If } Q < 0 \\text{: Endothermic (energy required)}\n\n\\textbf{Threshold KE for endothermic reaction:}\nKE_{th} = |Q| \\cdot \\frac{m_a + m_X + m_Y + m_b}{2m_X}",
+    "tags": ["modern-physics", "nuclear-reactions"]
+  },
+  {
+    "id": "mp-f-13",
+    "type": "formula",
+    "front": "Mass-Energy Equivalence (E = mc²)",
+    "back": "E = mc^2\n\n\\text{Rest mass energy of electron:}\nm_e c^2 = 0.511 \\text{ MeV}\n\n\\text{1 atomic mass unit:}\n1 \\text{ amu} = 1.66 \\times 10^{-27} \\text{ kg} = 931.5 \\text{ MeV}/c^2\n\n\\textbf{Pair production threshold:}\nE_{photon} \\geq 2m_e c^2 = 1.022 \\text{ MeV}\n\n\\textbf{Annihilation:}\ne^- + e^+ \\rightarrow 2\\gamma \\quad (\\text{each } \\gamma \\text{ carries } 0.511 \\text{ MeV})",
+    "tags": ["modern-physics", "mass-energy"]
+  },
+  {
+    "id": "mp-f-14",
+    "type": "formula",
+    "front": "Compton Wavelength Shift",
+    "back": "\\Delta\\lambda = \\lambda' - \\lambda = \\frac{h}{m_e c}(1 - \\cos\\theta)\n\n\\text{Compton wavelength of electron:}\n\\lambda_c = \\frac{h}{m_e c} = 2.43 \\times 10^{-12} \\text{ m} = 0.0243 \\text{ Å}\n\n\\text{Maximum shift (backscatter, } \\theta = 180°\\text{):}\n\\Delta\\lambda_{max} = \\frac{2h}{m_e c} = 2\\lambda_c = 0.0486 \\text{ Å}\n\n\\text{Forward scatter (} \\theta = 0°\\text{): } \\Delta\\lambda = 0\n\n\\text{Scattered photon energy: } E' = \\frac{E}{1 + \\frac{E}{m_e c^2}(1-\\cos\\theta)}",
+    "tags": ["modern-physics", "compton-effect"]
+  },
+  {
+    "id": "mp-f-15",
+    "type": "formula",
+    "front": "Nuclear Radius and Density",
+    "back": "\\textbf{Nuclear radius:}\nR = R_0 A^{1/3} \\quad \\text{where } R_0 = 1.2 \\times 10^{-15} \\text{ m}\n\n\\text{Volume: } V \\propto A \\quad (\\text{proportional to mass number})\n\n\\textbf{Nuclear density (approximately constant):}\n\\rho \\approx 2.3 \\times 10^{17} \\text{ kg/m}^3\n\n\\text{Nuclear density is same for all nuclei}\n\n\\textbf{D-T Fusion:}\n^2\\text{H} + ^3\\text{H} \\rightarrow ^4\\text{He} + n + 17.6 \\text{ MeV}\n\n\\textbf{D-D Fusion:}\n^2\\text{H} + ^2\\text{H} \\rightarrow ^3\\text{He} + n + 3.27 \\text{ MeV}",
+    "tags": ["modern-physics", "nuclear-physics"]
+  },
+  {
+    "id": "mp-c-01",
+    "type": "concept",
+    "front": "Photoelectric Effect: Key Experimental Observations",
+    "back": "**1. Threshold frequency (ν₀):**\nNo emission below ν₀, regardless of intensity. ν₀ is metal-dependent.\n\n**2. Instantaneous emission:**\nPhotoelectrons emitted within < 10⁻⁹ s of illumination.\n\n**3. Intensity ↔ current (not energy):**\nHigher intensity → more photoelectrons, but NOT higher KE.\n\n**4. Frequency ↔ kinetic energy:**\nKE_max depends only on frequency, not intensity.\n\n**5. Stopping potential:**\nV_c is independent of intensity; increases only with frequency.\n\n**Classical physics fails** to explain threshold frequency and instantaneous emission — requires photon (quantum) model.",
+    "tags": ["modern-physics", "photoelectric-effect"]
+  },
+  {
+    "id": "mp-c-02",
+    "type": "concept",
+    "front": "Wave-Particle Duality",
+    "back": "**Light shows dual nature:**\n- Wave: interference, diffraction, polarisation\n- Particle: photoelectric effect, Compton effect\n\n**Matter shows dual nature (de Broglie, 1924):**\n- Particle: definite mass, momentum\n- Wave: λ = h/p\n\n**Key insight:**\nWavelength significant only for small masses.\nFor macroscopic objects, λ is negligibly small.\n\n**Davisson-Germer experiment (1927):**\nConfirmed electron diffraction — proved matter wave hypothesis.\n\n**Heisenberg Uncertainty Principle (consequence):**\n\\Delta x \\cdot \\Delta p \\geq \\frac{h}{4\\pi}",
+    "tags": ["modern-physics", "matter-waves"]
+  },
+  {
+    "id": "mp-c-03",
+    "type": "concept",
+    "front": "Bohr's Postulates for Hydrogen Atom",
+    "back": "**Postulate 1 — Stable orbits:**\nElectrons revolve in discrete circular orbits without radiating energy.\n\n**Postulate 2 — Angular momentum quantization:**\nL = mvr = nℏ = nh/(2π), where n = 1, 2, 3, ...\n\n**Postulate 3 — Energy emission/absorption:**\nRadiation emitted/absorbed only when electron transitions between orbits:\nhν = E_higher − E_lower\n\n**Key results for hydrogen:**\n- r_n = 0.53 n² Å\n- v_n = 2.18 × 10⁶/n m/s\n- E_n = −13.6/n² eV\n\n**Limitation:** Works only for one-electron species (H, He⁺, Li²⁺).",
+    "tags": ["modern-physics", "bohr-model"]
+  },
+  {
+    "id": "mp-c-04",
+    "type": "concept",
+    "front": "Hydrogen Spectral Series",
+    "back": "All series follow: \\frac{1}{\\lambda} = R\\left(\\frac{1}{n_1^2} - \\frac{1}{n_2^2}\\right)\n\n| Series | n₁ | n₂ | Region |\n|--------|----|----|--------|\n| Lyman | 1 | 2,3,... | UV |\n| Balmer | 2 | 3,4,... | Visible |\n| Paschen | 3 | 4,5,... | Near IR |\n| Brackett | 4 | 5,6,... | IR |\n| Pfund | 5 | 6,7,... | Far IR |\n\n**Series limit:** n₂ → ∞ gives minimum wavelength in series.\n\n**Number of spectral lines** from level n to ground:\nN = n(n−1)/2",
+    "tags": ["modern-physics", "spectral-series"]
+  },
+  {
+    "id": "mp-c-05",
+    "type": "concept",
+    "front": "Alpha, Beta, Gamma Decay: Comparison",
+    "back": "| Property | α | β⁻ | γ |\n|----------|---|-----|---|\n| Particle | ⁴He nucleus | Electron | Photon |\n| Charge | +2e | −e | 0 |\n| Change in Z | −2 | +1 | 0 |\n| Change in A | −4 | 0 | 0 |\n| Penetration | Low | Medium | Highest |\n| Ionisation | Highest | Medium | Lowest |\n| Speed | ~10⁷ m/s | ~10⁸ m/s | c |\n\n**β⁻ decay:** n → p + e⁻ + ν̄\n**β⁺ decay:** p → n + e⁺ + ν (requires Q > 2m_e c²)\n**γ decay:** excited nucleus de-excites; no change in A or Z.",
+    "tags": ["modern-physics", "radioactivity"]
+  },
+  {
+    "id": "mp-c-06",
+    "type": "concept",
+    "front": "Nuclear Stability and the N/Z Ratio",
+    "back": "**Stability belt:** stable nuclei lie within a band on the N vs Z plot.\n\n**For light nuclei (Z < 20):** N/Z ≈ 1\n**For heavy nuclei:** N/Z > 1 (up to ~1.5 for Bi)\n\n**If N/Z too high** (above belt): β⁻ decay (n → p, reduces N/Z)\n**If N/Z too low** (below belt): β⁺ or electron capture (p → n, increases N/Z)\n\n**Even-even nuclei:** most stable (160 known stable)\n**Odd-odd nuclei:** least stable (only 4: H-2, Li-6, B-10, N-14)\n\n**No stable nucleus with Z > 83** (Bismuth is the last stable element).\n\nHeavy nuclei (Z > 82) stabilise by α decay.",
+    "tags": ["modern-physics", "nuclear-stability"]
+  },
+  {
+    "id": "mp-c-07",
+    "type": "concept",
+    "front": "Binding Energy Curve: Significance",
+    "back": "**Graph:** Binding energy per nucleon (BE/A) vs mass number (A)\n\n**Key features:**\n- Rises steeply for light nuclei (A < 20)\n- Broad maximum ~8.8 MeV at A ≈ 56 (Fe-56) — most stable\n- Gradually decreases for heavy nuclei\n\n**Why fission releases energy:**\nHeavy nuclei (A~235) have lower BE/A. Splitting into medium fragments increases BE/A → energy released.\n\n**Why fusion releases energy:**\nLight nuclei (A<10) have low BE/A. Combining increases BE/A → energy released.\n\n**Both processes move toward the peak (Fe-56).**\n\nFusion releases more energy per nucleon than fission.",
+    "tags": ["modern-physics", "nuclear-physics"]
+  },
+  {
+    "id": "mp-c-08",
+    "type": "concept",
+    "front": "Nuclear Fission vs Nuclear Fusion",
+    "back": "| Feature | Fission | Fusion |\n|---------|---------|--------|\n| Process | Heavy nucleus splits | Light nuclei combine |\n| Example | U-235 + n → Ba + Kr + 3n | D + T → He-4 + n |\n| Energy/event | ~200 MeV | ~17.6 MeV (D-T) |\n| Energy/nucleon | Lower | Higher |\n| Temperature needed | Lower | ~10⁸ K (plasma) |\n| Chain reaction | Possible | Not applicable |\n| Fuel | U-235, Pu-239 | Deuterium, Tritium |\n| Waste | Radioactive | Less radioactive |\n\n**Controlled fission:** nuclear reactors (moderator + control rods)\n**Uncontrolled fission:** nuclear bomb\n**Fusion:** powers the sun; still experimental on Earth (tokamak).",
+    "tags": ["modern-physics", "fission-fusion"]
+  },
+  {
+    "id": "mp-c-09",
+    "type": "concept",
+    "front": "Compton Effect: Particle Nature of Light",
+    "back": "**Phenomenon:** X-ray photon scatters off a free electron. Scattered photon has longer wavelength (lower energy).\n\n**Why classical theory fails:**\nWave theory predicts no wavelength change — only intensity should change.\n\n**Compton's explanation (1923):**\nPhoton treated as particle with momentum p = h/λ.\nElastic collision conserved momentum and energy.\n\n**Key results:**\n- Δλ depends only on scattering angle θ, NOT on incident λ\n- Maximum shift at θ = 180° (backscatter): Δλ = 2h/m_e c\n- Zero shift at θ = 0° (forward scatter)\n- Recoiling electron carries away kinetic energy\n\n**Significance:** Confirms photons carry momentum = h/λ.",
+    "tags": ["modern-physics", "compton-effect"]
+  },
+  {
+    "id": "mp-c-10",
+    "type": "concept",
+    "front": "X-rays: Production, Types, and Characteristic Spectrum",
+    "back": "**Production:** High-speed electrons strike metal target (Coolidge tube).\nOnly 1–10% KE → X-rays; rest becomes heat.\n\n**Types:**\n- Hard X-rays: 0.1–1 Å, high energy, high penetration\n- Soft X-rays: 1–100 Å, low energy, low penetration\n\n**Continuous spectrum (Bremsstrahlung):**\nElectrons decelerate → broad spectrum with sharp cutoff at λ_min = hc/eV.\n\n**Characteristic spectrum:**\nElectrons knock out inner shell electrons. Outer electrons fill vacancies → discrete wavelengths specific to target material.\nK_α: transition from L → K shell\nK_β: transition from M → K shell\n\n**Moseley's Law:** √ν = a(Z − b) — linked atomic number to X-ray frequency.",
+    "tags": ["modern-physics", "x-rays"]
+  },
+  {
+    "id": "mp-mcq-01",
+    "type": "mcq",
+    "front": "Light of wavelength 400 nm falls on a metal with work function 1.5 eV. What is the stopping potential?\n\n(A) 1.6 V\n(B) 1.7 V\n(C) 0.1 V\n(D) 3.1 V",
+    "back": "**Answer: (A) 1.6 V**\n\n**Solution:**\nE_{photon} = \\frac{12400}{400} = 31 \\text{ eV}\n\n\\text{Wait — } \\frac{12400}{400} = 31? \\text{ Let us recheck:}\n\\frac{12400}{400} = 31 \\text{ eV} \\quad \\checkmark\n\nKE_{max} = E - W_0 = 31 - 1.5\n\n\\text{Hmm: } 31 \\text{ eV is for 400 Å, not 400 nm.}\n\n\\text{400 nm} = 4000 \\text{ Å}\nE = \\frac{12400}{4000} = 3.1 \\text{ eV}\n\nKE_{max} = 3.1 - 1.5 = 1.6 \\text{ eV}\n\nV_c = 1.6 \\text{ V}\n\n**Key:** 1 nm = 10 Å. Convert wavelength carefully before using the shortcut formula.",
+    "tags": ["modern-physics", "photoelectric-effect"]
+  },
+  {
+    "id": "mp-mcq-02",
+    "type": "mcq",
+    "front": "If the kinetic energy of a free electron doubles, its de Broglie wavelength changes by a factor of:\n\n(A) √2\n(B) 1/√2\n(C) 2\n(D) 1/2",
+    "back": "**Answer: (B) 1/√2**\n\n**Solution:**\n\\lambda = \\frac{h}{\\sqrt{2mKE}}\n\n\\text{If } KE \\rightarrow 2KE\\text{:}\n\\lambda' = \\frac{h}{\\sqrt{2m \\cdot 2KE}} = \\frac{h}{\\sqrt{2} \\cdot \\sqrt{2mKE}} = \\frac{\\lambda}{\\sqrt{2}}\n\n\\text{Factor} = \\frac{\\lambda'}{\\lambda} = \\frac{1}{\\sqrt{2}}\n\n**Key:** λ ∝ 1/√(KE), so doubling KE reduces λ by factor 1/√2.",
+    "tags": ["modern-physics", "matter-waves"]
+  },
+  {
+    "id": "mp-mcq-03",
+    "type": "mcq",
+    "front": "Energy required for electron excitation in Li²⁺ from n=1 to n=3 is:\n\n(A) 12.1 eV\n(B) 36.3 eV\n(C) 108.8 eV\n(D) 122.4 eV",
+    "back": "**Answer: (C) 108.8 eV**\n\n**Solution:**\n\\text{Li}^{2+} \\text{ is hydrogen-like with Z = 3}\n\nE_n = -\\frac{13.6 Z^2}{n^2} \\text{ eV}\n\nE_1 = -\\frac{13.6 \\times 9}{1} = -122.4 \\text{ eV}\n\nE_3 = -\\frac{13.6 \\times 9}{9} = -13.6 \\text{ eV}\n\n\\Delta E = E_3 - E_1 = -13.6 - (-122.4) = 108.8 \\text{ eV}\n\n**Key:** For hydrogen-like ions, multiply E_n by Z². Z = 3 for Li²⁺.",
+    "tags": ["modern-physics", "bohr-model"]
+  },
+  {
+    "id": "mp-mcq-04",
+    "type": "mcq",
+    "front": "Hydrogen atom is excited from ground state to n=4. How many spectral lines can appear in the emission spectrum?\n\n(A) 3\n(B) 4\n(C) 5\n(D) 6",
+    "back": "**Answer: (D) 6**\n\n**Solution:**\n\\text{Number of lines} = \\frac{n(n-1)}{2}\n\n\\text{Here } n = 4 \\text{ (4 levels: 1, 2, 3, 4)}\n\nN = \\frac{4 \\times 3}{2} = 6\n\n**The 6 transitions are:**\n4→3, 4→2, 4→1 (3 lines)\n3→2, 3→1 (2 lines)\n2→1 (1 line)\n\n**Key:** N = n(n−1)/2 counts all possible downward transitions.",
+    "tags": ["modern-physics", "spectral-series"]
+  },
+  {
+    "id": "mp-mcq-05",
+    "type": "mcq",
+    "front": "An α-particle and a proton are both accelerated through 100 V. The ratio λ_p/λ_α is approximately:\n\n(A) 2√2\n(B) 3\n(C) 2\n(D) √2",
+    "back": "**Answer: (B) 3 (nearest integer)**\n\n**Solution:**\n\\lambda = \\frac{h}{\\sqrt{2mqV}}\n\n\\frac{\\lambda_p}{\\lambda_\\alpha} = \\sqrt{\\frac{m_\\alpha q_\\alpha}{m_p q_p}}\n\nm_\\alpha = 4m_p, \\quad q_\\alpha = 2e, \\quad q_p = e\n\n\\frac{\\lambda_p}{\\lambda_\\alpha} = \\sqrt{\\frac{4m_p \\cdot 2e}{m_p \\cdot e}} = \\sqrt{8} = 2\\sqrt{2} \\approx 2.83\n\n\\text{Nearest integer} = 3\n\n**Key:** Both charge and mass of the particle affect de Broglie wavelength when accelerated through same potential.",
+    "tags": ["modern-physics", "matter-waves"]
+  },
+  {
+    "id": "mp-mcq-06",
+    "type": "mcq",
+    "front": "An X-ray tube operates at 50 kV. What is the minimum wavelength of X-rays produced?\n\n(A) 0.124 Å\n(B) 0.248 Å\n(C) 0.50 Å\n(D) 1.24 Å",
+    "back": "**Answer: (B) 0.248 Å**\n\n**Solution:**\n\\lambda_{min} = \\frac{12400}{V(\\text{in volts})} \\text{ Å}\n\n\\lambda_{min} = \\frac{12400}{50000} = 0.248 \\text{ Å}\n\n\\text{OR using } \\lambda_{min} = \\frac{hc}{eV}\\text{:}\n\\lambda_{min} = \\frac{6.63 \\times 10^{-34} \\times 3 \\times 10^8}{1.6 \\times 10^{-19} \\times 50000}\n= 2.48 \\times 10^{-11} \\text{ m} = 0.248 \\text{ Å}\n\n**Key:** λ_min = 12400/V(volts) Å is the standard shortcut. Higher accelerating voltage → shorter minimum wavelength.",
+    "tags": ["modern-physics", "x-rays"]
+  },
+  {
+    "id": "mp-mcq-07",
+    "type": "mcq",
+    "front": "A radioactive sample has activity 800 Bq and half-life 5 days. What will be its activity after 20 days?\n\n(A) 100 Bq\n(B) 50 Bq\n(C) 200 Bq\n(D) 400 Bq",
+    "back": "**Answer: (B) 50 Bq**\n\n**Solution:**\n\\text{Number of half-lives} = \\frac{20}{5} = 4\n\nA = \\frac{A_0}{2^n} = \\frac{800}{2^4} = \\frac{800}{16} = 50 \\text{ Bq}\n\n**Verification using decay law:**\n\\lambda = \\frac{0.693}{5} \\text{ day}^{-1}\nA = 800 \\times e^{-\\lambda \\times 20} = 800 \\times e^{-4\\ln 2} = 800 \\times \\frac{1}{16} = 50 \\text{ Bq}\n\n**Key:** Each half-life halves the activity. After n half-lives, A = A₀/2ⁿ.",
+    "tags": ["modern-physics", "radioactivity"]
+  },
+  {
+    "id": "mp-mcq-08",
+    "type": "mcq",
+    "front": "In the Compton effect, an X-ray photon is scattered at 90°. The Compton wavelength of the electron is 0.0243 Å. What is the wavelength shift?\n\n(A) 0.0243 Å\n(B) 0.0486 Å\n(C) 0 Å\n(D) 0.0122 Å",
+    "back": "**Answer: (A) 0.0243 Å**\n\n**Solution:**\n\\Delta\\lambda = \\lambda_c (1 - \\cos\\theta)\n\n\\text{At } \\theta = 90°\\text{: } \\cos 90° = 0\n\n\\Delta\\lambda = 0.0243 \\times (1 - 0) = 0.0243 \\text{ Å}\n\n**Special angles:**\n\\theta = 0°: \\Delta\\lambda = 0 \\text{ (no change)}\n\\theta = 90°: \\Delta\\lambda = \\lambda_c = 0.0243 \\text{ Å}\n\\theta = 180°: \\Delta\\lambda = 2\\lambda_c = 0.0486 \\text{ Å (maximum)}\n\n**Key:** The shift depends only on scattering angle, not the incident wavelength.",
+    "tags": ["modern-physics", "compton-effect"]
+  },
+  {
+    "id": "mp-mcq-09",
+    "type": "mcq",
+    "front": "The binding energy per nucleon of ²H is 1.1 MeV and that of ⁴He is 7.1 MeV. Energy released in the fusion reaction ²H + ²H → ⁴He is:\n\n(A) 24 MeV\n(B) 23.6 MeV\n(C) 12 MeV\n(D) 1.1 MeV",
+    "back": "**Answer: (A) 24 MeV**\n\n**Solution:**\n\\text{BE of 2 deuterons} = 2 \\times (2 \\times 1.1) = 4.4 \\text{ MeV}\n\n\\text{BE of He-4} = 4 \\times 7.1 = 28.4 \\text{ MeV}\n\n\\text{Energy released} = BE_{final} - BE_{initial}\n= 28.4 - 4.4 = 24.0 \\text{ MeV}\n\n**Logic:** Energy is released because products are more tightly bound. The difference in total binding energies equals energy released.\n\n**Key:** Q = BE(products) − BE(reactants). More binding energy in products → energy released.",
+    "tags": ["modern-physics", "fission-fusion"]
+  },
+  {
+    "id": "mp-mcq-10",
+    "type": "mcq",
+    "front": "According to the photoelectric equation, the slope of the graph of maximum kinetic energy of photoelectrons vs frequency of incident light is:\n\n(A) Work function of the metal\n(B) Planck's constant h\n(C) h/e\n(D) Same for all metals and equal to h",
+    "back": "**Answer: (D) Same for all metals and equal to h**\n\n**Solution:**\nKE_{max} = h\\nu - W_0\n\n\\text{This is of the form } y = mx + c\\text{, where:}\n\\text{Slope } m = h \\text{ (Planck's constant)}\n\\text{Intercept } c = -W_0 \\text{ (metal-dependent)}\n\n\\text{The slope } h \\text{ is universal — same for all metals.}\n\\text{The intercept varies with metal (different } W_0\\text{).}\n\n**The stopping potential graph** V_c vs ν has slope = h/e.\n**The KE_max graph** vs ν has slope = h.\n\n**Key:** Slope of KE vs ν = h (universal). Slope of V_c vs ν = h/e.",
+    "tags": ["modern-physics", "photoelectric-effect"]
+  }
+]

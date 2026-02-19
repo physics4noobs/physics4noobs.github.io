@@ -1,0 +1,247 @@
+[
+  {
+    "id": "sup-f-01",
+    "type": "formula",
+    "front": "Vector Addition: Parallelogram Law Magnitude and Direction",
+    "back": "\\text{Magnitude of resultant:}\nR = \\sqrt{P^2 + Q^2 + 2PQ\\cos\\theta}\n\n\\text{Direction (angle with first vector):}\n\\tan\\alpha = \\frac{Q\\sin\\theta}{P + Q\\cos\\theta}\n\n\\text{where } \\theta = \\text{angle between } \\vec{P} \\text{ and } \\vec{Q}\n\n\\textbf{Special cases:}\n\\text{Same direction (}\\theta=0\\text{): } R_{max} = P + Q\n\\text{Opposite (}\\theta=180°\\text{): } R_{min} = |P - Q|",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-f-02",
+    "type": "formula",
+    "front": "Vector Components and Magnitude Reconstruction",
+    "back": "\\text{Resolution into components:}\na_x = a\\cos\\theta \\quad a_y = a\\sin\\theta\n\n\\text{Reconstruction:}\na = \\sqrt{a_x^2 + a_y^2}\n\n\\tan\\theta = \\frac{a_y}{a_x}\n\n\\text{Component form:}\n\\vec{a} = a_x\\hat{i} + a_y\\hat{j} = a\\cos\\theta\\,\\hat{i} + a\\sin\\theta\\,\\hat{j}\n\n\\text{For multiple vectors: } R_x = \\sum a_{xi},\\quad R_y = \\sum a_{yi}",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-f-03",
+    "type": "formula",
+    "front": "Dot Product (Scalar Product)",
+    "back": "\\text{Geometric definition:}\n\\vec{a}\\cdot\\vec{b} = |\\vec{a}||\\vec{b}|\\cos\\theta = ab\\cos\\theta\n\n\\text{Component form (3D):}\n\\vec{a}\\cdot\\vec{b} = a_x b_x + a_y b_y + a_z b_z\n\n\\text{Self dot product: } \\vec{a}\\cdot\\vec{a} = a^2\n\n\\text{Unit vectors: } \\hat{i}\\cdot\\hat{i} = \\hat{j}\\cdot\\hat{j} = \\hat{k}\\cdot\\hat{k} = 1\n\\hat{i}\\cdot\\hat{j} = \\hat{i}\\cdot\\hat{k} = \\hat{j}\\cdot\\hat{k} = 0\n\n\\text{Work done: } W = \\vec{F}\\cdot\\vec{s} = Fs\\cos\\theta",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-f-04",
+    "type": "formula",
+    "front": "Cross Product (Vector Product)",
+    "back": "\\text{Magnitude and direction:}\n\\vec{a}\\times\\vec{b} = ab\\sin\\theta\\,\\hat{n}\n\n|\\vec{a}\\times\\vec{b}| = ab\\sin\\theta\n\n\\text{Anti-commutative: } \\vec{a}\\times\\vec{b} = -(\\vec{b}\\times\\vec{a})\n\n\\text{Unit vectors: } \\hat{i}\\times\\hat{j}=\\hat{k},\\;\\hat{j}\\times\\hat{k}=\\hat{i},\\;\\hat{k}\\times\\hat{i}=\\hat{j}\n\\hat{i}\\times\\hat{i} = 0\n\n\\text{Component form (3D):}\n\\vec{a}\\times\\vec{b} = (a_y b_z - a_z b_y)\\hat{i} + (a_z b_x - a_x b_z)\\hat{j} + (a_x b_y - a_y b_x)\\hat{k}\n\n\\text{Area of parallelogram} = |\\vec{a}\\times\\vec{b}|",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-f-05",
+    "type": "formula",
+    "front": "Dimensional Formulas for Common Quantities",
+    "back": "\\text{Velocity: } [v] = LT^{-1}\n\\text{Acceleration: } [a] = LT^{-2}\n\\text{Force: } [F] = MLT^{-2}\n\\text{Work / Energy: } [W] = ML^2T^{-2}\n\\text{Power: } [P] = ML^2T^{-3}\n\\text{Pressure: } [p] = ML^{-1}T^{-2}\n\\text{Momentum: } [p] = MLT^{-1}\n\\text{Angular momentum: } [L] = ML^2T^{-1}\n\\text{Torque: } [\\tau] = ML^2T^{-2}\n\\text{Frequency: } [f] = T^{-1}",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-f-06",
+    "type": "formula",
+    "front": "Unit Conversion Between Systems (Dimensional Method)",
+    "back": "\\text{For a quantity with dimension } [M^a L^b T^c]:\n\nn_2 = n_1 \\left[\\frac{M_1}{M_2}\\right]^a \\left[\\frac{L_1}{L_2}\\right]^b \\left[\\frac{T_1}{T_2}\\right]^c\n\n\\textbf{Key conversions:}\n\\text{1 Newton} = 10^5 \\text{ Dyne}\n\\text{1 Joule} = 10^7 \\text{ Erg}\n\\text{1 MeV} = 1.6\\times10^{-13}\\text{ J}\n\\text{1 horse power} = 746\\text{ W}\n\\text{1 \\AA ngstr\\ddot{o}m} = 10^{-10}\\text{ m}",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-f-07",
+    "type": "formula",
+    "front": "Error Propagation: Sum, Difference, Product, Division",
+    "back": "\\textbf{Sum / Difference: } x = a \\pm b\n\\Delta x = \\pm(\\Delta a + \\Delta b) \\quad \\text{(absolute errors add)}\n\n\\textbf{Product / Division: } x = \\frac{ab}{c}\n\\frac{\\Delta x}{x} = \\pm\\left(\\frac{\\Delta a}{a} + \\frac{\\Delta b}{b} + \\frac{\\Delta c}{c}\\right) \\quad \\text{(relative errors add)}\n\n\\textbf{Power: } x = a^n b^m\n\\frac{\\Delta x}{x} = \\pm\\left(n\\frac{\\Delta a}{a} + m\\frac{\\Delta b}{b}\\right)\n\n\\text{Percentage error} = \\frac{\\Delta x}{x}\\times 100\\%",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-f-08",
+    "type": "formula",
+    "front": "Error Propagation: Power Rule and Density Example",
+    "back": "\\textbf{General power rule:}\n\\frac{\\Delta f}{f} = n_1\\frac{\\Delta a}{a} + n_2\\frac{\\Delta b}{b} + \\cdots\n\n\\textbf{Example — Density } \\rho = \\frac{M}{L^3}:\n\\frac{\\Delta\\rho}{\\rho} = \\frac{\\Delta M}{M} + 3\\frac{\\Delta L}{L}\n\n\\textbf{Example — Gravitational acceleration } g = \\frac{4\\pi^2 L}{T^2}:\n\\frac{\\Delta g}{g} = \\frac{\\Delta L}{L} + 2\\frac{\\Delta T}{T}\n\n\\text{Quantity with highest power contributes most to error.}",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-f-09",
+    "type": "formula",
+    "front": "Differentiation: Standard Rules and Key Derivatives",
+    "back": "\\textbf{Power rule: } \\frac{d}{dx}(x^n) = nx^{n-1}\n\n\\textbf{Trig: } \\frac{d}{dx}(\\sin x) = \\cos x,\\quad \\frac{d}{dx}(\\cos x) = -\\sin x\n\n\\textbf{Exponential / Log:}\n\\frac{d}{dx}(e^x) = e^x,\\quad \\frac{d}{dx}(\\ln x) = \\frac{1}{x}\n\n\\textbf{Product rule: } \\frac{d}{dx}(uv) = u\\frac{dv}{dx} + v\\frac{du}{dx}\n\n\\textbf{Chain rule (linear): } \\frac{d}{dx}[f(ax+b)] = a\\cdot f'(ax+b)\n\n\\textbf{Sum rule: } \\frac{d}{dx}[u+v] = \\frac{du}{dx} + \\frac{dv}{dx}",
+    "tags": ["supplementary", "math-tools"]
+  },
+  {
+    "id": "sup-f-10",
+    "type": "formula",
+    "front": "Integration: Standard Formulas (Indefinite and Definite)",
+    "back": "\\textbf{Power: } \\int x^n\\,dx = \\frac{x^{n+1}}{n+1} + c \\quad (n\\neq -1)\n\n\\int \\frac{dx}{x} = \\ln x + c\n\n\\int e^x\\,dx = e^x + c\n\n\\int \\sin x\\,dx = -\\cos x + c\n\n\\int \\cos x\\,dx = \\sin x + c\n\n\\int \\sec^2 x\\,dx = \\tan x + c\n\n\\textbf{Definite integral:}\n\\int_a^b f(x)\\,dx = F(b) - F(a)\n\\text{(area under curve from } a \\text{ to } b\\text{)}",
+    "tags": ["supplementary", "math-tools"]
+  },
+  {
+    "id": "sup-f-11",
+    "type": "formula",
+    "front": "Vernier Caliper: Least Count and Reading",
+    "back": "\\textbf{Least count:}\nL.C. = 1\\;M.S.D. - 1\\;V.S.D.\n\n\\text{Typical: } L.C. = 1\\text{ mm} - 0.9\\text{ mm} = 0.1\\text{ mm} = 0.01\\text{ cm}\n\n\\textbf{Reading formula:}\n\\text{Reading} = N + n \\times L.C.\n\n\\text{where } N = \\text{main scale reading (left of Vernier zero)}\n\\text{and } n = \\text{Vernier division that coincides with M.S.}\n\n\\textbf{True reading:}\n\\text{True} = \\text{Measured} - \\text{Zero error}",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-f-12",
+    "type": "formula",
+    "front": "Screw Gauge: Least Count and Reading",
+    "back": "\\textbf{Least count:}\nL.C. = \\frac{\\text{Pitch}}{\\text{Number of circular scale divisions}}\n\n\\text{Typical: } L.C. = \\frac{1\\text{ mm}}{100} = 0.01\\text{ mm} = 10\\;\\mu\\text{m}\n\n\\textbf{Reading formula:}\n\\text{Reading} = M.S.R. + n \\times L.C.\n\n\\text{where } M.S.R. = \\text{linear (sleeve) scale reading}\n\\text{and } n = \\text{circular scale division aligned with reference line}\n\n\\textbf{True reading:}\n\\text{True} = \\text{Measured} - \\text{Zero error}",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-f-13",
+    "type": "formula",
+    "front": "Meter Bridge: Balance Condition and Resistance Formula",
+    "back": "\\textbf{Balance condition (Wheatstone bridge):}\n\\frac{R}{S} = \\frac{l}{100 - l}\n\n\\textbf{Unknown resistance:}\nR = S \\times \\frac{l}{100 - l}\n\n\\text{where } l = \\text{balance point from end A (in cm)}\n\\text{and } S = \\text{known resistance in other gap}\n\n\\textbf{Minimum error: } l = 50\\text{ cm}\n\n\\textbf{Error in R:}\n\\frac{\\Delta R}{R} = \\frac{\\Delta l}{l(100 - l)}\\times 100\\",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-f-14",
+    "type": "formula",
+    "front": "Potentiometer Principle and Speed of Sound (Resonance Column)",
+    "back": "\\textbf{Potentiometer principle:}\n\\text{The potential difference across a uniform wire is}\n\\text{proportional to its length:}\nV \\propto l \\quad\\Rightarrow\\quad \\frac{V_1}{V_2} = \\frac{l_1}{l_2}\n\n\\textbf{Applications: } E.M.F. comparison, internal resistance\n\n\\textbf{Resonance Column — speed of sound:}\nv = 2f_0(l_2 - l_1)\n\n\\text{where } l_1, l_2 = \\text{first and second resonance lengths}\n\\text{and } f_0 = \\text{tuning fork frequency}",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-f-15",
+    "type": "formula",
+    "front": "Simple Pendulum: Time Period and Determination of g",
+    "back": "\\textbf{Time period:}\nT = 2\\pi\\sqrt{\\frac{L}{g}}\n\n\\textbf{Gravitational acceleration:}\ng = \\frac{4\\pi^2 L}{T^2}\n\n\\textbf{Error in g:}\n\\frac{\\Delta g}{g} = \\frac{\\Delta L}{L} + 2\\frac{\\Delta T}{T}\n\n\\text{To minimise } \\Delta T: \\text{ measure } n \\text{ oscillations,}\nT = \\frac{\\text{total time}}{n},\\quad \\Delta T = \\frac{\\Delta t}{n}\n\n\\text{Amplitude must be small (} < 15°\\text{) for SHM approximation.}",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-c-01",
+    "type": "concept",
+    "front": "Scalar vs Vector Quantities: Key Distinction and Examples",
+    "back": "**Scalar:** magnitude only — no direction.\nExamples: mass, speed, energy, temperature, distance, work, power, charge.\n\n**Vector:** magnitude AND direction — cannot be fully described without both.\nExamples: displacement, velocity, acceleration, force, momentum, electric field, torque.\n\n**Key rules:**\n- Scalars obey ordinary algebra.\n- Vectors obey the triangle law / parallelogram law for addition.\n- The same physical operation (e.g., work = F·d) can produce a scalar from two vectors (dot product).\n- Vectors in opposite directions partially or fully cancel.\n\n**Dimensionless vectors:** unit vectors (\\(\\hat{i}, \\hat{j}, \\hat{k}\\)) have magnitude 1 and carry only direction.",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-c-02",
+    "type": "concept",
+    "front": "Applications of Dimensional Analysis",
+    "back": "Dimensional analysis is a tool to:\n\n1. **Check correctness** of a physical equation — both sides must have identical dimensions (Principle of Homogeneity).\n2. **Derive units** of a physical quantity from its formula.\n3. **Convert** between unit systems using \\(n_2 = n_1[M_1/M_2]^a[L_1/L_2]^b[T_1/T_2]^c\\).\n4. **Establish relations** between quantities (when the form is known except for dimensionless constants).\n\n**Limitations:**\n- Cannot determine dimensionless constants (\\(\\pi, 2, \\frac{1}{2}\\), etc.).\n- Cannot handle transcendental functions (\\(\\sin, \\log, e^x\\)) — their arguments must already be dimensionless.\n- A dimensionally correct equation is not necessarily physically correct.",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-c-03",
+    "type": "concept",
+    "front": "Significant Figures: Rules for Counting and Arithmetic",
+    "back": "**Counting sig figs:**\n- All non-zero digits are significant.\n- Zero *between* non-zero digits is significant (e.g., 405 has 3 s.f.).\n- Leading zeros are NOT significant (e.g., 0.0045 has 2 s.f.).\n- Trailing zeros after a decimal ARE significant (e.g., 3.600 has 4 s.f.).\n- Scientific notation: only coefficient digits count (e.g., \\(1.32\\times10^2\\) has 3 s.f.).\n\n**Arithmetic rules:**\n- Addition / Subtraction: result has as many *decimal places* as the least precise operand.\n- Multiplication / Division: result has as many *significant figures* as the operand with fewest s.f.\n\n**Rounding:** if the dropped digit = 5, make the last retained digit even (banker's rounding).",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-c-04",
+    "type": "concept",
+    "front": "Vernier Caliper Zero Error: Positive, Negative, and Correction",
+    "back": "**Zero error** occurs when the Vernier zero does not align with the main scale zero when the jaws are closed.\n\n**Positive zero error:** Vernier zero lies *to the right* of the main scale zero.\n- Zero error is *positive* → subtract from measured reading.\n- True = Measured − (+ve zero error)\n\n**Negative zero error:** Vernier zero lies *to the left* of the main scale zero.\n- Zero error is *negative* → add its magnitude to measured reading.\n- True = Measured − (−ve zero error) = Measured + magnitude\n\n**General rule:**\n\\(\\text{True reading} = \\text{Measured reading} - \\text{Zero error}\\)\n(algebraic subtraction handles both signs automatically)\n\n**Back-lash error in screw gauge:** due to loose thread fit — minimised by always rotating the screw in the same direction.",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-c-05",
+    "type": "concept",
+    "front": "Systematic vs Random Errors: Causes and Reduction",
+    "back": "**Systematic errors:** reproducible, one-directional errors with a fixed cause.\n- Sources: instrument zero error, incorrect calibration, personal bias, environmental conditions (temperature, pressure).\n- Effect: shifts all readings in the same direction by approximately the same amount.\n- Reduction: calibrate instrument, use correction factors, change experimental method.\n\n**Random errors:** unpredictable fluctuations in each measurement.\n- Sources: parallax, fluctuating conditions, variation in observer judgment.\n- Effect: readings scatter around the true value (both higher and lower).\n- Reduction: take many repeated readings and compute the mean; standard deviation quantifies spread.\n\n**Least count error** is a systematic-type error equal to the least count of the instrument — it sets a lower bound on measurement precision.",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-c-06",
+    "type": "concept",
+    "front": "Dot Product: Geometric Meaning and Zero-Product Condition",
+    "back": "\\(\\vec{a}\\cdot\\vec{b} = ab\\cos\\theta\\)\n\n**Geometric meaning:** the dot product equals the product of the magnitude of one vector and the *projection* of the other along it.\n\n**Sign interpretation:**\n- \\(\\vec{a}\\cdot\\vec{b} > 0\\): angle between vectors is acute (\\(\\theta < 90°\\))\n- \\(\\vec{a}\\cdot\\vec{b} = 0\\): vectors are **perpendicular** (\\(\\theta = 90°\\))\n- \\(\\vec{a}\\cdot\\vec{b} < 0\\): angle is obtuse (\\(\\theta > 90°\\))\n\n**Properties:**\n- Commutative: \\(\\vec{a}\\cdot\\vec{b} = \\vec{b}\\cdot\\vec{a}\\)\n- Maximum at \\(\\theta = 0°\\); minimum (most negative) at \\(\\theta = 180°\\)\n- Distributive over addition.\n\n**Application:** work, power, projections, angle between vectors.",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-c-07",
+    "type": "concept",
+    "front": "Cross Product: Direction (Right-Hand Rule) and Zero-Product Condition",
+    "back": "\\(\\vec{a}\\times\\vec{b} = ab\\sin\\theta\\,\\hat{n}\\)\n\n**Right-hand rule:** point fingers along \\(\\vec{a}\\), curl toward \\(\\vec{b}\\) — thumb points in direction of \\(\\vec{a}\\times\\vec{b}\\).\n\n**Sign / direction:**\n- \\(|\\vec{a}\\times\\vec{b}|\\) is maximum when \\(\\theta = 90°\\) (perpendicular vectors).\n- \\(\\vec{a}\\times\\vec{b} = 0\\) when vectors are **parallel or anti-parallel** (\\(\\theta = 0°\\) or \\(180°\\)).\n- \\(\\vec{a}\\times\\vec{a} = 0\\) always.\n\n**Properties:**\n- Anti-commutative: \\(\\vec{a}\\times\\vec{b} = -(\\vec{b}\\times\\vec{a})\\)\n- NOT commutative — order matters.\n\n**Applications:** torque \\((\\vec{\\tau} = \\vec{r}\\times\\vec{F})\\), angular momentum, area of parallelogram.",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-c-08",
+    "type": "concept",
+    "front": "Dimensional Analysis: Principle of Homogeneity",
+    "back": "**Principle of Homogeneity:** every term in a physically valid equation must have *identical dimensions*.\n\nFor an equation \\(X = A + B + C\\):\n\\([X] = [A] = [B] = [C]\\)\n\nFor a product equation \\(X = \\frac{AB}{C}\\):\n\\([X] = \\frac{[A][B]}{[C]}\\)\n\n**Consequences:**\n- You cannot add quantities of different dimensions (e.g., mass + length is meaningless).\n- Arguments of \\(\\sin, \\cos, \\exp, \\ln\\) must be **dimensionless**.\n- Numerical constants are dimensionless.\n\n**Worked check — \\(v^2 = u^2 + 2as\\):**\n\\([v^2] = L^2T^{-2}\\)\n\\([u^2] = L^2T^{-2},\\quad [2as] = LT^{-2}\\cdot L = L^2T^{-2}\\) ✓",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-c-09",
+    "type": "concept",
+    "front": "Meter Bridge Experiment: Procedure and Sources of Error",
+    "back": "**Principle:** Wheatstone bridge at balance — no current through galvanometer.\n\n\\(\\frac{R}{S} = \\frac{l}{100-l}\\quad\\Rightarrow\\quad R = S\\cdot\\frac{l}{100-l}\\)\n\n**Procedure:**\n1. Connect unknown R in one gap, known S in the other.\n2. Move jockey along the wire to find balance point (galvanometer reads zero).\n3. Read length \\(l\\) from end A.\n4. Repeat with R and S swapped to eliminate end-correction errors.\n\n**Optimal condition:** balance near \\(l = 50\\) cm → minimum percentage error.\n\n**Major error sources:**\n- Non-uniform bridge wire resistance.\n- Contact resistance at junctions.\n- Joule heating (use key K₁ to minimise heating).\n- End corrections at terminal gaps.",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-c-10",
+    "type": "concept",
+    "front": "Young's Modulus Experiment (Searle's Method): Setup and Error",
+    "back": "**Formula:**\nY = \\frac{MgL}{\\pi r^2 \\Delta L}\n\n**Setup:** two parallel wires — reference wire Q (constant load), experimental wire P (varying load). Extension \\(\\Delta L\\) measured by screw gauge.\n\n**Procedure:**\n1. Measure wire diameter D with screw gauge (several positions).\n2. Measure original length L with metre scale.\n3. Add loads progressively; record \\(\\Delta L\\) at each step.\n4. Plot load vs. extension — slope gives Y.\n\n**Relative error:**\n\\frac{\\Delta Y}{Y} = \\frac{\\Delta M}{M} + \\frac{\\Delta g}{g} + \\frac{\\Delta L}{L} + 2\\frac{\\Delta D}{D} + \\frac{\\Delta(\\Delta L)}{\\Delta L}\n\n**Dominant error:** diameter (appears squared) and extension measurement.\n**Precaution:** keep load below half the breaking force to stay in elastic range.",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-mcq-01",
+    "type": "mcq",
+    "front": "Two vectors \\(\\vec{P}\\) and \\(\\vec{Q}\\) have magnitudes 3 and 4 respectively. The magnitude of \\(\\vec{P}\\times\\vec{Q}\\) is 12. What is \\(\\vec{P}\\cdot\\vec{Q}\\)?",
+    "back": "**Answer: 0**\n\n\\(|\\vec{P}\\times\\vec{Q}| = PQ\\sin\\theta = 3\\times4\\times\\sin\\theta = 12\\)\n\n\\(\\Rightarrow\\sin\\theta = 1\\Rightarrow\\theta = 90°\\)\n\n\\(\\vec{P}\\cdot\\vec{Q} = PQ\\cos90° = 0\\)\n\n**Key insight:** if the cross-product magnitude equals \\(PQ\\) (maximum), the vectors are perpendicular, so the dot product is zero.\n\n(A) 0\n(B) 5\n(C) 12\n(D) 7\n\n**Correct: (A)**",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-mcq-02",
+    "type": "mcq",
+    "front": "The dimensional formula for the coefficient of viscosity \\(\\eta\\) (defined by \\(F = \\eta A\\frac{dv}{dx}\\)) is:",
+    "back": "**Answer: \\([ML^{-1}T^{-1}]\\)**\n\n\\([F] = MLT^{-2}\\)\n\\([A] = L^2\\)\n\\([dv/dx] = (LT^{-1})/L = T^{-1}\\)\n\n\\([\\eta] = \\frac{[F]}{[A][dv/dx]} = \\frac{MLT^{-2}}{L^2\\cdot T^{-1}} = ML^{-1}T^{-1}\\)\n\n(A) \\([MLT^{-2}]\\)\n(B) \\([ML^{-1}T^{-1}]\\)\n(C) \\([ML^{2}T^{-2}]\\)\n(D) \\([M^0L^0T^{-1}]\\)\n\n**Correct: (B)**",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-mcq-03",
+    "type": "mcq",
+    "front": "A Vernier caliper has 10 Vernier scale divisions equal to 9 main scale divisions, and each main scale division is 1 mm. The least count is:",
+    "back": "**Answer: 0.1 mm**\n\n\\(1\\;V.S.D. = \\frac{9}{10}\\;M.S.D. = 0.9\\text{ mm}\\)\n\n\\(L.C. = 1\\;M.S.D. - 1\\;V.S.D. = 1\\text{ mm} - 0.9\\text{ mm} = 0.1\\text{ mm}\\)\n\n(A) 0.01 mm\n(B) 0.1 mm\n(C) 1 mm\n(D) 0.001 mm\n\n**Correct: (B)**\n\nNote: If 20 V.S.D. = 19 M.S.D., then L.C. = 1/20 mm = 0.05 mm — always check the given number of divisions.",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-mcq-04",
+    "type": "mcq",
+    "front": "The resultant of two forces P and Q (P > Q) is minimum when the angle between them is:",
+    "back": "**Answer: 180°**\n\n\\(R = \\sqrt{P^2 + Q^2 + 2PQ\\cos\\theta}\\)\n\nR is minimum when \\(\\cos\\theta\\) is minimum, i.e., \\(\\cos\\theta = -1\\Rightarrow\\theta = 180°\\)\n\n\\(R_{min} = \\sqrt{P^2 + Q^2 - 2PQ} = |P - Q|\\)\n\n(A) 0°\n(B) 90°\n(C) 120°\n(D) 180°\n\n**Correct: (D)**\n\nR is *maximum* at \\(\\theta = 0°\\) giving \\(R_{max} = P + Q\\).",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-mcq-05",
+    "type": "mcq",
+    "front": "Which of the following equations is dimensionally incorrect?\n\n(A) \\(v = u + at\\)\n(B) \\(s = ut + \\frac{1}{2}at^2\\)\n(C) \\(v^2 = u^2 + 2at\\)\n(D) \\(s = \\frac{v+u}{2}\\cdot t\\)",
+    "back": "**Answer: (C)**\n\nCheck \\(v^2 = u^2 + 2at\\):\n- LHS: \\([v^2] = L^2T^{-2}\\)\n- RHS: \\([2at] = LT^{-2}\\cdot T = LT^{-1}\\)\n\n\\(L^2T^{-2} \\neq LT^{-1}\\) — dimensionally **incorrect**.\n\nThe correct equation is \\(v^2 = u^2 + 2as\\) where \\([2as] = LT^{-2}\\cdot L = L^2T^{-2}\\) ✓\n\n(A) ✓ both sides \\(LT^{-1}\\)\n(B) ✓ both sides \\(L\\)\n(C) ✗ dimension mismatch\n(D) ✓ both sides \\(L\\)\n\n**Correct: (C)**",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-mcq-06",
+    "type": "mcq",
+    "front": "In a meter bridge experiment, the balance point is found at \\(l = 40\\) cm with a known resistance \\(S = 30\\;\\Omega\\). The unknown resistance R is:",
+    "back": "**Answer: 20 Ω**\n\nUsing the balance equation:\n\\(R = S\\cdot\\frac{l}{100-l} = 30\\times\\frac{40}{60} = 30\\times\\frac{2}{3} = 20\\;\\Omega\\)\n\n(A) 12 Ω\n(B) 20 Ω\n(C) 45 Ω\n(D) 75 Ω\n\n**Correct: (B)**\n\nNote: To minimise error, the balance point should be near 50 cm. Here it is slightly off — one would interchange R and S to get a balance near 60 cm and average.",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-mcq-07",
+    "type": "mcq",
+    "front": "If \\(\\vec{a} = 2\\hat{i} + 3\\hat{j}\\) and \\(\\vec{b} = 4\\hat{i} - 6\\hat{j}\\), then \\(\\vec{a}\\times\\vec{b}\\) is:",
+    "back": "**Answer: \\(-24\\hat{k}\\)**\n\nFor 2D vectors (\\(a_z = b_z = 0\\)):\n\\(\\vec{a}\\times\\vec{b} = (a_x b_y - a_y b_x)\\hat{k}\\)\n\n\\(= (2\\times(-6) - 3\\times4)\\hat{k}\\)\n\\(= (-12 - 12)\\hat{k}\\)\n\\(= -24\\hat{k}\\)\n\nMagnitude = 24 (direction: into the page, negative Z)\n\n(A) \\(24\\hat{k}\\)\n(B) \\(-24\\hat{k}\\)\n(C) \\(0\\)\n(D) \\(-24\\hat{i}\\)\n\n**Correct: (B)**",
+    "tags": ["supplementary", "vectors"]
+  },
+  {
+    "id": "sup-mcq-08",
+    "type": "mcq",
+    "front": "The period of a simple pendulum is measured by timing 50 oscillations with a stopwatch of least count 0.1 s. If total time = 100.0 s, what is the percentage error in the period?",
+    "back": "**Answer: 0.05%**\n\n\\(T = \\frac{\\text{total time}}{n} = \\frac{100.0}{50} = 2.000\\text{ s}\\)\n\n\\(\\Delta T = \\frac{\\Delta t}{n} = \\frac{0.1}{50} = 0.002\\text{ s}\\)\n\n\\(\\frac{\\Delta T}{T}\\times100\\% = \\frac{0.002}{2.000}\\times100\\% = 0.1\\%\\)\n\nWait — rechecking:\n\\(0.002/2.000 = 0.001 = 0.1\\%\\)\n\n(A) 0.02%\n(B) 0.05%\n(C) 0.1%\n(D) 1.0%\n\n**Correct: (C) 0.1%**\n\nKey lesson: measuring many oscillations (large n) reduces error in T by factor n.",
+    "tags": ["supplementary", "experiments"]
+  },
+  {
+    "id": "sup-mcq-09",
+    "type": "mcq",
+    "front": "The number of significant figures in \\(6.020\\times10^{23}\\) is:",
+    "back": "**Answer: 4**\n\nIn scientific notation, only the coefficient digits count:\n\\(6.020\\times10^{23}\\)\n\nDigits: 6, 0, 2, 0\n- 6 — significant (non-zero)\n- 0 — significant (between non-zero digits... actually between 6 and 2)\n- 2 — significant (non-zero)\n- 0 — significant (trailing zero after decimal point)\n\nTotal: **4 significant figures**\n\n(A) 2\n(B) 3\n(C) 4\n(D) 5\n\n**Correct: (C)**\n\nNote: The \\(10^{23}\\) does not contribute to significant figures count.",
+    "tags": ["supplementary", "units"]
+  },
+  {
+    "id": "sup-mcq-10",
+    "type": "mcq",
+    "front": "A force \\(\\vec{F} = 3\\hat{i} + 4\\hat{j}\\) N acts through a point with position vector \\(\\vec{r} = 2\\hat{i} + 3\\hat{j}\\) m. The magnitude of the torque about the origin is:",
+    "back": "**Answer: 1 N·m**\n\n\\(\\vec{\\tau} = \\vec{r}\\times\\vec{F}\\)\n\nFor 2D vectors:\n\\(\\tau = (r_x F_y - r_y F_x)\\hat{k}\\)\n\\(= (2\\times4 - 3\\times3)\\hat{k}\\)\n\\(= (8 - 9)\\hat{k}\\)\n\\(= -\\hat{k}\\text{ N·m}\\)\n\n\\(|\\vec{\\tau}| = 1\\text{ N·m}\\)\n\n(A) 1 N·m\n(B) 5 N·m\n(C) 7 N·m\n(D) 17 N·m\n\n**Correct: (A)**\n\nNegative sign indicates torque is into the page (clockwise rotation).",
+    "tags": ["supplementary", "vectors"]
+  }
+]

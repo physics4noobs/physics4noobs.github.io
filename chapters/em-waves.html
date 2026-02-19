@@ -83,9 +83,20 @@
       <div class="ch-nav">
         <a href="#displacement-current">Displacement Current</a>
         <a href="#maxwells-equations">Maxwell's Equations</a>
-        <a href="#em-wave-properties">EM Wave Properties</a>
-        <a href="#em-spectrum">EM Spectrum</a>
+        <a href="#em-wave-fundamentals">EM Wave Fundamentals</a>
+        <a href="#em-wave-properties">Wave Properties</a>
+        <a href="#wave-parameters">Wave in Media</a>
         <a href="#energy-momentum">Energy &amp; Momentum</a>
+        <a href="#em-spectrum">EM Spectrum</a>
+        <a href="#magnetic-field-lines">Magnetic Field Lines</a>
+        <a href="#magnetic-moment">Magnetic Moment</a>
+        <a href="#dipole-in-field">Dipole in Field</a>
+        <a href="#earths-magnetism">Earth's Magnetism</a>
+        <a href="#magnetization">Magnetization</a>
+        <a href="#magnetic-materials">Magnetic Materials</a>
+        <a href="#hysteresis">Hysteresis</a>
+        <a href="#permanent-electromagnets">Permanent &amp; Electromagnets</a>
+        <a href="#key-formulas">Key Formulas</a>
       </div>
     </div>
 
@@ -126,6 +137,7 @@
         <li>In a region of space with no conduction current, a time-varying electric field still produces a magnetic field.</li>
         <li>The converse is also true: a time-varying magnetic field produces an electric field (Faraday's law).</li>
         <li>These two effects together sustain electromagnetic waves that propagate through free space.</li>
+        <li>Inside a capacitor: I<sub>c</sub> = 0 but I<sub>d</sub> &ne; 0. Outside the capacitor plates: I<sub>c</sub> &ne; 0 but I<sub>d</sub> = 0.</li>
       </ul>
     </div>
 
@@ -191,10 +203,52 @@
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 3: EM Wave Properties -->
+    <!-- SECTION 3: EM Wave Fundamentals -->
+    <!-- ============================== -->
+    <div class="theory-section" id="em-wave-fundamentals">
+      <h2>3. Electromagnetic Wave Fundamentals</h2>
+
+      <h3>What Are EM Waves?</h3>
+      <p>
+        Electromagnetic waves are self-sustaining oscillations of electric and magnetic field vectors that propagate through space without requiring a material medium. The source of EM waves is an oscillating electric charge, which produces time-varying electric and magnetic fields that radiate outward. Both fields oscillate in phase with each other, maintaining a constant amplitude ratio.
+      </p>
+
+      <h3>Key Characteristics</h3>
+      <ul>
+        <li>EM waves are <strong>transverse waves</strong>: the electric field <strong>E</strong>, magnetic field <strong>B</strong>, and direction of propagation form a mutually perpendicular right-handed triad.</li>
+        <li>The cross product <strong>E</strong> &times; <strong>B</strong> points in the direction of energy flow (propagation direction).</li>
+        <li>In vacuum, c = 3 &times; 10<sup>8</sup> m/s is constant for all frequencies &mdash; independent of the source or observer's motion.</li>
+        <li>The ratio of electric to magnetic field amplitudes is always equal to c in vacuum: E<sub>0</sub>/B<sub>0</sub> = c.</li>
+        <li>EM waves require no material medium; they propagate through vacuum.</li>
+      </ul>
+
+      <div class="formula-box">
+        Speed of light: c = 1 / &radic;(&mu;<sub>0</sub>&epsilon;<sub>0</sub>) &asymp; 3 &times; 10<sup>8</sup> m/s<br><br>
+        Field amplitude ratio: E<sub>0</sub> / B<sub>0</sub> = c<br><br>
+        Angular frequency: &omega; = 2&pi;&nu;<br><br>
+        Wave number: k = 2&pi; / &lambda;<br><br>
+        Wave speed: c = &nu;&lambda; = &omega; / k
+      </div>
+
+      <h3>Mathematical Form</h3>
+      <p>
+        For a plane wave propagating along the +x direction with E along y and B along z:
+      </p>
+      <div class="formula-box">
+        E<sub>y</sub> = E<sub>0</sub> sin(kx &minus; &omega;t)<br>
+        B<sub>z</sub> = B<sub>0</sub> sin(kx &minus; &omega;t)<br><br>
+        where B<sub>0</sub> = E<sub>0</sub> / c
+      </div>
+      <p>
+        The electric and magnetic fields are always in phase &mdash; they reach their maxima and minima simultaneously at any given point.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: EM Wave Properties -->
     <!-- ============================== -->
     <div class="theory-section" id="em-wave-properties">
-      <h2>3. Electromagnetic Wave Properties</h2>
+      <h2>4. Electromagnetic Wave Properties</h2>
 
       <h3>Nature of EM Waves</h3>
       <p>
@@ -239,13 +293,171 @@
         v = 1 / &radic;(&mu; &epsilon;) = c / &radic;(&mu;<sub>r</sub> &epsilon;<sub>r</sub>)<br><br>
         Refractive index: n = c / v = &radic;(&mu;<sub>r</sub> &epsilon;<sub>r</sub>)
       </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 1 &mdash; Finding B-field from E-field expression</div>
+        <p>
+          An EM wave has its electric field given by E = E<sub>0</sub> sin(kx &minus; &omega;t) j (along y-direction). Write the expression for the magnetic field.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Direction of propagation is +x. The B-field must be perpendicular to both E and the propagation direction.<br><br>
+            Since E is along y and propagation is along x:<br>
+            <strong>E</strong> &times; <strong>B</strong> must point along +x, so <strong>B</strong> must be along +z.<br><br>
+            Amplitude: B<sub>0</sub> = E<sub>0</sub> / c<br><br>
+            Phase and frequency match E, so:<br>
+            B = (E<sub>0</sub>/c) sin(kx &minus; &omega;t) k (along z)
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 4: EM Spectrum -->
+    <!-- SECTION 5: Wave Parameters in Different Media -->
+    <!-- ============================== -->
+    <div class="theory-section" id="wave-parameters">
+      <h2>5. Wave Parameters in Different Media</h2>
+
+      <h3>Speed in a Medium</h3>
+      <p>
+        When an EM wave enters a material medium, its speed changes depending on the electric permittivity (&epsilon;) and magnetic permeability (&mu;) of that medium. The refractive index relates the vacuum speed to the medium speed and is always greater than or equal to 1 for physical materials.
+      </p>
+
+      <div class="formula-box">
+        Speed in medium: c<sub>M</sub> = 1 / &radic;(&epsilon;&mu;)<br><br>
+        Refractive index: n<sub>M</sub> = c / c<sub>M</sub> = &radic;(&epsilon;<sub>r</sub>&mu;<sub>r</sub>)<br><br>
+        Speed from relative values: c<sub>M</sub> = c / &radic;(&epsilon;<sub>r</sub>&mu;<sub>r</sub>)<br><br>
+        Wavelength in medium: &lambda;<sub>M</sub> = &lambda;<sub>0</sub> / n<sub>M</sub><br><br>
+        Frequency in medium: &nu;<sub>M</sub> = &nu; (unchanged across media)
+      </div>
+
+      <h3>Important Notes</h3>
+      <ul>
+        <li>Frequency remains constant when a wave crosses from one medium to another; only speed and wavelength change.</li>
+        <li>Refractive index is typically greater than 1 for materials, meaning the wave slows down.</li>
+        <li>For non-magnetic materials (&mu;<sub>r</sub> &asymp; 1), the refractive index simplifies to n &asymp; &radic;&epsilon;<sub>r</sub>.</li>
+        <li>Permittivity and permeability are material-specific properties that determine how the medium interacts with EM fields.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Example 2 &mdash; Wavelength change on entering a medium</div>
+        <p>
+          An EM wave has a wavelength of 0.67 m in vacuum. It enters a medium with refractive index n = 1.5. Find the wavelength in the medium and the speed of the wave in the medium.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Given: &lambda;<sub>0</sub> = 0.67 m, n = 1.5<br><br>
+            Wavelength in medium:<br>
+            &lambda;<sub>M</sub> = &lambda;<sub>0</sub> / n = 0.67 / 1.5 = <strong>0.447 m</strong><br><br>
+            Speed in medium:<br>
+            c<sub>M</sub> = c / n = (3 &times; 10<sup>8</sup>) / 1.5 = <strong>2 &times; 10<sup>8</sup> m/s</strong><br><br>
+            Frequency is unchanged: &nu; = c / &lambda;<sub>0</sub> = (3 &times; 10<sup>8</sup>) / 0.67 &asymp; 4.48 &times; 10<sup>8</sup> Hz
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Energy & Momentum -->
+    <!-- ============================== -->
+    <div class="theory-section" id="energy-momentum">
+      <h2>6. Energy &amp; Momentum of EM Waves</h2>
+
+      <h3>Energy Density</h3>
+      <p>
+        Electromagnetic waves carry energy. The energy is stored equally in the oscillating electric and magnetic fields. The energy density (energy per unit volume) at any point is:
+      </p>
+      <div class="formula-box">
+        Energy density in E field: u<sub>E</sub> = &frac12; &epsilon;<sub>0</sub> E&sup2;<br>
+        Energy density in B field: u<sub>B</sub> = B&sup2; / (2&mu;<sub>0</sub>)<br>
+        Total energy density: u = u<sub>E</sub> + u<sub>B</sub> = &epsilon;<sub>0</sub> E&sup2; = B&sup2; / &mu;<sub>0</sub><br><br>
+        Average energy density: u<sub>avg</sub> = (1/4)&epsilon;<sub>0</sub>E<sub>0</sub>&sup2; = (1/4&mu;<sub>0</sub>)B<sub>0</sub>&sup2;
+      </div>
+      <p>
+        Since u<sub>E</sub> = u<sub>B</sub> at every instant, the electric and magnetic fields contribute equally to the total energy of an EM wave.
+      </p>
+
+      <h3>Intensity</h3>
+      <p>
+        The intensity of an EM wave is the average energy crossing a unit area perpendicular to the direction of propagation per unit time. It equals the average energy density multiplied by the speed of the wave.
+      </p>
+      <div class="formula-box">
+        Intensity: I = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2;<br><br>
+        Also: I = c &lt;u&gt; = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2; = E<sub>0</sub>&sup2; / (2&mu;<sub>0</sub>c) = c B<sub>0</sub>&sup2; / (2&mu;<sub>0</sub>)<br><br>
+        Using E<sub>rms</sub>: I = &epsilon;<sub>0</sub> c E<sub>rms</sub>&sup2;<br><br>
+        Poynting vector magnitude: S = (E<sub>0</sub>B<sub>0</sub>) / (2&mu;<sub>0</sub>)
+      </div>
+
+      <h3>Momentum &amp; Radiation Pressure</h3>
+      <p>
+        Electromagnetic waves carry momentum as well as energy. When an EM wave is absorbed by a surface, it transfers momentum to the surface, exerting a force (and hence a pressure) called <strong>radiation pressure</strong>. The momentum carried by an EM wave of energy U is:
+      </p>
+      <div class="formula-box">
+        Momentum: p = U / c &nbsp; (total absorption)<br>
+        Momentum: p = 2U / c &nbsp; (total reflection)<br><br>
+        Radiation pressure (absorption): P = I / c<br>
+        Radiation pressure (reflection): P = 2I / c
+      </div>
+      <p>
+        The factor of 2 for reflection arises because the incoming wave has momentum U/c in one direction, and the reflected wave has momentum U/c in the opposite direction, so the total momentum change is 2U/c.
+      </p>
+      <ul>
+        <li>Radiation pressure is very small for ordinary light sources but can be significant for intense laser beams or in astrophysical contexts (e.g., radiation pressure from stars affects interstellar dust).</li>
+        <li>The concept of radiation pressure provides direct evidence that EM waves carry momentum.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Example 3 &mdash; Intensity and electric field amplitude of a laser</div>
+        <p>
+          A laser beam has a cross-sectional area of 2 mm&sup2; and a power of 1 mW. Calculate: (a) the intensity of the beam, (b) the amplitude of the electric field, and (c) the radiation pressure on a perfectly reflecting surface.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Power P = 1 mW = 1 &times; 10<sup>&minus;3</sup> W, Area A = 2 mm&sup2; = 2 &times; 10<sup>&minus;6</sup> m&sup2;<br><br>
+            <em>(a) Intensity:</em><br>
+            I = P / A = (1 &times; 10<sup>&minus;3</sup>) / (2 &times; 10<sup>&minus;6</sup>) = <strong>500 W/m&sup2;</strong><br><br>
+            <em>(b) Amplitude of electric field:</em><br>
+            I = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2;<br>
+            E<sub>0</sub>&sup2; = 2I / (&epsilon;<sub>0</sub> c) = 2 &times; 500 / (8.85 &times; 10<sup>&minus;12</sup> &times; 3 &times; 10<sup>8</sup>)<br>
+            E<sub>0</sub>&sup2; = 1000 / (2.655 &times; 10<sup>&minus;3</sup>) = 3.77 &times; 10<sup>5</sup><br>
+            E<sub>0</sub> &asymp; <strong>614 V/m</strong><br><br>
+            <em>(c) Radiation pressure (perfectly reflecting surface):</em><br>
+            P<sub>rad</sub> = 2I / c = 2 &times; 500 / (3 &times; 10<sup>8</sup>) = <strong>3.33 &times; 10<sup>&minus;6</sup> Pa</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 4 &mdash; Peak electric field and wave parameters</div>
+        <p>
+          The electric field in a plane electromagnetic wave is given by E = 300 sin(5 &times; 10<sup>6</sup> t &minus; 1.67 &times; 10<sup>&minus;2</sup> x) V/m. Find the amplitude of the magnetic field, the frequency, the wavelength, and the speed of the wave.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Comparing with E = E<sub>0</sub> sin(&omega;t &minus; kx):<br>
+            E<sub>0</sub> = 300 V/m, &omega; = 5 &times; 10<sup>6</sup> rad/s, k = 1.67 &times; 10<sup>&minus;2</sup> rad/m<br><br>
+            Amplitude of magnetic field:<br>
+            B<sub>0</sub> = E<sub>0</sub> / c = 300 / (3 &times; 10<sup>8</sup>) = <strong>10<sup>&minus;6</sup> T = 1 &mu;T</strong><br><br>
+            Frequency:<br>
+            f = &omega; / (2&pi;) = 5 &times; 10<sup>6</sup> / (2&pi;) &asymp; <strong>7.96 &times; 10<sup>5</sup> Hz &asymp; 796 kHz</strong><br><br>
+            Wavelength:<br>
+            &lambda; = 2&pi; / k = 2&pi; / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; <strong>376 m</strong><br><br>
+            Speed:<br>
+            v = &omega; / k = 5 &times; 10<sup>6</sup> / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; <strong>3 &times; 10<sup>8</sup> m/s = c</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: EM Spectrum -->
     <!-- ============================== -->
     <div class="theory-section" id="em-spectrum">
-      <h2>4. Electromagnetic Spectrum</h2>
+      <h2>7. Electromagnetic Spectrum</h2>
 
       <p>
         The electromagnetic spectrum is the entire range of electromagnetic radiation, classified by frequency (or equivalently, wavelength). All EM waves travel at the same speed in vacuum (c = 3 &times; 10<sup>8</sup> m/s) but differ in frequency and wavelength. The spectrum is continuous &mdash; there are no sharp boundaries between regions. The classification is based on the method of production and detection.
@@ -253,7 +465,7 @@
 
       <h3>Radio Waves</h3>
       <p>
-        <strong>Frequency:</strong> &lt; 10<sup>9</sup> Hz (up to ~300 MHz for FM, up to ~1 GHz broadly).<br>
+        <strong>Frequency:</strong> 3 &times; 10<sup>3</sup> Hz to ~10<sup>9</sup> Hz.<br>
         <strong>Wavelength:</strong> &gt; 0.3 m (can be kilometres long).<br>
         <strong>Source:</strong> Oscillating circuits (LC oscillators), antennas.<br>
         <strong>Uses:</strong> AM/FM radio broadcasting, television signals, radar, cellular communication.<br>
@@ -289,7 +501,7 @@
 
       <h3>Ultraviolet Radiation</h3>
       <p>
-        <strong>Frequency:</strong> 7.5 &times; 10<sup>14</sup> Hz to 10<sup>17</sup> Hz.<br>
+        <strong>Frequency:</strong> 8 &times; 10<sup>14</sup> Hz to 10<sup>17</sup> Hz.<br>
         <strong>Wavelength:</strong> 400 nm to 1 nm.<br>
         <strong>Source:</strong> Sun, mercury vapour lamps, very hot bodies (T &gt; 3000 K).<br>
         <strong>Uses:</strong> Sterilization, LASIK eye surgery, water purification, detection of forged documents, fluorescence studies.<br>
@@ -298,7 +510,7 @@
 
       <h3>X-Rays</h3>
       <p>
-        <strong>Frequency:</strong> 10<sup>16</sup> Hz to 10<sup>19</sup> Hz.<br>
+        <strong>Frequency:</strong> 10<sup>17</sup> Hz to 10<sup>19</sup> Hz.<br>
         <strong>Wavelength:</strong> 10 nm to 10<sup>&minus;3</sup> nm.<br>
         <strong>Source:</strong> Bombardment of high-energy electrons on heavy metal targets (Coolidge tube), synchrotron radiation.<br>
         <strong>Uses:</strong> Medical diagnostics (bone fractures), CT scans, crystallography (Bragg diffraction), airport security screening, industrial quality control.<br>
@@ -322,98 +534,395 @@
         <li>The order of increasing wavelength is the reverse of the above.</li>
         <li>All EM waves travel at speed c in vacuum. In a medium, the speed is less than c.</li>
         <li>The photon energy E = hf = hc/&lambda; increases with frequency. Hence, gamma rays are the most energetic and radio waves are the least energetic.</li>
+        <li>Photon energy: E = hf where h = 6.63 &times; 10<sup>&minus;34</sup> J&middot;s (Planck's constant).</li>
       </ul>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 5: Energy & Momentum -->
+    <!-- SECTION 8: Magnetic Field Lines -->
     <!-- ============================== -->
-    <div class="theory-section" id="energy-momentum">
-      <h2>5. Energy &amp; Momentum of EM Waves</h2>
+    <div class="theory-section" id="magnetic-field-lines">
+      <h2>8. Magnetic Field Lines and Gauss's Law for Magnetism</h2>
 
-      <h3>Energy in EM Waves</h3>
+      <h3>Properties of Magnetic Field Lines</h3>
       <p>
-        Electromagnetic waves carry energy. The energy is stored equally in the oscillating electric and magnetic fields. The energy density (energy per unit volume) at any point is:
-      </p>
-      <div class="formula-box">
-        Energy density in E field: u<sub>E</sub> = &frac12; &epsilon;<sub>0</sub> E&sup2;<br>
-        Energy density in B field: u<sub>B</sub> = B&sup2; / (2&mu;<sub>0</sub>)<br>
-        Total energy density: u = u<sub>E</sub> + u<sub>B</sub> = &epsilon;<sub>0</sub> E&sup2; = B&sup2; / &mu;<sub>0</sub>
-      </div>
-      <p>
-        Since u<sub>E</sub> = u<sub>B</sub> at every instant, the electric and magnetic fields contribute equally to the total energy of an EM wave.
-      </p>
-
-      <h3>Intensity</h3>
-      <p>
-        The intensity of an EM wave is the average energy crossing a unit area perpendicular to the direction of propagation per unit time. It equals the average energy density multiplied by the speed of the wave.
-      </p>
-      <div class="formula-box">
-        Intensity: I = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2;<br><br>
-        Also: I = c &lt;u&gt; = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2; = E<sub>0</sub>&sup2; / (2&mu;<sub>0</sub>c) = c B<sub>0</sub>&sup2; / (2&mu;<sub>0</sub>)<br><br>
-        Using E<sub>rms</sub>: I = &epsilon;<sub>0</sub> c E<sub>rms</sub>&sup2;
-      </div>
-
-      <h3>Momentum &amp; Radiation Pressure</h3>
-      <p>
-        Electromagnetic waves carry momentum as well as energy. When an EM wave is absorbed by a surface, it transfers momentum to the surface, exerting a force (and hence a pressure) called <strong>radiation pressure</strong>. The momentum carried by an EM wave of energy U is:
-      </p>
-      <div class="formula-box">
-        Momentum: p = U / c &nbsp; (total absorption)<br>
-        Momentum: p = 2U / c &nbsp; (total reflection)<br><br>
-        Radiation pressure (absorption): P = I / c<br>
-        Radiation pressure (reflection): P = 2I / c
-      </div>
-      <p>
-        The factor of 2 for reflection arises because the incoming wave has momentum U/c in one direction, and the reflected wave has momentum U/c in the opposite direction, so the total momentum change is 2U/c.
+        Magnetic field lines are a visual representation of the magnetic field in space. They have several distinguishing properties that set them apart from electric field lines. Most importantly, magnetic field lines always form <strong>closed loops</strong> &mdash; they have no starting or ending point. This is a direct consequence of the non-existence of magnetic monopoles.
       </p>
       <ul>
-        <li>Radiation pressure is very small for ordinary light sources but can be significant for intense laser beams or in astrophysical contexts (e.g., radiation pressure from stars affects interstellar dust).</li>
-        <li>The concept of radiation pressure provides direct evidence that EM waves carry momentum.</li>
+        <li>Magnetic field lines form continuous closed loops with no beginning or end.</li>
+        <li>The density of field lines at a point represents the strength of the magnetic field at that point.</li>
+        <li>Magnetic field lines never cross or intersect each other.</li>
+        <li>Inside a bar magnet, field lines run from the south pole to the north pole. Outside, they run from north to south.</li>
+        <li>The direction at any point is the direction in which a north pole would tend to move (or the direction a compass needle would point).</li>
+      </ul>
+
+      <h3>Gauss's Law for Magnetism</h3>
+      <p>
+        The total magnetic flux through any closed surface is always zero. This is a formal statement of the fact that magnetic monopoles do not exist:
+      </p>
+      <div class="formula-box">
+        &oint; <strong>B</strong> &middot; d<strong>s</strong> = 0<br><br>
+        This means: No net magnetic flux can leave any closed surface.<br>
+        Every field line that enters a closed surface must also exit it.
+      </div>
+
+      <h3>Field of a Bar Magnet</h3>
+      <p>
+        At large distances r from the centre of a bar magnet with magnetic moment m, the field can be approximated as that of a magnetic dipole:
+      </p>
+      <div class="formula-box">
+        On axis (axial point): B = (&mu;<sub>0</sub> / 4&pi;) &times; (2m / r&sup3;)<br><br>
+        On equatorial line: B = (&mu;<sub>0</sub> / 4&pi;) &times; (m / r&sup3;)<br><br>
+        Inside a long solenoid: B = &mu;<sub>0</sub>nI &nbsp; (n = turns per unit length)
+      </div>
+      <ul>
+        <li>No isolated magnetic poles exist &mdash; you cannot create a magnetic monopole by breaking a magnet; each half becomes a complete dipole.</li>
+        <li>Axial field is twice the equatorial field at the same distance from the dipole centre.</li>
+        <li>Magnetic field falls off as 1/r&sup3; at large distances from a dipole.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 9: Magnetic Moment -->
+    <!-- ============================== -->
+    <div class="theory-section" id="magnetic-moment">
+      <h2>9. Magnetic Moment and Bar Magnet Properties</h2>
+
+      <h3>Magnetic Moment of a Bar Magnet</h3>
+      <p>
+        The magnetic moment of a bar magnet is a vector quantity that characterises the strength and orientation of the magnet. It is defined as the product of the pole strength and the magnetic length (the effective separation between the poles):
+      </p>
+      <div class="formula-box">
+        Magnetic moment: M = m &times; 2l<br>
+        &nbsp;&nbsp;where m = pole strength (A&middot;m), 2l = magnetic length (m)<br><br>
+        Pole strength: m = M / (2l)<br><br>
+        Relation between lengths: Magnetic length / Geometric length &asymp; 0.84<br><br>
+        Axial field (far): B = (&mu;<sub>0</sub> / 4&pi;)(2M / r&sup3;)<br><br>
+        Equatorial field (far): B = (&mu;<sub>0</sub> / 4&pi;)(M / r&sup3;)
+      </div>
+
+      <h3>Key Properties</h3>
+      <ul>
+        <li>The SI unit of magnetic moment is A&middot;m&sup2; (ampere metre squared), also expressed as J/T.</li>
+        <li>Magnetic moment is a vector quantity directed from the south pole to the north pole of the magnet.</li>
+        <li>A bar magnet produces the same external field as an equivalent current-carrying solenoid at large distances.</li>
+        <li>The effective magnetic length (2l) is about 84% of the geometric (physical) length of the magnet.</li>
+        <li>The far-field behavior depends only on the total dipole moment, not on individual pole strengths or the separation independently.</li>
       </ul>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 1</div>
+        <div class="ex-label">Example 5 &mdash; Magnetic moment and field of a bar magnet</div>
         <p>
-          The electric field in a plane electromagnetic wave is given by E = 300 sin(5 &times; 10<sup>6</sup> t &minus; 1.67 &times; 10<sup>&minus;2</sup> x) V/m. Find the amplitude of the magnetic field, the frequency, the wavelength, and the speed of the wave.
+          A bar magnet has a magnetic length of 4 cm and a pole strength of 10 A&middot;m. Find: (a) the magnetic moment, and (b) the magnetic field at a point 20 cm from the centre on the axial line.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            Comparing with E = E<sub>0</sub> sin(&omega;t &minus; kx):<br>
-            E<sub>0</sub> = 300 V/m, &omega; = 5 &times; 10<sup>6</sup> rad/s, k = 1.67 &times; 10<sup>&minus;2</sup> rad/m<br><br>
-            Amplitude of magnetic field:<br>
-            B<sub>0</sub> = E<sub>0</sub> / c = 300 / (3 &times; 10<sup>8</sup>) = <strong>10<sup>&minus;6</sup> T = 1 &mu;T</strong><br><br>
-            Frequency:<br>
-            f = &omega; / (2&pi;) = 5 &times; 10<sup>6</sup> / (2&pi;) &asymp; <strong>7.96 &times; 10<sup>5</sup> Hz &asymp; 796 kHz</strong><br><br>
-            Wavelength:<br>
-            &lambda; = 2&pi; / k = 2&pi; / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; <strong>376 m</strong><br><br>
-            Speed:<br>
-            v = &omega; / k = 5 &times; 10<sup>6</sup> / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; <strong>3 &times; 10<sup>8</sup> m/s = c</strong>
+            Given: m = 10 A&middot;m, 2l = 0.04 m, r = 0.20 m<br><br>
+            <em>(a) Magnetic moment:</em><br>
+            M = m &times; 2l = 10 &times; 0.04 = <strong>0.4 A&middot;m&sup2;</strong><br><br>
+            <em>(b) Axial magnetic field:</em><br>
+            B = (&mu;<sub>0</sub> / 4&pi;) &times; (2M / r&sup3;)<br>
+            B = 10<sup>&minus;7</sup> &times; (2 &times; 0.4) / (0.20)&sup3;<br>
+            B = 10<sup>&minus;7</sup> &times; 0.8 / (8 &times; 10<sup>&minus;3</sup>)<br>
+            B = 10<sup>&minus;7</sup> &times; 100 = <strong>10<sup>&minus;5</sup> T = 0.1 G</strong>
           </p>
         </div>
       </div>
+    </div>
 
-      <div class="example-box">
-        <div class="ex-label">Solved Example 2</div>
-        <p>
-          A laser beam has a cross-sectional area of 2 mm&sup2; and a power of 1 mW. Calculate: (a) the intensity of the beam, (b) the amplitude of the electric field, and (c) the radiation pressure on a perfectly reflecting surface.
-        </p>
-        <div class="solution">
-          <p>
-            <strong>Solution:</strong><br>
-            Power P = 1 mW = 1 &times; 10<sup>&minus;3</sup> W, Area A = 2 mm&sup2; = 2 &times; 10<sup>&minus;6</sup> m&sup2;<br><br>
-            <em>(a) Intensity:</em><br>
-            I = P / A = (1 &times; 10<sup>&minus;3</sup>) / (2 &times; 10<sup>&minus;6</sup>) = <strong>500 W/m&sup2;</strong><br><br>
-            <em>(b) Amplitude of electric field:</em><br>
-            I = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2;<br>
-            E<sub>0</sub>&sup2; = 2I / (&epsilon;<sub>0</sub> c) = 2 &times; 500 / (8.85 &times; 10<sup>&minus;12</sup> &times; 3 &times; 10<sup>8</sup>)<br>
-            E<sub>0</sub>&sup2; = 1000 / (2.655 &times; 10<sup>&minus;3</sup>) = 3.77 &times; 10<sup>5</sup><br>
-            E<sub>0</sub> &asymp; <strong>614 V/m</strong><br><br>
-            <em>(c) Radiation pressure (perfectly reflecting surface):</em><br>
-            P<sub>rad</sub> = 2I / c = 2 &times; 500 / (3 &times; 10<sup>8</sup>) = <strong>3.33 &times; 10<sup>&minus;6</sup> Pa</strong>
-          </p>
-        </div>
+    <!-- ============================== -->
+    <!-- SECTION 10: Dipole in Field -->
+    <!-- ============================== -->
+    <div class="theory-section" id="dipole-in-field">
+      <h2>10. Magnetic Dipole in a Uniform Field</h2>
+
+      <h3>Torque on a Magnetic Dipole</h3>
+      <p>
+        When a magnetic dipole (bar magnet) is placed in a uniform external magnetic field, the field exerts equal and opposite forces on the two poles. These forces constitute a couple that produces a <strong>torque</strong> on the dipole, tending to align it with the field. The torque depends on the angle &theta; between the magnetic moment vector and the field direction:
+      </p>
+      <div class="formula-box">
+        Torque: &tau; = M &times; B = MB sin&theta;<br><br>
+        Potential energy: U = &minus;M&middot;B = &minus;MB cos&theta;<br><br>
+        Equilibrium positions:<br>
+        &nbsp;&nbsp;&theta; = 0&deg; (stable, U = &minus;MB, minimum energy)<br>
+        &nbsp;&nbsp;&theta; = 180&deg; (unstable, U = +MB, maximum energy)
+      </div>
+
+      <h3>Oscillation of a Magnetic Dipole</h3>
+      <p>
+        When a magnetic dipole is displaced slightly from its stable equilibrium position (&theta; = 0) and released, it undergoes simple harmonic motion. For small angles, sin&theta; &asymp; &theta;, and the restoring torque becomes proportional to the angular displacement:
+      </p>
+      <div class="formula-box">
+        Equation of motion: d&sup2;&theta;/dt&sup2; = &minus;(MB/I)&theta;<br><br>
+        Angular frequency: &omega; = &radic;(MB/I)<br><br>
+        Time period: T = 2&pi;&radic;(I/(MB))<br><br>
+        where I = moment of inertia of the magnet about its pivot axis
+      </div>
+      <ul>
+        <li>The period of oscillation increases with the moment of inertia (heavier or longer magnets oscillate more slowly).</li>
+        <li>The period decreases in a stronger magnetic field (the dipole oscillates more rapidly).</li>
+        <li>This principle is used in vibration magnetometers to compare magnetic moments or measure field strengths.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 11: Earth's Magnetism -->
+    <!-- ============================== -->
+    <div class="theory-section" id="earths-magnetism">
+      <h2>11. Earth's Magnetic Field and Elements</h2>
+
+      <h3>Origin of Earth's Magnetic Field</h3>
+      <p>
+        Earth behaves like a giant magnetic dipole. Its magnetic field is believed to arise from convective motion of molten iron and nickel in the Earth's outer core (the <strong>dynamo effect</strong>). This sets up circulating electric currents that generate a dipole-like magnetic field. The magnetic north pole of Earth is located near the geographic south pole, and vice versa.
+      </p>
+
+      <h3>Elements of Earth's Magnetic Field</h3>
+      <p>
+        Three quantities (called magnetic elements) completely describe Earth's field at any location:
+      </p>
+      <ul>
+        <li><strong>Declination (&theta;):</strong> The angle between the geographic meridian (true north) and the magnetic meridian at that location. It tells us how much a compass deviates from true geographic north.</li>
+        <li><strong>Inclination (Angle of Dip, &delta;):</strong> The angle that the total magnetic field vector makes with the horizontal plane. At the magnetic equator, &delta; = 0&deg;. At the magnetic poles, &delta; = 90&deg;.</li>
+        <li><strong>Horizontal Component (H):</strong> The component of Earth's total field in the horizontal plane, pointing toward the magnetic north.</li>
+      </ul>
+
+      <div class="formula-box">
+        Total field: B = &radic;(H&sup2; + Z&sup2;)<br><br>
+        Vertical component: Z = B sin&delta;<br>
+        Horizontal component: H = B cos&delta;<br><br>
+        Angle of dip: tan&delta; = Z / H<br><br>
+        Earth's field magnitude &asymp; 3 &times; 10<sup>&minus;5</sup> T to 6 &times; 10<sup>&minus;5</sup> T (varies by location)
+      </div>
+
+      <h3>Important Points</h3>
+      <ul>
+        <li>The magnetic equator is the line on Earth's surface where the dip angle is zero.</li>
+        <li>The geographic and magnetic poles do not coincide; the angular difference is the declination.</li>
+        <li>Earth's magnetic field reverses direction on geological timescales (polarity reversals).</li>
+        <li>At the geographic poles, the dip angle is not exactly 90&deg; because the magnetic poles are not at the geographic poles.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 12: Magnetization -->
+    <!-- ============================== -->
+    <div class="theory-section" id="magnetization">
+      <h2>12. Magnetization and Magnetic Intensity</h2>
+
+      <h3>Three Key Magnetic Quantities</h3>
+      <p>
+        When a material is placed in a magnetic field, the material's response must be accounted for. Three related but distinct magnetic quantities describe this:
+      </p>
+      <ul>
+        <li><strong>Magnetization M:</strong> The net magnetic moment per unit volume of the material, measured in A/m. It represents how strongly the material has been magnetized by the external field.</li>
+        <li><strong>Magnetic Intensity H:</strong> A field quantity that represents the applied (external) field, independent of the material's response. It equals B/&mu;<sub>0</sub> &minus; M.</li>
+        <li><strong>Magnetic Induction B:</strong> The total field inside the material, including both the external field and the field due to the magnetized material itself.</li>
+      </ul>
+
+      <div class="formula-box">
+        Magnetization: M = m<sub>net</sub> / V &nbsp; (net magnetic moment / volume)<br><br>
+        Relation: B = &mu;<sub>0</sub>(H + M)<br><br>
+        In vacuum (M = 0): B = &mu;<sub>0</sub>H<br><br>
+        Magnetic susceptibility: &chi; = M / H &nbsp; (dimensionless)<br><br>
+        Relative permeability: &mu;<sub>r</sub> = 1 + &chi;<br><br>
+        Field in material: B = &mu;<sub>0</sub>&mu;<sub>r</sub>H = &mu;H
+      </div>
+
+      <h3>Significance of Susceptibility</h3>
+      <ul>
+        <li>Susceptibility &chi; measures how easily a material magnetizes in an applied field.</li>
+        <li>Positive &chi;: material is attracted to field (paramagnetic or ferromagnetic).</li>
+        <li>Negative &chi;: material is repelled by field (diamagnetic).</li>
+        <li>For linear materials, M is proportional to H: M = &chi;H.</li>
+        <li>The permeability &mu; = &mu;<sub>0</sub>&mu;<sub>r</sub> = &mu;<sub>0</sub>(1 + &chi;) relates B and H inside the material.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 13: Magnetic Materials -->
+    <!-- ============================== -->
+    <div class="theory-section" id="magnetic-materials">
+      <h2>13. Classification of Magnetic Materials</h2>
+
+      <p>
+        Based on their response to an external magnetic field, materials are classified into three broad categories: diamagnetic, paramagnetic, and ferromagnetic.
+      </p>
+
+      <h3>Diamagnetic Materials</h3>
+      <p>
+        Diamagnetic materials are <strong>weakly repelled</strong> by magnetic fields. When placed in an external field, they develop a small magnetization opposite to the field direction. This arises from the orbital motion of electrons being slightly altered by the applied field.
+      </p>
+      <ul>
+        <li>Susceptibility: &chi; is small and negative (approximately &minus;10<sup>&minus;5</sup> to 0).</li>
+        <li>Relative permeability: &mu;<sub>r</sub> slightly less than 1.</li>
+        <li>Magnetic field lines are pushed out of a diamagnetic material.</li>
+        <li>Examples: Bismuth (Bi), Copper (Cu), Water (H<sub>2</sub>O), Gold (Au), NaCl.</li>
+        <li>Superconductors are perfect diamagnets: &chi; = &minus;1, &mu;<sub>r</sub> = 0. They expel all magnetic flux (Meissner effect).</li>
+        <li>Diamagnetism is temperature-independent.</li>
+      </ul>
+
+      <h3>Paramagnetic Materials</h3>
+      <p>
+        Paramagnetic materials are <strong>weakly attracted</strong> by magnetic fields. They have atoms or molecules with permanent magnetic dipole moments (due to unpaired electrons). In the absence of a field, thermal agitation randomizes these dipole orientations. An applied field partially aligns the dipoles, producing a small net magnetization in the field direction.
+      </p>
+      <ul>
+        <li>Susceptibility: &chi; is small and positive (approximately 10<sup>&minus;5</sup> to 10<sup>&minus;3</sup>).</li>
+        <li>Relative permeability: &mu;<sub>r</sub> slightly greater than 1.</li>
+        <li>Magnetization decreases with temperature (Curie's law: &chi; = C/T, where C is the Curie constant).</li>
+        <li>Examples: Aluminium (Al), Platinum (Pt), Oxygen (O<sub>2</sub>), Sodium (Na), Manganese (Mn).</li>
+      </ul>
+
+      <h3>Ferromagnetic Materials</h3>
+      <p>
+        Ferromagnetic materials are <strong>strongly attracted</strong> by magnetic fields and can retain their magnetism after the external field is removed. They exhibit magnetic domains &mdash; regions where atomic magnetic moments are aligned. An applied field causes domain walls to move and domains aligned with the field to grow.
+      </p>
+      <ul>
+        <li>Susceptibility: &chi; is very large and positive (10<sup>2</sup> to 10<sup>5</sup> or more).</li>
+        <li>Relative permeability: &mu;<sub>r</sub> much greater than 1 (can be thousands).</li>
+        <li>Above the <strong>Curie temperature</strong>, ferromagnets become paramagnetic (domain structure destroyed).</li>
+        <li>Examples: Iron (Fe), Nickel (Ni), Cobalt (Co), and their alloys (alnico, permalloy).</li>
+        <li>Ferromagnetism is responsible for permanent magnets and electromagnets.</li>
+      </ul>
+
+      <div class="formula-box">
+        Curie's law (paramagnetism): &chi; = C / T<br>
+        &nbsp;&nbsp;C = Curie constant (material-specific), T = temperature in kelvin<br><br>
+        Curie-Weiss law (ferromagnetism, above T<sub>C</sub>): &chi; = C / (T &minus; T<sub>C</sub>)<br>
+        &nbsp;&nbsp;T<sub>C</sub> = Curie temperature (material-specific)
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 14: Hysteresis -->
+    <!-- ============================== -->
+    <div class="theory-section" id="hysteresis">
+      <h2>14. Hysteresis in Ferromagnetic Materials</h2>
+
+      <h3>The B-H Curve and Hysteresis Loop</h3>
+      <p>
+        When a ferromagnetic material is subjected to a cyclic variation of the applied magnetic intensity H (from a large positive value to a large negative value and back), the magnetic induction B in the material does not retrace the same path. Instead, B lags behind H. This phenomenon is called <strong>hysteresis</strong> (from the Greek word for "lagging behind"). The closed curve traced on a B-H graph during one complete cycle is called the <strong>hysteresis loop</strong>.
+      </p>
+
+      <h3>Key Parameters from the Hysteresis Loop</h3>
+      <ul>
+        <li><strong>Saturation Magnetization:</strong> The maximum value of B reached when all domains are aligned with the applied field.</li>
+        <li><strong>Retentivity (Remanence, B<sub>r</sub>):</strong> The value of B remaining in the material when H is reduced back to zero. It measures the material's ability to retain magnetism.</li>
+        <li><strong>Coercivity (H<sub>c</sub>):</strong> The reverse field required to reduce B back to zero. It measures the material's resistance to demagnetization.</li>
+        <li><strong>Energy dissipation:</strong> The area enclosed by the B-H loop equals the energy dissipated as heat per unit volume per cycle. A wider loop means greater energy loss per cycle.</li>
+      </ul>
+
+      <div class="formula-box">
+        Energy dissipated per cycle per unit volume = Area of B&minus;H loop<br><br>
+        Retentivity B<sub>r</sub>: value of B when H = 0 (after saturation)<br><br>
+        Coercivity H<sub>c</sub>: magnitude of H when B = 0 (after retentivity)<br><br>
+        Relative permeability at operating point: &mu;<sub>r</sub> = B / (&mu;<sub>0</sub>H)
+      </div>
+
+      <h3>Hard vs. Soft Magnetic Materials</h3>
+      <p>
+        The shape of the B-H loop determines the practical application of the material:
+      </p>
+      <ul>
+        <li><strong>Hard ferromagnets</strong> (wide loop, high retentivity, high coercivity): Used for permanent magnets. Examples: steel, alnico, samarium-cobalt, neodymium-iron-boron. Once magnetized, they are difficult to demagnetize.</li>
+        <li><strong>Soft ferromagnets</strong> (narrow loop, low retentivity, low coercivity): Used for transformer cores, electromagnet cores, and motor cores where the field must be switched rapidly. Examples: soft iron, silicon steel, permalloy. They are easy to magnetize and demagnetize.</li>
+        <li>Heating a ferromagnet above its Curie temperature destroys ferromagnetism permanently (until cooled again).</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 15: Permanent & Electromagnets -->
+    <!-- ============================== -->
+    <div class="theory-section" id="permanent-electromagnets">
+      <h2>15. Permanent Magnets and Electromagnets</h2>
+
+      <h3>Permanent Magnets</h3>
+      <p>
+        Permanent magnets are made from <strong>hard ferromagnetic materials</strong> that retain their magnetization indefinitely after the magnetizing field is removed. Their key properties are high retentivity (so they retain strong magnetism) and high coercivity (so they resist demagnetization by stray fields, vibrations, or moderate heating).
+      </p>
+      <ul>
+        <li>Materials: Steel, alnico (Al, Ni, Co alloy), samarium-cobalt (SmCo<sub>5</sub>), neodymium-iron-boron (NdFeB &mdash; the strongest common permanent magnet material).</li>
+        <li>Applications: Loudspeakers, electric motors, generators, MRI machines, refrigerator magnets, hard disk drives.</li>
+        <li>Permanent magnets can be demagnetized by heating above the Curie temperature, mechanical shock, or exposure to a strong opposing field.</li>
+      </ul>
+
+      <h3>Electromagnets</h3>
+      <p>
+        Electromagnets are made from <strong>soft ferromagnetic materials</strong> (cores) wound with current-carrying coils. They can produce very strong magnetic fields when current flows, and they lose their magnetism when the current is switched off. The key requirements are low retentivity (so the magnet turns off cleanly) and low coercivity (so it can be easily magnetized and demagnetized).
+      </p>
+      <div class="formula-box">
+        Field inside solenoid electromagnet: B = &mu;<sub>0</sub>&mu;<sub>r</sub>nI<br>
+        &nbsp;&nbsp;n = turns per unit length, I = current, &mu;<sub>r</sub> = relative permeability of core<br><br>
+        Choosing core: low hysteresis loss (narrow B&minus;H loop) is essential<br>
+        for AC applications (transformers, motors) to minimize energy loss.
+      </div>
+      <ul>
+        <li>Materials: Soft iron, silicon steel, permalloy, ferrites (for high-frequency applications).</li>
+        <li>Applications: Electric bells, relays, motors, transformers, cranes (for lifting scrap iron), MRI (superconducting electromagnets).</li>
+        <li>The strength of an electromagnet can be controlled by adjusting the current.</li>
+      </ul>
+
+      <h3>Comparison: Permanent Magnets vs. Electromagnets</h3>
+      <ul>
+        <li>Permanent magnet: No power required; always "on"; cannot be switched off easily; field strength fixed by material and geometry.</li>
+        <li>Electromagnet: Requires continuous power; field can be switched on/off and varied; field strength controllable; typically much stronger fields achievable with superconducting coils.</li>
+      </ul>
+    </div>
+
+    <!-- ============================== -->
+    <!-- KEY FORMULAS SUMMARY -->
+    <!-- ============================== -->
+    <div class="theory-section" id="key-formulas">
+      <h2>Key Formulas Summary</h2>
+
+      <h3>Electromagnetic Waves</h3>
+      <div class="formula-box">
+        Speed in vacuum: c = 1 / &radic;(&mu;<sub>0</sub>&epsilon;<sub>0</sub>) = 3 &times; 10<sup>8</sup> m/s<br><br>
+        Field ratio: E<sub>0</sub> / B<sub>0</sub> = c<br><br>
+        Wave number: k = 2&pi; / &lambda; &nbsp;&nbsp; Angular frequency: &omega; = 2&pi;&nu;<br><br>
+        Wave speed: c = &nu;&lambda; = &omega; / k<br><br>
+        Speed in medium: c<sub>M</sub> = c / &radic;(&epsilon;<sub>r</sub>&mu;<sub>r</sub>) &nbsp;&nbsp; Refractive index: n = c / c<sub>M</sub> = &radic;(&epsilon;<sub>r</sub>&mu;<sub>r</sub>)<br><br>
+        Wavelength in medium: &lambda;<sub>M</sub> = &lambda;<sub>0</sub> / n
+      </div>
+
+      <h3>Energy and Intensity</h3>
+      <div class="formula-box">
+        Energy density: u = &epsilon;<sub>0</sub>E&sup2; = B&sup2; / &mu;<sub>0</sub> &nbsp;&nbsp; (u<sub>E</sub> = u<sub>B</sub> always)<br><br>
+        Average energy density: u<sub>avg</sub> = (1/4)&epsilon;<sub>0</sub>E<sub>0</sub>&sup2; = B<sub>0</sub>&sup2; / (4&mu;<sub>0</sub>)<br><br>
+        Intensity: I = (1/2)&epsilon;<sub>0</sub>cE<sub>0</sub>&sup2; = cB<sub>0</sub>&sup2; / (2&mu;<sub>0</sub>) = E<sub>0</sub>B<sub>0</sub> / (2&mu;<sub>0</sub>)<br><br>
+        Radiation momentum (absorbed): p = U/c &nbsp;&nbsp; Radiation pressure (absorbed): P = I/c<br><br>
+        Radiation momentum (reflected): p = 2U/c &nbsp;&nbsp; Radiation pressure (reflected): P = 2I/c
+      </div>
+
+      <h3>Displacement Current</h3>
+      <div class="formula-box">
+        Displacement current: I<sub>d</sub> = &epsilon;<sub>0</sub>(d&Phi;<sub>E</sub>/dt)<br><br>
+        Ampere-Maxwell law: &oint;B&middot;dl = &mu;<sub>0</sub>(I<sub>c</sub> + I<sub>d</sub>) = &mu;<sub>0</sub>I<sub>c</sub> + &mu;<sub>0</sub>&epsilon;<sub>0</sub>(d&Phi;<sub>E</sub>/dt)
+      </div>
+
+      <h3>Magnetism and Dipole</h3>
+      <div class="formula-box">
+        Magnetic moment: M = m &times; 2l &nbsp; (pole strength &times; magnetic length)<br><br>
+        Dipole fields: B<sub>axial</sub> = (&mu;<sub>0</sub>/4&pi;)(2M/r&sup3;) &nbsp;&nbsp; B<sub>equatorial</sub> = (&mu;<sub>0</sub>/4&pi;)(M/r&sup3;)<br><br>
+        Torque on dipole: &tau; = MB sin&theta;<br><br>
+        Potential energy: U = &minus;MB cos&theta;<br><br>
+        Period of oscillation: T = 2&pi;&radic;(I/(MB)) &nbsp; (I = moment of inertia)
+      </div>
+
+      <h3>Earth's Magnetic Field</h3>
+      <div class="formula-box">
+        Total field: B = &radic;(H&sup2; + Z&sup2;)<br><br>
+        Angle of dip: tan&delta; = Z/H<br><br>
+        Components: H = B cos&delta; &nbsp;&nbsp; Z = B sin&delta;
+      </div>
+
+      <h3>Magnetization and Materials</h3>
+      <div class="formula-box">
+        Magnetic induction: B = &mu;<sub>0</sub>(H + M)<br><br>
+        Susceptibility: &chi; = M/H &nbsp;&nbsp; Relative permeability: &mu;<sub>r</sub> = 1 + &chi;<br><br>
+        Curie's law (paramagnetism): &chi; = C/T<br><br>
+        Diamagnetic: &chi; &lt; 0 &nbsp;&nbsp; Paramagnetic: 0 &lt; &chi; &lt; 1 &nbsp;&nbsp; Ferromagnetic: &chi; &gg; 1<br><br>
+        Solenoid magnetic moment: M = NIA &nbsp; (N = total turns, I = current, A = area)
       </div>
     </div>
 

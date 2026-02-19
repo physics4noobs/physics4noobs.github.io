@@ -1,0 +1,247 @@
+[
+  {
+    "id": "emw-f-01",
+    "type": "formula",
+    "front": "Speed of EM Waves in Vacuum",
+    "back": "c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}}\n\n\\text{where: } \\mu_0 = 4\\pi \\times 10^{-7} \\text{ T·m/A (permeability of free space)}\n\\quad\\quad\\quad \\varepsilon_0 = 8.85 \\times 10^{-12} \\text{ F/m (permittivity of free space)}\n\nc = 3 \\times 10^8 \\text{ m/s (constant for all frequencies)}\n\n\\text{Also: } c = \\nu\\lambda = \\frac{\\omega}{k}\n\n\\textbf{Key: } c \\text{ is the same in vacuum regardless of source motion}",
+    "tags": ["em-waves", "wave-speed"]
+  },
+  {
+    "id": "emw-f-02",
+    "type": "formula",
+    "front": "E/B Ratio and Field Amplitudes in EM Wave",
+    "back": "\\frac{E}{B} = c = 3 \\times 10^8 \\text{ m/s}\n\n\\text{For peak (amplitude) values: } \\frac{E_0}{B_0} = c\n\n\\text{For instantaneous values at any point: } \\frac{E}{B} = c\n\n\\text{Direction: } \\vec{E}, \\vec{B}, \\text{ and } \\hat{k} \\text{ form a right-handed triad}\n\n\\text{Energy flow: } \\vec{S} = \\frac{1}{\\mu_0}(\\vec{E} \\times \\vec{B})\n\n\\textbf{Note: } E \\text{ and } B \\text{ are always in phase}",
+    "tags": ["em-waves", "field-ratio"]
+  },
+  {
+    "id": "emw-f-03",
+    "type": "formula",
+    "front": "Displacement Current",
+    "back": "i_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}\n\n\\text{where: } \\Phi_E = \\text{electric flux through surface}\n\n\\text{For parallel plate capacitor (area } A \\text{):}\ni_d = \\varepsilon_0 A \\frac{dE}{dt}\n\n\\text{Ampère–Maxwell law (complete):}\n\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 i_c + \\mu_0 \\varepsilon_0 \\frac{d\\Phi_E}{dt}\n\n\\textbf{Inside capacitor: } i_c = 0,\\ i_d \\neq 0\n\\textbf{Outside capacitor: } i_c \\neq 0,\\ i_d = 0",
+    "tags": ["em-waves", "displacement-current"]
+  },
+  {
+    "id": "emw-f-04",
+    "type": "formula",
+    "front": "Energy Density of EM Wave",
+    "back": "\\text{Total instantaneous energy density:}\nU = U_E + U_B = \\frac{1}{2}\\varepsilon_0 E^2 + \\frac{1}{2\\mu_0}B^2\n\n\\text{Since } U_E = U_B \\text{ in vacuum:}\nU = \\varepsilon_0 E^2 = \\frac{B^2}{\\mu_0}\n\n\\text{Average (using } E_{rms} \\text{):}\nU_{avg} = \\varepsilon_0 E_{rms}^2 = \\frac{1}{4}\\varepsilon_0 E_0^2\n\n\\textbf{Key: } U_E = U_B \\text{ always (energy equally shared)}",
+    "tags": ["em-waves", "energy-density"]
+  },
+  {
+    "id": "emw-f-05",
+    "type": "formula",
+    "front": "Intensity and Poynting Vector",
+    "back": "\\text{Poynting vector (instantaneous power per area):}\n\\vec{S} = \\frac{1}{\\mu_0}(\\vec{E} \\times \\vec{B})\n\n\\text{Magnitude: } S = \\frac{EB}{\\mu_0}\n\n\\text{Average intensity (using peak fields):}\nI = \\frac{1}{2}\\varepsilon_0 c E_0^2 = \\frac{E_0 B_0}{2\\mu_0} = \\frac{B_0^2 c}{2\\mu_0}\n\n\\text{Using rms values:}\nI = \\varepsilon_0 c E_{rms}^2 = \\frac{E_{rms} B_{rms}}{\\mu_0}\n\n\\text{Unit: W/m}^2",
+    "tags": ["em-waves", "poynting-vector"]
+  },
+  {
+    "id": "emw-f-06",
+    "type": "formula",
+    "front": "Radiation Pressure",
+    "back": "\\text{For perfect absorber:}\nP_{rad} = \\frac{I}{c} = \\frac{U}{A \\cdot c}\n\n\\text{For perfect reflector:}\nP_{rad} = \\frac{2I}{c}\n\n\\text{Momentum transferred (absorber): } \\Delta p = \\frac{E}{c}\n\\text{Momentum transferred (reflector): } \\Delta p = \\frac{2E}{c}\n\n\\textbf{Recall: } \\text{photon momentum} = \\frac{h}{\\lambda} = \\frac{h\\nu}{c} = \\frac{E_{photon}}{c}",
+    "tags": ["em-waves", "radiation-pressure"]
+  },
+  {
+    "id": "emw-f-07",
+    "type": "formula",
+    "front": "Wavelength and Speed of EM Waves in a Medium",
+    "back": "\\text{Speed in medium: } c_M = \\frac{1}{\\sqrt{\\varepsilon \\mu}} = \\frac{c}{\\sqrt{\\varepsilon_r \\mu_r}}\n\n\\text{Refractive index: } n = \\frac{c}{c_M} = \\sqrt{\\varepsilon_r \\mu_r}\n\n\\text{Wavelength in medium: } \\lambda_M = \\frac{\\lambda_0}{n}\n\n\\text{Frequency: unchanged across media, } \\nu_M = \\nu\n\n\\textbf{For non-magnetic media } (\\mu_r \\approx 1): n \\approx \\sqrt{\\varepsilon_r}",
+    "tags": ["em-waves", "medium-propagation"]
+  },
+  {
+    "id": "emw-f-08",
+    "type": "formula",
+    "front": "Maxwell's Four Equations (Summary)",
+    "back": "\\text{1. Gauss's law (electric): } \\oint \\vec{E} \\cdot d\\vec{A} = \\frac{Q_{enc}}{\\varepsilon_0}\n\n\\text{2. Gauss's law (magnetic): } \\oint \\vec{B} \\cdot d\\vec{A} = 0\n\n\\text{3. Faraday's law: } \\oint \\vec{E} \\cdot d\\vec{l} = -\\frac{d\\Phi_B}{dt}\n\n\\text{4. Ampère–Maxwell: } \\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 i_c + \\mu_0 \\varepsilon_0 \\frac{d\\Phi_E}{dt}\n\n\\textbf{Eq. 2: no magnetic monopoles}\n\\textbf{Eq. 3 \\& 4: changing fields generate each other}",
+    "tags": ["em-waves", "maxwells-equations"]
+  },
+  {
+    "id": "emw-f-09",
+    "type": "formula",
+    "front": "Magnetic Moment of a Bar Magnet",
+    "back": "\\vec{M} = m \\times 2l\n\n\\text{where: } m = \\text{pole strength (A·m)}\n\\quad\\quad\\quad 2l = \\text{magnetic length of magnet}\n\n\\text{Direction: from S-pole to N-pole (inside magnet)}\n\n\\text{SI unit: A·m}^2 \\text{ or J/T}\n\n\\text{Relation to geometric length:}\n\\frac{\\text{magnetic length}}{\\text{geometric length}} \\approx 0.84\n\n\\textbf{Solenoid equivalent: } M = NIA",
+    "tags": ["em-waves", "magnetic-moment"]
+  },
+  {
+    "id": "emw-f-10",
+    "type": "formula",
+    "front": "Axial and Equatorial Field of a Magnetic Dipole",
+    "back": "\\text{Axial field (on axis, far field):}\nB_{axial} = \\frac{\\mu_0}{4\\pi} \\cdot \\frac{2M}{r^3}\n\n\\text{Equatorial field (on broadside, far field):}\nB_{equat} = \\frac{\\mu_0}{4\\pi} \\cdot \\frac{M}{r^3}\n\n\\text{Ratio: } B_{axial} = 2\\, B_{equat} \\text{ (at same distance)}\n\n\\text{Both fields } \\propto \\frac{1}{r^3} \\text{ (inverse cube law)}\n\n\\mu_0 / 4\\pi = 10^{-7} \\text{ T·m/A}",
+    "tags": ["em-waves", "dipole-field"]
+  },
+  {
+    "id": "emw-f-11",
+    "type": "formula",
+    "front": "Torque on a Magnetic Dipole in Uniform Field",
+    "back": "\\vec{\\tau} = \\vec{M} \\times \\vec{B}\n\\quad |\\tau| = MB\\sin\\theta\n\n\\text{Potential energy: } U = -\\vec{M} \\cdot \\vec{B} = -MB\\cos\\theta\n\n\\text{Stable equilibrium: } \\theta = 0°,\\ U_{min} = -MB\n\\text{Unstable equilibrium: } \\theta = 180°,\\ U_{max} = +MB\n\n\\text{SHM (small oscillations):}\nT = 2\\pi\\sqrt{\\frac{I}{MB}}\n\n\\text{where } I = \\text{moment of inertia of magnet}",
+    "tags": ["em-waves", "dipole-torque"]
+  },
+  {
+    "id": "emw-f-12",
+    "type": "formula",
+    "front": "Earth's Magnetic Field Components",
+    "back": "\\text{Total field: } B = \\sqrt{H^2 + Z^2}\n\n\\text{Angle of dip (inclination } \\delta \\text{):}\n\\tan\\delta = \\frac{Z}{H}\n\n\\text{where: } H = \\text{horizontal component}\n\\quad\\quad\\quad Z = \\text{vertical component}\n\n\\text{At magnetic equator: } \\delta = 0°,\\ Z = 0\n\\text{At magnetic poles: } \\delta = 90°,\\ H = 0\n\n\\textbf{Earth's field} \\approx 10^{-5} \\text{ T (varies by location)}",
+    "tags": ["em-waves", "earths-magnetism"]
+  },
+  {
+    "id": "emw-f-13",
+    "type": "formula",
+    "front": "Magnetization, Susceptibility, and Permeability",
+    "back": "\\text{Magnetization: } M = \\frac{m_{net}}{V} \\quad (\\text{A/m})\n\n\\text{Magnetic induction: } B = \\mu_0(H + M)\n\n\\text{Susceptibility: } \\chi = \\frac{M}{H} \\quad (\\text{dimensionless})\n\n\\text{Relative permeability: } \\mu_r = 1 + \\chi\n\n\\text{Permeability: } \\mu = \\mu_0 \\mu_r = \\mu_0(1 + \\chi)\n\n\\text{So: } B = \\mu H = \\mu_0 \\mu_r H",
+    "tags": ["em-waves", "magnetization"]
+  },
+  {
+    "id": "emw-f-14",
+    "type": "formula",
+    "front": "Curie's Law for Paramagnetic Materials",
+    "back": "\\chi = \\frac{C}{T}\n\n\\text{where: } C = \\text{Curie constant (material-specific)}\n\\quad\\quad\\quad T = \\text{absolute temperature (K)}\n\n\\text{Equivalently: } M = C\\frac{H}{T} = C\\frac{B_0}{\\mu_0 T}\n\n\\text{Valid for: low } B_0 \\text{ (high } T \\text{ regime — not near saturation)}\n\n\\textbf{Implication: } \\chi \\uparrow \\text{ as } T \\downarrow \\text{ for paramagnets}\n\n\\text{Curie temperature } T_C: \\text{ above } T_C,\n\\text{ferromagnet} \\to \\text{paramagnet}",
+    "tags": ["em-waves", "curie-law"]
+  },
+  {
+    "id": "emw-f-15",
+    "type": "formula",
+    "front": "Hysteresis: Retentivity and Coercivity",
+    "back": "\\text{Retentivity (remanence): } B_r\n\\quad \\text{B remaining after H is reduced to zero}\n\n\\text{Coercivity: } H_c\n\\quad \\text{reverse H needed to make B = 0}\n\n\\text{Energy dissipated per cycle per unit volume}\n= \\text{Area enclosed by B-H loop}\n\n\\text{Hard ferromagnet: high } B_r, \\text{ high } H_c\n\\quad \\to \\text{permanent magnets (alnico, SmCo)}\n\n\\text{Soft ferromagnet: low } B_r, \\text{ low } H_c\n\\quad \\to \\text{electromagnets, transformers (soft iron)}",
+    "tags": ["em-waves", "hysteresis"]
+  },
+  {
+    "id": "emw-c-01",
+    "type": "concept",
+    "front": "The Electromagnetic Spectrum: Regions and Uses",
+    "back": "**Increasing frequency / decreasing wavelength:**\n\n| Region | Frequency | Typical Use |\n|---|---|---|\n| Radio | 3 kHz – 300 MHz | Communication, AM/FM |\n| Microwave | 300 MHz – 300 GHz | Radar, cooking, satellite |\n| Infrared | 300 GHz – 400 THz | Thermal imaging, remote sensing |\n| Visible | 400–700 nm | Vision, photography |\n| Ultraviolet | 10^{15}–10^{17} Hz | Sterilization, sun-tan |\n| X-ray | 10^{17}–10^{19} Hz | Medical imaging, crystallography |\n| Gamma | > 10^{19} Hz | Cancer therapy, nuclear physics |\n\n**All regions travel at c = 3 × 10^8 m/s in vacuum**\nHigher frequency = higher photon energy E = hf",
+    "tags": ["em-waves", "em-spectrum"]
+  },
+  {
+    "id": "emw-c-02",
+    "type": "concept",
+    "front": "Displacement Current: Why Maxwell Modified Ampère's Law",
+    "back": "**The Problem:** A charging capacitor has no conduction current between plates, yet a magnetic field exists there — violating Ampère's original law.\n\n**Maxwell's fix:** A time-varying electric field acts like a current.\n\n**Displacement current:** i_d = ε₀ (dΦ_E/dt)\n\n**Physical meaning:**\n- Not a flow of charges\n- Is a consequence of changing electric flux\n- Produces the same magnetic effect as conduction current\n\n**Result:** Current is continuous across capacitor gap — no discontinuity.\n\n**Deeper implication:** Changing E → B (and changing B → E by Faraday's law), allowing self-sustaining EM waves to propagate through vacuum.",
+    "tags": ["em-waves", "displacement-current"]
+  },
+  {
+    "id": "emw-c-03",
+    "type": "concept",
+    "front": "Properties of EM Waves: Transverse Nature and No Medium Required",
+    "back": "**Transverse nature:**\n- E and B fields are perpendicular to each other AND to the direction of propagation\n- E × B points in the direction of wave travel\n- Polarization is possible — proof of transverse nature\n\n**No medium required:**\n- EM waves are self-sustaining oscillations of E and B fields\n- They propagate through vacuum at c = 3 × 10^8 m/s\n- Source: oscillating electric charges produce time-varying fields\n\n**Phase relationship:**\n- E and B are always **in phase** (zero phase difference)\n- Both reach maxima and minima simultaneously\n\n**Wave equation:** E and B satisfy ∂²E/∂x² = μ₀ε₀ ∂²E/∂t²",
+    "tags": ["em-waves", "wave-properties"]
+  },
+  {
+    "id": "emw-c-04",
+    "type": "concept",
+    "front": "Comparison of Diamagnetic, Paramagnetic, and Ferromagnetic Materials",
+    "back": "| Property | Diamagnetic | Paramagnetic | Ferromagnetic |\n|---|---|---|---|\n| Susceptibility χ | Small negative (−10^{−5}) | Small positive (+10^{−5} to 10^{−3}) | Large positive (10² to 10^5) |\n| μ_r | Slightly < 1 | Slightly > 1 | >> 1 |\n| Response | Weakly repelled | Weakly attracted | Strongly attracted |\n| Temp effect | Nearly none | Curie's law (χ ∝ 1/T) | Loses magnetism above T_C |\n| Examples | Bi, Cu, H₂O | Al, Mn, O₂ | Fe, Ni, Co |\n| Domains | No | No | Yes |\n| Field lines | Pushed out of material | Slightly concentrated | Strongly concentrated |",
+    "tags": ["em-waves", "magnetic-materials"]
+  },
+  {
+    "id": "emw-c-05",
+    "type": "concept",
+    "front": "Earth's Magnetism: Elements and Origin",
+    "back": "**Three elements of Earth's magnetism:**\n1. **Magnetic declination (θ):** Angle between geographic north and magnetic north (varies with location)\n2. **Angle of dip (δ):** Angle between total field B and horizontal plane\n3. **Horizontal component (H):** Component of B along horizontal\n\n**Relations:** B = √(H² + Z²), tan δ = Z/H\n\n**Key facts:**\n- Earth's magnetic north pole is near the geographic **south** pole\n- Field strength ≈ 10^{−5} T (varies 25–65 μT)\n- Origin: convection of molten iron in outer core (dynamo effect)\n- Dip = 0° at magnetic equator, 90° at poles\n- Magnetic meridian: vertical plane through magnetic poles",
+    "tags": ["em-waves", "earths-magnetism"]
+  },
+  {
+    "id": "emw-c-06",
+    "type": "concept",
+    "front": "Hysteresis and Domain Theory of Ferromagnetism",
+    "back": "**Domain theory:**\n- Ferromagnets contain microscopic regions (domains) where atomic magnetic moments are aligned\n- In unmagnetized state, domains point in random directions → net M = 0\n- External field causes: (1) domain wall movement, (2) domain rotation\n- Full alignment = magnetic saturation\n\n**Hysteresis loop (B-H curve):**\n- **Retentivity B_r:** Residual B when H → 0 (memory effect)\n- **Coercivity H_c:** Reverse H needed to demagnetize\n- **Loop area:** Energy dissipated per cycle (heat loss)\n- Wider loop → more energy loss per cycle\n\n**Temperature effect:** Above Curie temperature T_C, thermal energy destroys domain alignment → ferromagnet becomes paramagnetic",
+    "tags": ["em-waves", "hysteresis-domains"]
+  },
+  {
+    "id": "emw-c-07",
+    "type": "concept",
+    "front": "Permanent Magnets vs. Electromagnets: Material Choice",
+    "back": "**Permanent magnets:**\n- Need: **high retentivity** (retain B after H removed) + **high coercivity** (resist demagnetization)\n- Materials: Alnico (Al-Ni-Co), samarium-cobalt, neodymium-iron-boron\n- Hard ferromagnets with wide B-H loop\n- Application: speakers, MRI, motors, compasses\n\n**Electromagnets:**\n- Need: **high permeability** + **low retentivity** + **low coercivity** (easy to switch on/off)\n- Material: soft iron, silicon steel\n- Narrow B-H loop → low energy loss per cycle\n- Application: solenoids, relays, transformer cores, MRI coils\n\n**Transformer cores** also use soft iron to minimize hysteresis losses per AC cycle.",
+    "tags": ["em-waves", "permanent-electromagnets"]
+  },
+  {
+    "id": "emw-c-08",
+    "type": "concept",
+    "front": "Bar Magnet as an Equivalent Solenoid",
+    "back": "**Equivalence:** At large distances, a bar magnet and a finite solenoid produce identical external magnetic fields.\n\n**Solenoid magnetic moment:** M = NIA (N = total turns, I = current, A = cross-sectional area)\n\n**Bar magnet moment:** M = m × 2l (m = pole strength, 2l = magnetic length)\n\n**Internal field of solenoid:** B = μ₀nI (uniform inside, not in bar magnet)\n\n**External far fields (both):**\n- Axial: B = (μ₀/4π)(2M/r³)\n- Equatorial: B = (μ₀/4π)(M/r³)\n\n**Key difference:** Bar magnet field lines are continuous (no monopoles); solenoid equivalence holds only outside and far from either object.",
+    "tags": ["em-waves", "bar-magnet-solenoid"]
+  },
+  {
+    "id": "emw-c-09",
+    "type": "concept",
+    "front": "Poynting Vector: Energy Flow in EM Waves",
+    "back": "**Definition:** \\vec{S} = (1/μ₀)(\\vec{E} × \\vec{B})\n\n**Physical meaning:**\n- S gives the direction and rate of energy flow per unit area\n- |S| = power per unit area (W/m²)\n- S always points in the direction of wave propagation\n\n**Average intensity:** I = ⟨S⟩ = (E₀B₀)/(2μ₀) = (1/2)ε₀cE₀²\n\n**Energy equally split:**\n- Electric energy density = Magnetic energy density at all times\n- U_E = U_B = (1/4)ε₀E₀²\n\n**Practical:** I ∝ E₀² — doubling field amplitude quadruples intensity\n\n**Radiation pressure = I/c** (absorber) or 2I/c (perfect reflector)",
+    "tags": ["em-waves", "poynting-vector"]
+  },
+  {
+    "id": "emw-c-10",
+    "type": "concept",
+    "front": "Gauss's Law for Magnetism: No Magnetic Monopoles",
+    "back": "**Statement:** ∮ B · dA = 0 for any closed surface\n\n**Meaning:** The net magnetic flux through any closed surface is always zero.\n\n**Physical consequence:** Magnetic field lines always form **closed loops** — they have no beginning or end.\n\n**Contrast with electric field:** ∮ E · dA = Q/ε₀ (non-zero when charges enclosed)\n\n**Why this matters:**\n- No isolated magnetic poles (monopoles) exist\n- Cutting a bar magnet always creates two smaller dipoles\n- Every north pole is always paired with a south pole\n\n**Inside solenoid:** B is uniform and non-zero, but flux entering one end exits the other — net flux through any closed surface = 0.",
+    "tags": ["em-waves", "gauss-magnetism"]
+  },
+  {
+    "id": "emw-mcq-01",
+    "type": "mcq",
+    "front": "An EM wave in vacuum has electric field amplitude E₀ = 60 V/m. What is the average intensity of the wave?\n(ε₀ = 8.85 × 10⁻¹² F/m, c = 3 × 10⁸ m/s)",
+    "back": "**Answer: (B) 4.77 W/m²**\n\n\\text{Using: } I = \\frac{1}{2}\\varepsilon_0 c E_0^2\n\nI = \\frac{1}{2} \\times 8.85 \\times 10^{-12} \\times 3 \\times 10^8 \\times (60)^2\n\nI = \\frac{1}{2} \\times 8.85 \\times 10^{-12} \\times 3 \\times 10^8 \\times 3600\n\nI = \\frac{1}{2} \\times 9549 \\times 10^{-3} \\approx 4.77 \\text{ W/m}^2\n\n**(A)** 2.39 W/m²\n**(B)** 4.77 W/m² ✓\n**(C)** 9.54 W/m²\n**(D)** 1.59 W/m²",
+    "tags": ["em-waves", "intensity-calculation"]
+  },
+  {
+    "id": "emw-mcq-02",
+    "type": "mcq",
+    "front": "An EM wave passes from vacuum (n = 1) into glass with εᵣ = 4, μᵣ = 1. The frequency is 3 MHz. Which statement is correct?",
+    "back": "**Answer: (C) Wavelength is halved; frequency unchanged**\n\n\\text{Refractive index: } n = \\sqrt{\\varepsilon_r \\mu_r} = \\sqrt{4 \\times 1} = 2\n\n\\text{Speed in glass: } c_M = c/n = 1.5 \\times 10^8 \\text{ m/s}\n\n\\text{Frequency: unchanged (} f = 3 \\text{ MHz still)}\n\n\\text{Wavelength in vacuum: } \\lambda_0 = c/f = 100 \\text{ m}\n\\text{Wavelength in glass: } \\lambda = \\lambda_0/n = 50 \\text{ m (halved)}\n\n**(A)** Both wavelength and frequency halve\n**(B)** Wavelength doubles; frequency unchanged\n**(C)** Wavelength is halved; frequency unchanged ✓\n**(D)** Both remain unchanged",
+    "tags": ["em-waves", "medium-propagation"]
+  },
+  {
+    "id": "emw-mcq-03",
+    "type": "mcq",
+    "front": "A radiation of energy E falls normally on a perfectly reflecting surface. What is the momentum transferred to the surface?",
+    "back": "**Answer: (B) 2E/c**\n\n\\text{Momentum of incident wave: } p = E/c\n\n\\text{For perfect reflector: wave reverses direction}\n\\text{Change in momentum} = p_{final} - p_{initial}\n= (-E/c) - (+E/c) = -\\frac{2E}{c}\n\n\\text{Magnitude of momentum transferred to surface: } \\frac{2E}{c}\n\n\\text{Compare: perfect absorber transfers only } E/c\n\n**(A)** E/c\n**(B)** 2E/c ✓\n**(C)** Ec\n**(D)** E/c²",
+    "tags": ["em-waves", "radiation-pressure"]
+  },
+  {
+    "id": "emw-mcq-04",
+    "type": "mcq",
+    "front": "The magnetic field of an EM wave is B = 20 × 10⁻⁹ sin(kx − ωt) T. What is the peak electric field E₀?",
+    "back": "**Answer: (A) 6 V/m**\n\n\\text{Using: } E_0 = c \\times B_0\n\nE_0 = 3 \\times 10^8 \\times 20 \\times 10^{-9}\n\nE_0 = 3 \\times 10^8 \\times 2 \\times 10^{-8} = 6 \\text{ V/m}\n\n\\text{The relationship } E_0/B_0 = c \\text{ always holds in vacuum.}\n\n**(A)** 6 V/m ✓\n**(B)** 9 V/m\n**(C)** 12 V/m\n**(D)** 3 V/m",
+    "tags": ["em-waves", "field-ratio"]
+  },
+  {
+    "id": "emw-mcq-05",
+    "type": "mcq",
+    "front": "A paramagnetic material has susceptibility χ = 0.004 at temperature T = 150 K. Using Curie's law, what is χ at 300 K?",
+    "back": "**Answer: (B) 0.002**\n\n\\text{Curie's law: } \\chi = \\frac{C}{T}\n\n\\text{At 150 K: } 0.004 = \\frac{C}{150} \\Rightarrow C = 0.6\n\n\\text{At 300 K: } \\chi = \\frac{0.6}{300} = 0.002\n\n\\text{As temperature doubles, susceptibility halves.}\n\\text{Paramagnets become less magnetic when heated.}\n\n**(A)** 0.001\n**(B)** 0.002 ✓\n**(C)** 0.004\n**(D)** 0.008",
+    "tags": ["em-waves", "curie-law"]
+  },
+  {
+    "id": "emw-mcq-06",
+    "type": "mcq",
+    "front": "An EM wave travels in the +x direction. At a point, the electric field is E = 6.3 ĵ V/m. What is the corresponding magnetic field B?",
+    "back": "**Answer: (C) 2.1 × 10⁻⁸ k̂ T**\n\n\\text{Magnitude: } B_0 = \\frac{E_0}{c} = \\frac{6.3}{3 \\times 10^8} = 2.1 \\times 10^{-8} \\text{ T}\n\n\\text{Direction: } \\vec{E} \\times \\vec{B} \\text{ must point in } +\\hat{x}\n\n\\hat{j} \\times \\hat{k} = \\hat{i} \\quad \\checkmark \\text{ (so B along } +\\hat{k})\n\n\\vec{B} = 2.1 \\times 10^{-8} \\hat{k} \\text{ T}\n\n**(A)** 6.3 × 10⁻⁸ k̂ T\n**(B)** 2.1 × 10⁻⁸ ĵ T\n**(C)** 2.1 × 10⁻⁸ k̂ T ✓\n**(D)** 6.3 × 10⁻⁸ ĵ T",
+    "tags": ["em-waves", "wave-direction"]
+  },
+  {
+    "id": "emw-mcq-07",
+    "type": "mcq",
+    "front": "At a location, the horizontal component of Earth's magnetic field is H = 0.35 G and angle of dip δ = 30°. What is the total magnetic field B at that point?",
+    "back": "**Answer: (B) ≈ 0.404 G**\n\n\\tan\\delta = \\frac{Z}{H} \\Rightarrow Z = H\\tan 30° = 0.35 \\times \\frac{1}{\\sqrt{3}} \\approx 0.202 \\text{ G}\n\nB = \\sqrt{H^2 + Z^2} = \\sqrt{(0.35)^2 + (0.202)^2}\n= \\sqrt{0.1225 + 0.0408} = \\sqrt{0.1633} \\approx 0.404 \\text{ G}\n\n\\text{Alternatively: } B = \\frac{H}{\\cos\\delta} = \\frac{0.35}{\\cos 30°} = \\frac{0.35}{\\sqrt{3}/2} \\approx 0.404 \\text{ G}\n\n**(A)** 0.35 G\n**(B)** 0.404 G ✓\n**(C)** 0.202 G\n**(D)** 0.70 G",
+    "tags": ["em-waves", "earths-magnetism"]
+  },
+  {
+    "id": "emw-mcq-08",
+    "type": "mcq",
+    "front": "The rms value of the electric field of sunlight is 720 N/C. What is the average total energy density of this EM wave?\n(ε₀ = 8.85 × 10⁻¹² F/m)",
+    "back": "**Answer: (B) 4.58 × 10⁻⁶ J/m³**\n\n\\text{Average total energy density:}\nU_{avg} = \\varepsilon_0 E_{rms}^2\n\n\\text{(since } U_E = U_B \\text{, total} = 2 \\times \\frac{1}{2}\\varepsilon_0 E_{rms}^2 = \\varepsilon_0 E_{rms}^2)\n\nU_{avg} = 8.85 \\times 10^{-12} \\times (720)^2\n= 8.85 \\times 10^{-12} \\times 518400\n\\approx 4.58 \\times 10^{-6} \\text{ J/m}^3\n\n**(A)** 3.3 × 10⁻³ J/m³\n**(B)** 4.58 × 10⁻⁶ J/m³ ✓\n**(C)** 6.37 × 10⁻⁹ J/m³\n**(D)** 81.35 × 10⁻¹² J/m³",
+    "tags": ["em-waves", "energy-density"]
+  },
+  {
+    "id": "emw-mcq-09",
+    "type": "mcq",
+    "front": "A bar magnet has magnetic moment M = 0.4 J/T. What is the magnetic field at a point 20 cm away on its equatorial line?\n(μ₀/4π = 10⁻⁷ T·m/A)",
+    "back": "**Answer: (A) 5 × 10⁻⁶ T**\n\n\\text{Equatorial field:}\nB = \\frac{\\mu_0}{4\\pi} \\cdot \\frac{M}{r^3}\n\nB = 10^{-7} \\times \\frac{0.4}{(0.20)^3}\n\nB = 10^{-7} \\times \\frac{0.4}{0.008}\n\nB = 10^{-7} \\times 50 = 5 \\times 10^{-6} \\text{ T}\n\n\\text{Compare: axial field at same distance} = 2 \\times 5 \\times 10^{-6} = 10^{-5} \\text{ T}\n\n**(A)** 5 × 10⁻⁶ T ✓\n**(B)** 10⁻⁵ T\n**(C)** 2.5 × 10⁻⁶ T\n**(D)** 4 × 10⁻⁵ T",
+    "tags": ["em-waves", "dipole-field"]
+  },
+  {
+    "id": "emw-mcq-10",
+    "type": "mcq",
+    "front": "Which of the following correctly describes a superconductor from a magnetic materials perspective?",
+    "back": "**Answer: (C) Perfect diamagnet with χ = −1 and μᵣ = 0**\n\n\\text{Superconductors exhibit the Meissner effect:}\n\\text{they expel all magnetic flux from their interior.}\n\n\\text{Inside superconductor: } B = 0\n\n\\text{Since } B = \\mu_0(H + M) = 0 \\Rightarrow M = -H\n\n\\text{Susceptibility: } \\chi = M/H = -1 \\text{ (perfect diamagnet)}\n\n\\text{Permeability: } \\mu_r = 1 + \\chi = 1 + (-1) = 0\n\n\\text{This is the most extreme possible diamagnetic response.}\n\n**(A)** Paramagnetic with χ >> 1\n**(B)** Ferromagnetic with high retentivity\n**(C)** Perfect diamagnet with χ = −1 and μᵣ = 0 ✓\n**(D)** Diamagnetic with small negative χ ≈ −10⁻⁵",
+    "tags": ["em-waves", "magnetic-materials"]
+  }
+]
