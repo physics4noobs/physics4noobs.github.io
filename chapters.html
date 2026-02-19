@@ -10,6 +10,167 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="js/theme.js"></script>
+  <style>
+    /* --- Chapters Page Layout --- */
+    .chp-page {
+      max-width: 1320px;
+      margin: 88px auto 40px;
+      padding: 0 24px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .chp-layout {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 32px;
+      align-items: start;
+    }
+    .chp-main { min-width: 0; }
+
+    /* Grade section headers */
+    .chp-grade-section {
+      margin-bottom: 36px;
+    }
+    .chp-grade-label {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* Override ch-grid for this layout */
+    .chp-page .ch-grid {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    /* Clean up ch-card */
+    .chp-page .ch-card {
+      padding: 20px;
+      border-radius: var(--radius-md);
+    }
+    .chp-page .ch-card .ch-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--color-primary);
+      background: rgba(0, 212, 255, 0.06);
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .chp-page .ch-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 8px 0 4px;
+    }
+    .chp-page .ch-card .ch-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+    .chp-page .ch-card .ch-formula {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+    }
+    .chp-page .ch-card .ch-arrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* --- Right Sidebar: Chapter Index --- */
+    .chp-index {
+      position: sticky;
+      top: 88px;
+      max-height: calc(100vh - 104px);
+      overflow-y: auto;
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,212,255,0.2) transparent;
+    }
+    .chp-index::-webkit-scrollbar { width: 4px; }
+    .chp-index::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.2); border-radius: 2px; }
+
+    .chp-index-header {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-primary);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .chp-index-group {
+      margin-bottom: 16px;
+    }
+    .chp-index-group:last-child { margin-bottom: 0; }
+    .chp-index-label {
+      font-family: var(--font-display);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      padding: 0 0 4px;
+      margin-bottom: 4px;
+    }
+    .chp-index-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 400;
+      transition: var(--transition-fast);
+      text-decoration: none;
+    }
+    .chp-index-item:hover {
+      background: var(--bg-glass-hover);
+      color: var(--text-primary);
+    }
+    .chp-idx-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      min-width: 18px;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 960px) {
+      .chp-layout {
+        grid-template-columns: 1fr;
+      }
+      .chp-index {
+        position: static;
+        max-height: none;
+        order: -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        padding: 16px;
+        margin-bottom: 8px;
+      }
+      .chp-index-header {
+        grid-column: 1 / -1;
+      }
+    }
+    @media (max-width: 640px) {
+      .chp-page { margin-top: 80px; padding: 0 12px; }
+      .chp-page .ch-grid { grid-template-columns: 1fr; }
+      .chp-index { grid-template-columns: 1fr; }
+    }
+  </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -77,189 +238,217 @@
     })();
   </script>
 
-  <!-- Page Header -->
-  <div class="page-header">
-    <h1>Physics <span class="text-gradient">Chapter Guide</span></h1>
-    <p>Complete chapter-wise breakdown for Grade XI and XII &mdash; key concepts, important formulas, and direct links to interactive simulations.</p>
-  </div>
+  <!-- Chapters Content -->
+  <div class="chp-page">
+    <div class="chp-layout">
 
-  <!-- Chapter Listings -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container">
+      <!-- Left: Chapter Cards -->
+      <div class="chp-main">
 
-      <div class="grade-tabs">
-        <button class="grade-tab active" data-grade="grade-xi">Grade XI</button>
-        <button class="grade-tab" data-grade="grade-xii">Grade XII</button>
-      </div>
+        <!-- Grade XI -->
+        <div class="chp-grade-section" id="grade-xi">
+          <div class="chp-grade-label">Grade XI</div>
+          <div class="ch-grid">
 
-      <!-- ==================== GRADE XI ==================== -->
-      <div class="grade-content active" id="grade-xi">
-        <div class="ch-grid">
+            <a class="ch-card" href="chapters/kinematics.html">
+              <span class="ch-num">01</span>
+              <h3>Kinematics</h3>
+              <p class="ch-desc">Motion, velocity, projectiles</p>
+              <span class="ch-formula">v = u + at</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/kinematics.html">
-            <span class="ch-num">01</span>
-            <h3>Kinematics</h3>
-            <p class="ch-desc">Motion, velocity, projectiles</p>
-            <span class="ch-formula">v = u + at</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/newtons-laws.html">
+              <span class="ch-num">02</span>
+              <h3>Newton's Laws</h3>
+              <p class="ch-desc">Force, inertia, friction</p>
+              <span class="ch-formula">F = ma</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/newtons-laws.html">
-            <span class="ch-num">02</span>
-            <h3>Newton's Laws</h3>
-            <p class="ch-desc">Force, inertia, friction</p>
-            <span class="ch-formula">F = ma</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/work-power-energy.html">
+              <span class="ch-num">03</span>
+              <h3>Work, Power &amp; Energy</h3>
+              <p class="ch-desc">Work-energy theorem, collisions</p>
+              <span class="ch-formula">KE = &frac12;mv&sup2;</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/work-power-energy.html">
-            <span class="ch-num">03</span>
-            <h3>Work, Power &amp; Energy</h3>
-            <p class="ch-desc">Work-energy theorem, collisions</p>
-            <span class="ch-formula">KE = &frac12;mv&sup2;</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/rotational-motion.html">
+              <span class="ch-num">04</span>
+              <h3>Rotational Motion</h3>
+              <p class="ch-desc">Torque, MOI, rolling</p>
+              <span class="ch-formula">&tau; = I&alpha;</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/rotational-motion.html">
-            <span class="ch-num">04</span>
-            <h3>Rotational Motion</h3>
-            <p class="ch-desc">Torque, MOI, rolling</p>
-            <span class="ch-formula">&tau; = I&alpha;</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/gravitation.html">
+              <span class="ch-num">05</span>
+              <h3>Gravitation</h3>
+              <p class="ch-desc">Orbits, escape velocity, Kepler</p>
+              <span class="ch-formula">F = GMm/r&sup2;</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/gravitation.html">
-            <span class="ch-num">05</span>
-            <h3>Gravitation</h3>
-            <p class="ch-desc">Orbits, escape velocity, Kepler</p>
-            <span class="ch-formula">F = GMm/r&sup2;</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/mechanical-properties.html">
+              <span class="ch-num">06</span>
+              <h3>Mechanical Properties</h3>
+              <p class="ch-desc">Stress, strain, elasticity</p>
+              <span class="ch-formula">Y = &sigma;/&epsilon;</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/mechanical-properties.html">
-            <span class="ch-num">06</span>
-            <h3>Mechanical Properties</h3>
-            <p class="ch-desc">Stress, strain, elasticity</p>
-            <span class="ch-formula">Y = &sigma;/&epsilon;</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/fluid-mechanics.html">
+              <span class="ch-num">07</span>
+              <h3>Fluid Mechanics</h3>
+              <p class="ch-desc">Pressure, buoyancy, Bernoulli</p>
+              <span class="ch-formula">P + &frac12;&rho;v&sup2; + &rho;gh = const</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/fluid-mechanics.html">
-            <span class="ch-num">07</span>
-            <h3>Fluid Mechanics</h3>
-            <p class="ch-desc">Pressure, buoyancy, Bernoulli</p>
-            <span class="ch-formula">P + &frac12;&rho;v&sup2; + &rho;gh = const</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/thermodynamics.html">
+              <span class="ch-num">08</span>
+              <h3>Thermodynamics</h3>
+              <p class="ch-desc">Heat, gas laws, Carnot</p>
+              <span class="ch-formula">&Delta;U = Q &minus; W</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/thermodynamics.html">
-            <span class="ch-num">08</span>
-            <h3>Thermodynamics</h3>
-            <p class="ch-desc">Heat, gas laws, Carnot</p>
-            <span class="ch-formula">&Delta;U = Q &minus; W</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/shm.html">
+              <span class="ch-num">09</span>
+              <h3>Simple Harmonic Motion</h3>
+              <p class="ch-desc">Oscillations, pendulum, springs</p>
+              <span class="ch-formula">x = A sin(&omega;t + &phi;)</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/shm.html">
-            <span class="ch-num">09</span>
-            <h3>Simple Harmonic Motion</h3>
-            <p class="ch-desc">Oscillations, pendulum, springs</p>
-            <span class="ch-formula">x = A sin(&omega;t + &phi;)</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/waves.html">
+              <span class="ch-num">10</span>
+              <h3>Waves</h3>
+              <p class="ch-desc">Standing waves, Doppler, beats</p>
+              <span class="ch-formula">v = f&lambda;</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/waves.html">
-            <span class="ch-num">10</span>
-            <h3>Waves</h3>
-            <p class="ch-desc">Standing waves, Doppler, beats</p>
-            <span class="ch-formula">v = f&lambda;</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
-
+          </div>
         </div>
-      </div>
 
-      <!-- ==================== GRADE XII ==================== -->
-      <div class="grade-content" id="grade-xii">
-        <div class="ch-grid">
+        <!-- Grade XII -->
+        <div class="chp-grade-section" id="grade-xii">
+          <div class="chp-grade-label">Grade XII</div>
+          <div class="ch-grid">
 
-          <a class="ch-card" href="chapters/electrostatics.html">
-            <span class="ch-num">01</span>
-            <h3>Electrostatics &amp; Capacitance</h3>
-            <p class="ch-desc">Coulomb, Gauss, capacitors</p>
-            <span class="ch-formula">F = kq&#8321;q&#8322;/r&sup2;</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/electrostatics.html">
+              <span class="ch-num">01</span>
+              <h3>Electrostatics &amp; Capacitance</h3>
+              <p class="ch-desc">Coulomb, Gauss, capacitors</p>
+              <span class="ch-formula">F = kq&#8321;q&#8322;/r&sup2;</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/current-electricity.html">
-            <span class="ch-num">02</span>
-            <h3>Current Electricity</h3>
-            <p class="ch-desc">Ohm's law, Kirchhoff, circuits</p>
-            <span class="ch-formula">V = IR</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/current-electricity.html">
+              <span class="ch-num">02</span>
+              <h3>Current Electricity</h3>
+              <p class="ch-desc">Ohm's law, Kirchhoff, circuits</p>
+              <span class="ch-formula">V = IR</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/magnetism.html">
-            <span class="ch-num">03</span>
-            <h3>Moving Charges &amp; Magnetism</h3>
-            <p class="ch-desc">Lorentz force, Biot-Savart</p>
-            <span class="ch-formula">F = qv &times; B</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/magnetism.html">
+              <span class="ch-num">03</span>
+              <h3>Moving Charges &amp; Magnetism</h3>
+              <p class="ch-desc">Lorentz force, Biot-Savart</p>
+              <span class="ch-formula">F = qv &times; B</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/emi.html">
-            <span class="ch-num">04</span>
-            <h3>Electromagnetic Induction</h3>
-            <p class="ch-desc">Faraday, Lenz, inductance</p>
-            <span class="ch-formula">&epsilon; = &minus;d&Phi;/dt</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/emi.html">
+              <span class="ch-num">04</span>
+              <h3>Electromagnetic Induction</h3>
+              <p class="ch-desc">Faraday, Lenz, inductance</p>
+              <span class="ch-formula">&epsilon; = &minus;d&Phi;/dt</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/ac-circuits.html">
-            <span class="ch-num">05</span>
-            <h3>Alternating Current</h3>
-            <p class="ch-desc">Phasors, resonance, transformers</p>
-            <span class="ch-formula">Z = &radic;(R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;)</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/ac-circuits.html">
+              <span class="ch-num">05</span>
+              <h3>Alternating Current</h3>
+              <p class="ch-desc">Phasors, resonance, transformers</p>
+              <span class="ch-formula">Z = &radic;(R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;)</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/em-waves.html">
-            <span class="ch-num">06</span>
-            <h3>Electromagnetic Waves</h3>
-            <p class="ch-desc">EM spectrum, Maxwell</p>
-            <span class="ch-formula">c = 1/&radic;(&mu;&#8320;&epsilon;&#8320;)</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/em-waves.html">
+              <span class="ch-num">06</span>
+              <h3>Electromagnetic Waves</h3>
+              <p class="ch-desc">EM spectrum, Maxwell</p>
+              <span class="ch-formula">c = 1/&radic;(&mu;&#8320;&epsilon;&#8320;)</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/ray-optics.html">
-            <span class="ch-num">07</span>
-            <h3>Ray Optics</h3>
-            <p class="ch-desc">Mirrors, lenses, prisms</p>
-            <span class="ch-formula">1/v &minus; 1/u = 1/f</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/ray-optics.html">
+              <span class="ch-num">07</span>
+              <h3>Ray Optics</h3>
+              <p class="ch-desc">Mirrors, lenses, prisms</p>
+              <span class="ch-formula">1/v &minus; 1/u = 1/f</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/wave-optics.html">
-            <span class="ch-num">08</span>
-            <h3>Wave Optics</h3>
-            <p class="ch-desc">YDSE, diffraction, polarization</p>
-            <span class="ch-formula">&beta; = &lambda;D/d</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/wave-optics.html">
+              <span class="ch-num">08</span>
+              <h3>Wave Optics</h3>
+              <p class="ch-desc">YDSE, diffraction, polarization</p>
+              <span class="ch-formula">&beta; = &lambda;D/d</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
-          <a class="ch-card" href="chapters/modern-physics.html">
-            <span class="ch-num">09</span>
-            <h3>Modern Physics</h3>
-            <p class="ch-desc">Photoelectric, Bohr, nuclear</p>
-            <span class="ch-formula">E = hf</span>
-            <span class="ch-arrow">Read Theory &rarr;</span>
-          </a>
+            <a class="ch-card" href="chapters/modern-physics.html">
+              <span class="ch-num">09</span>
+              <h3>Modern Physics</h3>
+              <p class="ch-desc">Photoelectric, Bohr, nuclear</p>
+              <span class="ch-formula">E = hf</span>
+              <span class="ch-arrow">Read Theory &rarr;</span>
+            </a>
 
+          </div>
         </div>
+
       </div>
+
+      <!-- Right: Chapter Index Sidebar -->
+      <nav class="chp-index">
+        <div class="chp-index-header">Chapters</div>
+
+        <div class="chp-index-group">
+          <div class="chp-index-label">Grade XI</div>
+          <a href="chapters/kinematics.html" class="chp-index-item"><span class="chp-idx-num">01</span> Kinematics</a>
+          <a href="chapters/newtons-laws.html" class="chp-index-item"><span class="chp-idx-num">02</span> Newton's Laws</a>
+          <a href="chapters/work-power-energy.html" class="chp-index-item"><span class="chp-idx-num">03</span> Work, Power &amp; Energy</a>
+          <a href="chapters/rotational-motion.html" class="chp-index-item"><span class="chp-idx-num">04</span> Rotational Motion</a>
+          <a href="chapters/gravitation.html" class="chp-index-item"><span class="chp-idx-num">05</span> Gravitation</a>
+          <a href="chapters/mechanical-properties.html" class="chp-index-item"><span class="chp-idx-num">06</span> Mechanical Properties</a>
+          <a href="chapters/fluid-mechanics.html" class="chp-index-item"><span class="chp-idx-num">07</span> Fluid Mechanics</a>
+          <a href="chapters/thermodynamics.html" class="chp-index-item"><span class="chp-idx-num">08</span> Thermodynamics</a>
+          <a href="chapters/shm.html" class="chp-index-item"><span class="chp-idx-num">09</span> SHM</a>
+          <a href="chapters/waves.html" class="chp-index-item"><span class="chp-idx-num">10</span> Waves</a>
+        </div>
+
+        <div class="chp-index-group">
+          <div class="chp-index-label">Grade XII</div>
+          <a href="chapters/electrostatics.html" class="chp-index-item"><span class="chp-idx-num">01</span> Electrostatics</a>
+          <a href="chapters/current-electricity.html" class="chp-index-item"><span class="chp-idx-num">02</span> Current Electricity</a>
+          <a href="chapters/magnetism.html" class="chp-index-item"><span class="chp-idx-num">03</span> Magnetism</a>
+          <a href="chapters/emi.html" class="chp-index-item"><span class="chp-idx-num">04</span> EMI</a>
+          <a href="chapters/ac-circuits.html" class="chp-index-item"><span class="chp-idx-num">05</span> AC Circuits</a>
+          <a href="chapters/em-waves.html" class="chp-index-item"><span class="chp-idx-num">06</span> EM Waves</a>
+          <a href="chapters/ray-optics.html" class="chp-index-item"><span class="chp-idx-num">07</span> Ray Optics</a>
+          <a href="chapters/wave-optics.html" class="chp-index-item"><span class="chp-idx-num">08</span> Wave Optics</a>
+          <a href="chapters/modern-physics.html" class="chp-index-item"><span class="chp-idx-num">09</span> Modern Physics</a>
+        </div>
+      </nav>
 
     </div>
-  </section>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
