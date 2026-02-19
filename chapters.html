@@ -11,164 +11,115 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="js/theme.js"></script>
   <style>
-    /* --- Chapters Page Layout --- */
+    /* --- Chapters Page: Netflix-style rows --- */
     .chp-page {
       max-width: 1320px;
-      margin: 88px auto 40px;
-      padding: 0 24px;
+      margin: 92px auto 40px;
+      padding: 0 28px;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
-    .chp-layout {
-      display: grid;
-      grid-template-columns: 1fr 240px;
-      gap: 32px;
-      align-items: start;
-    }
-    .chp-main { min-width: 0; }
 
-    /* Grade section headers */
-    .chp-grade-section {
-      margin-bottom: 36px;
+    /* Row */
+    .chp-row { margin-bottom: 36px; }
+    .chp-row-header {
+      display: flex; align-items: center; padding: 0 0 12px; gap: 12px;
     }
-    .chp-grade-label {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: 0.5px;
-      padding-bottom: 10px;
-      margin-bottom: 18px;
+    .chp-row-accent { width: 3px; height: 20px; border-radius: 2px; flex-shrink: 0; }
+    .chp-row-accent.xi-1 { background: var(--color-primary); }
+    .chp-row-accent.xi-2 { background: var(--color-secondary); }
+    .chp-row-accent.xii-1 { background: var(--color-accent); }
+    .chp-row-accent.xii-2 { background: var(--color-warning, #ff6b35); }
+    .chp-row-title {
+      font-family: var(--font-display); font-size: 1rem; font-weight: 600;
+      color: var(--text-primary); letter-spacing: 0.5px; flex: 1;
+    }
+    .chp-row-count {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted);
+    }
+    .chp-row-arrows { display: flex; gap: 6px; }
+    .chp-row-arrow {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 1px solid var(--border-subtle); background: var(--bg-card);
+      color: var(--text-secondary); font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition-fast); line-height: 1;
+    }
+    .chp-row-arrow:hover {
+      border-color: rgba(0,212,255,0.3); background: var(--bg-glass-hover); color: var(--color-primary);
+    }
+
+    /* Track */
+    .chp-track-wrap { position: relative; }
+    .chp-track-wrap::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 48px; height: calc(100% - 4px);
+      background: linear-gradient(90deg, transparent, var(--bg-primary));
+      pointer-events: none; z-index: 1;
+    }
+    .chp-track {
+      display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
+      scroll-snap-type: x mandatory; -ms-overflow-style: none; scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+    .chp-track::-webkit-scrollbar { display: none; }
+
+    /* Cards: thumbnail on top, info below */
+    .chp-track .ch-card {
+      flex: 0 0 240px; scroll-snap-align: start;
+      border-radius: var(--radius-md); display: flex; flex-direction: column;
+      padding: 0; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .chp-track .ch-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+    }
+
+    /* Thumbnail area */
+    .ch-thumb {
+      height: 140px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
       border-bottom: 1px solid var(--border-subtle);
+      transition: color 0.3s ease;
     }
+    .ch-thumb svg { width: 72%; height: 72%; overflow: visible; }
 
-    /* Override ch-grid for this layout */
-    .chp-page .ch-grid {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-    }
+    /* Row-specific thumbnail tints */
+    .chp-row:nth-child(1) .ch-thumb { background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,212,255,0.02)); color: rgba(0,212,255,0.45); }
+    .chp-row:nth-child(2) .ch-thumb { background: linear-gradient(135deg, rgba(157,78,221,0.1), rgba(157,78,221,0.02)); color: rgba(157,78,221,0.45); }
+    .chp-row:nth-child(3) .ch-thumb { background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,255,136,0.02)); color: rgba(0,255,136,0.45); }
+    .chp-row:nth-child(4) .ch-thumb { background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(255,107,53,0.02)); color: rgba(255,107,53,0.45); }
+    .chp-row:nth-child(1) .ch-card:hover .ch-thumb { color: rgba(0,212,255,0.85); }
+    .chp-row:nth-child(2) .ch-card:hover .ch-thumb { color: rgba(157,78,221,0.85); }
+    .chp-row:nth-child(3) .ch-card:hover .ch-thumb { color: rgba(0,255,136,0.85); }
+    .chp-row:nth-child(4) .ch-card:hover .ch-thumb { color: rgba(255,107,53,0.85); }
 
-    /* Clean up ch-card */
-    .chp-page .ch-card {
-      padding: 20px;
-      border-radius: var(--radius-md);
+    /* Info section below thumbnail */
+    .ch-info { padding: 14px 16px 16px; }
+    .chp-page .ch-info .ch-num {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      color: var(--color-primary); background: rgba(0,212,255,0.06);
+      padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px;
+      display: inline-block; width: fit-content;
     }
-    .chp-page .ch-card .ch-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--color-primary);
-      background: rgba(0, 212, 255, 0.06);
-      padding: 2px 8px;
-      border-radius: 4px;
-      letter-spacing: 0.5px;
+    .chp-page .ch-info h3 {
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin: 8px 0 3px;
     }
-    .chp-page .ch-card h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 8px 0 4px;
-    }
-    .chp-page .ch-card .ch-desc {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.82rem;
-      line-height: 1.4;
-    }
-    .chp-page .ch-card .ch-formula {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-    }
-    .chp-page .ch-card .ch-arrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-
-    /* --- Right Sidebar: Chapter Index --- */
-    .chp-index {
-      position: sticky;
-      top: 88px;
-      max-height: calc(100vh - 104px);
-      overflow-y: auto;
-      padding: 20px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0,212,255,0.2) transparent;
-    }
-    .chp-index::-webkit-scrollbar { width: 4px; }
-    .chp-index::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.2); border-radius: 2px; }
-
-    .chp-index-header {
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--color-primary);
-      padding-bottom: 10px;
-      margin-bottom: 12px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .chp-index-group {
-      margin-bottom: 16px;
-    }
-    .chp-index-group:last-child { margin-bottom: 0; }
-    .chp-index-label {
-      font-family: var(--font-display);
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      padding: 0 0 4px;
-      margin-bottom: 4px;
-    }
-    .chp-index-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: var(--radius-sm);
+    .chp-page .ch-info .ch-desc {
+      font-family: 'Inter', sans-serif; font-size: 0.78rem; line-height: 1.4; margin: 0;
       color: var(--text-secondary);
-      font-size: 0.8rem;
-      font-weight: 400;
-      transition: var(--transition-fast);
-      text-decoration: none;
     }
-    .chp-index-item:hover {
-      background: var(--bg-glass-hover);
-      color: var(--text-primary);
-    }
-    .chp-idx-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      min-width: 18px;
+    .chp-page .ch-info .ch-formula {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      display: block; margin-top: 6px; opacity: 0.7;
     }
 
-    /* --- Responsive --- */
-    @media (max-width: 960px) {
-      .chp-layout {
-        grid-template-columns: 1fr;
-      }
-      .chp-index {
-        position: static;
-        max-height: none;
-        order: -1;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0 20px;
-        padding: 16px;
-        margin-bottom: 8px;
-      }
-      .chp-index-header {
-        grid-column: 1 / -1;
-      }
-    }
-    @media (max-width: 640px) {
-      .chp-page { margin-top: 80px; padding: 0 12px; }
-      .chp-page .ch-grid { grid-template-columns: 1fr; }
-      .chp-index { grid-template-columns: 1fr; }
+    @media (max-width: 768px) {
+      .chp-page { margin-top: 80px; padding: 0 14px; }
+      .chp-track .ch-card { flex: 0 0 200px; }
+      .ch-thumb { height: 110px; }
+      .chp-row-arrows { display: none; }
+      .chp-row-title { font-size: 0.9rem; }
     }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -240,215 +191,329 @@
 
   <!-- Chapters Content -->
   <div class="chp-page">
-    <div class="chp-layout">
 
-      <!-- Left: Chapter Cards -->
-      <div class="chp-main">
-
-        <!-- Grade XI -->
-        <div class="chp-grade-section" id="grade-xi">
-          <div class="chp-grade-label">Grade XI</div>
-          <div class="ch-grid">
-
-            <a class="ch-card" href="chapters/kinematics.html">
+    <!-- Row 1: Grade XI Book 1 -->
+    <div class="chp-row">
+      <div class="chp-row-header">
+        <div class="chp-row-accent xi-1"></div>
+        <div class="chp-row-title">Grade XI &mdash; Book 1</div>
+        <div class="chp-row-count">5 chapters</div>
+        <div class="chp-row-arrows">
+          <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
+          <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="chp-track-wrap">
+        <div class="chp-track">
+          <a class="ch-card" href="chapters/kinematics.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">01</span>
               <h3>Kinematics</h3>
               <p class="ch-desc">Motion, velocity, projectiles</p>
               <span class="ch-formula">v = u + at</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/newtons-laws.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/newtons-laws.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">02</span>
               <h3>Newton's Laws</h3>
               <p class="ch-desc">Force, inertia, friction</p>
               <span class="ch-formula">F = ma</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/work-power-energy.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/work-power-energy.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">03</span>
               <h3>Work, Power &amp; Energy</h3>
               <p class="ch-desc">Work-energy theorem, collisions</p>
               <span class="ch-formula">KE = &frac12;mv&sup2;</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/rotational-motion.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/rotational-motion.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">04</span>
               <h3>Rotational Motion</h3>
               <p class="ch-desc">Torque, MOI, rolling</p>
               <span class="ch-formula">&tau; = I&alpha;</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/gravitation.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/gravitation.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">05</span>
               <h3>Gravitation</h3>
               <p class="ch-desc">Orbits, escape velocity, Kepler</p>
               <span class="ch-formula">F = GMm/r&sup2;</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
 
-            <a class="ch-card" href="chapters/mechanical-properties.html">
+    <!-- Row 2: Grade XI Book 2 -->
+    <div class="chp-row">
+      <div class="chp-row-header">
+        <div class="chp-row-accent xi-2"></div>
+        <div class="chp-row-title">Grade XI &mdash; Book 2</div>
+        <div class="chp-row-count">5 chapters</div>
+        <div class="chp-row-arrows">
+          <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
+          <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="chp-track-wrap">
+        <div class="chp-track">
+          <a class="ch-card" href="chapters/mechanical-properties.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">06</span>
               <h3>Mechanical Properties</h3>
               <p class="ch-desc">Stress, strain, elasticity</p>
               <span class="ch-formula">Y = &sigma;/&epsilon;</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/fluid-mechanics.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/fluid-mechanics.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">07</span>
               <h3>Fluid Mechanics</h3>
               <p class="ch-desc">Pressure, buoyancy, Bernoulli</p>
               <span class="ch-formula">P + &frac12;&rho;v&sup2; + &rho;gh = const</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/thermodynamics.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/thermodynamics.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">08</span>
               <h3>Thermodynamics</h3>
               <p class="ch-desc">Heat, gas laws, Carnot</p>
               <span class="ch-formula">&Delta;U = Q &minus; W</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/shm.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/shm.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">09</span>
               <h3>Simple Harmonic Motion</h3>
               <p class="ch-desc">Oscillations, pendulum, springs</p>
               <span class="ch-formula">x = A sin(&omega;t + &phi;)</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/waves.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/waves.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">10</span>
               <h3>Waves</h3>
               <p class="ch-desc">Standing waves, Doppler, beats</p>
               <span class="ch-formula">v = f&lambda;</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-          </div>
+            </div>
+          </a>
         </div>
+      </div>
+    </div>
 
-        <!-- Grade XII -->
-        <div class="chp-grade-section" id="grade-xii">
-          <div class="chp-grade-label">Grade XII</div>
-          <div class="ch-grid">
-
-            <a class="ch-card" href="chapters/electrostatics.html">
+    <!-- Row 3: Grade XII Book 1 -->
+    <div class="chp-row">
+      <div class="chp-row-header">
+        <div class="chp-row-accent xii-1"></div>
+        <div class="chp-row-title">Grade XII &mdash; Book 1</div>
+        <div class="chp-row-count">5 chapters</div>
+        <div class="chp-row-arrows">
+          <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
+          <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="chp-track-wrap">
+        <div class="chp-track">
+          <a class="ch-card" href="chapters/electrostatics.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">01</span>
               <h3>Electrostatics &amp; Capacitance</h3>
               <p class="ch-desc">Coulomb, Gauss, capacitors</p>
               <span class="ch-formula">F = kq&#8321;q&#8322;/r&sup2;</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/current-electricity.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/current-electricity.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">02</span>
               <h3>Current Electricity</h3>
               <p class="ch-desc">Ohm's law, Kirchhoff, circuits</p>
               <span class="ch-formula">V = IR</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/magnetism.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/magnetism.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">03</span>
               <h3>Moving Charges &amp; Magnetism</h3>
               <p class="ch-desc">Lorentz force, Biot-Savart</p>
               <span class="ch-formula">F = qv &times; B</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/emi.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/emi.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">04</span>
               <h3>Electromagnetic Induction</h3>
               <p class="ch-desc">Faraday, Lenz, inductance</p>
               <span class="ch-formula">&epsilon; = &minus;d&Phi;/dt</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/ac-circuits.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/ac-circuits.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">05</span>
               <h3>Alternating Current</h3>
               <p class="ch-desc">Phasors, resonance, transformers</p>
-              <span class="ch-formula">Z = &radic;(R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;)</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
+              <span class="ch-formula">Z = &radic;(R&sup2; + (X<sub>L</sub>&minus;X<sub>C</sub>)&sup2;)</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
 
-            <a class="ch-card" href="chapters/em-waves.html">
+    <!-- Row 4: Grade XII Book 2 -->
+    <div class="chp-row">
+      <div class="chp-row-header">
+        <div class="chp-row-accent xii-2"></div>
+        <div class="chp-row-title">Grade XII &mdash; Book 2</div>
+        <div class="chp-row-count">4 chapters</div>
+        <div class="chp-row-arrows">
+          <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
+          <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="chp-track-wrap">
+        <div class="chp-track">
+          <a class="ch-card" href="chapters/em-waves.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">06</span>
               <h3>Electromagnetic Waves</h3>
               <p class="ch-desc">EM spectrum, Maxwell</p>
               <span class="ch-formula">c = 1/&radic;(&mu;&#8320;&epsilon;&#8320;)</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/ray-optics.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/ray-optics.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">07</span>
               <h3>Ray Optics</h3>
               <p class="ch-desc">Mirrors, lenses, prisms</p>
               <span class="ch-formula">1/v &minus; 1/u = 1/f</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/wave-optics.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/wave-optics.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">08</span>
               <h3>Wave Optics</h3>
               <p class="ch-desc">YDSE, diffraction, polarization</p>
               <span class="ch-formula">&beta; = &lambda;D/d</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-            <a class="ch-card" href="chapters/modern-physics.html">
+            </div>
+          </a>
+          <a class="ch-card" href="chapters/modern-physics.html">
+            <div class="ch-thumb"></div>
+            <div class="ch-info">
               <span class="ch-num">09</span>
               <h3>Modern Physics</h3>
               <p class="ch-desc">Photoelectric, Bohr, nuclear</p>
               <span class="ch-formula">E = hf</span>
-              <span class="ch-arrow">Read Theory &rarr;</span>
-            </a>
-
-          </div>
+            </div>
+          </a>
         </div>
-
       </div>
-
-      <!-- Right: Chapter Index Sidebar -->
-      <nav class="chp-index">
-        <div class="chp-index-header">Chapters</div>
-
-        <div class="chp-index-group">
-          <div class="chp-index-label">Grade XI</div>
-          <a href="chapters/kinematics.html" class="chp-index-item"><span class="chp-idx-num">01</span> Kinematics</a>
-          <a href="chapters/newtons-laws.html" class="chp-index-item"><span class="chp-idx-num">02</span> Newton's Laws</a>
-          <a href="chapters/work-power-energy.html" class="chp-index-item"><span class="chp-idx-num">03</span> Work, Power &amp; Energy</a>
-          <a href="chapters/rotational-motion.html" class="chp-index-item"><span class="chp-idx-num">04</span> Rotational Motion</a>
-          <a href="chapters/gravitation.html" class="chp-index-item"><span class="chp-idx-num">05</span> Gravitation</a>
-          <a href="chapters/mechanical-properties.html" class="chp-index-item"><span class="chp-idx-num">06</span> Mechanical Properties</a>
-          <a href="chapters/fluid-mechanics.html" class="chp-index-item"><span class="chp-idx-num">07</span> Fluid Mechanics</a>
-          <a href="chapters/thermodynamics.html" class="chp-index-item"><span class="chp-idx-num">08</span> Thermodynamics</a>
-          <a href="chapters/shm.html" class="chp-index-item"><span class="chp-idx-num">09</span> SHM</a>
-          <a href="chapters/waves.html" class="chp-index-item"><span class="chp-idx-num">10</span> Waves</a>
-        </div>
-
-        <div class="chp-index-group">
-          <div class="chp-index-label">Grade XII</div>
-          <a href="chapters/electrostatics.html" class="chp-index-item"><span class="chp-idx-num">01</span> Electrostatics</a>
-          <a href="chapters/current-electricity.html" class="chp-index-item"><span class="chp-idx-num">02</span> Current Electricity</a>
-          <a href="chapters/magnetism.html" class="chp-index-item"><span class="chp-idx-num">03</span> Magnetism</a>
-          <a href="chapters/emi.html" class="chp-index-item"><span class="chp-idx-num">04</span> EMI</a>
-          <a href="chapters/ac-circuits.html" class="chp-index-item"><span class="chp-idx-num">05</span> AC Circuits</a>
-          <a href="chapters/em-waves.html" class="chp-index-item"><span class="chp-idx-num">06</span> EM Waves</a>
-          <a href="chapters/ray-optics.html" class="chp-index-item"><span class="chp-idx-num">07</span> Ray Optics</a>
-          <a href="chapters/wave-optics.html" class="chp-index-item"><span class="chp-idx-num">08</span> Wave Optics</a>
-          <a href="chapters/modern-physics.html" class="chp-index-item"><span class="chp-idx-num">09</span> Modern Physics</a>
-        </div>
-      </nav>
-
     </div>
+
   </div>
+
+  <script>
+    /* Arrow scroll */
+    document.querySelectorAll('.chp-row-arrow').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var track = btn.closest('.chp-row').querySelector('.chp-track');
+        if (track) track.scrollBy({ left: parseInt(btn.dataset.dir) * 260, behavior: 'smooth' });
+      });
+    });
+
+    /* Chapter animation thumbnails — SMIL SVGs injected by href, paused until hover */
+    (function() {
+      var svgs = {
+        'kinematics': '<svg viewBox="0 0 100 80"><path d="M10,70 Q50,0 90,70" stroke="currentColor" stroke-width="1.5" fill="none" stroke-dasharray="4 3" opacity="0.3"/><circle r="5" fill="currentColor"><animateMotion dur="2s" repeatCount="indefinite" path="M10,70 Q50,0 90,70" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/></circle></svg>',
+
+        'newtons-laws': '<svg viewBox="0 0 100 60"><line x1="5" y1="48" x2="95" y2="48" stroke="currentColor" stroke-width="1" opacity="0.2"/><rect y="28" width="18" height="18" rx="3" fill="currentColor" opacity="0.7"><animate attributeName="x" values="8;72;8" dur="1.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.6 1"/></rect><g opacity="0.35"><line x1="60" y1="37" x2="88" y2="37" stroke="currentColor" stroke-width="2"/><polygon points="88,32 95,37 88,42" fill="currentColor"/></g></svg>',
+
+        'work-power-energy': '<svg viewBox="0 0 100 80"><line x1="15" y1="72" x2="85" y2="72" stroke="currentColor" stroke-width="1.5" opacity="0.25"/><circle cx="50" r="7" fill="currentColor"><animate attributeName="cy" values="64;14;64" dur="1.2s" repeatCount="indefinite" calcMode="spline" keySplines="0.3 0 1 1;0 0 0.7 1"/></circle></svg>',
+
+        'rotational-motion': '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="14 8"><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="50" cy="50" r="4" fill="currentColor" opacity="0.6"/></svg>',
+
+        'gravitation': '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="8" fill="currentColor" opacity="0.35"/><ellipse cx="50" cy="50" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2" stroke-dasharray="4 3"/><circle r="5" fill="currentColor"><animateMotion dur="3s" repeatCount="indefinite" path="M14,50 A36,18 0 1,1 86,50 A36,18 0 1,1 14,50"/></circle></svg>',
+
+        'mechanical-properties': '<svg viewBox="0 0 100 60"><line x1="5" y1="30" x2="15" y2="30" stroke="currentColor" stroke-width="2" opacity="0.5"/><path fill="none" stroke="currentColor" stroke-width="2"><animate attributeName="d" values="M15,30 L20,18 L28,42 L36,18 L44,42 L52,18 L60,42 L65,30 L80,30;M15,30 L22,12 L34,48 L46,12 L58,48 L70,12 L82,48 L92,30 L95,30;M15,30 L20,18 L28,42 L36,18 L44,42 L52,18 L60,42 L65,30 L80,30" dur="1.5s" repeatCount="indefinite"/></path><circle r="5" fill="currentColor" opacity="0.6"><animate attributeName="cx" values="80;95;80" dur="1.5s" repeatCount="indefinite"/><animate attributeName="cy" values="30;30;30" dur="1.5s" repeatCount="indefinite"/></circle></svg>',
+
+        'fluid-mechanics': '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="1.5"><animate attributeName="r" values="5;45" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite"/></circle><circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="1.5"><animate attributeName="r" values="5;45" dur="2s" begin="0.66s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;0" dur="2s" begin="0.66s" repeatCount="indefinite"/></circle><circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="1.5"><animate attributeName="r" values="5;45" dur="2s" begin="1.33s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;0" dur="2s" begin="1.33s" repeatCount="indefinite"/></circle></svg>',
+
+        'thermodynamics': '<svg viewBox="0 0 80 100"><path fill="currentColor" opacity="0.6"><animate attributeName="d" values="M40,90 Q25,70 28,50 Q32,35 40,18 Q48,35 52,50 Q55,70 40,90Z;M40,90 Q18,62 24,42 Q28,25 40,12 Q52,25 56,42 Q62,62 40,90Z;M40,90 Q25,70 28,50 Q32,35 40,18 Q48,35 52,50 Q55,70 40,90Z" dur="0.6s" repeatCount="indefinite"/></path><path fill="currentColor" opacity="0.25"><animate attributeName="d" values="M40,90 Q30,75 33,60 Q36,48 40,38 Q44,48 47,60 Q50,75 40,90Z;M40,90 Q26,70 30,52 Q34,38 40,30 Q46,38 50,52 Q54,70 40,90Z;M40,90 Q30,75 33,60 Q36,48 40,38 Q44,48 47,60 Q50,75 40,90Z" dur="0.5s" repeatCount="indefinite"/></path></svg>',
+
+        'shm': '<svg viewBox="0 0 100 100"><circle cx="50" cy="8" r="3" fill="currentColor" opacity="0.3"/><g><line x1="50" y1="8" x2="50" y2="68" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><circle cx="50" cy="74" r="8" fill="currentColor" opacity="0.7"/><animateTransform attributeName="transform" type="rotate" values="-28 50 8;28 50 8;-28 50 8" dur="1.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/></g></svg>',
+
+        'waves': '<svg viewBox="0 0 100 60"><path d="M0,30 Q12.5,5 25,30 Q37.5,55 50,30 Q62.5,5 75,30 Q87.5,55 100,30" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="10 5"><animate attributeName="stroke-dashoffset" values="0;-60" dur="1s" repeatCount="indefinite"/></path></svg>',
+
+        'electrostatics': '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="8" fill="currentColor" opacity="0.5"/><g opacity="0.5"><line x1="50" y1="8" x2="50" y2="35" stroke="currentColor" stroke-width="2"><animate attributeName="y1" values="8;16;8" dur="1s" repeatCount="indefinite"/></line><line x1="50" y1="65" x2="50" y2="92" stroke="currentColor" stroke-width="2"><animate attributeName="y2" values="92;84;92" dur="1s" repeatCount="indefinite"/></line><line x1="8" y1="50" x2="35" y2="50" stroke="currentColor" stroke-width="2"><animate attributeName="x1" values="8;16;8" dur="1s" repeatCount="indefinite"/></line><line x1="65" y1="50" x2="92" y2="50" stroke="currentColor" stroke-width="2"><animate attributeName="x2" values="92;84;92" dur="1s" repeatCount="indefinite"/></line></g></svg>',
+
+        'current-electricity': '<svg viewBox="0 0 100 60"><line x1="5" y1="30" x2="95" y2="30" stroke="currentColor" stroke-width="2" opacity="0.2"/><circle r="4" cy="30" fill="currentColor"><animate attributeName="cx" values="10;90" dur="1s" repeatCount="indefinite"/></circle><circle r="3.5" cy="30" fill="currentColor" opacity="0.6"><animate attributeName="cx" values="10;90" dur="1s" begin="0.33s" repeatCount="indefinite"/></circle><circle r="3" cy="30" fill="currentColor" opacity="0.35"><animate attributeName="cx" values="10;90" dur="1s" begin="0.66s" repeatCount="indefinite"/></circle></svg>',
+
+        'magnetism': '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15"/><g><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="2.5"/><polygon points="80,44 93,50 80,56" fill="currentColor"/><circle cx="20" cy="50" r="3.5" fill="currentColor" opacity="0.4"/><animateTransform attributeName="transform" type="rotate" values="-35 50 50;35 50 50;-35 50 50" dur="2s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/></g></svg>',
+
+        'emi': '<svg viewBox="0 0 100 100"><rect x="25" y="20" width="50" height="60" rx="6" fill="none" stroke="currentColor" stroke-width="2" opacity="0.25"/><rect width="20" height="14" rx="2" fill="currentColor" opacity="0.7"><animate attributeName="x" values="40;40" dur="2s" repeatCount="indefinite"/><animate attributeName="y" values="72;16;72" dur="2s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/></rect></svg>',
+
+        'ac-circuits': '<svg viewBox="0 0 100 60"><path fill="none" stroke="currentColor" stroke-width="2.5"><animate attributeName="d" values="M0,30 Q12.5,5 25,30 Q37.5,55 50,30 Q62.5,5 75,30 Q87.5,55 100,30;M0,30 Q12.5,55 25,30 Q37.5,5 50,30 Q62.5,55 75,30 Q87.5,5 100,30;M0,30 Q12.5,5 25,30 Q37.5,55 50,30 Q62.5,5 75,30 Q87.5,55 100,30" dur="1s" repeatCount="indefinite"/></path></svg>',
+
+        'em-waves': '<svg viewBox="0 0 100 80"><path fill="none" stroke="currentColor" stroke-width="2" opacity="0.7"><animate attributeName="d" values="M0,40 Q12.5,15 25,40 Q37.5,65 50,40 Q62.5,15 75,40 Q87.5,65 100,40;M0,40 Q12.5,65 25,40 Q37.5,15 50,40 Q62.5,65 75,40 Q87.5,15 100,40;M0,40 Q12.5,15 25,40 Q37.5,65 50,40 Q62.5,15 75,40 Q87.5,65 100,40" dur="1.2s" repeatCount="indefinite"/></path><path fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3" stroke-dasharray="3 3"><animate attributeName="d" values="M0,40 Q12.5,65 25,40 Q37.5,15 50,40 Q62.5,65 75,40 Q87.5,15 100,40;M0,40 Q12.5,15 25,40 Q37.5,65 50,40 Q62.5,15 75,40 Q87.5,65 100,40;M0,40 Q12.5,65 25,40 Q37.5,15 50,40 Q62.5,65 75,40 Q87.5,15 100,40" dur="1.2s" repeatCount="indefinite"/></path></svg>',
+
+        'ray-optics': '<svg viewBox="0 0 100 80"><ellipse cx="50" cy="40" rx="5" ry="28" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><line x1="5" y1="15" x2="50" y2="40" stroke="currentColor" stroke-width="1.5"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" repeatCount="indefinite"/></line><line x1="50" y1="40" x2="95" y2="20" stroke="currentColor" stroke-width="1.5"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" begin="0.3s" repeatCount="indefinite"/></line><line x1="5" y1="65" x2="50" y2="40" stroke="currentColor" stroke-width="1.5"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" begin="0.6s" repeatCount="indefinite"/></line><line x1="50" y1="40" x2="95" y2="60" stroke="currentColor" stroke-width="1.5"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" begin="0.9s" repeatCount="indefinite"/></line></svg>',
+
+        'wave-optics': '<svg viewBox="0 0 100 80"><rect x="5" y="5" width="10" height="70" rx="2" fill="currentColor"><animate attributeName="opacity" values="0.15;0.8;0.15" dur="1.5s" repeatCount="indefinite"/></rect><rect x="20" y="5" width="10" height="70" rx="2" fill="currentColor"><animate attributeName="opacity" values="0.8;0.15;0.8" dur="1.5s" repeatCount="indefinite"/></rect><rect x="35" y="5" width="10" height="70" rx="2" fill="currentColor"><animate attributeName="opacity" values="0.15;0.8;0.15" dur="1.5s" begin="0.2s" repeatCount="indefinite"/></rect><rect x="50" y="5" width="10" height="70" rx="2" fill="currentColor"><animate attributeName="opacity" values="0.8;0.15;0.8" dur="1.5s" begin="0.2s" repeatCount="indefinite"/></rect><rect x="65" y="5" width="10" height="70" rx="2" fill="currentColor"><animate attributeName="opacity" values="0.15;0.8;0.15" dur="1.5s" begin="0.4s" repeatCount="indefinite"/></rect><rect x="80" y="5" width="10" height="70" rx="2" fill="currentColor"><animate attributeName="opacity" values="0.8;0.15;0.8" dur="1.5s" begin="0.4s" repeatCount="indefinite"/></rect></svg>',
+
+        'modern-physics': '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="6" fill="currentColor" opacity="0.35"/><ellipse cx="50" cy="50" rx="38" ry="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.2"/><ellipse cx="50" cy="50" rx="38" ry="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.2" transform="rotate(60 50 50)"/><ellipse cx="50" cy="50" rx="38" ry="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.2" transform="rotate(120 50 50)"/><circle r="4" fill="currentColor"><animateMotion dur="2s" repeatCount="indefinite" path="M12,50 A38,14 0 1,1 88,50 A38,14 0 1,1 12,50"/></circle></svg>'
+      };
+
+      document.querySelectorAll('.ch-card').forEach(function(card) {
+        var href = card.getAttribute('href') || '';
+        var match = href.match(/chapters\/(.+)\.html/);
+        if (!match) return;
+        var key = match[1];
+        var svgStr = svgs[key];
+        if (!svgStr) return;
+
+        var thumb = card.querySelector('.ch-thumb');
+        if (!thumb) return;
+        thumb.innerHTML = svgStr;
+
+        /* Pause SMIL animations by default, unpause on hover */
+        var svg = thumb.querySelector('svg');
+        if (svg) {
+          /* Wait a tick so SMIL initialises, then pause */
+          requestAnimationFrame(function() {
+            if (svg.pauseAnimations) svg.pauseAnimations();
+          });
+
+          card.addEventListener('mouseenter', function() {
+            if (svg.unpauseAnimations) svg.unpauseAnimations();
+          });
+          card.addEventListener('mouseleave', function() {
+            if (svg.pauseAnimations) svg.pauseAnimations();
+          });
+        }
+      });
+    })();
+  </script>
 
   <!-- Footer -->
   <footer class="footer">
