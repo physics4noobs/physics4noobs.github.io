@@ -1,0 +1,247 @@
+[
+  {
+    "id": "wo-f-01",
+    "type": "formula",
+    "front": "Resultant Amplitude in Interference",
+    "back": "A = \\sqrt{A_1^2 + A_2^2 + 2A_1 A_2 \\cos \\Delta\\phi}\n\nWhere \\Delta\\phi is the phase difference between the two waves.\n\n**Maximum** (constructive, \\Delta\\phi = 2n\\pi):\nA_{max} = A_1 + A_2\n\n**Minimum** (destructive, \\Delta\\phi = (2n+1)\\pi):\nA_{min} = |A_1 - A_2|",
+    "tags": ["wave-optics", "interference"]
+  },
+  {
+    "id": "wo-f-02",
+    "type": "formula",
+    "front": "YDSE: Bright and Dark Fringe Positions",
+    "back": "Path difference at point P: p = \\frac{xd}{D}\n\n**Bright fringes** (p = n\\lambda, n = 0, 1, 2, \\ldots):\nx_n = \\frac{n D \\lambda}{d}\n\n**Dark fringes** (p = (2n-1)\\frac{\\lambda}{2}, n = 1, 2, 3, \\ldots):\nx_n = \\frac{(2n-1) D \\lambda}{2d}\n\nd = slit separation, D = slit-to-screen distance",
+    "tags": ["wave-optics", "ydse"]
+  },
+  {
+    "id": "wo-f-03",
+    "type": "formula",
+    "front": "Fringe Width in Young's Double Slit Experiment",
+    "back": "\\omega = \\frac{D \\lambda}{d}\n\n\\omega = fringe width (distance between consecutive bright or dark fringes)\nD = distance from slits to screen\n\\lambda = wavelength of light\nd = separation between slits\n\n**Key dependences:**\n\\omega \\propto D,\\quad \\omega \\propto \\lambda,\\quad \\omega \\propto \\frac{1}{d}",
+    "tags": ["wave-optics", "ydse"]
+  },
+  {
+    "id": "wo-f-04",
+    "type": "formula",
+    "front": "Intensity Distribution in Interference (cos² Law)",
+    "back": "General resultant intensity:\nI = I_1 + I_2 + 2\\sqrt{I_1 I_2}\\cos\\Delta\\phi\n\nFor equal intensities I_1 = I_2 = I_0:\nI = 4I_0 \\cos^2\\!\\left(\\frac{\\Delta\\phi}{2}\\right)\n\nI_{max} = 4I_0 \\quad (\\Delta\\phi = 2n\\pi)\nI_{min} = 0 \\quad (\\Delta\\phi = (2n+1)\\pi)\n\nAlong screen: I(x) = I_{max}\\cos^2\\!\\left(\\frac{\\pi x}{\\omega}\\right)",
+    "tags": ["wave-optics", "interference"]
+  },
+  {
+    "id": "wo-f-05",
+    "type": "formula",
+    "front": "Phase Difference and Optical Path Difference",
+    "back": "Geometric path difference: p = x_2 - x_1\n\nPhase difference from path:\n\\Delta\\phi = \\frac{2\\pi}{\\lambda} \\times p\n\n**Useful conversions:**\np = \\lambda \\implies \\Delta\\phi = 2\\pi \\quad \\text{(constructive)}\np = \\frac{\\lambda}{2} \\implies \\Delta\\phi = \\pi \\quad \\text{(destructive)}\n\nOptical path difference:\n\\Delta = \\mu_1 x_1 - \\mu_2 x_2 \\quad (\\mu = \\text{refractive index})",
+    "tags": ["wave-optics", "interference"]
+  },
+  {
+    "id": "wo-f-06",
+    "type": "formula",
+    "front": "Path Difference Introduced by a Glass Slab",
+    "back": "When a transparent slab of thickness t and refractive index \\mu is inserted in one beam:\n\n\\text{Extra optical path} = t(\\mu - 1)\n\nModified path difference at screen:\np = \\frac{xd}{D} - t(\\mu - 1)\n\nShift of entire fringe pattern:\n\\Delta x = \\frac{D \\cdot t(\\mu - 1)}{d}\n\nShift is **towards** the slit covered by the slab.",
+    "tags": ["wave-optics", "fringe-shift"]
+  },
+  {
+    "id": "wo-f-07",
+    "type": "formula",
+    "front": "Single Slit Diffraction: Minima Positions",
+    "back": "Condition for minima (dark fringes):\nb \\sin\\theta = n\\lambda \\quad n = \\pm 1, \\pm 2, \\pm 3, \\ldots\n\nb = slit width, \\theta = angle from central axis\n\nFor small angles (\\sin\\theta \\approx \\tan\\theta = x/D):\nx_n = \\frac{n D \\lambda}{b}\n\n**Note:** Central maximum lies between n = -1 and n = +1 minima.",
+    "tags": ["wave-optics", "diffraction"]
+  },
+  {
+    "id": "wo-f-08",
+    "type": "formula",
+    "front": "Width of Central Maximum in Single Slit Diffraction",
+    "back": "Linear width of central maximum (between first minima on both sides):\nW = \\frac{2D\\lambda}{b}\n\nAngular half-width (to first minimum):\n\\theta_1 = \\frac{\\lambda}{b}\n\nFull angular width of central maximum:\n\\Theta = \\frac{2\\lambda}{b}\n\nb = slit width, D = screen distance\n\n**Key:** Narrower slit \\Rightarrow wider central maximum",
+    "tags": ["wave-optics", "diffraction"]
+  },
+  {
+    "id": "wo-f-09",
+    "type": "formula",
+    "front": "Rayleigh Criterion for Resolution",
+    "back": "Minimum angular separation for two sources to be just resolved:\n\n**Circular aperture (diameter D):**\n\\theta_{min} = \\frac{1.22\\,\\lambda}{D}\n\n**Rectangular slit (width b):**\n\\theta_{min} = \\frac{\\lambda}{b}\n\nLinear limit of resolution at distance L:\ns = 1.22\\,\\frac{\\lambda L}{D}\n\nResolving power \\propto \\frac{D}{\\lambda} \\quad \\text{(larger aperture, shorter } \\lambda \\text{ is better)}",
+    "tags": ["wave-optics", "resolution"]
+  },
+  {
+    "id": "wo-f-10",
+    "type": "formula",
+    "front": "Brewster's Angle",
+    "back": "Condition: reflected ray \\perp refracted ray, i.e. i_B + r = 90°\n\n\\tan\\theta_B = \\frac{n_2}{n_1}\n\nFor air (n_1 = 1) to glass (n_2 = 1.5):\n\\tan\\theta_B = 1.5 \\implies \\theta_B \\approx 56.3°\n\nAt Brewster's angle:\n- Reflected light is **completely plane-polarized** (\\perp to plane of incidence)\n- Refracted light is **partially polarized**",
+    "tags": ["wave-optics", "polarization"]
+  },
+  {
+    "id": "wo-f-11",
+    "type": "formula",
+    "front": "Malus's Law",
+    "back": "Intensity of polarized light after passing through an analyzer at angle \\theta to its polarization axis:\n\nI = I_0 \\cos^2\\theta\n\n**Special cases:**\n\\theta = 0° \\implies I = I_0 \\quad \\text{(maximum, parallel polarizers)}\n\\theta = 90° \\implies I = 0 \\quad \\text{(crossed polarizers)}\n\nUnpolarized light through one polarizer:\nI = \\frac{I_0}{2}",
+    "tags": ["wave-optics", "polarization"]
+  },
+  {
+    "id": "wo-f-12",
+    "type": "formula",
+    "front": "Fresnel Biprism: Separation of Virtual Sources",
+    "back": "Deviation by one half of the biprism (small-angle prism):\n\\delta = (\\mu - 1)\\alpha\n\nSeparation between two virtual coherent sources:\nd = 2a\\delta = 2a(\\mu - 1)\\alpha\n\na = distance from real source S to biprism\n\\mu = refractive index of biprism material\n\\alpha = base angle of biprism\n\nFringe width (same as YDSE):\n\\omega = \\frac{D\\lambda}{d} = \\frac{D\\lambda}{2a(\\mu-1)\\alpha}\n\nD = source-to-screen distance",
+    "tags": ["wave-optics", "fresnel-biprism"]
+  },
+  {
+    "id": "wo-f-13",
+    "type": "formula",
+    "front": "Angular Fringe Width",
+    "back": "Angular fringe width in YDSE:\n\n\\theta_f = \\frac{\\omega}{D} = \\frac{\\lambda}{d}\n\n\\omega = linear fringe width = \\frac{D\\lambda}{d}\nD = screen distance, d = slit separation\n\n**Key features:**\n- Angular fringe width is independent of D\n- Depends only on \\lambda and d\n- Larger d \\Rightarrow smaller angular fringe width\n- Measured in radians",
+    "tags": ["wave-optics", "ydse"]
+  },
+  {
+    "id": "wo-f-14",
+    "type": "formula",
+    "front": "Intensity Ratio: Max to Min in Interference",
+    "back": "Let r = \\frac{A_1}{A_2} = \\sqrt{\\frac{I_1}{I_2}}\n\n\\frac{I_{max}}{I_{min}} = \\left(\\frac{r + 1}{r - 1}\\right)^2 = \\left(\\frac{\\sqrt{I_1} + \\sqrt{I_2}}{\\sqrt{I_1} - \\sqrt{I_2}}\\right)^2\n\n**Special case** (equal amplitudes, r = 1):\nI_{max} = 4I_0,\\quad I_{min} = 0 \\implies \\frac{I_{max}}{I_{min}} \\to \\infty\n\nVisibility: V = \\frac{I_{max} - I_{min}}{I_{max} + I_{min}} = \\frac{2r}{r^2 + 1}",
+    "tags": ["wave-optics", "interference"]
+  },
+  {
+    "id": "wo-f-15",
+    "type": "formula",
+    "front": "Resolving Power of Optical Instruments",
+    "back": "**Telescope** (objective diameter D):\n\\theta_{min} = \\frac{1.22\\,\\lambda}{D}\nR.P. = \\frac{D}{1.22\\,\\lambda}\n\n**Microscope** (objective semi-angle \\alpha, medium index n):\nR.P. = \\frac{2n\\sin\\alpha}{1.22\\,\\lambda}\n\nLimit of resolution of eye \\approx 1' of arc\n\n**General rule:** Larger aperture and shorter wavelength improve resolution.\nElectron microscopes use \\lambda \\ll 1\\,\\text{nm} for sub-nanometer resolution.",
+    "tags": ["wave-optics", "resolution"]
+  },
+  {
+    "id": "wo-c-01",
+    "type": "concept",
+    "front": "Coherent vs Incoherent Sources",
+    "back": "**Coherent sources:**\n- Maintain a constant phase difference over time\n- Same frequency and wavelength\n- Produce a stable, observable interference pattern\n- Example: two slits illuminated by a single monochromatic source (YDSE), laser beams\n\n**Incoherent sources:**\n- Phase difference changes randomly and rapidly\n- No sustained interference pattern (intensity simply adds: I = I_1 + I_2)\n- Example: two independent bulbs, two independent lasers (without phase locking)\n\n**Why a single source is split:** ensures constant phase relationship between the two derived beams.",
+    "tags": ["wave-optics", "coherence"]
+  },
+  {
+    "id": "wo-c-02",
+    "type": "concept",
+    "front": "Huygens' Principle",
+    "back": "Every point on a wavefront acts as a source of **secondary spherical wavelets** that spread out with the speed of the wave in that medium.\n\nThe new wavefront at a later time is the **forward envelope** (tangent surface) of all these secondary wavelets.\n\n**Key consequences:**\n1. Explains rectilinear propagation of light (backward wavelets cancel)\n2. Derives Snell's law of refraction: n_1 \\sin i = n_2 \\sin r\n3. Proves angle of incidence = angle of reflection\n4. Frequency remains constant across media; speed and wavelength change\n\n**Wavefront types:** plane (distant point source), spherical (nearby point source), cylindrical (line source)",
+    "tags": ["wave-optics", "huygens-principle"]
+  },
+  {
+    "id": "wo-c-03",
+    "type": "concept",
+    "front": "Lloyd's Mirror: Phase Change on Reflection",
+    "back": "A real source S and its virtual image S' (formed by reflection in a plane mirror) act as two coherent sources separated by d = 2h.\n\n**Critical distinction from YDSE:**\nReflection from the mirror (denser medium) introduces a **phase change of \\pi** (half-wavelength path equivalent).\n\nConsequences:\n- Sources S and S' are effectively **out of phase**\n- Central fringe (p = 0) is **dark** (not bright)\n- Conditions for bright/dark fringes are **reversed**:\n  - Bright: p = (2n-1)\\lambda/2\n  - Dark: p = n\\lambda\n\nThis phase reversal is direct experimental evidence that light undergoes a phase change of \\pi on reflection from a denser medium.",
+    "tags": ["wave-optics", "lloyds-mirror"]
+  },
+  {
+    "id": "wo-c-04",
+    "type": "concept",
+    "front": "Conditions for Sustained Interference",
+    "back": "For a stable, observable interference pattern, the sources must be:\n\n1. **Coherent** — constant phase difference over time\n2. **Monochromatic** — same single frequency/wavelength (polychromatic gives overlapping colored patterns that wash out)\n3. **Narrow** — narrow slits act as line sources, ensuring a definite phase relationship\n4. **Close together** — separation d must be small compared to D so fringes are observable in width\n5. **Same polarization state** — orthogonally polarized beams do not interfere (cos\\Delta\\phi averages to zero)\n\n**Practical implication:** Two independent sources cannot produce sustained interference; a single source must be split.",
+    "tags": ["wave-optics", "interference"]
+  },
+  {
+    "id": "wo-c-05",
+    "type": "concept",
+    "front": "Diffraction vs Interference",
+    "back": "| Feature | Interference | Diffraction |\n|---|---|---|\n| Origin | Superposition of waves from **two or more** discrete sources | Superposition of wavelets from **different parts of the same** wavefront |\n| Fringe width | Constant (uniform) | Varies; central maximum is wider |\n| Intensity | All bright fringes have equal intensity (for equal sources) | Intensity falls off from central maximum |\n| Dark fringes | Perfect dark (I = 0 for equal sources) | Not perfectly dark |\n| Example | YDSE, biprism | Single slit, circular aperture |\n\n**In YDSE:** diffraction from each slit acts as an **intensity envelope** modulating the interference fringes — so both occur simultaneously.",
+    "tags": ["wave-optics", "diffraction"]
+  },
+  {
+    "id": "wo-c-06",
+    "type": "concept",
+    "front": "Types of Polarization",
+    "back": "**Unpolarized light:** Electric field vector vibrates in all directions perpendicular to propagation — no preferred direction.\n\n**Plane (linear) polarization:** Electric field oscillates in a single fixed plane containing the propagation direction.\n\n**Circular polarization:** Electric field vector rotates at constant rate; magnitude is constant — tip traces a circle.\n\n**Elliptical polarization:** Electric field vector rotates but magnitude varies — tip traces an ellipse. (Most general case.)\n\n**Methods to produce polarized light:**\n1. Selective absorption (Polaroid/dichroism)\n2. Reflection at Brewster's angle\n3. Double refraction (birefringence) — e.g., calcite crystal\n4. Scattering (e.g., Rayleigh scattering in sky)",
+    "tags": ["wave-optics", "polarization"]
+  },
+  {
+    "id": "wo-c-07",
+    "type": "concept",
+    "front": "Brewster's Angle: Physical Significance",
+    "back": "At Brewster's angle \\theta_B = \\arctan(n_2/n_1):\n\n- The reflected and refracted rays are **perpendicular** to each other (i + r = 90°)\n- The reflected beam is **completely plane-polarized** (only the component perpendicular to the plane of incidence is reflected)\n- The refracted beam is **partially polarized** (parallel component transmitted with full strength, perpendicular reduced)\n\n**Physical reason:** An oscillating dipole does not radiate along its own axis. At Brewster's angle, the refracted ray direction coincides with the direction a dipole oscillating parallel to the plane of incidence would need to radiate — so that component is not reflected.\n\n**Applications:** anti-glare camera filters, laser Brewster windows (zero reflection loss for one polarization), LCD technology.",
+    "tags": ["wave-optics", "polarization"]
+  },
+  {
+    "id": "wo-c-08",
+    "type": "concept",
+    "front": "Wavefront and Types",
+    "back": "A **wavefront** is the locus of all points of the medium that are vibrating in the same phase at a given instant — a surface of constant phase.\n\n**Types of wavefronts:**\n\n1. **Spherical wavefront** — from a point source radiating uniformly in all directions; intensity \\propto 1/r^2\n2. **Cylindrical wavefront** — from a long linear source; intensity \\propto 1/r\n3. **Plane wavefront** — from a very distant (effectively infinite) point source; all rays are parallel; intensity is uniform\n\nThe direction of propagation (ray direction) is always **perpendicular** to the wavefront.\n\nHuygens' principle uses wavefronts to predict the future position of a wave without knowing the detailed oscillation of every particle.",
+    "tags": ["wave-optics", "huygens-principle"]
+  },
+  {
+    "id": "wo-c-09",
+    "type": "concept",
+    "front": "Fresnel Biprism vs Young's Double Slit",
+    "back": "Both produce interference fringes from two coherent sources; key differences:\n\n| Feature | YDSE | Fresnel Biprism |\n|---|---|---|\n| Coherent sources | Two real slits | Two virtual images (S\\u2081, S\\u2082) created by refraction |\n| Source of division | Division of wavefront | Division of wavefront (via refraction) |\n| Phase of sources | Same phase | Same phase (no reflection) |\n| Central fringe | Bright | Bright |\n| Slit sep. control | Physical | Changed by varying source-prism distance a |\n\n**d = 2a(\\mu - 1)\\alpha** is the key formula for source separation in biprism.\n\nAdvantage of biprism: single optical element, more stable setup, no diffraction-limiting physical slits needed.",
+    "tags": ["wave-optics", "fresnel-biprism"]
+  },
+  {
+    "id": "wo-c-10",
+    "type": "concept",
+    "front": "Single Slit Diffraction: Central Maximum and Secondary Maxima",
+    "back": "A single slit of width b produces a diffraction pattern:\n\n**Central maximum:** extends from -\\lambda/b to +\\lambda/b in angle; width = 2D\\lambda/b on screen. It contains the vast majority (~84%) of the total intensity.\n\n**Minima:** at b\\sin\\theta = n\\lambda (n = \\pm1, \\pm2, ...)\n\n**Secondary maxima:** approximately midway between minima, at b\\sin\\theta \\approx (2n+1)\\lambda/2\n- 1st secondary max intensity \\approx 4.5% of central max\n- Intensity falls off rapidly with order\n\n**Physical picture:** slit is divided into pairs of Huygens zones that cancel pairwise at minima positions.\n\nNarrower slit \\Rightarrow wider central maximum \\Rightarrow light \"bends more\" around edges (more diffraction).",
+    "tags": ["wave-optics", "diffraction"]
+  },
+  {
+    "id": "wo-mcq-01",
+    "type": "mcq",
+    "front": "In a YDSE, the slits are 0.5 mm apart and the screen is 1.0 m away. If light of wavelength 500 nm is used, the fringe width is:\n\n(A) 0.5 mm\n(B) 1.0 mm\n(C) 0.25 mm\n(D) 2.0 mm",
+    "back": "**Answer: (B) 1.0 mm**\n\n\\omega = \\frac{D\\lambda}{d} = \\frac{1.0 \\times 500 \\times 10^{-9}}{0.5 \\times 10^{-3}}\n= \\frac{5 \\times 10^{-7}}{5 \\times 10^{-4}} = 1.0 \\times 10^{-3}\\text{ m} = 1.0\\text{ mm}",
+    "tags": ["wave-optics", "ydse"]
+  },
+  {
+    "id": "wo-mcq-02",
+    "type": "mcq",
+    "front": "A glass slab of thickness 2 \\mu\\text{m} and refractive index 1.5 is placed over one of the slits in a YDSE. The shift in the central fringe on a screen 1 m away with slit separation 0.5 mm and \\lambda = 500 nm is:\n\n(A) 1 mm\n(B) 2 mm\n(C) 0.5 mm\n(D) 4 mm",
+    "back": "**Answer: (B) 2 mm**\n\n\\text{Shift} = \\frac{D \\cdot t(\\mu - 1)}{d}\n= \\frac{1.0 \\times 2 \\times 10^{-6} \\times (1.5 - 1)}{0.5 \\times 10^{-3}}\n= \\frac{1.0 \\times 10^{-6}}{5 \\times 10^{-4}} = 2 \\times 10^{-3}\\text{ m} = 2\\text{ mm}",
+    "tags": ["wave-optics", "fringe-shift"]
+  },
+  {
+    "id": "wo-mcq-03",
+    "type": "mcq",
+    "front": "In a Lloyd's mirror experiment, when the screen is moved to the edge of the mirror, the fringe observed at that edge (path difference = 0) is:\n\n(A) Bright, because path difference is zero\n(B) Dark, because of the \\pi phase change on reflection\n(C) Bright, because both beams travel equal distances\n(D) No fringe is observed at the edge",
+    "back": "**Answer: (B) Dark, because of the \\pi phase change on reflection**\n\nAlthough the geometric path difference at the mirror's edge is zero, the reflected ray undergoes a phase shift of \\pi (half wavelength equivalent) on reflection from the denser mirror surface.\n\nNet phase difference = \\pi \\Rightarrow destructive interference \\Rightarrow **dark fringe** at zero path difference.",
+    "tags": ["wave-optics", "lloyds-mirror"]
+  },
+  {
+    "id": "wo-mcq-04",
+    "type": "mcq",
+    "front": "The width of the central maximum in a single slit diffraction pattern is found to be twice the width when using a slit of width b. If \\lambda is fixed, the new slit width used is:\n\n(A) b/2\n(B) 2b\n(C) b\\sqrt{2}\n(D) b/4",
+    "back": "**Answer: (A) b/2**\n\nCentral maximum width: W = \\frac{2D\\lambda}{b}\n\nIf W' = 2W:\n\\frac{2D\\lambda}{b'} = 2 \\times \\frac{2D\\lambda}{b}\n\\Rightarrow b' = \\frac{b}{2}\n\nHalving the slit width doubles the central maximum width (inverse relationship).",
+    "tags": ["wave-optics", "diffraction"]
+  },
+  {
+    "id": "wo-mcq-05",
+    "type": "mcq",
+    "front": "Unpolarized light of intensity I_0 passes through two polaroids. The axis of the second is at 60° to that of the first. The transmitted intensity is:\n\n(A) \\frac{I_0}{8}\n(B) \\frac{I_0}{4}\n(C) \\frac{I_0}{2}\n(D) \\frac{3I_0}{8}",
+    "back": "**Answer: (A) \\frac{I_0}{8}**\n\nStep 1 — After first polaroid:\nI_1 = \\frac{I_0}{2} \\quad \\text{(unpolarized through polarizer)}\n\nStep 2 — After second polaroid (Malus's law, \\theta = 60°):\nI_2 = I_1 \\cos^2 60° = \\frac{I_0}{2} \\times \\left(\\frac{1}{2}\\right)^2 = \\frac{I_0}{2} \\times \\frac{1}{4} = \\frac{I_0}{8}",
+    "tags": ["wave-optics", "polarization"]
+  },
+  {
+    "id": "wo-mcq-06",
+    "type": "mcq",
+    "front": "Light of wavelength 600 nm is incident on a single slit of width 0.3 mm. The screen is 1.5 m away. The distance between the first dark fringes on either side of the central maximum is:\n\n(A) 3 mm\n(B) 6 mm\n(C) 1.5 mm\n(D) 9 mm",
+    "back": "**Answer: (B) 6 mm**\n\nWidth of central maximum = \\frac{2D\\lambda}{b}\n= \\frac{2 \\times 1.5 \\times 600 \\times 10^{-9}}{0.3 \\times 10^{-3}}\n= \\frac{1.8 \\times 10^{-6}}{3 \\times 10^{-4}}\n= 6 \\times 10^{-3}\\text{ m} = 6\\text{ mm}\n\nThis is the distance between the first minima on either side (= full width of central maximum).",
+    "tags": ["wave-optics", "diffraction"]
+  },
+  {
+    "id": "wo-mcq-07",
+    "type": "mcq",
+    "front": "In a YDSE, the ratio of intensities of bright and dark fringes is 9. The ratio of amplitudes of the two interfering waves is:\n\n(A) 3:1\n(B) 9:1\n(C) 2:1\n(D) 4:1",
+    "back": "**Answer: (C) 2:1**\n\n\\frac{I_{max}}{I_{min}} = \\left(\\frac{r+1}{r-1}\\right)^2 = 9\n\n\\frac{r+1}{r-1} = 3\n\\Rightarrow r + 1 = 3r - 3\n\\Rightarrow 2r = 4 \\Rightarrow r = 2\n\nRatio of amplitudes A_1 : A_2 = r : 1 = **2 : 1**",
+    "tags": ["wave-optics", "interference"]
+  },
+  {
+    "id": "wo-mcq-08",
+    "type": "mcq",
+    "front": "The Brewster's angle for light passing from water (n = 4/3) into glass (n = 3/2) is:\n\n(A) \\tan^{-1}(2)\n(B) \\tan^{-1}(9/8)\n(C) \\tan^{-1}(8/9)\n(D) \\tan^{-1}(1/2)",
+    "back": "**Answer: (B) \\tan^{-1}(9/8)**\n\n\\tan\\theta_B = \\frac{n_{glass}}{n_{water}} = \\frac{3/2}{4/3} = \\frac{3}{2} \\times \\frac{3}{4} = \\frac{9}{8}\n\n\\therefore \\theta_B = \\tan^{-1}\\!\\left(\\frac{9}{8}\\right) \\approx 48.4°\n\nNote: When light travels from medium 1 to medium 2, \\tan\\theta_B = n_2/n_1.",
+    "tags": ["wave-optics", "polarization"]
+  },
+  {
+    "id": "wo-mcq-09",
+    "type": "mcq",
+    "front": "In a Fresnel biprism experiment, the base angle of the biprism is 1° and its refractive index is 1.5. The source is 0.2 m from the biprism and the screen is 1.8 m from the biprism. For \\lambda = 589 nm, the fringe width is approximately:\n\n(A) 0.24 mm\n(B) 0.48 mm\n(C) 0.12 mm\n(D) 0.96 mm",
+    "back": "**Answer: (A) 0.24 mm**\n\n\\alpha = 1° = \\frac{\\pi}{180}\\text{ rad} \\approx 0.01745\\text{ rad}\n\nd = 2a(\\mu-1)\\alpha = 2 \\times 0.2 \\times 0.5 \\times 0.01745 = 3.49 \\times 10^{-3}\\text{ m}\n\nD = 0.2 + 1.8 = 2.0\\text{ m}\n\n\\omega = \\frac{D\\lambda}{d} = \\frac{2.0 \\times 589 \\times 10^{-9}}{3.49 \\times 10^{-3}} \\approx 3.38 \\times 10^{-4}\\text{ m} \\approx 0.24\\text{ mm (to 2 s.f.)}",
+    "tags": ["wave-optics", "fresnel-biprism"]
+  },
+  {
+    "id": "wo-mcq-10",
+    "type": "mcq",
+    "front": "In a YDSE with monochromatic light, the 10th bright fringe is observed at 4.0 mm from the central maximum. If the wavelength is changed to 3/4 of the original, the 10th bright fringe will be found at:\n\n(A) 3.0 mm\n(B) 4.0 mm\n(C) 5.3 mm\n(D) 2.0 mm",
+    "back": "**Answer: (A) 3.0 mm**\n\nPosition of nth bright fringe: x_n = \\frac{nD\\lambda}{d}\n\nx_n \\propto \\lambda \\quad (n, D, d\\text{ unchanged})\n\n\\frac{x'_{10}}{x_{10}} = \\frac{\\lambda'}{\\lambda} = \\frac{3}{4}\n\nx'_{10} = 4.0 \\times \\frac{3}{4} = \\mathbf{3.0\\text{ mm}}",
+    "tags": ["wave-optics", "ydse"]
+  }
+]

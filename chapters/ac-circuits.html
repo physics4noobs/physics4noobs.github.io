@@ -83,11 +83,17 @@
       <div class="ch-nav">
         <a href="#ac-basics">AC Basics</a>
         <a href="#ac-through-rlc">AC Through R, L, C</a>
+        <a href="#phasor-diagrams">Phasor Diagrams</a>
         <a href="#series-lcr">Series LCR Circuit</a>
         <a href="#resonance">Resonance</a>
         <a href="#power-in-ac">Power in AC</a>
+        <a href="#power-individual-elements">Power: L &amp; C</a>
+        <a href="#parallel-rc">Parallel RC</a>
+        <a href="#parallel-rl">Parallel RL</a>
+        <a href="#parallel-lcr">Parallel LCR</a>
         <a href="#transformers">Transformers</a>
         <a href="#lc-oscillations">LC Oscillations</a>
+        <a href="#key-formulas">Key Formulas</a>
       </div>
     </div>
 
@@ -171,26 +177,99 @@
       <p>
         Capacitive reactance decreases with frequency: at high frequencies, a capacitor easily passes AC. At DC (f = 0), X<sub>C</sub> = &infin; and the capacitor blocks current completely (open circuit).
       </p>
-
-      <h3>Phasor Diagrams</h3>
-      <p>
-        Phasors are rotating vectors used to represent sinusoidally varying quantities. The length of the phasor represents the amplitude, and the angle with the reference axis represents the phase. Key phasor relationships:
-      </p>
-      <ul>
-        <li><strong>Resistor:</strong> V<sub>R</sub> and I are in phase (same direction).</li>
-        <li><strong>Inductor:</strong> V<sub>L</sub> leads I by 90&deg; (V<sub>L</sub> phasor is 90&deg; ahead of I).</li>
-        <li><strong>Capacitor:</strong> V<sub>C</sub> lags I by 90&deg; (V<sub>C</sub> phasor is 90&deg; behind I).</li>
-      </ul>
       <p>
         A useful mnemonic: <strong>"CIVIL"</strong> &mdash; in a <strong>C</strong>apacitor, <strong>I</strong> leads <strong>V</strong>; in an inductor (<strong>L</strong>), <strong>V</strong> leads <strong>I</strong>.
       </p>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 3: Series LCR Circuit -->
+    <!-- SECTION 3: Phasor Diagrams -->
+    <!-- ============================== -->
+    <div class="theory-section" id="phasor-diagrams">
+      <h2>3. Phasor Diagrams and AC Circuit Analysis</h2>
+
+      <h3>What is a Phasor?</h3>
+      <p>
+        A phasor is a rotating vector used to represent a sinusoidally varying quantity. The length of the phasor represents the <strong>RMS amplitude</strong> of the quantity, and the angle it makes with a reference direction represents the <strong>phase</strong>. As time progresses, the phasor rotates counterclockwise at angular frequency &omega;, and the instantaneous value of the quantity is the projection of the phasor onto the vertical (or horizontal) axis.
+      </p>
+      <p>
+        All values shown in phasor diagrams are <strong>RMS values</strong>. Phasor addition follows the parallelogram (vector addition) law, which greatly simplifies analysis of AC circuits.
+      </p>
+
+      <h3>Phase Relationships in Basic Elements</h3>
+      <ul>
+        <li><strong>Resistor:</strong> V<sub>R</sub> and I are in phase (same direction in phasor diagram). V<sub>R</sub> = IR.</li>
+        <li><strong>Inductor:</strong> V<sub>L</sub> leads I by 90&deg; (V<sub>L</sub> phasor is 90&deg; ahead of I phasor). V<sub>L</sub> = IX<sub>L</sub>.</li>
+        <li><strong>Capacitor:</strong> V<sub>C</sub> lags I by 90&deg; (V<sub>C</sub> phasor is 90&deg; behind I phasor). V<sub>C</sub> = IX<sub>C</sub>.</li>
+      </ul>
+
+      <h3>Phasor Diagram for Series RC Circuit</h3>
+      <p>
+        In a series RC circuit, the current I is common to both elements. Taking I as the reference phasor (along the positive x-axis):
+      </p>
+      <ul>
+        <li>V<sub>R</sub> is along the same direction as I (0&deg;).</li>
+        <li>V<sub>C</sub> points downward, perpendicular to I (&minus;90&deg;).</li>
+        <li>The resultant voltage V = &radic;(V<sub>R</sub>&sup2; + V<sub>C</sub>&sup2;) lags the current by angle &phi; = tan<sup>&minus;1</sup>(V<sub>C</sub>/V<sub>R</sub>) = tan<sup>&minus;1</sup>(X<sub>C</sub>/R).</li>
+      </ul>
+      <div class="formula-box">
+        Series RC: Z = &radic;(R&sup2; + X<sub>C</sub>&sup2;)<br>
+        &phi; = tan<sup>&minus;1</sup>(X<sub>C</sub>/R) &nbsp; (voltage lags current)
+      </div>
+
+      <h3>Phasor Diagram for Series RL Circuit</h3>
+      <p>
+        In a series RL circuit, taking I as the reference phasor:
+      </p>
+      <ul>
+        <li>V<sub>R</sub> is along I (0&deg;).</li>
+        <li>V<sub>L</sub> points upward, perpendicular to I (+90&deg;).</li>
+        <li>The resultant voltage V leads the current by angle &phi; = tan<sup>&minus;1</sup>(V<sub>L</sub>/V<sub>R</sub>) = tan<sup>&minus;1</sup>(X<sub>L</sub>/R).</li>
+      </ul>
+      <div class="formula-box">
+        Series RL: Z = &radic;(R&sup2; + X<sub>L</sub>&sup2;)<br>
+        &phi; = tan<sup>&minus;1</sup>(X<sub>L</sub>/R) &nbsp; (voltage leads current)
+      </div>
+
+      <h3>Phasor Diagram for Series LCR Circuit</h3>
+      <p>
+        In a series LCR circuit, V<sub>L</sub> and V<sub>C</sub> are exactly 180&deg; apart and partially cancel each other. The resultant reactive voltage is |V<sub>L</sub> &minus; V<sub>C</sub>|, and the total voltage is:
+      </p>
+      <div class="formula-box">
+        V = &radic;[V<sub>R</sub>&sup2; + (V<sub>L</sub> &minus; V<sub>C</sub>)&sup2;]<br>
+        &phi; = tan<sup>&minus;1</sup>[(X<sub>L</sub> &minus; X<sub>C</sub>) / R]<br><br>
+        If X<sub>L</sub> &gt; X<sub>C</sub>: circuit is inductive, V leads I<br>
+        If X<sub>C</sub> &gt; X<sub>L</sub>: circuit is capacitive, I leads V<br>
+        If X<sub>L</sub> = X<sub>C</sub>: resonance, V and I in phase
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 1 &mdash; Phasor Analysis of a Series RC Circuit</div>
+        <p>
+          An RC series circuit has V<sub>rms</sub> = 141.5 V, V<sub>R</sub> = 81.2 V, and V<sub>C</sub> = 116 V. Verify the source voltage using phasor addition and find the phase angle between V and I.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Taking current I as the reference phasor:<br>
+            &bull; V<sub>R</sub> = 81.2 V is along I (0&deg;)<br>
+            &bull; V<sub>C</sub> = 116 V lags I by 90&deg; (points downward)<br><br>
+            Resultant source voltage (phasor sum):<br>
+            V = &radic;(V<sub>R</sub>&sup2; + V<sub>C</sub>&sup2;) = &radic;(81.2&sup2; + 116&sup2;)<br>
+            V = &radic;(6593.4 + 13456) = &radic;20049.4 &asymp; <strong>141.6 V</strong> &nbsp; (matches given 141.5 V)<br><br>
+            Phase angle:<br>
+            &phi; = tan<sup>&minus;1</sup>(V<sub>C</sub>/V<sub>R</sub>) = tan<sup>&minus;1</sup>(116/81.2) = tan<sup>&minus;1</sup>(1.429) &asymp; <strong>55&deg;</strong><br><br>
+            Conclusion: The source voltage lags the current by 55&deg; (capacitive circuit).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Series LCR Circuit -->
     <!-- ============================== -->
     <div class="theory-section" id="series-lcr">
-      <h2>3. Series LCR Circuit</h2>
+      <h2>4. Series LCR Circuit</h2>
 
       <h3>Impedance</h3>
       <p>
@@ -225,7 +304,7 @@
       </ul>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 1</div>
+        <div class="ex-label">Example 2 &mdash; Series LCR Impedance and Phase Angle</div>
         <p>
           A series LCR circuit has R = 100 &Omega;, L = 0.5 H, and C = 10 &mu;F. It is connected to a 200 V, 50 Hz AC source. Find the impedance, current, and phase angle. Also find the voltage across each element.
         </p>
@@ -252,10 +331,10 @@
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 4: Resonance -->
+    <!-- SECTION 5: Resonance -->
     <!-- ============================== -->
     <div class="theory-section" id="resonance">
-      <h2>4. Resonance in Series LCR Circuit</h2>
+      <h2>5. Resonance in Series LCR Circuit</h2>
 
       <h3>Resonance Condition</h3>
       <p>
@@ -294,10 +373,10 @@
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 5: Power in AC -->
+    <!-- SECTION 6: Power in AC -->
     <!-- ============================== -->
     <div class="theory-section" id="power-in-ac">
-      <h2>5. Power in AC Circuits</h2>
+      <h2>6. Power in AC Circuits</h2>
 
       <h3>Instantaneous and Average Power</h3>
       <p>
@@ -335,7 +414,7 @@
       </div>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 2</div>
+        <div class="ex-label">Example 3 &mdash; Power and Power Factor in a Resonant LCR Circuit</div>
         <p>
           A series LCR circuit with R = 50 &Omega; is at resonance with a 100 V RMS AC source. The quality factor is Q = 10. Find the RMS current, the power dissipated, the voltage across the inductor, and the power factor.
         </p>
@@ -355,10 +434,201 @@
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 6: Transformers -->
+    <!-- SECTION 7: Power in L and C   -->
+    <!-- ============================== -->
+    <div class="theory-section" id="power-individual-elements">
+      <h2>7. Average Power Across Individual Reactive Elements</h2>
+
+      <h3>Average Power Across a Resistor</h3>
+      <p>
+        The resistor is the only element that dissipates energy in an AC circuit. Power in the resistor is always positive (energy always flows from source to resistor):
+      </p>
+      <div class="formula-box">
+        P<sub>R</sub> = I<sub>rms</sub>&sup2; &times; R = V<sub>R,rms</sub>&sup2; / R
+      </div>
+
+      <h3>Average Power Across an Ideal Inductor</h3>
+      <p>
+        In an ideal inductor, the current lags the voltage by exactly 90&deg;. During the first quarter cycle, the inductor absorbs energy from the source (storing it in its magnetic field). During the next quarter cycle, it returns this energy back to the circuit. There is no net energy dissipation:
+      </p>
+      <div class="formula-box">
+        P<sub>L,avg</sub> = V<sub>L,rms</sub> &times; I<sub>rms</sub> &times; cos(90&deg;) = <strong>0 W</strong>
+      </div>
+      <p>
+        The inductor is a purely <strong>reactive (non-dissipative)</strong> element. It temporarily stores energy in its magnetic field and releases it back, acting as an energy reservoir rather than a consumer. This is why the voltage and current being 90&deg; out of phase makes the time-averaged power exactly zero.
+      </p>
+
+      <h3>Average Power Across an Ideal Capacitor</h3>
+      <p>
+        Similarly, in an ideal capacitor, the current leads the voltage by exactly 90&deg;. During the first quarter cycle, the capacitor charges and absorbs energy (stored in its electric field). During the next quarter cycle, it discharges and returns this energy to the circuit:
+      </p>
+      <div class="formula-box">
+        P<sub>C,avg</sub> = V<sub>C,rms</sub> &times; I<sub>rms</sub> &times; cos(90&deg;) = <strong>0 W</strong>
+      </div>
+      <p>
+        Like the inductor, the capacitor is a purely <strong>reactive (non-dissipative)</strong> element. It stores and releases energy cyclically with zero net dissipation over a complete cycle.
+      </p>
+      <p>
+        <strong>Summary:</strong> Only the resistor dissipates power (P = I&sup2;R). Ideal inductors and capacitors store and return energy with zero average power dissipation. Real inductors have some resistance, so they do dissipate a small amount of energy.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Parallel RC -->
+    <!-- ============================== -->
+    <div class="theory-section" id="parallel-rc">
+      <h2>8. Parallel RC Circuit</h2>
+
+      <h3>Circuit Characteristics</h3>
+      <p>
+        In a parallel RC circuit, the same AC voltage V is applied across both the resistor and the capacitor. Each branch carries its own current, which are out of phase with each other. The total current is the phasor (vector) sum of the two branch currents.
+      </p>
+      <ul>
+        <li>Current through R: I<sub>R</sub> = V/R &mdash; <strong>in phase</strong> with V.</li>
+        <li>Current through C: I<sub>C</sub> = V/X<sub>C</sub> = V&omega;C &mdash; <strong>leads</strong> V by 90&deg;.</li>
+        <li>Since I<sub>R</sub> and I<sub>C</sub> are 90&deg; apart, total current is found by Pythagoras.</li>
+      </ul>
+
+      <h3>Impedance and Phase Angle</h3>
+      <div class="formula-box">
+        Total current: I = &radic;(I<sub>R</sub>&sup2; + I<sub>C</sub>&sup2;)<br><br>
+        Since I = V/Z:<br>
+        1/Z = &radic;(1/R&sup2; + 1/X<sub>C</sub>&sup2;) = &radic;(1/R&sup2; + &omega;&sup2;C&sup2;)<br><br>
+        Phase angle: tan&phi; = I<sub>C</sub>/I<sub>R</sub> = R/X<sub>C</sub> = &omega;RC<br>
+        &phi; = tan<sup>&minus;1</sup>(&omega;RC)<br><br>
+        The total current <strong>leads</strong> the voltage by &phi;.
+      </div>
+      <p>
+        Note: In a parallel circuit, the admittance Y = 1/Z is more convenient than impedance. The impedance of a parallel combination is always <em>less</em> than either branch impedance alone.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Example 4 &mdash; Parallel RC Circuit Analysis</div>
+        <p>
+          In a parallel RC circuit connected to a 100 V, 50 Hz supply, R = 200 &Omega; and C = 10 &mu;F. Find the branch currents, total current, impedance, and phase angle.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            V<sub>rms</sub> = 100 V, f = 50 Hz, R = 200 &Omega;, C = 10 &times; 10<sup>&minus;6</sup> F<br>
+            &omega; = 2&pi; &times; 50 = 100&pi; rad/s<br><br>
+            X<sub>C</sub> = 1/(&omega;C) = 1/(100&pi; &times; 10<sup>&minus;5</sup>) = 1000/&pi; &asymp; 318.3 &Omega;<br><br>
+            Branch currents:<br>
+            I<sub>R</sub> = V/R = 100/200 = <strong>0.5 A</strong> (in phase with V)<br>
+            I<sub>C</sub> = V/X<sub>C</sub> = 100/318.3 &asymp; <strong>0.314 A</strong> (leads V by 90&deg;)<br><br>
+            Total current:<br>
+            I = &radic;(I<sub>R</sub>&sup2; + I<sub>C</sub>&sup2;) = &radic;(0.25 + 0.0986) = &radic;0.3486 &asymp; <strong>0.590 A</strong><br><br>
+            Impedance: Z = V/I = 100/0.590 &asymp; <strong>169.5 &Omega;</strong><br><br>
+            Phase angle:<br>
+            tan&phi; = I<sub>C</sub>/I<sub>R</sub> = 0.314/0.5 = 0.628<br>
+            &phi; = tan<sup>&minus;1</sup>(0.628) &asymp; <strong>32.1&deg;</strong><br>
+            Total current leads voltage by 32.1&deg;.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 9: Parallel RL -->
+    <!-- ============================== -->
+    <div class="theory-section" id="parallel-rl">
+      <h2>9. Parallel RL Circuit</h2>
+
+      <h3>Circuit Characteristics</h3>
+      <p>
+        In a parallel RL circuit, the same AC voltage V is applied across both the resistor and the inductor. The two branch currents are 90&deg; out of phase with each other:
+      </p>
+      <ul>
+        <li>Current through R: I<sub>R</sub> = V/R &mdash; <strong>in phase</strong> with V.</li>
+        <li>Current through L: I<sub>L</sub> = V/X<sub>L</sub> = V/(&omega;L) &mdash; <strong>lags</strong> V by 90&deg;.</li>
+        <li>The total current lags the voltage (unlike series RL, where the voltage leads the current).</li>
+      </ul>
+
+      <h3>Impedance and Phase Angle</h3>
+      <div class="formula-box">
+        Total current: I = &radic;(I<sub>R</sub>&sup2; + I<sub>L</sub>&sup2;)<br><br>
+        1/Z = &radic;(1/R&sup2; + 1/X<sub>L</sub>&sup2;) = &radic;(1/R&sup2; + 1/(&omega;L)&sup2;)<br><br>
+        Phase angle: tan&phi; = I<sub>L</sub>/I<sub>R</sub> = R/X<sub>L</sub> = R/(&omega;L)<br>
+        &phi; = tan<sup>&minus;1</sup>(R/(&omega;L))<br><br>
+        The total current <strong>lags</strong> the voltage by &phi;.
+      </div>
+      <p>
+        Comparing with series RL: in a series RL circuit the voltage <em>leads</em> the current by tan<sup>&minus;1</sup>(X<sub>L</sub>/R). In a parallel RL circuit, the current <em>lags</em> the voltage by tan<sup>&minus;1</sup>(R/X<sub>L</sub>). At higher frequencies, X<sub>L</sub> increases, making R/X<sub>L</sub> smaller and the phase lag decreases.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Example 5 &mdash; Parallel RL vs. Parallel RC Comparison</div>
+        <p>
+          A parallel RL circuit has I<sub>R</sub> = 0.8 A and I<sub>L</sub> = 0.6 A. A parallel RC circuit has I<sub>R</sub> = 0.8 A and I<sub>C</sub> = 0.6 A. Compare the total currents and phase angles in both cases.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Parallel RL:</strong><br>
+            I<sub>total</sub> = &radic;(I<sub>R</sub>&sup2; + I<sub>L</sub>&sup2;) = &radic;(0.64 + 0.36) = &radic;1.00 = <strong>1.0 A</strong><br>
+            tan&phi; = I<sub>L</sub>/I<sub>R</sub> = 0.6/0.8 = 0.75<br>
+            &phi; = tan<sup>&minus;1</sup>(0.75) &asymp; <strong>36.87&deg;</strong> &mdash; current <em>lags</em> voltage<br><br>
+            <strong>Parallel RC:</strong><br>
+            I<sub>total</sub> = &radic;(I<sub>R</sub>&sup2; + I<sub>C</sub>&sup2;) = &radic;(0.64 + 0.36) = &radic;1.00 = <strong>1.0 A</strong><br>
+            tan&phi; = I<sub>C</sub>/I<sub>R</sub> = 0.6/0.8 = 0.75<br>
+            &phi; = tan<sup>&minus;1</sup>(0.75) &asymp; <strong>36.87&deg;</strong> &mdash; current <em>leads</em> voltage<br><br>
+            <strong>Key difference:</strong> Both circuits give the same magnitude of total current and phase angle, but the phase direction is opposite &mdash; RL is lagging (inductive) while RC is leading (capacitive).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 10: Parallel LCR -->
+    <!-- ============================== -->
+    <div class="theory-section" id="parallel-lcr">
+      <h2>10. Parallel LCR Circuit</h2>
+
+      <h3>Circuit Characteristics</h3>
+      <p>
+        In a parallel LCR circuit, the same voltage V is applied across all three branches. Each branch draws its own current:
+      </p>
+      <ul>
+        <li>I<sub>R</sub> = V/R &mdash; in phase with V.</li>
+        <li>I<sub>L</sub> = V/X<sub>L</sub> &mdash; lags V by 90&deg;.</li>
+        <li>I<sub>C</sub> = V/X<sub>C</sub> &mdash; leads V by 90&deg;.</li>
+      </ul>
+      <p>
+        Since I<sub>L</sub> and I<sub>C</sub> are exactly 180&deg; apart, they partially cancel. The net reactive current is |I<sub>C</sub> &minus; I<sub>L</sub>|, and the total current is found by phasor addition with I<sub>R</sub>:
+      </p>
+      <div class="formula-box">
+        When I<sub>C</sub> &gt; I<sub>L</sub> (capacitive): I = &radic;[I<sub>R</sub>&sup2; + (I<sub>C</sub> &minus; I<sub>L</sub>)&sup2;]<br>
+        When I<sub>L</sub> &gt; I<sub>C</sub> (inductive): I = &radic;[I<sub>R</sub>&sup2; + (I<sub>L</sub> &minus; I<sub>C</sub>)&sup2;]<br>
+        When I<sub>C</sub> = I<sub>L</sub> (resonance): I = I<sub>R</sub><br><br>
+        Admittance: 1/Z = &radic;[1/R&sup2; + (1/X<sub>C</sub> &minus; 1/X<sub>L</sub>)&sup2;]<br>
+        Phase angle: tan&phi; = (I<sub>C</sub> &minus; I<sub>L</sub>)/I<sub>R</sub>
+      </div>
+
+      <h3>Parallel Resonance</h3>
+      <p>
+        Resonance in a parallel LCR circuit occurs when I<sub>L</sub> = I<sub>C</sub>, which means 1/X<sub>L</sub> = 1/X<sub>C</sub>, i.e., X<sub>L</sub> = X<sub>C</sub> &mdash; the same condition as series resonance:
+      </p>
+      <div class="formula-box">
+        At parallel resonance: &omega;<sub>0</sub> = 1/&radic;(LC)<br><br>
+        At resonance:<br>
+        &bull; Impedance Z is <strong>maximum</strong> (= R)<br>
+        &bull; Current I is <strong>minimum</strong> (= I<sub>R</sub> only)<br>
+        &bull; I<sub>L</sub> and I<sub>C</sub> are equal and cancel out (they still circulate within the LC loop)<br>
+        &bull; Phase angle &phi; = 0 (V and I in phase)
+      </div>
+      <p>
+        This is the opposite of series resonance, where impedance is <em>minimum</em> and current is <em>maximum</em>. Parallel resonance is used in circuits where high impedance at a specific frequency is needed (e.g., tank circuits in oscillators, filters).
+      </p>
+
+      <p>
+        Note: In a parallel LCR circuit at resonance, large currents I<sub>L</sub> = I<sub>C</sub> circulate within the LC loop (tank circuit), even though the total current drawn from the source is small (just I<sub>R</sub>). This circulating current can be Q times the source current, where Q is the quality factor.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 11: Transformers -->
     <!-- ============================== -->
     <div class="theory-section" id="transformers">
-      <h2>6. Transformers</h2>
+      <h2>11. Transformers</h2>
 
       <h3>Principle</h3>
       <p>
@@ -409,10 +679,10 @@
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 7: LC Oscillations -->
+    <!-- SECTION 12: LC Oscillations -->
     <!-- ============================== -->
     <div class="theory-section" id="lc-oscillations">
-      <h2>7. LC Oscillations</h2>
+      <h2>12. LC Oscillations</h2>
 
       <h3>Principle</h3>
       <p>
@@ -474,7 +744,7 @@
       </div>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 3</div>
+        <div class="ex-label">Example 6 &mdash; LC Oscillation: Frequency, Peak Current, and Energy</div>
         <p>
           An LC circuit has L = 20 mH and C = 50 &mu;F. The capacitor is initially charged to 100 &mu;C. Find the resonant frequency, peak current, and the total energy of the circuit.
         </p>
@@ -491,6 +761,78 @@
             Verification: &frac12;LI<sub>0</sub>&sup2; = &frac12;(0.02)(0.01) = 10<sup>&minus;4</sup> J (matches)
           </p>
         </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 13: Key Formulas -->
+    <!-- ============================== -->
+    <div class="theory-section" id="key-formulas">
+      <h2>13. Key Formulas Summary</h2>
+
+      <h3>AC Representation and Values</h3>
+      <div class="formula-box">
+        Instantaneous: I = I<sub>0</sub> sin(&omega;t + &phi;), &nbsp; V = V<sub>0</sub> sin(&omega;t)<br>
+        Angular frequency: &omega; = 2&pi;f = 2&pi;/T<br>
+        RMS values: V<sub>rms</sub> = V<sub>0</sub>/&radic;2, &nbsp; I<sub>rms</sub> = I<sub>0</sub>/&radic;2<br>
+        Half-cycle average: V<sub>avg</sub> = 2V<sub>0</sub>/&pi; &asymp; 0.637 V<sub>0</sub>
+      </div>
+
+      <h3>Reactances</h3>
+      <div class="formula-box">
+        Inductive reactance: X<sub>L</sub> = &omega;L &nbsp; (&Omega;) &nbsp; [increases with f]<br>
+        Capacitive reactance: X<sub>C</sub> = 1/(&omega;C) &nbsp; (&Omega;) &nbsp; [decreases with f]
+      </div>
+
+      <h3>Series Circuits</h3>
+      <div class="formula-box">
+        Series RC: Z = &radic;(R&sup2; + X<sub>C</sub>&sup2;), &nbsp; tan&phi; = X<sub>C</sub>/R &nbsp; (V lags I)<br>
+        Series RL: Z = &radic;(R&sup2; + X<sub>L</sub>&sup2;), &nbsp; tan&phi; = X<sub>L</sub>/R &nbsp; (V leads I)<br>
+        Series LCR: Z = &radic;[R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;], &nbsp; tan&phi; = (X<sub>L</sub> &minus; X<sub>C</sub>)/R
+      </div>
+
+      <h3>Parallel Circuits</h3>
+      <div class="formula-box">
+        Parallel RC: 1/Z = &radic;(1/R&sup2; + &omega;&sup2;C&sup2;), &nbsp; tan&phi; = &omega;RC &nbsp; (I leads V)<br>
+        Parallel RL: 1/Z = &radic;(1/R&sup2; + 1/(&omega;L)&sup2;), &nbsp; tan&phi; = R/(&omega;L) &nbsp; (I lags V)<br>
+        Parallel LCR: 1/Z = &radic;[1/R&sup2; + (1/X<sub>C</sub> &minus; 1/X<sub>L</sub>)&sup2;]
+      </div>
+
+      <h3>Resonance (Series and Parallel)</h3>
+      <div class="formula-box">
+        Condition: X<sub>L</sub> = X<sub>C</sub> &nbsp;&rArr;&nbsp; &omega;<sub>0</sub> = 1/&radic;(LC)<br>
+        Resonant frequency: f<sub>0</sub> = 1/(2&pi;&radic;LC)<br>
+        Series resonance: Z<sub>min</sub> = R, &nbsp; I<sub>max</sub> = V/R, &nbsp; &phi; = 0<br>
+        Parallel resonance: Z<sub>max</sub> = R, &nbsp; I<sub>min</sub> = V/R, &nbsp; &phi; = 0<br>
+        Quality factor: Q = &omega;<sub>0</sub>L/R = 1/(&omega;<sub>0</sub>CR) = (1/R)&radic;(L/C)<br>
+        Bandwidth: &Delta;&omega; = R/L, &nbsp; Q = &omega;<sub>0</sub>/&Delta;&omega;
+      </div>
+
+      <h3>Power in AC Circuits</h3>
+      <div class="formula-box">
+        Average power: P<sub>avg</sub> = V<sub>rms</sub>I<sub>rms</sub> cos&phi;<br>
+        Power factor: cos&phi; = R/Z<br>
+        Power in resistor: P<sub>R</sub> = I<sub>rms</sub>&sup2; R<br>
+        Power in ideal L or C: P<sub>L</sub> = P<sub>C</sub> = 0<br>
+        Apparent power: S = V<sub>rms</sub>I<sub>rms</sub> (VA)<br>
+        Reactive power: Q<sub>p</sub> = V<sub>rms</sub>I<sub>rms</sub> sin&phi; (VAR)<br>
+        Wattless current: I<sub>rms</sub> sin&phi;
+      </div>
+
+      <h3>Transformers</h3>
+      <div class="formula-box">
+        Turns ratio: V<sub>s</sub>/V<sub>p</sub> = N<sub>s</sub>/N<sub>p</sub> = I<sub>p</sub>/I<sub>s</sub><br>
+        Ideal transformer: V<sub>p</sub>I<sub>p</sub> = V<sub>s</sub>I<sub>s</sub><br>
+        Efficiency: &eta; = P<sub>out</sub>/P<sub>in</sub> = V<sub>s</sub>I<sub>s</sub>/(V<sub>p</sub>I<sub>p</sub>)<br>
+        Transmission loss: P<sub>loss</sub> = I&sup2;R = (P/V)&sup2;R
+      </div>
+
+      <h3>LC Oscillations</h3>
+      <div class="formula-box">
+        Charge: q(t) = Q<sub>0</sub> cos(&omega;t), &nbsp; &omega; = 1/&radic;(LC)<br>
+        Current: I(t) = &minus;Q<sub>0</sub>&omega; sin(&omega;t), &nbsp; I<sub>0</sub> = Q<sub>0</sub>/&radic;(LC)<br>
+        Total energy: U = Q<sub>0</sub>&sup2;/(2C) = &frac12;LI<sub>0</sub>&sup2;<br>
+        Damped oscillation: q(t) = Q<sub>0</sub> e<sup>&minus;Rt/(2L)</sup> cos(&omega;'t)
       </div>
     </div>
 

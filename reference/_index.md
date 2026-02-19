@@ -32,17 +32,17 @@ VMC Physics Class 11 & 12 JEE (Modules + Workbooks + Solutions)
 ### Session 4 (Completed)
 | Chapter | File | Status | Content |
 |---|---|---|---|
-| Electrostatics | `electrostatics.md` | Done | Theory (24 concepts: Coulomb, Gauss, potential, capacitance) + questions placeholder |
-| Current Electricity | `current-electricity.md` | Done | Theory (13 concepts: Ohm's law, Kirchhoff, Wheatstone, potentiometer) + questions placeholder |
-| Magnetism | `magnetism.md` | Done | Theory (30 concepts: Biot-Savart, Ampere, Lorentz, galvanometer, materials) + questions placeholder |
+| Electrostatics | `electrostatics.md` | Done | Theory (24 concepts: Coulomb, Gauss, potential, capacitance) + 165+ Electrostatics questions + 115+ Capacitor questions + JEE archives with keys |
+| Current Electricity | `current-electricity.md` | Done | Theory (13 concepts: Ohm's law, Kirchhoff, Wheatstone, potentiometer) + 200+ questions (L0-L2, Misc, JEE Main/Advanced archives with keys) |
+| Magnetism | `magnetism.md` | Done | Theory (30 concepts: Biot-Savart, Ampere, Lorentz, galvanometer, materials) + 200+ questions (L0-L2, Misc, JEE Main/Advanced archives with keys) |
 
-### Session 5 (Pending)
-| Chapter | File | Status |
-|---|---|---|
-| EMI | `emi.md` | Pending |
-| AC Circuits | `ac-circuits.md` | Pending |
-| Ray Optics | `ray-optics.md` | Pending |
-| Wave Optics | `wave-optics.md` | Pending |
+### Session 5 (Completed)
+| Chapter | File | Status | Content |
+|---|---|---|---|
+| EMI | `emi.md` | Done | Theory (15 concepts: Faraday, Lenz, motional EMF, inductance, RL/LC circuits) + 270+ questions (L0-L2, Misc, JEE Main/Advanced archives with keys) |
+| AC Circuits | `ac-circuits.md` | Done | Theory (15 concepts: RMS, reactance, LCR series/parallel, resonance, power, transformers) + 150+ questions (L0-L2, Misc, JEE Main/Advanced archives with keys) |
+| Ray Optics | `ray-optics.md` | Done | Theory (18 concepts: mirrors, refraction, TIR, prism, lenses, aberration, instruments) + 200+ questions (L0-L2, JEE Main/Advanced archives with keys) |
+| Wave Optics | `wave-optics.md` | Done | Theory (15 concepts: YDSE, interference, diffraction, polarization, Brewster, Malus) + 170+ questions (L0-L2, JEE Main/Advanced archives with keys) |
 
 ### Session 6 (Pending)
 | Chapter | File | Status |

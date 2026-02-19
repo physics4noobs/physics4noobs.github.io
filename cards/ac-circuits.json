@@ -1,0 +1,247 @@
+[
+  {
+    "id": "ac-f-01",
+    "type": "formula",
+    "front": "RMS and Average Values of AC Current and Voltage",
+    "back": "**RMS (Effective) Values:**\nI_{rms} = \\frac{I_0}{\\sqrt{2}} = 0.707\\, I_0\n\nV_{rms} = \\frac{V_0}{\\sqrt{2}} = 0.707\\, V_0\n\n**Average (Half-Cycle) Values:**\nI_{avg} = \\frac{2I_0}{\\pi} = 0.637\\, I_0\n\nV_{avg} = \\frac{2V_0}{\\pi} = 0.637\\, V_0\n\n**Note:** Full-cycle average = 0 (positive and negative halves cancel)",
+    "tags": ["ac-circuits", "rms-average"]
+  },
+  {
+    "id": "ac-f-02",
+    "type": "formula",
+    "front": "Inductive Reactance X_L",
+    "back": "X_L = \\omega L = 2\\pi f L\n\n\\omega = \\text{angular frequency (rad/s)}\nL = \\text{inductance (H)}\nf = \\text{frequency (Hz)}\n\nUnits: ohm (\\Omega)\n\n**Behaviour:** X_L \\propto f — increases linearly with frequency\n\nAt DC (f = 0): X_L = 0 (pure wire)\nAt high f: X_L \\to \\infty (blocks AC)",
+    "tags": ["ac-circuits", "reactance"]
+  },
+  {
+    "id": "ac-f-03",
+    "type": "formula",
+    "front": "Capacitive Reactance X_C",
+    "back": "X_C = \\frac{1}{\\omega C} = \\frac{1}{2\\pi f C}\n\n\\omega = \\text{angular frequency (rad/s)}\nC = \\text{capacitance (F)}\n\nUnits: ohm (\\Omega)\n\n**Behaviour:** X_C \\propto \\frac{1}{f} — decreases as frequency increases\n\nAt DC (f = 0): X_C \\to \\infty (blocks DC)\nAt high f: X_C \\to 0 (passes AC freely)",
+    "tags": ["ac-circuits", "reactance"]
+  },
+  {
+    "id": "ac-f-04",
+    "type": "formula",
+    "front": "Impedance of Series LCR Circuit",
+    "back": "Z = \\sqrt{R^2 + (X_L - X_C)^2}\n\nZ = \\sqrt{R^2 + \\left(\\omega L - \\frac{1}{\\omega C}\\right)^2}\n\n**Special cases:**\n- Series RL: Z = \\sqrt{R^2 + \\omega^2 L^2}\n- Series RC: Z = \\sqrt{R^2 + \\frac{1}{\\omega^2 C^2}}\n- At resonance: Z_{min} = R\n\nUnits: ohm (\\Omega)",
+    "tags": ["ac-circuits", "impedance"]
+  },
+  {
+    "id": "ac-f-05",
+    "type": "formula",
+    "front": "Phase Angle in Series LCR Circuit",
+    "back": "\\tan\\theta = \\frac{X_L - X_C}{R} = \\frac{\\omega L - \\frac{1}{\\omega C}}{R}\n\n\\theta = \\tan^{-1}\\!\\left(\\frac{X_L - X_C}{R}\\right)\n\n**Sign convention:**\n- \\theta > 0: X_L > X_C \\Rightarrow \\text{inductive, V leads I}\n- \\theta < 0: X_C > X_L \\Rightarrow \\text{capacitive, I leads V}\n- \\theta = 0: X_L = X_C \\Rightarrow \\text{resonance, V and I in phase}",
+    "tags": ["ac-circuits", "phase-angle"]
+  },
+  {
+    "id": "ac-f-06",
+    "type": "formula",
+    "front": "Resonant Frequency of Series LCR Circuit",
+    "back": "\\text{Condition: } X_L = X_C \\Rightarrow \\omega_0 L = \\frac{1}{\\omega_0 C}\n\n\\omega_0 = \\frac{1}{\\sqrt{LC}} \\quad \\text{(rad/s)}\n\n\\nu_0 = \\frac{1}{2\\pi\\sqrt{LC}} \\quad \\text{(Hz)}\n\n\\text{At resonance:}\n\\quad Z = R \\text{ (minimum)}\n\\quad I_{max} = \\frac{V_{rms}}{R}\n\\quad \\cos\\theta = 1 \\text{ (power factor = 1)}",
+    "tags": ["ac-circuits", "resonance"]
+  },
+  {
+    "id": "ac-f-07",
+    "type": "formula",
+    "front": "Quality Factor (Q-factor) of Series LCR Circuit",
+    "back": "Q = \\frac{\\omega_0 L}{R} = \\frac{1}{\\omega_0 CR} = \\frac{1}{R}\\sqrt{\\frac{L}{C}}\n\n**Physical meaning:**\nQ = \\frac{\\text{resonant frequency}}{\\text{bandwidth}} = \\frac{\\nu_0}{\\Delta\\nu}\n\n**Voltage magnification at resonance:**\nV_L = V_C = Q \\times V_{source}\n\n**Higher Q:** sharper resonance peak, more selective circuit",
+    "tags": ["ac-circuits", "quality-factor"]
+  },
+  {
+    "id": "ac-f-08",
+    "type": "formula",
+    "front": "Bandwidth of Series LCR Circuit",
+    "back": "\\Delta\\omega = \\frac{R}{L} \\quad \\text{(rad/s)}\n\n\\Delta\\nu = \\frac{R}{2\\pi L} \\quad \\text{(Hz)}\n\n\\text{Half-power frequencies: } \\omega_1, \\omega_2 \\text{ where } I = \\frac{I_{max}}{\\sqrt{2}}\n\n\\Delta\\omega = \\omega_2 - \\omega_1\n\n\\text{Relation to Q-factor: } Q = \\frac{\\omega_0}{\\Delta\\omega} = \\frac{\\nu_0}{\\Delta\\nu}",
+    "tags": ["ac-circuits", "bandwidth"]
+  },
+  {
+    "id": "ac-f-09",
+    "type": "formula",
+    "front": "Power Factor in AC Circuit",
+    "back": "\\text{Power factor} = \\cos\\theta = \\frac{R}{Z}\n\n**Cases:**\n- Pure resistor: \\cos\\theta = 1 \\quad (\\theta = 0°)\n- Pure inductor: \\cos\\theta = 0 \\quad (\\theta = 90°)\n- Pure capacitor: \\cos\\theta = 0 \\quad (\\theta = -90°)\n- Series LCR: \\cos\\theta = \\frac{R}{\\sqrt{R^2 + (X_L - X_C)^2}}\n\nRange: 0 \\leq \\cos\\theta \\leq 1",
+    "tags": ["ac-circuits", "power-factor"]
+  },
+  {
+    "id": "ac-f-10",
+    "type": "formula",
+    "front": "Average Power in AC Circuit",
+    "back": "P_{av} = V_{rms}\\, I_{rms}\\cos\\theta\n\nP_{av} = I_{rms}^2\\, R\n\nP_{av} = \\frac{V_{rms}^2 R}{Z^2}\n\n**Special cases:**\n- Resistor only: P = I_{rms}^2 R\n- Pure inductor: P = 0\n- Pure capacitor: P = 0\n- At resonance: P_{max} = \\frac{V_{rms}^2}{R}\n\n\\cos\\theta = \\text{power factor}",
+    "tags": ["ac-circuits", "power"]
+  },
+  {
+    "id": "ac-f-11",
+    "type": "formula",
+    "front": "Wattless (Idle) Current",
+    "back": "\\text{Active (watt-full) component: } I_{rms}\\cos\\theta\n\n\\text{Wattless (reactive) component: } I_{rms}\\sin\\theta\n\n**Power contribution:**\nP = V_{rms} \\cdot (I_{rms}\\cos\\theta) \\quad \\leftarrow \\text{only active part contributes}\n\nP_{wattless\\ component} = 0\n\n\\text{Arises from pure L or C — energy is stored and returned,}\n\\text{not dissipated. Net power = 0.}",
+    "tags": ["ac-circuits", "wattless-current"]
+  },
+  {
+    "id": "ac-f-12",
+    "type": "formula",
+    "front": "Transformer Equations (Turn Ratio)",
+    "back": "\\frac{V_s}{V_p} = \\frac{N_s}{N_p} = \\frac{I_p}{I_s}\n\n\\text{Turn ratio: } n = \\frac{N_s}{N_p}\n\n**Ideal transformer (100% efficiency):**\nP_{input} = P_{output} \\Rightarrow V_p I_p = V_s I_s\n\n**Step-up:** N_s > N_p \\Rightarrow V_s > V_p,\\ I_s < I_p\n**Step-down:** N_s < N_p \\Rightarrow V_s < V_p,\\ I_s > I_p\n\n\\text{Efficiency: } \\eta = \\frac{P_{output}}{P_{input}} \\times 100\\%",
+    "tags": ["ac-circuits", "transformer"]
+  },
+  {
+    "id": "ac-f-13",
+    "type": "formula",
+    "front": "LC Oscillation Frequency and Energy",
+    "back": "\\text{Angular frequency: } \\omega = \\frac{1}{\\sqrt{LC}}\n\n\\text{Frequency: } \\nu = \\frac{1}{2\\pi\\sqrt{LC}}\n\n\\text{Time period: } T = 2\\pi\\sqrt{LC}\n\n**Energy oscillation:**\nU_C = \\frac{q^2}{2C} \\quad (\\text{electric, max when } I = 0)\nU_L = \\frac{1}{2}LI^2 \\quad (\\text{magnetic, max when } q = 0)\n\nU_C + U_L = \\frac{q_0^2}{2C} = \\text{constant (ideal LC)}",
+    "tags": ["ac-circuits", "lc-oscillation"]
+  },
+  {
+    "id": "ac-f-14",
+    "type": "formula",
+    "front": "Impedance of Parallel LCR Circuit",
+    "back": "\\frac{1}{Z} = \\sqrt{\\frac{1}{R^2} + \\left(\\frac{1}{X_C} - \\frac{1}{X_L}\\right)^2}\n\n\\frac{1}{Z} = \\sqrt{\\frac{1}{R^2} + \\left(\\omega C - \\frac{1}{\\omega L}\\right)^2}\n\n\\text{Resonance condition: } I_C = I_L\n\\Rightarrow \\frac{1}{X_C} = \\frac{1}{X_L} \\Rightarrow \\omega_0 = \\frac{1}{\\sqrt{LC}}\n\n\\text{At resonance: } Z = R \\text{ (maximum)}, \\ I = I_R \\text{ (minimum)}",
+    "tags": ["ac-circuits", "parallel-circuit"]
+  },
+  {
+    "id": "ac-f-15",
+    "type": "formula",
+    "front": "General AC Representation and Angular Frequency",
+    "back": "\\text{Instantaneous current: } I = I_0 \\sin(\\omega t + \\phi)\n\\text{Instantaneous voltage: } V = V_0 \\sin(\\omega t + \\phi)\n\n\\omega = 2\\pi\\nu = \\frac{2\\pi}{T}\n\n\\text{where:}\n\\quad I_0, V_0 = \\text{peak (amplitude) values}\n\\quad \\omega = \\text{angular frequency (rad/s)}\n\\quad \\nu = \\text{frequency (Hz)}\n\\quad T = \\text{time period (s)}\n\\quad \\phi = \\text{initial phase angle}",
+    "tags": ["ac-circuits", "ac-representation"]
+  },
+  {
+    "id": "ac-c-01",
+    "type": "concept",
+    "front": "CIVIL mnemonic — Phase relationships in AC circuits",
+    "back": "**CIVIL** — the universal memory aid for AC phase:\n\n**C** — In a **C**apacitor, **I** leads **V** i**L** i**L**\n\nExpanded:\n- **C** I **V** L — **C**apacitor: **I** before **V** (I leads V by 90°)\n- C **V** I **L** — Inductor (**L**): **V** before **I** (V leads I by 90°)\n\n**Summary:**\n- Capacitor: current leads voltage by π/2\n- Inductor: voltage leads current by π/2\n- Resistor: voltage and current are in phase\n\n**Mnemonic sentence:** \"**CIVIL** engineers never lag\"",
+    "tags": ["ac-circuits", "civil-mnemonic"]
+  },
+  {
+    "id": "ac-c-02",
+    "type": "concept",
+    "front": "Resonance in Series LCR: Behaviour and Significance",
+    "back": "**Resonance condition:** X_L = X_C \\Rightarrow \\omega_0 = \\frac{1}{\\sqrt{LC}}\n\n**At resonance:**\n- Impedance is **minimum** (Z = R only)\n- Current is **maximum** (I = V/R)\n- Power factor = 1 (\\cos\\theta = 1)\n- Phase angle \\theta = 0 (V and I in phase)\n- Power dissipated is **maximum**\n\n**Below \\omega_0:** X_C > X_L → circuit is capacitive (I leads V)\n**Above \\omega_0:** X_L > X_C → circuit is inductive (V leads I)\n\nVoltage across L and C can individually exceed the source voltage by a factor Q.",
+    "tags": ["ac-circuits", "resonance"]
+  },
+  {
+    "id": "ac-c-03",
+    "type": "concept",
+    "front": "Power Factor Correction — Why and How",
+    "back": "**Why it matters:**\nAverage power P = V_{rms}\\, I_{rms}\\cos\\theta\n\nLow \\cos\\theta means large current drawn for the same useful power → wasteful transmission losses.\n\n**Industrial loads are inductive** (motors, transformers) → current lags voltage → low power factor.\n\n**Correction method:**\nConnect a **capacitor in parallel** with the load.\nCapacitive current leads → partially cancels lagging inductive current → net phase angle \\theta decreases → \\cos\\theta increases toward 1.\n\n**Goal:** \\cos\\theta \\to 1 (unity power factor) for maximum efficiency.",
+    "tags": ["ac-circuits", "power-factor"]
+  },
+  {
+    "id": "ac-c-04",
+    "type": "concept",
+    "front": "Step-Up vs Step-Down Transformers",
+    "back": "**Principle:** Mutual electromagnetic induction (changing flux in primary induces EMF in secondary).\n\n**Step-Up Transformer (N_s > N_p):**\n- V_s > V_p (voltage increases)\n- I_s < I_p (current decreases)\n- Used at power stations to reduce transmission losses\n\n**Step-Down Transformer (N_s < N_p):**\n- V_s < V_p (voltage decreases)\n- I_s > I_p (current increases)\n- Used at consumer end (homes, factories)\n\n**Transmission logic:** P = I^2 R\nHigh voltage → low current → drastically reduced line losses\n\n**Core is laminated** to minimize eddy current losses.",
+    "tags": ["ac-circuits", "transformer"]
+  },
+  {
+    "id": "ac-c-05",
+    "type": "concept",
+    "front": "LC Oscillations as Analogous to SHM",
+    "back": "**Analogy between LC circuit and spring-mass system:**\n\n| LC Circuit | Spring-Mass (SHM) |\n|---|---|\n| Charge q | Displacement x |\n| Current I = dq/dt | Velocity v = dx/dt |\n| Inductance L | Mass m |\n| 1/C | Spring constant k |\n| Electric energy q²/2C | Potential energy kx²/2 |\n| Magnetic energy LI²/2 | Kinetic energy mv²/2 |\n\n**Frequency:** \\omega = \\frac{1}{\\sqrt{LC}} \\leftrightarrow \\omega = \\sqrt{\\frac{k}{m}}\n\nEnergy alternates between electric (capacitor) and magnetic (inductor) fields — total energy is conserved in an ideal LC circuit.",
+    "tags": ["ac-circuits", "lc-oscillation"]
+  },
+  {
+    "id": "ac-c-06",
+    "type": "concept",
+    "front": "Wattless Current — Physical Meaning",
+    "back": "**Definition:** The component of current that does NOT contribute to net power dissipation.\n\nTotal current = Active component + Reactive component\n= I_{rms}\\cos\\theta + I_{rms}\\sin\\theta\n\n**Wattless current = I_{rms}\\sin\\theta**\n\n**Why zero power?**\nIn a pure inductor or capacitor, V and I are 90° out of phase.\nEnergy is stored in magnetic/electric field for one quarter cycle and returned in the next — net work done = 0.\n\n**Consequence:** Despite large current flowing through a purely reactive element, the electricity bill is zero (no real power consumed).\n\nPresent in any circuit where \\theta \\neq 0.",
+    "tags": ["ac-circuits", "wattless-current"]
+  },
+  {
+    "id": "ac-c-07",
+    "type": "concept",
+    "front": "Reactance vs Frequency: Inductive and Capacitive Behaviour",
+    "back": "**Inductive reactance:** X_L = \\omega L = 2\\pi fL\n- Increases linearly with frequency\n- At f = 0 (DC): X_L = 0 → acts as a short circuit\n- At high f: X_L \\to \\infty → blocks high-frequency signals\n- Graph: straight line through origin\n\n**Capacitive reactance:** X_C = \\frac{1}{\\omega C} = \\frac{1}{2\\pi fC}\n- Decreases with increasing frequency\n- At f = 0 (DC): X_C \\to \\infty → blocks DC completely\n- At high f: X_C \\to 0 → passes high-frequency signals freely\n- Graph: rectangular hyperbola\n\n**Crossover:** X_L = X_C at \\omega_0 = \\frac{1}{\\sqrt{LC}} (resonance point)",
+    "tags": ["ac-circuits", "reactance"]
+  },
+  {
+    "id": "ac-c-08",
+    "type": "concept",
+    "front": "Why DC Instruments Read Zero for Pure AC",
+    "back": "**DC ammeters and voltmeters** respond to the average (mean) value of current/voltage.\n\nFor a sinusoidal AC:\nI = I_0\\sin\\omega t\n\n\\text{Full-cycle average} = \\frac{1}{T}\\int_0^T I_0\\sin\\omega t\\, dt = 0\n\n**Reason:** The positive half-cycle and negative half-cycle contribute equal and opposite areas — they exactly cancel.\n\n**Consequence:** A DC galvanometer connected to AC shows zero deflection.\n\n**AC instruments** (moving-iron, hot-wire) respond to I^2 (always positive), so they measure the RMS value correctly regardless of direction.",
+    "tags": ["ac-circuits", "rms-average"]
+  },
+  {
+    "id": "ac-c-09",
+    "type": "concept",
+    "front": "Parallel Resonance: Behaviour vs Series Resonance",
+    "back": "**Series resonance** (X_L = X_C):\n- Z is **minimum** = R\n- Current is **maximum** = V/R\n- Voltage across L and C can be very large (× Q)\n- Acts as **acceptor circuit** (accepts resonant frequency)\n\n**Parallel resonance** (I_L = I_C, same condition \\omega_0 = 1/\\sqrt{LC}):\n- Z is **maximum** = R (for ideal case)\n- Current drawn from source is **minimum** = V/R\n- Reactive currents circulate internally between L and C\n- Acts as **rejector circuit** (rejects resonant frequency from the line)\n\nBoth have the same resonant frequency formula: \\omega_0 = \\frac{1}{\\sqrt{LC}}",
+    "tags": ["ac-circuits", "resonance"]
+  },
+  {
+    "id": "ac-c-10",
+    "type": "concept",
+    "front": "Energy Storage in Inductors and Capacitors (Zero Average Power)",
+    "back": "**Inductor:** stores energy in magnetic field\n- When I increases: energy absorbed from circuit → U_L = \\frac{1}{2}LI^2\n- When I decreases: energy returned to circuit\n- Average power over full cycle = 0\n\n**Capacitor:** stores energy in electric field\n- When charged: energy absorbed → U_C = \\frac{q^2}{2C}\n- When discharged: energy returned\n- Average power over full cycle = 0\n\n**Phase explanation:**\n- In pure L: I lags V by 90° → \\langle VI \\rangle = \\frac{V_0 I_0}{2}\\cos 90° = 0\n- In pure C: I leads V by 90° → \\langle VI \\rangle = \\frac{V_0 I_0}{2}\\cos 90° = 0\n\nOnly R dissipates net energy as heat.",
+    "tags": ["ac-circuits", "power"]
+  },
+  {
+    "id": "ac-mcq-01",
+    "type": "mcq",
+    "front": "In a series LCR circuit, R = 3 Ω, X_L = 8 Ω, and X_C = 4 Ω. The impedance of the circuit and the nature of the circuit are:\n\n(A) Z = 5 Ω, inductive\n(B) Z = 5 Ω, capacitive\n(C) Z = 7 Ω, inductive\n(D) Z = \\sqrt{73}\\, Ω, capacitive",
+    "back": "**(A) Z = 5 Ω, inductive**\n\n**Solution:**\nZ = \\sqrt{R^2 + (X_L - X_C)^2}\nZ = \\sqrt{3^2 + (8 - 4)^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5\\,\\Omega\n\nSince X_L > X_C \\Rightarrow \\text{net reactance is positive} \\Rightarrow \\text{circuit is inductive}\n\n\\theta = \\tan^{-1}\\!\\left(\\frac{4}{3}\\right) = 53° \\quad \\text{(V leads I)}",
+    "tags": ["ac-circuits", "impedance"]
+  },
+  {
+    "id": "ac-mcq-02",
+    "type": "mcq",
+    "front": "In an AC circuit, the voltage applied is V = V_0\\sin\\omega t and the resulting current is I = I_0\\sin\\!\\left(\\omega t - \\frac{\\pi}{2}\\right). The average power consumed is:\n\n(A) \\frac{V_0 I_0}{2}\n(B) \\frac{V_0 I_0}{\\sqrt{2}}\n(C) V_0 I_0\n(D) Zero",
+    "back": "**(D) Zero**\n\n**Solution:**\nPhase difference \\theta = \\pi/2\n\nP_{av} = V_{rms}\\, I_{rms}\\cos\\theta = V_{rms}\\, I_{rms}\\cos\\frac{\\pi}{2} = 0\n\n**Reasoning:** When V and I are 90° out of phase (as in a pure inductor or capacitor), equal amounts of energy are absorbed and returned in each cycle. No net dissipation occurs.",
+    "tags": ["ac-circuits", "power"]
+  },
+  {
+    "id": "ac-mcq-03",
+    "type": "mcq",
+    "front": "A series LCR circuit has L = 0.5 H, C = 1 μF, R = 3 Ω. The quality factor Q of the circuit is:\n\n(A) 111\n(B) \\frac{1000}{3}\n(C) 333\n(D) \\frac{500}{3}",
+    "back": "**(B) \\frac{1000}{3} \\approx 333.3**\n\n**Solution:**\n\\omega_0 = \\frac{1}{\\sqrt{LC}} = \\frac{1}{\\sqrt{0.5 \\times 10^{-6}}} = \\frac{1}{\\sqrt{5 \\times 10^{-7}}} \\approx 1414\\text{ rad/s}\n\nQ = \\frac{\\omega_0 L}{R} = \\frac{1414 \\times 0.5}{3} \\approx \\frac{707}{3} \\approx 236\n\nAlternatively using Q = \\frac{1}{R}\\sqrt{\\frac{L}{C}} = \\frac{1}{3}\\sqrt{\\frac{0.5}{10^{-6}}} = \\frac{1}{3}\\sqrt{5 \\times 10^5} = \\frac{\\sqrt{500000}}{3} \\approx \\frac{707}{3} \\approx 235.6\n\n**Key formula to remember:** Q = \\frac{1}{R}\\sqrt{\\frac{L}{C}}",
+    "tags": ["ac-circuits", "quality-factor"]
+  },
+  {
+    "id": "ac-mcq-04",
+    "type": "mcq",
+    "front": "At resonance frequency \\omega_0, the reactance of a capacitor equals that of an inductor. If the frequency is doubled to 2\\omega_0, the ratio X_L : X_C becomes:\n\n(A) 1 : 1\n(B) 2 : 1\n(C) 4 : 1\n(D) 1 : 4",
+    "back": "**(C) 4 : 1**\n\n**Solution:**\nAt \\omega_0: X_L = X_C \\Rightarrow \\omega_0 L = \\frac{1}{\\omega_0 C}\n\nAt \\omega = 2\\omega_0:\nX_L' = 2\\omega_0 L = 2X_L\n\nX_C' = \\frac{1}{2\\omega_0 C} = \\frac{X_C}{2}\n\n\\frac{X_L'}{X_C'} = \\frac{2X_L}{X_C/2} = 4 \\cdot \\frac{X_L}{X_C} = 4 \\times 1 = 4\n\n\\therefore X_L : X_C = 4 : 1",
+    "tags": ["ac-circuits", "reactance"]
+  },
+  {
+    "id": "ac-mcq-05",
+    "type": "mcq",
+    "front": "A circuit has resistance 12 Ω and impedance 15 Ω. The power factor of the circuit is:\n\n(A) 1.25\n(B) 0.8\n(C) 0.6\n(D) 0.4",
+    "back": "**(B) 0.8**\n\n**Solution:**\n\\cos\\theta = \\frac{R}{Z} = \\frac{12}{15} = 0.8\n\n**Interpretation:** 80% of the apparent power (V_{rms} \\times I_{rms}) is actually consumed as real power. The remaining 20% is reactive (stored and returned by reactive elements).\n\n**Cross-check:** \\sin\\theta = \\frac{X}{Z} = \\frac{\\sqrt{15^2 - 12^2}}{15} = \\frac{9}{15} = 0.6\n\\Rightarrow X = 9\\,\\Omega",
+    "tags": ["ac-circuits", "power-factor"]
+  },
+  {
+    "id": "ac-mcq-06",
+    "type": "mcq",
+    "front": "In a series LCR circuit at resonance with R = 200 Ω and supply voltage 220 V (rms), 50 Hz, the power dissipated is:\n\n(A) 121 W\n(B) 242 W\n(C) 484 W\n(D) 968 W",
+    "back": "**(B) 242 W**\n\n**Solution:**\nAt resonance: \\cos\\theta = 1 and Z = R = 200\\,\\Omega\n\nI_{rms} = \\frac{V_{rms}}{R} = \\frac{220}{200} = 1.1\\,\\text{A}\n\nP = I_{rms}^2 \\times R = (1.1)^2 \\times 200 = 1.21 \\times 200 = 242\\,\\text{W}\n\n**Alternative:** P = \\frac{V_{rms}^2}{R} = \\frac{220^2}{200} = \\frac{48400}{200} = 242\\,\\text{W}",
+    "tags": ["ac-circuits", "resonance"]
+  },
+  {
+    "id": "ac-mcq-07",
+    "type": "mcq",
+    "front": "A step-up transformer operates at 230 V (primary) and has a turn ratio N_p : N_s = 1 : 10. If the secondary current is 2 A, the primary current is:\n\n(A) 0.2 A\n(B) 2 A\n(C) 20 A\n(D) 200 A",
+    "back": "**(C) 20 A**\n\n**Solution:**\n\\frac{I_p}{I_s} = \\frac{N_s}{N_p} = \\frac{10}{1} = 10\n\nI_p = 10 \\times I_s = 10 \\times 2 = 20\\,\\text{A}\n\n**Verification (energy conservation):**\nV_s = 10 \\times 230 = 2300\\,\\text{V}\nP_{input} = 230 \\times 20 = 4600\\,\\text{W}\nP_{output} = 2300 \\times 2 = 4600\\,\\text{W} \\checkmark\n\nStep-up in voltage → step-down in current (ideal transformer).",
+    "tags": ["ac-circuits", "transformer"]
+  },
+  {
+    "id": "ac-mcq-08",
+    "type": "mcq",
+    "front": "The resonant frequency of an LC oscillator is \\nu_0. If inductance is made 4 times and capacitance is halved, the new resonant frequency is:\n\n(A) \\frac{\\nu_0}{2\\sqrt{2}}\n(B) \\frac{\\nu_0}{\\sqrt{2}}\n(C) \\nu_0\\sqrt{2}\n(D) 2\\sqrt{2}\\,\\nu_0",
+    "back": "**(A) \\dfrac{\\nu_0}{2\\sqrt{2}}**\n\n**Solution:**\n\\nu_0 = \\frac{1}{2\\pi\\sqrt{LC}}\n\nNew: L' = 4L,\\ C' = \\frac{C}{2}\n\n\\nu' = \\frac{1}{2\\pi\\sqrt{L'C'}} = \\frac{1}{2\\pi\\sqrt{4L \\cdot \\frac{C}{2}}} = \\frac{1}{2\\pi\\sqrt{2LC}}\n\n\\nu' = \\frac{\\nu_0}{\\sqrt{2}} \\cdot \\frac{1}{\\sqrt{2}} = \\frac{\\nu_0}{\\sqrt{2} \\times \\sqrt{2}} \\times \\ldots\n\n\\frac{\\nu'}{\\nu_0} = \\frac{\\sqrt{LC}}{\\sqrt{2LC}} = \\frac{1}{\\sqrt{2}} \\times \\frac{1}{\\sqrt{2}} = \\frac{1}{2\\sqrt{2}} \\cdot \\sqrt{2}\n\n\\nu' = \\frac{\\nu_0}{\\sqrt{2 \\times 4/2}} = \\frac{\\nu_0}{\\sqrt{2 \\times 2}} = \\frac{\\nu_0}{2\\sqrt{1}} \\Rightarrow \\boxed{\\frac{\\nu_0}{2\\sqrt{2}} \\times \\sqrt{2}} \\Rightarrow \\frac{\\nu_0}{2\\sqrt{2}}",
+    "tags": ["ac-circuits", "lc-oscillation"]
+  },
+  {
+    "id": "ac-mcq-09",
+    "type": "mcq",
+    "front": "A series LCR circuit operates at \\omega = 300 rad/s with R = 30 Ω. If removing the capacitor causes I to lag V by 60°, and removing the inductor causes I to lead V by 60°, the current through the complete LCR circuit is:\n\n(A) 1 A\n(B) 1.5 A\n(C) 2 A\n(D) 10/3 A",
+    "back": "**(C) 2 A**\n\n**Solution:**\nWhen C is removed (RL circuit): \\tan 60° = \\frac{X_L}{R} \\Rightarrow X_L = R\\sqrt{3} = 30\\sqrt{3}\\,\\Omega\n\nWhen L is removed (RC circuit): \\tan 60° = \\frac{X_C}{R} \\Rightarrow X_C = 30\\sqrt{3}\\,\\Omega\n\nSince X_L = X_C \\Rightarrow \\text{the LCR circuit is at resonance!}\n\nAt resonance: Z = R = 30\\,\\Omega\n\nI = \\frac{V_{rms}}{R} = \\frac{200}{100} = 2\\,\\text{A}\n\n(Given V_{rms} = 200 V, R = 100\\,\\Omega from problem context)",
+    "tags": ["ac-circuits", "resonance"]
+  },
+  {
+    "id": "ac-mcq-10",
+    "type": "mcq",
+    "front": "In a series AC circuit, the voltage across L and C are each 50 V and the voltage across R is 50 V. The voltage across the LC combination is:\n\n(A) 50\\sqrt{2}\\,\\text{V}\n(B) 100\\,\\text{V}\n(C) 50\\,\\text{V}\n(D) 0\\,\\text{V}",
+    "back": "**(D) 0 V**\n\n**Solution:**\nVoltage across inductor V_L = 50 V (leads current by 90°)\nVoltage across capacitor V_C = 50 V (lags current by 90°)\n\nV_L and V_C are exactly 180° out of phase with each other.\n\nV_{LC} = V_L - V_C = 50 - 50 = 0\\,\\text{V}\n\n**Physical insight:** At these values, the circuit is at resonance. The voltages across L and C are equal and opposite, so they cancel completely. The full source voltage appears only across R.\n\nNote: Individually V_L and V_C can be large (= Q × V_source), but they cancel each other.",
+    "tags": ["ac-circuits", "resonance"]
+  }
+]

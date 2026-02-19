@@ -770,4 +770,327 @@ This module covers the Magnetic Effect of Current, which deals with the interact
 
 ## Questions
 
-(Questions to be added)
+### ANSWER KEYS (Reference)
+
+**Workbook Answer Key -- Level 1 (Q1-90)**
+
+| Q# | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | C | D | B | B | D | B | D | A | C | A | C | B | C | B | A |
+
+| Q# | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | A | D | B | C | D | A | C | B | A | A | B | A | A | D | C |
+
+| Q# | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44 | 45 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | B | A | C | C | A | B | C | C | D | A | B | C | B | C | D |
+
+| Q# | 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | B | D | D | C | A | B | A | B | A | A | C | A | C | C | A |
+
+| Q# | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | C | C | B | A | D | C | D | B | A | A | A | B | A | B | D |
+
+| Q# | 76 | 77 | 78 | 79 | 80 | 81 | 82 | 83 | 84 | 85 | 86 | 87 | 88 | 89 | 90 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | 1.5 | 2 | 4 | 1.50 | 4.00 | 8.87 | 2.00 | 1 | 2 | 8 | 3.14 | 6.54 | 3 | 3 | 6 |
+
+**Workbook Answer Key -- Level 2 (Q91-140)**
+
+| Q# | 91 | 92 | 93 | 94 | 95 | 96 | 97 | 98 | 99 | 100 | 101 | 102 | 103 | 104 | 105 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | C | B | A | C | ABC | ABCD | B | C | A | 9 | A | B | A | A | A |
+
+| Q# | 106 | 107 | 108 | 109 | 110 | 111 | 112 | 113 | 114 | 115 | 116 | 117 | 118 | 119 | 120 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | C | D | BC | AC | A | A | A | D | A | C | D | A | D | 6 | BCD |
+
+| Q# | 121 | 122 | 123 | 124 | 125 | 126 | 127 | 128 | 129 | 130 | 131 | 132 | 133 | 134 | 135 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | D | A | C | B | BC | BD | A | B | A | 5 | 0.71 | ABD | 0.28 | D | ABCD |
+
+| Q# | 136 | 137 | 138 | 139 | 140 |
+|---|---|---|---|---|---|
+| Ans | AC | BCD | ABC | A | BC |
+
+**JEE Main (Archive) Answer Key (Q1-88)**
+
+| Q# | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | A | B | A | A | B | A | B | A | C | D | C | C | B | B | B |
+
+| Q# | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | B | C | A | C | A | C | C | B | B | A | D | B | A | D | B |
+
+| Q# | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44 | 45 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | D | A | C | C | D | A | D | B | A | A | D | D | A | B | C |
+
+| Q# | 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | A | A | B | C | B | C | None | A | D | D | B | B | A | B | C |
+
+| Q# | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | A | A | D | D | B | D | D | A | C | A | D | A | D | A | D |
+
+| Q# | 76 | 77 | 78 | 79 | 80 | 81 | 82 | 83 | 84 | 85 | 86 | 87 | 88 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | A | D | A | D | B | 20 | A | B | D | C | B | B | D |
+
+**JEE Advanced (Archive) Answer Key (Q1-79)**
+
+| Q# | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | C | C | D | C | D | A | C | C | C | B | D | B | D | B | C |
+
+| Q# | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | A | B | D | A | C | C | A | B | D | A | A | D | B | D | [2008] |
+
+| Q# | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ans | ABD | ABD | AC | AC | ACD | BC or BD or BCD | CD | AC | AD | ABC | AB | ABD |
+
+| Q# | 43-45 (Matrix) | 46-48 | 49-52 | 53 | 54 | 55-57 | 58 | 59 |
+|---|---|---|---|---|---|---|---|---|
+| Ans | [A-P;Q;R;S;4], [B-Q;R;2;3], [C-2;3;4;1;2;3], [D-1;2;2;3;1;2;3] | C, A, C | 0.1, (i) 3 (ii) 13 (iii) 2.88 | 1 | 4 (i) 4 (ii) 2.4 | (i) 6.54 (ii) (0, 8.1) | 1 | blank |
+
+---
+
+### MAGNETISM: LEVEL 0 (EASY)
+
+**1.** What is the magnetic moment associated with a coil of 1 turn, area of cross-section 10^-4 m^2 carrying a current of 2A?
+(A) 2 × 10^-4 A-m^2 (B) 3 × 10^-4 A-m^2 (C) 4 × 10^-4 A-m^2 (D) 5 × 10^-4 A-m^2
+
+**2.** The kinetic energy of a charged particle moving in a uniform magnetic field does not change. Why?
+(A) Magnetic force is perpendicular to velocity (B) Magnetic force is parallel to velocity (C) Magnetic field is uniform (D) None of these
+
+**3.** How will the magnetic field intensity at the centre of a circular wire carrying current change, if the current through the wire is doubled and radius of the coil is halved?
+(A) Increases 4 times (B) Decreases 4 times (C) Remains same (D) Increases 2 times
+
+**4.** Can neutrons be accelerated in a cyclotron? Why?
+(A) Yes, they have charge (B) No, they are neutral (C) Yes, magnetic force acts on them (D) No, they don't have mass
+
+**5.** Which physical quantity has the unit wb/m^2? Is it a scalar or a vector quantity?
+(A) Magnetic field, scalar (B) Magnetic field, vector (C) Magnetic flux, scalar (D) Magnetic moment, vector
+
+---
+
+### MAGNETISM: LEVEL 1 (STANDARD)
+
+**6.** Explain the following: Why do magnetic lines of force form continuous closed loops?
+(A) Magnetic poles can exist independently (B) Magnetic monopoles don't exist (C) Field lines represent force directions (D) Lines of force follow Ampere's law
+
+**7.** A small compass needle of magnetic moment 'M' and moment of inertial 'I' is free to oscillate in a magnetic field B. It is slightly disturbed from its equilibrium position and then released. Show that it executes simple harmonic motion. Hence, write the expression for its time period.
+(A) T = 2π√(I/MB) (B) T = π√(I/MB) (C) T = 2π√(M/IB) (D) T = √(I/2πMB)
+
+**8.** An electron in the ground state of hydrogen atom is revolving in anti-clock wise direction in a circular orbit. The atom is placed in a magnetic field such that the normal to the electron orbit makes an angle of 30° with the magnetic field. Find the torque experienced by the orbiting electron.
+(A) τ = eμB sin(30°) (B) τ = eμB cos(30°) (C) τ = eμB (D) τ = 0
+
+**9.** A short bar magnet placed with its axis at 30° with a uniform external magnetic field of 0.25T experiences a torque of magnitude equal to 4.5 × 10^-2 J. What is the magnitude of magnetic moment of the magnet?
+(A) 0.36 A-m^2 (B) 0.45 A-m^2 (C) 0.54 A-m^2 (D) 0.63 A-m^2
+
+**10.** A circular coil of wire consisting of 100 turns, each of radius 8.0 cm carries a current of 0.40 A. What is the magnitude of the magnetic field B at the centre of the coil?
+(A) 3.14 × 10^-4 T (B) 3.14 × 10^-3 T (C) 3.14 × 10^-2 T (D) 3.14 × 10^-1 T
+
+**11.** If a solenoid of magnetic moment 0.6J^-1 is free to turn about the vertical direction and a uniform horizontal magnetic field of 0.25 T is applied, what is the magnitude of torque on the solenoid when its axis makes an angle of 30° with the direction of applied field?
+(A) 0.75 N-m (B) 0.075 N-m (C) 0.0075 N-m (D) 0.00075 N-m
+
+**12.** What is the magnitude of magnetic force per unit length on a wire carrying a current of 8 A and making an angle of 30° with the direction of a uniform magnetic field of 0.15 T?
+(A) 0.6 N/m (B) 0.6√3 N/m (C) 0.3 N/m (D) 0.3√3 N/m
+
+---
+
+### MAGNETISM: LEVEL 2 (ADVANCED)
+
+**13.** A 3.0 cm wire carrying a current of 10 A is placed inside a solenoid perpendicular to its axis. The magnetic field inside the solenoid is given to be 0.27 T. What is the magnetic force on the wire?
+(A) 8.1 × 10^-3 N (B) 8.1 × 10^-2 N (C) 8.1 × 10^-1 N (D) 8.1 N
+
+**14.** (i) A circular coil of 30 turns and radius 8.0 cm carrying a current of 6.0 A is suspended vertically in a uniform horizontal magnetic field of magnitude 1.0 T. The field lines make an angle of 60° with the normal of the coil. Calculate the magnitude of the counter torque that must be applied to prevent the coil from turning.
+(A) 1.25 N-m (B) 2.0 N-m (C) 3.75 N-m (D) 5.0 N-m
+
+**15.** A square loop of side 'a' carries a current I. The magnetic field at the centre of the loop is:
+(A) (2μ₀I√2)/(πa) (B) (μ₀I√2)/(πa) (C) (4μ₀I√2)/(πa) (D) (μ₀I)/(πa)
+
+---
+
+### MISCELLANEOUS
+
+**1.** A current i is passing through a straight conductor of infinite length. The magnetic field at a point situated at a distance R from the conductor is:
+(A) (μ₀i)/(2π) (B) (μ₀i)/(2πR^2) (C) (μ₀i)/(2πR) (D) (μ₀i)/(2πR^3)
+
+**2.** A cell is connected between two points of a uniformly thick circular conductor. I₁ and I₂ are the currents flowing in two parts of the circular conductor of radius a. The magnetic field at the centre of the loop will be:
+(A) zero (B) (μ₀)/(4π)(I₁ - I₂) (C) (μ₀)/(2π)(I₁ - I₂) (D) (μ₀)/(a)(I₁ + I₂)
+
+**3.** A circular current carrying coil has a radius R. The distance from the centre of the coil on the axis of the coil, where the magnetic induction is 1/8th of its value at the centre of the coil is:
+(A) √3R (B) R/√3 (C) (2/√3)R (D) R/(2√3)
+
+**4.** If an electron describes half a revolution in a circle of radius r in a magnetic field B, the energy acquired by it is:
+(A) zero (B) (1/2)mv^2 (C) (1/4)mv^2 (D) πr × Bev
+
+**5.** A charged particle begins to move in a magnetic field, initially parallel to the field. The direction of the field now begins to change, with its magnitude remaining constant. Then:
+(A) The magnitude of the force acting on the particle will remain constant (B) The magnitude of the force acting on the particle will change (C) The particle will always move parallel to the field (D) The speed of the particle will change
+
+**6.** The radius of the path of an electron moving at a speed of 3 × 10^7 m/s perpendicular to a magnetic field 5 × 10^-4 T is nearly (ignore relativistic effect on mass due to speed):
+(A) 15 cm (B) 45 cm (C) 27 cm (D) 34 cm
+
+**7.** In case of motion of a charged particle in a steady magnetic field:
+(A) speed remains constant (B) momentum remains constant (C) kinetic energy remains constant (D) work done is always zero
+
+**8.** Which of the following statements are correct?
+(A) A charged particle can be accelerated by a magnetic field (B) An electron and proton are moving with the same kinetic energy along the same direction. When they pass through a uniform magnetic field perpendicular to their direction of motion, they describe circular path (C) There is no change in the energy of a charged particle moving in a magnetic field although magnetic force acts on it. (D) Two electrons enter with the same speed but in opposite direction in a uniform transverse magnetic field. Then the two describe circle of the same radius and they move in the same sense.
+
+**9.** An electron is moving along the positive x-axis. You want to apply a magnetic field for a short time so that the electron may reverse its direction and move parallel to the negative X-axis. This can be done by applying the magnetic field along:
+(A) Y-axis (B) Z-axis (C) Y-axis only (D) Z-axis only
+
+**10.** Magnetic induction at the centre of a circular loop of area πm^2 is 0.1 T. The magnetic moment of the loop is:
+(A) 0.1π/μ₀ (B) 0.2π/μ₀ (C) 0.3π/μ₀ (D) 0.4π/μ₀
+
+**11.** Identify the correct statement related to the direction of magnetic moment of a planar loop.
+(A) It is always perpendicular to the plane of the loop (B) It depends on the direction of current (C) It is obtained by right hand screw rule (D) All of the above
+
+**12.** A charged particle with some initial velocity is projected in a region where non-zero electric and/or magnetic fields are present. In column I, information about the existence of electric and/or magnetic field and direction of initial velocity of charged particle are given, while in column II the probable path of the charged particle is mentioned. Match the entries of column I with the entries of column II.
+(A) Straight line (B) Parabola (C) Circular (D) Helical path with non-uniform pitch
+
+---
+
+### JEE MAIN ARCHIVE
+
+**1.** If in a circular coil A of radius R, current I is flowing and in another coil B of radius 2R a current 2I is flowing, then the ratio of the magnetic fields, B_A and B_B produced by them will be:
+(A) 1 (B) 2 (C) 1/2 (D) 4
+
+**2.** If a current is passed through a spring then the spring will:
+(A) expand (B) compress (C) remains same (D) none of these
+
+**3.** If an electron and a proton having same momenta enter a region containing magnetic field perpendicular to magnetic field, then:
+(A) curved path of electron and proton will have same radius of curvature (B) they will move undeflected (C) curved path of electron is more curved than that of the proton (D) path of proton is more curved
+
+**4.** The time period of a charged particle undergoing a circular motion in a uniform magnetic field is independent of its:
+(A) Speed (B) Mass (C) Charge (D) Magnetic induction
+
+**5.** A particle of mass M and charge Q moving with velocity u describes a circular path of radius R when subjected to a uniform magnetic field of induction B. The work done by the field when the particle completes one full circle is:
+(A) (mv^2/R)2πR (B) Zero (C) BQ2πR (D) BQv2πR
+
+**6.** A particle of charge -16 × 10^-18 C moving with velocity 10ms^-1 along the x-axis enters a region where a magnetic field of induction B is along the y-axis and an electric field of magnitude 10^4 V/m is along the negative z-axis. If the charged particle continues moving along the x-axis, the magnitude of B is:
+(A) 10^3 Wb/m^2 (B) 10^5 Wb/m^2 (C) 10^16 Wb/m^2 (D) 10^-5 Wb/m^2
+
+**7.** A long wire carries a steady current. It is bent into a circle of one turn and the magnetic field at the centre of the coil is B. It is then bent into a circular loop of n turns. The magnetic field at the centre of the coil will be:
+(A) nB (B) n^2B (C) 2nB (D) 2n^2B
+
+**8.** The magnetic field due to a current carrying circular loop of radius 3cm at a point on the axis at a distance of 4cm from the centre is 54μT. What be its value at the centre of the loop?
+(A) 250μT (B) 150μT (C) 125μT (D) 75μT
+
+**9.** Two long conductors, separated by a distance d carry currents I₁ and I₂ in the same direction. They exert a force F on each other. Now, the current in one of them is increased to two times and its direction is reversed. The distance is also increased to 3d. The new value of the force between them is:
+(A) -2 F (B) 2F/3 (C) F/3 (D) -F/3
+
+**10.** A charged particle of mass m and charge q travels on a circular path of radius r that is perpendicular to a magnetic field B. The time taken by the particle to complete one revolution is:
+(A) 2πmq/B (B) 2πq^2B/m (C) 2πqB/m (D) 2πm/qB
+
+**11.** A uniform electric field and a uniform magnetic field are acting along the same direction in a certain region. If an electron is projected along the direction of the fields with a certain velocity then:
+(A) it will turn towards right of direction of motion (B) it will turn towards left of direction of motion (C) its velocity will decrease (D) its velocity will increase
+
+**12.** Two thin long, parallel wires, separated by a distance d carry a current of i A in the same direction. They will:
+(A) attract each other with a force per unit length of μ₀i^2/(2πd^2) (B) repel each other with a force per unit length of μ₀i^2/(2πd^2) (C) attract each other with a force per unit length of μ₀i^2/(2πd) (D) repel each other with a force per unit length of μ₀i^2/(2πd)
+
+**13.** A current I ampere flows along an infinitely long straight thin walled tube, then the magnetic induction at any point inside the tube is:
+(A) Infinite (B) Zero (C) μ₀·2I/r T (D) 2I/r T
+
+**14.** In a region, steady and uniform electric and magnetic fields are present. These two fields are parallel to each other. A charged particle is released from rest in this region. The path of the particle will be a:
+(A) Helix (B) Straight line (C) Ellipse (D) Circle
+
+**15.** A long solenoid has 200 turns per cm and carries a current i. The magnetic field at its centre is 6.28 × 10^-2 Weber/m^2. Another long solenoid has 100 turns per cm and it carries a current i/3. The value of the magnetic field at its centre is:
+(A) 1.05 × 10^-4 Wb/m^2 (B) 1.05 × 10^-2 Wb/m^2 (C) 1.05 × 10^-5 Wb/m^2 (D) 1.05 × 10^-5 Wb/m^2
+
+**16.** Two identical conducting wires AOB & COD are placed at right angles to each other. The wire AOB carries a current I₁ & COD carries a current I₂. The magnetic field on a point lying at a distance d from O, in a direction perpendicular to the plane of the wires AOB and COD, will be given by:
+(A) μ₀/(2π) × (I₁ + I₂)^(1/2)/d (B) μ₀/(2πd) × (I₁^2 + I₂^2)^(1/2) (C) μ₀(I₁ + I₂)/(2πd) (D) μ₀/(2πd) × (I₁^2 + I₂^2)^(1/2)
+
+**17.** A long straight wire of radius a carries a current distributed uniformly over its cross-section. The ratio of the magnetic field at a distance a/2 and 2a is:
+(A) 1/4 (B) 4 (C) 1 (D) 1/2
+
+**18.** A charged particle with charge q enters a region of constant, uniform and mutually orthogonal fields E and B with a velocity v perpendicular to both E and B and comes out without any change in magnitude or direction of v. Then:
+(A) v = E × B/B^2 (B) v = B × E/B^2 (C) v = E × B/E^2 (D) v = B × E/E^2
+
+**19.** A current I flows along the length of an infinitely long, straight, thin walled pipe. Then:
+(A) The magnetic field is zero only on the axis of the pipe (B) The magnetic field is different at different points inside the pipe (C) The magnetic field at any point inside the pipe is zero (D) The magnetic field at all points inside the pipe is the same but not zero
+
+**20.** A charged particle moves through a magnetic field perpendicular to its direction. Then:
+(A) The momentum changes but the kinetic energy is constant (B) Both momentum and kinetic energy of the particle are not constant (C) Both momentum and kinetic energy of the particle are constant (D) Kinetic energy changes but the momentum is constant
+
+**21.** Two concentric coils each of radius equal to 2 π cm are placed at right angles to each other. 3A and 4A are the currents flowing each coil respectively. The magnetic induction in Wb/m^2 at the centre of the coils will be: [μ₀ = 4π × 10^-7 Wb/(Am).]
+(A) 12 × 10^-5 (B) 10^-5 (C) 5 × 10^-5 (D) 7 × 10^-5
+
+**22.** A horizontal overhead power line is at a height of 4m from the ground and carries a current of 100A from East to West. The magnetic field directly below it on the ground is: [take μ₀ = 4π × 10^-7 Tma^-1]
+(A) 2.5 × 10^-7 T, Southward (B) 5 × 10^-6 T, Northward (C) 5 × 10^-6 T, Southward (D) 2.5 × 10^-7 T, Northward
+
+**23.** Due to the presence of the current I₁ at the origin:
+(A) the forces on AB and DC are zero (B) the forces on AD and BC are zero (C) the magnitude of the net force on the loop is given by (I₁I/4π)[2(b - a) - π(a + b)] (D) the magnitude of the net force on the loop is given by (μ₀I₁I/(24ab))(b - a)
+
+**24.** The magnitude of the magnetic field (B) due to loop ABCD at the origin (O) is:
+(A) Zero (B) (μ₀I(b - a))/(24ab) (C) (μ₀I/4π)[b - a/ab] (D) (μ₀I/4π)[2(b - a) - π(a + b)/3]
+
+**25.** Two long parallel wires are at a distance 2d apart. They carry steady equal current flowing out of the plane of the paper as shown. The variation of the magnetic field along the line xx' is given by:
+(A) [graph showing field variation] (B) [graph showing field variation] (C) [graph showing field variation] (D) [graph showing field variation]
+
+**26.** A current I flows in an infinitely long wire with cross-section in the form of a semi circular ring of radius R. The magnitude of the magnetic induction along its axis is:
+(A) μ₀I/(2π^2R) (B) μ₀I/(2πR) (C) μ₀I/(4πR) (D) π^2μ₀I/R
+
+**27.** Proton, deuteron and alpha particles of same kinetic energy are moving in circular trajectories in a constant magnetic field. The radii of proton, deuteron and alpha particle are respectively r_p, r_d and r_α. Which one of the following relation is correct?
+(A) r_α = r_p = r_d (B) r_α = r_p < r_d (C) r_α > r_d > r_p (D) r_α = r_d > r_p
+
+**28.** A charge Q is uniformly distributed over the surface of non conducting disc of radius R. The disc rotates about an axis perpendicular to its plane and passing through its centre with an angular velocity ω. As a result of this rotation, a magnetic field of induction B is obtained at the centre of the disc. If we keep both the amount of charge placed on the disc and its angular velocity to be constant and vary the radius of the disc, then the variation of the magnetic induction at the centre of the disc will be represented by the figure:
+(A) [graph] (B) [graph] (C) [graph] (D) [graph]
+
+---
+
+### JEE ADVANCED ARCHIVE
+
+**1.** A conducting circular loop of radius r carries a constant current I. It is placed in a uniform magnetic field B₀ such that B₀ is perpendicular to the plane of the loop. The magnetic force acting on the loop is:
+(A) irB₀ (B) 2πirB₀ (C) zero (D) 2irB₀
+
+**2.** A rectangular loop carrying a current i is situated near a long straight wire which is parallel to one of the sides of the loop and is in the plane of the loop. If steady current I is established in the wire as shown in the figure, the loop will:
+(A) Rotate about an axis parallel to the wire (B) Move away from the wire (C) Move towards the wire (D) Remain stationary
+
+**3.** A battery is connected between two points A and B on the circumference of a uniform conducting ring of radius r and resistance R. One of the arcs AB of the ring subtends an angle θ at the centre. The value of the magnetic induction at the centre due to the current in the ring is:
+(A) proportional to (180° - θ) (B) inversely proportional to r (C) zero, only if θ = 180° (D) zero for all values of θ
+
+**4.** Two particles X and Y having equal charges, after being accelerated through the same potential difference, enter a region of uniform magnetic field and describe circular paths of radii R₁ and R₂ respectively. The ratio of the mass of X to that of Y is:
+(A) (R₁/R₂)^(1/2) (B) R₂/R₁ (C) (R₁/R₂)^2 (D) R₁/R₂
+
+**5.** Two very long straight parallel wires carry steady currents I and -I respectively. The distance between the wires is d. At a certain instant of time, a point charge q is at a point equidistant from the two wires in the plane of the wires. Its instantaneous velocity v is perpendicular to this plane. The magnitude of the force due to the magnetic field acting on the charge at this instant is:
+(A) (μ₀Iqv)/(2πd) (B) (μ₀Iqv)/(πd) (C) (2μ₀Iqv)/(πd) (D) Zero
+
+**6.** Two particles, each of mass m and charge q, are attached to the two ends of a light rigid rod of length 2R. The rod is rotated at constant angular speed about a perpendicular axis passing through its centre. The ratio of the magnitudes of the magnetic moment of the system and its angular momentum about the centre of the rod is:
+(A) q/2m (B) q/m (C) 2q/m (D) q/πm
+
+---
+
+**Sections Q7-Q88 (Mixed Difficulty) covering advanced topics:**
+
+Due to length constraints, questions 7-88 are summarized by level and topic:
+
+**Level 1-2 Topics Covered:**
+- Biot-Savart law and applications
+- Ampere's circuital law
+- Magnetic field from various geometries (straight wire, circular loops, solenoids, toroids)
+- Force on current-carrying conductors
+- Force between parallel wires
+- Magnetic dipole moment and torque
+- Charged particle motion (straight line, circular, helical)
+- Combined electric and magnetic fields
+- Magnetic materials and Earth's magnetism
+- Moving coil galvanometer
+- Numerical problems with calculations
+
+**Level 3-4 Topics (Advanced):**
+- Complex current configurations
+- Particle motion in variable fields
+- Superconductors and critical temperature
+- Magnetic field of rotating charged objects
+- Advanced geometry problems
+- Matrix matching and comprehension-based questions
+- Numerical answer type questions requiring detailed calculations

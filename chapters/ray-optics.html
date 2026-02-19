@@ -82,12 +82,23 @@
       <div class="ch-meta">Grade XII &mdash; Chapter 07</div>
       <div class="ch-nav">
         <a href="#reflection">Reflection</a>
+        <a href="#sign-convention">Sign Convention</a>
         <a href="#mirror-formula">Mirror Formula</a>
+        <a href="#ray-diagrams">Ray Diagrams</a>
         <a href="#refraction">Refraction</a>
         <a href="#total-internal-reflection">Total Internal Reflection</a>
-        <a href="#lenses">Lenses</a>
+        <a href="#glass-slab">Glass Slab</a>
         <a href="#prism">Prism</a>
+        <a href="#dispersion">Dispersion</a>
+        <a href="#apparent-shift">Apparent Shift</a>
+        <a href="#spherical-surfaces">Spherical Surfaces</a>
+        <a href="#lenses">Lenses</a>
+        <a href="#lens-formula">Lens Formula</a>
+        <a href="#displacement-method">Displacement Method</a>
+        <a href="#lens-combinations">Lens Combinations</a>
+        <a href="#chromatic-aberration">Chromatic Aberration</a>
         <a href="#optical-instruments">Optical Instruments</a>
+        <a href="#key-formulas">Key Formulas</a>
       </div>
     </div>
 
@@ -95,7 +106,7 @@
     <!-- SECTION 1: Reflection -->
     <!-- ============================== -->
     <div class="theory-section" id="reflection">
-      <h2>1. Reflection of Light</h2>
+      <h2>1. Reflection of Light &amp; Fermat's Principle</h2>
 
       <h3>Laws of Reflection</h3>
       <p>
@@ -106,7 +117,19 @@
         <li>The angle of incidence equals the angle of reflection: <em>i</em> = <em>r</em>.</li>
       </ul>
       <p>
+        <strong>Fermat's Principle:</strong> Light travels between two points along the path that requires the minimum time. This principle underlies both the laws of reflection and refraction.
+      </p>
+      <p>
         These laws hold for all types of reflecting surfaces &mdash; plane, concave, or convex. At each point of a curved surface, the normal is drawn perpendicular to the tangent at that point.
+      </p>
+      <div class="formula-box">
+        Law of Reflection: &nbsp; i = r<br><br>
+        Mirror rotation: if mirror rotates by &theta;, reflected ray rotates by 2&theta;
+      </div>
+
+      <h3>Real and Virtual Images</h3>
+      <p>
+        A <strong>real image</strong> is formed when light rays actually pass through the image point &mdash; it can be projected on a screen. A <strong>virtual image</strong> is formed where reflected (or refracted) rays only appear to diverge from &mdash; it cannot be projected on a screen.
       </p>
 
       <h3>Plane Mirrors</h3>
@@ -118,70 +141,112 @@
         <li>The image is laterally inverted (left-right reversal).</li>
         <li>Magnification m = +1 (same size, erect).</li>
         <li>If the mirror rotates by angle &theta;, the reflected ray rotates by 2&theta;.</li>
-        <li>Minimum length of mirror to see full image of a person = half the person's height.</li>
-        <li>Two plane mirrors inclined at angle &theta; produce n images where n = (360&deg;/&theta;) &minus; 1 (if 360/&theta; is even) or depends on object position (if odd).</li>
+        <li>Minimum length of mirror to see full image of a person = half the person's height. The top edge of the mirror must be at the level halfway between the eyes and the top of the head.</li>
+        <li>Two plane mirrors inclined at angle &theta; produce n images where n = (360&deg;/&theta;) &minus; 1 (when 360/&theta; is even).</li>
       </ul>
 
-      <h3>Spherical Mirrors</h3>
+      <div class="example-box">
+        <div class="ex-label">Example 1 &mdash; Plane Mirror and Person&rsquo;s Full Image</div>
+        <p>
+          A plane mirror of length L/2 is long enough for a person of height L to view their entire reflected image. Where must the top edge of the mirror be positioned?
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Let the person have eyes at height h<sub>eye</sub> from the floor, top of head at height L, and feet at the floor. For the person to see their full image, the mirror must reflect rays from both the top of the head and the feet to the eyes.<br><br>
+            The top edge of the mirror must be at the level halfway between the eyes and the top of the head:<br>
+            Top edge height = h<sub>eye</sub> + (L &minus; h<sub>eye</sub>)/2 = (L + h<sub>eye</sub>)/2<br><br>
+            The mirror length needed = (L &minus; 0)/2 = <strong>L/2</strong>, confirming that half the person's height is sufficient regardless of their distance from the mirror.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Sign Convention -->
+    <!-- ============================== -->
+    <div class="theory-section" id="sign-convention">
+      <h2>2. Sign Convention &amp; Spherical Mirrors</h2>
+
+      <h3>New Cartesian Sign Convention</h3>
       <p>
-        Spherical mirrors are portions of a sphere with one reflecting surface. A <strong>concave mirror</strong> has the reflecting surface on the inner (cave) side, and a <strong>convex mirror</strong> has it on the outer side.
+        All distances for spherical mirrors are measured from the <strong>pole (P)</strong> of the mirror along the principal axis. The convention is:
       </p>
+      <ul>
+        <li>Distances measured in the direction of incident light (towards the mirror) are taken as <strong>negative</strong>.</li>
+        <li>Distances measured against the direction of incident light (behind the mirror) are taken as <strong>positive</strong>.</li>
+        <li>Heights above the principal axis are positive; heights below are negative.</li>
+      </ul>
+      <p>
+        With this convention: for a <strong>concave mirror</strong>, f and R are negative; for a <strong>convex mirror</strong>, f and R are positive. Object distance u is always negative for a real object (object is in front of the mirror, in the direction of incident light).
+      </p>
+
+      <h3>Key Terms for Spherical Mirrors</h3>
       <ul>
         <li><strong>Centre of curvature (C):</strong> The centre of the sphere of which the mirror is a part.</li>
         <li><strong>Radius of curvature (R):</strong> The radius of that sphere.</li>
         <li><strong>Pole (P):</strong> The geometric centre of the mirror surface.</li>
         <li><strong>Principal axis:</strong> The line joining P and C.</li>
-        <li><strong>Focus (F):</strong> The point on the principal axis where parallel rays (paraxial) converge (concave) or appear to diverge from (convex) after reflection. f = R/2.</li>
+        <li><strong>Focus (F):</strong> The point where paraxial rays parallel to the principal axis converge (concave) or appear to diverge from (convex) after reflection.</li>
       </ul>
+      <div class="formula-box">
+        Focal length and radius of curvature: &nbsp; f = R / 2<br><br>
+        Concave mirror: f &lt; 0, R &lt; 0 &nbsp; (using sign convention)<br>
+        Convex mirror: f &gt; 0, R &gt; 0<br><br>
+        For a plane mirror: f = &infin;, &nbsp; v = &minus;u &nbsp; (image equidistant behind mirror)
+      </div>
+
+      <h3>Concave vs Convex Mirrors</h3>
       <p>
-        <strong>Concave mirror:</strong> Can form real or virtual images depending on object position. Used in torches, headlights, shaving mirrors, solar furnaces, satellite dishes.
+        A <strong>concave mirror</strong> is a converging mirror. It can form real or virtual images depending on the object position. Used in torches, headlights, shaving mirrors, solar furnaces, and satellite dishes.
       </p>
       <p>
-        <strong>Convex mirror:</strong> Always forms virtual, erect, and diminished images. Used as rear-view mirrors in vehicles (wider field of view).
+        A <strong>convex mirror</strong> is a diverging mirror. It always forms virtual, erect, and diminished images regardless of object position. Used as rear-view mirrors in vehicles because it provides a wider field of view.
       </p>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 2: Mirror Formula -->
+    <!-- SECTION 3: Mirror Formula -->
     <!-- ============================== -->
     <div class="theory-section" id="mirror-formula">
-      <h2>2. Mirror Formula &amp; Magnification</h2>
-
-      <h3>Sign Convention (Cartesian)</h3>
-      <p>
-        The New Cartesian Sign Convention is used for spherical mirrors:
-      </p>
-      <ul>
-        <li>All distances are measured from the pole (P) of the mirror.</li>
-        <li>Distances measured in the direction of the incident light (towards the mirror) are taken as <strong>negative</strong>.</li>
-        <li>Distances measured against the direction of incident light (away from the mirror, behind it) are taken as <strong>positive</strong>.</li>
-        <li>Heights above the principal axis are positive; below are negative.</li>
-      </ul>
-      <p>
-        With this convention: for a concave mirror, f and R are negative; for a convex mirror, f and R are positive. Object distance u is always negative (object is on the same side as incident light).
-      </p>
+      <h2>3. Mirror Formula &amp; Magnification</h2>
 
       <h3>Mirror Formula</h3>
+      <p>
+        The relationship between object distance (u), image distance (v), and focal length (f) for a spherical mirror:
+      </p>
       <div class="formula-box">
-        1/v + 1/u = 1/f<br><br>
+        1/v + 1/u = 1/f &nbsp; &nbsp; (Mirror Equation)<br><br>
         where:<br>
         v = image distance (from pole)<br>
         u = object distance (from pole)<br>
-        f = focal length (= R/2)
+        f = focal length = R/2
       </div>
 
       <h3>Magnification</h3>
       <div class="formula-box">
-        Linear magnification: m = h<sub>i</sub> / h<sub>o</sub> = &minus; v / u<br><br>
-        m &gt; 0: image is erect (virtual for mirrors)<br>
-        m &lt; 0: image is inverted (real for mirrors)<br>
-        |m| &gt; 1: image is magnified<br>
-        |m| &lt; 1: image is diminished<br>
-        |m| = 1: image is same size as object
+        Linear magnification: &nbsp; m = h<sub>i</sub> / h<sub>o</sub> = &minus; v / u<br><br>
+        Also: &nbsp; m = (f &minus; v) / f = f / (f &minus; u)<br><br>
+        m &gt; 0: image is erect (virtual for real objects in mirrors)<br>
+        m &lt; 0: image is inverted (real for concave mirrors)<br>
+        |m| &gt; 1: image is magnified &nbsp; &nbsp; |m| &lt; 1: image is diminished
       </div>
 
+      <h3>Image Positions for Concave Mirror</h3>
+      <ul>
+        <li>Object at infinity &rarr; image at F, real, point-sized</li>
+        <li>Object beyond C &rarr; image between F and C, real, inverted, diminished</li>
+        <li>Object at C &rarr; image at C, real, inverted, same size</li>
+        <li>Object between C and F &rarr; image beyond C, real, inverted, enlarged</li>
+        <li>Object at F &rarr; image at infinity</li>
+        <li>Object between F and P &rarr; image behind mirror, virtual, erect, enlarged</li>
+      </ul>
+      <p>
+        For a <strong>convex mirror</strong>, the image is always virtual, erect, and diminished, located between P and F behind the mirror.
+      </p>
+
       <div class="example-box">
-        <div class="ex-label">Solved Example 1</div>
+        <div class="ex-label">Example 2 &mdash; Concave Mirror Image Position</div>
         <p>
           An object is placed 30 cm in front of a concave mirror of focal length 20 cm. Find the position, nature, and magnification of the image.
         </p>
@@ -193,71 +258,113 @@
             1/v + 1/(&minus;30) = 1/(&minus;20)<br>
             1/v = &minus;1/20 + 1/30 = (&minus;3 + 2)/60 = &minus;1/60<br>
             v = <strong>&minus;60 cm</strong><br><br>
-            The image is formed 60 cm in front of the mirror (same side as the object), so it is <strong>real</strong>.<br><br>
+            The image is 60 cm in front of the mirror (same side as the object), so it is <strong>real</strong>.<br><br>
             Magnification: m = &minus;v/u = &minus;(&minus;60)/(&minus;30) = &minus;2<br>
-            |m| = 2 &gt; 1, and m is negative, so the image is <strong>real, inverted, and magnified (2 times)</strong>.
+            The image is <strong>real, inverted, and magnified (2&times;)</strong>.
           </p>
         </div>
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 3: Refraction -->
+    <!-- SECTION 4: Ray Diagrams -->
     <!-- ============================== -->
-    <div class="theory-section" id="refraction">
-      <h2>3. Refraction of Light</h2>
+    <div class="theory-section" id="ray-diagrams">
+      <h2>4. Ray Diagrams for Spherical Mirrors</h2>
 
-      <h3>Snell's Law</h3>
+      <h3>Three Key Rays for Mirror Diagrams</h3>
       <p>
-        When light passes from one transparent medium to another, it changes direction at the interface. This bending of light is called <strong>refraction</strong>. Snell's law relates the angles of incidence and refraction to the refractive indices of the two media:
+        Any two of the following three standard rays are sufficient to locate an image in a spherical mirror:
+      </p>
+      <ul>
+        <li><strong>Ray 1:</strong> A ray parallel to the principal axis reflects through the focus F (concave) or appears to come from F (convex).</li>
+        <li><strong>Ray 2:</strong> A ray passing through (or directed towards) the focus F reflects parallel to the principal axis.</li>
+        <li><strong>Ray 3:</strong> A ray directed towards the centre of curvature C strikes the mirror normally and reflects back along the same path.</li>
+      </ul>
+      <p>
+        The intersection of any two reflected rays gives the position of the real image. If the reflected rays diverge, they are extended backwards to find the virtual image behind the mirror.
+      </p>
+
+      <h3>Two Inclined Plane Mirrors</h3>
+      <p>
+        When two plane mirrors are inclined at angle &theta; to each other, a ray undergoes multiple reflections. The total deviation of the emergent ray depends on the geometry. For two reflections (one from each mirror), the net deviation is:
       </p>
       <div class="formula-box">
-        n<sub>1</sub> sin &theta;<sub>1</sub> = n<sub>2</sub> sin &theta;<sub>2</sub><br><br>
-        or equivalently: sin &theta;<sub>1</sub> / sin &theta;<sub>2</sub> = n<sub>2</sub> / n<sub>1</sub> = <sup>1</sup>n<sub>2</sub> (relative refractive index)
+        Net deviation = 180&deg; &minus; 2&theta; &nbsp; (when ray is reflected once from each mirror)<br><br>
+        Number of images formed = (360&deg; / &theta;) &minus; 1 &nbsp; (when 360/&theta; is even integer)
       </div>
       <p>
-        When light goes from a rarer medium (lower n) to a denser medium (higher n), it bends towards the normal (&theta;<sub>2</sub> &lt; &theta;<sub>1</sub>). When it goes from denser to rarer, it bends away from the normal (&theta;<sub>2</sub> &gt; &theta;<sub>1</sub>).
-      </p>
-
-      <h3>Real and Apparent Depth</h3>
-      <p>
-        When an object is submerged in a denser medium and viewed from a rarer medium (e.g., looking at a coin in water from air), the object appears to be closer to the surface than it actually is.
-      </p>
-      <div class="formula-box">
-        Apparent depth = Real depth / n<br><br>
-        where n = refractive index of the denser medium relative to the rarer medium.<br>
-        Shift = Real depth &times; (1 &minus; 1/n)
-      </div>
-
-      <h3>Lateral Shift</h3>
-      <p>
-        When a light ray passes through a parallel-sided glass slab, the emergent ray is parallel to the incident ray but shifted sideways. This sideways displacement is called the <strong>lateral shift</strong>.
-      </p>
-      <div class="formula-box">
-        Lateral shift: d = t sin(i &minus; r) / cos r<br><br>
-        where t = thickness of the slab, i = angle of incidence, r = angle of refraction inside the slab.
-      </div>
-      <p>
-        The lateral shift increases with the thickness of the slab, the angle of incidence, and the refractive index of the slab material. At normal incidence (i = 0), there is no lateral shift.
+        This is why two mirrors at 90&deg; produce 3 images, at 60&deg; produce 5 images, and at 45&deg; produce 7 images.
       </p>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 4: Total Internal Reflection -->
+    <!-- SECTION 5: Refraction -->
+    <!-- ============================== -->
+    <div class="theory-section" id="refraction">
+      <h2>5. Refraction at Plane Surfaces</h2>
+
+      <h3>Snell's Law</h3>
+      <p>
+        When light passes from one transparent medium to another, it changes direction at the interface. This bending of light is called <strong>refraction</strong>. The refractive index of a medium is defined as:
+      </p>
+      <div class="formula-box">
+        Absolute refractive index: &nbsp; &mu; = c / v<br><br>
+        where c = speed of light in vacuum, v = speed of light in the medium.<br><br>
+        Snell's Law: &nbsp; n<sub>1</sub> sin &theta;<sub>1</sub> = n<sub>2</sub> sin &theta;<sub>2</sub><br><br>
+        Relative refractive index: &nbsp; <sup>1</sup>n<sub>2</sub> = n<sub>2</sub> / n<sub>1</sub> = sin &theta;<sub>1</sub> / sin &theta;<sub>2</sub>
+      </div>
+      <p>
+        When light goes from a rarer medium (lower n) to a denser medium (higher n), it bends <strong>towards</strong> the normal (&theta;<sub>2</sub> &lt; &theta;<sub>1</sub>). When it goes from denser to rarer, it bends <strong>away</strong> from the normal (&theta;<sub>2</sub> &gt; &theta;<sub>1</sub>).
+      </p>
+
+      <h3>Real and Apparent Depth</h3>
+      <p>
+        When an object is submerged in a denser medium and viewed from a rarer medium (e.g., looking at a coin in water from air), the object appears closer to the surface than it actually is.
+      </p>
+      <div class="formula-box">
+        Apparent depth = Real depth / n<br><br>
+        Apparent shift (upward) = Real depth &times; (1 &minus; 1/n)<br><br>
+        For multiple layers: total shift = t<sub>1</sub>(1 &minus; 1/n<sub>1</sub>) + t<sub>2</sub>(1 &minus; 1/n<sub>2</sub>) + &hellip;
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 3 &mdash; Snell&rsquo;s Law Through Multiple Media</div>
+        <p>
+          A layer of ice (&mu; = 1.33) lies on a glass plate (&mu; = 1.5). A ray of light makes an angle of incidence of 60&deg; on the surface of ice. Find the angle between this ray and the normal inside the glass.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Apply Snell's Law across the full path. At normal incidence, by Snell's Law applied consecutively:<br><br>
+            n<sub>air</sub> sin 60&deg; = n<sub>ice</sub> sin r<sub>1</sub> = n<sub>glass</sub> sin r<sub>2</sub><br><br>
+            At the air-ice interface: 1 &times; sin 60&deg; = 1.33 &times; sin r<sub>1</sub><br>
+            sin r<sub>1</sub> = sin 60&deg; / 1.33 = 0.866 / 1.33 &asymp; 0.651 &nbsp; &rarr; r<sub>1</sub> &asymp; 40.6&deg;<br><br>
+            At the ice-glass interface: n<sub>ice</sub> sin r<sub>1</sub> = n<sub>glass</sub> sin r<sub>2</sub><br>
+            sin r<sub>2</sub> = (1.33 &times; 0.651) / 1.5 = 0.866 / 1.5 &asymp; 0.577 &nbsp; &rarr; r<sub>2</sub> &asymp; <strong>35.3&deg;</strong><br><br>
+            Note: the intermediate medium (ice) drops out. Effectively: sin 60&deg; / sin r<sub>2</sub> = n<sub>glass</sub>/n<sub>air</sub> = 1.5, giving sin r<sub>2</sub> = sin 60&deg; / 1.5 = 0.577, so r<sub>2</sub> &asymp; <strong>35.3&deg;</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Total Internal Reflection -->
     <!-- ============================== -->
     <div class="theory-section" id="total-internal-reflection">
-      <h2>4. Total Internal Reflection</h2>
+      <h2>6. Total Internal Reflection</h2>
 
       <h3>Critical Angle</h3>
       <p>
-        When light travels from a denser medium to a rarer medium and the angle of incidence exceeds a certain value called the <strong>critical angle</strong>, the light is completely reflected back into the denser medium instead of being refracted. This phenomenon is called <strong>total internal reflection (TIR)</strong>.
+        When light travels from a denser medium to a rarer medium and the angle of incidence exceeds the <strong>critical angle</strong> &theta;<sub>c</sub>, the light is completely reflected back into the denser medium. This is called <strong>total internal reflection (TIR)</strong>.
       </p>
       <p>
-        The critical angle &theta;<sub>c</sub> is the angle of incidence in the denser medium for which the angle of refraction in the rarer medium is 90&deg;.
+        The critical angle is the angle of incidence for which the refraction angle equals 90&deg;.
       </p>
       <div class="formula-box">
-        sin &theta;<sub>c</sub> = n<sub>2</sub> / n<sub>1</sub> &nbsp; (where n<sub>1</sub> &gt; n<sub>2</sub>)<br><br>
-        For a medium of refractive index n relative to air: sin &theta;<sub>c</sub> = 1/n
+        sin &theta;<sub>c</sub> = n<sub>rarer</sub> / n<sub>denser</sub><br><br>
+        For a medium of index n relative to air: &nbsp; sin &theta;<sub>c</sub> = 1 / n<br><br>
+        TIR occurs when: light travels denser &rarr; rarer AND i &gt; &theta;<sub>c</sub>
       </div>
 
       <h3>Conditions for TIR</h3>
@@ -268,83 +375,278 @@
 
       <h3>Applications of Total Internal Reflection</h3>
       <p>
-        <strong>Optical Fibre:</strong> An optical fibre consists of a thin glass or plastic core surrounded by a cladding of lower refractive index. Light enters one end and undergoes repeated total internal reflections as it propagates along the fibre, with negligible energy loss. Optical fibres are used in telecommunications, medical endoscopy, and decorative lighting.
+        <strong>Optical Fibre:</strong> A thin glass or plastic core surrounded by cladding of lower refractive index. Light undergoes repeated TIR as it propagates along the fibre with negligible energy loss. Used in telecommunications and medical endoscopy.
       </p>
       <p>
-        <strong>Mirage:</strong> On hot days, layers of air near the ground are hotter and less dense (lower refractive index) than the layers above. Light from a distant object travelling downward gets progressively refracted away from the normal until TIR occurs, creating an inverted image that appears as a pool of water on the road.
+        <strong>Mirage:</strong> On hot days, air near the ground is hotter and less dense (lower n) than layers above. Light travelling downward is progressively refracted until TIR occurs, creating an inverted image that looks like a pool of water.
       </p>
       <p>
-        <strong>Diamond Brilliance:</strong> Diamond has a very high refractive index (n &asymp; 2.42), giving a small critical angle (&theta;<sub>c</sub> &asymp; 24.4&deg;). Light entering a well-cut diamond undergoes multiple total internal reflections before emerging, producing the characteristic sparkle and brilliance.
+        <strong>Diamond Brilliance:</strong> Diamond has n &asymp; 2.42, giving &theta;<sub>c</sub> &asymp; 24.4&deg;. Light entering a well-cut diamond undergoes multiple TIR before emerging, producing its characteristic brilliance.
       </p>
       <p>
-        <strong>Totally Reflecting Prisms:</strong> Right-angled isosceles prisms (45&deg;-90&deg;-45&deg;) made of glass (n = 1.5, &theta;<sub>c</sub> &asymp; 42&deg;) are used in periscopes, binoculars, and SLR cameras to achieve total internal reflection with nearly 100% efficiency, superior to metallic mirrors.
+        <strong>Totally Reflecting Prisms:</strong> Right-angled isosceles prisms (45&deg;-90&deg;-45&deg;) of glass (n = 1.5, &theta;<sub>c</sub> &asymp; 42&deg;) are used in periscopes and binoculars for nearly 100% reflection efficiency.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Example 4 &mdash; Radius of Bright Circle in TIR</div>
+        <p>
+          A point source S is placed at the bottom of a tank containing a liquid of refractive index &mu; up to depth h. Show that the radius of the bright circle visible from above is r = h / &radic;(&mu;&sup2; &minus; 1).
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Light rays from S that strike the liquid-air interface beyond the critical angle undergo TIR and cannot escape. Only rays within the critical angle cone emerge.<br><br>
+            From the geometry: tan &theta;<sub>c</sub> = r / h<br><br>
+            Since sin &theta;<sub>c</sub> = 1/&mu;, we have cos &theta;<sub>c</sub> = &radic;(1 &minus; 1/&mu;&sup2;) = &radic;(&mu;&sup2; &minus; 1) / &mu;<br><br>
+            tan &theta;<sub>c</sub> = sin &theta;<sub>c</sub> / cos &theta;<sub>c</sub> = (1/&mu;) / (&radic;(&mu;&sup2; &minus; 1) / &mu;) = 1 / &radic;(&mu;&sup2; &minus; 1)<br><br>
+            Therefore: r = h &times; tan &theta;<sub>c</sub> = <strong>h / &radic;(&mu;&sup2; &minus; 1)</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Glass Slab -->
+    <!-- ============================== -->
+    <div class="theory-section" id="glass-slab">
+      <h2>7. Refraction Through a Glass Slab</h2>
+
+      <h3>Key Properties</h3>
+      <p>
+        When a ray of light passes through a parallel-sided glass slab, it refracts at both surfaces. Since the surfaces are parallel, the angle of refraction at the first surface equals the angle of incidence at the second surface (by geometry), and the emergent ray is parallel to the incident ray. There is no angular deviation, only a <strong>lateral displacement</strong>.
+      </p>
+      <div class="formula-box">
+        Angle of emergence = Angle of incidence &nbsp; (e = i)<br><br>
+        Lateral displacement: &nbsp; d = t &times; sin(i &minus; r) / cos r<br><br>
+        where t = thickness of the slab<br>
+        i = angle of incidence, r = angle of refraction inside the glass<br><br>
+        For small angles: &nbsp; d &asymp; t(i &minus; r) = t &times; i &times; (1 &minus; 1/n)
+      </div>
+      <p>
+        Lateral displacement <strong>increases</strong> with angle of incidence, slab thickness, and refractive index. At normal incidence (i = 0), there is no lateral shift.
+      </p>
+
+      <h3>Effect on Converging Beams</h3>
+      <p>
+        When a glass slab is inserted in the path of a converging beam, it shifts the point of convergence away from the lens by a distance:
+      </p>
+      <div class="formula-box">
+        Shift in convergence point = t (1 &minus; 1/n)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 5 &mdash; Lateral Displacement Through a Glass Plate</div>
+        <p>
+          A narrow beam of light strikes a glass plate (&mu; = 1.60) at an angle of 53&deg; to the normal. If the plate is 20 mm thick, find the lateral displacement of the beam.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            At the first surface, using Snell's Law:<br>
+            sin 53&deg; = 1.60 &times; sin r<br>
+            sin r = 0.800 / 1.60 = 0.500 &nbsp; &rarr; r = 30&deg;<br><br>
+            Lateral displacement:<br>
+            d = t &times; sin(i &minus; r) / cos r<br>
+            d = 20 &times; sin(53&deg; &minus; 30&deg;) / cos 30&deg;<br>
+            d = 20 &times; sin 23&deg; / cos 30&deg;<br>
+            d = 20 &times; 0.3907 / 0.8660<br>
+            d &asymp; <strong>9.02 mm</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Prism -->
+    <!-- ============================== -->
+    <div class="theory-section" id="prism">
+      <h2>8. Refraction Through a Prism</h2>
+
+      <h3>Deviation by a Prism</h3>
+      <p>
+        A prism is a transparent medium bounded by two plane refracting surfaces at an angle A (the <strong>refracting angle</strong> or <strong>apex angle</strong>). When a ray of light enters a prism, it refracts at the first surface, travels through the prism, and refracts again at the second surface. The angle between the incident ray and the emergent ray is called the <strong>angle of deviation (&delta;)</strong>.
+      </p>
+      <div class="formula-box">
+        At first surface: &nbsp; r<sub>1</sub> + r<sub>2</sub> = A &nbsp; (from geometry of the prism)<br><br>
+        Angle of deviation: &nbsp; &delta; = (i<sub>1</sub> + i<sub>2</sub>) &minus; A<br><br>
+        where i<sub>1</sub> = angle of incidence at first surface, i<sub>2</sub> = angle of emergence at second surface
+      </div>
+
+      <h3>Minimum Deviation</h3>
+      <p>
+        As i<sub>1</sub> increases from a small value, the deviation first decreases, reaches a minimum &delta;<sub>m</sub>, and then increases. At minimum deviation, the ray passes symmetrically through the prism:
+      </p>
+      <ul>
+        <li>i<sub>1</sub> = i<sub>2</sub> = i (angle of incidence = angle of emergence)</li>
+        <li>r<sub>1</sub> = r<sub>2</sub> = A/2 (the refracted ray inside the prism is parallel to the base)</li>
+      </ul>
+      <div class="formula-box">
+        At minimum deviation: &nbsp; &delta;<sub>m</sub> = 2i &minus; A &nbsp; &rArr; &nbsp; i = (A + &delta;<sub>m</sub>) / 2<br><br>
+        Refractive index: &nbsp; n = sin[(A + &delta;<sub>m</sub>) / 2] / sin(A / 2)<br><br>
+        Thin prism (small A): &nbsp; &delta; = (n &minus; 1) A
+      </div>
+      <p>
+        The same value of deviation is possible for two different angles of incidence (one less than, one greater than the angle at minimum deviation). At grazing incidence (i = 90&deg;), the refraction angle at the first surface equals the critical angle.
       </p>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 5: Lenses -->
+    <!-- SECTION 9: Dispersion -->
+    <!-- ============================== -->
+    <div class="theory-section" id="dispersion">
+      <h2>9. Dispersion Through a Prism</h2>
+
+      <h3>Why Dispersion Occurs</h3>
+      <p>
+        The refractive index of a material depends on the wavelength of light. For most optical materials, &mu; decreases with increasing wavelength: &mu;<sub>violet</sub> &gt; &mu;<sub>yellow</sub> &gt; &mu;<sub>red</sub>. As a result, violet light is deviated more than red light by a prism. This splitting of white light into its constituent colours is called <strong>dispersion</strong>.
+      </p>
+      <div class="formula-box">
+        Deviation for violet light: &nbsp; &delta;<sub>V</sub> = (&mu;<sub>V</sub> &minus; 1)A<br>
+        Deviation for red light: &nbsp; &delta;<sub>R</sub> = (&mu;<sub>R</sub> &minus; 1)A<br><br>
+        Angle of dispersion: &nbsp; &phi; = &delta;<sub>V</sub> &minus; &delta;<sub>R</sub> = (&mu;<sub>V</sub> &minus; &mu;<sub>R</sub>)A<br><br>
+        Mean deviation: &nbsp; &delta;<sub>Y</sub> = (&mu;<sub>Y</sub> &minus; 1)A<br><br>
+        Dispersive power: &nbsp; &omega; = &phi; / &delta;<sub>Y</sub> = (&mu;<sub>V</sub> &minus; &mu;<sub>R</sub>) / (&mu;<sub>Y</sub> &minus; 1)
+      </div>
+
+      <h3>Rainbow Formation</h3>
+      <p>
+        Rainbows are formed by the dispersion and total internal reflection of sunlight in water droplets. A <strong>primary rainbow</strong> (one internal reflection per droplet) shows colours from violet (inner) to red (outer) at about 42&deg; from the anti-solar point. A <strong>secondary rainbow</strong> (two internal reflections) appears at about 51&deg; with reversed colour order and is fainter.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 10: Apparent Shift -->
+    <!-- ============================== -->
+    <div class="theory-section" id="apparent-shift">
+      <h2>10. Apparent Shift &amp; Real vs Apparent Depth</h2>
+
+      <h3>Object in a Denser Medium</h3>
+      <p>
+        When an object is located in a denser medium and viewed from a rarer medium (e.g., a fish at the bottom of a pool, viewed from air above), the object appears <strong>closer to the surface</strong> than it actually is. This upward shift is the <strong>apparent shift</strong>.
+      </p>
+      <div class="formula-box">
+        Apparent depth = Real depth / n &nbsp; (object in medium n, observed from air)<br><br>
+        Apparent shift (upward) = Real depth &times; (1 &minus; 1/n) = t(1 &minus; 1/&mu;)<br><br>
+        For multiple layers: total shift = &Sigma; t<sub>i</sub> (1 &minus; 1/&mu;<sub>i</sub>)<br><br>
+        Effect on converging beam (slab in path): shift of focus = t(1 &minus; 1/n)
+      </div>
+
+      <h3>Observer in a Denser Medium</h3>
+      <p>
+        If the observer is also in a medium of refractive index &mu;<sub>0</sub> and the object is in a medium of index &mu;, the apparent depth is:
+      </p>
+      <div class="formula-box">
+        Apparent depth = (real depth) &times; &mu;<sub>0</sub> / &mu;<br><br>
+        Apparent shift = t (1 &minus; &mu;<sub>0</sub>/&mu;)
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 6 &mdash; Apparent Depth Through Multiple Layers</div>
+        <p>
+          A layer of ether (&mu; = 1.36) 2 cm thick floats on water (&mu; = 4/3) 4 cm deep. What is the apparent distance from the ether surface to the bottom of the water layer when viewed from directly above?
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Treat each layer separately. For normal incidence, apparent depth of each layer as viewed from air above:<br><br>
+            Apparent depth of ether layer = 2 / 1.36 &asymp; 1.47 cm<br>
+            Apparent depth of water layer = 4 / (4/3) = 4 &times; 3/4 = 3.00 cm<br><br>
+            Total apparent depth from ether surface to bottom = 1.47 + 3.00 = <strong>4.47 cm</strong><br><br>
+            (The actual total depth is 6 cm, but it appears only 4.47 cm deep due to refraction in the two layers.)
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 11: Spherical Surfaces -->
+    <!-- ============================== -->
+    <div class="theory-section" id="spherical-surfaces">
+      <h2>11. Refraction at Spherical Surfaces</h2>
+
+      <h3>Formula for Refraction at a Single Spherical Surface</h3>
+      <p>
+        When light travels from a medium of refractive index &mu;<sub>1</sub> to a medium of refractive index &mu;<sub>2</sub> through a spherical interface of radius of curvature R, the relation between object distance u and image distance v is:
+      </p>
+      <div class="formula-box">
+        &mu;<sub>2</sub> / v &minus; &mu;<sub>1</sub> / u = (&mu;<sub>2</sub> &minus; &mu;<sub>1</sub>) / R<br><br>
+        Sign convention: all distances measured from the pole of the spherical surface.<br>
+        R &gt; 0 if the centre of curvature is on the transmission side (convex surface facing incident light).<br>
+        R &lt; 0 if the centre of curvature is on the incidence side.<br><br>
+        For a plane surface (R &rarr; &infin;): &nbsp; &mu;<sub>2</sub>/v = &mu;<sub>1</sub>/u &nbsp; (apparent depth formula)
+      </div>
+
+      <h3>Application: Glass Sphere</h3>
+      <p>
+        For a glass sphere of radius R and refractive index n, refraction occurs at two spherical surfaces. The second refraction is applied using the image from the first refraction as the new object. This sequential application is a common exam problem type.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 12: Lenses -->
     <!-- ============================== -->
     <div class="theory-section" id="lenses">
-      <h2>5. Lenses</h2>
-
-      <h3>Thin Lens Formula</h3>
-      <p>
-        A thin lens is one whose thickness is negligible compared to its radius of curvature. Using the Cartesian sign convention:
-      </p>
-      <div class="formula-box">
-        Thin Lens Formula: 1/v &minus; 1/u = 1/f<br><br>
-        where:<br>
-        v = image distance<br>
-        u = object distance<br>
-        f = focal length (positive for convex lens, negative for concave lens)
-      </div>
-      <p>
-        A <strong>convex (converging) lens</strong> has a positive focal length and can form both real and virtual images. A <strong>concave (diverging) lens</strong> has a negative focal length and always forms virtual, erect, and diminished images.
-      </p>
-
-      <h3>Magnification</h3>
-      <div class="formula-box">
-        Linear magnification: m = h<sub>i</sub> / h<sub>o</sub> = v / u
-      </div>
-
-      <h3>Power of a Lens</h3>
-      <p>
-        The power of a lens is defined as the reciprocal of its focal length (in metres). The SI unit of power is the <strong>dioptre (D)</strong>.
-      </p>
-      <div class="formula-box">
-        P = 1/f &nbsp; (f in metres, P in dioptres)<br><br>
-        Convex lens: P &gt; 0 (converging)<br>
-        Concave lens: P &lt; 0 (diverging)
-      </div>
+      <h2>12. Lenses &mdash; Convex and Concave</h2>
 
       <h3>Lens Maker's Equation</h3>
       <p>
         The lens maker's equation relates the focal length of a thin lens to the refractive index of the lens material and the radii of curvature of its two surfaces:
       </p>
       <div class="formula-box">
-        1/f = (n &minus; 1) [1/R<sub>1</sub> &minus; 1/R<sub>2</sub>]<br><br>
-        where n = refractive index of the lens material relative to the surrounding medium,<br>
-        R<sub>1</sub> = radius of curvature of the first surface (facing the object),<br>
-        R<sub>2</sub> = radius of curvature of the second surface.
+        1 / f = (&mu; / &mu;<sub>0</sub> &minus; 1) (1/R<sub>1</sub> &minus; 1/R<sub>2</sub>)<br><br>
+        In air (&mu;<sub>0</sub> = 1): &nbsp; 1/f = (n &minus; 1)(1/R<sub>1</sub> &minus; 1/R<sub>2</sub>)<br><br>
+        R<sub>1</sub> = radius of curvature of the first surface (facing the object)<br>
+        R<sub>2</sub> = radius of curvature of the second surface<br>
+        Sign convention: R &gt; 0 if centre of curvature is on transmission side
       </div>
 
-      <h3>Combination of Thin Lenses</h3>
+      <h3>Convex (Converging) Lens</h3>
       <p>
-        When two or more thin lenses are placed in contact, the equivalent focal length and power are:
+        A convex lens has surfaces that bulge outward. It has a <strong>positive</strong> focal length and converges parallel rays to the focus.
       </p>
+      <ul>
+        <li>Object beyond 2F &rarr; image between F and 2F, real, inverted, diminished</li>
+        <li>Object at 2F &rarr; image at 2F, real, inverted, same size</li>
+        <li>Object between 2F and F &rarr; image beyond 2F, real, inverted, enlarged</li>
+        <li>Object at F &rarr; image at infinity</li>
+        <li>Object between F and lens &rarr; image on same side as object, virtual, erect, enlarged</li>
+      </ul>
+
+      <h3>Concave (Diverging) Lens</h3>
+      <p>
+        A concave lens has surfaces that curve inward. It has a <strong>negative</strong> focal length. For any real object, it <strong>always</strong> forms a virtual, erect, and diminished image on the same side as the object. It cannot form a real image of a real object. Used as corrective lenses for myopia (short-sightedness).
+      </p>
+
+      <h3>Power of a Lens</h3>
       <div class="formula-box">
-        1/f<sub>eq</sub> = 1/f<sub>1</sub> + 1/f<sub>2</sub> + 1/f<sub>3</sub> + ...<br><br>
-        P<sub>eq</sub> = P<sub>1</sub> + P<sub>2</sub> + P<sub>3</sub> + ...
+        Power: &nbsp; P = 1/f &nbsp; (f in metres, P in dioptres D)<br><br>
+        Convex lens: P &gt; 0 &nbsp; &nbsp; Concave lens: P &lt; 0
       </div>
-      <p>
-        For two lenses separated by distance d:
-      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 13: Lens Formula -->
+    <!-- ============================== -->
+    <div class="theory-section" id="lens-formula">
+      <h2>13. Lens Equation &amp; Magnification</h2>
+
+      <h3>Thin Lens Formula</h3>
       <div class="formula-box">
-        1/f<sub>eq</sub> = 1/f<sub>1</sub> + 1/f<sub>2</sub> &minus; d/(f<sub>1</sub> f<sub>2</sub>)
+        Thin Lens Formula: &nbsp; 1/v &minus; 1/u = 1/f<br><br>
+        Note: some books write 1/v + 1/u = 1/f using a different sign convention.<br>
+        With the standard convention (distances positive in the direction of light propagation):<br>
+        u = negative for real object, v = positive for real image, f = positive for convex lens.
+      </div>
+
+      <h3>Magnification</h3>
+      <div class="formula-box">
+        Linear magnification: &nbsp; m = h<sub>i</sub> / h<sub>o</sub> = v / u<br><br>
+        Also: &nbsp; m = f / (f + u) = (v &minus; f) / f<br><br>
+        m &gt; 0: image erect (virtual for real objects) &nbsp; &nbsp; m &lt; 0: image inverted (real)
       </div>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 2</div>
+        <div class="ex-label">Example 7 &mdash; Convex Lens Image Formation</div>
         <p>
           A convex lens of focal length 15 cm forms an image of an object placed 25 cm from it. Find the image position, nature, and magnification.
         </p>
@@ -357,124 +659,169 @@
             1/v + 1/25 = 1/15<br>
             1/v = 1/15 &minus; 1/25 = (5 &minus; 3)/75 = 2/75<br>
             v = <strong>+37.5 cm</strong><br><br>
-            Since v is positive, the image is formed on the other side of the lens &mdash; it is <strong>real</strong>.<br><br>
+            Since v is positive, the image is on the opposite side of the lens &mdash; it is <strong>real</strong>.<br><br>
             Magnification: m = v/u = 37.5/(&minus;25) = &minus;1.5<br>
-            The image is <strong>real, inverted, and magnified (1.5 times)</strong>.
+            The image is <strong>real, inverted, and magnified (1.5&times;)</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Example 8 &mdash; Lens Maker&rsquo;s Formula for Biconvex Lens</div>
+        <p>
+          Find the focal length of a biconvex lens in air if the radii of its surfaces are 60 cm and 15 cm, and the refractive index of glass is 1.5.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            For a biconvex lens: R<sub>1</sub> = +60 cm (first convex surface), R<sub>2</sub> = &minus;15 cm (second convex surface, centre on incidence side).<br><br>
+            Lens maker's equation:<br>
+            1/f = (n &minus; 1)(1/R<sub>1</sub> &minus; 1/R<sub>2</sub>)<br>
+            1/f = (1.5 &minus; 1)(1/60 &minus; 1/(&minus;15))<br>
+            1/f = 0.5 &times; (1/60 + 1/15)<br>
+            1/f = 0.5 &times; (1/60 + 4/60)<br>
+            1/f = 0.5 &times; 5/60 = 1/24<br>
+            f = <strong>24 cm</strong>
           </p>
         </div>
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 6: Prism -->
+    <!-- SECTION 14: Displacement Method -->
     <!-- ============================== -->
-    <div class="theory-section" id="prism">
-      <h2>6. Refraction Through a Prism</h2>
+    <div class="theory-section" id="displacement-method">
+      <h2>14. Displacement Method (Bessel&rsquo;s Method)</h2>
 
-      <h3>Deviation by a Prism</h3>
+      <h3>Principle</h3>
       <p>
-        When a ray of light enters a prism, it refracts at the first surface, travels through the prism, and refracts again at the second surface. The angle between the incident ray and the emergent ray is called the <strong>angle of deviation (&delta;)</strong>.
+        Bessel's method is an experimental technique to measure the focal length of a converging lens accurately. The object and screen are fixed at a distance D apart (D &gt; 4f). The lens is moved along the axis and there are exactly <strong>two positions</strong> of the lens that give a sharp image on the screen. Let L be the distance between these two lens positions.
       </p>
       <div class="formula-box">
-        &delta; = (i<sub>1</sub> + i<sub>2</sub>) &minus; A<br><br>
-        where i<sub>1</sub> = angle of incidence, i<sub>2</sub> = angle of emergence, A = angle of the prism (refracting angle).<br><br>
-        Also: r<sub>1</sub> + r<sub>2</sub> = A &nbsp; (r<sub>1</sub>, r<sub>2</sub> are angles of refraction at the two surfaces)
-      </div>
-
-      <h3>Minimum Deviation</h3>
-      <p>
-        As the angle of incidence increases from a small value, the deviation first decreases, reaches a minimum value &delta;<sub>m</sub>, and then increases. At minimum deviation, the ray passes symmetrically through the prism, meaning:
-      </p>
-      <ul>
-        <li>i<sub>1</sub> = i<sub>2</sub> = i (angle of incidence equals angle of emergence)</li>
-        <li>r<sub>1</sub> = r<sub>2</sub> = r = A/2 (the refracted ray inside the prism is parallel to the base)</li>
-      </ul>
-      <div class="formula-box">
-        &delta;<sub>m</sub> = 2i &minus; A, &nbsp; so &nbsp; i = (A + &delta;<sub>m</sub>)/2<br><br>
-        Refractive index: n = sin[(A + &delta;<sub>m</sub>)/2] / sin(A/2)
+        Focal length: &nbsp; f = (D&sup2; &minus; L&sup2;) / (4D)<br><br>
+        where D = distance between object and screen,<br>
+        L = displacement between the two lens positions giving sharp images.<br><br>
+        Condition for two positions to exist: D &gt; 4f<br><br>
+        Object size: O = &radic;(I<sub>1</sub> &times; I<sub>2</sub>)<br>
+        where I<sub>1</sub>, I<sub>2</sub> are the image sizes at the two positions.
       </div>
       <p>
-        This formula is one of the most accurate methods for measuring the refractive index of a material.
-      </p>
-
-      <h3>Thin Prism Approximation</h3>
-      <p>
-        For a prism with a small refracting angle A (thin prism), the deviation is approximately:
-      </p>
-      <div class="formula-box">
-        &delta; = (n &minus; 1) A &nbsp; (for small A)
-      </div>
-
-      <h3>Dispersion</h3>
-      <p>
-        The splitting of white light into its constituent colours on passing through a prism is called <strong>dispersion</strong>. Different colours (wavelengths) have slightly different refractive indices in the prism material &mdash; violet light is refracted the most and red the least.
-      </p>
-      <div class="formula-box">
-        Dispersive power: &omega; = (&delta;<sub>V</sub> &minus; &delta;<sub>R</sub>) / &delta;<sub>Y</sub> = (n<sub>V</sub> &minus; n<sub>R</sub>) / (n<sub>Y</sub> &minus; 1)<br><br>
-        Angular dispersion = &delta;<sub>V</sub> &minus; &delta;<sub>R</sub> = (n<sub>V</sub> &minus; n<sub>R</sub>) A
-      </div>
-
-      <h3>Rainbow Formation</h3>
-      <p>
-        Rainbows are formed by the dispersion and total internal reflection of sunlight in water droplets. A <strong>primary rainbow</strong> (one internal reflection) shows colours from violet (inner) to red (outer) at about 42&deg; from the anti-solar point. A <strong>secondary rainbow</strong> (two internal reflections) appears at about 51&deg; with reversed colour order (red inner, violet outer) and is fainter.
+        At the first position, the image is magnified (m<sub>1</sub> &gt; 1) and at the second position it is diminished (m<sub>2</sub> &lt; 1). The product of the two magnifications m<sub>1</sub> &times; m<sub>2</sub> = 1.
       </p>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 7: Optical Instruments -->
+    <!-- SECTION 15: Lens Combinations -->
+    <!-- ============================== -->
+    <div class="theory-section" id="lens-combinations">
+      <h2>15. Combinations of Lenses</h2>
+
+      <h3>Lenses in Contact</h3>
+      <p>
+        When two or more thin lenses are placed in contact (negligible separation), their powers add directly:
+      </p>
+      <div class="formula-box">
+        Equivalent focal length: &nbsp; 1/F = 1/f<sub>1</sub> + 1/f<sub>2</sub> + 1/f<sub>3</sub> + &hellip;<br><br>
+        Equivalent power: &nbsp; P = P<sub>1</sub> + P<sub>2</sub> + P<sub>3</sub> + &hellip;
+      </div>
+
+      <h3>Lenses Separated by Distance d</h3>
+      <div class="formula-box">
+        1/F = 1/f<sub>1</sub> + 1/f<sub>2</sub> &minus; d / (f<sub>1</sub> &times; f<sub>2</sub>)
+      </div>
+
+      <h3>Silvered Lens (Equivalent Mirror)</h3>
+      <p>
+        When one surface of a lens is silvered, the combination acts as an equivalent mirror. Light refracts through the lens, reflects from the silvered surface, and refracts through the lens again. The equivalent focal length is:
+      </p>
+      <div class="formula-box">
+        1/F<sub>eq</sub> = 1/f<sub>lens</sub> + 1/f<sub>mirror</sub> + 1/f<sub>lens</sub> = 2/f<sub>lens</sub> + 1/f<sub>mirror</sub><br><br>
+        where f<sub>mirror</sub> = R/2 for the silvered surface (R = radius of curvature of silvered surface)<br><br>
+        This combination acts as a concave mirror of focal length F<sub>eq</sub>.
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 16: Chromatic Aberration -->
+    <!-- ============================== -->
+    <div class="theory-section" id="chromatic-aberration">
+      <h2>16. Chromatic Aberration &amp; Achromatic Combination</h2>
+
+      <h3>Chromatic Aberration</h3>
+      <p>
+        Since the refractive index of a lens material varies with wavelength (&mu;<sub>V</sub> &gt; &mu;<sub>R</sub>), different colours of light are focused at different points by the same lens. This defect is called <strong>chromatic aberration</strong>. Violet light focuses closer to the lens (shorter focal length) and red light focuses farther away.
+      </p>
+      <div class="formula-box">
+        &mu;<sub>V</sub> &gt; &mu;<sub>R</sub> &nbsp; &rArr; &nbsp; f<sub>V</sub> &lt; f<sub>R</sub><br><br>
+        Dispersive power: &nbsp; &omega; = (&mu;<sub>V</sub> &minus; &mu;<sub>R</sub>) / (&mu;<sub>Y</sub> &minus; 1)
+      </div>
+
+      <h3>Achromatic Doublet</h3>
+      <p>
+        An achromatic doublet combines a converging lens (crown glass) and a diverging lens (flint glass) in contact. By choosing appropriate focal lengths, the chromatic aberrations of the two lenses cancel each other while still providing net converging power.
+      </p>
+      <div class="formula-box">
+        Condition for achromatism: &nbsp; &omega;<sub>1</sub>/f<sub>1</sub> + &omega;<sub>2</sub>/f<sub>2</sub> = 0<br><br>
+        Combined focal length: &nbsp; 1/F = 1/f<sub>1</sub> + 1/f<sub>2</sub><br><br>
+        Since &omega;<sub>1</sub> and &omega;<sub>2</sub> are both positive, we need f<sub>1</sub> and f<sub>2</sub> to have opposite signs<br>
+        (one converging, one diverging).
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 17: Optical Instruments -->
     <!-- ============================== -->
     <div class="theory-section" id="optical-instruments">
-      <h2>7. Optical Instruments</h2>
+      <h2>17. Optical Instruments</h2>
 
       <h3>The Human Eye</h3>
       <p>
-        The human eye is a natural optical instrument. The eye lens (a convex lens of variable focal length) forms a real, inverted image on the retina. The ability of the eye to adjust its focal length is called <strong>accommodation</strong>. The <strong>near point</strong> (least distance of distinct vision) for a normal eye is 25 cm, and the <strong>far point</strong> is at infinity.
+        The human eye is a natural optical instrument with a variable-focal-length lens system. The <strong>near point</strong> (least distance of distinct vision) for a normal eye is D = 25 cm, and the <strong>far point</strong> is at infinity. The ability to adjust focal length is called <strong>accommodation</strong>.
       </p>
       <p>
-        <strong>Defects of vision:</strong>
+        <strong>Defects of Vision:</strong>
       </p>
       <ul>
-        <li><strong>Myopia (short-sightedness):</strong> The image of distant objects is formed before the retina. The far point is finite. Corrected using a concave (diverging) lens of focal length f = &minus;(far point distance).</li>
-        <li><strong>Hypermetropia (long-sightedness):</strong> The image of nearby objects is formed behind the retina. The near point is farther than 25 cm. Corrected using a convex (converging) lens. Power: P = 1/f = 1/d &minus; 1/D, where d = 25 cm and D = actual near point.</li>
-        <li><strong>Presbyopia:</strong> Age-related loss of accommodation, leading to difficulty in seeing both near and far objects. Corrected using bifocal lenses.</li>
-        <li><strong>Astigmatism:</strong> The cornea is not perfectly spherical, causing blurred vision. Corrected using cylindrical lenses.</li>
+        <li><strong>Myopia</strong> (short-sight): far point is finite. Image of distant objects forms before the retina. Corrected using a concave lens of power P = &minus;1/(far point in metres).</li>
+        <li><strong>Hypermetropia</strong> (long-sight): near point farther than 25 cm. Corrected using a convex lens.</li>
+        <li><strong>Presbyopia:</strong> Age-related loss of accommodation. Corrected using bifocal lenses.</li>
+        <li><strong>Astigmatism:</strong> Non-spherical cornea. Corrected using cylindrical lenses.</li>
       </ul>
 
       <h3>Simple Microscope (Magnifying Glass)</h3>
       <p>
-        A convex lens of short focal length used to view small objects. The object is placed between F and the lens.
+        A convex lens of short focal length used to view small objects. The object is placed between F and the lens, forming a virtual, erect, enlarged image.
       </p>
       <div class="formula-box">
-        Magnifying power (image at near point, D = 25 cm): m = 1 + D/f<br>
-        Magnifying power (image at infinity): m = D/f
+        Magnifying power (image at near point D = 25 cm): &nbsp; m = 1 + D/f<br>
+        Magnifying power (image at infinity): &nbsp; m = D/f
       </div>
 
       <h3>Compound Microscope</h3>
       <p>
-        Consists of two convex lenses: the <strong>objective</strong> (short focal length f<sub>o</sub>, small aperture) and the <strong>eyepiece</strong> (moderate focal length f<sub>e</sub>, larger aperture). The object is placed just beyond F<sub>o</sub>; the objective forms a real, magnified, intermediate image which acts as the object for the eyepiece.
+        Consists of two convex lenses: the <strong>objective</strong> (very short f<sub>o</sub>, small aperture) near the object, and the <strong>eyepiece</strong> (short f<sub>e</sub>). The objective forms a real, magnified, inverted intermediate image which the eyepiece further magnifies as a simple microscope.
       </p>
       <div class="formula-box">
-        Magnifying power: m = m<sub>o</sub> &times; m<sub>e</sub><br><br>
-        Image at near point: m = &minus;(L/f<sub>o</sub>) &times; (1 + D/f<sub>e</sub>)<br>
-        Image at infinity: m = &minus;(L/f<sub>o</sub>) &times; (D/f<sub>e</sub>)<br><br>
-        where L = length of the microscope tube (distance between the lenses, approximately)
+        Image at near point: &nbsp; m = &minus;(L/f<sub>o</sub>) &times; (1 + D/f<sub>e</sub>)<br>
+        Image at infinity: &nbsp; m = &minus;(L/f<sub>o</sub>) &times; (D/f<sub>e</sub>)<br><br>
+        where L = length of the microscope tube (image distance from objective minus f<sub>o</sub>)
       </div>
 
       <h3>Astronomical Telescope (Refracting)</h3>
       <p>
-        Used to view distant objects (stars, planets). Consists of an <strong>objective</strong> (large focal length f<sub>o</sub>, large aperture to collect more light) and an <strong>eyepiece</strong> (short focal length f<sub>e</sub>). The objective forms a real, inverted, diminished image of the distant object at its focal point, which is viewed by the eyepiece.
+        Used to view distant objects. The <strong>objective</strong> has a large focal length f<sub>o</sub> and large aperture (to collect more light). The <strong>eyepiece</strong> has a short focal length f<sub>e</sub>. In normal adjustment, the final image is at infinity.
       </p>
       <div class="formula-box">
-        Magnifying power (image at infinity, normal adjustment): m = &minus;f<sub>o</sub> / f<sub>e</sub><br>
-        Length of telescope (normal adjustment): L = f<sub>o</sub> + f<sub>e</sub><br><br>
-        Magnifying power (image at near point): m = &minus;(f<sub>o</sub>/f<sub>e</sub>)(1 + f<sub>e</sub>/D)
+        Magnifying power (normal adjustment, image at &infin;): &nbsp; m = &minus;f<sub>o</sub> / f<sub>e</sub><br>
+        Length of telescope (normal adjustment): &nbsp; L = f<sub>o</sub> + f<sub>e</sub><br><br>
+        Magnifying power (image at near point): &nbsp; m = &minus;(f<sub>o</sub>/f<sub>e</sub>)(1 + f<sub>e</sub>/D)
       </div>
       <p>
-        The image formed by an astronomical telescope is <strong>inverted</strong>. A <strong>terrestrial telescope</strong> uses an additional erecting lens (or prism system) to produce an erect image.
+        The image formed by an astronomical telescope is inverted. A terrestrial telescope uses an additional erecting lens to produce an erect final image.
       </p>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 3</div>
+        <div class="ex-label">Example 9 &mdash; Astronomical Telescope Magnification</div>
         <p>
           The objective of an astronomical telescope has a focal length of 100 cm and the eyepiece has a focal length of 5 cm. Calculate the magnifying power and the length of the telescope in normal adjustment.
         </p>
@@ -487,6 +834,73 @@
             Length of telescope: L = f<sub>o</sub> + f<sub>e</sub> = 100 + 5 = <strong>105 cm</strong>
           </p>
         </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 18: Key Formulas -->
+    <!-- ============================== -->
+    <div class="theory-section" id="key-formulas">
+      <h2>18. Key Formulas Summary</h2>
+
+      <h3>Mirrors</h3>
+      <div class="formula-box">
+        Law of reflection: &nbsp; i = r<br>
+        Focal length: &nbsp; f = R/2<br>
+        Mirror equation: &nbsp; 1/v + 1/u = 1/f<br>
+        Linear magnification: &nbsp; m = &minus;v/u = h<sub>i</sub>/h<sub>o</sub><br>
+        Mirror rotation: reflected ray rotates by 2&theta; when mirror rotates by &theta;
+      </div>
+
+      <h3>Refraction</h3>
+      <div class="formula-box">
+        Snell's Law: &nbsp; n<sub>1</sub> sin &theta;<sub>1</sub> = n<sub>2</sub> sin &theta;<sub>2</sub><br>
+        Refractive index: &nbsp; n = c/v<br>
+        Apparent depth: &nbsp; d<sub>app</sub> = d<sub>real</sub> / n<br>
+        Lateral shift in slab: &nbsp; d = t sin(i &minus; r) / cos r<br>
+        Refraction at spherical surface: &nbsp; &mu;<sub>2</sub>/v &minus; &mu;<sub>1</sub>/u = (&mu;<sub>2</sub> &minus; &mu;<sub>1</sub>)/R
+      </div>
+
+      <h3>Total Internal Reflection</h3>
+      <div class="formula-box">
+        Critical angle: &nbsp; sin &theta;<sub>c</sub> = n<sub>rarer</sub>/n<sub>denser</sub> = 1/n (for glass-air)<br>
+        TIR: occurs when i &gt; &theta;<sub>c</sub> going from denser to rarer medium
+      </div>
+
+      <h3>Prism</h3>
+      <div class="formula-box">
+        Geometry: &nbsp; r<sub>1</sub> + r<sub>2</sub> = A<br>
+        Deviation: &nbsp; &delta; = i<sub>1</sub> + i<sub>2</sub> &minus; A<br>
+        At minimum deviation: &nbsp; n = sin[(A + &delta;<sub>m</sub>)/2] / sin(A/2)<br>
+        Thin prism: &nbsp; &delta; = (n &minus; 1)A<br>
+        Dispersive power: &nbsp; &omega; = (&mu;<sub>V</sub> &minus; &mu;<sub>R</sub>) / (&mu;<sub>Y</sub> &minus; 1)<br>
+        Angle of dispersion: &nbsp; &phi; = (&mu;<sub>V</sub> &minus; &mu;<sub>R</sub>)A
+      </div>
+
+      <h3>Lenses</h3>
+      <div class="formula-box">
+        Lens maker's equation: &nbsp; 1/f = (n &minus; 1)(1/R<sub>1</sub> &minus; 1/R<sub>2</sub>)<br>
+        Thin lens formula: &nbsp; 1/v &minus; 1/u = 1/f<br>
+        Magnification: &nbsp; m = v/u<br>
+        Power: &nbsp; P = 1/f &nbsp; (f in metres, P in dioptres)<br>
+        Lenses in contact: &nbsp; 1/F = 1/f<sub>1</sub> + 1/f<sub>2</sub> + &hellip;<br>
+        Lenses separated by d: &nbsp; 1/F = 1/f<sub>1</sub> + 1/f<sub>2</sub> &minus; d/(f<sub>1</sub>f<sub>2</sub>)<br>
+        Silvered lens: &nbsp; 1/F<sub>eq</sub> = 2/f<sub>lens</sub> + 1/f<sub>mirror</sub>
+      </div>
+
+      <h3>Bessel's Method (Displacement Method)</h3>
+      <div class="formula-box">
+        f = (D&sup2; &minus; L&sup2;) / (4D)<br>
+        Object size: O = &radic;(I<sub>1</sub> &times; I<sub>2</sub>)
+      </div>
+
+      <h3>Optical Instruments</h3>
+      <div class="formula-box">
+        Simple microscope: m = 1 + D/f &nbsp; (near point) &nbsp; or &nbsp; m = D/f &nbsp; (at &infin;)<br>
+        Compound microscope: m = &minus;(L/f<sub>o</sub>) &times; (D/f<sub>e</sub>) &nbsp; (at &infin;)<br>
+        Astronomical telescope: m = &minus;f<sub>o</sub>/f<sub>e</sub> &nbsp; (normal adjustment), L = f<sub>o</sub> + f<sub>e</sub><br>
+        Achromatic doublet: &omega;<sub>1</sub>/f<sub>1</sub> + &omega;<sub>2</sub>/f<sub>2</sub> = 0<br><br>
+        D = 25 cm = least distance of distinct vision for normal eye
       </div>
     </div>
 

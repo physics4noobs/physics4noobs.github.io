@@ -53,7 +53,11 @@
     waves: 'Waves',
     electrostatics: 'Electrostatics',
     'current-electricity': 'Current Electricity',
-    magnetism: 'Magnetism'
+    magnetism: 'Magnetism',
+    emi: 'Electromagnetic Induction',
+    'ac-circuits': 'AC Circuits',
+    'ray-optics': 'Ray Optics',
+    'wave-optics': 'Wave Optics'
   };
   var currentChapter = null;
   var cards = [];

@@ -81,18 +81,29 @@
       <h1>Wave Optics</h1>
       <div class="ch-meta">Grade XII &mdash; Chapter 08</div>
       <div class="ch-nav">
-        <a href="#huygens-principle">Huygens' Principle</a>
+        <a href="#huygens-principle">Huygens&#39; Principle</a>
         <a href="#interference">Interference</a>
-        <a href="#diffraction">Diffraction</a>
-        <a href="#polarization">Polarization</a>
+        <a href="#ydse">Young&#39;s Double Slit</a>
+        <a href="#fringe-width">Fringe Width &amp; Shift</a>
+        <a href="#constructive-destructive">Constructive &amp; Destructive</a>
+        <a href="#intensity-distribution">Intensity Distribution</a>
+        <a href="#fresnels-biprism">Fresnel&#39;s Biprism</a>
+        <a href="#lloyds-mirror">Lloyd&#39;s Mirror</a>
+        <a href="#optical-path">Optical Path</a>
+        <a href="#diffraction">Single Slit Diffraction</a>
+        <a href="#rayleigh-criterion">Rayleigh Criterion</a>
+        <a href="#brewsters-angle">Brewster&#39;s Angle</a>
+        <a href="#malus-law">Malus&#39;s Law</a>
+        <a href="#dispersion">Dispersion &amp; Prism</a>
+        <a href="#key-formulas">Key Formulas</a>
       </div>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 1: Huygens' Principle -->
+    <!-- SECTION 1: Huygens' Principle  -->
     <!-- ============================== -->
     <div class="theory-section" id="huygens-principle">
-      <h2>1. Huygens' Principle</h2>
+      <h2>1. Huygens&#39; Principle</h2>
 
       <h3>Wavefronts</h3>
       <p>
@@ -107,7 +118,7 @@
         The direction of propagation of a wave is always perpendicular to the wavefront. Rays are perpendicular to wavefronts.
       </p>
 
-      <h3>Huygens' Construction</h3>
+      <h3>Huygens&#39; Construction</h3>
       <p>
         Huygens proposed that every point on a given wavefront acts as a source of <strong>secondary wavelets</strong>, which spread out in all directions with the speed of the wave in that medium. The new wavefront at a later time is the <strong>forward envelope</strong> (tangent surface) of all these secondary wavelets.
       </p>
@@ -115,29 +126,31 @@
         <li>Each point on the existing wavefront emits a spherical secondary wavelet.</li>
         <li>After time &Delta;t, each wavelet has radius v&Delta;t (where v is the wave speed).</li>
         <li>The new wavefront is the surface tangent to all the forward-propagating wavelets.</li>
-        <li>The backward-propagating wavelets are ignored (this was a weakness of the original theory, later resolved by Kirchhoff's mathematical treatment).</li>
+        <li>The backward-propagating wavelets are ignored (this was a weakness of the original theory, later resolved by Kirchhoff&#39;s mathematical treatment).</li>
       </ul>
 
       <h3>Derivation of Laws of Reflection</h3>
       <p>
-        Using Huygens' principle, consider a plane wavefront incident on a flat reflecting surface. When one edge of the wavefront hits the surface, it starts emitting secondary wavelets. By the time the other edge reaches the surface, the first wavelet has expanded to a radius equal to the distance the incident wavefront travelled. Constructing the reflected wavefront as the tangent to all these wavelets yields the result that the angle of incidence equals the angle of reflection, and all rays lie in the same plane.
+        Using Huygens&#39; principle, consider a plane wavefront incident on a flat reflecting surface. When one edge of the wavefront hits the surface, it starts emitting secondary wavelets. By the time the other edge reaches the surface, the first wavelet has expanded to a radius equal to the distance the incident wavefront travelled. Constructing the reflected wavefront as the tangent to all these wavelets yields the result that the angle of incidence equals the angle of reflection, and all rays lie in the same plane.
       </p>
 
-      <h3>Derivation of Laws of Refraction (Snell's Law)</h3>
+      <h3>Derivation of Laws of Refraction (Snell&#39;s Law)</h3>
       <p>
-        Consider a plane wavefront passing from medium 1 (speed v<sub>1</sub>) to medium 2 (speed v<sub>2</sub>). When one edge of the wavefront enters the second medium, it slows down (if v<sub>2</sub> &lt; v<sub>1</sub>). The wavelet in medium 2 has a smaller radius than it would have in medium 1. Constructing the refracted wavefront as the tangent to the wavelets in medium 2 gives:
+        Consider a plane wavefront passing from medium 1 (speed v<sub>1</sub>) to medium 2 (speed v<sub>2</sub>). When one edge of the wavefront enters the second medium, it slows down (if v<sub>2</sub> &lt; v<sub>1</sub>). The wavelet in medium 2 has a smaller radius than it would have in medium 1. From the geometry of the construction:
       </p>
       <div class="formula-box">
-        sin &theta;<sub>1</sub> / sin &theta;<sub>2</sub> = v<sub>1</sub> / v<sub>2</sub> = n<sub>2</sub> / n<sub>1</sub><br><br>
-        This is Snell's law: n<sub>1</sub> sin &theta;<sub>1</sub> = n<sub>2</sub> sin &theta;<sub>2</sub>
+        sin i / sin r = v<sub>1</sub> / v<sub>2</sub> = n<sub>2</sub> / n<sub>1</sub><br><br>
+        Snell&#39;s Law: n<sub>1</sub> sin &theta;<sub>1</sub> = n<sub>2</sub> sin &theta;<sub>2</sub><br><br>
+        Wavelength in medium: &lambda;<sub>2</sub> = &lambda;<sub>1</sub> &times; (v<sub>2</sub>/v<sub>1</sub>)<br>
+        Frequency is unchanged across all media: f = v<sub>1</sub>/&lambda;<sub>1</sub> = v<sub>2</sub>/&lambda;<sub>2</sub>
       </div>
       <p>
-        This derivation also shows that light travels slower in a denser medium (higher refractive index), which is consistent with the wave theory. This was a key prediction that distinguished the wave theory from Newton's corpuscular theory, which required light to travel faster in a denser medium.
+        This derivation also shows that light travels <em>slower</em> in a denser medium (higher refractive index), which is consistent with the wave theory. This distinguished the wave theory from Newton&#39;s corpuscular theory, which required light to travel <em>faster</em> in a denser medium.
       </p>
     </div>
 
     <!-- ============================== -->
-    <!-- SECTION 2: Interference -->
+    <!-- SECTION 2: Interference        -->
     <!-- ============================== -->
     <div class="theory-section" id="interference">
       <h2>2. Interference of Light</h2>
@@ -147,9 +160,9 @@
         Two sources are said to be <strong>coherent</strong> if they emit light waves of the same frequency with a constant phase difference. Ordinary light sources (bulbs, candles) are incoherent because they emit light in random bursts with random phases. To obtain coherent sources, we must derive two sources from a single source. Methods include:
       </p>
       <ul>
-        <li>Young's double slit (division of wavefront)</li>
-        <li>Lloyd's mirror</li>
-        <li>Fresnel's biprism</li>
+        <li>Young&#39;s double slit (division of wavefront)</li>
+        <li>Lloyd&#39;s mirror</li>
+        <li>Fresnel&#39;s biprism</li>
         <li>Thin film interference (division of amplitude)</li>
       </ul>
 
@@ -157,48 +170,63 @@
       <p>
         When two or more waves meet at a point, the resultant displacement at that point is the algebraic sum of the individual displacements. This leads to the phenomenon of <strong>interference</strong>: when two coherent waves superpose, the intensity at each point depends on the phase difference between the waves at that point.
       </p>
+
+      <h3>Resultant Amplitude and Intensity</h3>
+      <p>
+        If two waves y<sub>1</sub> = A<sub>1</sub> sin(&omega;t &minus; kx<sub>1</sub> + &phi;<sub>1</sub>) and y<sub>2</sub> = A<sub>2</sub> sin(&omega;t &minus; kx<sub>2</sub> + &phi;<sub>2</sub>) meet at a point, the resultant amplitude A and intensity I are:
+      </p>
       <div class="formula-box">
-        Resultant intensity: I = I<sub>1</sub> + I<sub>2</sub> + 2&radic;(I<sub>1</sub> I<sub>2</sub>) cos &phi;<br><br>
+        Phase difference at point P: &Delta;&phi; = (2&pi;/&lambda;)(x<sub>2</sub> &minus; x<sub>1</sub>) + (&phi;<sub>1</sub> &minus; &phi;<sub>2</sub>)<br><br>
+        Resultant amplitude: A = &radic;(A<sub>1</sub>&sup2; + A<sub>2</sub>&sup2; + 2A<sub>1</sub>A<sub>2</sub> cos &Delta;&phi;)<br><br>
+        Resultant intensity: I = I<sub>1</sub> + I<sub>2</sub> + 2&radic;(I<sub>1</sub>I<sub>2</sub>) cos &Delta;&phi;<br><br>
         For equal intensities I<sub>1</sub> = I<sub>2</sub> = I<sub>0</sub>:<br>
-        I = 4I<sub>0</sub> cos&sup2;(&phi;/2)<br><br>
-        where &phi; = phase difference between the two waves at the point
+        I = 4I<sub>0</sub> cos&sup2;(&Delta;&phi;/2)
       </div>
 
-      <h3>Young's Double Slit Experiment (YDSE)</h3>
+      <h3>Path Difference and Phase Difference</h3>
       <p>
-        Thomas Young's experiment (1801) provided the first conclusive evidence for the wave nature of light. A monochromatic source illuminates two narrow slits S<sub>1</sub> and S<sub>2</sub> separated by distance <em>d</em>. The interference pattern is observed on a screen placed at distance <em>D</em> from the slits (D &gt;&gt; d).
-      </p>
-
-      <h3>Path Difference and Fringe Conditions</h3>
-      <p>
-        At a point P on the screen at distance <em>y</em> from the central axis, the path difference between waves from S<sub>1</sub> and S<sub>2</sub> is approximately:
+        The path difference p between two waves is the physical difference in distances they travel to reach a common point. It is directly related to the phase difference:
       </p>
       <div class="formula-box">
-        Path difference: &Delta;x = yd / D<br><br>
-        Phase difference: &phi; = 2&pi; &Delta;x / &lambda; = 2&pi; yd / (&lambda;D)
+        Path difference: p = x<sub>2</sub> &minus; x<sub>1</sub><br>
+        Phase difference: &Delta;&phi; = (2&pi;/&lambda;) &times; p<br><br>
+        p = &lambda; &hArr; &Delta;&phi; = 2&pi; (one full cycle)<br>
+        p = &lambda;/2 &hArr; &Delta;&phi; = &pi; (half cycle)
+      </div>
+    </div>
+
+    <!-- ====================================== -->
+    <!-- SECTION 3: Young's Double Slit         -->
+    <!-- ====================================== -->
+    <div class="theory-section" id="ydse">
+      <h2>3. Young&#39;s Double Slit Experiment (YDSE)</h2>
+
+      <h3>Setup</h3>
+      <p>
+        Thomas Young&#39;s experiment (1801) provided the first conclusive evidence for the wave nature of light. A monochromatic source illuminates two narrow slits S<sub>1</sub> and S<sub>2</sub> separated by distance <em>d</em>. The interference pattern is observed on a screen placed at distance <em>D</em> from the slits (D &gt;&gt; d).
+      </p>
+
+      <h3>Path Difference at a Screen Point</h3>
+      <p>
+        At a point P on the screen at distance <em>y</em> from the central axis, the path difference between waves from S<sub>1</sub> and S<sub>2</sub> is (using the small angle approximation since d &lt;&lt; D):
+      </p>
+      <div class="formula-box">
+        Path difference: &Delta;x = yd/D<br><br>
+        Phase difference: &phi; = 2&pi;&Delta;x/&lambda; = 2&pi;yd/(&lambda;D)
       </div>
 
-      <h3>Conditions for Maxima and Minima</h3>
+      <h3>Positions of Bright and Dark Fringes</h3>
       <div class="formula-box">
-        <strong>Constructive interference (bright fringes):</strong><br>
-        &Delta;x = n&lambda; &nbsp; (n = 0, &plusmn;1, &plusmn;2, ...)<br>
-        y<sub>n</sub> = n&lambda;D / d<br><br>
-        <strong>Destructive interference (dark fringes):</strong><br>
-        &Delta;x = (2n &minus; 1)&lambda;/2 &nbsp; (n = 1, 2, 3, ...)<br>
-        y<sub>n</sub> = (2n &minus; 1)&lambda;D / (2d)
-      </div>
-
-      <h3>Fringe Width</h3>
-      <p>
-        The fringe width is the distance between two consecutive bright (or dark) fringes. It is uniform across the screen (for small angles).
-      </p>
-      <div class="formula-box">
-        Fringe width: &beta; = &lambda;D / d
+        <strong>Bright fringes (constructive): &Delta;x = n&lambda;</strong><br>
+        y<sub>n</sub> = n&lambda;D/d &nbsp; (n = 0, &plusmn;1, &plusmn;2, ...)<br><br>
+        <strong>Dark fringes (destructive): &Delta;x = (2n &minus; 1)&lambda;/2</strong><br>
+        y<sub>n</sub> = (2n &minus; 1)&lambda;D/(2d) &nbsp; (n = 1, 2, 3, ...)
       </div>
       <p>
         Key observations:
       </p>
       <ul>
+        <li>Fringe width &beta; = &lambda;D/d is uniform across the screen (for small angles).</li>
         <li>&beta; increases with wavelength &lambda; (red fringes are wider than violet).</li>
         <li>&beta; increases with screen distance D.</li>
         <li>&beta; decreases with slit separation d.</li>
@@ -209,9 +237,9 @@
       </ul>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 1</div>
+        <div class="ex-label">Example 1 &mdash; Fringe Width and Position Calculation</div>
         <p>
-          In a Young's double slit experiment, the slit separation is 0.5 mm, the screen is 1.5 m away, and monochromatic light of wavelength 600 nm is used. Calculate the fringe width and the distance of the 5th bright fringe from the central maximum.
+          In a Young&#39;s double slit experiment, the slit separation is 0.5 mm, the screen is 1.5 m away, and monochromatic light of wavelength 600 nm is used. Calculate the fringe width and the distance of the 5th bright fringe from the central maximum.
         </p>
         <div class="solution">
           <p>
@@ -225,7 +253,7 @@
       </div>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 2</div>
+        <div class="ex-label">Example 2 &mdash; Intensity at a Given Path Difference</div>
         <p>
           In YDSE, two slits are illuminated by a monochromatic source. The intensity at the central maximum is I<sub>0</sub>. What is the intensity at a point where the path difference equals &lambda;/3?
         </p>
@@ -242,74 +270,286 @@
       </div>
     </div>
 
-    <!-- ============================== -->
-    <!-- SECTION 3: Diffraction -->
-    <!-- ============================== -->
+    <!-- ======================================= -->
+    <!-- SECTION 4: Fringe Width and Shift       -->
+    <!-- ======================================= -->
+    <div class="theory-section" id="fringe-width">
+      <h2>4. Fringe Width and Pattern Displacement</h2>
+
+      <h3>Fringe Width Formula</h3>
+      <p>
+        The fringe width &beta; is the distance between two consecutive bright (or dark) fringes:
+      </p>
+      <div class="formula-box">
+        Fringe width: &beta; = &lambda;D/d<br><br>
+        Angular fringe width: &theta; = &beta;/D = &lambda;/d
+      </div>
+
+      <h3>Shift Due to a Transparent Plate</h3>
+      <p>
+        When a transparent plate of thickness <em>t</em> and refractive index &mu; is placed in the path of one beam, the optical path through the plate increases. Light takes longer to traverse the plate than the same thickness of air, introducing an additional path of t(&mu; &minus; 1). This shifts the entire fringe pattern toward the side of the plate:
+      </p>
+      <div class="formula-box">
+        Extra optical path introduced: &Delta; = t(&mu; &minus; 1)<br><br>
+        New path difference at point y: p = yd/D &minus; t(&mu; &minus; 1)<br><br>
+        Lateral shift of fringe pattern: S = Dt(&mu; &minus; 1)/d<br><br>
+        Number of fringes shifted: N = t(&mu; &minus; 1)/&lambda;
+      </div>
+      <p>
+        Key notes:
+      </p>
+      <ul>
+        <li>The shift is proportional to (&mu; &minus; 1)t.</li>
+        <li>The shift is in the direction of the slit covered by the plate.</li>
+        <li>Fringe width remains unchanged &mdash; only the pattern position shifts.</li>
+        <li>If the plate is thick enough, the central maximum can shift by many fringe widths.</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-label">Example 3 &mdash; Angular Fringe Width and Slit Spacing</div>
+        <p>
+          In a Young&#39;s double slit experiment the angular width of a fringe formed on a distant screen is 0.1&deg;. The wavelength of the light used is 6000 &Aring;. What is the spacing between the slits?
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Angular fringe width: &theta; = &lambda;/d<br>
+            &theta; = 0.1&deg; = 0.1 &times; &pi;/180 rad<br><br>
+            d = &lambda;/&theta; = (6000 &times; 10<sup>&minus;10</sup>) / (0.1 &times; &pi;/180)<br>
+            d = (6 &times; 10<sup>&minus;7</sup> &times; 180) / (0.1 &times; &pi;)<br>
+            d &asymp; <strong>3.44 &times; 10<sup>&minus;4</sup> m = 0.344 mm</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- SECTION 5: Constructive and Destructive       -->
+    <!-- ============================================= -->
+    <div class="theory-section" id="constructive-destructive">
+      <h2>5. Constructive and Destructive Interference</h2>
+
+      <h3>Conditions</h3>
+      <p>
+        The type of interference at any point depends on the phase difference &Delta;&phi; between the two waves arriving there.
+      </p>
+      <div class="formula-box">
+        <strong>Constructive interference (bright):</strong><br>
+        &Delta;&phi; = 2n&pi; &nbsp; (n = 0, 1, 2, ...)<br>
+        Path difference p = n&lambda;<br>
+        Maximum amplitude: A<sub>max</sub> = A<sub>1</sub> + A<sub>2</sub><br><br>
+        <strong>Destructive interference (dark):</strong><br>
+        &Delta;&phi; = (2n + 1)&pi; &nbsp; (n = 0, 1, 2, ...)<br>
+        Path difference p = (2n + 1)&lambda;/2<br>
+        Minimum amplitude: A<sub>min</sub> = |A<sub>1</sub> &minus; A<sub>2</sub>|
+      </div>
+
+      <h3>Intensity Extremes</h3>
+      <div class="formula-box">
+        I<sub>max</sub> = (&radic;I<sub>1</sub> + &radic;I<sub>2</sub>)&sup2;<br>
+        I<sub>min</sub> = (&radic;I<sub>1</sub> &minus; &radic;I<sub>2</sub>)&sup2;<br><br>
+        For equal intensities (I<sub>1</sub> = I<sub>2</sub> = I<sub>0</sub>):<br>
+        I<sub>max</sub> = 4I<sub>0</sub>, &nbsp; I<sub>min</sub> = 0<br><br>
+        Ratio: I<sub>max</sub>/I<sub>min</sub> = ((r + 1)/(r &minus; 1))&sup2; where r = A<sub>1</sub>/A<sub>2</sub>
+      </div>
+
+      <h3>Effect of Source Phase</h3>
+      <p>
+        When the two sources are in <strong>opposite phase</strong> (e.g., Lloyd&#39;s mirror), the conditions for constructive and destructive interference are interchanged:
+      </p>
+      <ul>
+        <li>Constructive: p = (2n + 1)&lambda;/2 (odd multiples of half wavelength)</li>
+        <li>Destructive: p = n&lambda; (integral multiples of wavelength)</li>
+        <li>The central fringe (p = 0) becomes dark.</li>
+      </ul>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- SECTION 6: Intensity Distribution           -->
+    <!-- =========================================== -->
+    <div class="theory-section" id="intensity-distribution">
+      <h2>6. Intensity Distribution in Interference</h2>
+
+      <h3>Intensity as a Function of Position</h3>
+      <p>
+        For two equal-amplitude coherent sources, the intensity at any point on the screen varies as a cosine-squared function of position:
+      </p>
+      <div class="formula-box">
+        I(&phi;) = 4I<sub>0</sub> cos&sup2;(&Delta;&phi;/2)<br><br>
+        In terms of screen position y (with fringe width &beta; = &lambda;D/d):<br>
+        I(y) = 4I<sub>0</sub> cos&sup2;(&pi;y/&beta;)<br><br>
+        Maximum occurs at y = 0, &plusmn;&beta;, &plusmn;2&beta;, ... (I = 4I<sub>0</sub>)<br>
+        Minimum occurs at y = &plusmn;&beta;/2, &plusmn;3&beta;/2, ... (I = 0)
+      </div>
+
+      <h3>Fringe Visibility</h3>
+      <p>
+        The <strong>fringe visibility</strong> (or contrast) V quantifies how well-defined the fringes are:
+      </p>
+      <div class="formula-box">
+        V = (I<sub>max</sub> &minus; I<sub>min</sub>) / (I<sub>max</sub> + I<sub>min</sub>)<br><br>
+        For equal-amplitude sources: V = 1 (perfect visibility)<br>
+        For very unequal amplitudes: V &rarr; 0 (fringes wash out)
+      </div>
+      <p>
+        Energy is <strong>conserved</strong> in interference: the average intensity equals I<sub>1</sub> + I<sub>2</sub>. Energy is simply redistributed from the dark regions to the bright regions.
+      </p>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECTION 7: Fresnel's Biprism              -->
+    <!-- ========================================= -->
+    <div class="theory-section" id="fresnels-biprism">
+      <h2>7. Fresnel&#39;s Biprism Experiment</h2>
+
+      <h3>Principle</h3>
+      <p>
+        A <strong>Fresnel biprism</strong> is a glass prism with a very small refracting angle (approximately 1&deg;/3 or about 0.33&deg;). A single monochromatic slit source S illuminates the biprism. The upper and lower halves of the biprism refract the light slightly toward the base, producing two virtual coherent images S<sub>1</sub> and S<sub>2</sub> of the original source. These virtual images act as two coherent point sources, producing an interference pattern in the overlapping region beyond the biprism.
+      </p>
+
+      <h3>Key Formulas</h3>
+      <div class="formula-box">
+        Deviation by small-angle prism: &delta; = (&mu; &minus; 1)&alpha;<br>
+        (where &mu; = refractive index of glass, &alpha; = refracting angle of biprism)<br><br>
+        Separation of virtual sources: d = 2a&delta; = 2a(&mu; &minus; 1)&alpha;<br>
+        (where a = distance of source S from the biprism)<br><br>
+        Fringe width: &beta; = &lambda;D/d<br>
+        (where D = total distance from source to screen)
+      </div>
+
+      <h3>Measuring d with a Lens</h3>
+      <p>
+        In practice, the separation d of the virtual sources is measured by interposing a convex lens between the biprism and the screen. The lens forms real images of S<sub>1</sub> and S<sub>2</sub> on the screen, and their measured separation, divided by the magnification, gives d.
+      </p>
+
+      <div class="example-box">
+        <div class="ex-label">Example 4 &mdash; Fresnel&#39;s Biprism Fringe Width</div>
+        <p>
+          In a Fresnel&#39;s biprism experiment, a narrow slit illuminated by monochromatic light of wavelength 6000 &Aring; is placed 5 cm behind the biprism. A screen is placed 100 cm from the biprism. A convex lens placed 25 cm from the biprism forms real images of coherent sources on the screen, and these images are found 0.3 cm apart. Find (i) the fringe width, and (ii) the length occupied by 20 fringes.
+        </p>
+        <div class="solution">
+          <p>
+            <strong>Solution:</strong><br>
+            Object distance u = 5 + 25 = 30 cm, image distance v = 75 cm<br>
+            Magnification = v/u = 75/30 = 2.5<br>
+            Separation of virtual sources: d = 0.3/2.5 = 0.12 cm = 1.2 mm<br><br>
+            Total source-to-screen distance: D = 5 + 100 = 105 cm<br>
+            &lambda; = 6000 &Aring; = 6 &times; 10<sup>&minus;5</sup> cm<br><br>
+            (i) Fringe width: &beta; = &lambda;D/d = (6 &times; 10<sup>&minus;5</sup> &times; 105)/0.12<br>
+            &beta; = 5.25 &times; 10<sup>&minus;3</sup> cm &asymp; <strong>0.0525 mm</strong><br><br>
+            (ii) Length for 20 fringes = 20 &times; &beta; = 20 &times; 5.25 &times; 10<sup>&minus;3</sup> = <strong>0.105 cm = 1.05 mm</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECTION 8: Lloyd's Mirror                 -->
+    <!-- ========================================= -->
+    <div class="theory-section" id="lloyds-mirror">
+      <h2>8. Lloyd&#39;s Mirror Experiment</h2>
+
+      <h3>Principle</h3>
+      <p>
+        In Lloyd&#39;s mirror experiment, a point source S is placed very close to a plane mirror. The reflected light appears to come from a virtual image S&#39;, which is the mirror image of S. The direct light from S and the reflected light (appearing to come from S&#39;) are coherent sources and produce an interference pattern on a screen beyond the mirror&#39;s edge.
+      </p>
+
+      <h3>Phase Reversal on Reflection</h3>
+      <p>
+        A critical feature of Lloyd&#39;s mirror: the reflected ray undergoes a <strong>phase change of &pi;</strong> (half a wavelength) upon reflection from the optically denser mirror surface. This means S and S&#39; are effectively in <strong>opposite phase</strong>. As a result:
+      </p>
+      <ul>
+        <li>The fringe at the edge of the mirror (where path difference = 0) is a <strong>dark fringe</strong>, not a bright one.</li>
+        <li>The conditions for bright and dark fringes are <em>interchanged</em> compared to normal YDSE.</li>
+      </ul>
+      <div class="formula-box">
+        Separation of S and S&#39;: d = 2h (where h = height of source above mirror)<br><br>
+        Fringe width: &beta; = &lambda;D/d<br><br>
+        <strong>Bright fringes (opposite phase sources):</strong> p = (2n &minus; 1)&lambda;/2<br>
+        <strong>Dark fringes (opposite phase sources):</strong> p = n&lambda;<br>
+        Central fringe at p = 0 is <strong>dark</strong>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECTION 9: Optical Path                   -->
+    <!-- ========================================= -->
+    <div class="theory-section" id="optical-path">
+      <h2>9. Path Difference and Optical Path</h2>
+
+      <h3>Optical Path</h3>
+      <p>
+        The <strong>optical path</strong> of a ray travelling a geometric distance x through a medium of refractive index &mu; is defined as &mu;x. It represents the equivalent distance the ray would travel in vacuum to accumulate the same phase. When a ray passes through a medium of refractive index &mu; and thickness t, it gains an extra optical path of t(&mu; &minus; 1) compared to travelling through the same thickness of air.
+      </p>
+      <div class="formula-box">
+        Optical path in a medium: L = &mu;x<br><br>
+        Extra optical path due to slab (thickness t, index &mu;): &Delta; = t(&mu; &minus; 1)<br><br>
+        Phase difference due to optical path difference &Delta;:<br>
+        &delta; = (2&pi;/&lambda;) &times; &Delta;<br><br>
+        For constructive interference (thin film, no phase change): 2&mu;t = n&lambda;<br>
+        For destructive interference (thin film, one phase change): 2&mu;t = (2n &minus; 1)&lambda;/2
+      </div>
+
+      <h3>Thin Film Interference</h3>
+      <p>
+        When light reflects off both the top and bottom surfaces of a thin film, the two reflected rays interfere. Whether the interference is constructive or destructive at a given wavelength depends on:
+      </p>
+      <ul>
+        <li>The film thickness t and refractive index &mu;.</li>
+        <li>Whether a phase change of &pi; occurs at each interface (reflection from denser medium causes &pi; phase shift; reflection from rarer medium does not).</li>
+        <li>The wavelength of light &lambda;.</li>
+      </ul>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- SECTION 10: Single Slit Diffraction      -->
+    <!-- ======================================== -->
     <div class="theory-section" id="diffraction">
-      <h2>3. Diffraction of Light</h2>
+      <h2>10. Single Slit Diffraction</h2>
 
       <h3>What is Diffraction?</h3>
       <p>
         <strong>Diffraction</strong> is the bending of light waves around obstacles or through narrow openings. It is a characteristic property of all waves and becomes significant when the size of the obstacle or aperture is comparable to the wavelength of the wave. Diffraction provides strong evidence for the wave nature of light.
       </p>
 
-      <h3>Single Slit Diffraction</h3>
+      <h3>Single Slit Pattern</h3>
       <p>
-        When monochromatic light passes through a single narrow slit of width <em>a</em>, a diffraction pattern is observed on a distant screen. The pattern consists of a bright central maximum flanked by alternating dark and bright fringes of decreasing intensity.
+        When monochromatic light passes through a single narrow slit of width <em>a</em> (or <em>b</em>), a diffraction pattern is observed on a distant screen. The pattern consists of a bright central maximum flanked by alternating dark and bright fringes of decreasing intensity.
       </p>
 
       <h3>Conditions for Minima</h3>
-      <p>
-        The dark fringes (minima) occur at angles where:
-      </p>
       <div class="formula-box">
-        a sin &theta; = n&lambda; &nbsp; (n = &plusmn;1, &plusmn;2, &plusmn;3, ...)<br><br>
-        Position of n-th minimum on screen: y<sub>n</sub> = n&lambda;D/a<br><br>
-        (where D = distance from slit to screen, and small angle approximation sin &theta; &asymp; tan &theta; = y/D)
+        Minima: a sin &theta; = n&lambda; &nbsp; (n = &plusmn;1, &plusmn;2, &plusmn;3, ...)<br><br>
+        Position of n-th minimum on screen: y<sub>n</sub> = n&lambda;D/a<br>
+        (D = slit-to-screen distance; small angle: sin &theta; &asymp; y/D)<br><br>
+        Note: n = 0 is the central maximum, NOT a minimum
       </div>
-      <p>
-        Note: n = 0 does NOT correspond to a minimum &mdash; it is the central maximum.
-      </p>
 
-      <h3>Central Maximum</h3>
-      <p>
-        The central maximum extends from the first minimum on one side to the first minimum on the other side. Its angular width and linear width are:
-      </p>
+      <h3>Central Maximum Width</h3>
       <div class="formula-box">
-        Angular half-width of central maximum: sin &theta; = &lambda;/a &nbsp; (first minimum)<br>
-        Full angular width: 2&theta; = 2&lambda;/a (for small angles)<br><br>
+        Angular half-width of central maximum: &theta;<sub>1</sub> = &lambda;/a<br>
+        Full angular width: 2&theta;<sub>1</sub> = 2&lambda;/a<br><br>
         Linear width of central maximum: W = 2&lambda;D/a
       </div>
       <p>
-        The central maximum is twice as wide as any other secondary maximum and contains about 84% of the total light intensity. As the slit width <em>a</em> decreases, the central maximum broadens (more spreading). As <em>a</em> increases, the pattern narrows and approaches geometric optics.
+        The central maximum is <strong>twice as wide</strong> as any secondary maximum and contains about 84% of the total diffracted light intensity. As slit width a decreases, the central maximum broadens. As a increases, the pattern narrows toward geometric optics.
       </p>
 
-      <h3>Conditions for Secondary Maxima</h3>
-      <p>
-        The secondary maxima occur approximately at:
-      </p>
+      <h3>Secondary Maxima</h3>
       <div class="formula-box">
-        a sin &theta; &asymp; (2n + 1)&lambda;/2 &nbsp; (n = 1, 2, 3, ...)<br><br>
-        Intensity ratio: I<sub>1</sub> : I<sub>2</sub> : I<sub>3</sub> ... &asymp; 1 : 1/22 : 1/61 ... (secondary maxima are much dimmer than the central maximum)
+        Secondary maxima (approximate positions): a sin &theta; &asymp; (2n + 1)&lambda;/2 &nbsp; (n = 1, 2, 3, ...)<br><br>
+        Relative intensity of secondary maxima: I<sub>1</sub> : I<sub>2</sub> : I<sub>3</sub> &asymp; 1 : 1/22 : 1/61 (very dim compared to central)
       </div>
 
-      <h3>Resolving Power</h3>
-      <p>
-        The <strong>resolving power</strong> of an optical instrument is its ability to distinguish between two closely spaced objects. According to <strong>Rayleigh's criterion</strong>, two point sources are just resolved when the central maximum of the diffraction pattern of one falls on the first minimum of the other.
-      </p>
-      <div class="formula-box">
-        Limit of resolution of a telescope: &Delta;&theta; = 1.22 &lambda;/D<br>
-        (where D = diameter of the objective lens/mirror)<br><br>
-        Resolving power = 1/&Delta;&theta; = D/(1.22&lambda;)<br><br>
-        Limit of resolution of a microscope: d<sub>min</sub> = 1.22&lambda;/(2n sin&beta;) = 0.61&lambda;/NA<br>
-        (where NA = n sin&beta; is the numerical aperture)
-      </div>
-      <p>
-        A larger aperture (larger D) gives better resolution (smaller &Delta;&theta;). Shorter wavelengths also improve resolution, which is why electron microscopes (using de Broglie wavelength of electrons) have much higher resolving power than optical microscopes.
-      </p>
+      <h3>Comparison with Double Slit Interference</h3>
+      <ul>
+        <li>In interference (YDSE), all bright fringes are equally intense; in diffraction, central maximum is much brighter.</li>
+        <li>In interference, fringes are equally spaced; in diffraction, central maximum is twice as wide as secondary maxima.</li>
+        <li>Both patterns are described by wave superposition principles.</li>
+      </ul>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 3</div>
+        <div class="ex-label">Example 5 &mdash; Single Slit Central Maximum Width</div>
         <p>
           Light of wavelength 500 nm falls on a slit of width 0.2 mm. The screen is placed 2 m from the slit. Find the width of the central maximum and the position of the first secondary maximum.
         </p>
@@ -317,93 +557,239 @@
           <p>
             <strong>Solution:</strong><br>
             &lambda; = 500 nm = 5 &times; 10<sup>&minus;7</sup> m, a = 0.2 mm = 2 &times; 10<sup>&minus;4</sup> m, D = 2 m<br><br>
-            Width of central maximum: W = 2&lambda;D/a = 2 &times; 5 &times; 10<sup>&minus;7</sup> &times; 2 / (2 &times; 10<sup>&minus;4</sup>)<br>
-            W = 2 &times; 10<sup>&minus;6</sup> / 2 &times; 10<sup>&minus;4</sup> = 1 &times; 10<sup>&minus;2</sup> m = <strong>10 mm</strong><br><br>
-            Position of first secondary maximum (approximately at 3&lambda;/2 path difference):<br>
-            a sin &theta; &asymp; 3&lambda;/2, so sin &theta; &asymp; 3&lambda;/(2a)<br>
-            y = D sin &theta; &asymp; 3&lambda;D/(2a) = 3 &times; 5 &times; 10<sup>&minus;7</sup> &times; 2 / (2 &times; 2 &times; 10<sup>&minus;4</sup>)<br>
-            y = 3 &times; 10<sup>&minus;6</sup> / 4 &times; 10<sup>&minus;4</sup> = 7.5 &times; 10<sup>&minus;3</sup> m = <strong>7.5 mm</strong> from the central maximum
+            Width of central maximum: W = 2&lambda;D/a = (2 &times; 5 &times; 10<sup>&minus;7</sup> &times; 2) / (2 &times; 10<sup>&minus;4</sup>)<br>
+            W = 2 &times; 10<sup>&minus;6</sup> / 2 &times; 10<sup>&minus;4</sup> = <strong>10 mm</strong><br><br>
+            First secondary maximum at a sin &theta; &asymp; 3&lambda;/2:<br>
+            y = 3&lambda;D/(2a) = (3 &times; 5 &times; 10<sup>&minus;7</sup> &times; 2)/(2 &times; 2 &times; 10<sup>&minus;4</sup>)<br>
+            y = 3 &times; 10<sup>&minus;6</sup> / 4 &times; 10<sup>&minus;4</sup> = <strong>7.5 mm</strong> from the central maximum
           </p>
         </div>
       </div>
     </div>
 
-    <!-- ============================== -->
-    <!-- SECTION 4: Polarization -->
-    <!-- ============================== -->
-    <div class="theory-section" id="polarization">
-      <h2>4. Polarization of Light</h2>
+    <!-- ========================================= -->
+    <!-- SECTION 11: Rayleigh Criterion            -->
+    <!-- ========================================= -->
+    <div class="theory-section" id="rayleigh-criterion">
+      <h2>11. Rayleigh Criterion and Resolution</h2>
 
-      <h3>Polarized vs Unpolarized Light</h3>
+      <h3>Resolving Power</h3>
       <p>
-        In an ordinary light wave, the electric field vector vibrates in all possible directions perpendicular to the direction of propagation. Such light is called <strong>unpolarized light</strong>. When the electric field vector is restricted to vibrate in a single plane, the light is called <strong>plane-polarized</strong> (or linearly polarized) light. The plane containing the electric field vector and the direction of propagation is called the <strong>plane of polarization</strong>.
-      </p>
-      <p>
-        Since polarization involves the direction of the electric field oscillation, it is a property exclusively of <strong>transverse waves</strong>. Longitudinal waves (like sound) cannot be polarized. The observation of polarization of light was a key piece of evidence proving that light is a transverse wave.
+        The <strong>resolving power</strong> of an optical instrument is its ability to distinguish between two closely spaced objects. Diffraction at the aperture of the instrument sets the fundamental limit on resolution &mdash; this limit cannot be overcome simply by increasing magnification.
       </p>
 
-      <h3>Methods of Polarization</h3>
-      <ul>
-        <li><strong>By selective absorption (polaroids):</strong> Certain materials preferentially absorb one component of the electric field while transmitting the perpendicular component.</li>
-        <li><strong>By reflection:</strong> When unpolarized light is reflected from a surface at the Brewster angle, the reflected light is completely polarized.</li>
-        <li><strong>By refraction:</strong> Partial polarization occurs during refraction.</li>
-        <li><strong>By scattering:</strong> Sunlight scattered by atmospheric molecules is partially polarized (this is why the sky appears polarized when viewed at 90&deg; to the sun).</li>
-        <li><strong>By double refraction:</strong> Certain crystals (calcite, quartz) split an incident ray into two polarized rays with perpendicular polarizations (ordinary and extraordinary rays).</li>
-      </ul>
-
-      <h3>Malus's Law</h3>
+      <h3>Rayleigh&#39;s Criterion</h3>
       <p>
-        When plane-polarized light of intensity I<sub>0</sub> passes through a second polaroid (called the analyser) whose transmission axis makes an angle &theta; with the polarization direction of the incident light, the transmitted intensity is:
+        Two point sources are said to be <strong>just resolved</strong> when the central maximum of the diffraction pattern of one source falls exactly on the <strong>first minimum</strong> of the diffraction pattern of the other.
       </p>
       <div class="formula-box">
-        I = I<sub>0</sub> cos&sup2;&theta; &nbsp; (Malus's Law)<br><br>
-        When &theta; = 0&deg;: I = I<sub>0</sub> (maximum transmission)<br>
-        When &theta; = 90&deg;: I = 0 (no transmission &mdash; crossed polaroids)<br>
-        When &theta; = 45&deg;: I = I<sub>0</sub>/2
+        Minimum angular separation (circular aperture):<br>
+        &Delta;&theta;<sub>min</sub> = 1.22 &lambda;/D<br>
+        (D = diameter of the aperture; factor 1.22 comes from Bessel function for circular aperture)<br><br>
+        For rectangular aperture/slit: &Delta;&theta;<sub>min</sub> = &lambda;/a<br><br>
+        Resolving power of telescope = 1/&Delta;&theta;<sub>min</sub> = D/(1.22&lambda;)<br><br>
+        Limit of resolution of microscope: d<sub>min</sub> = 0.61&lambda;/(n sin&beta;) = 0.61&lambda;/NA<br>
+        (NA = n sin&beta; = numerical aperture)
       </div>
       <p>
-        If unpolarized light of intensity I passes through a single polaroid, the transmitted intensity is I/2 (half the incident intensity), since on average, cos&sup2;&theta; averages to 1/2 over all angles.
+        A larger aperture (larger D) gives better resolution (smaller &Delta;&theta;). Shorter wavelengths also improve resolution, which is why electron microscopes (using de Broglie wavelength of electrons, ~0.01 nm) have far higher resolving power than optical microscopes.
+      </p>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECTION 12: Brewster's Angle              -->
+    <!-- ========================================= -->
+    <div class="theory-section" id="brewsters-angle">
+      <h2>12. Brewster&#39;s Angle and Polarization by Reflection</h2>
+
+      <h3>Polarization</h3>
+      <p>
+        In an ordinary light wave, the electric field vector vibrates in all possible directions perpendicular to the direction of propagation &mdash; this is <strong>unpolarized light</strong>. When the electric field is restricted to vibrate in a single plane, the light is called <strong>plane-polarized</strong> (linearly polarized) light. Since polarization involves the direction of the electric field oscillation, it is a property exclusively of <strong>transverse waves</strong>. Longitudinal waves (like sound) cannot be polarized.
       </p>
 
-      <h3>Brewster's Angle</h3>
+      <h3>Brewster&#39;s Law</h3>
       <p>
-        When unpolarized light strikes a transparent surface, the reflected light is partially polarized. At a particular angle of incidence called <strong>Brewster's angle</strong> (&theta;<sub>B</sub>), the reflected light is completely polarized (with the electric field vector parallel to the surface). At Brewster's angle, the reflected and refracted rays are perpendicular to each other.
+        When unpolarized light strikes a transparent surface, the reflected light is partially polarized. At a particular angle of incidence called <strong>Brewster&#39;s angle</strong> (&theta;<sub>B</sub>), the reflected light is <em>completely</em> polarized (electric field perpendicular to the plane of incidence). At this angle, the reflected and refracted rays are perpendicular to each other.
       </p>
       <div class="formula-box">
-        tan &theta;<sub>B</sub> = n &nbsp; (Brewster's Law)<br><br>
-        where n = refractive index of the reflecting medium relative to the incident medium.<br><br>
-        At Brewster's angle: &theta;<sub>B</sub> + &theta;<sub>r</sub> = 90&deg; (reflected and refracted rays are perpendicular)
+        Brewster&#39;s Law: tan &theta;<sub>B</sub> = n<sub>2</sub>/n<sub>1</sub><br><br>
+        For air-to-glass (n = 1.5): &theta;<sub>B</sub> = tan<sup>&minus;1</sup>(1.5) &asymp; 56.3&deg;<br>
+        For air-to-water (n = 1.33): &theta;<sub>B</sub> &asymp; 53.1&deg;<br><br>
+        At Brewster&#39;s angle: &theta;<sub>B</sub> + &theta;<sub>r</sub> = 90&deg;<br>
+        (reflected and refracted rays are perpendicular)
       </div>
-      <p>
-        For glass (n = 1.5): &theta;<sub>B</sub> = tan<sup>&minus;1</sup>(1.5) &asymp; 56.3&deg;. For water (n = 1.33): &theta;<sub>B</sub> &asymp; 53.1&deg;.
-      </p>
 
-      <h3>Polaroids &mdash; Applications</h3>
+      <h3>Polaroids and Applications</h3>
       <ul>
-        <li><strong>Sunglasses:</strong> Polaroid sunglasses reduce glare by blocking horizontally polarized light reflected from surfaces like roads and water.</li>
-        <li><strong>LCD screens:</strong> Liquid crystal displays use two polaroids with a liquid crystal layer in between to control light transmission.</li>
+        <li><strong>Sunglasses:</strong> Polaroid sunglasses reduce glare by blocking horizontally polarized reflected light.</li>
+        <li><strong>LCD screens:</strong> Liquid crystal displays use two polaroids with a liquid crystal layer to control light transmission.</li>
         <li><strong>Photography:</strong> Polarizing filters reduce reflections and enhance contrast.</li>
         <li><strong>3D movies:</strong> Different polarizations are used for left and right eye images.</li>
         <li><strong>Stress analysis:</strong> Photoelasticity uses polarized light to visualize stress patterns in transparent materials.</li>
       </ul>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECTION 13: Malus's Law                   -->
+    <!-- ========================================= -->
+    <div class="theory-section" id="malus-law">
+      <h2>13. Malus&#39;s Law and Polarizers</h2>
+
+      <h3>Malus&#39;s Law</h3>
+      <p>
+        When plane-polarized light of intensity I<sub>0</sub> passes through a second polaroid (the <strong>analyser</strong>) whose transmission axis makes an angle &theta; with the polarization direction of the incident light, the transmitted intensity is:
+      </p>
+      <div class="formula-box">
+        I = I<sub>0</sub> cos&sup2; &theta; &nbsp; (Malus&#39;s Law)<br><br>
+        &theta; = 0&deg;: I = I<sub>0</sub> (maximum transmission &mdash; axes parallel)<br>
+        &theta; = 90&deg;: I = 0 (no transmission &mdash; crossed polaroids)<br>
+        &theta; = 45&deg;: I = I<sub>0</sub>/2
+      </div>
+
+      <h3>Unpolarized Light Through a Polaroid</h3>
+      <p>
+        If unpolarized light of intensity I passes through a single polaroid, the transmitted intensity is <strong>I/2</strong>, because the average value of cos&sup2;&theta; over all angles is 1/2.
+      </p>
+
+      <h3>Crossed Polaroids and Three-Polaroid System</h3>
+      <p>
+        When the first and third polaroids are crossed (90&deg; apart), no light passes through if there are only two polaroids. However, inserting a third polaroid at an intermediate angle between them allows some light through:
+      </p>
+      <div class="formula-box">
+        After polaroid 1 (from unpolarized I): I<sub>1</sub> = I/2<br>
+        After polaroid 2 (at angle &theta; to polaroid 1): I<sub>2</sub> = (I/2) cos&sup2; &theta;<br>
+        After polaroid 3 (at 90&deg; to polaroid 1, i.e., (90&deg; &minus; &theta;) to polaroid 2):<br>
+        I<sub>3</sub> = (I/2) cos&sup2; &theta; &times; cos&sup2;(90&deg; &minus; &theta;) = (I/2) cos&sup2;&theta; sin&sup2;&theta; = I sin&sup2;(2&theta;)/8
+      </div>
 
       <div class="example-box">
-        <div class="ex-label">Solved Example 4</div>
+        <div class="ex-label">Example 6 &mdash; Three Polaroids in Series</div>
         <p>
-          Unpolarized light of intensity 32 W/m&sup2; passes through three polaroids. The transmission axis of the first polaroid is vertical. The second makes an angle of 30&deg; with the first, and the third makes an angle of 60&deg; with the first (i.e., 30&deg; with the second). Find the intensity of light emerging from the system.
+          Unpolarized light of intensity 32 W/m&sup2; passes through three polaroids. The transmission axis of the first is vertical. The second makes 30&deg; with the first, and the third makes 60&deg; with the first (30&deg; with the second). Find the intensity emerging from the system.
         </p>
         <div class="solution">
           <p>
             <strong>Solution:</strong><br>
-            After the first polaroid (unpolarized to polarized):<br>
-            I<sub>1</sub> = I/2 = 32/2 = <strong>16 W/m&sup2;</strong><br><br>
-            After the second polaroid (angle 30&deg; with the first):<br>
-            I<sub>2</sub> = I<sub>1</sub> cos&sup2;30&deg; = 16 &times; (3/4) = <strong>12 W/m&sup2;</strong><br><br>
-            After the third polaroid (angle 30&deg; with the second):<br>
-            I<sub>3</sub> = I<sub>2</sub> cos&sup2;30&deg; = 12 &times; (3/4) = <strong>9 W/m&sup2;</strong><br><br>
-            The emerging intensity is <strong>9 W/m&sup2;</strong>.
+            After the first polaroid (unpolarized &rarr; polarized):<br>
+            I<sub>1</sub> = 32/2 = <strong>16 W/m&sup2;</strong><br><br>
+            After the second polaroid (angle 30&deg; with first):<br>
+            I<sub>2</sub> = 16 &times; cos&sup2;30&deg; = 16 &times; (3/4) = <strong>12 W/m&sup2;</strong><br><br>
+            After the third polaroid (angle 30&deg; with second):<br>
+            I<sub>3</sub> = 12 &times; cos&sup2;30&deg; = 12 &times; (3/4) = <strong>9 W/m&sup2;</strong>
           </p>
         </div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECTION 14: Dispersion and Prism          -->
+    <!-- ========================================= -->
+    <div class="theory-section" id="dispersion">
+      <h2>14. Dispersion and Prism</h2>
+
+      <h3>Dispersion</h3>
+      <p>
+        <strong>Dispersion</strong> is the separation of white light into its component wavelengths (colors) when it passes through a refracting medium. It occurs because the refractive index of a medium depends on wavelength &mdash; a phenomenon described by Cauchy&#39;s equation. Violet light (shorter wavelength) has a higher refractive index and bends more; red light (longer wavelength) has a lower refractive index and bends less.
+      </p>
+
+      <h3>Prism Formulae</h3>
+      <div class="formula-box">
+        Deviation by a prism: &delta; = i + e &minus; A<br>
+        (i = angle of incidence, e = angle of emergence, A = prism angle)<br><br>
+        At minimum deviation (&delta;<sub>m</sub>): i = e and ray passes symmetrically<br>
+        Prism formula at minimum deviation: sin((A + &delta;<sub>m</sub>)/2) = n sin(A/2)<br><br>
+        Angular dispersion: &delta;<sub>V</sub> &minus; &delta;<sub>R</sub> = (n<sub>V</sub> &minus; n<sub>R</sub>)A (for small A)<br><br>
+        Dispersive power: &omega; = (n<sub>V</sub> &minus; n<sub>R</sub>)/(n<sub>Y</sub> &minus; 1)
+      </div>
+
+      <h3>Cauchy&#39;s Equation</h3>
+      <div class="formula-box">
+        n(&lambda;) = A + B/&lambda;&sup2;<br>
+        (A and B are material constants; n decreases as &lambda; increases)
+      </div>
+
+      <h3>Applications</h3>
+      <ul>
+        <li><strong>Spectrometers:</strong> Prisms and diffraction gratings are used to analyze the spectrum of light sources.</li>
+        <li><strong>Chromatic aberration:</strong> Lenses suffer from dispersion; different colors focus at different points. Achromatic doublets (convex + concave lens of different glass types) correct this.</li>
+        <li><strong>Rainbow:</strong> Sunlight undergoes dispersion and total internal reflection inside water droplets to produce the rainbow.</li>
+      </ul>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECTION 15: Key Formulas Summary          -->
+    <!-- ========================================= -->
+    <div class="theory-section" id="key-formulas">
+      <h2>15. Key Formulas Summary</h2>
+
+      <h3>Huygens&#39; Principle and Refraction</h3>
+      <div class="formula-box">
+        Snell&#39;s Law (wave derivation): sin i / sin r = v<sub>1</sub>/v<sub>2</sub> = n<sub>2</sub>/n<sub>1</sub><br>
+        Frequency is constant across media; wavelength changes: &lambda; = v/f
+      </div>
+
+      <h3>Interference &mdash; General</h3>
+      <div class="formula-box">
+        Resultant intensity: I = I<sub>1</sub> + I<sub>2</sub> + 2&radic;(I<sub>1</sub>I<sub>2</sub>) cos &Delta;&phi;<br>
+        Phase &harr; path: &Delta;&phi; = (2&pi;/&lambda;) &times; p<br>
+        I<sub>max</sub> = (&radic;I<sub>1</sub> + &radic;I<sub>2</sub>)&sup2;, &nbsp; I<sub>min</sub> = (&radic;I<sub>1</sub> &minus; &radic;I<sub>2</sub>)&sup2;
+      </div>
+
+      <h3>Young&#39;s Double Slit Experiment</h3>
+      <div class="formula-box">
+        Path difference: &Delta;x = yd/D<br>
+        Fringe width: &beta; = &lambda;D/d<br>
+        Angular fringe width: &theta; = &lambda;/d<br>
+        n-th bright fringe: y<sub>n</sub> = n&lambda;D/d<br>
+        n-th dark fringe: y<sub>n</sub> = (2n &minus; 1)&lambda;D/(2d)<br>
+        Intensity at any point: I = 4I<sub>0</sub> cos&sup2;(&Delta;&phi;/2)
+      </div>
+
+      <h3>Fringe Pattern Shift (Transparent Slab)</h3>
+      <div class="formula-box">
+        Extra optical path: &Delta; = t(&mu; &minus; 1)<br>
+        Lateral shift of pattern: S = Dt(&mu; &minus; 1)/d<br>
+        Number of fringes shifted: N = t(&mu; &minus; 1)/&lambda;
+      </div>
+
+      <h3>Fresnel&#39;s Biprism</h3>
+      <div class="formula-box">
+        Deviation: &delta; = (&mu; &minus; 1)&alpha;<br>
+        Virtual source separation: d = 2a(&mu; &minus; 1)&alpha;<br>
+        Fringe width: &beta; = &lambda;D/d
+      </div>
+
+      <h3>Lloyd&#39;s Mirror</h3>
+      <div class="formula-box">
+        Source separation: d = 2h<br>
+        Central fringe is DARK (phase change &pi; on reflection)<br>
+        Fringe width: &beta; = &lambda;D/d
+      </div>
+
+      <h3>Single Slit Diffraction</h3>
+      <div class="formula-box">
+        Minima: a sin &theta; = n&lambda; (n = 1, 2, 3, ...)<br>
+        Central maximum width: W = 2&lambda;D/a<br>
+        Secondary maxima (approx.): a sin &theta; = (2n + 1)&lambda;/2
+      </div>
+
+      <h3>Rayleigh Criterion</h3>
+      <div class="formula-box">
+        Minimum resolvable angle (circular): &Delta;&theta; = 1.22&lambda;/D<br>
+        Resolving power of telescope: R = D/(1.22&lambda;)
+      </div>
+
+      <h3>Polarization</h3>
+      <div class="formula-box">
+        Brewster&#39;s Law: tan &theta;<sub>B</sub> = n &nbsp; (&theta;<sub>B</sub> + &theta;<sub>r</sub> = 90&deg;)<br>
+        Malus&#39;s Law: I = I<sub>0</sub> cos&sup2; &theta;<br>
+        Unpolarized through single polaroid: I<sub>out</sub> = I<sub>in</sub>/2
+      </div>
+
+      <h3>Dispersion</h3>
+      <div class="formula-box">
+        Prism formula at minimum deviation: sin((A + &delta;<sub>m</sub>)/2) = n sin(A/2)<br>
+        Dispersive power: &omega; = (n<sub>V</sub> &minus; n<sub>R</sub>)/(n<sub>Y</sub> &minus; 1)
       </div>
     </div>
 
