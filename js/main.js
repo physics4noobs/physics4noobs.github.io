@@ -278,9 +278,28 @@ function initChapterSidebar() {
     wrapper.appendChild(detail.firstChild);
   }
 
+  // Pull h1 out to span full grid width; keep ch-nav inside chd-content
+  var hero = wrapper.querySelector('.ch-hero');
+  var heading = hero ? hero.querySelector('h1') : null;
+  var chNav = hero ? hero.querySelector('.ch-nav') : null;
+
   var sidebar = document.createElement('nav');
   sidebar.className = 'chd-sidebar';
   sidebar.innerHTML = html;
+
+  // Place h1 as full-span grid child
+  if (heading) {
+    heading.className = 'ch-title-full';
+    detail.appendChild(heading);
+  }
+  // Move ch-nav to the start of chd-content (before theory sections)
+  if (chNav && wrapper.firstChild) {
+    wrapper.insertBefore(chNav, wrapper.firstChild);
+  }
+  // Remove the now-empty ch-hero
+  if (hero && hero.parentNode) {
+    hero.parentNode.removeChild(hero);
+  }
 
   detail.appendChild(wrapper);
   detail.appendChild(sidebar);
