@@ -232,7 +232,7 @@ function initChapterSidebar() {
       { num: '05', name: 'Gravitation', file: 'gravitation' },
       { num: '06', name: 'Mechanical Properties', file: 'mechanical-properties' },
       { num: '07', name: 'Fluid Mechanics', file: 'fluid-mechanics' },
-      { num: '08', name: 'Thermodynamics', file: 'thermodynamics' },
+      { num: '08', name: 'KTG & Thermodynamics', file: 'thermodynamics' },
       { num: '09', name: 'SHM', file: 'shm' },
       { num: '10', name: 'Waves', file: 'waves' }
     ]},
