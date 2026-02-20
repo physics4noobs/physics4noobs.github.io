@@ -128,10 +128,10 @@
       </ul>
 
       <div class="formula-box">
-        Displacement: &Delta;r = r<sub>f</sub> &minus; r<sub>i</sub><br>
-        In 1-D: &Delta;x = x<sub>f</sub> &minus; x<sub>i</sub><br>
-        In 2-D: &Delta;r = (x<sub>f</sub> &minus; x<sub>i</sub>) i + (y<sub>f</sub> &minus; y<sub>i</sub>) j<br>
-        |&Delta;r| = &radic;[(&Delta;x)&sup2; + (&Delta;y)&sup2;]
+        $$\Delta r = r_f - r_i$$
+        $$\Delta x = x_f - x_i$$
+        $$\Delta r = (x_f - x_i) \mathbf{i} + (y_f - y_i) \mathbf{j}$$
+        $$|\Delta r| = \sqrt{(\Delta x)^2 + (\Delta y)^2}$$
       </div>
 
       <h3>Path Length vs Displacement</h3>
@@ -185,16 +185,15 @@
         Average speed is defined as the total distance travelled divided by the total time taken. It is a scalar quantity and is always positive.
       </p>
       <div class="formula-box">
-        Average Speed = Total Distance / Total Time<br>
-        v<sub>avg</sub> = d / t
+        $$v_{\text{avg}} = \frac{\text{Total Distance}}{\text{Total Time}} = \frac{d}{t}$$
       </div>
       <p>
         If a body covers distances d<sub>1</sub>, d<sub>2</sub>, d<sub>3</sub>, ... with speeds v<sub>1</sub>, v<sub>2</sub>, v<sub>3</sub>, ... respectively, then the average speed is:
       </p>
       <div class="formula-box">
-        v<sub>avg</sub> = (d<sub>1</sub> + d<sub>2</sub> + d<sub>3</sub> + ...) / (d<sub>1</sub>/v<sub>1</sub> + d<sub>2</sub>/v<sub>2</sub> + d<sub>3</sub>/v<sub>3</sub> + ...)<br><br>
-        Special case &mdash; Equal distances: v<sub>avg</sub> = 2v<sub>1</sub>v<sub>2</sub> / (v<sub>1</sub> + v<sub>2</sub>) &nbsp; (Harmonic mean)<br>
-        Special case &mdash; Equal times: v<sub>avg</sub> = (v<sub>1</sub> + v<sub>2</sub>) / 2 &nbsp; (Arithmetic mean)
+        $$v_{\text{avg}} = \frac{d_1 + d_2 + d_3 + \cdots}{\frac{d_1}{v_1} + \frac{d_2}{v_2} + \frac{d_3}{v_3} + \cdots}$$
+        $$v_{\text{avg}} = \frac{2v_1v_2}{v_1 + v_2} \quad \text{(Harmonic mean)}$$
+        $$v_{\text{avg}} = \frac{v_1 + v_2}{2} \quad \text{(Arithmetic mean)}$$
       </div>
 
       <h3>Average Velocity</h3>
@@ -202,7 +201,7 @@
         Average velocity is defined as the displacement divided by the time interval. Unlike average speed, average velocity is a vector quantity and can be positive, negative, or zero.
       </p>
       <div class="formula-box">
-        v<sub>avg</sub> = &Delta;r / &Delta;t = (r<sub>f</sub> &minus; r<sub>i</sub>) / (t<sub>f</sub> &minus; t<sub>i</sub>)
+        $$v_{\text{avg}} = \frac{\Delta r}{\Delta t} = \frac{r_f - r_i}{t_f - t_i}$$
       </div>
 
       <h3>Instantaneous Velocity</h3>
@@ -210,8 +209,8 @@
         Instantaneous velocity is the velocity of a particle at a specific instant of time. Mathematically, it is the limiting value of the average velocity as the time interval approaches zero.
       </p>
       <div class="formula-box">
-        v = lim (&Delta;t &rarr; 0) &Delta;r / &Delta;t = dr/dt<br><br>
-        In 1-D: v = dx/dt
+        $$v = \lim_{\Delta t \to 0} \frac{\Delta r}{\Delta t} = \frac{dr}{dt}$$
+        $$v = \frac{dx}{dt} \quad \text{(1-D)}$$
       </div>
       <p>
         The magnitude of instantaneous velocity is the instantaneous speed. The direction of instantaneous velocity is always tangent to the path of the particle at that point.
@@ -273,7 +272,7 @@
         Average acceleration is defined as the change in velocity divided by the time interval over which the change occurs. It is a vector quantity.
       </p>
       <div class="formula-box">
-        a<sub>avg</sub> = &Delta;v / &Delta;t = (v<sub>f</sub> &minus; v<sub>i</sub>) / (t<sub>f</sub> &minus; t<sub>i</sub>)
+        $$a_{\text{avg}} = \frac{\Delta v}{\Delta t} = \frac{v_f - v_i}{t_f - t_i}$$
       </div>
 
       <h3>Instantaneous Acceleration</h3>
@@ -281,8 +280,8 @@
         Instantaneous acceleration is the acceleration at a specific instant of time. It is the time derivative of velocity, or equivalently, the second derivative of position.
       </p>
       <div class="formula-box">
-        a = dv/dt = d&sup2;r/dt&sup2;<br><br>
-        In 1-D: a = dv/dt = d&sup2;x/dt&sup2;
+        $$a = \frac{dv}{dt} = \frac{d^2r}{dt^2}$$
+        $$a = \frac{dv}{dt} = \frac{d^2x}{dt^2} \quad \text{(1-D)}$$
       </div>
       <p>
         Important points about acceleration:
@@ -310,11 +309,9 @@
         <li>The speed at which the object returns to the point of projection equals the speed of projection.</li>
       </ul>
       <div class="formula-box">
-        Free fall from rest: v = gt, &nbsp; h = &frac12;gt&sup2;, &nbsp; v&sup2; = 2gh<br>
-        Object thrown upward with speed u: v = u &minus; gt, &nbsp; h = ut &minus; &frac12;gt&sup2;, &nbsp; v&sup2; = u&sup2; &minus; 2gh<br>
-        Time to reach max height: t = u/g<br>
-        Maximum height: H = u&sup2;/(2g)<br>
-        Total time of flight: T = 2u/g
+        $$v = gt \quad h = \frac{1}{2}gt^2 \quad v^2 = 2gh$$
+        $$v = u - gt \quad h = ut - \frac{1}{2}gt^2 \quad v^2 = u^2 - 2gh$$
+        $$t = \frac{u}{g} \quad H = \frac{u^2}{2g} \quad T = \frac{2u}{g}$$
       </div>
 
       <div class="example-box">
@@ -372,7 +369,7 @@
         Starting from the definition of acceleration: a = (v &minus; u)/t, rearranging gives us the velocity-time relation.
       </p>
       <div class="formula-box">
-        v = u + at
+        $$v = u + at$$
       </div>
       <p>
         Derivation: Since a = dv/dt for constant acceleration, integrating both sides from 0 to t: &int;dv = a &int;dt gives v &minus; u = at, hence v = u + at.
@@ -383,7 +380,7 @@
         This gives the displacement-time relation. Since v = ds/dt = u + at, integrating both sides from 0 to t yields the displacement.
       </p>
       <div class="formula-box">
-        s = ut + &frac12;at&sup2;
+        $$s = ut + \frac{1}{2}at^2$$
       </div>
       <p>
         Derivation: ds = v dt = (u + at) dt. Integrating: s = ut + &frac12;at&sup2;. Note that s here is the displacement, not the distance.
@@ -394,7 +391,7 @@
         This is the velocity-displacement relation, obtained by eliminating time from the first two equations.
       </p>
       <div class="formula-box">
-        v&sup2; = u&sup2; + 2as
+        $$v^2 = u^2 + 2as$$
       </div>
       <p>
         Derivation: From v = u + at, we get t = (v &minus; u)/a. Substituting in s = ut + &frac12;at&sup2; and simplifying: s = u(v &minus; u)/a + &frac12;a[(v &minus; u)/a]&sup2; = (v &minus; u)(v + u)/(2a), which gives v&sup2; &minus; u&sup2; = 2as.
@@ -405,7 +402,7 @@
         A frequently asked formula in competitive exams gives the displacement during the n-th second of motion (not the first n seconds, but only the n-th one).
       </p>
       <div class="formula-box">
-        s<sub>n</sub> = u + a(2n &minus; 1)/2
+        $$s_n = u + \frac{a(2n - 1)}{2}$$
       </div>
       <p>
         Derivation: s<sub>n</sub> = s(n) &minus; s(n&minus;1) = [un + &frac12;an&sup2;] &minus; [u(n&minus;1) + &frac12;a(n&minus;1)&sup2;] = u + &frac12;a(2n &minus; 1). This formula is extremely useful for problems asking about distance in a specific second of motion.
@@ -507,9 +504,9 @@
         A common competitive-exam strategy is to convert between graphs. For example, given a v-t graph, you can construct the corresponding x-t and a-t graphs. From the v-t graph, compute the slope at each point for the a-t graph, and compute the area under the curve for changes in position to construct the x-t graph.
       </p>
       <div class="formula-box">
-        x-t graph: Slope = v (velocity)<br>
-        v-t graph: Slope = a (acceleration), &nbsp; Area = &Delta;x (displacement)<br>
-        a-t graph: Area = &Delta;v (change in velocity)
+        $$\text{x-t graph: Slope} = v \quad \text{(velocity)}$$
+        $$\text{v-t graph: Slope} = a \quad \text{(acceleration)} \quad \text{Area} = \Delta x \quad \text{(displacement)}$$
+        $$\text{a-t graph: Area} = \Delta v \quad \text{(change in velocity)}$$
       </div>
 
       <div class="example-box">
@@ -564,25 +561,25 @@
       <h3>Case 1: Acceleration as a Function of Time &mdash; a = f(t)</h3>
       <p>Integrate successively to obtain velocity and then position.</p>
       <div class="formula-box">
-        Given: a(t) = f(t)<br><br>
-        Velocity: v(t) = v<sub>0</sub> + &int;<sub>0</sub><sup>t</sup> a(t&prime;) dt&prime;<br><br>
-        Position: x(t) = x<sub>0</sub> + &int;<sub>0</sub><sup>t</sup> v(t&prime;) dt&prime;
+        $$a(t) = f(t)$$
+        $$v(t) = v_0 + \int_0^t a(t') \, dt'$$
+        $$x(t) = x_0 + \int_0^t v(t') \, dt'$$
       </div>
 
       <h3>Case 2: Acceleration as a Function of Position &mdash; a = f(x)</h3>
       <p>Use the relation a = v (dv/dx) to convert to a separable differential equation.</p>
       <div class="formula-box">
-        Given: a(x) = f(x)<br><br>
-        v dv = a(x) dx<br><br>
-        &frac12;(v&sup2; &minus; v<sub>0</sub>&sup2;) = &int;<sub>x<sub>0</sub></sub><sup>x</sup> f(x&prime;) dx&prime;
+        $$a(x) = f(x)$$
+        $$v \, dv = a(x) \, dx$$
+        $$\frac{1}{2}(v^2 - v_0^2) = \int_{x_0}^{x} f(x') \, dx'$$
       </div>
 
       <h3>Case 3: Acceleration as a Function of Velocity &mdash; a = f(v)</h3>
       <p>Separate variables depending on what is needed.</p>
       <div class="formula-box">
-        Given: a(v) = f(v)<br><br>
-        To find v vs t: &nbsp; t = &int;<sub>v<sub>0</sub></sub><sup>v</sup> dv&prime; / f(v&prime;)<br><br>
-        To find v vs x: &nbsp; x &minus; x<sub>0</sub> = &int;<sub>v<sub>0</sub></sub><sup>v</sup> v&prime; dv&prime; / f(v&prime;)
+        $$a(v) = f(v)$$
+        $$t = \int_{v_0}^{v} \frac{dv'}{f(v')} \quad \text{(v vs t)}$$
+        $$x - x_0 = \int_{v_0}^{v} \frac{v' \, dv'}{f(v')} \quad \text{(v vs x)}$$
       </div>
       <p>This case commonly arises in problems involving resistive forces (drag), where the retarding force depends on speed.</p>
 
@@ -629,12 +626,8 @@
       <h3>Equations of Motion for a Projectile</h3>
 
       <div class="formula-box">
-        Horizontal:<br>
-        x = (u cos&theta;) t<br>
-        v<sub>x</sub> = u cos&theta; (constant)<br><br>
-        Vertical:<br>
-        y = (u sin&theta;) t &minus; &frac12;gt&sup2;<br>
-        v<sub>y</sub> = u sin&theta; &minus; gt
+        $$x = (u \cos\theta) t \quad v_x = u \cos\theta$$
+        $$y = (u \sin\theta) t - \frac{1}{2}gt^2 \quad v_y = u \sin\theta - gt$$
       </div>
 
       <h3>Time of Flight (T)</h3>
@@ -642,7 +635,7 @@
       <p>The projectile returns to the same vertical level (y = 0) when:</p>
 
       <div class="formula-box">
-        T = 2u sin&theta; / g
+        $$T = \frac{2u \sin\theta}{g}$$
       </div>
 
       <p>The time to reach maximum height is exactly half the total time of flight: t<sub>peak</sub> = T/2 = u sin&theta; / g.</p>
@@ -652,7 +645,7 @@
       <p>At the highest point, v<sub>y</sub> = 0. Using v<sub>y</sub>&sup2; = u<sub>y</sub>&sup2; &minus; 2gH:</p>
 
       <div class="formula-box">
-        H = u&sup2; sin&sup2;&theta; / (2g)
+        $$H = \frac{u^2 \sin^2\theta}{2g}$$
       </div>
 
       <h3>Horizontal Range (R)</h3>
@@ -660,7 +653,7 @@
       <p>The horizontal distance covered during the total time of flight:</p>
 
       <div class="formula-box">
-        R = u&sup2; sin 2&theta; / g
+        $$R = \frac{u^2 \sin 2\theta}{g}$$
       </div>
 
       <p>Maximum range occurs when sin 2&theta; = 1, i.e., &theta; = 45&deg;, giving R<sub>max</sub> = u&sup2;/g.</p>
@@ -670,8 +663,8 @@
       <p>Eliminating time from x = u cos&theta; &middot; t and y = u sin&theta; &middot; t &minus; &frac12;gt&sup2;:</p>
 
       <div class="formula-box">
-        y = x tan&theta; &minus; gx&sup2; / (2u&sup2; cos&sup2;&theta;)<br>
-        or equivalently: y = x tan&theta; (1 &minus; x/R)
+        $$y = x \tan\theta - \frac{gx^2}{2u^2 \cos^2\theta}$$
+        $$y = x \tan\theta \left(1 - \frac{x}{R}\right)$$
       </div>
 
       <p>This is the equation of a parabola opening downward.</p>
@@ -724,10 +717,8 @@
       <h3>Key Formulas</h3>
 
       <div class="formula-box">
-        Time to reach ground: t = &radic;(2h/g)<br>
-        Horizontal distance (Range): x = u&radic;(2h/g)<br>
-        Final velocity at impact: v = &radic;(u&sup2; + 2gh)<br>
-        Angle below horizontal at impact: tan&alpha; = &radic;(2gh) / u
+        $$t = \sqrt{\frac{2h}{g}} \quad x = u\sqrt{\frac{2h}{g}}$$
+        $$v = \sqrt{u^2 + 2gh} \quad \tan\alpha = \frac{\sqrt{2gh}}{u}$$
       </div>
 
       <h3>Derivation</h3>
@@ -769,17 +760,17 @@
       <h3>Acceleration Components</h3>
 
       <div class="formula-box">
-        Along incline (x&prime;-axis): a<sub>x&prime;</sub> = &minus;g sin&beta;<br>
-        Perpendicular to incline (y&prime;-axis): a<sub>y&prime;</sub> = &minus;g cos&beta;
+        $$a_{x'} = -g \sin\beta$$
+        $$a_{y'} = -g \cos\beta$$
       </div>
 
       <h3>Key Formulas</h3>
 
       <div class="formula-box">
-        Time of Flight: T = 2u sin(&alpha; &minus; &beta;) / (g cos&beta;)<br>
-        Range on Incline: R = 2u&sup2; sin(&alpha; &minus; &beta;) cos&alpha; / (g cos&sup2;&beta;)<br>
-        Angle for Maximum Range: &alpha; = 45&deg; + &beta;/2<br>
-        Maximum Range: R<sub>max</sub> = u&sup2; / [g(1 + sin&beta;)]
+        $$T = \frac{2u \sin(\alpha - \beta)}{g \cos\beta}$$
+        $$R = \frac{2u^2 \sin(\alpha - \beta) \cos\alpha}{g \cos^2\beta}$$
+        $$\alpha = 45° + \frac{\beta}{2}$$
+        $$R_{\max} = \frac{u^2}{g(1 + \sin\beta)}$$
       </div>
 
       <h3>Important Notes</h3>
@@ -822,20 +813,20 @@
       <h3>Fundamental Quantities</h3>
 
       <div class="formula-box">
-        Angular velocity: &omega; = d&theta;/dt = v/r &nbsp;(rad/s)<br>
-        Period: T = 2&pi;/&omega; = 2&pi;r/v<br>
-        Frequency: f = 1/T = &omega;/(2&pi;) &nbsp;(Hz)<br>
-        Linear velocity: v = r&omega;<br>
-        Centripetal acceleration: a<sub>c</sub> = v&sup2;/r = &omega;&sup2;r &nbsp;(toward center)
+        $$\omega = \frac{d\theta}{dt} = \frac{v}{r} \quad \text{(rad/s)}$$
+        $$T = \frac{2\pi}{\omega} = \frac{2\pi r}{v}$$
+        $$f = \frac{1}{T} = \frac{\omega}{2\pi} \quad \text{(Hz)}$$
+        $$v = r\omega$$
+        $$a_c = \frac{v^2}{r} = \omega^2 r \quad \text{(toward center)}$$
       </div>
 
       <h3>Position and Velocity in UCM</h3>
 
       <div class="formula-box">
-        Position: r(t) = r cos(&omega;t) &icirc; + r sin(&omega;t) &jcirc;<br>
-        Velocity: v(t) = &minus;r&omega; sin(&omega;t) &icirc; + r&omega; cos(&omega;t) &jcirc;<br>
-        Speed: |v| = r&omega; (constant)<br>
-        Acceleration: a(t) = &minus;&omega;&sup2;r(t) &nbsp;(toward center)
+        $$\mathbf{r}(t) = r \cos(\omega t) \, \hat{\mathbf{i}} + r \sin(\omega t) \, \hat{\mathbf{j}}$$
+        $$\mathbf{v}(t) = -r\omega \sin(\omega t) \, \hat{\mathbf{i}} + r\omega \cos(\omega t) \, \hat{\mathbf{j}}$$
+        $$|\mathbf{v}| = r\omega \quad \text{(constant)}$$
+        $$\mathbf{a}(t) = -\omega^2 \mathbf{r}(t) \quad \text{(toward center)}$$
       </div>
 
       <h3>Important Points for JEE</h3>
@@ -879,10 +870,10 @@
       <h3>Key Formulas</h3>
 
       <div class="formula-box">
-        Radial acceleration: a<sub>r</sub> = v&sup2;/r &nbsp;(toward center)<br>
-        Tangential acceleration: a<sub>t</sub> = dv/dt &nbsp;(along tangent)<br>
-        Net acceleration: a = &radic;(a<sub>r</sub>&sup2; + a<sub>t</sub>&sup2;)<br>
-        Angle of net acceleration with radius: tan&alpha; = a<sub>t</sub>/a<sub>r</sub>
+        $$a_r = \frac{v^2}{r} \quad \text{(toward center)}$$
+        $$a_t = \frac{dv}{dt} \quad \text{(along tangent)}$$
+        $$a = \sqrt{a_r^2 + a_t^2}$$
+        $$\tan\alpha = \frac{a_t}{a_r}$$
       </div>
 
       <h3>Important Points</h3>
@@ -920,29 +911,29 @@
       <p>The velocity of an object is always measured with respect to a frame of reference. The relative velocity of object A with respect to object B is:</p>
 
       <div class="formula-box">
-        v<sub>AB</sub> = v<sub>A</sub> &minus; v<sub>B</sub><br>
-        Property: v<sub>AB</sub> = &minus;v<sub>BA</sub>
+        $$v_{AB} = v_A - v_B$$
+        $$v_{AB} = -v_{BA}$$
       </div>
 
       <h3>Relative Velocity in 1-D</h3>
       <p>If two objects A and B move along the same straight line with velocities v<sub>A</sub> and v<sub>B</sub>:</p>
       <div class="formula-box">
-        Same direction: |v<sub>AB</sub>| = |v<sub>A</sub> &minus; v<sub>B</sub>|<br>
-        Opposite directions: |v<sub>AB</sub>| = |v<sub>A</sub>| + |v<sub>B</sub>| &nbsp;(approach speed)
+        $$|v_{AB}| = |v_A - v_B| \quad \text{(same direction)}$$
+        $$|v_{AB}| = |v_A| + |v_B| \quad \text{(opposite directions, approach speed)}$$
       </div>
 
       <h3>Relative Velocity in 2-D</h3>
       <div class="formula-box">
-        |v<sub>AB</sub>| = &radic;(v<sub>A</sub>&sup2; + v<sub>B</sub>&sup2; &minus; 2 v<sub>A</sub> v<sub>B</sub> cos&theta;)<br>
-        where &theta; is the angle between v<sub>A</sub> and v<sub>B</sub>
+        $$|v_{AB}| = \sqrt{v_A^2 + v_B^2 - 2v_A v_B \cos\theta}$$
+        where $\theta$ is the angle between $v_A$ and $v_B$
       </div>
 
       <h3>Rain-Man Problem</h3>
       <p>Rain falls vertically with velocity v<sub>R</sub> and a man moves horizontally with velocity v<sub>M</sub>:</p>
       <div class="formula-box">
-        v<sub>RM</sub> = v<sub>R</sub> &minus; v<sub>M</sub><br>
-        |v<sub>RM</sub>| = &radic;(v<sub>R</sub>&sup2; + v<sub>M</sub>&sup2;)<br>
-        Angle with vertical: tan&alpha; = v<sub>M</sub> / v<sub>R</sub>
+        $$v_{RM} = v_R - v_M$$
+        $$|v_{RM}| = \sqrt{v_R^2 + v_M^2}$$
+        $$\tan\alpha = \frac{v_M}{v_R}$$
       </div>
       <p>The man must tilt his umbrella at angle &alpha; from the vertical (in the direction of his motion) to stay dry.</p>
 
@@ -951,15 +942,15 @@
 
       <p>Case 1: Shortest Time &mdash; Point the boat straight across.</p>
       <div class="formula-box">
-        Time = d / v<sub>b</sub><br>
-        Drift downstream = v<sub>r</sub> &times; (d / v<sub>b</sub>)
+        $$\text{Time} = \frac{d}{v_b}$$
+        $$\text{Drift downstream} = v_r \times \frac{d}{v_b}$$
       </div>
 
       <p>Case 2: Shortest Path (straight across) &mdash; Aim upstream. Requires v<sub>b</sub> &gt; v<sub>r</sub>.</p>
       <div class="formula-box">
-        sin&theta; = v<sub>r</sub>/v<sub>b</sub> &nbsp;(angle upstream)<br>
-        Effective speed = &radic;(v<sub>b</sub>&sup2; &minus; v<sub>r</sub>&sup2;)<br>
-        Time = d / &radic;(v<sub>b</sub>&sup2; &minus; v<sub>r</sub>&sup2;)
+        $$\sin\theta = \frac{v_r}{v_b} \quad \text{(angle upstream)}$$
+        $$\text{Effective speed} = \sqrt{v_b^2 - v_r^2}$$
+        $$\text{Time} = \frac{d}{\sqrt{v_b^2 - v_r^2}}$$
       </div>
 
       <div class="example-box">

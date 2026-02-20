@@ -117,15 +117,11 @@
         position vector r from the element is:
       </p>
       <div class="formula-box">
-        dB = (&mu;<sub>0</sub> / 4&pi;) &times; I(dl &times; r&#770;) / r&sup2;<br><br>
-        In terms of the full position vector:<br>
-        dB = (&mu;<sub>0</sub> / 4&pi;) &times; I(dl &times; r) / r&sup3;<br><br>
-        Magnitude form:<br>
-        dB = (&mu;<sub>0</sub> / 4&pi;) &times; (I dl sin&theta;) / r&sup2;<br><br>
-        where:<br>
-        &mu;<sub>0</sub> = 4&pi; &times; 10<sup>&minus;7</sup> T&middot;m&middot;A<sup>&minus;1</sup> (permeability of free space)<br>
-        &theta; = angle between dl and position vector r<br>
-        r = distance from current element to point P
+        $$d\mathbf{B} = \frac{\mu_0}{4\pi} \cdot \frac{I(d\mathbf{l} \times \hat{r})}{r^2}$$
+        $$d\mathbf{B} = \frac{\mu_0}{4\pi} \cdot \frac{I(d\mathbf{l} \times \mathbf{r})}{r^3}$$
+        $$dB = \frac{\mu_0}{4\pi} \cdot \frac{I \, dl \sin\theta}{r^2}$$
+        $$\mu_0 = 4\pi \times 10^{-7} \text{ T·m·A}^{-1} \quad \theta = \text{angle between } d\mathbf{l} \text{ and } \mathbf{r}$$
+        $$r = \text{distance from current element to point P}$$
       </div>
 
       <h3>Key Characteristics</h3>
@@ -133,8 +129,8 @@
         <li>The magnetic field dB is perpendicular to both the current element dl and the position vector r, as dictated by the cross product.</li>
         <li>The field is directly proportional to the current I and the element length dl, and inversely proportional to the square of the distance r.</li>
         <li>The field depends on the angle &theta; between the current direction and the line joining the element to the observation point. It is maximum when &theta; = 90&deg; and zero when &theta; = 0&deg; or 180&deg;.</li>
-        <li>For a medium with relative permeability &mu;<sub>r</sub>, replace &mu;<sub>0</sub> with &mu;<sub>0</sub>&mu;<sub>r</sub>.</li>
-        <li>For a complete conductor, the total field is the vector integral: B = (&mu;<sub>0</sub>I / 4&pi;) &int; (dl &times; r&#770;) / r&sup2;.</li>
+        <li>For a medium with relative permeability $\mu_r$, replace $\mu_0$ with $\mu_0\mu_r$.</li>
+        <li>For a complete conductor, the total field is the vector integral: $B = \frac{\mu_0 I}{4\pi} \int \frac{d\mathbf{l} \times \hat{r}}{r^2}$.</li>
       </ul>
 
       <h3>Direction: Right-Hand Rule</h3>
@@ -171,7 +167,7 @@
         &minus;&infin; to +&infin;:
       </p>
       <div class="formula-box">
-        B = (&mu;<sub>0</sub>I) / (2&pi;r)
+        $$B = \frac{\mu_0 I}{2\pi r}$$
       </div>
       <p>
         The magnetic field lines form concentric circles around the wire. The magnitude decreases
@@ -188,15 +184,15 @@
         observation point to the two ends of the wire:
       </p>
       <div class="formula-box">
-        B = (&mu;<sub>0</sub>I) / (4&pi;r) &times; (sin&alpha; + sin&beta;)
+        $$B = \frac{\mu_0 I}{4\pi r} (\sin\alpha + \sin\beta)$$
       </div>
       <p>
         Special cases that appear frequently in JEE problems:
       </p>
       <ul>
-        <li>Infinite wire: &alpha; = &beta; = 90&deg;, so B = &mu;<sub>0</sub>I / (2&pi;r).</li>
-        <li>Semi-infinite wire (one end at perpendicular foot): &alpha; = 90&deg;, &beta; = 0&deg;, so B = &mu;<sub>0</sub>I / (4&pi;r).</li>
-        <li>At the midpoint of a finite wire of length L: sin&alpha; = sin&beta; = L / (2&radic;(r&sup2; + L&sup2;/4)), which gives B = (&mu;<sub>0</sub>IL) / (2&pi;r&radic;(4r&sup2; + L&sup2;)).</li>
+        <li>Infinite wire: $\alpha = \beta = 90°$, so $B = \frac{\mu_0 I}{2\pi r}$.</li>
+        <li>Semi-infinite wire: $\alpha = 90°$, $\beta = 0°$, so $B = \frac{\mu_0 I}{4\pi r}$.</li>
+        <li>At midpoint of finite wire of length L: $\sin\alpha = \sin\beta = \frac{L}{2\sqrt{r^2 + L^2/4}}$, giving $B = \frac{\mu_0 I L}{2\pi r\sqrt{4r^2 + L^2}}$.</li>
       </ul>
 
       <h3>Superposition for Complex Geometries</h3>
@@ -217,16 +213,12 @@
         <div class="solution">
           <p>
             <u>Solution:</u><br>
-            The centre of the square is at perpendicular distance r = a/2 from each side.<br>
-            Each side subtends equal angles at the centre: &alpha; = &beta; = 45&deg;.<br><br>
-            Field due to one side:<br>
-            B<sub>1</sub> = (&mu;<sub>0</sub>I) / (4&pi; &times; a/2) &times; (sin 45&deg; + sin 45&deg;)<br>
-            B<sub>1</sub> = (&mu;<sub>0</sub>I) / (2&pi;a) &times; (2 &times; &radic;2/2)<br>
-            B<sub>1</sub> = (&mu;<sub>0</sub>I&radic;2) / (2&pi;a)<br><br>
-            All four sides contribute fields in the same direction (into or out of the plane),
-            so the total field is:<br>
-            B<sub>total</sub> = 4 &times; B<sub>1</sub> = 4 &times; (&mu;<sub>0</sub>I&radic;2) / (2&pi;a)<br>
-            B<sub>total</sub> = 2&radic;2 &mu;<sub>0</sub>I / (&pi;a)
+            The centre of the square is at perpendicular distance $r = a/2$ from each side.
+            Each side subtends equal angles at the centre: $\alpha = \beta = 45°$.
+            Field due to one side:
+            $$B_1 = \frac{\mu_0 I}{4\pi \cdot a/2} (\sin 45° + \sin 45°) = \frac{\mu_0 I}{2\pi a} \left(2 \times \frac{\sqrt{2}}{2}\right) = \frac{\mu_0 I\sqrt{2}}{2\pi a}$$
+            All four sides contribute fields in the same direction (into or out of the plane), so:
+            $$B_{\text{total}} = 4 \times B_1 = \frac{4\mu_0 I\sqrt{2}}{2\pi a} = \frac{2\sqrt{2}\mu_0 I}{\pi a}$$
           </p>
         </div>
       </div>
@@ -248,9 +240,8 @@
         (so sin&theta; = 1). Integrating around the full loop:
       </p>
       <div class="formula-box">
-        B<sub>centre</sub> = (&mu;<sub>0</sub>I) / (2R)<br><br>
-        For a coil of N turns:<br>
-        B<sub>centre</sub> = (&mu;<sub>0</sub>NI) / (2R)
+        $$B_{\text{centre}} = \frac{\mu_0 I}{2R}$$
+        $$B_{\text{centre}} = \frac{\mu_0 N I}{2R} \quad \text{(N turns)}$$
       </div>
 
       <h3>Field on the Axis of a Circular Loop</h3>
@@ -260,12 +251,10 @@
         elements). Only the axial component survives:
       </p>
       <div class="formula-box">
-        B<sub>axis</sub> = (&mu;<sub>0</sub>IR&sup2;) / [2(R&sup2; + x&sup2;)<sup>3/2</sup>]<br><br>
-        For N turns:<br>
-        B<sub>axis</sub> = (&mu;<sub>0</sub>NIR&sup2;) / [2(R&sup2; + x&sup2;)<sup>3/2</sup>]<br><br>
-        Special cases:<br>
-        At centre (x = 0): B = (&mu;<sub>0</sub>NI) / (2R)<br>
-        Far from loop (x &gt;&gt; R): B &asymp; (&mu;<sub>0</sub>NIR&sup2;) / (2x&sup3;) &mdash; dipole-like fall-off
+        $$B_{\text{axis}} = \frac{\mu_0 I R^2}{2(R^2 + x^2)^{3/2}}$$
+        $$B_{\text{axis}} = \frac{\mu_0 N I R^2}{2(R^2 + x^2)^{3/2}} \quad \text{(N turns)}$$
+        $$\text{At centre } (x = 0): \quad B = \frac{\mu_0 N I}{2R}$$
+        $$\text{Far from loop } (x \gg R): \quad B \approx \frac{\mu_0 N I R^2}{2x^3}$$
       </div>
       <p>
         The far-field result (B &prop; 1/x&sup3;) shows that a current loop behaves like a
@@ -280,11 +269,10 @@
         of the full-loop field:
       </p>
       <div class="formula-box">
-        B = (&mu;<sub>0</sub>I&alpha;) / (4&pi;r)<br><br>
-        Special cases:<br>
-        Full circle (&alpha; = 2&pi;): B = &mu;<sub>0</sub>I / (2r)<br>
-        Semicircle (&alpha; = &pi;): B = &mu;<sub>0</sub>I / (4r)<br>
-        Quarter circle (&alpha; = &pi;/2): B = &mu;<sub>0</sub>I / (8r)
+        $$B = \frac{\mu_0 I \alpha}{4\pi r}$$
+        $$\text{Full circle } (\alpha = 2\pi): \quad B = \frac{\mu_0 I}{2r}$$
+        $$\text{Semicircle } (\alpha = \pi): \quad B = \frac{\mu_0 I}{4r}$$
+        $$\text{Quarter circle } (\alpha = \pi/2): \quad B = \frac{\mu_0 I}{8r}$$
       </div>
       <p>
         JEE Tip: Straight segments of a wire that pass through the centre of the
@@ -300,7 +288,7 @@
       </p>
       <ul>
         <li>Identify each segment: straight radial parts contribute zero field at the centre.</li>
-        <li>For each arc segment, use B = &mu;<sub>0</sub>I&alpha; / (4&pi;r) and determine the direction.</li>
+        <li>For each arc segment, use $B = \frac{\mu_0 I \alpha}{4\pi r}$ and determine the direction.</li>
         <li>Add the fields vectorially.</li>
       </ul>
     </div>
@@ -320,13 +308,10 @@
         loops, each contributing to the total field.
       </p>
       <div class="formula-box">
-        Inside (ideal solenoid, length &gt;&gt; radius):<br>
-        B = &mu;<sub>0</sub>nI = (&mu;<sub>0</sub>NI) / L<br><br>
-        Outside: B &asymp; 0<br><br>
-        At the ends (open solenoid):<br>
-        B<sub>end</sub> = (&mu;<sub>0</sub>nI) / 2 = B<sub>inside</sub> / 2<br><br>
-        where n = N/L = number of turns per unit length,<br>
-        N = total turns, L = length of solenoid
+        $$B_{\text{inside}} = \mu_0 n I = \frac{\mu_0 N I}{L}$$
+        $$B_{\text{outside}} \approx 0$$
+        $$B_{\text{end}} = \frac{\mu_0 n I}{2} = \frac{B_{\text{inside}}}{2}$$
+        $$n = \frac{N}{L} = \text{turns per unit length}$$
       </div>
       <ul>
         <li>The field inside is uniform, parallel to the axis, and independent of the solenoid radius &mdash; it depends only on n and I.</li>
@@ -341,10 +326,8 @@
         can be expressed in terms of the angles subtended by the solenoid ends:
       </p>
       <div class="formula-box">
-        B = (&mu;<sub>0</sub>IN) / (2L) &times; (cos&alpha; &minus; cos&beta;)<br><br>
-        where &alpha; and &beta; are angles from the observation point to each end of the solenoid.<br>
-        At the midpoint of a long solenoid: &alpha; &asymp; 0&deg;, &beta; &asymp; 180&deg;,<br>
-        so B &asymp; &mu;<sub>0</sub>IN/L = &mu;<sub>0</sub>nI
+        $$B = \frac{\mu_0 I N}{2L}(\cos\alpha - \cos\beta)$$
+        $$\text{At midpoint: } \alpha \approx 0°, \quad \beta \approx 180°, \quad B \approx \mu_0 n I$$
       </div>
 
       <h3>Magnetic Field in a Toroid</h3>
@@ -354,10 +337,8 @@
         cavity or outside the toroid. This can be shown rigorously using Ampere's law.
       </p>
       <div class="formula-box">
-        Inside the toroid at radius r from the centre:<br>
-        B = (&mu;<sub>0</sub>NI) / (2&pi;r)<br><br>
-        In the central cavity: B = 0<br>
-        Outside the toroid: B = 0
+        $$B = \frac{\mu_0 N I}{2\pi r} \quad \text{(inside toroid at radius } r)$$
+        $$B = 0 \quad \text{(central cavity and outside)}$$
       </div>
       <ul>
         <li>The field lines form concentric circles inside the toroid.</li>
@@ -383,7 +364,7 @@
         path:
       </p>
       <div class="formula-box">
-        &oint; B &middot; dl = &mu;<sub>0</sub> I<sub>enclosed</sub>
+        $$\oint \mathbf{B} \cdot d\mathbf{l} = \mu_0 I_{\text{enclosed}}$$
       </div>
       <p>
         The law is always true for steady (time-independent) currents, but is most useful as a
@@ -411,8 +392,8 @@
         and tangent to the loop at every point:
       </p>
       <div class="formula-box">
-        &oint; B &middot; dl = B &times; 2&pi;r = &mu;<sub>0</sub>I<br>
-        B = (&mu;<sub>0</sub>I) / (2&pi;r)
+        $$\oint \mathbf{B} \cdot d\mathbf{l} = B \times 2\pi r = \mu_0 I$$
+        $$B = \frac{\mu_0 I}{2\pi r}$$
       </div>
 
       <h3>Application: Inside a Thick Wire</h3>
@@ -422,11 +403,10 @@
         contributes:
       </p>
       <div class="formula-box">
-        I<sub>enclosed</sub> = I &times; (r&sup2; / R&sup2;)<br>
-        B &times; 2&pi;r = &mu;<sub>0</sub>I(r&sup2; / R&sup2;)<br>
-        B = (&mu;<sub>0</sub>Ir) / (2&pi;R&sup2;) &nbsp;&nbsp; (for r &lt; R)<br><br>
-        At the surface (r = R): B = &mu;<sub>0</sub>I / (2&pi;R)<br>
-        Outside (r &gt; R): B = &mu;<sub>0</sub>I / (2&pi;r)
+        $$I_{\text{enclosed}} = I \times \frac{r^2}{R^2}$$
+        $$B = \frac{\mu_0 I r}{2\pi R^2} \quad \text{(for } r < R)$$
+        $$B = \frac{\mu_0 I}{2\pi R} \quad \text{(at surface, } r = R)$$
+        $$B = \frac{\mu_0 I}{2\pi r} \quad \text{(outside, } r > R)$$
       </div>
       <p>
         The field increases linearly from zero at the centre to a maximum at the surface, then
@@ -435,16 +415,14 @@
 
       <h3>Application: Solenoid (via Ampere's Law)</h3>
       <div class="formula-box">
-        Rectangular Amperian loop (length l inside, one side outside):<br>
-        B &times; l + 0 + 0 + 0 = &mu;<sub>0</sub>(nl)I<br>
-        B = &mu;<sub>0</sub>nI
+        $$B \times l = \mu_0 (nl)I$$
+        $$B = \mu_0 n I$$
       </div>
 
       <h3>Application: Toroid (via Ampere's Law)</h3>
       <div class="formula-box">
-        Circular Amperian loop at radius r inside toroid:<br>
-        B &times; 2&pi;r = &mu;<sub>0</sub>NI<br>
-        B = (&mu;<sub>0</sub>NI) / (2&pi;r)
+        $$B \times 2\pi r = \mu_0 N I$$
+        $$B = \frac{\mu_0 N I}{2\pi r}$$
       </div>
     </div>
 
@@ -461,19 +439,18 @@
         fields, the total electromagnetic force on it is called the Lorentz force:
       </p>
       <div class="formula-box">
-        F = q(E + v &times; B)<br><br>
-        Electric force: F<sub>E</sub> = qE (along E for +q)<br>
-        Magnetic force: F<sub>B</sub> = q(v &times; B)<br>
-        Magnitude of magnetic force: F<sub>B</sub> = qvB sin&theta;<br>
-        where &theta; = angle between v and B
+        $$\mathbf{F} = q(\mathbf{E} + \mathbf{v} \times \mathbf{B})$$
+        $$F_E = qE \quad \text{(electric force)}$$
+        $$\mathbf{F}_B = q(\mathbf{v} \times \mathbf{B})$$
+        $$F_B = qvB\sin\theta \quad \text{(magnetic force magnitude)}$$
       </div>
 
       <h3>Properties of the Magnetic Force</h3>
       <ul>
         <li>The magnetic force is always perpendicular to the velocity, so it acts as a centripetal-type force that changes the direction of motion without changing the speed.</li>
         <li>Since F<sub>B</sub> &perp; v, the magnetic force does no work: W = &int; F &middot; ds = 0. The kinetic energy remains constant.</li>
-        <li>The force is maximum when v &perp; B (&theta; = 90&deg;): F<sub>max</sub> = qvB.</li>
-        <li>The force is zero when v &parallel; B (&theta; = 0&deg; or 180&deg;).</li>
+        <li>Maximum when $\mathbf{v} \perp \mathbf{B}$ ($\theta = 90°$): $F_{\max} = qvB$.</li>
+        <li>Zero when $\mathbf{v} \parallel \mathbf{B}$ ($\theta = 0°$ or $180°$).</li>
         <li>A stationary charge (v = 0) experiences no magnetic force. Magnetism is inherently a phenomenon of moving charges.</li>
         <li>For a positive charge, the force direction is given by the right-hand rule (point fingers along v, curl towards B, thumb gives F). For a negative charge, the force is reversed.</li>
       </ul>
@@ -485,8 +462,8 @@
         a specific velocity:
       </p>
       <div class="formula-box">
-        At balance: qE = qvB<br>
-        Selected velocity: v = E / B
+        $$qE = qvB$$
+        $$v = \frac{E}{B}$$
       </div>
       <p>
         Only particles moving with exactly this velocity pass through undeflected. Slower particles
@@ -504,9 +481,8 @@
         D-shaped electrodes (dees) where an alternating electric field accelerates it.
       </p>
       <div class="formula-box">
-        Cyclotron frequency: f<sub>c</sub> = qB / (2&pi;m)<br>
-        Maximum kinetic energy: KE<sub>max</sub> = q&sup2;B&sup2;R&sup2; / (2m)<br>
-        where R = radius of the dees
+        $$f_c = \frac{qB}{2\pi m}$$
+        $$KE_{\max} = \frac{q^2 B^2 R^2}{2m}$$
       </div>
       <p>
         Limitation: At relativistic speeds, the mass increases and the cyclotron
@@ -529,8 +505,8 @@
         in a straight line with constant velocity, completely unaffected by the field.
       </p>
       <div class="formula-box">
-        F = qvB sin 0&deg; = 0<br>
-        Trajectory: straight line along B
+        $$F = qvB\sin 0° = 0$$
+        $$\text{Trajectory: straight line along } \mathbf{B}$$
       </div>
 
       <h3>Case 2: v Perpendicular to B (Circular Motion)</h3>
@@ -540,11 +516,11 @@
         plane perpendicular to B:
       </p>
       <div class="formula-box">
-        Force balance: mv&sup2;/r = qvB<br><br>
-        Radius of circular orbit: r = mv / (qB) = p / (qB)<br>
-        Time period: T = 2&pi;m / (qB)<br>
-        Frequency: f = qB / (2&pi;m)<br>
-        Angular frequency (cyclotron frequency): &omega; = qB / m
+        $$\frac{mv^2}{r} = qvB$$
+        $$r = \frac{mv}{qB} = \frac{p}{qB}$$
+        $$T = \frac{2\pi m}{qB}$$
+        $$f = \frac{qB}{2\pi m}$$
+        $$\omega = \frac{qB}{m}$$
       </div>
       <ul>
         <li>Key insight: The time period T and frequency f are independent of speed and radius. All particles with the same q/m ratio revolve with the same period, regardless of their energy. This is the operating principle of the cyclotron.</li>
@@ -569,12 +545,11 @@
         helical (corkscrew) trajectory:
       </p>
       <div class="formula-box">
-        v<sub>&parallel;</sub> = v cos&theta; &nbsp; (constant, along B)<br>
-        v<sub>&perp;</sub> = v sin&theta; &nbsp; (produces circular motion)<br><br>
-        Radius of helix: r = m(v sin&theta;) / (qB)<br>
-        Period: T = 2&pi;m / (qB) &nbsp; (independent of &theta;)<br>
-        Pitch (advance per revolution):<br>
-        p = v<sub>&parallel;</sub> &times; T = (2&pi;mv cos&theta;) / (qB)
+        $$v_\parallel = v\cos\theta \quad \text{(constant, along } \mathbf{B})$$
+        $$v_\perp = v\sin\theta \quad \text{(produces circular motion)}$$
+        $$r = \frac{m v \sin\theta}{qB}$$
+        $$T = \frac{2\pi m}{qB}$$
+        $$p = v_\parallel \times T = \frac{2\pi m v \cos\theta}{qB}$$
       </div>
       <ul>
         <li>The axis of the helix is parallel to B.</li>
@@ -637,9 +612,8 @@
         uniform field B:
       </p>
       <div class="formula-box">
-        F = I(l &times; B)<br><br>
-        Magnitude: F = BIl sin&theta;<br>
-        where &theta; = angle between conductor direction and B
+        $$\mathbf{F} = I(\mathbf{l} \times \mathbf{B})$$
+        $$F = BIl\sin\theta$$
       </div>
       <ul>
         <li>Maximum force when conductor &perp; field (&theta; = 90&deg;): F = BIl.</li>
@@ -654,8 +628,8 @@
         on the actual path:
       </p>
       <div class="formula-box">
-        F = I(L<sub>eff</sub> &times; B)<br>
-        where L<sub>eff</sub> = vector from start to end of conductor
+        $$\mathbf{F} = I(\mathbf{L}_{\text{eff}} \times \mathbf{B})$$
+        $$\mathbf{L}_{\text{eff}} = \text{vector from start to end of conductor}$$
       </div>
       <p>
         Important corollary: For a closed current loop in a uniform magnetic field,
@@ -669,10 +643,9 @@
         experiences a torque:
       </p>
       <div class="formula-box">
-        &tau; = NIA &times; B = m &times; B<br><br>
-        Magnitude: &tau; = NIAB sin&theta;<br>
-        where &theta; = angle between the area normal (n&#770;) and B,<br>
-        and m = NIA is the magnetic dipole moment.
+        $$\boldsymbol{\tau} = \mathbf{m} \times \mathbf{B}$$
+        $$\tau = NIAB\sin\theta$$
+        $$\mathbf{m} = NIA \quad \text{(magnetic dipole moment)}$$
       </div>
       <ul>
         <li>Maximum torque when loop plane is parallel to B (&theta; = 90&deg;): &tau;<sub>max</sub> = NIAB.</li>
@@ -695,7 +668,7 @@
         of wire 2:
       </p>
       <div class="formula-box">
-        B<sub>1</sub> = (&mu;<sub>0</sub>I<sub>1</sub>) / (2&pi;d)
+        $$B_1 = \frac{\mu_0 I_1}{2\pi d}$$
       </div>
       <p>
         This field is perpendicular to wire 2, so it exerts the maximum force on it. The force per
@@ -724,8 +697,8 @@
         exactly 2 &times; 10<sup>&minus;7</sup> N per metre of length between them.
       </p>
       <div class="formula-box">
-        Verification: For I<sub>1</sub> = I<sub>2</sub> = 1 A, d = 1 m:<br>
-        F/l = (4&pi; &times; 10<sup>&minus;7</sup> &times; 1 &times; 1) / (2&pi; &times; 1) = 2 &times; 10<sup>&minus;7</sup> N/m &check;
+        $$\text{Verification: For } I_1 = I_2 = 1 \text{ A}, \quad d = 1 \text{ m}:$$
+        $$\frac{F}{l} = \frac{4\pi \times 10^{-7} \times 1 \times 1}{2\pi \times 1} = 2 \times 10^{-7} \text{ N/m}$$
       </div>
 
       <div class="example-box">
@@ -762,11 +735,10 @@
         quantity that characterises the strength and orientation of the dipole:
       </p>
       <div class="formula-box">
-        m = NIA n&#770;<br><br>
-        Magnitude: m = NIA<br>
-        SI unit: A&middot;m&sup2; (ampere-metre squared) or J/T (joule per tesla)<br><br>
-        where N = number of turns, I = current, A = area of loop,<br>
-        n&#770; = unit normal to loop plane (right-hand rule)
+        $$\mathbf{m} = NIA\hat{n}$$
+        $$m = NIA$$
+        $$\text{SI unit: A·m}^2 \text{ or J/T}$$
+        $$\hat{n} = \text{unit normal to loop plane (right-hand rule)}$$
       </div>
       <p>
         The direction of m is perpendicular to the loop plane, given by the
@@ -781,11 +753,10 @@
         align the dipole moment with the field:
       </p>
       <div class="formula-box">
-        &tau; = m &times; B<br>
-        Magnitude: &tau; = mB sin&theta;<br>
-        where &theta; = angle between m and B<br><br>
-        Maximum torque: &tau;<sub>max</sub> = mB (when &theta; = 90&deg;)<br>
-        Zero torque: when &theta; = 0&deg; (stable) or 180&deg; (unstable)
+        $$\boldsymbol{\tau} = \mathbf{m} \times \mathbf{B}$$
+        $$\tau = mB\sin\theta$$
+        $$\tau_{\max} = mB \quad (\theta = 90°)$$
+        $$\tau = 0 \quad (\theta = 0° \text{ or } 180°)$$
       </div>
 
       <h3>Potential Energy of a Magnetic Dipole</h3>
@@ -793,12 +764,11 @@
         The potential energy of a magnetic dipole in a uniform field depends on its orientation:
       </p>
       <div class="formula-box">
-        U = &minus;m &middot; B = &minus;mB cos&theta;<br><br>
-        Stable equilibrium (&theta; = 0&deg;): U<sub>min</sub> = &minus;mB<br>
-        Unstable equilibrium (&theta; = 180&deg;): U<sub>max</sub> = +mB<br>
-        At &theta; = 90&deg;: U = 0<br><br>
-        Work to rotate from &theta;<sub>1</sub> to &theta;<sub>2</sub>:<br>
-        W = mB(cos&theta;<sub>1</sub> &minus; cos&theta;<sub>2</sub>)
+        $$U = -\mathbf{m} \cdot \mathbf{B} = -mB\cos\theta$$
+        $$U_{\min} = -mB \quad (\theta = 0° \text{ stable})$$
+        $$U_{\max} = +mB \quad (\theta = 180° \text{ unstable})$$
+        $$U = 0 \quad (\theta = 90°)$$
+        $$W = mB(\cos\theta_1 - \cos\theta_2)$$
       </div>
       <ul>
         <li>The dipole naturally tends toward &theta; = 0&deg; (minimum energy).</li>
@@ -813,10 +783,8 @@
         rotating with angular velocity &omega;:
       </p>
       <div class="formula-box">
-        m = Q&omega;R&sup2; / 4<br><br>
-        For a uniformly charged sphere of charge Q, mass M:<br>
-        Gyromagnetic ratio: m/L = Q / (2M)<br>
-        where L = angular momentum of the body
+        $$m = \frac{Q\omega R^2}{4}$$
+        $$\frac{m}{L} = \frac{Q}{2M} \quad \text{(Gyromagnetic ratio)}$$
       </div>
       <p>
         The ratio of magnetic moment to angular momentum (gyromagnetic ratio) is a fundamental
@@ -857,13 +825,10 @@
         torque of the suspension fibre at equilibrium:
       </p>
       <div class="formula-box">
-        Magnetic torque: &tau;<sub>m</sub> = NIAB<br>
-        Restoring torque: &tau;<sub>r</sub> = k&phi;<br><br>
-        At equilibrium: NIAB = k&phi;<br><br>
-        Deflection: &phi; = (NAB / k) &times; I<br><br>
-        where:<br>
-        N = number of turns, A = area of coil, B = magnetic field,<br>
-        k = torsional spring constant of suspension, &phi; = deflection angle
+      <div class="formula-box">
+        $$\tau_m = NIAB$$
+        $$\tau_r = k\phi$$
+        $$\phi = \frac{NAB}{k} I$$
       </div>
       <p>
         Since &phi; &prop; I, the galvanometer has a linear scale.
@@ -871,9 +836,8 @@
 
       <h3>Sensitivity</h3>
       <div class="formula-box">
-        Current sensitivity: S<sub>I</sub> = &phi;/I = NAB/k &nbsp; (rad/A)<br><br>
-        Voltage sensitivity: S<sub>V</sub> = &phi;/V = NAB/(kR<sub>G</sub>) &nbsp; (rad/V)<br>
-        where R<sub>G</sub> = coil resistance
+        $$S_I = \frac{\phi}{I} = \frac{NAB}{k} \quad \text{(rad/A)}$$
+        $$S_V = \frac{\phi}{V} = \frac{NAB}{kR_G} \quad \text{(rad/V)}$$
       </div>
       <p>
         To increase sensitivity: use more turns (N), larger area (A), stronger magnet (B), or
@@ -888,10 +852,8 @@
         shunt S in parallel:
       </p>
       <div class="formula-box">
-        S = (I<sub>g</sub> &times; R<sub>G</sub>) / (I &minus; I<sub>g</sub>) = R<sub>G</sub> / (n &minus; 1)<br><br>
-        where n = I/I<sub>g</sub> = multiplication factor,<br>
-        I<sub>g</sub> = full-scale deflection current,<br>
-        I = desired full-scale ammeter reading
+        $$S = \frac{I_g \times R_G}{I - I_g} = \frac{R_G}{n - 1}$$
+        $$n = \frac{I}{I_g} = \text{multiplication factor}$$
       </div>
       <p>
         The shunt carries most of the current (I &minus; I<sub>g</sub>), protecting the
@@ -905,8 +867,7 @@
         with the circuit element. Connect a high resistance R in series with the galvanometer:
       </p>
       <div class="formula-box">
-        R = (V / I<sub>g</sub>) &minus; R<sub>G</sub><br><br>
-        where V = desired full-scale voltage reading
+        $$R = \frac{V}{I_g} - R_G$$
       </div>
       <p>
         The series resistance limits the current to I<sub>g</sub> when voltage V is applied. The
@@ -949,13 +910,14 @@
         respond, and the material becomes magnetised. Two key quantities describe this:
       </p>
       <div class="formula-box">
-        Magnetisation: M = net magnetic moment per unit volume (A/m)<br>
-        Magnetic intensity: H = B/&mu;<sub>0</sub> &minus; M<br>
-        Relation: B = &mu;<sub>0</sub>(H + M)<br><br>
-        Magnetic susceptibility: &chi;<sub>m</sub> = M/H (dimensionless)<br>
-        M = &chi;<sub>m</sub>H<br>
-        B = &mu;<sub>0</sub>(1 + &chi;<sub>m</sub>)H = &mu;<sub>0</sub>&mu;<sub>r</sub>H<br>
-        Relative permeability: &mu;<sub>r</sub> = 1 + &chi;<sub>m</sub>
+      <div class="formula-box">
+        $$M = \text{net magnetic moment per unit volume (A/m)}$$
+        $$\mathbf{H} = \frac{\mathbf{B}}{\mu_0} - \mathbf{M}$$
+        $$\mathbf{B} = \mu_0(\mathbf{H} + \mathbf{M})$$
+        $$\chi_m = \frac{M}{H} \quad \text{(magnetic susceptibility)}$$
+        $$\mathbf{M} = \chi_m \mathbf{H}$$
+        $$\mathbf{B} = \mu_0(1 + \chi_m)\mathbf{H} = \mu_0 \mu_r \mathbf{H}$$
+        $$\mu_r = 1 + \chi_m \quad \text{(relative permeability)}$$
       </div>
 
       <h3>Diamagnetic Materials</h3>
@@ -966,9 +928,9 @@
         law at the atomic level). They are weakly repelled by magnetic fields.
       </p>
       <div class="formula-box">
-        Susceptibility: &chi;<sub>m</sub> &lt; 0 (small and negative)<br>
-        Typical range: &chi;<sub>m</sub> &asymp; &minus;10<sup>&minus;5</sup> to &minus;10<sup>&minus;6</sup><br>
-        Relative permeability: &mu;<sub>r</sub> &lt; 1 (slightly less than 1)
+        $$\chi_m < 0 \quad \text{(small and negative)}$$
+        $$\chi_m \approx -10^{-5} \text{ to } -10^{-6}$$
+        $$\mu_r < 1 \quad \text{(slightly less than 1)}$$
       </div>
       <ul>
         <li>All materials exhibit some diamagnetism, but it is usually masked by stronger para- or ferromagnetic effects.</li>
@@ -987,11 +949,10 @@
         it, producing a weak net magnetisation in the field direction.
       </p>
       <div class="formula-box">
-        Susceptibility: &chi;<sub>m</sub> &gt; 0 (small and positive)<br>
-        Typical range: &chi;<sub>m</sub> &asymp; 10<sup>&minus;5</sup> to 10<sup>&minus;3</sup><br>
-        Relative permeability: &mu;<sub>r</sub> &gt; 1 (slightly greater than 1)<br><br>
-        Curie's Law: &chi;<sub>m</sub> = C / T<br>
-        where C = Curie constant, T = absolute temperature
+        $$\chi_m > 0 \quad \text{(small and positive)}$$
+        $$\chi_m \approx 10^{-5} \text{ to } 10^{-3}$$
+        $$\mu_r > 1$$
+        $$\chi_m = \frac{C}{T} \quad \text{(Curie's Law)}$$
       </div>
       <ul>
         <li>Paramagnetic materials are weakly attracted towards regions of strong field.</li>
@@ -1010,9 +971,9 @@
         magnetisation.
       </p>
       <div class="formula-box">
-        Susceptibility: &chi;<sub>m</sub> &gt;&gt; 1 (very large and positive)<br>
-        Typical range: &chi;<sub>m</sub> &asymp; 10&sup2; to 10<sup>5</sup><br>
-        Relative permeability: &mu;<sub>r</sub> &gt;&gt; 1
+        $$\chi_m \gg 1 \quad \text{(very large and positive)}$$
+        $$\chi_m \approx 10^2 \text{ to } 10^5$$
+        $$\mu_r \gg 1$$
       </div>
       <ul>
         <li>Hysteresis: When a ferromagnetic material is subjected to a cyclic magnetic field, the B-H curve traces a loop. The area of this hysteresis loop represents the energy dissipated per cycle per unit volume.</li>
@@ -1027,9 +988,9 @@
 
       <h3>Comparison Table</h3>
       <div class="formula-box">
-        Diamagnetic: &chi;<sub>m</sub> &lt; 0, &mu;<sub>r</sub> &lt; 1, weakly repelled, independent of T<br>
-        Paramagnetic: &chi;<sub>m</sub> &gt; 0 (small), &mu;<sub>r</sub> &gt; 1, weakly attracted, &chi; &prop; 1/T<br>
-        Ferromagnetic: &chi;<sub>m</sub> &gt;&gt; 1, &mu;<sub>r</sub> &gt;&gt; 1, strongly attracted, complex T-dependence
+        $$\text{Diamagnetic: } \chi_m < 0, \quad \mu_r < 1, \quad \chi \propto T^0$$
+        $$\text{Paramagnetic: } \chi_m > 0, \quad \mu_r > 1, \quad \chi \propto 1/T$$
+        $$\text{Ferromagnetic: } \chi_m \gg 1, \quad \mu_r \gg 1, \quad \text{complex T-dependence}$$
       </div>
     </div>
 
@@ -1057,8 +1018,8 @@
         south pole situated there.
       </p>
       <div class="formula-box">
-        Surface field strength: B &asymp; 25&ndash;65 &mu;T (0.25&ndash;0.65 gauss)<br>
-        Weakest near equator (~25 &mu;T), strongest near poles (~65 &mu;T)
+        $$B \approx 25\text{--}65 \text{ μT} \quad \text{(0.25--0.65 gauss)}$$
+        $$\text{Weakest at equator (~25 μT), strongest at poles (~65 μT)}$$
       </div>
 
       <h3>Elements of Earth's Magnetic Field</h3>
@@ -1083,10 +1044,10 @@
         </li>
       </ul>
       <div class="formula-box">
-        B<sub>H</sub> = B cos I &nbsp; (horizontal component)<br>
-        B<sub>V</sub> = B sin I &nbsp; (vertical component)<br>
-        B = &radic;(B<sub>H</sub>&sup2; + B<sub>V</sub>&sup2;) &nbsp; (total field)<br>
-        tan I = B<sub>V</sub> / B<sub>H</sub>
+        $$B_H = B\cos I$$
+        $$B_V = B\sin I$$
+        $$B = \sqrt{B_H^2 + B_V^2}$$
+        $$\tan I = \frac{B_V}{B_H}$$
       </div>
 
       <h3>Neutral Points</h3>
@@ -1118,80 +1079,80 @@
 
       <h3>Biot-Savart Law &amp; Magnetic Fields</h3>
       <div class="formula-box">
-        dB = (&mu;<sub>0</sub>/4&pi;)(I dl sin&theta;) / r&sup2;<br>
-        B (infinite wire) = &mu;<sub>0</sub>I / (2&pi;r)<br>
-        B (finite wire) = (&mu;<sub>0</sub>I / 4&pi;r)(sin&alpha; + sin&beta;)<br>
-        B (loop centre, N turns) = &mu;<sub>0</sub>NI / (2R)<br>
-        B (loop axis) = &mu;<sub>0</sub>NIR&sup2; / [2(R&sup2; + x&sup2;)<sup>3/2</sup>]<br>
-        B (arc at centre) = &mu;<sub>0</sub>I&alpha; / (4&pi;r)
+        $$dB = \frac{\mu_0}{4\pi}\frac{I \, dl \sin\theta}{r^2}$$
+        $$B = \frac{\mu_0 I}{2\pi r} \quad \text{(infinite wire)}$$
+        $$B = \frac{\mu_0 I}{4\pi r}(\sin\alpha + \sin\beta) \quad \text{(finite wire)}$$
+        $$B = \frac{\mu_0 N I}{2R} \quad \text{(loop centre)}$$
+        $$B = \frac{\mu_0 N I R^2}{2(R^2 + x^2)^{3/2}} \quad \text{(loop axis)}$$
+        $$B = \frac{\mu_0 I \alpha}{4\pi r} \quad \text{(arc at centre)}$$
       </div>
 
       <h3>Solenoid &amp; Toroid</h3>
       <div class="formula-box">
-        B (solenoid, inside) = &mu;<sub>0</sub>nI = &mu;<sub>0</sub>NI / L<br>
-        B (solenoid, at end) = &mu;<sub>0</sub>nI / 2<br>
-        B (toroid, inside at r) = &mu;<sub>0</sub>NI / (2&pi;r)
+        $$B = \mu_0 n I = \frac{\mu_0 N I}{L} \quad \text{(solenoid inside)}$$
+        $$B = \frac{\mu_0 n I}{2} \quad \text{(solenoid at end)}$$
+        $$B = \frac{\mu_0 N I}{2\pi r} \quad \text{(toroid inside)}$$
       </div>
 
       <h3>Ampere's Circuital Law</h3>
       <div class="formula-box">
-        &oint; B &middot; dl = &mu;<sub>0</sub>I<sub>enclosed</sub><br>
-        B (inside thick wire, r &lt; R) = &mu;<sub>0</sub>Ir / (2&pi;R&sup2;)
+        $$\oint \mathbf{B} \cdot d\mathbf{l} = \mu_0 I_{\text{enclosed}}$$
+        $$B = \frac{\mu_0 I r}{2\pi R^2} \quad \text{(inside thick wire, } r < R)$$
       </div>
 
       <h3>Lorentz Force &amp; Particle Motion</h3>
       <div class="formula-box">
-        F = q(E + v &times; B)<br>
-        Magnetic force magnitude: F = qvB sin&theta;<br>
-        Velocity selector: v = E/B<br>
-        Cyclotron KE<sub>max</sub> = q&sup2;B&sup2;R&sup2; / (2m)<br><br>
-        Circular motion: r = mv/(qB), T = 2&pi;m/(qB), &omega; = qB/m<br>
-        Helical motion: r = mv sin&theta;/(qB), pitch = 2&pi;mv cos&theta;/(qB)
+        $$\mathbf{F} = q(\mathbf{E} + \mathbf{v} \times \mathbf{B})$$
+        $$F = qvB\sin\theta$$
+        $$v = \frac{E}{B} \quad \text{(velocity selector)}$$
+        $$KE_{\max} = \frac{q^2 B^2 R^2}{2m} \quad \text{(cyclotron)}$$
+        $$r = \frac{mv}{qB}, \quad T = \frac{2\pi m}{qB}, \quad \omega = \frac{qB}{m}$$
+        $$r = \frac{mv\sin\theta}{qB}, \quad \text{pitch} = \frac{2\pi m v\cos\theta}{qB}$$
       </div>
 
       <h3>Force on Conductors &amp; Parallel Wires</h3>
       <div class="formula-box">
-        F (straight conductor) = BIl sin&theta;<br>
-        Torque (N-turn loop): &tau; = NIAB sin&theta;<br>
-        Force between parallel wires: F/l = &mu;<sub>0</sub>I<sub>1</sub>I<sub>2</sub> / (2&pi;d)
+        $$F = BIl\sin\theta \quad \text{(straight conductor)}$$
+        $$\tau = NIAB\sin\theta \quad \text{(N-turn loop)}$$
+        $$\frac{F}{l} = \frac{\mu_0 I_1 I_2}{2\pi d} \quad \text{(parallel wires)}$$
       </div>
 
       <h3>Magnetic Dipole</h3>
       <div class="formula-box">
-        Dipole moment: m = NIA<br>
-        Torque: &tau; = mB sin&theta;<br>
-        Potential energy: U = &minus;mB cos&theta;<br>
-        Rotating disc moment: m = Q&omega;R&sup2; / 4<br>
-        Gyromagnetic ratio: m/L = q / (2m<sub>body</sub>)
+        $$m = NIA$$
+        $$\tau = mB\sin\theta$$
+        $$U = -mB\cos\theta$$
+        $$m = \frac{Q\omega R^2}{4} \quad \text{(rotating disc)}$$
+        $$\frac{m}{L} = \frac{q}{2m_{\text{body}}} \quad \text{(gyromagnetic ratio)}$$
       </div>
 
       <h3>Galvanometer</h3>
       <div class="formula-box">
-        Deflection: &phi; = (NAB/k)I<br>
-        Shunt (ammeter): S = I<sub>g</sub>R<sub>G</sub> / (I &minus; I<sub>g</sub>)<br>
-        Multiplier (voltmeter): R = V/I<sub>g</sub> &minus; R<sub>G</sub>
+        $$\phi = \frac{NAB}{k}I$$
+        $$S = \frac{I_g R_G}{I - I_g}$$
+        $$R = \frac{V}{I_g} - R_G$$
       </div>
 
       <h3>Magnetic Materials</h3>
       <div class="formula-box">
-        B = &mu;<sub>0</sub>(H + M) = &mu;<sub>0</sub>&mu;<sub>r</sub>H<br>
-        &chi;<sub>m</sub> = M/H, &mu;<sub>r</sub> = 1 + &chi;<sub>m</sub><br>
-        Curie's Law (paramagnets): &chi;<sub>m</sub> = C/T
+        $$\mathbf{B} = \mu_0(\mathbf{H} + \mathbf{M}) = \mu_0 \mu_r \mathbf{H}$$
+        $$\chi_m = \frac{M}{H}, \quad \mu_r = 1 + \chi_m$$
+        $$\chi_m = \frac{C}{T} \quad \text{(Curie's Law)}$$
       </div>
 
       <h3>Earth's Magnetism</h3>
       <div class="formula-box">
-        B<sub>H</sub> = B cos I, B<sub>V</sub> = B sin I<br>
-        tan I = B<sub>V</sub> / B<sub>H</sub><br>
-        B = &radic;(B<sub>H</sub>&sup2; + B<sub>V</sub>&sup2;)
+        $$B_H = B\cos I, \quad B_V = B\sin I$$
+        $$\tan I = \frac{B_V}{B_H}$$
+        $$B = \sqrt{B_H^2 + B_V^2}$$
       </div>
 
       <h3>Constants</h3>
       <div class="formula-box">
-        &mu;<sub>0</sub> = 4&pi; &times; 10<sup>&minus;7</sup> T&middot;m&middot;A<sup>&minus;1</sup><br>
-        e = 1.6 &times; 10<sup>&minus;19</sup> C<br>
-        m<sub>e</sub> = 9.11 &times; 10<sup>&minus;31</sup> kg<br>
-        m<sub>p</sub> = 1.67 &times; 10<sup>&minus;27</sup> kg
+        $$\mu_0 = 4\pi \times 10^{-7} \text{ T·m·A}^{-1}$$
+        $$e = 1.6 \times 10^{-19} \text{ C}$$
+        $$m_e = 9.11 \times 10^{-31} \text{ kg}$$
+        $$m_p = 1.67 \times 10^{-27} \text{ kg}$$
       </div>
     </div>
 

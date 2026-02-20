@@ -1272,6 +1272,19 @@ ul { list-style: none; }
   overflow-x: auto;
   border-left: 3px solid rgba(0, 212, 255, 0.2);
 }
+.chapter-detail .formula-box .katex-display {
+  margin: 8px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+}
+.chapter-detail .formula-box .katex {
+  font-size: 1.05em;
+  color: var(--color-primary);
+}
+.chapter-detail .formula-box .katex-display > .katex {
+  text-align: left;
+}
 
 /* Section diagram placeholder — floats right, text wraps around */
 .chapter-detail .section-diagram {
@@ -1580,7 +1593,8 @@ ul { list-style: none; }
   .chapter-detail .theory-section { margin-bottom: 44px; padding-bottom: 36px; }
   .chapter-detail .theory-section p { font-size: 0.96rem; line-height: 1.85; }
   .chapter-detail .theory-section li { font-size: 0.94rem; }
-  .chapter-detail .formula-box { font-size: 0.86rem; padding: 18px 20px; }
+  .chapter-detail .formula-box { font-size: 0.86rem; padding: 18px 20px; overflow-x: auto; }
+  .chapter-detail .formula-box .katex { font-size: 0.95em; }
   .chapter-detail .example-box { padding: 20px 22px; }
   .chapter-detail .example-box p { font-size: 0.92rem; }
   .test-wrapper { padding: 70px 16px 30px; }

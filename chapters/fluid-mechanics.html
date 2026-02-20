@@ -120,7 +120,7 @@
           a static fluid).
         </p>
         <div class="formula-box">
-          P = F / A
+          $$P = \frac{F}{A}$$
         </div>
         <p>
           The SI unit of pressure is the Pascal (Pa), where 1 Pa = 1 N/m&sup2;. Other common units
@@ -148,7 +148,7 @@
 
         <h3>Thrust on Horizontal Surfaces</h3>
         <div class="formula-box">
-          F = PA
+          $$F = PA$$
         </div>
         <p>
           For a horizontal surface at depth h, the pressure is P = &rho;gh (assuming gauge pressure),
@@ -163,7 +163,7 @@
           height h:
         </p>
         <div class="formula-box">
-          F = &int;&#8320;<sup>h</sup> &rho;gy dA = &rho;g &times; h&sup2; / 2
+          $$F = \int_0^h \rho gy \, dA = \rho g \times \frac{h^2}{2}$$
         </div>
         <p>
           The point of application of this thrust (center of pressure) is located at a depth of 2h/3
@@ -204,8 +204,8 @@
           on a large-area piston. Since pressure is transmitted equally:
         </p>
         <div class="formula-box">
-          F&#8321; / A&#8321; = F&#8322; / A&#8322;<br><br>
-          F&#8322; = F&#8321; &times; (A&#8322; / A&#8321;)
+          $$\frac{F_1}{A_1} = \frac{F_2}{A_2}$$
+          $$F_2 = F_1 \times \left(\frac{A_2}{A_1}\right)$$
         </div>
         <p>
           This is the principle behind hydraulic brakes, hydraulic lifts, and hydraulic presses.
@@ -243,7 +243,7 @@
           by the body.
         </p>
         <div class="formula-box">
-          F<sub>b</sub> = &rho;<sub>fluid</sub> &times; V<sub>displaced</sub> &times; g
+          $$F_b = \rho_{\text{fluid}} \times V_{\text{displaced}} \times g$$
         </div>
 
         <h3>Floating and Sinking Conditions</h3>
@@ -259,7 +259,7 @@
           amount of the buoyant force:
         </p>
         <div class="formula-box">
-          W<sub>apparent</sub> = W &minus; F<sub>b</sub> = (&rho;<sub>body</sub> &minus; &rho;<sub>fluid</sub>)Vg
+          $$W_{\text{apparent}} = W - F_b = (\rho_{\text{body}} - \rho_{\text{fluid}})Vg$$
         </div>
       </div>
 
@@ -275,9 +275,9 @@
 
         <h3>Floating Condition</h3>
         <div class="formula-box">
-          V<sub>submerged</sub> &times; &rho;<sub>fluid</sub> = V &times; &rho;<sub>body</sub><br><br>
-          Fraction submerged = &rho;<sub>body</sub> / &rho;<sub>fluid</sub><br>
-          Fraction above surface = 1 &minus; &rho;<sub>body</sub> / &rho;<sub>fluid</sub>
+          $$V_{\text{submerged}} \times \rho_{\text{fluid}} = V \times \rho_{\text{body}}$$
+          $$\text{Fraction submerged} = \frac{\rho_{\text{body}}}{\rho_{\text{fluid}}}$$
+          $$\text{Fraction above surface} = 1 - \frac{\rho_{\text{body}}}{\rho_{\text{fluid}}}$$
         </div>
 
         <h3>Two Immiscible Liquids</h3>
@@ -286,7 +286,7 @@
           liquids must be considered:
         </p>
         <div class="formula-box">
-          V&#8321; &times; &rho;&#8321; + V&#8322; &times; &rho;&#8322; = V &times; &rho;<sub>body</sub>
+          $$V_1 \times \rho_1 + V_2 \times \rho_2 = V \times \rho_{\text{body}}$$
         </div>
         <p>
           where V&#8321; and V&#8322; are the volumes immersed in liquids 1 and 2 respectively.
@@ -329,7 +329,7 @@
           the volume flow rate is conserved:
         </p>
         <div class="formula-box">
-          A&#8321;v&#8321; = A&#8322;v&#8322; = Q (constant)
+          $$A_1v_1 = A_2v_2 = Q \text{ (constant)}$$
         </div>
         <p>
           This means that where the tube narrows (smaller A), the fluid speeds up (larger v), and
@@ -353,7 +353,7 @@
           streamline:
         </p>
         <div class="formula-box">
-          P + &frac12;&rho;v&sup2; + &rho;gh = constant
+          $$P + \frac{1}{2}\rho v^2 + \rho gh = \text{constant}$$
         </div>
         <p>
           This equation shows that where the fluid velocity increases (as in a constriction), the
@@ -414,7 +414,7 @@
           is directly related to the height difference &Delta;h in the manometer:
         </p>
         <div class="formula-box">
-          Q = A&#8321; A&#8322; &radic;(2g&Delta;h / (A&#8321;&sup2; &minus; A&#8322;&sup2;))
+          $$Q = A_1 A_2 \sqrt{\frac{2g\Delta h}{A_1^2 - A_2^2}}$$
         </div>
         <p>
           where A&#8321; is the area of the main pipe, A&#8322; is the area of the constriction, and
@@ -427,7 +427,7 @@
           with density &rho;:
         </p>
         <div class="formula-box">
-          Q = A&#8321; A&#8322; &radic;(2g&Delta;h&rho;<sub>m</sub> / (&rho;(A&#8321;&sup2; &minus; A&#8322;&sup2;)))
+          $$Q = A_1 A_2 \sqrt{\frac{2g\Delta h\rho_m}{\rho(A_1^2 - A_2^2)}}$$
         </div>
       </div>
 
@@ -448,7 +448,7 @@
           point and the free stream:
         </p>
         <div class="formula-box">
-          V = &radic;(2gh)
+          $$V = \sqrt{2gh}$$
         </div>
         <p>
           where h is the height difference in the manometer connected to the Pitot tube.
@@ -457,10 +457,10 @@
         <h3>Pitot Tube for Gases</h3>
         <p>
           For gases (where density is much lower), the pressure difference must account for the gas
-          density &rho; and the manometer liquid density &rho;<sub>m</sub>:
+          density ρ and the manometer liquid density ρₘ:
         </p>
         <div class="formula-box">
-          V = &radic;(2gh&rho;<sub>m</sub> / &rho;)
+          $$V = \sqrt{\frac{2gh\rho_m}{\rho}}$$
         </div>
 
         <div class="example-box">
@@ -495,7 +495,7 @@
 
         <h3>Efflux Velocity</h3>
         <div class="formula-box">
-          V = &radic;(2gh)
+          $$V = \sqrt{2gh}$$
         </div>
         <p>
           where h is the height of the liquid column above the hole.
@@ -508,7 +508,7 @@
           of height H) is:
         </p>
         <div class="formula-box">
-          R = 2&radic;(h(H &minus; h))
+          $$R = 2\sqrt{h(H - h)}$$
         </div>
         <p>
           The range is maximum when h = H/2, giving R<sub>max</sub> = H.
@@ -517,10 +517,10 @@
         <h3>Reaction Force</h3>
         <p>
           The jet of liquid exiting creates a reaction force on the container. If the liquid exits
-          with velocity V from an orifice of area a, and the container has liquid density &rho;:
+          with velocity V from an orifice of area a, and the container has liquid density ρ:
         </p>
         <div class="formula-box">
-          F = 2&rho;agh
+          $$F = 2\rho agh$$
         </div>
 
         <h3>Time to Empty</h3>
@@ -529,15 +529,15 @@
           completely empty a liquid column of height H is:
         </p>
         <div class="formula-box">
-          t = (A / a) &radic;(2H / g)
+          $$t = \frac{A}{a} \sqrt{\frac{2H}{g}}$$
         </div>
 
         <h3>Sealed Container with Pressure</h3>
         <p>
-          If the container is sealed and has pressure P&#8320; inside (with external pressure P<sub>atm</sub>):
+          If the container is sealed and has pressure P₀ inside (with external pressure Pₐₜₘ):
         </p>
         <div class="formula-box">
-          V = &radic;(2gh + 2(P&#8320; &minus; P<sub>atm</sub>) / &rho;)
+          $$V = \sqrt{2gh + \frac{2(P_0 - P_{\text{atm}})}{\rho}}$$
         </div>
 
         <div class="example-box">
@@ -571,7 +571,7 @@
           (they have neighbours only on one side), minimising the surface area.
         </p>
         <div class="formula-box">
-          T = F / l
+          $$T = \frac{F}{l}$$
         </div>
         <p>
           where T is the surface tension (N/m) and F is the force acting along a length l of an
@@ -630,7 +630,7 @@
           drop over the outside pressure is:
         </p>
         <div class="formula-box">
-          &Delta;P = 2T / R
+          $$\Delta P = \frac{2T}{R}$$
         </div>
 
         <h3>Excess Pressure in a Soap Bubble</h3>
@@ -638,7 +638,7 @@
           A soap bubble has two surfaces (inner and outer), each contributing to the excess pressure:
         </p>
         <div class="formula-box">
-          &Delta;P = 4T / R
+          $$\Delta P = \frac{4T}{R}$$
         </div>
 
         <h3>Air Bubble in a Liquid</h3>
@@ -646,16 +646,16 @@
           For an air bubble of radius R in a liquid at depth h below the surface:
         </p>
         <div class="formula-box">
-          P<sub>bubble</sub> = P<sub>atm</sub> + &rho;gh + 2T / R
+          $$P_{\text{bubble}} = P_{\text{atm}} + \rho gh + \frac{2T}{R}$$
         </div>
 
         <h3>Double Bubble</h3>
         <p>
-          When two soap bubbles of radii r&#8321; and r&#8322; merge into a single bubble, the radius of
+          When two soap bubbles of radii r₁ and r₂ merge into a single bubble, the radius of
           the resulting bubble is related by:
         </p>
         <div class="formula-box">
-          r = (r&#8321; r&#8322;) / (r&#8322; &minus; r&#8321;)
+          $$r = \frac{r_1 r_2}{r_2 - r_1}$$
         </div>
 
         <div class="example-box">
@@ -687,7 +687,7 @@
           The height to which the liquid rises (or falls) in a capillary tube is given by:
         </p>
         <div class="formula-box">
-          h = (2T cos &theta;) / (r &rho; g)
+          $$h = \frac{2T \cos \theta}{r \rho g}$$
         </div>
         <p>
           where T is surface tension, &theta; is the contact angle, r is the radius of the capillary,
@@ -738,7 +738,7 @@
           that the viscous force between two parallel layers is:
         </p>
         <div class="formula-box">
-          F = &eta; A (dv/dy)
+          $$F = \eta A \frac{dv}{dy}$$
         </div>
         <p>
           where &eta; is the coefficient of dynamic viscosity (SI unit: Pa&middot;s or N&middot;s/m&sup2;),
@@ -762,7 +762,7 @@
           laminar or turbulent. It is the ratio of inertial forces to viscous forces:
         </p>
         <div class="formula-box">
-          Re = (&rho; V D) / &eta;
+          $$Re = \frac{\rho V D}{\eta}$$
         </div>
         <p>
           where &rho; is the fluid density, V is the flow velocity, D is the characteristic length
@@ -782,7 +782,7 @@
           For flow in a pipe, the critical Reynolds number is approximately 2000, so:
         </p>
         <div class="formula-box">
-          V<sub>critical</sub> = (2000 &eta;) / (&rho; D)
+          $$V_{\text{critical}} = \frac{2000 \eta}{\rho D}$$
         </div>
 
         <div class="example-box">
@@ -815,7 +815,7 @@
           pipe radius, varying with the fourth power of the radius.
         </p>
         <div class="formula-box">
-          Q = (&pi; &Delta;P R<sup>4</sup>) / (8 &eta; L)
+          $$Q = \frac{\pi \Delta P R^4}{8 \eta L}$$
         </div>
         <p>
           where &Delta;P is the pressure difference between the ends of the pipe, R is the radius,
@@ -827,7 +827,7 @@
           The resistance to flow can be defined as:
         </p>
         <div class="formula-box">
-          R<sub>flow</sub> = &Delta;P / Q = (8 &eta; L) / (&pi; R<sup>4</sup>)
+          $$R_{\text{flow}} = \frac{\Delta P}{Q} = \frac{8 \eta L}{\pi R^4}$$
         </div>
 
         <h3>Series and Parallel Combinations</h3>
@@ -870,7 +870,7 @@
           viscous drag force acting on it is given by Stokes&rsquo; Law:
         </p>
         <div class="formula-box">
-          F = 6&pi;&eta;rv
+          $$F = 6\pi\eta rv$$
         </div>
         <p>
           where r is the radius of the sphere, v is its velocity, and &eta; is the dynamic viscosity.
@@ -884,7 +884,7 @@
           buoyant force. At this point, the sphere falls with a constant velocity called the terminal velocity:
         </p>
         <div class="formula-box">
-          v<sub>t</sub> = (2r&sup2;(&rho;<sub>sphere</sub> &minus; &rho;<sub>fluid</sub>)g) / (9&eta;)
+          $$v_t = \frac{2r^2(\rho_{\text{sphere}} - \rho_{\text{fluid}})g}{9\eta}$$
         </div>
 
         <h3>Combining Drops</h3>
@@ -894,7 +894,7 @@
           terminal velocity of a single drop by:
         </p>
         <div class="formula-box">
-          v<sub>t,combined</sub> = v<sub>t,single</sub> &times; 2<sup>2/3</sup>
+          $$v_{t,\text{combined}} = v_{t,\text{single}} \times 2^{2/3}$$
         </div>
 
         <div class="example-box">
@@ -936,7 +936,7 @@
           a point at distance r from the axis and depth z below the surface is:
         </p>
         <div class="formula-box">
-          P = P<sub>0</sub> + &frac12;&rho;&omega;&sup2;r&sup2; + &rho;gz
+          $$P = P_0 + \frac{1}{2}\rho\omega^2r^2 + \rho gz$$
         </div>
         <p>
           where P<sub>0</sub> is the pressure at the axis and surface level.
@@ -948,7 +948,7 @@
           the rotation axis, the surface height y above the minimum point (at the axis) is:
         </p>
         <div class="formula-box">
-          y = (&omega;&sup2; r&sup2;) / (2g)
+          $$y = \frac{\omega^2 r^2}{2g}$$
         </div>
         <p>
           This parabolic shape arises because at the free surface, the pressure is constant, and the

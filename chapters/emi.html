@@ -114,9 +114,8 @@
         Magnetic flux through a surface is a measure of the total magnetic field passing through that surface. For a uniform magnetic field B passing through a flat surface of area A:
       </p>
       <div class="formula-box">
-        &Phi;<sub>B</sub> = B &middot; A = BA cos&theta;<br><br>
-        where &theta; = angle between B and the area vector A (normal to the surface)<br>
-        SI unit: Weber (Wb) = T m&sup2;
+        $$\Phi_B = \mathbf{B} \cdot \mathbf{A} = BA\cos\theta$$
+        $$\text{SI unit: Weber (Wb) = T·m}^2$$
       </div>
       <p>
         Key points about magnetic flux:
@@ -134,7 +133,7 @@
         For a coil of N turns, the total flux linkage is N times the flux through one turn:
       </p>
       <div class="formula-box">
-        Flux linkage = N&Phi; = NBA cos&theta;
+        $$\text{Flux linkage} = N\Phi = NBA\cos\theta$$
       </div>
     </div>
 
@@ -161,8 +160,8 @@
         The magnitude of the induced EMF in a circuit is equal to the rate of change of magnetic flux linkage through the circuit. For a coil of N turns:
       </p>
       <div class="formula-box">
-        &epsilon; = &minus;d(N&Phi;)/dt = &minus;N d&Phi;/dt<br><br>
-        &epsilon; = &minus;N d(BA cos&theta;)/dt
+        $$\varepsilon = -\frac{d(N\Phi)}{dt} = -N\frac{d\Phi}{dt}$$
+        $$\varepsilon = -N\frac{d(BA\cos\theta)}{dt}$$
       </div>
       <p>
         The negative sign indicates that the induced EMF opposes the change in flux (Lenz's law). The flux can change due to a change in B, A, &theta;, or any combination of these.
@@ -216,9 +215,8 @@
         When a straight conductor of length l moves with velocity v perpendicular to a uniform magnetic field B, an EMF is induced across its ends. The free electrons in the conductor experience a magnetic force (F = qvB), causing charge separation until the electric force balances the magnetic force.
       </p>
       <div class="formula-box">
-        &epsilon; = Blv<br><br>
-        where B = magnetic field, l = length of conductor,<br>
-        v = velocity perpendicular to both l and B
+        $$\varepsilon = Blv$$
+        $$B = \text{magnetic field}, \quad l = \text{length}, \quad v = \text{velocity} \perp \text{ to } l \text{ and } B$$
       </div>
 
       <h3>Sliding Rod on Rails</h3>
@@ -226,10 +224,10 @@
         A conducting rod slides with velocity v on two parallel rails connected by a resistance R, in a uniform magnetic field B perpendicular to the plane of the rails. The induced EMF drives a current through the circuit:
       </p>
       <div class="formula-box">
-        EMF: &epsilon; = Blv<br>
-        Current: I = Blv / R<br>
-        Force on rod (opposing motion): F = BIl = B&sup2;l&sup2;v / R<br>
-        Power dissipated: P = B&sup2;l&sup2;v&sup2; / R = Fv
+        $$\varepsilon = Blv$$
+        $$I = \frac{Blv}{R}$$
+        $$F = BIl = \frac{B^2 l^2 v}{R}$$
+        $$P = \frac{B^2 l^2 v^2}{R} = Fv$$
       </div>
 
       <h3>Rotating Rod</h3>
@@ -237,7 +235,7 @@
         A conducting rod of length l rotates about one end with angular velocity &omega; in a uniform magnetic field B perpendicular to the plane of rotation. Different parts of the rod have different velocities. The EMF is found by integration:
       </p>
       <div class="formula-box">
-        &epsilon; = &frac12;Bl&sup2;&omega;
+        $$\varepsilon = \frac{1}{2}Bl^2\omega$$
       </div>
 
       <div class="example-box">
@@ -249,8 +247,7 @@
           <p>
             <u>Solution:</u><br>
             l = 1 m, &omega; = 10 rad/s, B = 3 &times; 10<sup>&minus;5</sup> T<br><br>
-            &epsilon; = &frac12;Bl&sup2;&omega; = &frac12;(3 &times; 10<sup>&minus;5</sup>)(1)&sup2;(10)<br>
-            &epsilon; = &frac12; &times; 3 &times; 10<sup>&minus;4</sup> = 1.5 &times; 10<sup>&minus;4</sup> V = 0.15 mV
+            $$\varepsilon = \frac{1}{2}(3 \times 10^{-5})(1)^2(10) = \frac{1}{2} \times 3 \times 10^{-4} = 1.5 \times 10^{-4} \text{ V}$$
           </p>
         </div>
       </div>
@@ -268,9 +265,8 @@
         When the magnetic flux through a circuit of resistance R changes, a current flows and a total charge is displaced. A key result is that the total charge is independent of how fast the flux changes &mdash; it depends only on the total change in flux and the resistance.
       </p>
       <div class="formula-box">
-        q = &int; i &thinsp;dt = (1/R) &int; (d&Phi;/dt) dt = |&Delta;&Phi;| / R<br><br>
-        For an N-turn coil:<br>
-        q = N|&Delta;&Phi;| / R
+        $$q = \int i \, dt = \frac{1}{R}\int \frac{d\Phi}{dt} dt = \frac{|\Delta\Phi|}{R}$$
+        $$q = \frac{N|\Delta\Phi|}{R} \quad \text{(N-turn coil)}$$
       </div>
 
       <h3>Physical Insight</h3>
@@ -322,7 +318,7 @@
         If the induced current i is held constant (e.g., by an external mechanism) while the flux changes by &Delta;&Phi;:
       </p>
       <div class="formula-box">
-        H = i |&Delta;&Phi;|
+        $$H = i|\Delta\Phi|$$
       </div>
 
       <h3>Heat from a Known Flux Change (General Case)</h3>
@@ -330,7 +326,7 @@
         When a flux change &Delta;&Phi; occurs in a single-turn circuit of resistance R:
       </p>
       <div class="formula-box">
-        H = (&Delta;&Phi;)&sup2; / R
+        $$H = \frac{(\Delta\Phi)^2}{R}$$
       </div>
       <p>
         Like the induced charge, this is also independent of how fast the flux changes:
@@ -345,7 +341,7 @@
         When an inductor carrying current I<sub>0</sub> is short-circuited, all magnetic energy stored is dissipated as heat in the resistance of the circuit:
       </p>
       <div class="formula-box">
-        H = U = &frac12;LI<sub>0</sub>&sup2;
+        $$H = U = \frac{1}{2}LI_0^2$$
       </div>
     </div>
 
@@ -361,9 +357,9 @@
         When the current in a coil changes, the magnetic flux through the coil itself changes, inducing an EMF in the same coil. This phenomenon is called self-induction, and the induced EMF is called a back-EMF. The self-inductance L of a coil relates the flux linkage to the current:
       </p>
       <div class="formula-box">
-        N&Phi; = LI<br><br>
-        Induced EMF: &epsilon; = &minus;L dI/dt<br><br>
-        SI unit of inductance: Henry (H) = V s/A = Wb/A
+        $$N\Phi = LI$$
+        $$\varepsilon = -L\frac{dI}{dt}$$
+        $$\text{SI unit: Henry (H) = V·s/A = Wb/A}$$
       </div>
 
       <h3>Inductance of a Solenoid</h3>
@@ -371,11 +367,9 @@
         For a solenoid of N turns, length l, and cross-sectional area A:
       </p>
       <div class="formula-box">
-        B = &mu;<sub>0</sub>nI = &mu;<sub>0</sub>(N/l)I<br>
-        &Phi; = BA = &mu;<sub>0</sub>(N/l)IA<br>
-        N&Phi; = &mu;<sub>0</sub>N&sup2;A/l &times; I<br><br>
-        L = &mu;<sub>0</sub>N&sup2;A/l = &mu;<sub>0</sub>n&sup2;Al<br><br>
-        With core of permeability &mu;: L = &mu;N&sup2;A/l = &mu;<sub>0</sub>&mu;<sub>r</sub>N&sup2;A/l
+        $$B = \mu_0 n I = \mu_0 \frac{N}{l}I$$
+        $$L = \frac{\mu_0 N^2 A}{l} = \mu_0 n^2 A l$$
+        $$L = \frac{\mu N^2 A}{l} = \frac{\mu_0 \mu_r N^2 A}{l} \quad \text{(with core)}$$
       </div>
 
       <h3>Energy Stored in an Inductor</h3>
@@ -383,13 +377,13 @@
         An inductor stores energy in its magnetic field. The energy stored when a current I flows through an inductance L is:
       </p>
       <div class="formula-box">
-        U = &frac12;LI&sup2;
+        $$U = \frac{1}{2}LI^2$$
       </div>
       <p>
         The energy density (energy per unit volume) in the magnetic field is:
       </p>
       <div class="formula-box">
-        u = B&sup2; / (2&mu;<sub>0</sub>)
+        $$u = \frac{B^2}{2\mu_0}$$
       </div>
 
       <div class="example-box">
@@ -401,12 +395,9 @@
           <p>
             <u>Solution:</u><br>
             l = 0.40 m, r = 0.02 m, N = 1000, I = 5 A<br>
-            A = &pi;r&sup2; = &pi;(0.02)&sup2; = 4&pi; &times; 10<sup>&minus;4</sup> m&sup2;<br><br>
-            L = &mu;<sub>0</sub>N&sup2;A/l = (4&pi; &times; 10<sup>&minus;7</sup>)(10<sup>6</sup>)(4&pi; &times; 10<sup>&minus;4</sup>) / 0.40<br>
-            L = (4&pi; &times; 10<sup>&minus;7</sup>)(4&pi; &times; 10<sup>2</sup>)<br>
-            L = 16&pi;&sup2; &times; 10<sup>&minus;5</sup> = 1.58 &times; 10<sup>&minus;3</sup> H &asymp; 1.58 mH<br><br>
-            Energy: U = &frac12;LI&sup2; = &frac12;(1.58 &times; 10<sup>&minus;3</sup>)(25)<br>
-            U = 0.0197 J &asymp; 19.7 mJ
+            $$A = \pi r^2 = \pi(0.02)^2 = 4\pi \times 10^{-4} \text{ m}^2$$
+            $$L = \frac{\mu_0 N^2 A}{l} = \frac{(4\pi \times 10^{-7})(10^6)(4\pi \times 10^{-4})}{0.40} = 1.58 \times 10^{-3} \text{ H}$$
+            $$U = \frac{1}{2}LI^2 = \frac{1}{2}(1.58 \times 10^{-3})(25) = 19.7 \text{ mJ}$$
           </p>
         </div>
       </div>
@@ -424,7 +415,7 @@
         When inductors are connected in series (assuming no mutual coupling between them), the same current flows through each. The total back-EMF is the sum of individual back-EMFs, so the equivalent inductance is:
       </p>
       <div class="formula-box">
-        L<sub>series</sub> = L<sub>1</sub> + L<sub>2</sub> + L<sub>3</sub> + &hellip;
+        $$L_{\text{series}} = L_1 + L_2 + L_3 + \ldots$$
       </div>
       <p>
         Series connection increases the total inductance. This is analogous to resistors in series.
@@ -435,7 +426,7 @@
         When inductors are connected in parallel, the same voltage appears across each. The total current is the sum of individual currents, giving:
       </p>
       <div class="formula-box">
-        1/L<sub>parallel</sub> = 1/L<sub>1</sub> + 1/L<sub>2</sub> + 1/L<sub>3</sub> + &hellip;
+        $$\frac{1}{L_{\text{parallel}}} = \frac{1}{L_1} + \frac{1}{L_2} + \frac{1}{L_3} + \ldots$$
       </div>
       <p>
         Parallel connection decreases the total inductance. For n identical inductors of value L in parallel, L<sub>eq</sub> = L/n.
@@ -446,9 +437,8 @@
         If two coils in series are placed close together so that their magnetic fields interact (mutual inductance M between them), the equivalent inductance becomes:
       </p>
       <div class="formula-box">
-        L<sub>eq</sub> = L<sub>1</sub> + L<sub>2</sub> &plusmn; 2M<br><br>
-        (+) when fields aid each other (series-aiding)<br>
-        (&minus;) when fields oppose each other (series-opposing)
+        $$L_{\text{eq}} = L_1 + L_2 \pm 2M$$
+        $$(+) \text{ series-aiding, } (-) \text{ series-opposing}$$
       </div>
     </div>
 
@@ -464,23 +454,22 @@
         When a battery of EMF &epsilon; is suddenly connected to a series RL circuit (switch closed at t = 0), the inductance opposes any instantaneous change in current. Applying Kirchhoff's voltage law:
       </p>
       <div class="formula-box">
-        &epsilon; &minus; iR &minus; L(di/dt) = 0
+        $$\varepsilon - iR - L\frac{di}{dt} = 0$$
       </div>
       <p>
         Solving this differential equation with initial condition i(0) = 0:
       </p>
       <div class="formula-box">
-        i(t) = (&epsilon;/R)(1 &minus; e<sup>&minus;Rt/L</sup>) = I<sub>0</sub>(1 &minus; e<sup>&minus;t/&tau;</sup>)<br><br>
-        where I<sub>0</sub> = &epsilon;/R is the final steady-state current<br>
-        and &tau; = L/R is the time constant of the RL circuit
+        $$i(t) = \frac{\varepsilon}{R}(1 - e^{-Rt/L}) = I_0(1 - e^{-t/\tau})$$
+        $$I_0 = \frac{\varepsilon}{R}, \quad \tau = \frac{L}{R}$$
       </div>
 
       <h3>Key Time Points</h3>
       <ul>
         <li>At t = 0: i = 0 (current cannot change instantaneously through an inductor).</li>
-        <li>At t = &tau;: i = I<sub>0</sub>(1 &minus; e<sup>&minus;1</sup>) &asymp; 0.632 I<sub>0</sub> (63.2% of steady-state).</li>
-        <li>At t = 5&tau;: i &asymp; 0.993 I<sub>0</sub> (effectively at steady state).</li>
-        <li>As t &rarr; &infin;: i &rarr; &epsilon;/R (all voltage drops across R; inductor acts as short circuit).</li>
+        <li>At $t = \tau$: $i \approx 0.632 I_0$ (63.2% of steady-state).</li>
+        <li>At $t = 5\tau$: $i \approx 0.993 I_0$ (effectively steady state).</li>
+        <li>As $t \to \infty$: $i \to \varepsilon/R$ (inductor acts as short circuit).</li>
       </ul>
 
       <h3>Self-Induced EMF During Growth</h3>
@@ -488,7 +477,7 @@
         The back-EMF of the inductor decreases exponentially as the current builds up:
       </p>
       <div class="formula-box">
-        &epsilon;<sub>L</sub> = L(di/dt) = &epsilon; e<sup>&minus;t/&tau;</sup>
+        $$\varepsilon_L = L\frac{di}{dt} = \varepsilon e^{-t/\tau}$$
       </div>
 
       <div class="example-box">
@@ -520,21 +509,21 @@
         When the battery is suddenly disconnected from a steady-state RL circuit (with initial current I<sub>0</sub>), the inductor now acts as the source of EMF, driving the current through the circuit. Applying KVL:
       </p>
       <div class="formula-box">
-        &minus;L(di/dt) &minus; iR = 0
+        $$-L\frac{di}{dt} - iR = 0$$
       </div>
       <p>
         Solving with i(0) = I<sub>0</sub>:
       </p>
       <div class="formula-box">
-        i(t) = I<sub>0</sub> e<sup>&minus;Rt/L</sup> = I<sub>0</sub> e<sup>&minus;t/&tau;</sup><br><br>
-        &tau; = L/R &nbsp;&nbsp; (same time constant as growth)
+        $$i(t) = I_0 e^{-Rt/L} = I_0 e^{-t/\tau}$$
+        $$\tau = \frac{L}{R}$$
       </div>
 
       <h3>Key Features of Decay</h3>
       <ul>
         <li>At t = 0: i = I<sub>0</sub> (current cannot drop to zero instantaneously).</li>
-        <li>At t = &tau;: i = I<sub>0</sub>/e &asymp; 0.368 I<sub>0</sub> (37% of initial value remains).</li>
-        <li>Energy stored in the inductor (&frac12;LI<sub>0</sub>&sup2;) is entirely dissipated as heat in R during decay.</li>
+        <li>At $t = \tau$: $i \approx 0.368 I_0$ (37% of initial value remains).</li>
+        <li>Energy stored in inductor $(\frac{1}{2}LI_0^2)$ is entirely dissipated as heat in R.</li>
         <li>A larger L/R ratio means a slower decay (current persists longer).</li>
       </ul>
 
@@ -551,7 +540,7 @@
             i(0.1) = 5 &times; e<sup>&minus;0.1/0.3</sup> = 5 &times; e<sup>&minus;1/3</sup><br>
             i(0.1) = 5 &times; 0.717 = 3.59 A<br><br>
             Total heat dissipated (all magnetic energy):<br>
-            H = &frac12;LI<sub>0</sub>&sup2; = &frac12; &times; 3 &times; 25 = 37.5 J
+            $$H = \frac{1}{2}LI_0^2 = \frac{1}{2} \times 3 \times 25 = 37.5 \text{ J}$$
           </p>
         </div>
       </div>
@@ -582,12 +571,11 @@
         Applying KVL to the LC loop:
       </p>
       <div class="formula-box">
-        L(d&sup2;q/dt&sup2;) + q/C = 0<br><br>
-        <u>Solution:</u> q(t) = q<sub>0</sub> cos(&omega;t + &phi;)<br>
-        where &omega; = 1/&radic;(LC) is the angular frequency of oscillation<br><br>
-        Current: i(t) = &minus;&omega;q<sub>0</sub> sin(&omega;t + &phi;)<br>
-        Peak current: I<sub>0</sub> = &omega;q<sub>0</sub> = q<sub>0</sub>/&radic;(LC)<br><br>
-        Frequency of oscillation: f = 1/(2&pi;&radic;(LC))
+        $$L\frac{d^2q}{dt^2} + \frac{q}{C} = 0$$
+        $$q(t) = q_0\cos(\omega t + \phi), \quad \omega = \frac{1}{\sqrt{LC}}$$
+        $$i(t) = -\omega q_0\sin(\omega t + \phi)$$
+        $$I_0 = \omega q_0 = \frac{q_0}{\sqrt{LC}}$$
+        $$f = \frac{1}{2\pi\sqrt{LC}}$$
       </div>
 
       <h3>Energy Oscillation</h3>
@@ -595,9 +583,9 @@
         In an ideal (lossless) LC circuit, total energy is conserved and oscillates between the electric field of the capacitor and the magnetic field of the inductor:
       </p>
       <div class="formula-box">
-        U<sub>C</sub> = q&sup2;/(2C) = q<sub>0</sub>&sup2; cos&sup2;(&omega;t) / (2C)<br>
-        U<sub>L</sub> = &frac12;Li&sup2; = q<sub>0</sub>&sup2; sin&sup2;(&omega;t) / (2C)<br><br>
-        U<sub>total</sub> = U<sub>C</sub> + U<sub>L</sub> = q<sub>0</sub>&sup2;/(2C) = constant
+        $$U_C = \frac{q^2}{2C} = \frac{q_0^2\cos^2(\omega t)}{2C}$$
+        $$U_L = \frac{1}{2}Li^2 = \frac{q_0^2\sin^2(\omega t)}{2C}$$
+        $$U_{\text{total}} = \frac{q_0^2}{2C} = \text{constant}$$
       </div>
       <p>
         When the capacitor is fully charged, i = 0 and all energy is electric. When the capacitor is fully discharged, i is maximum and all energy is magnetic.
@@ -611,10 +599,9 @@
         <div class="solution">
           <p>
             <u>Solution:</u><br>
-            &omega; = 1/&radic;(LC) = 1/&radic;(1 &times; 10<sup>&minus;6</sup>) = 1/10<sup>&minus;3</sup> = 1000 rad/s<br><br>
-            f = &omega;/(2&pi;) = 1000/(2&pi;) &asymp; 159 Hz<br><br>
-            Maximum current:<br>
-            I<sub>0</sub> = &omega;q<sub>0</sub> = 1000 &times; 100 &times; 10<sup>&minus;6</sup> = 0.1 A
+            $$\omega = \frac{1}{\sqrt{LC}} = \frac{1}{\sqrt{1 \times 10^{-6}}} = 1000 \text{ rad/s}$$
+            $$f = \frac{\omega}{2\pi} = \frac{1000}{2\pi} \approx 159 \text{ Hz}$$
+            $$I_0 = \omega q_0 = 1000 \times 100 \times 10^{-6} = 0.1 \text{ A}$$
           </p>
         </div>
       </div>
@@ -632,9 +619,9 @@
         When the current in one coil (primary) changes, it changes the magnetic flux through a nearby coil (secondary), inducing an EMF in the secondary coil. This phenomenon is called mutual induction. The mutual inductance M between two coils relates the flux linkage in one coil due to the current in the other:
       </p>
       <div class="formula-box">
-        N<sub>2</sub>&Phi;<sub>2</sub> = MI<sub>1</sub><br><br>
-        Induced EMF in coil 2: &epsilon;<sub>2</sub> = &minus;M dI<sub>1</sub>/dt<br><br>
-        SI unit: Henry (H)
+        $$N_2\Phi_2 = MI_1$$
+        $$\varepsilon_2 = -M\frac{dI_1}{dt}$$
+        $$\text{SI unit: Henry (H)}$$
       </div>
       <p>
         Mutual inductance is a reciprocal property: M<sub>12</sub> = M<sub>21</sub> = M. The value of M depends on the geometry of the coils, their relative orientation, and the medium between them.
@@ -645,7 +632,7 @@
         For two coaxial solenoids, one inside the other (the inner solenoid of N<sub>1</sub> turns, area A, length l; the outer solenoid of N<sub>2</sub> turns, same length l):
       </p>
       <div class="formula-box">
-        M = &mu;<sub>0</sub>N<sub>1</sub>N<sub>2</sub>A / l
+        $$M = \frac{\mu_0 N_1 N_2 A}{l}$$
       </div>
 
       <h3>Coefficient of Coupling</h3>
@@ -653,10 +640,9 @@
         The coefficient of coupling k describes how effectively the two coils are magnetically linked:
       </p>
       <div class="formula-box">
-        M = k &radic;(L<sub>1</sub>L<sub>2</sub>)<br><br>
-        0 &le; k &le; 1<br>
-        k = 1 for perfect coupling (all flux of one coil links the other)<br>
-        k = 0 for no coupling
+        $$M = k\sqrt{L_1 L_2}$$
+        $$0 \le k \le 1$$
+        $$k = 1 \text{ (perfect coupling)}, \quad k = 0 \text{ (no coupling)}$$
       </div>
     </div>
 
@@ -682,10 +668,9 @@
         If the coil has N turns, area A, and rotates with angular velocity &omega; in a field B, the flux at time t is:
       </p>
       <div class="formula-box">
-        &Phi; = NBA cos(&omega;t)<br><br>
-        &epsilon; = &minus;d&Phi;/dt = NBA&omega; sin(&omega;t)<br><br>
-        &epsilon; = &epsilon;<sub>0</sub> sin(&omega;t)<br>
-        where &epsilon;<sub>0</sub> = NBA&omega; = peak EMF
+        $$\Phi = NBA\cos(\omega t)$$
+        $$\varepsilon = -\frac{d\Phi}{dt} = NBA\omega\sin(\omega t)$$
+        $$\varepsilon = \varepsilon_0\sin(\omega t), \quad \varepsilon_0 = NBA\omega$$
       </div>
       <p>
         The EMF varies sinusoidally with time. One complete rotation produces one full cycle of alternating EMF. The frequency of the AC produced equals the rotational frequency of the coil: f = &omega;/(2&pi;).
@@ -701,11 +686,9 @@
             <u>Solution:</u><br>
             N = 200, A = 50 &times; 10<sup>&minus;4</sup> m&sup2; = 5 &times; 10<sup>&minus;3</sup> m&sup2;, B = 0.2 T<br>
             Rotational speed = 3000 rpm = 3000/60 = 50 rps<br>
-            &omega; = 2&pi;f = 2&pi;(50) = 100&pi; rad/s<br><br>
-            Peak EMF: &epsilon;<sub>0</sub> = NBA&omega; = (200)(0.2)(5 &times; 10<sup>&minus;3</sup>)(100&pi;)<br>
-            &epsilon;<sub>0</sub> = 200 &times; 10<sup>&minus;3</sup> &times; 100&pi; = 20&pi;<br>
-            &epsilon;<sub>0</sub> = 62.83 V<br><br>
-            RMS EMF: &epsilon;<sub>rms</sub> = &epsilon;<sub>0</sub> / &radic;2 = 62.83 / 1.414 = 44.43 V
+            $$\omega = 2\pi f = 100\pi \text{ rad/s}$$
+            $$\varepsilon_0 = NBA\omega = 200 \times 0.2 \times 5 \times 10^{-3} \times 100\pi = 20\pi \approx 62.83 \text{ V}$$
+            $$\varepsilon_{\text{rms}} = \frac{\varepsilon_0}{\sqrt{2}} = \frac{62.83}{1.414} \approx 44.43 \text{ V}$$
           </p>
         </div>
       </div>
@@ -723,7 +706,7 @@
         A changing magnetic field does not just induce EMF in a conducting loop &mdash; it creates a real electric field in space, whether or not a conductor is present. This induced electric field is described by the integral form of Faraday's law:
       </p>
       <div class="formula-box">
-        &oint; E &middot; dl = &minus;d&Phi;<sub>B</sub>/dt
+        $$\oint \mathbf{E} \cdot d\mathbf{l} = -\frac{d\Phi_B}{dt}$$
       </div>
       <p>
         The line integral of the induced electric field around any closed path equals the negative rate of change of magnetic flux through the area enclosed by that path.
@@ -734,12 +717,8 @@
         For a cylindrical region of radius R in which a uniform magnetic field B changes at rate dB/dt, consider a circular path of radius r centred on the axis:
       </p>
       <div class="formula-box">
-        Inside (r &lt; R):<br>
-        E &times; 2&pi;r = &pi;r&sup2; |dB/dt|<br>
-        E = (r/2) |dB/dt|<br><br>
-        Outside (r &gt; R):<br>
-        E &times; 2&pi;r = &pi;R&sup2; |dB/dt|<br>
-        E = R&sup2;/(2r) &times; |dB/dt|
+        $$\text{Inside } (r < R): \quad E = \frac{r}{2}\left|\frac{dB}{dt}\right|$$
+        $$\text{Outside } (r > R): \quad E = \frac{R^2}{2r}\left|\frac{dB}{dt}\right|$$
       </div>
       <p>
         Inside the region, E increases linearly with r. Outside, E falls off as 1/r.
@@ -751,7 +730,7 @@
       </p>
       <ul>
         <li>Its field lines form closed loops (no beginning or end &mdash; no associated scalar potential).</li>
-        <li>Work done around a closed path is non-zero: W = q &oint; E &middot; dl = &minus;q d&Phi;<sub>B</sub>/dt.</li>
+        <li>Work around closed path is non-zero: $W = q\oint \mathbf{E} \cdot d\mathbf{l} = -q\frac{d\Phi_B}{dt}$.</li>
         <li>The concept of potential difference between two points is path-dependent.</li>
         <li>This non-conservative field is responsible for energy transfer in transformers.</li>
       </ul>
@@ -764,11 +743,10 @@
         <div class="solution">
           <p>
             <u>Solution:</u><br>
-            (a) Inside (r = 0.1 m &lt; R = 0.2 m):<br>
-            E = (r/2)|dB/dt| = (0.1/2) &times; 2 = 0.1 V/m<br><br>
-            (b) Outside (r = 0.4 m &gt; R = 0.2 m):<br>
-            E = R&sup2;/(2r) &times; |dB/dt| = (0.2)&sup2;/(2 &times; 0.4) &times; 2<br>
-            E = (0.04/0.8) &times; 2 = 0.05 &times; 2 = 0.1 V/m
+            (a) Inside $(r = 0.1 \text{ m} < R = 0.2 \text{ m})$:
+            $$E = \frac{0.1}{2} \times 2 = 0.1 \text{ V/m}$$
+            (b) Outside $(r = 0.4 \text{ m} > R = 0.2 \text{ m})$:
+            $$E = \frac{(0.2)^2}{2 \times 0.4} \times 2 = 0.1 \text{ V/m}$$
           </p>
         </div>
       </div>
@@ -815,76 +793,76 @@
 
       <h3>Magnetic Flux</h3>
       <div class="formula-box">
-        &Phi; = BA cos&theta; &nbsp;&nbsp; (uniform field)<br>
-        &Phi; = &int; B &middot; dA &nbsp;&nbsp; (general)<br>
-        Flux linkage = N&Phi;<br>
-        Unit: Weber (Wb) = T m&sup2;
+        $$\Phi = BA\cos\theta$$
+        $$\Phi = \int \mathbf{B} \cdot d\mathbf{A}$$
+        $$\text{Flux linkage} = N\Phi$$
+        $$\text{Unit: Weber (Wb) = T·m}^2$$
       </div>
 
       <h3>Faraday's Law &amp; Lenz's Law</h3>
       <div class="formula-box">
-        &epsilon; = &minus;N d&Phi;/dt<br>
-        Induced current: i = &epsilon;/R = &minus;(N/R)(d&Phi;/dt)
+        $$\varepsilon = -N\frac{d\Phi}{dt}$$
+        $$i = \frac{\varepsilon}{R} = -\frac{N}{R}\frac{d\Phi}{dt}$$
       </div>
 
       <h3>Motional EMF</h3>
       <div class="formula-box">
-        Straight rod: &epsilon; = Blv<br>
-        Rotating rod (pivot at one end): &epsilon; = &frac12;Bl&sup2;&omega;<br>
-        Rotating coil (N turns): &epsilon;<sub>0</sub> = NBA&omega;
+        $$\varepsilon = Blv \quad \text{(straight rod)}$$
+        $$\varepsilon = \frac{1}{2}Bl^2\omega \quad \text{(rotating rod)}$$
+        $$\varepsilon_0 = NBA\omega \quad \text{(rotating coil, N turns)}$$
       </div>
 
       <h3>Induced Charge and Heat</h3>
       <div class="formula-box">
-        Total charge: q = N|&Delta;&Phi;| / R<br>
-        Heat (flux change): H = (&Delta;&Phi;)&sup2; / R<br>
-        Heat (inductor discharge): H = &frac12;LI<sub>0</sub>&sup2;
+        $$q = \frac{N|\Delta\Phi|}{R}$$
+        $$H = \frac{(\Delta\Phi)^2}{R}$$
+        $$H = \frac{1}{2}LI_0^2$$
       </div>
 
       <h3>Self-Inductance</h3>
       <div class="formula-box">
-        Definition: N&Phi; = LI &nbsp;&rArr;&nbsp; &epsilon; = &minus;L dI/dt<br>
-        Solenoid: L = &mu;<sub>0</sub>N&sup2;A/l = &mu;<sub>0</sub>n&sup2;Al<br>
-        Energy stored: U = &frac12;LI&sup2;<br>
-        Energy density: u = B&sup2;/(2&mu;<sub>0</sub>)
+        $$N\Phi = LI \quad \Rightarrow \quad \varepsilon = -L\frac{dI}{dt}$$
+        $$L = \frac{\mu_0 N^2 A}{l} = \mu_0 n^2 A l$$
+        $$U = \frac{1}{2}LI^2$$
+        $$u = \frac{B^2}{2\mu_0}$$
       </div>
 
       <h3>Inductor Combinations</h3>
       <div class="formula-box">
-        Series: L<sub>eq</sub> = L<sub>1</sub> + L<sub>2</sub> + &hellip;<br>
-        Parallel: 1/L<sub>eq</sub> = 1/L<sub>1</sub> + 1/L<sub>2</sub> + &hellip;<br>
-        Series with coupling: L<sub>eq</sub> = L<sub>1</sub> + L<sub>2</sub> &plusmn; 2M
+        $$L_{\text{eq}} = L_1 + L_2 + \ldots$$
+        $$\frac{1}{L_{\text{eq}}} = \frac{1}{L_1} + \frac{1}{L_2} + \ldots$$
+        $$L_{\text{eq}} = L_1 + L_2 \pm 2M$$
       </div>
 
       <h3>RL Circuit</h3>
       <div class="formula-box">
-        Time constant: &tau; = L/R<br>
-        Growth: i(t) = (&epsilon;/R)(1 &minus; e<sup>&minus;t/&tau;</sup>)<br>
-        Decay: i(t) = I<sub>0</sub> e<sup>&minus;t/&tau;</sup><br>
-        Back-EMF during growth: &epsilon;<sub>L</sub> = &epsilon; e<sup>&minus;t/&tau;</sup>
+        $$\tau = \frac{L}{R}$$
+        $$i(t) = \frac{\varepsilon}{R}(1 - e^{-t/\tau})$$
+        $$i(t) = I_0 e^{-t/\tau}$$
+        $$\varepsilon_L = \varepsilon e^{-t/\tau}$$
       </div>
 
       <h3>LC Circuit</h3>
       <div class="formula-box">
-        Angular frequency: &omega; = 1/&radic;(LC)<br>
-        Frequency: f = 1/(2&pi;&radic;(LC))<br>
-        Charge: q(t) = q<sub>0</sub> cos(&omega;t + &phi;)<br>
-        Peak current: I<sub>0</sub> = &omega;q<sub>0</sub> = q<sub>0</sub>/&radic;(LC)<br>
-        Total energy: U = q<sub>0</sub>&sup2;/(2C) = &frac12;LI<sub>0</sub>&sup2; (conserved)
+        $$\omega = \frac{1}{\sqrt{LC}}$$
+        $$f = \frac{1}{2\pi\sqrt{LC}}$$
+        $$q(t) = q_0\cos(\omega t + \phi)$$
+        $$I_0 = \omega q_0 = \frac{q_0}{\sqrt{LC}}$$
+        $$U = \frac{q_0^2}{2C} = \frac{1}{2}LI_0^2$$
       </div>
 
       <h3>Mutual Inductance</h3>
       <div class="formula-box">
-        N<sub>2</sub>&Phi;<sub>2</sub> = MI<sub>1</sub> &nbsp;&rArr;&nbsp; &epsilon;<sub>2</sub> = &minus;M dI<sub>1</sub>/dt<br>
-        Coaxial solenoids: M = &mu;<sub>0</sub>N<sub>1</sub>N<sub>2</sub>A/l<br>
-        Coupling coefficient: M = k&radic;(L<sub>1</sub>L<sub>2</sub>), &nbsp; 0 &le; k &le; 1
+        $$N_2\Phi_2 = MI_1 \quad \Rightarrow \quad \varepsilon_2 = -M\frac{dI_1}{dt}$$
+        $$M = \frac{\mu_0 N_1 N_2 A}{l}$$
+        $$M = k\sqrt{L_1 L_2}, \quad 0 \le k \le 1$$
       </div>
 
       <h3>Induced Electric Field</h3>
       <div class="formula-box">
-        Faraday's law (integral): &oint; E &middot; dl = &minus;d&Phi;<sub>B</sub>/dt<br>
-        Inside cylinder (r &lt; R): E = (r/2)|dB/dt|<br>
-        Outside cylinder (r &gt; R): E = R&sup2;/(2r)|dB/dt|
+        $$\oint \mathbf{E} \cdot d\mathbf{l} = -\frac{d\Phi_B}{dt}$$
+        $$E = \frac{r}{2}\left|\frac{dB}{dt}\right| \quad (r < R)$$
+        $$E = \frac{R^2}{2r}\left|\frac{dB}{dt}\right| \quad (r > R)$$
       </div>
     </div>
 

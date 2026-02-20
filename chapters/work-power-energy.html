@@ -117,8 +117,8 @@
           When a constant force F acts on a body and displaces it through a distance d, the work done is:
         </p>
         <div class="formula-box">
-          W = F &middot; d &middot; cos&theta;<br>
-          W = F &middot; d (vector dot product)
+          $$W = F \cdot d \cdot \cos\theta$$
+          $$W = \vec{F} \cdot \vec{d}$$
         </div>
         <p>
           where &theta; is the angle between the force vector and the displacement vector.
@@ -134,14 +134,14 @@
           force F(x) in displacing the body from position x<sub>1</sub> to x<sub>2</sub> is:
         </p>
         <div class="formula-box">
-          W = &int; F(x) dx &nbsp;&nbsp;(from x<sub>1</sub> to x<sub>2</sub>)<br>
-          In 3D: W = &int; F &middot; dr = &int; (F<sub>x</sub>dx + F<sub>y</sub>dy + F<sub>z</sub>dz)
+          $$W = \int_{x_1}^{x_2} F(x) \, dx$$
+          $$W = \int \vec{F} \cdot d\vec{r} = \int (F_x \, dx + F_y \, dy + F_z \, dz)$$
         </div>
 
         <p>
-          Work done by a spring: W = &minus;&frac12;k(x<sub>2</sub>&sup2; &minus; x<sub>1</sub>&sup2;).
-          When stretching from natural length (x<sub>1</sub> = 0) to extension x: W<sub>spring</sub> = &minus;&frac12;kx&sup2;
-          (negative, as the spring opposes the displacement). The external agent does W<sub>ext</sub> = +&frac12;kx&sup2;.
+          Work done by a spring: $W = -\frac{1}{2}k(x_2^2 - x_1^2)$.
+          When stretching from natural length ($x_1 = 0$) to extension $x$: $W_{\text{spring}} = -\frac{1}{2}kx^2$
+          (negative, as the spring opposes the displacement). The external agent does $W_{\text{ext}} = +\frac{1}{2}kx^2$.
         </p>
       </div>
 
@@ -155,7 +155,7 @@
           kinetic energy:
         </p>
         <div class="formula-box">
-          W<sub>net</sub> = &Delta;KE = KE<sub>f</sub> &minus; KE<sub>i</sub> = &frac12;mv<sub>f</sub>&sup2; &minus; &frac12;mv<sub>i</sub>&sup2;
+          $$W_{\text{net}} = \Delta KE = KE_f - KE_i = \frac{1}{2}m v_f^2 - \frac{1}{2}m v_i^2$$
         </div>
         <p>
           This theorem is valid in all inertial reference frames. It provides a scalar equation (no direction
@@ -172,8 +172,8 @@
           For a block moving up an incline of angle &theta; with friction &mu;<sub>k</sub>, the work-energy theorem gives:
         </p>
         <div class="formula-box">
-          W<sub>applied</sub> + W<sub>gravity</sub> + W<sub>friction</sub> = &Delta;KE<br>
-          Fs &minus; mgs sin&theta; &minus; &mu;<sub>k</sub>mgs cos&theta; = &frac12;m(v<sub>f</sub>&sup2; &minus; v<sub>i</sub>&sup2;)
+          $$W_{\text{applied}} + W_{\text{gravity}} + W_{\text{friction}} = \Delta KE$$
+          $$Fs - mgs \sin\theta - \mu_k mgs \cos\theta = \frac{1}{2}m(v_f^2 - v_i^2)$$
         </div>
       </div>
 
@@ -186,7 +186,7 @@
           speed v:
         </p>
         <div class="formula-box">
-          KE = &frac12;mv&sup2;
+          $$KE = \frac{1}{2}mv^2$$
         </div>
         <p>
           Key properties of kinetic energy:
@@ -213,8 +213,8 @@
           For a body of mass m at height h above a chosen reference level (where PE = 0):
         </p>
         <div class="formula-box">
-          PE = mgh &nbsp;&nbsp;(near Earth&rsquo;s surface, where g is approximately constant)<br>
-          PE = &minus;GMm/r &nbsp;&nbsp;(general, with reference at infinity)
+          $$PE = mgh \quad \text{(near Earth's surface)}$$
+          $$PE = -\frac{GMm}{r} \quad \text{(general)}$$
         </div>
         <p>
           The choice of reference level is arbitrary &mdash; only the change in PE has physical significance.
@@ -224,7 +224,7 @@
           Energy stored in a spring (or any elastic body) when deformed from its natural length:
         </p>
         <div class="formula-box">
-          PE<sub>spring</sub> = &frac12;kx&sup2;
+          $$PE_{\text{spring}} = \frac{1}{2}kx^2$$
         </div>
         <p>
           where k is the spring constant and x is the extension or compression from the natural length.
@@ -242,8 +242,8 @@
         </p>
         <h3>Force-Potential Energy Relationship</h3>
         <div class="formula-box">
-          F(x) = &minus;dU/dx<br>
-          In 3D: F = &minus;&nabla;U = &minus;(&part;U/&part;x &icirc; + &part;U/&part;y ĵ + &part;U/&part;z k&#770;)
+          $$F(x) = -\frac{dU}{dx}$$
+          $$\vec{F} = -\nabla U = -\left(\frac{\partial U}{\partial x} \hat{\mathbf{i}} + \frac{\partial U}{\partial y} \hat{\mathbf{j}} + \frac{\partial U}{\partial z} \hat{\mathbf{k}}\right)$$
         </div>
         <h3>Potential Energy Graphs and Equilibrium</h3>
         <p>
@@ -267,9 +267,9 @@
           If only conservative forces do work on a system, the total mechanical energy (KE + PE) remains constant:
         </p>
         <div class="formula-box">
-          KE<sub>i</sub> + PE<sub>i</sub> = KE<sub>f</sub> + PE<sub>f</sub><br>
-          &frac12;mv<sub>i</sub>&sup2; + mgh<sub>i</sub> = &frac12;mv<sub>f</sub>&sup2; + mgh<sub>f</sub> &nbsp;&nbsp;(for gravity alone)<br>
-          &frac12;mv<sub>i</sub>&sup2; + &frac12;kx<sub>i</sub>&sup2; = &frac12;mv<sub>f</sub>&sup2; + &frac12;kx<sub>f</sub>&sup2; &nbsp;&nbsp;(for spring alone)
+          $$KE_i + PE_i = KE_f + PE_f$$
+          $$\frac{1}{2}m v_i^2 + mgh_i = \frac{1}{2}m v_f^2 + mgh_f \quad \text{(gravity)}$$
+          $$\frac{1}{2}m v_i^2 + \frac{1}{2}k x_i^2 = \frac{1}{2}m v_f^2 + \frac{1}{2}k x_f^2 \quad \text{(spring)}$$
         </div>
         <h3>With Non-Conservative Forces Present</h3>
         <p>
@@ -277,8 +277,8 @@
           energy is. The work done by non-conservative forces equals the change in mechanical energy:
         </p>
         <div class="formula-box">
-          W<sub>nc</sub> = &Delta;KE + &Delta;PE = (KE<sub>f</sub> + PE<sub>f</sub>) &minus; (KE<sub>i</sub> + PE<sub>i</sub>)<br>
-          W<sub>friction</sub> = &minus;f<sub>k</sub> &times; d &nbsp;&nbsp;(always negative, reducing mechanical energy)
+          $$W_{nc} = \Delta KE + \Delta PE = (KE_f + PE_f) - (KE_i + PE_i)$$
+          $$W_{\text{friction}} = -f_k \times d \quad \text{(always negative)}$$
         </div>
         <p>
           The energy balance: Initial mechanical energy + Work by non-conservative forces = Final mechanical energy.
@@ -295,9 +295,9 @@
           is Watt (W), where 1 W = 1 J/s.
         </p>
         <div class="formula-box">
-          Average power: P<sub>avg</sub> = W / t = &Delta;E / &Delta;t<br>
-          Instantaneous power: P = dW/dt = F &middot; v = Fv cos&theta;<br>
-          1 horsepower (hp) = 746 W &nbsp;&nbsp;|&nbsp;&nbsp; 1 kWh = 3.6 &times; 10&sup6; J
+          $$P_{\text{avg}} = \frac{W}{t} = \frac{\Delta E}{\Delta t}$$
+          $$P = \frac{dW}{dt} = \vec{F} \cdot \vec{v} = Fv \cos\theta$$
+          $$1 \text{ hp} = 746 \text{ W} \quad | \quad 1 \text{ kWh} = 3.6 \times 10^6 \text{ J}$$
         </div>
         <p>
           Power is maximum when force and velocity are parallel (&theta; = 0&deg;), zero when perpendicular (&theta; = 90&deg;),
@@ -324,21 +324,21 @@
         </p>
         <h3>Critical Speeds</h3>
         <div class="formula-box">
-          Minimum speed at the top (to complete circle): v<sub>top</sub> = &radic;(gr)<br>
-          Minimum speed at the bottom (to complete full circle): v<sub>bottom</sub> = &radic;(5gr)
+          $$v_{\text{top}} = \sqrt{gr}$$
+          $$v_{\text{bottom}} = \sqrt{5gr}$$
         </div>
         <h3>Tension Analysis</h3>
         <p>
           At the bottom of the circle:
         </p>
         <div class="formula-box">
-          T<sub>bottom</sub> = mg + mv<sub>bottom</sub>&sup2;/r
+          $$T_{\text{bottom}} = mg + \frac{m v_{\text{bottom}}^2}{r}$$
         </div>
         <p>
           At the top of the circle (both tension and weight point toward centre):
         </p>
         <div class="formula-box">
-          T<sub>top</sub> = mv<sub>top</sub>&sup2;/r &minus; mg
+          $$T_{\text{top}} = \frac{m v_{\text{top}}^2}{r} - mg$$
         </div>
 
         <h3>Conditions for Motion</h3>
@@ -352,7 +352,7 @@
           A block released from height h on a circular track of radius r. For the block to complete the loop:
         </p>
         <div class="formula-box">
-          h<sub>min</sub> = 2.5r &nbsp;&nbsp;(= 5r/2)
+          $$h_{\min} = 2.5r = \frac{5r}{2}$$
         </div>
       </div>
 
@@ -367,13 +367,13 @@
         </p>
         <h3>Conservation of Momentum</h3>
         <div class="formula-box">
-          m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub> = m<sub>1</sub>v<sub>1</sub> + m<sub>2</sub>v<sub>2</sub>
+          $$m_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2$$
         </div>
         <h3>Coefficient of Restitution</h3>
         <div class="formula-box">
-          e = (velocity of separation) / (velocity of approach)<br>
-          e = (v<sub>2</sub> &minus; v<sub>1</sub>) / (u<sub>1</sub> &minus; u<sub>2</sub>)<br>
-          e = 1 (perfectly elastic) &nbsp;|&nbsp; e = 0 (perfectly inelastic) &nbsp;|&nbsp; 0 &lt; e &lt; 1 (inelastic)
+          $$e = \frac{\text{velocity of separation}}{\text{velocity of approach}}$$
+          $$e = \frac{v_2 - v_1}{u_1 - u_2}$$
+          $$e = 1 \text{ (elastic)} \quad | \quad e = 0 \text{ (inelastic)} \quad | \quad 0 < e < 1$$
         </div>
         <h3>Types of Collisions</h3>
         <ul>
@@ -383,8 +383,8 @@
         </ul>
         <h3>1D Elastic Collision Formulas</h3>
         <div class="formula-box">
-          v<sub>1</sub> = [(m<sub>1</sub> &minus; m<sub>2</sub>)u<sub>1</sub> + 2m<sub>2</sub>u<sub>2</sub>] / (m<sub>1</sub> + m<sub>2</sub>)<br>
-          v<sub>2</sub> = [(m<sub>2</sub> &minus; m<sub>1</sub>)u<sub>2</sub> + 2m<sub>1</sub>u<sub>1</sub>] / (m<sub>1</sub> + m<sub>2</sub>)
+          $$v_1 = \frac{(m_1 - m_2)u_1 + 2m_2 u_2}{m_1 + m_2}$$
+          $$v_2 = \frac{(m_2 - m_1)u_2 + 2m_1 u_1}{m_1 + m_2}$$
         </div>
         <p>
           Special cases:
@@ -396,8 +396,8 @@
         </ul>
         <h3>Perfectly Inelastic Collision</h3>
         <div class="formula-box">
-          v = (m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub>) / (m<sub>1</sub> + m<sub>2</sub>)<br>
-          Loss in KE = &frac12; &middot; (m<sub>1</sub>m<sub>2</sub>)/(m<sub>1</sub> + m<sub>2</sub>) &middot; (u<sub>1</sub> &minus; u<sub>2</sub>)&sup2;
+          $$v = \frac{m_1 u_1 + m_2 u_2}{m_1 + m_2}$$
+          $$\text{Loss in KE} = \frac{1}{2} \cdot \frac{m_1 m_2}{m_1 + m_2} \cdot (u_1 - u_2)^2$$
         </div>
         <h3>2D Oblique Collisions</h3>
         <p>
@@ -407,7 +407,7 @@
         </p>
         <h3>Energy Loss Formula</h3>
         <div class="formula-box">
-          &Delta;KE = &frac12;(m<sub>1</sub>m<sub>2</sub>)/(m<sub>1</sub>+m<sub>2</sub>) &middot; (1 &minus; e&sup2;) &middot; (u<sub>1</sub> &minus; u<sub>2</sub>)&sup2;
+          $$\Delta KE = \frac{1}{2} \cdot \frac{m_1 m_2}{m_1 + m_2} \cdot (1 - e^2) \cdot (u_1 - u_2)^2$$
         </div>
       </div>
 
@@ -419,9 +419,9 @@
           Impulse is the change in momentum, calculated as the integral of force over time:
         </p>
         <div class="formula-box">
-          I = &Delta;p = m(v<sub>f</sub> &minus; v<sub>i</sub>)<br>
-          I = &int; F dt &nbsp;&nbsp;(impulse from variable force)<br>
-          F<sub>avg</sub> = &Delta;p / &Delta;t = m(v<sub>f</sub> &minus; v<sub>i</sub>) / &Delta;t
+          $$I = \Delta p = m(v_f - v_i)$$
+          $$I = \int F \, dt \quad \text{(variable force)}$$
+          $$F_{\text{avg}} = \frac{\Delta p}{\Delta t} = \frac{m(v_f - v_i)}{\Delta t}$$
         </div>
         <p>
           The impulse-momentum theorem states that F<sub>avg</sub> &middot; &Delta;t = m(v<sub>f</sub> &minus; v<sub>i</sub>).
@@ -444,15 +444,15 @@
           For a system of particles:
         </p>
         <div class="formula-box">
-          x<sub>cm</sub> = &Sigma;(m<sub>i</sub> &middot; x<sub>i</sub>) / M<sub>total</sub><br>
-          y<sub>cm</sub> = &Sigma;(m<sub>i</sub> &middot; y<sub>i</sub>) / M<sub>total</sub><br>
-          Vector form: r<sub>cm</sub> = &Sigma;(m<sub>i</sub> &middot; r<sub>i</sub>) / M<sub>total</sub>
+          $$x_{\text{cm}} = \frac{\sum (m_i \cdot x_i)}{M_{\text{total}}}$$
+          $$y_{\text{cm}} = \frac{\sum (m_i \cdot y_i)}{M_{\text{total}}}$$
+          $$\vec{r}_{\text{cm}} = \frac{\sum (m_i \cdot \vec{r}_i)}{M_{\text{total}}}$$
         </div>
         <h3>Velocity and Acceleration of Centre of Mass</h3>
         <div class="formula-box">
-          V<sub>cm</sub> = &Sigma;(m<sub>i</sub> &middot; v<sub>i</sub>) / M<sub>total</sub><br>
-          a<sub>cm</sub> = F<sub>ext</sub> / M<sub>total</sub><br>
-          M<sub>total</sub> &middot; V<sub>cm</sub> = Total momentum of the system
+          $$V_{\text{cm}} = \frac{\sum (m_i \cdot v_i)}{M_{\text{total}}}$$
+          $$a_{\text{cm}} = \frac{F_{\text{ext}}}{M_{\text{total}}}$$
+          $$M_{\text{total}} \cdot V_{\text{cm}} = P_{\text{total}}$$
         </div>
         <p>
           The centre of mass accelerates as if all the mass were concentrated there and all external forces
@@ -470,15 +470,15 @@
       <div class="theory-section" id="key-formulas">
         <h2>Key Formulas Summary</h2>
         <div class="formula-box">
-          W = Fd cos&theta; &nbsp;&nbsp;|&nbsp;&nbsp; W = &int; F &middot; dx (variable force)<br>
-          KE = &frac12;mv&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; KE = p&sup2;/2m<br>
-          PE<sub>grav</sub> = mgh &nbsp;&nbsp;|&nbsp;&nbsp; PE<sub>spring</sub> = &frac12;kx&sup2;<br>
-          F = &minus;dU/dx &nbsp;&nbsp;|&nbsp;&nbsp; W<sub>net</sub> = &Delta;KE (Work-Energy Theorem)<br>
-          KE<sub>i</sub> + PE<sub>i</sub> = KE<sub>f</sub> + PE<sub>f</sub> &nbsp;&nbsp;(conservation, conservative forces only)<br>
-          P = dW/dt = Fv cos&theta; &nbsp;&nbsp;|&nbsp;&nbsp; 1 hp = 746 W<br>
-          v<sub>top</sub> = &radic;(gr) &nbsp;&nbsp;|&nbsp;&nbsp; v<sub>bottom</sub> = &radic;(5gr) &nbsp;&nbsp;(vertical circle)<br>
-          e = (v<sub>2</sub> &minus; v<sub>1</sub>) / (u<sub>1</sub> &minus; u<sub>2</sub>) &nbsp;&nbsp;(coefficient of restitution)<br>
-          I = &Delta;p = F<sub>avg</sub>&Delta;t &nbsp;&nbsp;|&nbsp;&nbsp; x<sub>cm</sub> = &Sigma;m<sub>i</sub>x<sub>i</sub>/M<sub>total</sub>
+          $$W = Fd \cos\theta \quad | \quad W = \int F \cdot dx$$
+          $$KE = \frac{1}{2}mv^2 \quad | \quad KE = \frac{p^2}{2m}$$
+          $$PE_{\text{grav}} = mgh \quad | \quad PE_{\text{spring}} = \frac{1}{2}kx^2$$
+          $$F = -\frac{dU}{dx} \quad | \quad W_{\text{net}} = \Delta KE$$
+          $$KE_i + PE_i = KE_f + PE_f$$
+          $$P = \frac{dW}{dt} = Fv \cos\theta \quad | \quad 1 \text{ hp} = 746 \text{ W}$$
+          $$v_{\text{top}} = \sqrt{gr} \quad | \quad v_{\text{bottom}} = \sqrt{5gr}$$
+          $$e = \frac{v_2 - v_1}{u_1 - u_2}$$
+          $$I = \Delta p = F_{\text{avg}} \Delta t \quad | \quad x_{\text{cm}} = \frac{\sum m_i x_i}{M_{\text{total}}}$$
         </div>
       </div>
 

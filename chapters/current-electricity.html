@@ -120,8 +120,8 @@
         contribute to the current.
       </p>
       <div class="formula-box">
-        I = dQ/dt<br><br>
-        1 A = 1 C/s &nbsp;&nbsp; 1 mA = 10<sup>&minus;3</sup> A &nbsp;&nbsp; 1 &mu;A = 10<sup>&minus;6</sup> A
+        $$I = \frac{dQ}{dt}$$
+        $$1 \text{ A} = 1 \text{ C/s}, \quad 1 \text{ mA} = 10^{-3} \text{ A}, \quad 1 \, \mu\text{A} = 10^{-6} \text{ A}$$
       </div>
 
       <h3>Charge Transported</h3>
@@ -131,7 +131,7 @@
         this simplifies to Q = It.
       </p>
       <div class="formula-box">
-        Q = &int;<sub>t<sub>1</sub></sub><sup>t<sub>2</sub></sup> I &middot; dt
+        $$Q = \int_{t_1}^{t_2} I \, dt$$
       </div>
 
       <h3>Current Density</h3>
@@ -141,7 +141,7 @@
         through area A:
       </p>
       <div class="formula-box">
-        j = I/A &nbsp;&nbsp; (A/m&sup2;)
+        $$j = \frac{I}{A} \quad \text{(A/m}^2)$$
       </div>
 
       <h3>Resistance and Resistivity</h3>
@@ -151,10 +151,9 @@
         resistance of a conductor depends on its material, length, cross-sectional area, and temperature.
       </p>
       <div class="formula-box">
-        R = &rho;(l/A)<br><br>
-        where &rho; = resistivity of the material (&Omega;&middot;m),<br>
-        l = length of conductor (m),<br>
-        A = cross-sectional area (m&sup2;)
+        $$R = \rho \frac{l}{A}$$
+        $$\rho = \text{resistivity} \, (\Omega \cdot \text{m})$$
+        $$l = \text{length (m)}, \quad A = \text{area} \, (\text{m}^2)$$
       </div>
       <p>
         Resistivity (&rho;) is an intrinsic property of the material, independent of the shape
@@ -196,11 +195,9 @@
         direction. This average velocity is called the drift velocity (v<sub>d</sub>).
       </p>
       <div class="formula-box">
-        v<sub>d</sub> = eE&tau;/m<br><br>
-        where e = 1.6 &times; 10<sup>&minus;19</sup> C (electron charge),<br>
-        E = electric field inside conductor (V/m),<br>
-        &tau; = relaxation time (average time between successive collisions),<br>
-        m = 9.11 &times; 10<sup>&minus;31</sup> kg (electron mass)
+        $$v_d = \frac{eE\tau}{m}$$
+        $$e = 1.6 \times 10^{-19} \text{ C}, \quad m = 9.11 \times 10^{-31} \text{ kg}$$
+        $$\tau = \text{relaxation time}, \quad E = \text{electric field (V/m)}$$
       </div>
       <p>
         Typical drift velocities are extremely small &mdash; of the order of 10<sup>&minus;4</sup> to
@@ -215,8 +212,8 @@
         cross-section is dQ = nAev<sub>d</sub> dt, giving:
       </p>
       <div class="formula-box">
-        I = nAev<sub>d</sub><br>
-        j = nev<sub>d</sub>
+        $$I = nAev_d$$
+        $$j = nev_d$$
       </div>
       <p>
         This shows that for a given current, a thinner conductor requires a higher drift velocity. It also
@@ -231,8 +228,8 @@
         an applied field.
       </p>
       <div class="formula-box">
-        &mu; = v<sub>d</sub>/E = e&tau;/m<br><br>
-        SI unit: m&sup2; V<sup>&minus;1</sup> s<sup>&minus;1</sup>
+        $$\mu = \frac{v_d}{E} = \frac{e\tau}{m}$$
+        $$\text{SI unit: m}^2 \text{ V}^{-1} \text{ s}^{-1}$$
       </div>
 
       <h3>Relaxation Time</h3>
@@ -241,7 +238,7 @@
         electron with the lattice ions. It can be expressed in terms of measurable quantities:
       </p>
       <div class="formula-box">
-        &tau; = m/(ne&sup2;&rho;)
+        $$\tau = \frac{m}{ne^2\rho}$$
       </div>
       <p>
         Since resistivity &rho; increases with temperature (for metals), &tau; decreases with temperature,
@@ -287,10 +284,8 @@
 
       <h3>Macroscopic Form</h3>
       <div class="formula-box">
-        V = IR<br><br>
-        V &rarr; potential difference (V)<br>
-        I &rarr; current (A)<br>
-        R &rarr; resistance (&Omega;)
+        $$V = IR$$
+        $$V = \text{potential difference (V)}, \quad I = \text{current (A)}, \quad R = \text{resistance} \, (\Omega)$$
       </div>
 
       <h3>Microscopic (Point) Form</h3>
@@ -300,8 +295,8 @@
         independent of geometry:
       </p>
       <div class="formula-box">
-        j = &sigma;E &nbsp;&nbsp; or equivalently &nbsp;&nbsp; E = &rho;j<br><br>
-        where &sigma; = conductivity (S/m), &rho; = resistivity (&Omega;&middot;m)
+        $$j = \sigma E \quad \text{or} \quad E = \rho j$$
+        $$\sigma = \text{conductivity (S/m)}, \quad \rho = \text{resistivity} \, (\Omega \cdot \text{m})$$
       </div>
       <p>
         From E = V/l and j = I/A, the microscopic form directly yields the macroscopic relation
@@ -364,11 +359,9 @@
         approximately linear:
       </p>
       <div class="formula-box">
-        &rho;<sub>T</sub> = &rho;<sub>0</sub>(1 + &alpha;<sub>&rho;</sub>&Delta;T)<br><br>
-        R<sub>T</sub> = R<sub>0</sub>(1 + &alpha;<sub>R</sub>&Delta;T)<br><br>
-        where &alpha;<sub>&rho;</sub> = temperature coefficient of resistivity,<br>
-        &alpha;<sub>R</sub> = temperature coefficient of resistance,<br>
-        &Delta;T = T &minus; T<sub>0</sub>
+        $$\rho_T = \rho_0(1 + \alpha_\rho \Delta T)$$
+        $$R_T = R_0(1 + \alpha_R \Delta T)$$
+        $$\Delta T = T - T_0$$
       </div>
       <p>
         The relationship between the two coefficients is &alpha;<sub>R</sub> = &alpha;<sub>&rho;</sub> &minus; &alpha;
@@ -438,10 +431,10 @@
 
       <h3>How to Read a Four-Band Resistor</h3>
       <div class="formula-box">
-        Band 1: First significant digit<br>
-        Band 2: Second significant digit<br>
-        Band 3: Multiplier (power of 10)<br>
-        Band 4: Tolerance &mdash; Gold = &plusmn;5%, Silver = &plusmn;10%, No band = &plusmn;20%
+        $$\text{Band 1: First digit}$$
+        $$\text{Band 2: Second digit}$$
+        $$\text{Band 3: Multiplier} \, (10^n)$$
+        $$\text{Band 4: Gold} \pm 5\%, \quad \text{Silver} \pm 10\%, \quad \text{None} \pm 20\%$$
       </div>
       <p>
         Example: Yellow &ndash; Violet &ndash; Orange &ndash; Gold = 47 &times; 10<sup>3</sup> &Omega;
@@ -478,9 +471,9 @@
         individual resistance.
       </p>
       <div class="formula-box">
-        R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub> + &hellip; + R<sub>n</sub><br><br>
-        Same current through all: I<sub>1</sub> = I<sub>2</sub> = &hellip; = I<br>
-        Voltage divides: V = V<sub>1</sub> + V<sub>2</sub> + &hellip; + V<sub>n</sub>
+        $$R_{\text{eq}} = R_1 + R_2 + R_3 + \ldots + R_n$$
+        $$I_1 = I_2 = \ldots = I$$
+        $$V = V_1 + V_2 + \ldots + V_n$$
       </div>
 
       <h3>Voltage Divider Rule (Series)</h3>
@@ -488,8 +481,8 @@
         For two resistors R<sub>1</sub> and R<sub>2</sub> in series connected across a total voltage V:
       </p>
       <div class="formula-box">
-        V<sub>1</sub> = V &times; R<sub>1</sub>/(R<sub>1</sub> + R<sub>2</sub>)<br>
-        V<sub>2</sub> = V &times; R<sub>2</sub>/(R<sub>1</sub> + R<sub>2</sub>)
+        $$V_1 = V \times \frac{R_1}{R_1 + R_2}$$
+        $$V_2 = V \times \frac{R_2}{R_1 + R_2}$$
       </div>
 
       <h3>Parallel Combination</h3>
@@ -500,10 +493,10 @@
         smallest individual resistance.
       </p>
       <div class="formula-box">
-        1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + &hellip; + 1/R<sub>n</sub><br><br>
-        For two resistors: R<sub>eq</sub> = (R<sub>1</sub> &times; R<sub>2</sub>)/(R<sub>1</sub> + R<sub>2</sub>)<br><br>
-        Same voltage across all: V<sub>1</sub> = V<sub>2</sub> = &hellip; = V<br>
-        Current divides: I = I<sub>1</sub> + I<sub>2</sub> + &hellip; + I<sub>n</sub>
+        $$\frac{1}{R_{\text{eq}}} = \frac{1}{R_1} + \frac{1}{R_2} + \ldots + \frac{1}{R_n}$$
+        $$R_{\text{eq}} = \frac{R_1 R_2}{R_1 + R_2}$$
+        $$V_1 = V_2 = \ldots = V$$
+        $$I = I_1 + I_2 + \ldots + I_n$$
       </div>
 
       <h3>Current Divider Rule (Parallel)</h3>
@@ -512,8 +505,8 @@
         combination:
       </p>
       <div class="formula-box">
-        I<sub>1</sub> = I &times; R<sub>2</sub>/(R<sub>1</sub> + R<sub>2</sub>)<br>
-        I<sub>2</sub> = I &times; R<sub>1</sub>/(R<sub>1</sub> + R<sub>2</sub>)
+        $$I_1 = I \times \frac{R_2}{R_1 + R_2}$$
+        $$I_2 = I \times \frac{R_1}{R_1 + R_2}$$
       </div>
       <p>
         Note that the larger current flows through the smaller resistance.
@@ -584,9 +577,8 @@
 
       <h3>Terminal Voltage</h3>
       <div class="formula-box">
-        Discharging (current flows out): V = E &minus; Ir<br>
-        Charging (current flows in): V = E + Ir<br><br>
-        where E = EMF, I = current, r = internal resistance
+        $$V = E - Ir \quad \text{(discharging)}$$
+        $$V = E + Ir \quad \text{(charging)}$$
       </div>
       <p>
         Key observations: (i) when I = 0, terminal voltage = E; (ii) terminal voltage decreases as current
@@ -599,7 +591,7 @@
         Kirchhoff's voltage law around the loop gives:
       </p>
       <div class="formula-box">
-        I = E/(R + r)
+        $$I = \frac{E}{R + r}$$
       </div>
 
       <h3>Cells in Series</h3>
@@ -888,9 +880,9 @@
         into thermal energy (Joule heating). The heat produced is given by Joule's law:
       </p>
       <div class="formula-box">
-        H = I&sup2;Rt &nbsp; (in joules)<br><br>
-        Also: H = VIt = V&sup2;t/R<br><br>
-        Heat in calories: H<sub>cal</sub> = I&sup2;Rt / 4.186
+        $$H = I^2 Rt \quad \text{(in joules)}$$
+        $$H = VIt = \frac{V^2 t}{R}$$
+        $$H_{\text{cal}} = \frac{I^2 Rt}{4.186}$$
       </div>
       <p>
         Joule heating is the principle behind electric heaters, toasters, electric irons, fuses, and
@@ -904,8 +896,8 @@
         watt (W), equal to one joule per second.
       </p>
       <div class="formula-box">
-        P = VI = I&sup2;R = V&sup2;/R<br><br>
-        1 W = 1 J/s = 1 V &times; 1 A
+        $$P = VI = I^2 R = \frac{V^2}{R}$$
+        $$1 \text{ W} = 1 \text{ J/s} = 1 \text{ V} \times 1 \text{ A}$$
       </div>
 
       <h3>Electrical Energy and the Commercial Unit</h3>
@@ -922,7 +914,7 @@
         consumes when operated at its rated voltage. The resistance of the appliance is:
       </p>
       <div class="formula-box">
-        R = V<sub>rated</sub>&sup2; / P<sub>rated</sub>
+        $$R = \frac{V_{\text{rated}}^2}{P_{\text{rated}}}$$
       </div>
       <p>
         If the actual supply voltage differs from the rated voltage, the actual power consumed changes
@@ -936,7 +928,7 @@
         delivered to R is P = I&sup2;R = E&sup2;R/(R + r)&sup2;. This power is maximum when R = r:
       </p>
       <div class="formula-box">
-        P<sub>max</sub> = E&sup2;/(4r)
+        $$P_{\max} = \frac{E^2}{4r}$$
       </div>
       <p>
         At maximum power transfer, the efficiency is only 50% (half the power is lost in internal
@@ -1051,65 +1043,67 @@
 
       <h3>Current and Charge</h3>
       <div class="formula-box">
-        I = dQ/dt &nbsp; | &nbsp; Q = &int; I dt &nbsp; | &nbsp; j = I/A &nbsp; | &nbsp; 1 A = 1 C/s
+        $$I = \frac{dQ}{dt} \quad Q = \int I \, dt \quad j = \frac{I}{A} \quad 1 \text{ A} = 1 \text{ C/s}$$
       </div>
 
       <h3>Drift Velocity and Mobility</h3>
       <div class="formula-box">
-        v<sub>d</sub> = eE&tau;/m &nbsp; | &nbsp; I = nAev<sub>d</sub> &nbsp; | &nbsp; j = nev<sub>d</sub><br>
-        &mu; = v<sub>d</sub>/E = e&tau;/m &nbsp; | &nbsp; &tau; = m/(ne&sup2;&rho;)
+        $$v_d = \frac{eE\tau}{m} \quad I = nAev_d \quad j = nev_d$$
+        $$\mu = \frac{v_d}{E} = \frac{e\tau}{m} \quad \tau = \frac{m}{ne^2\rho}$$
       </div>
 
       <h3>Ohm's Law (Macroscopic and Microscopic)</h3>
       <div class="formula-box">
-        V = IR &nbsp; | &nbsp; j = &sigma;E &nbsp; | &nbsp; E = &rho;j &nbsp; | &nbsp; &sigma; = 1/&rho;
+        $$V = IR \quad j = \sigma E \quad E = \rho j \quad \sigma = \frac{1}{\rho}$$
       </div>
 
       <h3>Resistance and Resistivity</h3>
       <div class="formula-box">
-        R = &rho;l/A &nbsp; | &nbsp; &rho;<sub>T</sub> = &rho;<sub>0</sub>(1 + &alpha;&Delta;T) &nbsp; | &nbsp; R<sub>T</sub> = R<sub>0</sub>(1 + &alpha;&Delta;T)
+        $$R = \frac{\rho l}{A} \quad \rho_T = \rho_0(1 + \alpha \Delta T) \quad R_T = R_0(1 + \alpha \Delta T)$$
       </div>
 
       <h3>Series and Parallel Combinations</h3>
       <div class="formula-box">
-        Series: R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + &hellip;<br>
-        Parallel: 1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + &hellip;<br>
-        Two in parallel: R<sub>eq</sub> = R<sub>1</sub>R<sub>2</sub>/(R<sub>1</sub> + R<sub>2</sub>)
+        $$R_{\text{eq}} = R_1 + R_2 + \ldots$$
+        $$\frac{1}{R_{\text{eq}}} = \frac{1}{R_1} + \frac{1}{R_2} + \ldots$$
+        $$R_{\text{eq}} = \frac{R_1 R_2}{R_1 + R_2}$$
       </div>
 
       <h3>EMF and Internal Resistance</h3>
       <div class="formula-box">
-        V = E &minus; Ir &nbsp; (discharge) &nbsp; | &nbsp; V = E + Ir &nbsp; (charge)<br>
-        I = E/(R + r) &nbsp; | &nbsp; Series: E<sub>net</sub> = &Sigma;E, r<sub>net</sub> = &Sigma;r
+        $$V = E - Ir \quad \text{(discharge)} \quad V = E + Ir \quad \text{(charge)}$$
+        $$I = \frac{E}{R + r} \quad \text{Series: } E_{\text{net}} = \sum E, \quad r_{\text{net}} = \sum r$$
       </div>
 
       <h3>Kirchhoff's Laws</h3>
       <div class="formula-box">
-        KCL: &Sigma;I<sub>in</sub> = &Sigma;I<sub>out</sub> &nbsp; | &nbsp; KVL: &Sigma;&Delta;V = 0 (closed loop)
+        $$\sum I_{\text{in}} = \sum I_{\text{out}} \quad \text{(KCL)}$$
+        $$\sum \Delta V = 0 \quad \text{(KVL, closed loop)}$$
       </div>
 
       <h3>Wheatstone Bridge and Meter Bridge</h3>
       <div class="formula-box">
-        Balance: P/Q = R/S &nbsp; | &nbsp; Meter Bridge: X/R = l/(100 &minus; l)
+        $$\frac{P}{Q} = \frac{R}{S} \quad \text{(Balance condition)}$$
+        $$\frac{X}{R} = \frac{l}{100 - l} \quad \text{(Meter Bridge)}$$
       </div>
 
       <h3>Potentiometer</h3>
       <div class="formula-box">
-        k = V<sub>AB</sub>/L &nbsp; | &nbsp; E = kl &nbsp; | &nbsp; E<sub>1</sub>/E<sub>2</sub> = l<sub>1</sub>/l<sub>2</sub><br>
-        Internal resistance: r = R(l<sub>1</sub>/l<sub>2</sub> &minus; 1)
+        $$k = \frac{V_{AB}}{L} \quad E = kl \quad \frac{E_1}{E_2} = \frac{l_1}{l_2}$$
+        $$r = R\left(\frac{l_1}{l_2} - 1\right)$$
       </div>
 
       <h3>Heating Effect and Power</h3>
       <div class="formula-box">
-        H = I&sup2;Rt = VIt = V&sup2;t/R<br>
-        P = VI = I&sup2;R = V&sup2;/R &nbsp; | &nbsp; 1 kWh = 3.6 &times; 10<sup>6</sup> J<br>
-        P<sub>max</sub> = E&sup2;/(4r) &nbsp; when R = r
+        $$H = I^2 Rt = VIt = \frac{V^2 t}{R}$$
+        $$P = VI = I^2 R = \frac{V^2}{R} \quad 1 \text{ kWh} = 3.6 \times 10^6 \text{ J}$$
+        $$P_{\max} = \frac{E^2}{4r} \quad \text{when } R = r$$
       </div>
 
       <h3>Thermoelectricity</h3>
       <div class="formula-box">
-        Seebeck: e = &alpha;&Delta;T + &frac12;&beta;(&Delta;T)&sup2;<br>
-        T<sub>n</sub> = (T<sub>cold</sub> + T<sub>i</sub>)/2 &nbsp; | &nbsp; Peltier: Q = &pi;It
+        $$e = \alpha \Delta T + \frac{1}{2}\beta(\Delta T)^2$$
+        $$T_n = \frac{T_{\text{cold}} + T_i}{2} \quad \text{or} \quad Q = \pi I t$$
       </div>
 
       <h3>Ammeter and Voltmeter Conversion</h3>

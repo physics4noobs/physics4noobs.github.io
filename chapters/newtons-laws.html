@@ -148,9 +148,9 @@
           the direction of the applied force.
         </p>
         <div class="formula-box">
-          F = dp/dt = d(mv)/dt<br>
-          For constant mass: F = ma<br>
-          For variable mass systems: F<sub>ext</sub> = m(dv/dt) + v<sub>rel</sub>(dm/dt)
+          $$F = \frac{dp}{dt} = \frac{d(mv)}{dt}$$
+          $$F = ma \quad \text{(constant mass)}$$
+          $$F_{\text{ext}} = m\frac{dv}{dt} + v_{\text{rel}}\frac{dm}{dt} \quad \text{(variable mass)}$$
         </div>
         <h3>Linear Momentum</h3>
         <p>
@@ -170,8 +170,8 @@
           of the body:
         </p>
         <div class="formula-box">
-          J = F &middot; &Delta;t = &Delta;p = p<sub>f</sub> &minus; p<sub>i</sub><br>
-          For variable force: J = &int; F dt (from t<sub>1</sub> to t<sub>2</sub>)
+          $$J = F \cdot \Delta t = \Delta p = p_f - p_i$$
+          $$J = \int F \, dt \quad \text{(variable force)}$$
         </div>
         <p>
           The impulse-momentum theorem is particularly useful for collision problems and for situations where forces
@@ -197,9 +197,9 @@
           on body A.
         </p>
         <div class="formula-box">
-          F<sub>action</sub> = &minus;F<sub>reaction</sub><br>
-          &Sigma;F = 0 &nbsp;&nbsp;(condition for equilibrium)<br>
-          &Sigma;F<sub>x</sub> = 0 and &Sigma;F<sub>y</sub> = 0 &nbsp;&nbsp;(component-wise equilibrium)
+          $$F_{\text{action}} = -F_{\text{reaction}}$$
+          $$\sum F = 0 \quad \text{(equilibrium)}$$
+          $$\sum F_x = 0 \quad \text{and} \quad \sum F_y = 0 \quad \text{(component-wise)}$$
         </div>
         <p>
           Key points about action-reaction pairs:
@@ -278,8 +278,8 @@
           it matches the applied force up to a maximum value called the limiting friction.
         </p>
         <div class="formula-box">
-          f<sub>s</sub> &le; &mu;<sub>s</sub>N &nbsp;&nbsp;(self-adjusting)<br>
-          f<sub>s,max</sub> = &mu;<sub>s</sub>N &nbsp;&nbsp;(limiting value)
+          $$f_s \leq \mu_s N \quad \text{(self-adjusting)}$$
+          $$f_{s,\max} = \mu_s N \quad \text{(limiting value)}$$
         </div>
         <h3>Kinetic Friction (f<sub>k</sub>)</h3>
         <p>
@@ -287,7 +287,7 @@
           of surfaces) and is always less than the maximum static friction:
         </p>
         <div class="formula-box">
-          f<sub>k</sub> = &mu;<sub>k</sub>N &nbsp;&nbsp;where &mu;<sub>k</sub> &lt; &mu;<sub>s</sub>
+          $$f_k = \mu_k N \quad \text{where} \quad \mu_k < \mu_s$$
         </div>
 
         <h3>Angle of Repose</h3>
@@ -296,9 +296,9 @@
           to slide. At this angle, the component of gravity along the plane equals the maximum static friction:
         </p>
         <div class="formula-box">
-          mg sin&alpha; = &mu;<sub>s</sub> mg cos&alpha;<br>
-          tan&alpha; = &mu;<sub>s</sub><br>
-          &alpha; = tan<sup>&minus;1</sup>(&mu;<sub>s</sub>)
+          $$mg \sin\alpha = \mu_s mg \cos\alpha$$
+          $$\tan\alpha = \mu_s$$
+          $$\alpha = \tan^{-1}(\mu_s)$$
         </div>
         <h3>Friction on Inclines</h3>
         <p>
@@ -313,9 +313,9 @@
           When a force is applied at angle &theta; to move a block on a rough surface, the minimum force required is:
         </p>
         <div class="formula-box">
-          F = &mu;mg / (cos&theta; + &mu; sin&theta;)<br>
-          Optimal angle: &theta; = tan<sup>&minus;1</sup>(&mu;)<br>
-          Minimum force: F<sub>min</sub> = &mu;mg / &radic;(1 + &mu;&sup2;)
+          $$F = \frac{\mu mg}{\cos\theta + \mu \sin\theta}$$
+          $$\theta = \tan^{-1}(\mu)$$
+          $$F_{\min} = \frac{\mu mg}{\sqrt{1 + \mu^2}}$$
         </div>
       </div>
 
@@ -329,8 +329,8 @@
           it is provided by existing forces (tension, gravity, friction, normal force, etc.).
         </p>
         <div class="formula-box">
-          F<sub>c</sub> = mv&sup2;/r = m&omega;&sup2;r<br>
-          a<sub>c</sub> = v&sup2;/r = &omega;&sup2;r &nbsp;&nbsp;(centripetal acceleration, directed toward center)
+          $$F_c = \frac{mv^2}{r} = m\omega^2 r$$
+          $$a_c = \frac{v^2}{r} = \omega^2 r \quad \text{(toward center)}$$
         </div>
         <h3>Banking of Roads</h3>
         <p>
@@ -338,9 +338,9 @@
           provides the centripetal force. For the ideal speed (no friction needed):
         </p>
         <div class="formula-box">
-          tan&theta; = v&sup2;/rg &nbsp;&nbsp;&rArr;&nbsp;&nbsp; v = &radic;(rg tan&theta;)<br>
-          With friction: v<sub>max</sub> = &radic;[rg(tan&theta; + &mu;<sub>s</sub>)/(1 &minus; &mu;<sub>s</sub> tan&theta;)]<br>
-          With friction: v<sub>min</sub> = &radic;[rg(tan&theta; &minus; &mu;<sub>s</sub>)/(1 + &mu;<sub>s</sub> tan&theta;)]
+          $$\tan\theta = \frac{v^2}{rg} \quad \Rightarrow \quad v = \sqrt{rg \tan\theta}$$
+          $$v_{\max} = \sqrt{\frac{rg(\tan\theta + \mu_s)}{1 - \mu_s \tan\theta}}$$
+          $$v_{\min} = \sqrt{\frac{rg(\tan\theta - \mu_s)}{1 + \mu_s \tan\theta}}$$
         </div>
 
         <h3>Conical Pendulum</h3>
@@ -350,8 +350,8 @@
           (providing centripetal force):
         </p>
         <div class="formula-box">
-          T cos&theta; = mg &nbsp;&nbsp;&nbsp;&nbsp; T sin&theta; = mv&sup2;/r<br>
-          tan&theta; = v&sup2;/rg &nbsp;&nbsp;&nbsp;&nbsp; Time period: T<sub>period</sub> = 2&pi;&radic;(L cos&theta;/g)
+          $$T \cos\theta = mg \quad T \sin\theta = \frac{mv^2}{r}$$
+          $$\tan\theta = \frac{v^2}{rg} \quad T_{\text{period}} = 2\pi\sqrt{\frac{L \cos\theta}{g}}$$
         </div>
 
         <h3>Maximum Speed on Level Curve</h3>
@@ -359,7 +359,7 @@
           On a flat (unbanked) road, friction provides the centripetal force. The maximum speed without skidding is:
         </p>
         <div class="formula-box">
-          v<sub>max</sub> = &radic;(&mu;gR)
+          $$v_{\max} = \sqrt{\mu gR}$$
         </div>
       </div>
 
@@ -374,8 +374,8 @@
         </p>
         <h3>Atwood Machine</h3>
         <div class="formula-box">
-          Acceleration: a = (m<sub>2</sub> &minus; m<sub>1</sub>)g / (m<sub>1</sub> + m<sub>2</sub>)<br>
-          Tension: T = 2m<sub>1</sub>m<sub>2</sub>g / (m<sub>1</sub> + m<sub>2</sub>)
+          $$a = \frac{(m_2 - m_1)g}{m_1 + m_2}$$
+          $$T = \frac{2m_1 m_2 g}{m_1 + m_2}$$
         </div>
 
         <h3>Moving Pulley Systems</h3>
@@ -391,9 +391,8 @@
         </p>
         <h3>Inclined Plane with Pulley</h3>
         <div class="formula-box">
-          Incline component of gravity (down): mg sin&theta;<br>
-          Normal force: N = mg cos&theta;<br>
-          For a system with pulley on incline: use FBDs and constraint equations simultaneously
+          $$\text{Incline component} = mg \sin\theta$$
+          $$N = mg \cos\theta$$
         </div>
       </div>
 
@@ -406,8 +405,7 @@
           To apply Newton&rsquo;s laws in such frames, we introduce a pseudo force (also called a fictitious force):
         </p>
         <div class="formula-box">
-          F<sub>pseudo</sub> = &minus;ma<sub>frame</sub><br>
-          (applied on every object of mass m in the non-inertial frame, opposite to the acceleration of the frame)
+          $$F_{\text{pseudo}} = -m a_{\text{frame}}$$
         </div>
         <p>
           The pseudo force is not a real force &mdash; it has no agent, no reaction pair, and exists only because of
@@ -432,8 +430,8 @@
           mass m rests on the wedge&rsquo;s inclined surface at angle &theta;. For the block not to slide on the wedge:
         </p>
         <div class="formula-box">
-          tan&theta; = A/g<br>
-          Applied force on the system: F = (M + m)A
+          $$\tan\theta = \frac{A}{g}$$
+          $$F = (M + m)A$$
         </div>
 
         <div class="diagram-placeholder">Diagram: A wedge accelerating horizontally to the right. A block on the incline at angle &theta;. In the lab frame, show real forces: normal force N, weight mg, and applied force F. In the wedge frame, show the pseudo force mA pointing left, and explain equilibrium on the incline.</div>
@@ -443,14 +441,14 @@
       <div class="theory-section" id="key-formulas">
         <h2>Key Formulas Summary</h2>
         <div class="formula-box">
-          F = ma &nbsp;&nbsp;|&nbsp;&nbsp; p = mv &nbsp;&nbsp;|&nbsp;&nbsp; F = dp/dt<br>
-          J = F&Delta;t = &Delta;p &nbsp;&nbsp;|&nbsp;&nbsp; &Sigma;F = 0 (equilibrium)<br>
-          f<sub>s</sub> &le; &mu;<sub>s</sub>N &nbsp;&nbsp;|&nbsp;&nbsp; f<sub>k</sub> = &mu;<sub>k</sub>N &nbsp;&nbsp;|&nbsp;&nbsp; tan&alpha; = &mu;<sub>s</sub> (angle of repose)<br>
-          F<sub>min</sub> = &mu;mg/&radic;(1+&mu;&sup2;) &nbsp;&nbsp;|&nbsp;&nbsp; Optimal angle: &theta; = tan<sup>&minus;1</sup>(&mu;)<br>
-          a<sub>Atwood</sub> = (m<sub>2</sub>&minus;m<sub>1</sub>)g/(m<sub>1</sub>+m<sub>2</sub>) &nbsp;&nbsp;|&nbsp;&nbsp; T<sub>Atwood</sub> = 2m<sub>1</sub>m<sub>2</sub>g/(m<sub>1</sub>+m<sub>2</sub>)<br>
-          F<sub>c</sub> = mv&sup2;/r &nbsp;&nbsp;|&nbsp;&nbsp; tan&theta; = v&sup2;/rg (banking)<br>
-          v<sub>max</sub> = &radic;(&mu;gR) (level curve) &nbsp;&nbsp;|&nbsp;&nbsp; T<sub>conical</sub> = 2&pi;&radic;(L cos&theta;/g)<br>
-          F<sub>pseudo</sub> = &minus;ma<sub>frame</sub> &nbsp;&nbsp;|&nbsp;&nbsp; N<sub>lift</sub> = m(g &plusmn; a)
+          $$F = ma \quad | \quad p = mv \quad | \quad F = \frac{dp}{dt}$$
+          $$J = F\Delta t = \Delta p \quad | \quad \sum F = 0$$
+          $$f_s \leq \mu_s N \quad | \quad f_k = \mu_k N \quad | \quad \tan\alpha = \mu_s$$
+          $$F_{\min} = \frac{\mu mg}{\sqrt{1+\mu^2}} \quad | \quad \theta = \tan^{-1}(\mu)$$
+          $$a_{\text{Atwood}} = \frac{(m_2-m_1)g}{m_1+m_2} \quad | \quad T_{\text{Atwood}} = \frac{2m_1 m_2 g}{m_1+m_2}$$
+          $$F_c = \frac{mv^2}{r} \quad | \quad \tan\theta = \frac{v^2}{rg}$$
+          $$v_{\max} = \sqrt{\mu gR} \quad | \quad T_{\text{conical}} = 2\pi\sqrt{\frac{L \cos\theta}{g}}$$
+          $$F_{\text{pseudo}} = -m a_{\text{frame}} \quad | \quad N_{\text{lift}} = m(g \pm a)$$
         </div>
       </div>
 

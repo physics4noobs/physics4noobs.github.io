@@ -57,16 +57,21 @@
     }
     .chp-track::-webkit-scrollbar { display: none; }
 
-    /* Cards — sim-card style: emoji preview + title */
+    /* Cards */
     .chp-track .ch-card {
-      flex: 0 0 200px; scroll-snap-align: start;
+      flex: 0 0 300px; scroll-snap-align: start;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
       display: flex; flex-direction: column;
       padding: 0; overflow: hidden;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       position: relative;
+      opacity: 0; transform: translateY(20px);
+    }
+    .chp-track .ch-card.revealed {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
     .chp-track .ch-card::before {
       content: '';
@@ -75,44 +80,84 @@
       opacity: 0; transition: opacity 0.25s ease;
     }
     .chp-track .ch-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-      border-color: rgba(124, 58, 237, 0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+      border-color: rgba(124, 58, 237, 0.35);
     }
     .chp-track .ch-card:hover::before { opacity: 1; }
 
-    /* Thumbnail area — emoji */
+    /* Thumbnail area */
     .ch-thumb {
-      height: 100px; display: flex; align-items: center; justify-content: center;
-      font-size: 2.4rem;
+      height: 140px; display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden;
     }
     .ch-thumb::after {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 60%, var(--bg-card));
+      background: linear-gradient(180deg, transparent 50%, var(--bg-card));
+    }
+    .ch-emoji {
+      font-size: 3.2rem; position: relative; z-index: 1;
+      transition: transform 0.3s ease;
+    }
+    .ch-card:hover .ch-emoji { transform: scale(1.15); }
+
+    /* Chapter number badge */
+    .ch-badge {
+      position: absolute; top: 8px; left: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px; border-radius: 4px;
+      letter-spacing: 1px; z-index: 2;
     }
 
-    /* Row-specific thumbnail tints */
-    .chp-row:nth-child(1) .ch-thumb { background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(0,212,255,0.02)); }
-    .chp-row:nth-child(2) .ch-thumb { background: linear-gradient(135deg, rgba(157,78,221,0.08), rgba(157,78,221,0.02)); }
-    .chp-row:nth-child(3) .ch-thumb { background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(0,255,136,0.02)); }
-    .chp-row:nth-child(4) .ch-thumb { background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(255,107,53,0.02)); }
-
-    /* Info section — just title */
-    .ch-info { padding: 10px 14px 14px; }
+    /* Info section */
+    .ch-info { padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
     .chp-page .ch-info h3 {
-      font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
       line-height: 1.3; margin: 0;
       color: var(--text-primary);
     }
 
+    /* Topic tags — visible on hover */
+    .ch-tags {
+      display: flex; flex-wrap: wrap; gap: 4px;
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+    .ch-card:hover .ch-tags { max-height: 40px; opacity: 1; }
+    .ch-tags span {
+      font-size: 0.6rem; font-family: 'JetBrains Mono', monospace;
+      padding: 2px 6px; border-radius: 3px;
+      background: rgba(124,58,237,0.1); color: rgba(124,58,237,0.8);
+      letter-spacing: 0.3px;
+    }
+
+    /* Meta row: sections count + CTA */
+    .ch-meta-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto; padding-top: 4px;
+    }
+    .ch-sections {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; color: var(--text-muted);
+    }
+    .ch-cta {
+      font-size: 0.75rem; font-weight: 600; color: #7c3aed;
+      transition: color 0.2s ease;
+    }
+    .ch-card:hover .ch-cta { color: #00d4ff; }
+
     @media (max-width: 768px) {
-      .chp-track .ch-card { flex: 0 0 160px; }
-      .ch-thumb { height: 80px; font-size: 1.8rem; }
+      .chp-track .ch-card { flex: 0 0 180px; }
+      .ch-thumb { height: 90px; }
+      .ch-emoji { font-size: 2.2rem; }
       .chp-row-arrows { display: none; }
       .chp-row-title { font-size: 0.9rem; }
       .chp-page .ch-info h3 { font-size: 0.85rem; }
+      .ch-tags { display: none; }
     }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -191,6 +236,13 @@
       <p>Complete JEE Physics &mdash; concept-by-concept, with worked problems at every step. Pick a chapter, read the theory, and work through solved examples.</p>
     </div>
 
+    <div class="grade-tabs">
+      <button class="grade-tab active" data-grade="grade-xi-chp">Grade XI</button>
+      <button class="grade-tab" data-grade="grade-xii-chp">Grade XII</button>
+    </div>
+
+    <div class="grade-content active" id="grade-xi-chp">
+
     <!-- Row 1: Grade XI Book 1 -->
     <div class="chp-row">
       <div class="chp-row-header">
@@ -204,25 +256,45 @@
       </div>
       <div class="chp-track-wrap">
         <div class="chp-track">
-          <a class="ch-card" href="chapters/kinematics.html">
-            <div class="ch-thumb"><span>&#128640;</span></div>
-            <div class="ch-info"><h3>Kinematics</h3></div>
+          <a class="ch-card reveal" href="chapters/kinematics.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#0a2818)"><span class="ch-badge">01</span><span class="ch-emoji">&#128640;</span></div>
+            <div class="ch-info">
+              <h3>Kinematics</h3>
+              <div class="ch-tags"><span>Projectiles</span><span>Vectors</span><span>Circular</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">12 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/newtons-laws.html">
-            <div class="ch-thumb"><span>&#9878;</span></div>
-            <div class="ch-info"><h3>Newton's Laws</h3></div>
+          <a class="ch-card reveal" href="chapters/newtons-laws.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#1a0a28,#0a1628)"><span class="ch-badge">02</span><span class="ch-emoji">&#9878;</span></div>
+            <div class="ch-info">
+              <h3>Newton's Laws</h3>
+              <div class="ch-tags"><span>F = ma</span><span>Friction</span><span>FBD</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">8 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/work-power-energy.html">
-            <div class="ch-thumb"><span>&#9889;</span></div>
-            <div class="ch-info"><h3>Work, Power &amp; Energy</h3></div>
+          <a class="ch-card reveal" href="chapters/work-power-energy.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#281a0a,#0a1628)"><span class="ch-badge">03</span><span class="ch-emoji">&#9889;</span></div>
+            <div class="ch-info">
+              <h3>Work, Power &amp; Energy</h3>
+              <div class="ch-tags"><span>Conservation</span><span>Collisions</span><span>COM</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">10 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/rotational-motion.html">
-            <div class="ch-thumb"><span>&#128260;</span></div>
-            <div class="ch-info"><h3>Rotational Motion</h3></div>
+          <a class="ch-card reveal" href="chapters/rotational-motion.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2828,#1a0a28)"><span class="ch-badge">04</span><span class="ch-emoji">&#128260;</span></div>
+            <div class="ch-info">
+              <h3>Rotational Motion</h3>
+              <div class="ch-tags"><span>Torque</span><span>MOI</span><span>Rolling</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">16 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/gravitation.html">
-            <div class="ch-thumb"><span>&#127759;</span></div>
-            <div class="ch-info"><h3>Gravitation</h3></div>
+          <a class="ch-card reveal" href="chapters/gravitation.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#281a0a)"><span class="ch-badge">05</span><span class="ch-emoji">&#127759;</span></div>
+            <div class="ch-info">
+              <h3>Gravitation</h3>
+              <div class="ch-tags"><span>Orbits</span><span>Kepler</span><span>Escape v</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">7 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
         </div>
       </div>
@@ -241,29 +313,53 @@
       </div>
       <div class="chp-track-wrap">
         <div class="chp-track">
-          <a class="ch-card" href="chapters/mechanical-properties.html">
-            <div class="ch-thumb"><span>&#128204;</span></div>
-            <div class="ch-info"><h3>Mechanical Properties</h3></div>
+          <a class="ch-card reveal" href="chapters/mechanical-properties.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2818,#0a1628)"><span class="ch-badge">06</span><span class="ch-emoji">&#128204;</span></div>
+            <div class="ch-info">
+              <h3>Mechanical Properties</h3>
+              <div class="ch-tags"><span>Stress</span><span>Strain</span><span>Elasticity</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">11 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/fluid-mechanics.html">
-            <div class="ch-thumb"><span>&#127754;</span></div>
-            <div class="ch-info"><h3>Fluid Mechanics</h3></div>
+          <a class="ch-card reveal" href="chapters/fluid-mechanics.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#0a2828)"><span class="ch-badge">07</span><span class="ch-emoji">&#127754;</span></div>
+            <div class="ch-info">
+              <h3>Fluid Mechanics</h3>
+              <div class="ch-tags"><span>Bernoulli</span><span>Buoyancy</span><span>Viscosity</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">19 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/thermodynamics.html">
-            <div class="ch-thumb"><span>&#128293;</span></div>
-            <div class="ch-info"><h3>Thermodynamics</h3></div>
+          <a class="ch-card reveal" href="chapters/thermodynamics.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#280a0a,#281a0a)"><span class="ch-badge">08</span><span class="ch-emoji">&#128293;</span></div>
+            <div class="ch-info">
+              <h3>Thermodynamics</h3>
+              <div class="ch-tags"><span>Gas Laws</span><span>Carnot</span><span>Entropy</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">10 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/shm.html">
-            <div class="ch-thumb"><span>&#12336;</span></div>
-            <div class="ch-info"><h3>Simple Harmonic Motion</h3></div>
+          <a class="ch-card reveal" href="chapters/shm.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#1a0a28,#0a1628)"><span class="ch-badge">09</span><span class="ch-emoji">&#128344;</span></div>
+            <div class="ch-info">
+              <h3>Simple Harmonic Motion</h3>
+              <div class="ch-tags"><span>Oscillations</span><span>Pendulum</span><span>Springs</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">12 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/waves.html">
-            <div class="ch-thumb"><span>&#127925;</span></div>
-            <div class="ch-info"><h3>Waves</h3></div>
+          <a class="ch-card reveal" href="chapters/waves.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2828,#281a0a)"><span class="ch-badge">10</span><span class="ch-emoji">&#127925;</span></div>
+            <div class="ch-info">
+              <h3>Waves</h3>
+              <div class="ch-tags"><span>Standing</span><span>Doppler</span><span>Beats</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">10 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
         </div>
       </div>
     </div>
+
+    </div><!-- end grade-xi-chp -->
+
+    <div class="grade-content" id="grade-xii-chp">
 
     <!-- Row 3: Grade XII Book 1 -->
     <div class="chp-row">
@@ -278,25 +374,45 @@
       </div>
       <div class="chp-track-wrap">
         <div class="chp-track">
-          <a class="ch-card" href="chapters/electrostatics.html">
-            <div class="ch-thumb"><span>&#9889;</span></div>
-            <div class="ch-info"><h3>Electrostatics &amp; Capacitance</h3></div>
+          <a class="ch-card reveal" href="chapters/electrostatics.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#281a0a)"><span class="ch-badge">01</span><span class="ch-emoji">&#9889;</span></div>
+            <div class="ch-info">
+              <h3>Electrostatics &amp; Capacitance</h3>
+              <div class="ch-tags"><span>Coulomb</span><span>Gauss</span><span>Capacitors</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">18 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/current-electricity.html">
-            <div class="ch-thumb"><span>&#128268;</span></div>
-            <div class="ch-info"><h3>Current Electricity</h3></div>
+          <a class="ch-card reveal" href="chapters/current-electricity.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2818,#0a1628)"><span class="ch-badge">02</span><span class="ch-emoji">&#128268;</span></div>
+            <div class="ch-info">
+              <h3>Current Electricity</h3>
+              <div class="ch-tags"><span>Ohm's Law</span><span>Kirchhoff</span><span>Circuits</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">12 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/magnetism.html">
-            <div class="ch-thumb"><span>&#129522;</span></div>
-            <div class="ch-info"><h3>Moving Charges &amp; Magnetism</h3></div>
+          <a class="ch-card reveal" href="chapters/magnetism.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#1a0a28,#0a1628)"><span class="ch-badge">03</span><span class="ch-emoji">&#129522;</span></div>
+            <div class="ch-info">
+              <h3>Moving Charges &amp; Magnetism</h3>
+              <div class="ch-tags"><span>Lorentz</span><span>Biot-Savart</span><span>Ampere</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">13 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/emi.html">
-            <div class="ch-thumb"><span>&#9851;</span></div>
-            <div class="ch-info"><h3>Electromagnetic Induction</h3></div>
+          <a class="ch-card reveal" href="chapters/emi.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2828,#1a0a28)"><span class="ch-badge">04</span><span class="ch-emoji">&#9851;</span></div>
+            <div class="ch-info">
+              <h3>Electromagnetic Induction</h3>
+              <div class="ch-tags"><span>Faraday</span><span>Lenz</span><span>Inductance</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">15 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/ac-circuits.html">
-            <div class="ch-thumb"><span>&#12336;</span></div>
-            <div class="ch-info"><h3>Alternating Current</h3></div>
+          <a class="ch-card reveal" href="chapters/ac-circuits.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#281a0a,#0a2818)"><span class="ch-badge">05</span><span class="ch-emoji">&#12336;</span></div>
+            <div class="ch-info">
+              <h3>Alternating Current</h3>
+              <div class="ch-tags"><span>Phasors</span><span>Resonance</span><span>RLC</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">12 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
         </div>
       </div>
@@ -315,25 +431,43 @@
       </div>
       <div class="chp-track-wrap">
         <div class="chp-track">
-          <a class="ch-card" href="chapters/em-waves.html">
-            <div class="ch-thumb"><span>&#128225;</span></div>
-            <div class="ch-info"><h3>Electromagnetic Waves</h3></div>
+          <a class="ch-card reveal" href="chapters/em-waves.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#280a1a)"><span class="ch-badge">06</span><span class="ch-emoji">&#128225;</span></div>
+            <div class="ch-info">
+              <h3>Electromagnetic Waves</h3>
+              <div class="ch-tags"><span>EM Spectrum</span><span>Maxwell</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">15 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/ray-optics.html">
-            <div class="ch-thumb"><span>&#128269;</span></div>
-            <div class="ch-info"><h3>Ray Optics</h3></div>
+          <a class="ch-card reveal" href="chapters/ray-optics.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2818,#281a0a)"><span class="ch-badge">07</span><span class="ch-emoji">&#128269;</span></div>
+            <div class="ch-info">
+              <h3>Ray Optics</h3>
+              <div class="ch-tags"><span>Mirrors</span><span>Lenses</span><span>Prisms</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">17 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/wave-optics.html">
-            <div class="ch-thumb"><span>&#127752;</span></div>
-            <div class="ch-info"><h3>Wave Optics</h3></div>
+          <a class="ch-card reveal" href="chapters/wave-optics.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#1a0a28,#0a2828)"><span class="ch-badge">08</span><span class="ch-emoji">&#127752;</span></div>
+            <div class="ch-info">
+              <h3>Wave Optics</h3>
+              <div class="ch-tags"><span>YDSE</span><span>Diffraction</span><span>Polarization</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">14 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
-          <a class="ch-card" href="chapters/modern-physics.html">
-            <div class="ch-thumb"><span>&#9883;</span></div>
-            <div class="ch-info"><h3>Modern Physics</h3></div>
+          <a class="ch-card reveal" href="chapters/modern-physics.html">
+            <div class="ch-thumb" style="background:linear-gradient(135deg,#280a0a,#0a1628)"><span class="ch-badge">09</span><span class="ch-emoji">&#9883;</span></div>
+            <div class="ch-info">
+              <h3>Modern Physics</h3>
+              <div class="ch-tags"><span>Photoelectric</span><span>Bohr</span><span>Nuclear</span></div>
+              <div class="ch-meta-row"><span class="ch-sections">18 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
           </a>
         </div>
       </div>
     </div>
+
+    </div><!-- end grade-xii-chp -->
 
   </div>
 
@@ -342,7 +476,26 @@
     document.querySelectorAll('.chp-row-arrow').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var track = btn.closest('.chp-row').querySelector('.chp-track');
-        if (track) track.scrollBy({ left: parseInt(btn.dataset.dir) * 220, behavior: 'smooth' });
+        if (track) track.scrollBy({ left: parseInt(btn.dataset.dir) * 316, behavior: 'smooth' });
+      });
+    });
+
+    /* Staggered reveal animation for chapter cards */
+    function revealCards(container) {
+      var cards = container.querySelectorAll('.ch-card.reveal:not(.revealed)');
+      cards.forEach(function(card, i) {
+        setTimeout(function() { card.classList.add('revealed'); }, i * 80);
+      });
+    }
+    /* Reveal cards in the active tab */
+    revealCards(document.querySelector('.grade-content.active'));
+
+    /* Re-reveal when switching tabs */
+    document.querySelectorAll('.grade-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var id = tab.dataset.grade;
+        var panel = document.getElementById(id);
+        if (panel) setTimeout(function() { revealCards(panel); }, 50);
       });
     });
   </script>

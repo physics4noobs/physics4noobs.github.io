@@ -139,7 +139,7 @@
             wave.</li>
         </ul>
         <div class="formula-box">
-          Wave speed (general): v = f&lambda; &nbsp;&nbsp;|&nbsp;&nbsp; f = 1/T
+          $$v = f\lambda \quad | \quad f = \frac{1}{T}$$
         </div>
         <p>
           The wave speed is completely determined by the medium, while the frequency is determined by the
@@ -181,12 +181,14 @@
         </p>
         <h3>Speed Formulas for Different Media</h3>
         <div class="formula-box">
-          Transverse wave on a string: v = &radic;(T/&mu;)<br>
-          where T = tension, &mu; = mass per unit length (linear mass density)<br><br>
-          Longitudinal wave in a liquid: v = &radic;(B/&rho;)<br>
-          where B = Bulk modulus, &rho; = density<br><br>
-          Longitudinal wave in a solid rod: v = &radic;(Y/&rho;)<br>
-          where Y = Young&rsquo;s modulus, &rho; = density
+          $$v_{\text{string}} = \sqrt{\frac{T}{\mu}}$$
+          $$\text{(T = tension, } \mu \text{ = linear mass density)}$$
+
+          $$v_{\text{liquid}} = \sqrt{\frac{B}{\rho}}$$
+          $$\text{(B = Bulk modulus, } \rho \text{ = density)}$$
+
+          $$v_{\text{solid}} = \sqrt{\frac{Y}{\rho}}$$
+          $$\text{(Y = Young's modulus, } \rho \text{ = density)}$$
         </div>
 
         <h3>Speed of Sound in a Gas &mdash; Newton&rsquo;s Formula &amp; Laplace Correction</h3>
@@ -201,9 +203,9 @@
           isothermal. The corrected formula is:
         </p>
         <div class="formula-box">
-          v = &radic;(&gamma;P/&rho;) &nbsp;&nbsp;(Laplace correction)<br>
-          Using ideal gas law PV = nRT: &nbsp; v = &radic;(&gamma;RT/M)<br>
-          where &gamma; = C<sub>P</sub>/C<sub>V</sub>, M = molar mass, T = absolute temperature
+          $$v = \sqrt{\frac{\gamma P}{\rho}} \quad \text{(Laplace correction)}$$
+          $$v = \sqrt{\frac{\gamma RT}{M}}$$
+          $$\text{where } \gamma = C_P/C_V, M = \text{ molar mass}, T = \text{ absolute temperature}$$
         </div>
         <p>
           For air (&gamma; = 1.4) at NTP, this gives v &asymp; 331.6 m/s, which matches experimental values.
@@ -215,8 +217,8 @@
           temperature:
         </p>
         <div class="formula-box">
-          v<sub>T</sub> = v&#8320; &radic;(T/T&#8320;)<br>
-          Approximately: v &asymp; (331 + 0.6t) m/s &nbsp;&nbsp;(t in &deg;C, near room temperature)
+          $$v_T = v_0 \sqrt{\frac{T}{T_0}}$$
+          $$v \approx (331 + 0.6t) \text{ m/s} \quad (t \text{ in }°C\text{, near room temperature})$$
         </div>
       </div>
 
@@ -252,9 +254,9 @@
 
         <h3>Wave Number (k) and Angular Frequency (&omega;)</h3>
         <div class="formula-box">
-          Wave number: k = 2&pi;/&lambda; &nbsp;&nbsp;(unit: rad/m)<br>
-          Angular frequency: &omega; = 2&pi;f = 2&pi;/T &nbsp;&nbsp;(unit: rad/s)<br>
-          Wave speed: v = f&lambda; = &omega;/k
+          $$k = \frac{2\pi}{\lambda} \quad \text{(unit: rad/m)}$$
+          $$\omega = 2\pi f = \frac{2\pi}{T} \quad \text{(unit: rad/s)}$$
+          $$v = f\lambda = \frac{\omega}{k}$$
         </div>
 
         <h3>Phase</h3>
@@ -286,7 +288,7 @@
           A sinusoidal progressive wave travelling in the positive x-direction is described by:
         </p>
         <div class="formula-box">
-          y(x, t) = A sin(kx &minus; &omega;t + &phi;&#8320;)
+          $$y(x, t) = A \sin(kx - \omega t + \phi_0)$$
         </div>
         <p>
           Here y is the displacement of the medium particle at position x and time t, A is the
@@ -298,7 +300,7 @@
           For a wave travelling in the negative x-direction, the equation becomes:
         </p>
         <div class="formula-box">
-          y(x, t) = A sin(kx + &omega;t + &phi;&#8320;)
+          $$y(x, t) = A \sin(kx + \omega t + \phi_0)$$
         </div>
 
         <h3>Phase Difference and Path Difference</h3>
@@ -307,7 +309,7 @@
           related to the path difference &Delta;x = x&#8321; &minus; x&#8322; by:
         </p>
         <div class="formula-box">
-          &Delta;&phi; = (2&pi;/&lambda;) &times; &Delta;x = k &times; &Delta;x
+          $$\Delta\phi = \frac{2\pi}{\lambda} \times \Delta x = k \times \Delta x$$
         </div>
         <ul>
           <li>Same phase: &Delta;&phi; = 0, 2&pi;, 4&pi;, &hellip; &rArr; &Delta;x = 0, &lambda;, 2&lambda;, &hellip;</li>

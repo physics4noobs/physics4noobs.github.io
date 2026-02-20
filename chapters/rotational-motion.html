@@ -133,17 +133,17 @@
       </p>
 
       <div class="formula-box">
-        &omega; = 2&pi;/T = 2&pi;f &nbsp;&nbsp;|&nbsp;&nbsp; v = r&omega;<br>
-        a<sub>t</sub> = r&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; a<sub>r</sub> = &omega;&sup2;r
+        $$\omega = \frac{2\pi}{T} = 2\pi f \quad | \quad v = r\omega$$
+        $$a_t = r\alpha \quad | \quad a_r = \omega^2 r$$
       </div>
       <p>
         When angular acceleration is constant, the rotational equations are analogous to the linear kinematic
         equations with &theta; replacing s, &omega; replacing v, and &alpha; replacing a:
       </p>
       <div class="formula-box">
-        &omega;<sub>f</sub> = &omega;<sub>i</sub> + &alpha;t<br>
-        &theta; = &omega;<sub>i</sub>t + &frac12;&alpha;t&sup2;<br>
-        &omega;<sub>f</sub>&sup2; = &omega;<sub>i</sub>&sup2; + 2&alpha;&theta;
+        $$\omega_f = \omega_i + \alpha t$$
+        $$\theta = \omega_i t + \frac{1}{2}\alpha t^2$$
+        $$\omega_f^2 = \omega_i^2 + 2\alpha\theta$$
       </div>
 
       <h3>Non-Constant Angular Acceleration</h3>
@@ -189,8 +189,8 @@
 
       <h3>Definition and Calculation</h3>
       <div class="formula-box">
-        For discrete masses: I = &Sigma; m<sub>i</sub>r<sub>i</sub>&sup2;<br>
-        For continuous bodies: I = &int; r&sup2; dm
+        $$I = \sum m_i r_i^2 \quad \text{(discrete)}$$
+        $$I = \int r^2 \, dm \quad \text{(continuous)}$$
       </div>
       <p>
         Moment of inertia is related to rotational kinetic energy: KE<sub>rot</sub> = &frac12;I&omega;&sup2;, analogous
@@ -208,15 +208,12 @@
         For common shapes about standard axes:
       </p>
       <div class="formula-box">
-        Thin Rod (about center, perpendicular): I = ML&sup2;/12<br>
-        Thin Rod (about end, perpendicular): I = ML&sup2;/3<br>
-        Circular Ring (about axis through center): I = MR&sup2;<br>
-        Circular Ring (about diameter): I = MR&sup2;/2<br>
-        Solid Disc/Cylinder (about axis): I = MR&sup2;/2<br>
-        Solid Disc (about diameter): I = MR&sup2;/4<br>
-        Solid Sphere (about diameter): I = 2MR&sup2;/5<br>
-        Hollow Sphere (about diameter): I = 2MR&sup2;/3<br>
-        Hollow Cylinder (about axis): I = MR&sup2;
+        $$I_{\text{rod, center}} = \frac{ML^2}{12}$$
+        $$I_{\text{rod, end}} = \frac{ML^2}{3}$$
+        $$I_{\text{ring}} = MR^2 \quad I_{\text{ring, diameter}} = \frac{MR^2}{2}$$
+        $$I_{\text{disc}} = \frac{MR^2}{2} \quad I_{\text{disc, diameter}} = \frac{MR^2}{4}$$
+        $$I_{\text{sphere}} = \frac{2MR^2}{5} \quad I_{\text{hollow sphere}} = \frac{2MR^2}{3}$$
+        $$I_{\text{hollow cylinder}} = MR^2$$
       </div>
     </div>
 
@@ -232,7 +229,7 @@
         the most powerful tools for calculating moments of inertia.
       </p>
       <div class="formula-box">
-        I<sub>P</sub> = I<sub>CM</sub> + Md&sup2;
+        $$I_P = I_{\text{CM}} + Md^2$$
       </div>
       <p>
         where I<sub>CM</sub> is the moment of inertia about the centre-of-mass axis, M is total mass, and d is the
@@ -245,7 +242,7 @@
         in the plane that intersect at the same point.
       </p>
       <div class="formula-box">
-        I<sub>z</sub> = I<sub>x</sub> + I<sub>y</sub>
+        $$I_z = I_x + I_y$$
       </div>
       <p>
         This theorem does not apply to 3D bodies like spheres or solid cylinders. It is particularly useful
@@ -287,9 +284,8 @@
       </p>
 
       <div class="formula-box">
-        &tau; = r &times; F<br>
-        |&tau;| = rF sin&theta; = r<sub>&perp;</sub>F = rF<sub>&perp;</sub><br>
-        SI unit: Newton-metre (N&middot;m)
+        $$\vec{\tau} = \vec{r} \times \vec{F}$$
+        $$|\tau| = rF \sin\theta = r_\perp F = r F_\perp$$
       </div>
 
       <p>
@@ -304,8 +300,7 @@
         it is calculated and is given by:
       </p>
       <div class="formula-box">
-        &tau;<sub>couple</sub> = F &times; d<br>
-        where d is the perpendicular distance between the lines of action of the two forces
+        $$\tau_{\text{couple}} = F \times d$$
       </div>
 
       <h3>Conditions for Equilibrium</h3>
@@ -328,10 +323,10 @@
       </p>
 
       <div class="formula-box">
-        W = &tau; &Delta;&theta; &nbsp;&nbsp;(for constant torque)<br>
-        W = &int; &tau; d&theta; &nbsp;&nbsp;(for variable torque)<br>
-        P = dW/dt = &tau; &omega;<br>
-        W = &Delta;KE<sub>rot</sub> = &frac12;I&omega;<sub>f</sub>&sup2; &minus; &frac12;I&omega;<sub>i</sub>&sup2;
+        $$W = \tau \Delta\theta \quad \text{(constant torque)}$$
+        $$W = \int \tau \, d\theta \quad \text{(variable torque)}$$
+        $$P = \frac{dW}{dt} = \tau \omega$$
+        $$W = \Delta KE_{\text{rot}} = \frac{1}{2}I\omega_f^2 - \frac{1}{2}I\omega_i^2$$
       </div>
 
       <p>
@@ -351,8 +346,8 @@
       </p>
 
       <div class="formula-box">
-        &tau;<sub>net</sub> = I&alpha;<br>
-        Also: &tau;<sub>net</sub> = dL/dt (rate of change of angular momentum)
+        $$\tau_{\text{net}} = I\alpha$$
+        $$\tau_{\text{net}} = \frac{dL}{dt}$$
       </div>
 
       <p>
@@ -399,9 +394,8 @@
       </p>
 
       <div class="formula-box">
-        For blocks of mass m<sub>1</sub> and m<sub>2</sub> (m<sub>2</sub> > m<sub>1</sub>) with disc pulley of mass M:<br>
-        a = (m<sub>2</sub> - m<sub>1</sub>)g / (m<sub>1</sub> + m<sub>2</sub> + M/2)<br>
-        Constraint: a = R&alpha; (linear acceleration of blocks = tangential acceleration of pulley rim)
+        $$a = \frac{(m_2 - m_1)g}{m_1 + m_2 + M/2}$$
+        $$a = R\alpha$$
       </div>
 
       <p>
@@ -422,10 +416,10 @@
       </p>
 
       <div class="formula-box">
-        For rigid body about fixed axis: L = I&omega;<br>
-        For a particle: L = r &times; (mv) = r &times; p<br>
-        Magnitude: L = mvr sin&theta; = mvr<sub>&perp;</sub><br>
-        Relation to torque: &tau;<sub>net</sub> = dL/dt
+        $$L = I\omega \quad \text{(rigid body)}$$
+        $$\vec{L} = \vec{r} \times m\vec{v} \quad \text{(particle)}$$
+        $$L = mvr \sin\theta = mvr_\perp$$
+        $$\tau_{\text{net}} = \frac{dL}{dt}$$
       </div>
 
       <p>
@@ -467,8 +461,8 @@
       </p>
 
       <div class="formula-box">
-        If &tau;<sub>ext</sub> = 0, then L<sub>initial</sub> = L<sub>final</sub><br>
-        I<sub>1</sub>&omega;<sub>1</sub> = I<sub>2</sub>&omega;<sub>2</sub>
+        $$L_{\text{initial}} = L_{\text{final}}$$
+        $$I_1 \omega_1 = I_2 \omega_2$$
       </div>
 
       <p>
@@ -516,9 +510,8 @@
       </p>
 
       <div class="formula-box">
-        J = &int; &tau; dt = &Delta;L = L<sub>f</sub> - L<sub>i</sub><br>
-        For point force: J = I<sub>linear</sub> &times; r<sub>&perp;</sub><br>
-        where I<sub>linear</sub> is the linear impulse and r<sub>&perp;</sub> is the perpendicular distance
+        $$J = \int \tau \, dt = \Delta L = L_f - L_i$$
+        $$J = I_{\text{linear}} \times r_\perp$$
       </div>
 
       <p>
@@ -538,7 +531,7 @@
       </p>
 
       <div class="formula-box">
-        Total kinetic energy: K<sub>total</sub> = K<sub>trans</sub> + K<sub>rot</sub> = &frac12;MV<sub>CM</sub>&sup2; + &frac12;I<sub>CM</sub>&omega;&sup2;
+        $$K_{\text{total}} = K_{\text{trans}} + K_{\text{rot}} = \frac{1}{2}M V_{\text{CM}}^2 + \frac{1}{2}I_{\text{CM}}\omega^2$$
       </div>
 
       <h3>Velocity of Any Point on the Rigid Body</h3>
@@ -548,8 +541,8 @@
       </p>
 
       <div class="formula-box">
-        V<sub>A</sub> = V<sub>CM</sub> + V<sub>relative</sub><br>
-        where V<sub>relative</sub> = &omega; &times; r<sub>relative</sub> (tangential relative to CM)
+        $$\vec{V}_A = \vec{V}_{\text{CM}} + \vec{V}_{\text{relative}}$$
+        $$\vec{V}_{\text{relative}} = \vec{\omega} \times \vec{r}_{\text{relative}}$$
       </div>
     </div>
 
@@ -565,18 +558,18 @@
 
       <h3>The Rolling Condition</h3>
       <div class="formula-box">
-        V<sub>CM</sub> = R&omega; &nbsp;&nbsp;(no-slip condition)<br>
-        A<sub>CM</sub> = R&alpha; &nbsp;&nbsp;(differentiating the above)<br>
-        V<sub>contact</sub> = 0 &nbsp;&nbsp;(instantaneous axis of rotation at contact point)
+        $$V_{\text{CM}} = R\omega$$
+        $$A_{\text{CM}} = R\alpha$$
+        $$V_{\text{contact}} = 0$$
       </div>
       <p>
         On a rolling wheel, the contact point has zero velocity, the centre has velocity V<sub>CM</sub>, and the top has
         velocity 2V<sub>CM</sub>. For a general point at angle &theta; from the bottom contact point:
       </p>
       <div class="formula-box">
-        V<sub>top</sub> = 2V<sub>CM</sub><br>
-        V<sub>contact</sub> = 0<br>
-        V<sub>point at angle &theta;</sub> = 2V<sub>CM</sub> sin(&theta;/2)
+        $$V_{\text{top}} = 2V_{\text{CM}}$$
+        $$V_{\text{contact}} = 0$$
+        $$V_{\theta} = 2V_{\text{CM}} \sin(\theta/2)$$
       </div>
 
       <h3>Kinetic Energy of Rolling Bodies</h3>
@@ -584,10 +577,9 @@
         The total kinetic energy is the sum of translational and rotational parts:
       </p>
       <div class="formula-box">
-        KE<sub>total</sub> = &frac12;mV<sub>CM</sub>&sup2; + &frac12;I<sub>CM</sub>&omega;&sup2;<br>
-        Using V<sub>CM</sub> = R&omega; and I<sub>CM</sub> = mk&sup2;:<br>
-        KE<sub>total</sub> = &frac12;mV<sub>CM</sub>&sup2;(1 + k&sup2;/R&sup2;)<br>
-        Ratio: KE<sub>trans</sub>/KE<sub>rot</sub> = R&sup2;/k&sup2;
+        $$KE_{\text{total}} = \frac{1}{2}m V_{\text{CM}}^2 + \frac{1}{2}I_{\text{CM}}\omega^2$$
+        $$KE_{\text{total}} = \frac{1}{2}m V_{\text{CM}}^2 \left(1 + \frac{k^2}{R^2}\right)$$
+        $$\frac{KE_{\text{trans}}}{KE_{\text{rot}}} = \frac{R^2}{k^2}$$
       </div>
 
       <p>
@@ -607,10 +599,10 @@
 
       <h3>Acceleration and Friction</h3>
       <div class="formula-box">
-        Linear acceleration: A<sub>CM</sub> = g sin&theta; / (1 + k&sup2;/R&sup2;)<br>
-        Friction force: f = mg sin&theta; / (1 + R&sup2;/k&sup2;)<br>
-        Speed at bottom (height h): V<sub>CM</sub> = &radic;[2gh / (1 + k&sup2;/R&sup2;)]<br>
-        Condition for pure rolling: &mu;<sub>s</sub> &ge; tan&theta; / (1 + R&sup2;/k&sup2;)
+        $$A_{\text{CM}} = \frac{g \sin\theta}{1 + k^2/R^2}$$
+        $$f = \frac{mg \sin\theta}{1 + R^2/k^2}$$
+        $$V_{\text{CM}} = \sqrt{\frac{2gh}{1 + k^2/R^2}}$$
+        $$\mu_s \geq \frac{\tan\theta}{1 + R^2/k^2}$$
       </div>
 
       <h3>Ranking of Rolling Bodies</h3>
@@ -667,8 +659,8 @@
 
       <h3>General Transition Formula</h3>
       <div class="formula-box">
-        Time to reach pure rolling: t = (V<sub>0</sub>k&sup2;) / ((k&sup2; + R&sup2;)&mu;g)<br>
-        Final rolling velocity: V<sub>final</sub> = V<sub>0</sub>R&sup2; / (k&sup2; + R&sup2;)
+        $$t = \frac{V_0 k^2}{(k^2 + R^2)\mu g}$$
+        $$V_{\text{final}} = \frac{V_0 R^2}{k^2 + R^2}$$
       </div>
 
       <h3>Special Case: Solid Sphere</h3>
@@ -676,9 +668,9 @@
         For a solid sphere (I = 2/5 mR&sup2;), starting with initial velocity V<sub>0</sub>:
       </p>
       <div class="formula-box">
-        Time to rolling: t = 2V<sub>0</sub> / (7&mu;g)<br>
-        Final velocity: V<sub>final</sub> = 5V<sub>0</sub>/7<br>
-        Energy lost to friction: &Delta;E = &frac12;mV<sub>0</sub>&sup2;/7
+        $$t = \frac{2V_0}{7\mu g}$$
+        $$V_{\text{final}} = \frac{5V_0}{7}$$
+        $$\Delta E = \frac{1}{2} \frac{m V_0^2}{7}$$
       </div>
 
       <p>
@@ -725,9 +717,8 @@
 
       <h3>Impulse on a Rod</h3>
       <div class="formula-box">
-        Linear impulse: J = M &times; V<sub>CM</sub><br>
-        Angular impulse about CM: J &times; d = I<sub>CM</sub>&omega;<br>
-        where d is the distance from the CM to the point of impulse application
+        $$J = M \times V_{\text{CM}}$$
+        $$J \times d = I_{\text{CM}}\omega$$
       </div>
 
       <p>
@@ -774,9 +765,9 @@
         about the contact edge exceeds the restoring torque.
       </p>
       <div class="formula-box">
-        Condition for toppling before sliding: &mu; &gt; a/h<br>
-        Condition for sliding before toppling: &mu; &lt; a/h<br>
-        Critical angle for toppling: tan&theta; = a/h
+        $$\mu > \frac{a}{h} \quad \text{(toppling)}$$
+        $$\mu < \frac{a}{h} \quad \text{(sliding)}$$
+        $$\tan\theta = \frac{a}{h}$$
       </div>
 
       <h3>Equilibrium of Rigid Bodies</h3>
@@ -784,8 +775,8 @@
         For a rigid body in static equilibrium, both translational and rotational equilibrium conditions must be satisfied:
       </p>
       <div class="formula-box">
-        &Sigma;F<sub>x</sub> = 0, &Sigma;F<sub>y</sub> = 0 (no translation)<br>
-        &Sigma;&tau; = 0 about any point (no rotation)
+        $$\sum F_x = 0 \quad \sum F_y = 0$$
+        $$\sum \tau = 0$$
       </div>
 
       <h3>Cyclist on a Horizontal Curve</h3>
@@ -794,8 +785,8 @@
         balance. The friction provides the centripetal force, and torque equilibrium about the centre of gravity determines the lean angle.
       </p>
       <div class="formula-box">
-        Lean angle: tan&theta; = v&sup2;/(rg)<br>
-        Maximum speed without skidding: v = &radic;(&mu;rg)
+        $$\tan\theta = \frac{v^2}{rg}$$
+        $$v = \sqrt{\mu rg}$$
       </div>
 
       <h3>Cylinder Rolling off an Edge</h3>
@@ -805,9 +796,9 @@
         the cylinder leaves contact at a specific angle.
       </p>
       <div class="formula-box">
-        Angle at separation: &theta; = cos<sup>-1</sup>(4/7) &nbsp;&nbsp;(for solid cylinder)<br>
-        Speed at separation: V<sub>CM</sub> = &radic;(4Rg/7)<br>
-        Contact loss condition: mg cos&theta; = mV<sub>CM</sub>&sup2;/R
+        $$\theta = \cos^{-1}(4/7)$$
+        $$V_{\text{CM}} = \sqrt{\frac{4Rg}{7}}$$
+        $$mg \cos\theta = \frac{m V_{\text{CM}}^2}{R}$$
       </div>
 
       <h3>Rolling on a Track with Loop</h3>
@@ -816,9 +807,9 @@
         normal force at any point on the loop. For the sphere to maintain contact at the top, the normal force must be non-negative.
       </p>
       <div class="formula-box">
-        Normal force at bottom: N = mg + mV<sub>CM</sub>&sup2;/(R - r)<br>
-        Normal force at top: N = mV<sub>CM</sub>&sup2;/(R - r) - mg<br>
-        Energy conservation: mgh = &frac12;mV&sup2;(1 + k&sup2;/R&sup2;)
+        $$N = mg + \frac{m V_{\text{CM}}^2}{R - r}$$
+        $$N = \frac{m V_{\text{CM}}^2}{R - r} - mg$$
+        $$mgh = \frac{1}{2}m V^2 \left(1 + \frac{k^2}{R^2}\right)$$
       </div>
 
       <h3>Tension in a Rotating Ring</h3>
@@ -827,8 +818,7 @@
         acceleration. Consider a small element of the ring; the tension provides the centripetal force for that element.
       </p>
       <div class="formula-box">
-        Tension in ring: T = m&omega;&sup2;r&sup2;<br>
-        where m is the mass per unit length of the ring
+        $$T = m\omega^2 r^2$$
       </div>
     </div>
 

@@ -142,10 +142,10 @@
         Consider a plane wavefront passing from medium 1 (speed v<sub>1</sub>) to medium 2 (speed v<sub>2</sub>). When one edge of the wavefront enters the second medium, it slows down (if v<sub>2</sub> &lt; v<sub>1</sub>). The wavelet in medium 2 has a smaller radius than it would have in medium 1. From the geometry of the construction:
       </p>
       <div class="formula-box">
-        sin i / sin r = v<sub>1</sub> / v<sub>2</sub> = n<sub>2</sub> / n<sub>1</sub><br><br>
-        Snell&#39;s Law: n<sub>1</sub> sin &theta;<sub>1</sub> = n<sub>2</sub> sin &theta;<sub>2</sub><br><br>
-        Wavelength in medium: &lambda;<sub>2</sub> = &lambda;<sub>1</sub> &times; (v<sub>2</sub>/v<sub>1</sub>)<br>
-        Frequency is unchanged across all media: f = v<sub>1</sub>/&lambda;<sub>1</sub> = v<sub>2</sub>/&lambda;<sub>2</sub>
+        $$\frac{\sin i}{\sin r} = \frac{v_1}{v_2} = \frac{n_2}{n_1}$$
+        $$n_1 \sin\theta_1 = n_2 \sin\theta_2$$
+        $$\lambda_2 = \lambda_1 \times \frac{v_2}{v_1}$$
+        $$f = \frac{v_1}{\lambda_1} = \frac{v_2}{\lambda_2}$$
       </div>
       <p>
         This derivation also shows that light travels slower in a denser medium (higher refractive index), which is consistent with the wave theory. This distinguished the wave theory from Newton&#39;s corpuscular theory, which required light to travel faster in a denser medium.
@@ -180,11 +180,10 @@
         If two waves y<sub>1</sub> = A<sub>1</sub> sin(&omega;t &minus; kx<sub>1</sub> + &phi;<sub>1</sub>) and y<sub>2</sub> = A<sub>2</sub> sin(&omega;t &minus; kx<sub>2</sub> + &phi;<sub>2</sub>) meet at a point, the resultant amplitude A and intensity I are:
       </p>
       <div class="formula-box">
-        Phase difference at point P: &Delta;&phi; = (2&pi;/&lambda;)(x<sub>2</sub> &minus; x<sub>1</sub>) + (&phi;<sub>1</sub> &minus; &phi;<sub>2</sub>)<br><br>
-        Resultant amplitude: A = &radic;(A<sub>1</sub>&sup2; + A<sub>2</sub>&sup2; + 2A<sub>1</sub>A<sub>2</sub> cos &Delta;&phi;)<br><br>
-        Resultant intensity: I = I<sub>1</sub> + I<sub>2</sub> + 2&radic;(I<sub>1</sub>I<sub>2</sub>) cos &Delta;&phi;<br><br>
-        For equal intensities I<sub>1</sub> = I<sub>2</sub> = I<sub>0</sub>:<br>
-        I = 4I<sub>0</sub> cos&sup2;(&Delta;&phi;/2)
+        $$\Delta\phi = \frac{2\pi}{\lambda}(x_2 - x_1) + (\phi_1 - \phi_2)$$
+        $$A = \sqrt{A_1^2 + A_2^2 + 2A_1 A_2 \cos\Delta\phi}$$
+        $$I = I_1 + I_2 + 2\sqrt{I_1 I_2}\cos\Delta\phi$$
+        $$I = 4I_0 \cos^2\left(\frac{\Delta\phi}{2}\right) \quad \text{(equal intensities)}$$
       </div>
 
       <h3>Path Difference and Phase Difference</h3>
@@ -192,10 +191,10 @@
         The path difference p between two waves is the physical difference in distances they travel to reach a common point. It is directly related to the phase difference:
       </p>
       <div class="formula-box">
-        Path difference: p = x<sub>2</sub> &minus; x<sub>1</sub><br>
-        Phase difference: &Delta;&phi; = (2&pi;/&lambda;) &times; p<br><br>
-        p = &lambda; &hArr; &Delta;&phi; = 2&pi; (one full cycle)<br>
-        p = &lambda;/2 &hArr; &Delta;&phi; = &pi; (half cycle)
+        $$p = x_2 - x_1$$
+        $$\Delta\phi = \frac{2\pi}{\lambda} \times p$$
+        $$p = \lambda \Leftrightarrow \Delta\phi = 2\pi$$
+        $$p = \frac{\lambda}{2} \Leftrightarrow \Delta\phi = \pi$$
       </div>
     </div>
 
@@ -216,16 +215,16 @@
         At a point P on the screen at distance y from the central axis, the path difference between waves from S<sub>1</sub> and S<sub>2</sub> is (using the small angle approximation since d &lt;&lt; D):
       </p>
       <div class="formula-box">
-        Path difference: &Delta;x = yd/D<br><br>
-        Phase difference: &phi; = 2&pi;&Delta;x/&lambda; = 2&pi;yd/(&lambda;D)
+        $$\Delta x = \frac{yd}{D}$$
+        $$\phi = \frac{2\pi\Delta x}{\lambda} = \frac{2\pi yd}{\lambda D}$$
       </div>
 
       <h3>Positions of Bright and Dark Fringes</h3>
       <div class="formula-box">
-        Bright fringes (constructive): &Delta;x = n&lambda;<br>
-        y<sub>n</sub> = n&lambda;D/d &nbsp; (n = 0, &plusmn;1, &plusmn;2, ...)<br><br>
-        Dark fringes (destructive): &Delta;x = (2n &minus; 1)&lambda;/2<br>
-        y<sub>n</sub> = (2n &minus; 1)&lambda;D/(2d) &nbsp; (n = 1, 2, 3, ...)
+        $$\Delta x = n\lambda$$
+        $$y_n = \frac{n\lambda D}{d} \quad (n = 0, \pm 1, \pm 2, \ldots)$$
+        $$\Delta x = \frac{(2n - 1)\lambda}{2}$$
+        $$y_n = \frac{(2n - 1)\lambda D}{2d}$$
       </div>
       <p>
         Key observations:
@@ -287,8 +286,8 @@
         The fringe width &beta; is the distance between two consecutive bright (or dark) fringes:
       </p>
       <div class="formula-box">
-        Fringe width: &beta; = &lambda;D/d<br><br>
-        Angular fringe width: &theta; = &beta;/D = &lambda;/d
+        $$\beta = \frac{\lambda D}{d}$$
+        $$\theta = \frac{\beta}{D} = \frac{\lambda}{d}$$
       </div>
 
       <h3>Shift Due to a Transparent Plate</h3>
@@ -296,10 +295,10 @@
         When a transparent plate of thickness t and refractive index &mu; is placed in the path of one beam, the optical path through the plate increases. Light takes longer to traverse the plate than the same thickness of air, introducing an additional path of t(&mu; &minus; 1). This shifts the entire fringe pattern toward the side of the plate:
       </p>
       <div class="formula-box">
-        Extra optical path introduced: &Delta; = t(&mu; &minus; 1)<br><br>
-        New path difference at point y: p = yd/D &minus; t(&mu; &minus; 1)<br><br>
-        Lateral shift of fringe pattern: S = Dt(&mu; &minus; 1)/d<br><br>
-        Number of fringes shifted: N = t(&mu; &minus; 1)/&lambda;
+        $$\Delta = t(\mu - 1)$$
+        $$p = \frac{yd}{D} - t(\mu - 1)$$
+        $$S = \frac{Dt(\mu - 1)}{d}$$
+        $$N = \frac{t(\mu - 1)}{\lambda}$$
       </div>
       <p>
         Key notes:
@@ -341,23 +340,18 @@
         The type of interference at any point depends on the phase difference &Delta;&phi; between the two waves arriving there.
       </p>
       <div class="formula-box">
-        Constructive interference (bright):<br>
-        &Delta;&phi; = 2n&pi; &nbsp; (n = 0, 1, 2, ...)<br>
-        Path difference p = n&lambda;<br>
-        Maximum amplitude: A<sub>max</sub> = A<sub>1</sub> + A<sub>2</sub><br><br>
-        Destructive interference (dark):<br>
-        &Delta;&phi; = (2n + 1)&pi; &nbsp; (n = 0, 1, 2, ...)<br>
-        Path difference p = (2n + 1)&lambda;/2<br>
-        Minimum amplitude: A<sub>min</sub> = |A<sub>1</sub> &minus; A<sub>2</sub>|
+        $$\text{Constructive: } \Delta\phi = 2n\pi, \quad p = n\lambda$$
+        $$A_{\max} = A_1 + A_2$$
+        $$\text{Destructive: } \Delta\phi = (2n + 1)\pi, \quad p = \frac{(2n + 1)\lambda}{2}$$
+        $$A_{\min} = |A_1 - A_2|$$
       </div>
 
       <h3>Intensity Extremes</h3>
       <div class="formula-box">
-        I<sub>max</sub> = (&radic;I<sub>1</sub> + &radic;I<sub>2</sub>)&sup2;<br>
-        I<sub>min</sub> = (&radic;I<sub>1</sub> &minus; &radic;I<sub>2</sub>)&sup2;<br><br>
-        For equal intensities (I<sub>1</sub> = I<sub>2</sub> = I<sub>0</sub>):<br>
-        I<sub>max</sub> = 4I<sub>0</sub>, &nbsp; I<sub>min</sub> = 0<br><br>
-        Ratio: I<sub>max</sub>/I<sub>min</sub> = ((r + 1)/(r &minus; 1))&sup2; where r = A<sub>1</sub>/A<sub>2</sub>
+        $$I_{\max} = (\sqrt{I_1} + \sqrt{I_2})^2$$
+        $$I_{\min} = (\sqrt{I_1} - \sqrt{I_2})^2$$
+        $$I_{\max} = 4I_0, \quad I_{\min} = 0 \quad \text{(equal intensities)}$$
+        $$\frac{I_{\max}}{I_{\min}} = \left(\frac{r + 1}{r - 1}\right)^2 \quad (r = A_1/A_2)$$
       </div>
 
       <h3>Effect of Source Phase</h3>
@@ -383,11 +377,10 @@
         For two equal-amplitude coherent sources, the intensity at any point on the screen varies as a cosine-squared function of position:
       </p>
       <div class="formula-box">
-        I(&phi;) = 4I<sub>0</sub> cos&sup2;(&Delta;&phi;/2)<br><br>
-        In terms of screen position y (with fringe width &beta; = &lambda;D/d):<br>
-        I(y) = 4I<sub>0</sub> cos&sup2;(&pi;y/&beta;)<br><br>
-        Maximum occurs at y = 0, &plusmn;&beta;, &plusmn;2&beta;, ... (I = 4I<sub>0</sub>)<br>
-        Minimum occurs at y = &plusmn;&beta;/2, &plusmn;3&beta;/2, ... (I = 0)
+        $$I(\phi) = 4I_0 \cos^2\left(\frac{\Delta\phi}{2}\right)$$
+        $$I(y) = 4I_0 \cos^2\left(\frac{\pi y}{\beta}\right)$$
+        $$\text{Max at } y = 0, \pm\beta, \pm 2\beta, \ldots$$
+        $$\text{Min at } y = \pm\frac{\beta}{2}, \pm\frac{3\beta}{2}, \ldots$$
       </div>
 
       <h3>Fringe Visibility</h3>
@@ -395,9 +388,9 @@
         The fringe visibility (or contrast) V quantifies how well-defined the fringes are:
       </p>
       <div class="formula-box">
-        V = (I<sub>max</sub> &minus; I<sub>min</sub>) / (I<sub>max</sub> + I<sub>min</sub>)<br><br>
-        For equal-amplitude sources: V = 1 (perfect visibility)<br>
-        For very unequal amplitudes: V &rarr; 0 (fringes wash out)
+        $$V = \frac{I_{\max} - I_{\min}}{I_{\max} + I_{\min}}$$
+        $$V = 1 \quad \text{(perfect visibility)}$$
+        $$V \to 0 \quad \text{(poor visibility)}$$
       </div>
       <p>
         Energy is conserved in interference: the average intensity equals I<sub>1</sub> + I<sub>2</sub>. Energy is simply redistributed from the dark regions to the bright regions.
@@ -418,12 +411,9 @@
 
       <h3>Key Formulas</h3>
       <div class="formula-box">
-        Deviation by small-angle prism: &delta; = (&mu; &minus; 1)&alpha;<br>
-        (where &mu; = refractive index of glass, &alpha; = refracting angle of biprism)<br><br>
-        Separation of virtual sources: d = 2a&delta; = 2a(&mu; &minus; 1)&alpha;<br>
-        (where a = distance of source S from the biprism)<br><br>
-        Fringe width: &beta; = &lambda;D/d<br>
-        (where D = total distance from source to screen)
+        $$\delta = (\mu - 1)\alpha$$
+        $$d = 2a\delta = 2a(\mu - 1)\alpha$$
+        $$\beta = \frac{\lambda D}{d}$$
       </div>
 
       <h3>Measuring d with a Lens</h3>
@@ -473,11 +463,11 @@
         <li>The conditions for bright and dark fringes are interchanged compared to normal YDSE.</li>
       </ul>
       <div class="formula-box">
-        Separation of S and S&#39;: d = 2h (where h = height of source above mirror)<br><br>
-        Fringe width: &beta; = &lambda;D/d<br><br>
-        Bright fringes (opposite phase sources): p = (2n &minus; 1)&lambda;/2<br>
-        Dark fringes (opposite phase sources): p = n&lambda;<br>
-        Central fringe at p = 0 is dark
+        $$d = 2h$$
+        $$\beta = \frac{\lambda D}{d}$$
+        $$\text{Bright: } p = \frac{(2n - 1)\lambda}{2}$$
+        $$\text{Dark: } p = n\lambda$$
+        $$\text{Central fringe is dark}$$
       </div>
     </div>
 
@@ -493,12 +483,11 @@
         The optical path of a ray travelling a geometric distance x through a medium of refractive index &mu; is defined as &mu;x. It represents the equivalent distance the ray would travel in vacuum to accumulate the same phase. When a ray passes through a medium of refractive index &mu; and thickness t, it gains an extra optical path of t(&mu; &minus; 1) compared to travelling through the same thickness of air.
       </p>
       <div class="formula-box">
-        Optical path in a medium: L = &mu;x<br><br>
-        Extra optical path due to slab (thickness t, index &mu;): &Delta; = t(&mu; &minus; 1)<br><br>
-        Phase difference due to optical path difference &Delta;:<br>
-        &delta; = (2&pi;/&lambda;) &times; &Delta;<br><br>
-        For constructive interference (thin film, no phase change): 2&mu;t = n&lambda;<br>
-        For destructive interference (thin film, one phase change): 2&mu;t = (2n &minus; 1)&lambda;/2
+        $$L = \mu x$$
+        $$\Delta = t(\mu - 1)$$
+        $$\delta = \frac{2\pi}{\lambda} \times \Delta$$
+        $$2\mu t = n\lambda \quad \text{(constructive)}$$
+        $$2\mu t = \frac{(2n - 1)\lambda}{2} \quad \text{(destructive)}$$
       </div>
 
       <h3>Thin Film Interference</h3>
@@ -531,17 +520,16 @@
 
       <h3>Conditions for Minima</h3>
       <div class="formula-box">
-        Minima: a sin &theta; = n&lambda; &nbsp; (n = &plusmn;1, &plusmn;2, &plusmn;3, ...)<br><br>
-        Position of n-th minimum on screen: y<sub>n</sub> = n&lambda;D/a<br>
-        (D = slit-to-screen distance; small angle: sin &theta; &asymp; y/D)<br><br>
-        Note: n = 0 is the central maximum, NOT a minimum
+        $$a \sin\theta = n\lambda \quad (n = \pm 1, \pm 2, \pm 3, \ldots)$$
+        $$y_n = \frac{n\lambda D}{a}$$
+        $$n = 0 \text{ is the central maximum}$$
       </div>
 
       <h3>Central Maximum Width</h3>
       <div class="formula-box">
-        Angular half-width of central maximum: &theta;<sub>1</sub> = &lambda;/a<br>
-        Full angular width: 2&theta;<sub>1</sub> = 2&lambda;/a<br><br>
-        Linear width of central maximum: W = 2&lambda;D/a
+        $$\theta_1 = \frac{\lambda}{a}$$
+        $$2\theta_1 = \frac{2\lambda}{a}$$
+        $$W = \frac{2\lambda D}{a}$$
       </div>
       <p>
         The central maximum is twice as wide as any secondary maximum and contains about 84% of the total diffracted light intensity. As slit width a decreases, the central maximum broadens. As a increases, the pattern narrows toward geometric optics.
@@ -549,8 +537,8 @@
 
       <h3>Secondary Maxima</h3>
       <div class="formula-box">
-        Secondary maxima (approximate positions): a sin &theta; &asymp; (2n + 1)&lambda;/2 &nbsp; (n = 1, 2, 3, ...)<br><br>
-        Relative intensity of secondary maxima: I<sub>1</sub> : I<sub>2</sub> : I<sub>3</sub> &asymp; 1 : 1/22 : 1/61 (very dim compared to central)
+        $$a \sin\theta \approx \frac{(2n + 1)\lambda}{2}$$
+        $$I_1 : I_2 : I_3 \approx 1 : \frac{1}{22} : \frac{1}{61}$$
       </div>
 
       <h3>Comparison with Double Slit Interference</h3>
@@ -596,13 +584,10 @@
         Two point sources are said to be just resolved when the central maximum of the diffraction pattern of one source falls exactly on the first minimum of the diffraction pattern of the other.
       </p>
       <div class="formula-box">
-        Minimum angular separation (circular aperture):<br>
-        &Delta;&theta;<sub>min</sub> = 1.22 &lambda;/D<br>
-        (D = diameter of the aperture; factor 1.22 comes from Bessel function for circular aperture)<br><br>
-        For rectangular aperture/slit: &Delta;&theta;<sub>min</sub> = &lambda;/a<br><br>
-        Resolving power of telescope = 1/&Delta;&theta;<sub>min</sub> = D/(1.22&lambda;)<br><br>
-        Limit of resolution of microscope: d<sub>min</sub> = 0.61&lambda;/(n sin&beta;) = 0.61&lambda;/NA<br>
-        (NA = n sin&beta; = numerical aperture)
+        $$\Delta\theta_{\min} = \frac{1.22\lambda}{D} \quad \text{(circular aperture)}$$
+        $$\Delta\theta_{\min} = \frac{\lambda}{a} \quad \text{(rectangular)}$$
+        $$\text{Resolving power} = \frac{D}{1.22\lambda}$$
+        $$d_{\min} = \frac{0.61\lambda}{n\sin\beta} = \frac{0.61\lambda}{NA}$$
       </div>
       <p>
         A larger aperture (larger D) gives better resolution (smaller &Delta;&theta;). Shorter wavelengths also improve resolution, which is why electron microscopes (using de Broglie wavelength of electrons, ~0.01 nm) have far higher resolving power than optical microscopes.
@@ -626,11 +611,8 @@
         When unpolarized light strikes a transparent surface, the reflected light is partially polarized. At a particular angle of incidence called Brewster&#39;s angle (&theta;<sub>B</sub>), the reflected light is completely polarized (electric field perpendicular to the plane of incidence). At this angle, the reflected and refracted rays are perpendicular to each other.
       </p>
       <div class="formula-box">
-        Brewster&#39;s Law: tan &theta;<sub>B</sub> = n<sub>2</sub>/n<sub>1</sub><br><br>
-        For air-to-glass (n = 1.5): &theta;<sub>B</sub> = tan<sup>&minus;1</sup>(1.5) &asymp; 56.3&deg;<br>
-        For air-to-water (n = 1.33): &theta;<sub>B</sub> &asymp; 53.1&deg;<br><br>
-        At Brewster&#39;s angle: &theta;<sub>B</sub> + &theta;<sub>r</sub> = 90&deg;<br>
-        (reflected and refracted rays are perpendicular)
+        $$\tan\theta_B = \frac{n_2}{n_1}$$
+        $$\theta_B + \theta_r = 90°$$
       </div>
 
       <h3>Polaroids and Applications</h3>
@@ -655,10 +637,10 @@
         When plane-polarized light of intensity I<sub>0</sub> passes through a second polaroid (the analyser) whose transmission axis makes an angle &theta; with the polarization direction of the incident light, the transmitted intensity is:
       </p>
       <div class="formula-box">
-        I = I<sub>0</sub> cos&sup2; &theta; &nbsp; (Malus&#39;s Law)<br><br>
-        &theta; = 0&deg;: I = I<sub>0</sub> (maximum transmission &mdash; axes parallel)<br>
-        &theta; = 90&deg;: I = 0 (no transmission &mdash; crossed polaroids)<br>
-        &theta; = 45&deg;: I = I<sub>0</sub>/2
+        $$I = I_0 \cos^2\theta$$
+        $$\theta = 0°: I = I_0$$
+        $$\theta = 90°: I = 0$$
+        $$\theta = 45°: I = \frac{I_0}{2}$$
       </div>
 
       <h3>Unpolarized Light Through a Polaroid</h3>
@@ -671,10 +653,9 @@
         When the first and third polaroids are crossed (90&deg; apart), no light passes through if there are only two polaroids. However, inserting a third polaroid at an intermediate angle between them allows some light through:
       </p>
       <div class="formula-box">
-        After polaroid 1 (from unpolarized I): I<sub>1</sub> = I/2<br>
-        After polaroid 2 (at angle &theta; to polaroid 1): I<sub>2</sub> = (I/2) cos&sup2; &theta;<br>
-        After polaroid 3 (at 90&deg; to polaroid 1, i.e., (90&deg; &minus; &theta;) to polaroid 2):<br>
-        I<sub>3</sub> = (I/2) cos&sup2; &theta; &times; cos&sup2;(90&deg; &minus; &theta;) = (I/2) cos&sup2;&theta; sin&sup2;&theta; = I sin&sup2;(2&theta;)/8
+        $$I_1 = \frac{I}{2}$$
+        $$I_2 = \frac{I}{2}\cos^2\theta$$
+        $$I_3 = \frac{I}{2}\cos^2\theta \sin^2\theta = \frac{I\sin^2(2\theta)}{8}$$
       </div>
 
       <div class="example-box">
@@ -710,18 +691,15 @@
 
       <h3>Prism Formulae</h3>
       <div class="formula-box">
-        Deviation by a prism: &delta; = i + e &minus; A<br>
-        (i = angle of incidence, e = angle of emergence, A = prism angle)<br><br>
-        At minimum deviation (&delta;<sub>m</sub>): i = e and ray passes symmetrically<br>
-        Prism formula at minimum deviation: sin((A + &delta;<sub>m</sub>)/2) = n sin(A/2)<br><br>
-        Angular dispersion: &delta;<sub>V</sub> &minus; &delta;<sub>R</sub> = (n<sub>V</sub> &minus; n<sub>R</sub>)A (for small A)<br><br>
-        Dispersive power: &omega; = (n<sub>V</sub> &minus; n<sub>R</sub>)/(n<sub>Y</sub> &minus; 1)
+        $$\delta = i + e - A$$
+        $$\sin\left(\frac{A + \delta_m}{2}\right) = n\sin\left(\frac{A}{2}\right)$$
+        $$\delta_V - \delta_R = (n_V - n_R)A$$
+        $$\omega = \frac{n_V - n_R}{n_Y - 1}$$
       </div>
 
       <h3>Cauchy&#39;s Equation</h3>
       <div class="formula-box">
-        n(&lambda;) = A + B/&lambda;&sup2;<br>
-        (A and B are material constants; n decreases as &lambda; increases)
+        $$n(\lambda) = A + \frac{B}{\lambda^2}$$
       </div>
 
       <h3>Applications</h3>
@@ -738,74 +716,74 @@
     <div class="theory-section" id="key-formulas">
       <h2>15. Key Formulas Summary</h2>
 
-      <h3>Huygens&#39; Principle and Refraction</h3>
+      <h3>Huygens' Principle and Refraction</h3>
       <div class="formula-box">
-        Snell&#39;s Law (wave derivation): sin i / sin r = v<sub>1</sub>/v<sub>2</sub> = n<sub>2</sub>/n<sub>1</sub><br>
-        Frequency is constant across media; wavelength changes: &lambda; = v/f
+        $$\frac{\sin i}{\sin r} = \frac{v_1}{v_2} = \frac{n_2}{n_1}$$
+        $$f = \text{constant}, \quad \lambda = \frac{v}{f}$$
       </div>
 
-      <h3>Interference &mdash; General</h3>
+      <h3>Interference — General</h3>
       <div class="formula-box">
-        Resultant intensity: I = I<sub>1</sub> + I<sub>2</sub> + 2&radic;(I<sub>1</sub>I<sub>2</sub>) cos &Delta;&phi;<br>
-        Phase &harr; path: &Delta;&phi; = (2&pi;/&lambda;) &times; p<br>
-        I<sub>max</sub> = (&radic;I<sub>1</sub> + &radic;I<sub>2</sub>)&sup2;, &nbsp; I<sub>min</sub> = (&radic;I<sub>1</sub> &minus; &radic;I<sub>2</sub>)&sup2;
+        $$I = I_1 + I_2 + 2\sqrt{I_1 I_2}\cos\Delta\phi$$
+        $$\Delta\phi = \frac{2\pi}{\lambda} \times p$$
+        $$I_{\max} = (\sqrt{I_1} + \sqrt{I_2})^2, \quad I_{\min} = (\sqrt{I_1} - \sqrt{I_2})^2$$
       </div>
 
-      <h3>Young&#39;s Double Slit Experiment</h3>
+      <h3>Young's Double Slit Experiment</h3>
       <div class="formula-box">
-        Path difference: &Delta;x = yd/D<br>
-        Fringe width: &beta; = &lambda;D/d<br>
-        Angular fringe width: &theta; = &lambda;/d<br>
-        n-th bright fringe: y<sub>n</sub> = n&lambda;D/d<br>
-        n-th dark fringe: y<sub>n</sub> = (2n &minus; 1)&lambda;D/(2d)<br>
-        Intensity at any point: I = 4I<sub>0</sub> cos&sup2;(&Delta;&phi;/2)
+        $$\Delta x = \frac{yd}{D}$$
+        $$\beta = \frac{\lambda D}{d}$$
+        $$\theta = \frac{\lambda}{d}$$
+        $$y_n = \frac{n\lambda D}{d}$$
+        $$y_n = \frac{(2n - 1)\lambda D}{2d}$$
+        $$I = 4I_0 \cos^2\left(\frac{\Delta\phi}{2}\right)$$
       </div>
 
       <h3>Fringe Pattern Shift (Transparent Slab)</h3>
       <div class="formula-box">
-        Extra optical path: &Delta; = t(&mu; &minus; 1)<br>
-        Lateral shift of pattern: S = Dt(&mu; &minus; 1)/d<br>
-        Number of fringes shifted: N = t(&mu; &minus; 1)/&lambda;
+        $$\Delta = t(\mu - 1)$$
+        $$S = \frac{Dt(\mu - 1)}{d}$$
+        $$N = \frac{t(\mu - 1)}{\lambda}$$
       </div>
 
-      <h3>Fresnel&#39;s Biprism</h3>
+      <h3>Fresnel's Biprism</h3>
       <div class="formula-box">
-        Deviation: &delta; = (&mu; &minus; 1)&alpha;<br>
-        Virtual source separation: d = 2a(&mu; &minus; 1)&alpha;<br>
-        Fringe width: &beta; = &lambda;D/d
+        $$\delta = (\mu - 1)\alpha$$
+        $$d = 2a(\mu - 1)\alpha$$
+        $$\beta = \frac{\lambda D}{d}$$
       </div>
 
-      <h3>Lloyd&#39;s Mirror</h3>
+      <h3>Lloyd's Mirror</h3>
       <div class="formula-box">
-        Source separation: d = 2h<br>
-        Central fringe is DARK (phase change &pi; on reflection)<br>
-        Fringe width: &beta; = &lambda;D/d
+        $$d = 2h$$
+        $$\text{Central fringe is DARK}$$
+        $$\beta = \frac{\lambda D}{d}$$
       </div>
 
       <h3>Single Slit Diffraction</h3>
       <div class="formula-box">
-        Minima: a sin &theta; = n&lambda; (n = 1, 2, 3, ...)<br>
-        Central maximum width: W = 2&lambda;D/a<br>
-        Secondary maxima (approx.): a sin &theta; = (2n + 1)&lambda;/2
+        $$a \sin\theta = n\lambda$$
+        $$W = \frac{2\lambda D}{a}$$
+        $$a \sin\theta = \frac{(2n + 1)\lambda}{2}$$
       </div>
 
       <h3>Rayleigh Criterion</h3>
       <div class="formula-box">
-        Minimum resolvable angle (circular): &Delta;&theta; = 1.22&lambda;/D<br>
-        Resolving power of telescope: R = D/(1.22&lambda;)
+        $$\Delta\theta = \frac{1.22\lambda}{D}$$
+        $$R = \frac{D}{1.22\lambda}$$
       </div>
 
       <h3>Polarization</h3>
       <div class="formula-box">
-        Brewster&#39;s Law: tan &theta;<sub>B</sub> = n &nbsp; (&theta;<sub>B</sub> + &theta;<sub>r</sub> = 90&deg;)<br>
-        Malus&#39;s Law: I = I<sub>0</sub> cos&sup2; &theta;<br>
-        Unpolarized through single polaroid: I<sub>out</sub> = I<sub>in</sub>/2
+        $$\tan\theta_B = n, \quad \theta_B + \theta_r = 90°$$
+        $$I = I_0 \cos^2\theta$$
+        $$I_{\text{out}} = \frac{I_{\text{in}}}{2}$$
       </div>
 
       <h3>Dispersion</h3>
       <div class="formula-box">
-        Prism formula at minimum deviation: sin((A + &delta;<sub>m</sub>)/2) = n sin(A/2)<br>
-        Dispersive power: &omega; = (n<sub>V</sub> &minus; n<sub>R</sub>)/(n<sub>Y</sub> &minus; 1)
+        $$\sin\left(\frac{A + \delta_m}{2}\right) = n\sin\left(\frac{A}{2}\right)$$
+        $$\omega = \frac{n_V - n_R}{n_Y - 1}$$
       </div>
     </div>
 

@@ -111,12 +111,8 @@
         An alternating current (AC) is one that varies sinusoidally with time, periodically reversing direction. Unlike direct current (DC) which flows in one direction, AC continuously oscillates. Most electricity supplied to homes and industries is AC.
       </p>
       <div class="formula-box">
-        V = V<sub>0</sub> sin(&omega;t) &nbsp; or &nbsp; V = V<sub>0</sub> sin(2&pi;ft)<br>
-        I = I<sub>0</sub> sin(&omega;t + &phi;)<br><br>
-        where V<sub>0</sub> = peak (maximum) voltage,<br>
-        I<sub>0</sub> = peak (maximum) current,<br>
-        &omega; = angular frequency = 2&pi;f,<br>
-        f = frequency (Hz), &phi; = phase difference
+        $$V = V_0\sin(\omega t), \quad I = I_0\sin(\omega t + \phi)$$
+        $$\omega = 2\pi f$$
       </div>
 
       <h3>Peak, RMS, and Average Values</h3>
@@ -124,14 +120,9 @@
         Since AC varies continuously, we need different ways to characterize its magnitude:
       </p>
       <div class="formula-box">
-        Peak value: V<sub>0</sub> (or I<sub>0</sub>) &mdash; maximum value<br><br>
-        RMS (Root Mean Square) value:<br>
-        V<sub>rms</sub> = V<sub>0</sub> / &radic;2 &asymp; 0.707 V<sub>0</sub><br>
-        I<sub>rms</sub> = I<sub>0</sub> / &radic;2 &asymp; 0.707 I<sub>0</sub><br><br>
-        Average value (over half cycle):<br>
-        V<sub>avg</sub> = 2V<sub>0</sub> / &pi; &asymp; 0.637 V<sub>0</sub><br>
-        I<sub>avg</sub> = 2I<sub>0</sub> / &pi; &asymp; 0.637 I<sub>0</sub><br><br>
-        Average over full cycle = 0 (positive and negative halves cancel)
+        $$V_{\text{rms}} = \frac{V_0}{\sqrt{2}} \approx 0.707 V_0$$
+        $$I_{\text{rms}} = \frac{I_0}{\sqrt{2}} \approx 0.707 I_0$$
+        $$V_{\text{avg}} = \frac{2V_0}{\pi} \approx 0.637 V_0 \quad \text{(half cycle)}$$
       </div>
       <p>
         The RMS value is the most important measure of AC because it gives the equivalent DC value that would produce the same heating effect. When we say "230 V AC supply," we mean V<sub>rms</sub> = 230 V, so V<sub>0</sub> = 230&radic;2 &asymp; 325.3 V. Similarly, for Indian household supply at 50 Hz, &omega; = 100&pi; rad/s.
@@ -150,8 +141,7 @@
         When an AC voltage V = V<sub>0</sub> sin(&omega;t) is applied across a pure resistance R, the current is:
       </p>
       <div class="formula-box">
-        I = V<sub>0</sub> sin(&omega;t) / R = I<sub>0</sub> sin(&omega;t)<br><br>
-        The current is in phase with the voltage (phase difference &phi; = 0).
+        $$I = \frac{V_0}{R}\sin(\omega t), \quad \phi = 0$$
       </div>
 
       <h3>AC Through a Pure Inductor</h3>
@@ -159,10 +149,9 @@
         When an AC voltage is applied across a pure inductance L, the back-EMF opposes the change in current. The result is:
       </p>
       <div class="formula-box">
-        I = (V<sub>0</sub> / &omega;L) sin(&omega;t &minus; &pi;/2) = I<sub>0</sub> sin(&omega;t &minus; &pi;/2)<br><br>
-        Inductive reactance: X<sub>L</sub> = &omega;L = 2&pi;fL<br>
-        SI unit: Ohm (&Omega;)<br><br>
-        The current lags behind the voltage by &pi;/2 (90&deg;).
+        $$I = \frac{V_0}{\omega L}\sin(\omega t - \pi/2)$$
+        $$X_L = \omega L = 2\pi f L \quad \text{(inductive reactance)}$$
+        $$\text{Current lags voltage by } 90°$$
       </div>
       <p>
         Inductive reactance increases with frequency: at high frequencies, an inductor strongly opposes AC. At DC (f = 0), X<sub>L</sub> = 0 and the inductor behaves like a short circuit.
@@ -173,10 +162,9 @@
         When an AC voltage is applied across a pure capacitance C:
       </p>
       <div class="formula-box">
-        I = V<sub>0</sub>&omega;C sin(&omega;t + &pi;/2) = I<sub>0</sub> sin(&omega;t + &pi;/2)<br><br>
-        Capacitive reactance: X<sub>C</sub> = 1/(&omega;C) = 1/(2&pi;fC)<br>
-        SI unit: Ohm (&Omega;)<br><br>
-        The current leads the voltage by &pi;/2 (90&deg;).
+        $$I = V_0 \omega C \sin(\omega t + \pi/2)$$
+        $$X_C = \frac{1}{\omega C} = \frac{1}{2\pi f C} \quad \text{(capacitive reactance)}$$
+        $$\text{Current leads voltage by } 90°$$
       </div>
       <p>
         Capacitive reactance decreases with frequency: at high frequencies, a capacitor easily passes AC. At DC (f = 0), X<sub>C</sub> = &infin; and the capacitor blocks current completely (open circuit).
@@ -218,8 +206,8 @@
         <li>The resultant voltage V = &radic;(V<sub>R</sub>&sup2; + V<sub>C</sub>&sup2;) lags the current by angle &phi; = tan<sup>&minus;1</sup>(V<sub>C</sub>/V<sub>R</sub>) = tan<sup>&minus;1</sup>(X<sub>C</sub>/R).</li>
       </ul>
       <div class="formula-box">
-        Series RC: Z = &radic;(R&sup2; + X<sub>C</sub>&sup2;)<br>
-        &phi; = tan<sup>&minus;1</sup>(X<sub>C</sub>/R) &nbsp; (voltage lags current)
+        $$Z = \sqrt{R^2 + X_C^2}$$
+        $$\phi = \tan^{-1}\left(\frac{X_C}{R}\right)$$
       </div>
 
       <h3>Phasor Diagram for Series RL Circuit</h3>
@@ -232,8 +220,8 @@
         <li>The resultant voltage V leads the current by angle &phi; = tan<sup>&minus;1</sup>(V<sub>L</sub>/V<sub>R</sub>) = tan<sup>&minus;1</sup>(X<sub>L</sub>/R).</li>
       </ul>
       <div class="formula-box">
-        Series RL: Z = &radic;(R&sup2; + X<sub>L</sub>&sup2;)<br>
-        &phi; = tan<sup>&minus;1</sup>(X<sub>L</sub>/R) &nbsp; (voltage leads current)
+        $$Z = \sqrt{R^2 + X_L^2}$$
+        $$\phi = \tan^{-1}\left(\frac{X_L}{R}\right)$$
       </div>
 
       <h3>Phasor Diagram for Series LCR Circuit</h3>
@@ -241,11 +229,8 @@
         In a series LCR circuit, V<sub>L</sub> and V<sub>C</sub> are exactly 180&deg; apart and partially cancel each other. The resultant reactive voltage is |V<sub>L</sub> &minus; V<sub>C</sub>|, and the total voltage is:
       </p>
       <div class="formula-box">
-        V = &radic;[V<sub>R</sub>&sup2; + (V<sub>L</sub> &minus; V<sub>C</sub>)&sup2;]<br>
-        &phi; = tan<sup>&minus;1</sup>[(X<sub>L</sub> &minus; X<sub>C</sub>) / R]<br><br>
-        If X<sub>L</sub> &gt; X<sub>C</sub>: circuit is inductive, V leads I<br>
-        If X<sub>C</sub> &gt; X<sub>L</sub>: circuit is capacitive, I leads V<br>
-        If X<sub>L</sub> = X<sub>C</sub>: resonance, V and I in phase
+        $$V = \sqrt{V_R^2 + (V_L - V_C)^2}$$
+        $$\phi = \tan^{-1}\left[\frac{X_L - X_C}{R}\right]$$
       </div>
 
       <div class="example-box">
@@ -319,18 +304,12 @@
             <u>Solution:</u><br>
             R = 100 &Omega;, L = 0.5 H, C = 10 &times; 10<sup>&minus;6</sup> F, V<sub>rms</sub> = 200 V, f = 50 Hz<br>
             &omega; = 2&pi;f = 100&pi; rad/s<br><br>
-            X<sub>L</sub> = &omega;L = 100&pi; &times; 0.5 = 50&pi; &asymp; 157.08 &Omega;<br>
-            X<sub>C</sub> = 1/(&omega;C) = 1/(100&pi; &times; 10<sup>&minus;5</sup>) = 10<sup>5</sup>/(100&pi;) = 1000/&pi; &asymp; 318.31 &Omega;<br><br>
-            X<sub>L</sub> &minus; X<sub>C</sub> = 157.08 &minus; 318.31 = &minus;161.23 &Omega;<br><br>
-            Impedance: Z = &radic;(100&sup2; + 161.23&sup2;) = &radic;(10000 + 25995) = &radic;35995 &asymp; 189.99 &Omega;<br><br>
-            Current: I<sub>rms</sub> = V<sub>rms</sub>/Z = 200/189.99 &asymp; 1.053 A<br><br>
-            Phase angle: tan&phi; = &minus;161.23/100 = &minus;1.6123<br>
-            &phi; = tan<sup>&minus;1</sup>(&minus;1.6123) &asymp; &minus;58.2&deg; (capacitive &mdash; current leads voltage)<br><br>
-            Voltages:<br>
-            V<sub>R</sub> = IR = 1.053 &times; 100 = 105.3 V<br>
-            V<sub>L</sub> = IX<sub>L</sub> = 1.053 &times; 157.08 = 165.4 V<br>
-            V<sub>C</sub> = IX<sub>C</sub> = 1.053 &times; 318.31 = 335.2 V<br><br>
-            Note: V<sub>L</sub> and V<sub>C</sub> can individually exceed the source voltage!
+            $$X_L = 100\pi \times 0.5 \approx 157.08 \text{ Ω}$$
+            $$X_C = \frac{1}{100\pi \times 10^{-5}} \approx 318.31 \text{ Ω}$$
+            $$Z = \sqrt{100^2 + 161.23^2} \approx 189.99 \text{ Ω}$$
+            $$I_{\text{rms}} = \frac{200}{189.99} \approx 1.053 \text{ A}$$
+            $$\phi = \tan^{-1}(-1.6123) \approx -58.2°$$
+            $$V_R = 105.3 \text{ V}, \quad V_L = 165.4 \text{ V}, \quad V_C = 335.2 \text{ V}$$
           </p>
         </div>
       </div>
@@ -348,10 +327,9 @@
         Resonance occurs when the inductive reactance equals the capacitive reactance: X<sub>L</sub> = X<sub>C</sub>. At this condition, the impedance is minimum (Z = R), the current is maximum (I = V/R), and the circuit behaves as a purely resistive circuit.
       </p>
       <div class="formula-box">
-        At resonance: &omega;L = 1/(&omega;C)<br><br>
-        Resonant frequency: &omega;<sub>0</sub> = 1 / &radic;(LC)<br>
-        f<sub>res</sub> = 1 / (2&pi;&radic;LC)<br><br>
-        At resonance: Z = R, &nbsp; I<sub>max</sub> = V/R, &nbsp; &phi; = 0
+        $$\omega_0 = \frac{1}{\sqrt{LC}}$$
+        $$f_{\text{res}} = \frac{1}{2\pi\sqrt{LC}}$$
+        $$Z = R, \quad I_{\max} = \frac{V}{R}, \quad \phi = 0$$
       </div>
 
       <h3>Quality Factor (Q-factor)</h3>
@@ -359,8 +337,8 @@
         The quality factor measures the sharpness of resonance. A high Q-factor means a narrow, sharp resonance peak (very selective circuit), while a low Q-factor means a broad, flat resonance (less selective).
       </p>
       <div class="formula-box">
-        Q = &omega;<sub>0</sub>L / R = 1 / (&omega;<sub>0</sub>CR) = (1/R)&radic;(L/C)<br><br>
-        Q = V<sub>L</sub>/V (at resonance) = V<sub>C</sub>/V (at resonance)
+        $$Q = \frac{\omega_0 L}{R} = \frac{1}{\omega_0 CR} = \frac{1}{R}\sqrt{\frac{L}{C}}$$
+        $$Q = \frac{V_L}{V} = \frac{V_C}{V} \quad \text{(at resonance)}$$
       </div>
       <p>
         At resonance, the voltage across L or C can be Q times the source voltage. This is called voltage magnification. For high-Q circuits, this can be dangerously large.
@@ -371,8 +349,8 @@
         The bandwidth of a resonant circuit is the range of frequencies over which the current is at least 1/&radic;2 of its maximum value (half-power bandwidth):
       </p>
       <div class="formula-box">
-        Bandwidth: &Delta;&omega; = R / L &nbsp; or &nbsp; &Delta;f = R / (2&pi;L)<br><br>
-        Q = &omega;<sub>0</sub> / &Delta;&omega; = f<sub>0</sub> / &Delta;f
+        $$\Delta\omega = \frac{R}{L}, \quad \Delta f = \frac{R}{2\pi L}$$
+        $$Q = \frac{\omega_0}{\Delta\omega} = \frac{f_0}{\Delta f}$$
       </div>
       <p>
         A high Q-factor implies a narrow bandwidth (sharp resonance), which is desirable in radio tuning circuits for selecting a specific station.
@@ -391,8 +369,8 @@
         The instantaneous power in an AC circuit is P(t) = V(t) &times; I(t). Since both V and I are sinusoidal, the power fluctuates. The quantity of practical interest is the average power over one complete cycle:
       </p>
       <div class="formula-box">
-        P<sub>avg</sub> = V<sub>rms</sub> I<sub>rms</sub> cos&phi;<br><br>
-        where cos&phi; = R/Z is the power factor
+        $$P_{\text{avg}} = V_{\text{rms}} I_{\text{rms}} \cos\phi$$
+        $$\cos\phi = \frac{R}{Z}$$
       </div>
 
       <h3>Power Factor</h3>
@@ -400,7 +378,7 @@
         The power factor cos&phi; determines what fraction of the apparent power (V<sub>rms</sub>I<sub>rms</sub>) is actually dissipated as useful power:
       </p>
       <div class="formula-box">
-        cos&phi; = R / Z = R / &radic;[R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;]
+        $$\cos\phi = \frac{R}{Z} = \frac{R}{\sqrt{R^2 + (X_L - X_C)^2}}$$
       </div>
       <ul>
         <li>Pure resistor: &phi; = 0, cos&phi; = 1, P = V<sub>rms</sub>I<sub>rms</sub> (maximum power dissipation).</li>
@@ -414,11 +392,11 @@
         The component of current that does not contribute to power dissipation is called the wattless (or reactive) current. It oscillates energy back and forth between the source and the reactive elements (L and C).
       </p>
       <div class="formula-box">
-        Wattless current = I<sub>rms</sub> sin&phi;<br>
-        Power (active) current = I<sub>rms</sub> cos&phi;<br><br>
-        Apparent power = V<sub>rms</sub>I<sub>rms</sub> (unit: VA)<br>
-        Real power = V<sub>rms</sub>I<sub>rms</sub> cos&phi; (unit: W)<br>
-        Reactive power = V<sub>rms</sub>I<sub>rms</sub> sin&phi; (unit: VAR)
+        $$I_{\text{wattless}} = I_{\text{rms}}\sin\phi$$
+        $$I_{\text{active}} = I_{\text{rms}}\cos\phi$$
+        $$S = V_{\text{rms}}I_{\text{rms}} \quad (VA)$$
+        $$P = V_{\text{rms}}I_{\text{rms}}\cos\phi \quad (W)$$
+        $$Q = V_{\text{rms}}I_{\text{rms}}\sin\phi \quad (VAR)$$
       </div>
 
       <div class="example-box">
@@ -430,12 +408,10 @@
           <p>
             <u>Solution:</u><br>
             At resonance: Z = R = 50 &Omega;, V<sub>rms</sub> = 100 V, Q = 10<br><br>
-            Current: I<sub>rms</sub> = V<sub>rms</sub>/R = 100/50 = 2 A<br><br>
-            Power dissipated: P = V<sub>rms</sub>I<sub>rms</sub>cos&phi; = V&sup2;<sub>rms</sub>/R = (100)&sup2;/50 = 200 W<br>
-            (At resonance, cos&phi; = 1)<br><br>
-            Voltage across inductor: V<sub>L</sub> = Q &times; V<sub>rms</sub> = 10 &times; 100 = 1000 V<br>
-            (Similarly V<sub>C</sub> = 1000 V, but 180&deg; out of phase with V<sub>L</sub>, so they cancel)<br><br>
-            Power factor: cos&phi; = 1 (at resonance)
+            $$I_{\text{rms}} = \frac{100}{50} = 2 \text{ A}$$
+            $$P = \frac{V_{\text{rms}}^2}{R} = \frac{100^2}{50} = 200 \text{ W}$$
+            $$V_L = Q \times V_{\text{rms}} = 10 \times 100 = 1000 \text{ V}$$
+            $$\text{Power factor: } \cos\phi = 1$$
           </p>
         </div>
       </div>
@@ -453,7 +429,7 @@
         The resistor is the only element that dissipates energy in an AC circuit. Power in the resistor is always positive (energy always flows from source to resistor):
       </p>
       <div class="formula-box">
-        P<sub>R</sub> = I<sub>rms</sub>&sup2; &times; R = V<sub>R,rms</sub>&sup2; / R
+        $$P_R = I_{\text{rms}}^2 R = \frac{V_{R,\text{rms}}^2}{R}$$
       </div>
 
       <h3>Average Power Across an Ideal Inductor</h3>
@@ -461,7 +437,7 @@
         In an ideal inductor, the current lags the voltage by exactly 90&deg;. During the first quarter cycle, the inductor absorbs energy from the source (storing it in its magnetic field). During the next quarter cycle, it returns this energy back to the circuit. There is no net energy dissipation:
       </p>
       <div class="formula-box">
-        P<sub>L,avg</sub> = V<sub>L,rms</sub> &times; I<sub>rms</sub> &times; cos(90&deg;) = 0 W
+        $$P_{L,\text{avg}} = V_{L,\text{rms}} I_{\text{rms}} \cos(90°) = 0 \text{ W}$$
       </div>
       <p>
         The inductor is a purely reactive (non-dissipative) element. It temporarily stores energy in its magnetic field and releases it back, acting as an energy reservoir rather than a consumer. This is why the voltage and current being 90&deg; out of phase makes the time-averaged power exactly zero.
@@ -472,7 +448,7 @@
         Similarly, in an ideal capacitor, the current leads the voltage by exactly 90&deg;. During the first quarter cycle, the capacitor charges and absorbs energy (stored in its electric field). During the next quarter cycle, it discharges and returns this energy to the circuit:
       </p>
       <div class="formula-box">
-        P<sub>C,avg</sub> = V<sub>C,rms</sub> &times; I<sub>rms</sub> &times; cos(90&deg;) = 0 W
+        $$P_{C,\text{avg}} = V_{C,\text{rms}} I_{\text{rms}} \cos(90°) = 0 \text{ W}$$
       </div>
       <p>
         Like the inductor, the capacitor is a purely reactive (non-dissipative) element. It stores and releases energy cyclically with zero net dissipation over a complete cycle.
@@ -501,12 +477,9 @@
 
       <h3>Impedance and Phase Angle</h3>
       <div class="formula-box">
-        Total current: I = &radic;(I<sub>R</sub>&sup2; + I<sub>C</sub>&sup2;)<br><br>
-        Since I = V/Z:<br>
-        1/Z = &radic;(1/R&sup2; + 1/X<sub>C</sub>&sup2;) = &radic;(1/R&sup2; + &omega;&sup2;C&sup2;)<br><br>
-        Phase angle: tan&phi; = I<sub>C</sub>/I<sub>R</sub> = R/X<sub>C</sub> = &omega;RC<br>
-        &phi; = tan<sup>&minus;1</sup>(&omega;RC)<br><br>
-        The total current leads the voltage by &phi;.
+        $$I = \sqrt{I_R^2 + I_C^2}$$
+        $$\frac{1}{Z} = \sqrt{\frac{1}{R^2} + \omega^2 C^2}$$
+        $$\tan\phi = \frac{I_C}{I_R} = \omega RC$$
       </div>
       <p>
         Note: In a parallel circuit, the admittance Y = 1/Z is more convenient than impedance. The impedance of a parallel combination is always less than either branch impedance alone.
@@ -521,18 +494,12 @@
           <p>
             <u>Solution:</u><br>
             V<sub>rms</sub> = 100 V, f = 50 Hz, R = 200 &Omega;, C = 10 &times; 10<sup>&minus;6</sup> F<br>
-            &omega; = 2&pi; &times; 50 = 100&pi; rad/s<br><br>
-            X<sub>C</sub> = 1/(&omega;C) = 1/(100&pi; &times; 10<sup>&minus;5</sup>) = 1000/&pi; &asymp; 318.3 &Omega;<br><br>
-            Branch currents:<br>
-            I<sub>R</sub> = V/R = 100/200 = 0.5 A (in phase with V)<br>
-            I<sub>C</sub> = V/X<sub>C</sub> = 100/318.3 &asymp; 0.314 A (leads V by 90&deg;)<br><br>
-            Total current:<br>
-            I = &radic;(I<sub>R</sub>&sup2; + I<sub>C</sub>&sup2;) = &radic;(0.25 + 0.0986) = &radic;0.3486 &asymp; 0.590 A<br><br>
-            Impedance: Z = V/I = 100/0.590 &asymp; 169.5 &Omega;<br><br>
-            Phase angle:<br>
-            tan&phi; = I<sub>C</sub>/I<sub>R</sub> = 0.314/0.5 = 0.628<br>
-            &phi; = tan<sup>&minus;1</sup>(0.628) &asymp; 32.1&deg;<br>
-            Total current leads voltage by 32.1&deg;.
+            $$\omega = 2\pi \times 50 = 100\pi \text{ rad/s}$$
+            $$X_C = \frac{1}{100\pi \times 10^{-5}} \approx 318.3 \text{ Ω}$$
+            $$I_R = \frac{100}{200} = 0.5 \text{ A}$$
+            $$I_C = \frac{100}{318.3} \approx 0.314 \text{ A}$$
+            $$I = \sqrt{0.25 + 0.0986} \approx 0.590 \text{ A}$$
+            $$\phi = \tan^{-1}(0.628) \approx 32.1°$$
           </p>
         </div>
       </div>
@@ -557,11 +524,9 @@
 
       <h3>Impedance and Phase Angle</h3>
       <div class="formula-box">
-        Total current: I = &radic;(I<sub>R</sub>&sup2; + I<sub>L</sub>&sup2;)<br><br>
-        1/Z = &radic;(1/R&sup2; + 1/X<sub>L</sub>&sup2;) = &radic;(1/R&sup2; + 1/(&omega;L)&sup2;)<br><br>
-        Phase angle: tan&phi; = I<sub>L</sub>/I<sub>R</sub> = R/X<sub>L</sub> = R/(&omega;L)<br>
-        &phi; = tan<sup>&minus;1</sup>(R/(&omega;L))<br><br>
-        The total current lags the voltage by &phi;.
+        $$I = \sqrt{I_R^2 + I_L^2}$$
+        $$\frac{1}{Z} = \sqrt{\frac{1}{R^2} + \frac{1}{(\omega L)^2}}$$
+        $$\tan\phi = \frac{I_L}{I_R} = \frac{R}{\omega L}$$
       </div>
       <p>
         Comparing with series RL: in a series RL circuit the voltage leads the current by tan<sup>&minus;1</sup>(X<sub>L</sub>/R). In a parallel RL circuit, the current lags the voltage by tan<sup>&minus;1</sup>(R/X<sub>L</sub>). At higher frequencies, X<sub>L</sub> increases, making R/X<sub>L</sub> smaller and the phase lag decreases.
@@ -574,15 +539,12 @@
         </p>
         <div class="solution">
           <p>
-            Parallel RL:<br>
-            I<sub>total</sub> = &radic;(I<sub>R</sub>&sup2; + I<sub>L</sub>&sup2;) = &radic;(0.64 + 0.36) = &radic;1.00 = 1.0 A<br>
-            tan&phi; = I<sub>L</sub>/I<sub>R</sub> = 0.6/0.8 = 0.75<br>
-            &phi; = tan<sup>&minus;1</sup>(0.75) &asymp; 36.87&deg; &mdash; current lags voltage<br><br>
-            Parallel RC:<br>
-            I<sub>total</sub> = &radic;(I<sub>R</sub>&sup2; + I<sub>C</sub>&sup2;) = &radic;(0.64 + 0.36) = &radic;1.00 = 1.0 A<br>
-            tan&phi; = I<sub>C</sub>/I<sub>R</sub> = 0.6/0.8 = 0.75<br>
-            &phi; = tan<sup>&minus;1</sup>(0.75) &asymp; 36.87&deg; &mdash; current leads voltage<br><br>
-            Key difference: Both circuits give the same magnitude of total current and phase angle, but the phase direction is opposite &mdash; RL is lagging (inductive) while RC is leading (capacitive).
+            Parallel RL:
+            $$I_{\text{total}} = \sqrt{0.64 + 0.36} = 1.0 \text{ A}$$
+            $$\phi = \tan^{-1}(0.75) \approx 36.87° \quad \text{(lags)}$$
+            Parallel RC:
+            $$I_{\text{total}} = 1.0 \text{ A}$$
+            $$\phi \approx 36.87° \quad \text{(leads)}$$
           </p>
         </div>
       </div>
@@ -608,11 +570,9 @@
         Since I<sub>L</sub> and I<sub>C</sub> are exactly 180&deg; apart, they partially cancel. The net reactive current is |I<sub>C</sub> &minus; I<sub>L</sub>|, and the total current is found by phasor addition with I<sub>R</sub>:
       </p>
       <div class="formula-box">
-        When I<sub>C</sub> &gt; I<sub>L</sub> (capacitive): I = &radic;[I<sub>R</sub>&sup2; + (I<sub>C</sub> &minus; I<sub>L</sub>)&sup2;]<br>
-        When I<sub>L</sub> &gt; I<sub>C</sub> (inductive): I = &radic;[I<sub>R</sub>&sup2; + (I<sub>L</sub> &minus; I<sub>C</sub>)&sup2;]<br>
-        When I<sub>C</sub> = I<sub>L</sub> (resonance): I = I<sub>R</sub><br><br>
-        Admittance: 1/Z = &radic;[1/R&sup2; + (1/X<sub>C</sub> &minus; 1/X<sub>L</sub>)&sup2;]<br>
-        Phase angle: tan&phi; = (I<sub>C</sub> &minus; I<sub>L</sub>)/I<sub>R</sub>
+        $$I = \sqrt{I_R^2 + (I_C - I_L)^2}$$
+        $$\tan\phi = \frac{I_C - I_L}{I_R}$$
+        $$\text{Resonance: } I_C = I_L, \quad I = I_R$$
       </div>
 
       <h3>Parallel Resonance</h3>
@@ -620,12 +580,8 @@
         Resonance in a parallel LCR circuit occurs when I<sub>L</sub> = I<sub>C</sub>, which means 1/X<sub>L</sub> = 1/X<sub>C</sub>, i.e., X<sub>L</sub> = X<sub>C</sub> &mdash; the same condition as series resonance:
       </p>
       <div class="formula-box">
-        At parallel resonance: &omega;<sub>0</sub> = 1/&radic;(LC)<br><br>
-        At resonance:<br>
-        &bull; Impedance Z is maximum (= R)<br>
-        &bull; Current I is minimum (= I<sub>R</sub> only)<br>
-        &bull; I<sub>L</sub> and I<sub>C</sub> are equal and cancel out (they still circulate within the LC loop)<br>
-        &bull; Phase angle &phi; = 0 (V and I in phase)
+        $$\omega_0 = \frac{1}{\sqrt{LC}}$$
+        $$Z_{\max} = R, \quad I_{\min} = I_R, \quad \phi = 0$$
       </div>
       <p>
         This is the opposite of series resonance, where impedance is minimum and current is maximum. Parallel resonance is used in circuits where high impedance at a specific frequency is needed (e.g., tank circuits in oscillators, filters).
@@ -650,10 +606,9 @@
 
       <h3>Transformer Equation</h3>
       <div class="formula-box">
-        V<sub>s</sub> / V<sub>p</sub> = N<sub>s</sub> / N<sub>p</sub> = k (turns ratio)<br><br>
-        For an ideal transformer (100% efficient):<br>
-        V<sub>p</sub>I<sub>p</sub> = V<sub>s</sub>I<sub>s</sub> &nbsp; (power in = power out)<br>
-        I<sub>s</sub> / I<sub>p</sub> = N<sub>p</sub> / N<sub>s</sub> = 1/k
+        $$\frac{V_s}{V_p} = \frac{N_s}{N_p} = k$$
+        $$V_p I_p = V_s I_s$$
+        $$\frac{I_s}{I_p} = \frac{N_p}{N_s} = \frac{1}{k}$$
       </div>
 
       <h3>Step-Up and Step-Down Transformers</h3>
@@ -677,8 +632,7 @@
         <li>Flux leakage: Not all flux from the primary links with the secondary. Minimized by winding coils tightly over each other and using a closed core.</li>
       </ul>
       <div class="formula-box">
-        Efficiency: &eta; = P<sub>output</sub> / P<sub>input</sub> = V<sub>s</sub>I<sub>s</sub> / (V<sub>p</sub>I<sub>p</sub>)<br>
-        Typical large power transformers: &eta; &gt; 95%
+        $$\eta = \frac{P_{\text{output}}}{P_{\text{input}}} = \frac{V_s I_s}{V_p I_p}$$
       </div>
 
       <h3>Long-Distance Power Transmission</h3>
@@ -686,8 +640,7 @@
         Transformers are crucial for efficient long-distance power transmission. Power is transmitted at high voltage (and correspondingly low current) to minimize I&sup2;R losses in the transmission lines. At the generating station, a step-up transformer increases the voltage; at the consumer end, step-down transformers reduce it to safe levels.
       </p>
       <div class="formula-box">
-        Power loss in transmission: P<sub>loss</sub> = I&sup2;R = (P/V)&sup2; &times; R<br><br>
-        Doubling the transmission voltage reduces the power loss by a factor of 4.
+        $$P_{\text{loss}} = I^2 R = \left(\frac{P}{V}\right)^2 R$$
       </div>
     </div>
 
@@ -708,16 +661,14 @@
         If the capacitor is initially charged to Q<sub>0</sub> and then connected to an inductor L, the charge on the capacitor at time t is:
       </p>
       <div class="formula-box">
-        q(t) = Q<sub>0</sub> cos(&omega;t)<br><br>
-        where &omega; = 1 / &radic;(LC)<br>
-        Frequency: f = 1 / (2&pi;&radic;LC)<br>
-        Time period: T = 2&pi;&radic;(LC)
+        $$q(t) = Q_0\cos(\omega t), \quad \omega = \frac{1}{\sqrt{LC}}$$
+        $$f = \frac{1}{2\pi\sqrt{LC}}, \quad T = 2\pi\sqrt{LC}$$
       </div>
 
       <h3>Current</h3>
       <div class="formula-box">
-        I(t) = dq/dt = &minus;Q<sub>0</sub>&omega; sin(&omega;t) = &minus;I<sub>0</sub> sin(&omega;t)<br><br>
-        where I<sub>0</sub> = Q<sub>0</sub>&omega; = Q<sub>0</sub> / &radic;(LC) = peak current
+        $$I(t) = -Q_0\omega\sin(\omega t)$$
+        $$I_0 = Q_0\omega = \frac{Q_0}{\sqrt{LC}}$$
       </div>
 
       <h3>Energy Exchange</h3>
@@ -766,13 +717,10 @@
           <p>
             <u>Solution:</u><br>
             L = 20 &times; 10<sup>&minus;3</sup> H, C = 50 &times; 10<sup>&minus;6</sup> F, Q<sub>0</sub> = 100 &times; 10<sup>&minus;6</sup> C<br><br>
-            &omega; = 1/&radic;(LC) = 1/&radic;(20 &times; 10<sup>&minus;3</sup> &times; 50 &times; 10<sup>&minus;6</sup>)<br>
-            &omega; = 1/&radic;(10<sup>&minus;6</sup>) = 1/10<sup>&minus;3</sup> = 1000 rad/s<br><br>
-            Frequency: f = &omega;/(2&pi;) = 1000/(2&pi;) &asymp; 159.15 Hz<br><br>
-            Peak current: I<sub>0</sub> = Q<sub>0</sub>&omega; = (100 &times; 10<sup>&minus;6</sup>)(1000) = 0.1 A = 100 mA<br><br>
-            Total energy: U = Q<sub>0</sub>&sup2;/(2C) = (100 &times; 10<sup>&minus;6</sup>)&sup2; / (2 &times; 50 &times; 10<sup>&minus;6</sup>)<br>
-            U = 10<sup>&minus;8</sup> / (10<sup>&minus;4</sup>) = 10<sup>&minus;4</sup> J = 0.1 mJ<br><br>
-            Verification: &frac12;LI<sub>0</sub>&sup2; = &frac12;(0.02)(0.01) = 10<sup>&minus;4</sup> J (matches)
+            $$\omega = \frac{1}{\sqrt{20 \times 10^{-3} \times 50 \times 10^{-6}}} = \frac{1}{\sqrt{10^{-6}}} = 1000 \text{ rad/s}$$
+            $$f = \frac{1000}{2\pi} \approx 159.15 \text{ Hz}$$
+            $$I_0 = 100 \times 10^{-6} \times 1000 = 0.1 \text{ A}$$
+            $$U = \frac{(100 \times 10^{-6})^2}{2 \times 50 \times 10^{-6}} = 10^{-4} \text{ J}$$
           </p>
         </div>
       </div>
@@ -786,67 +734,61 @@
 
       <h3>AC Representation and Values</h3>
       <div class="formula-box">
-        Instantaneous: I = I<sub>0</sub> sin(&omega;t + &phi;), &nbsp; V = V<sub>0</sub> sin(&omega;t)<br>
-        Angular frequency: &omega; = 2&pi;f = 2&pi;/T<br>
-        RMS values: V<sub>rms</sub> = V<sub>0</sub>/&radic;2, &nbsp; I<sub>rms</sub> = I<sub>0</sub>/&radic;2<br>
-        Half-cycle average: V<sub>avg</sub> = 2V<sub>0</sub>/&pi; &asymp; 0.637 V<sub>0</sub>
+        $$V = V_0\sin(\omega t), \quad I = I_0\sin(\omega t + \phi)$$
+        $$\omega = 2\pi f$$
+        $$V_{\text{rms}} = \frac{V_0}{\sqrt{2}}, \quad I_{\text{rms}} = \frac{I_0}{\sqrt{2}}$$
       </div>
 
       <h3>Reactances</h3>
       <div class="formula-box">
-        Inductive reactance: X<sub>L</sub> = &omega;L &nbsp; (&Omega;) &nbsp; [increases with f]<br>
-        Capacitive reactance: X<sub>C</sub> = 1/(&omega;C) &nbsp; (&Omega;) &nbsp; [decreases with f]
+        $$X_L = \omega L \quad (\text{increases with } f)$$
+        $$X_C = \frac{1}{\omega C} \quad (\text{decreases with } f)$$
       </div>
 
       <h3>Series Circuits</h3>
       <div class="formula-box">
-        Series RC: Z = &radic;(R&sup2; + X<sub>C</sub>&sup2;), &nbsp; tan&phi; = X<sub>C</sub>/R &nbsp; (V lags I)<br>
-        Series RL: Z = &radic;(R&sup2; + X<sub>L</sub>&sup2;), &nbsp; tan&phi; = X<sub>L</sub>/R &nbsp; (V leads I)<br>
-        Series LCR: Z = &radic;[R&sup2; + (X<sub>L</sub> &minus; X<sub>C</sub>)&sup2;], &nbsp; tan&phi; = (X<sub>L</sub> &minus; X<sub>C</sub>)/R
+        $$Z = \sqrt{R^2 + X_C^2}, \quad \tan\phi = \frac{X_C}{R} \quad (RC)$$
+        $$Z = \sqrt{R^2 + X_L^2}, \quad \tan\phi = \frac{X_L}{R} \quad (RL)$$
+        $$Z = \sqrt{R^2 + (X_L - X_C)^2}, \quad \tan\phi = \frac{X_L - X_C}{R} \quad (LCR)$$
       </div>
 
       <h3>Parallel Circuits</h3>
       <div class="formula-box">
-        Parallel RC: 1/Z = &radic;(1/R&sup2; + &omega;&sup2;C&sup2;), &nbsp; tan&phi; = &omega;RC &nbsp; (I leads V)<br>
-        Parallel RL: 1/Z = &radic;(1/R&sup2; + 1/(&omega;L)&sup2;), &nbsp; tan&phi; = R/(&omega;L) &nbsp; (I lags V)<br>
-        Parallel LCR: 1/Z = &radic;[1/R&sup2; + (1/X<sub>C</sub> &minus; 1/X<sub>L</sub>)&sup2;]
+        $$\frac{1}{Z} = \sqrt{\frac{1}{R^2} + \omega^2 C^2}, \quad \tan\phi = \omega RC \quad (RC)$$
+        $$\frac{1}{Z} = \sqrt{\frac{1}{R^2} + \frac{1}{(\omega L)^2}}, \quad \tan\phi = \frac{R}{\omega L} \quad (RL)$$
+        $$\frac{1}{Z} = \sqrt{\frac{1}{R^2} + \left(\frac{1}{X_C} - \frac{1}{X_L}\right)^2} \quad (LCR)$$
       </div>
 
       <h3>Resonance (Series and Parallel)</h3>
       <div class="formula-box">
-        Condition: X<sub>L</sub> = X<sub>C</sub> &nbsp;&rArr;&nbsp; &omega;<sub>0</sub> = 1/&radic;(LC)<br>
-        Resonant frequency: f<sub>0</sub> = 1/(2&pi;&radic;LC)<br>
-        Series resonance: Z<sub>min</sub> = R, &nbsp; I<sub>max</sub> = V/R, &nbsp; &phi; = 0<br>
-        Parallel resonance: Z<sub>max</sub> = R, &nbsp; I<sub>min</sub> = V/R, &nbsp; &phi; = 0<br>
-        Quality factor: Q = &omega;<sub>0</sub>L/R = 1/(&omega;<sub>0</sub>CR) = (1/R)&radic;(L/C)<br>
-        Bandwidth: &Delta;&omega; = R/L, &nbsp; Q = &omega;<sub>0</sub>/&Delta;&omega;
+        $$\omega_0 = \frac{1}{\sqrt{LC}}, \quad f_0 = \frac{1}{2\pi\sqrt{LC}}$$
+        $$Z_{\min} = R, \quad I_{\max} = \frac{V}{R} \quad (\text{series})$$
+        $$Z_{\max} = R, \quad I_{\min} = \frac{V}{R} \quad (\text{parallel})$$
+        $$Q = \frac{\omega_0 L}{R} = \frac{1}{\omega_0 C R}, \quad \Delta\omega = \frac{R}{L}$$
       </div>
 
       <h3>Power in AC Circuits</h3>
       <div class="formula-box">
-        Average power: P<sub>avg</sub> = V<sub>rms</sub>I<sub>rms</sub> cos&phi;<br>
-        Power factor: cos&phi; = R/Z<br>
-        Power in resistor: P<sub>R</sub> = I<sub>rms</sub>&sup2; R<br>
-        Power in ideal L or C: P<sub>L</sub> = P<sub>C</sub> = 0<br>
-        Apparent power: S = V<sub>rms</sub>I<sub>rms</sub> (VA)<br>
-        Reactive power: Q<sub>p</sub> = V<sub>rms</sub>I<sub>rms</sub> sin&phi; (VAR)<br>
-        Wattless current: I<sub>rms</sub> sin&phi;
+        $$P = V_{\text{rms}}I_{\text{rms}}\cos\phi$$
+        $$\cos\phi = \frac{R}{Z}$$
+        $$P_R = I_{\text{rms}}^2 R, \quad P_L = P_C = 0$$
+        $$S = V_{\text{rms}}I_{\text{rms}}, \quad Q = V_{\text{rms}}I_{\text{rms}}\sin\phi$$
       </div>
 
       <h3>Transformers</h3>
       <div class="formula-box">
-        Turns ratio: V<sub>s</sub>/V<sub>p</sub> = N<sub>s</sub>/N<sub>p</sub> = I<sub>p</sub>/I<sub>s</sub><br>
-        Ideal transformer: V<sub>p</sub>I<sub>p</sub> = V<sub>s</sub>I<sub>s</sub><br>
-        Efficiency: &eta; = P<sub>out</sub>/P<sub>in</sub> = V<sub>s</sub>I<sub>s</sub>/(V<sub>p</sub>I<sub>p</sub>)<br>
-        Transmission loss: P<sub>loss</sub> = I&sup2;R = (P/V)&sup2;R
+        $$\frac{V_s}{V_p} = \frac{N_s}{N_p} = \frac{I_p}{I_s}$$
+        $$V_p I_p = V_s I_s$$
+        $$\eta = \frac{V_s I_s}{V_p I_p}$$
+        $$P_{\text{loss}} = I^2 R = \left(\frac{P}{V}\right)^2 R$$
       </div>
 
       <h3>LC Oscillations</h3>
       <div class="formula-box">
-        Charge: q(t) = Q<sub>0</sub> cos(&omega;t), &nbsp; &omega; = 1/&radic;(LC)<br>
-        Current: I(t) = &minus;Q<sub>0</sub>&omega; sin(&omega;t), &nbsp; I<sub>0</sub> = Q<sub>0</sub>/&radic;(LC)<br>
-        Total energy: U = Q<sub>0</sub>&sup2;/(2C) = &frac12;LI<sub>0</sub>&sup2;<br>
-        Damped oscillation: q(t) = Q<sub>0</sub> e<sup>&minus;Rt/(2L)</sup> cos(&omega;'t)
+        $$q(t) = Q_0\cos(\omega t), \quad \omega = \frac{1}{\sqrt{LC}}$$
+        $$I(t) = -Q_0\omega\sin(\omega t), \quad I_0 = \frac{Q_0}{\sqrt{LC}}$$
+        $$U = \frac{Q_0^2}{2C} = \frac{1}{2}LI_0^2$$
+        $$q(t) = Q_0 e^{-Rt/(2L)}\cos(\omega' t) \quad (\text{damped})$$
       </div>
     </div>
 
