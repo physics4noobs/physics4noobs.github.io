@@ -6,7 +6,7 @@
   <title>Electromagnetic Waves | Axomiya Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="../js/theme.js"></script>
@@ -108,12 +108,12 @@
 
       <h3>The Problem with Ampere's Law</h3>
       <p>
-        Ampere's circuital law in its original form states that the line integral of the magnetic field <strong>B</strong> around a closed loop equals &mu;<sub>0</sub> times the conduction current <em>I</em> enclosed by the loop. However, James Clerk Maxwell identified a fundamental inconsistency: consider a parallel plate capacitor being charged by a current. If we draw an Amperian loop around the wire, the enclosed conduction current is <em>I</em>. But if we draw a surface that passes between the capacitor plates (where no charge flows), the enclosed conduction current is zero. This contradicts the uniqueness of the result, since both surfaces are bounded by the same loop.
+        Ampere's circuital law in its original form states that the line integral of the magnetic field B around a closed loop equals &mu;<sub>0</sub> times the conduction current I enclosed by the loop. However, James Clerk Maxwell identified a fundamental inconsistency: consider a parallel plate capacitor being charged by a current. If we draw an Amperian loop around the wire, the enclosed conduction current is I. But if we draw a surface that passes between the capacitor plates (where no charge flows), the enclosed conduction current is zero. This contradicts the uniqueness of the result, since both surfaces are bounded by the same loop.
       </p>
 
       <h3>Maxwell's Correction</h3>
       <p>
-        Maxwell resolved this paradox by introducing the concept of <strong>displacement current</strong>. Between the capacitor plates, although no charges flow, the electric field is changing with time. Maxwell postulated that a changing electric field produces the same magnetic effects as a conduction current. He defined the displacement current as:
+        Maxwell resolved this paradox by introducing the concept of displacement current. Between the capacitor plates, although no charges flow, the electric field is changing with time. Maxwell postulated that a changing electric field produces the same magnetic effects as a conduction current. He defined the displacement current as:
       </p>
       <div class="formula-box">
         I<sub>d</sub> = &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt
@@ -124,10 +124,10 @@
 
       <h3>Ampere-Maxwell Law</h3>
       <p>
-        With the addition of the displacement current, Ampere's law is modified to the <strong>Ampere-Maxwell law</strong>:
+        With the addition of the displacement current, Ampere's law is modified to the Ampere-Maxwell law:
       </p>
       <div class="formula-box">
-        &oint; <strong>B</strong> &middot; d<strong>l</strong> = &mu;<sub>0</sub>(I<sub>c</sub> + I<sub>d</sub>) = &mu;<sub>0</sub> I<sub>c</sub> + &mu;<sub>0</sub> &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt
+        &oint; B &middot; dl = &mu;<sub>0</sub>(I<sub>c</sub> + I<sub>d</sub>) = &mu;<sub>0</sub> I<sub>c</sub> + &mu;<sub>0</sub> &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt
       </div>
       <p>
         This modified law is consistent for all surfaces bounded by a given Amperian loop. The total current (conduction + displacement) passing through any surface bounded by the loop is always the same. This was one of Maxwell's greatest contributions to physics, as it led directly to the prediction of electromagnetic waves.
@@ -139,6 +139,7 @@
         <li>These two effects together sustain electromagnetic waves that propagate through free space.</li>
         <li>Inside a capacitor: I<sub>c</sub> = 0 but I<sub>d</sub> &ne; 0. Outside the capacitor plates: I<sub>c</sub> &ne; 0 but I<sub>d</sub> = 0.</li>
       </ul>
+      <div class="diagram-placeholder">Diagram: Parallel plate capacitor with Amperian loop drawn around it, showing conduction current in wires and displacement current between plates</div>
     </div>
 
     <!-- ============================== -->
@@ -156,7 +157,7 @@
         The total electric flux through any closed surface is equal to 1/&epsilon;<sub>0</sub> times the total charge enclosed within that surface.
       </p>
       <div class="formula-box">
-        &oint; <strong>E</strong> &middot; d<strong>A</strong> = Q<sub>enclosed</sub> / &epsilon;<sub>0</sub>
+        &oint; E &middot; dA = Q<sub>enclosed</sub> / &epsilon;<sub>0</sub>
       </div>
       <p>
         This law implies that electric field lines originate from positive charges and terminate on negative charges. Electric charges are the sources and sinks of electric field lines.
@@ -167,7 +168,7 @@
         The total magnetic flux through any closed surface is always zero.
       </p>
       <div class="formula-box">
-        &oint; <strong>B</strong> &middot; d<strong>A</strong> = 0
+        &oint; B &middot; dA = 0
       </div>
       <p>
         This equation reflects the fact that magnetic monopoles do not exist. Magnetic field lines always form closed loops &mdash; they have no beginning or end. Every magnetic north pole is always accompanied by a south pole.
@@ -178,7 +179,7 @@
         A time-varying magnetic flux through a surface bounded by a closed loop induces an electromotive force (and hence an electric field) around that loop.
       </p>
       <div class="formula-box">
-        &oint; <strong>E</strong> &middot; d<strong>l</strong> = &minus; d&Phi;<sub>B</sub>/dt
+        &oint; E &middot; dl = &minus; d&Phi;<sub>B</sub>/dt
       </div>
       <p>
         The negative sign embodies Lenz's law: the induced EMF opposes the change in magnetic flux. This equation shows that a changing magnetic field creates an electric field, even in empty space.
@@ -189,10 +190,10 @@
         The line integral of the magnetic field around a closed loop equals &mu;<sub>0</sub> times the sum of the conduction current and the displacement current passing through any surface bounded by the loop.
       </p>
       <div class="formula-box">
-        &oint; <strong>B</strong> &middot; d<strong>l</strong> = &mu;<sub>0</sub> I<sub>c</sub> + &mu;<sub>0</sub> &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt
+        &oint; B &middot; dl = &mu;<sub>0</sub> I<sub>c</sub> + &mu;<sub>0</sub> &epsilon;<sub>0</sub> d&Phi;<sub>E</sub>/dt
       </div>
       <p>
-        This equation shows that magnetic fields are produced both by conduction currents and by time-varying electric fields. Together, Faraday's law and the Ampere-Maxwell law establish the beautiful symmetry: a changing <strong>E</strong> creates <strong>B</strong>, and a changing <strong>B</strong> creates <strong>E</strong>. This mutual generation is the mechanism that sustains electromagnetic waves.
+        This equation shows that magnetic fields are produced both by conduction currents and by time-varying electric fields. Together, Faraday's law and the Ampere-Maxwell law establish the beautiful symmetry: a changing E creates B, and a changing B creates E. This mutual generation is the mechanism that sustains electromagnetic waves.
       </p>
 
       <ul>
@@ -215,8 +216,8 @@
 
       <h3>Key Characteristics</h3>
       <ul>
-        <li>EM waves are <strong>transverse waves</strong>: the electric field <strong>E</strong>, magnetic field <strong>B</strong>, and direction of propagation form a mutually perpendicular right-handed triad.</li>
-        <li>The cross product <strong>E</strong> &times; <strong>B</strong> points in the direction of energy flow (propagation direction).</li>
+        <li>EM waves are transverse waves: the electric field E, magnetic field B, and direction of propagation form a mutually perpendicular right-handed triad.</li>
+        <li>The cross product E &times; B points in the direction of energy flow (propagation direction).</li>
         <li>In vacuum, c = 3 &times; 10<sup>8</sup> m/s is constant for all frequencies &mdash; independent of the source or observer's motion.</li>
         <li>The ratio of electric to magnetic field amplitudes is always equal to c in vacuum: E<sub>0</sub>/B<sub>0</sub> = c.</li>
         <li>EM waves require no material medium; they propagate through vacuum.</li>
@@ -252,16 +253,16 @@
 
       <h3>Nature of EM Waves</h3>
       <p>
-        Electromagnetic waves are <strong>transverse waves</strong> consisting of oscillating electric and magnetic fields that are mutually perpendicular to each other and to the direction of propagation. Unlike mechanical waves (sound, water waves), EM waves do not require a material medium &mdash; they can propagate through vacuum.
+        Electromagnetic waves are transverse waves consisting of oscillating electric and magnetic fields that are mutually perpendicular to each other and to the direction of propagation. Unlike mechanical waves (sound, water waves), EM waves do not require a material medium &mdash; they can propagate through vacuum.
       </p>
 
       <h3>Key Characteristics</h3>
       <ul>
-        <li><strong>Transverse nature:</strong> The electric field <strong>E</strong>, the magnetic field <strong>B</strong>, and the direction of propagation <strong>v</strong> are mutually perpendicular: <strong>E</strong> &perp; <strong>B</strong> &perp; <strong>v</strong>.</li>
-        <li><strong>Self-sustaining:</strong> A time-varying electric field generates a magnetic field (Ampere-Maxwell law), and a time-varying magnetic field generates an electric field (Faraday's law). Once initiated, the wave sustains itself without any external agency.</li>
-        <li><strong>Speed in vacuum:</strong> All electromagnetic waves travel at the same speed in vacuum, regardless of frequency or wavelength.</li>
-        <li><strong>No charge or mass:</strong> EM waves carry no charge. They carry energy and momentum.</li>
-        <li><strong>Direction of propagation:</strong> Given by the cross product <strong>E</strong> &times; <strong>B</strong>.</li>
+        <li>Transverse nature: The electric field E, the magnetic field B, and the direction of propagation v are mutually perpendicular: E &perp; B &perp; v.</li>
+        <li>Self-sustaining: A time-varying electric field generates a magnetic field (Ampere-Maxwell law), and a time-varying magnetic field generates an electric field (Faraday's law). Once initiated, the wave sustains itself without any external agency.</li>
+        <li>Speed in vacuum: All electromagnetic waves travel at the same speed in vacuum, regardless of frequency or wavelength.</li>
+        <li>No charge or mass: EM waves carry no charge. They carry energy and momentum.</li>
+        <li>Direction of propagation: Given by the cross product E &times; B.</li>
       </ul>
 
       <div class="formula-box">
@@ -284,6 +285,7 @@
       <p>
         The electric and magnetic fields oscillate in phase &mdash; they reach their maxima and minima simultaneously at any given point in space.
       </p>
+      <div class="diagram-placeholder">Diagram: Transverse electromagnetic wave showing electric field oscillating in y-direction, magnetic field oscillating in z-direction, both perpendicular to propagation direction (x-axis)</div>
 
       <h3>Speed in a Medium</h3>
       <p>
@@ -301,10 +303,10 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             Direction of propagation is +x. The B-field must be perpendicular to both E and the propagation direction.<br><br>
             Since E is along y and propagation is along x:<br>
-            <strong>E</strong> &times; <strong>B</strong> must point along +x, so <strong>B</strong> must be along +z.<br><br>
+            E &times; B must point along +x, so B must be along +z.<br><br>
             Amplitude: B<sub>0</sub> = E<sub>0</sub> / c<br><br>
             Phase and frequency match E, so:<br>
             B = (E<sub>0</sub>/c) sin(kx &minus; &omega;t) k (along z)
@@ -347,12 +349,12 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             Given: &lambda;<sub>0</sub> = 0.67 m, n = 1.5<br><br>
             Wavelength in medium:<br>
-            &lambda;<sub>M</sub> = &lambda;<sub>0</sub> / n = 0.67 / 1.5 = <strong>0.447 m</strong><br><br>
+            &lambda;<sub>M</sub> = &lambda;<sub>0</sub> / n = 0.67 / 1.5 = 0.447 m<br><br>
             Speed in medium:<br>
-            c<sub>M</sub> = c / n = (3 &times; 10<sup>8</sup>) / 1.5 = <strong>2 &times; 10<sup>8</sup> m/s</strong><br><br>
+            c<sub>M</sub> = c / n = (3 &times; 10<sup>8</sup>) / 1.5 = 2 &times; 10<sup>8</sup> m/s<br><br>
             Frequency is unchanged: &nu; = c / &lambda;<sub>0</sub> = (3 &times; 10<sup>8</sup>) / 0.67 &asymp; 4.48 &times; 10<sup>8</sup> Hz
           </p>
         </div>
@@ -392,7 +394,7 @@
 
       <h3>Momentum &amp; Radiation Pressure</h3>
       <p>
-        Electromagnetic waves carry momentum as well as energy. When an EM wave is absorbed by a surface, it transfers momentum to the surface, exerting a force (and hence a pressure) called <strong>radiation pressure</strong>. The momentum carried by an EM wave of energy U is:
+        Electromagnetic waves carry momentum as well as energy. When an EM wave is absorbed by a surface, it transfers momentum to the surface, exerting a force (and hence a pressure) called radiation pressure. The momentum carried by an EM wave of energy U is:
       </p>
       <div class="formula-box">
         Momentum: p = U / c &nbsp; (total absorption)<br>
@@ -415,17 +417,17 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             Power P = 1 mW = 1 &times; 10<sup>&minus;3</sup> W, Area A = 2 mm&sup2; = 2 &times; 10<sup>&minus;6</sup> m&sup2;<br><br>
-            <em>(a) Intensity:</em><br>
-            I = P / A = (1 &times; 10<sup>&minus;3</sup>) / (2 &times; 10<sup>&minus;6</sup>) = <strong>500 W/m&sup2;</strong><br><br>
-            <em>(b) Amplitude of electric field:</em><br>
+            (a) Intensity:<br>
+            I = P / A = (1 &times; 10<sup>&minus;3</sup>) / (2 &times; 10<sup>&minus;6</sup>) = 500 W/m&sup2;<br><br>
+            (b) Amplitude of electric field:<br>
             I = &frac12; &epsilon;<sub>0</sub> c E<sub>0</sub>&sup2;<br>
             E<sub>0</sub>&sup2; = 2I / (&epsilon;<sub>0</sub> c) = 2 &times; 500 / (8.85 &times; 10<sup>&minus;12</sup> &times; 3 &times; 10<sup>8</sup>)<br>
             E<sub>0</sub>&sup2; = 1000 / (2.655 &times; 10<sup>&minus;3</sup>) = 3.77 &times; 10<sup>5</sup><br>
-            E<sub>0</sub> &asymp; <strong>614 V/m</strong><br><br>
-            <em>(c) Radiation pressure (perfectly reflecting surface):</em><br>
-            P<sub>rad</sub> = 2I / c = 2 &times; 500 / (3 &times; 10<sup>8</sup>) = <strong>3.33 &times; 10<sup>&minus;6</sup> Pa</strong>
+            E<sub>0</sub> &asymp; 614 V/m<br><br>
+            (c) Radiation pressure (perfectly reflecting surface):<br>
+            P<sub>rad</sub> = 2I / c = 2 &times; 500 / (3 &times; 10<sup>8</sup>) = 3.33 &times; 10<sup>&minus;6</sup> Pa
           </p>
         </div>
       </div>
@@ -437,17 +439,17 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             Comparing with E = E<sub>0</sub> sin(&omega;t &minus; kx):<br>
             E<sub>0</sub> = 300 V/m, &omega; = 5 &times; 10<sup>6</sup> rad/s, k = 1.67 &times; 10<sup>&minus;2</sup> rad/m<br><br>
             Amplitude of magnetic field:<br>
-            B<sub>0</sub> = E<sub>0</sub> / c = 300 / (3 &times; 10<sup>8</sup>) = <strong>10<sup>&minus;6</sup> T = 1 &mu;T</strong><br><br>
+            B<sub>0</sub> = E<sub>0</sub> / c = 300 / (3 &times; 10<sup>8</sup>) = 10<sup>&minus;6</sup> T = 1 &mu;T<br><br>
             Frequency:<br>
-            f = &omega; / (2&pi;) = 5 &times; 10<sup>6</sup> / (2&pi;) &asymp; <strong>7.96 &times; 10<sup>5</sup> Hz &asymp; 796 kHz</strong><br><br>
+            f = &omega; / (2&pi;) = 5 &times; 10<sup>6</sup> / (2&pi;) &asymp; 7.96 &times; 10<sup>5</sup> Hz &asymp; 796 kHz<br><br>
             Wavelength:<br>
-            &lambda; = 2&pi; / k = 2&pi; / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; <strong>376 m</strong><br><br>
+            &lambda; = 2&pi; / k = 2&pi; / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; 376 m<br><br>
             Speed:<br>
-            v = &omega; / k = 5 &times; 10<sup>6</sup> / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; <strong>3 &times; 10<sup>8</sup> m/s = c</strong>
+            v = &omega; / k = 5 &times; 10<sup>6</sup> / (1.67 &times; 10<sup>&minus;2</sup>) &asymp; 3 &times; 10<sup>8</sup> m/s = c
           </p>
         </div>
       </div>
@@ -465,69 +467,69 @@
 
       <h3>Radio Waves</h3>
       <p>
-        <strong>Frequency:</strong> 3 &times; 10<sup>3</sup> Hz to ~10<sup>9</sup> Hz.<br>
-        <strong>Wavelength:</strong> &gt; 0.3 m (can be kilometres long).<br>
-        <strong>Source:</strong> Oscillating circuits (LC oscillators), antennas.<br>
-        <strong>Uses:</strong> AM/FM radio broadcasting, television signals, radar, cellular communication.<br>
-        <strong>Detection:</strong> Antennas, tuned receivers.
+        Frequency: 3 &times; 10<sup>3</sup> Hz to ~10<sup>9</sup> Hz.<br>
+        Wavelength: &gt; 0.3 m (can be kilometres long).<br>
+        Source: Oscillating circuits (LC oscillators), antennas.<br>
+        Uses: AM/FM radio broadcasting, television signals, radar, cellular communication.<br>
+        Detection: Antennas, tuned receivers.
       </p>
 
       <h3>Microwaves</h3>
       <p>
-        <strong>Frequency:</strong> 10<sup>9</sup> Hz to 10<sup>12</sup> Hz (1 GHz to 1 THz).<br>
-        <strong>Wavelength:</strong> 0.3 m to 0.3 mm.<br>
-        <strong>Source:</strong> Klystrons, magnetrons, Gunn diodes.<br>
-        <strong>Uses:</strong> Microwave ovens (2.45 GHz resonance of water molecules), satellite communication, Wi-Fi, Bluetooth, RADAR.<br>
-        <strong>Detection:</strong> Point-contact diodes, bolometers.
+        Frequency: 10<sup>9</sup> Hz to 10<sup>12</sup> Hz (1 GHz to 1 THz).<br>
+        Wavelength: 0.3 m to 0.3 mm.<br>
+        Source: Klystrons, magnetrons, Gunn diodes.<br>
+        Uses: Microwave ovens (2.45 GHz resonance of water molecules), satellite communication, Wi-Fi, Bluetooth, RADAR.<br>
+        Detection: Point-contact diodes, bolometers.
       </p>
 
       <h3>Infrared Radiation</h3>
       <p>
-        <strong>Frequency:</strong> 10<sup>12</sup> Hz to 4 &times; 10<sup>14</sup> Hz.<br>
-        <strong>Wavelength:</strong> 0.3 mm to 750 nm.<br>
-        <strong>Source:</strong> Hot bodies, sun, incandescent lamps, LED devices.<br>
-        <strong>Uses:</strong> Night vision equipment, TV remote controls, physiotherapy, greenhouse heating, thermal imaging.<br>
-        <strong>Detection:</strong> Thermopiles, bolometers, infrared photographic film.
+        Frequency: 10<sup>12</sup> Hz to 4 &times; 10<sup>14</sup> Hz.<br>
+        Wavelength: 0.3 mm to 750 nm.<br>
+        Source: Hot bodies, sun, incandescent lamps, LED devices.<br>
+        Uses: Night vision equipment, TV remote controls, physiotherapy, greenhouse heating, thermal imaging.<br>
+        Detection: Thermopiles, bolometers, infrared photographic film.
       </p>
 
       <h3>Visible Light</h3>
       <p>
-        <strong>Frequency:</strong> 4 &times; 10<sup>14</sup> Hz to 7.5 &times; 10<sup>14</sup> Hz.<br>
-        <strong>Wavelength:</strong> 750 nm (red) to 400 nm (violet).<br>
-        <strong>Source:</strong> Sun, stars, lamps, lasers, LEDs.<br>
-        <strong>Uses:</strong> Vision, photography, illumination, optical communication (fibre optics).<br>
-        <strong>Detection:</strong> Human eye, photocells, photographic film.
+        Frequency: 4 &times; 10<sup>14</sup> Hz to 7.5 &times; 10<sup>14</sup> Hz.<br>
+        Wavelength: 750 nm (red) to 400 nm (violet).<br>
+        Source: Sun, stars, lamps, lasers, LEDs.<br>
+        Uses: Vision, photography, illumination, optical communication (fibre optics).<br>
+        Detection: Human eye, photocells, photographic film.
       </p>
 
       <h3>Ultraviolet Radiation</h3>
       <p>
-        <strong>Frequency:</strong> 8 &times; 10<sup>14</sup> Hz to 10<sup>17</sup> Hz.<br>
-        <strong>Wavelength:</strong> 400 nm to 1 nm.<br>
-        <strong>Source:</strong> Sun, mercury vapour lamps, very hot bodies (T &gt; 3000 K).<br>
-        <strong>Uses:</strong> Sterilization, LASIK eye surgery, water purification, detection of forged documents, fluorescence studies.<br>
-        <strong>Detection:</strong> Photocells, UV sensitive photographic film.
+        Frequency: 8 &times; 10<sup>14</sup> Hz to 10<sup>17</sup> Hz.<br>
+        Wavelength: 400 nm to 1 nm.<br>
+        Source: Sun, mercury vapour lamps, very hot bodies (T &gt; 3000 K).<br>
+        Uses: Sterilization, LASIK eye surgery, water purification, detection of forged documents, fluorescence studies.<br>
+        Detection: Photocells, UV sensitive photographic film.
       </p>
 
       <h3>X-Rays</h3>
       <p>
-        <strong>Frequency:</strong> 10<sup>17</sup> Hz to 10<sup>19</sup> Hz.<br>
-        <strong>Wavelength:</strong> 10 nm to 10<sup>&minus;3</sup> nm.<br>
-        <strong>Source:</strong> Bombardment of high-energy electrons on heavy metal targets (Coolidge tube), synchrotron radiation.<br>
-        <strong>Uses:</strong> Medical diagnostics (bone fractures), CT scans, crystallography (Bragg diffraction), airport security screening, industrial quality control.<br>
-        <strong>Detection:</strong> Photographic plates, Geiger-Muller counters, fluorescent screens.
+        Frequency: 10<sup>17</sup> Hz to 10<sup>19</sup> Hz.<br>
+        Wavelength: 10 nm to 10<sup>&minus;3</sup> nm.<br>
+        Source: Bombardment of high-energy electrons on heavy metal targets (Coolidge tube), synchrotron radiation.<br>
+        Uses: Medical diagnostics (bone fractures), CT scans, crystallography (Bragg diffraction), airport security screening, industrial quality control.<br>
+        Detection: Photographic plates, Geiger-Muller counters, fluorescent screens.
       </p>
 
       <h3>Gamma Rays</h3>
       <p>
-        <strong>Frequency:</strong> &gt; 10<sup>19</sup> Hz.<br>
-        <strong>Wavelength:</strong> &lt; 10<sup>&minus;3</sup> nm (less than 10<sup>&minus;12</sup> m).<br>
-        <strong>Source:</strong> Nuclear reactions (radioactive decay), cosmic events, matter-antimatter annihilation.<br>
-        <strong>Uses:</strong> Cancer treatment (radiotherapy), food irradiation, sterilization of medical equipment, study of nuclear structure.<br>
-        <strong>Detection:</strong> Geiger-Muller counters, scintillation detectors.
+        Frequency: &gt; 10<sup>19</sup> Hz.<br>
+        Wavelength: &lt; 10<sup>&minus;3</sup> nm (less than 10<sup>&minus;12</sup> m).<br>
+        Source: Nuclear reactions (radioactive decay), cosmic events, matter-antimatter annihilation.<br>
+        Uses: Cancer treatment (radiotherapy), food irradiation, sterilization of medical equipment, study of nuclear structure.<br>
+        Detection: Geiger-Muller counters, scintillation detectors.
       </p>
 
       <p>
-        <strong>Key points for the exam:</strong>
+        Key points for the exam:
       </p>
       <ul>
         <li>The order of increasing frequency: Radio &lt; Microwave &lt; Infrared &lt; Visible &lt; Ultraviolet &lt; X-rays &lt; Gamma rays.</li>
@@ -546,7 +548,7 @@
 
       <h3>Properties of Magnetic Field Lines</h3>
       <p>
-        Magnetic field lines are a visual representation of the magnetic field in space. They have several distinguishing properties that set them apart from electric field lines. Most importantly, magnetic field lines always form <strong>closed loops</strong> &mdash; they have no starting or ending point. This is a direct consequence of the non-existence of magnetic monopoles.
+        Magnetic field lines are a visual representation of the magnetic field in space. They have several distinguishing properties that set them apart from electric field lines. Most importantly, magnetic field lines always form closed loops &mdash; they have no starting or ending point. This is a direct consequence of the non-existence of magnetic monopoles.
       </p>
       <ul>
         <li>Magnetic field lines form continuous closed loops with no beginning or end.</li>
@@ -555,13 +557,14 @@
         <li>Inside a bar magnet, field lines run from the south pole to the north pole. Outside, they run from north to south.</li>
         <li>The direction at any point is the direction in which a north pole would tend to move (or the direction a compass needle would point).</li>
       </ul>
+      <div class="diagram-placeholder">Diagram: Bar magnet with closed field lines, showing that lines enter south pole and emerge from north pole, with no isolated monopoles</div>
 
       <h3>Gauss's Law for Magnetism</h3>
       <p>
         The total magnetic flux through any closed surface is always zero. This is a formal statement of the fact that magnetic monopoles do not exist:
       </p>
       <div class="formula-box">
-        &oint; <strong>B</strong> &middot; d<strong>s</strong> = 0<br><br>
+        &oint; B &middot; ds = 0<br><br>
         This means: No net magnetic flux can leave any closed surface.<br>
         Every field line that enters a closed surface must also exit it.
       </div>
@@ -609,6 +612,7 @@
         <li>The effective magnetic length (2l) is about 84% of the geometric (physical) length of the magnet.</li>
         <li>The far-field behavior depends only on the total dipole moment, not on individual pole strengths or the separation independently.</li>
       </ul>
+      <div class="diagram-placeholder">Diagram: Bar magnet showing magnetic poles (north and south), magnetic moment vector pointing from south to north, and axial field showing field lines and field strength variation</div>
 
       <div class="example-box">
         <div class="ex-label">Example 5 &mdash; Magnetic moment and field of a bar magnet</div>
@@ -617,15 +621,15 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             Given: m = 10 A&middot;m, 2l = 0.04 m, r = 0.20 m<br><br>
-            <em>(a) Magnetic moment:</em><br>
-            M = m &times; 2l = 10 &times; 0.04 = <strong>0.4 A&middot;m&sup2;</strong><br><br>
-            <em>(b) Axial magnetic field:</em><br>
+            (a) Magnetic moment:<br>
+            M = m &times; 2l = 10 &times; 0.04 = 0.4 A&middot;m&sup2;<br><br>
+            (b) Axial magnetic field:<br>
             B = (&mu;<sub>0</sub> / 4&pi;) &times; (2M / r&sup3;)<br>
             B = 10<sup>&minus;7</sup> &times; (2 &times; 0.4) / (0.20)&sup3;<br>
             B = 10<sup>&minus;7</sup> &times; 0.8 / (8 &times; 10<sup>&minus;3</sup>)<br>
-            B = 10<sup>&minus;7</sup> &times; 100 = <strong>10<sup>&minus;5</sup> T = 0.1 G</strong>
+            B = 10<sup>&minus;7</sup> &times; 100 = 10<sup>&minus;5</sup> T = 0.1 G
           </p>
         </div>
       </div>
@@ -639,7 +643,7 @@
 
       <h3>Torque on a Magnetic Dipole</h3>
       <p>
-        When a magnetic dipole (bar magnet) is placed in a uniform external magnetic field, the field exerts equal and opposite forces on the two poles. These forces constitute a couple that produces a <strong>torque</strong> on the dipole, tending to align it with the field. The torque depends on the angle &theta; between the magnetic moment vector and the field direction:
+        When a magnetic dipole (bar magnet) is placed in a uniform external magnetic field, the field exerts equal and opposite forces on the two poles. These forces constitute a couple that produces a torque on the dipole, tending to align it with the field. The torque depends on the angle &theta; between the magnetic moment vector and the field direction:
       </p>
       <div class="formula-box">
         Torque: &tau; = M &times; B = MB sin&theta;<br><br>
@@ -674,7 +678,7 @@
 
       <h3>Origin of Earth's Magnetic Field</h3>
       <p>
-        Earth behaves like a giant magnetic dipole. Its magnetic field is believed to arise from convective motion of molten iron and nickel in the Earth's outer core (the <strong>dynamo effect</strong>). This sets up circulating electric currents that generate a dipole-like magnetic field. The magnetic north pole of Earth is located near the geographic south pole, and vice versa.
+        Earth behaves like a giant magnetic dipole. Its magnetic field is believed to arise from convective motion of molten iron and nickel in the Earth's outer core (the dynamo effect). This sets up circulating electric currents that generate a dipole-like magnetic field. The magnetic north pole of Earth is located near the geographic south pole, and vice versa.
       </p>
 
       <h3>Elements of Earth's Magnetic Field</h3>
@@ -682,9 +686,9 @@
         Three quantities (called magnetic elements) completely describe Earth's field at any location:
       </p>
       <ul>
-        <li><strong>Declination (&theta;):</strong> The angle between the geographic meridian (true north) and the magnetic meridian at that location. It tells us how much a compass deviates from true geographic north.</li>
-        <li><strong>Inclination (Angle of Dip, &delta;):</strong> The angle that the total magnetic field vector makes with the horizontal plane. At the magnetic equator, &delta; = 0&deg;. At the magnetic poles, &delta; = 90&deg;.</li>
-        <li><strong>Horizontal Component (H):</strong> The component of Earth's total field in the horizontal plane, pointing toward the magnetic north.</li>
+        <li>Declination (&theta;): The angle between the geographic meridian (true north) and the magnetic meridian at that location. It tells us how much a compass deviates from true geographic north.</li>
+        <li>Inclination (Angle of Dip, &delta;): The angle that the total magnetic field vector makes with the horizontal plane. At the magnetic equator, &delta; = 0&deg;. At the magnetic poles, &delta; = 90&deg;.</li>
+        <li>Horizontal Component (H): The component of Earth's total field in the horizontal plane, pointing toward the magnetic north.</li>
       </ul>
 
       <div class="formula-box">
@@ -715,9 +719,9 @@
         When a material is placed in a magnetic field, the material's response must be accounted for. Three related but distinct magnetic quantities describe this:
       </p>
       <ul>
-        <li><strong>Magnetization M:</strong> The net magnetic moment per unit volume of the material, measured in A/m. It represents how strongly the material has been magnetized by the external field.</li>
-        <li><strong>Magnetic Intensity H:</strong> A field quantity that represents the applied (external) field, independent of the material's response. It equals B/&mu;<sub>0</sub> &minus; M.</li>
-        <li><strong>Magnetic Induction B:</strong> The total field inside the material, including both the external field and the field due to the magnetized material itself.</li>
+        <li>Magnetization M: The net magnetic moment per unit volume of the material, measured in A/m. It represents how strongly the material has been magnetized by the external field.</li>
+        <li>Magnetic Intensity H: A field quantity that represents the applied (external) field, independent of the material's response. It equals B/&mu;<sub>0</sub> &minus; M.</li>
+        <li>Magnetic Induction B: The total field inside the material, including both the external field and the field due to the magnetized material itself.</li>
       </ul>
 
       <div class="formula-box">
@@ -751,7 +755,7 @@
 
       <h3>Diamagnetic Materials</h3>
       <p>
-        Diamagnetic materials are <strong>weakly repelled</strong> by magnetic fields. When placed in an external field, they develop a small magnetization opposite to the field direction. This arises from the orbital motion of electrons being slightly altered by the applied field.
+        Diamagnetic materials are weakly repelled by magnetic fields. When placed in an external field, they develop a small magnetization opposite to the field direction. This arises from the orbital motion of electrons being slightly altered by the applied field.
       </p>
       <ul>
         <li>Susceptibility: &chi; is small and negative (approximately &minus;10<sup>&minus;5</sup> to 0).</li>
@@ -764,7 +768,7 @@
 
       <h3>Paramagnetic Materials</h3>
       <p>
-        Paramagnetic materials are <strong>weakly attracted</strong> by magnetic fields. They have atoms or molecules with permanent magnetic dipole moments (due to unpaired electrons). In the absence of a field, thermal agitation randomizes these dipole orientations. An applied field partially aligns the dipoles, producing a small net magnetization in the field direction.
+        Paramagnetic materials are weakly attracted by magnetic fields. They have atoms or molecules with permanent magnetic dipole moments (due to unpaired electrons). In the absence of a field, thermal agitation randomizes these dipole orientations. An applied field partially aligns the dipoles, producing a small net magnetization in the field direction.
       </p>
       <ul>
         <li>Susceptibility: &chi; is small and positive (approximately 10<sup>&minus;5</sup> to 10<sup>&minus;3</sup>).</li>
@@ -775,12 +779,12 @@
 
       <h3>Ferromagnetic Materials</h3>
       <p>
-        Ferromagnetic materials are <strong>strongly attracted</strong> by magnetic fields and can retain their magnetism after the external field is removed. They exhibit magnetic domains &mdash; regions where atomic magnetic moments are aligned. An applied field causes domain walls to move and domains aligned with the field to grow.
+        Ferromagnetic materials are strongly attracted by magnetic fields and can retain their magnetism after the external field is removed. They exhibit magnetic domains &mdash; regions where atomic magnetic moments are aligned. An applied field causes domain walls to move and domains aligned with the field to grow.
       </p>
       <ul>
         <li>Susceptibility: &chi; is very large and positive (10<sup>2</sup> to 10<sup>5</sup> or more).</li>
         <li>Relative permeability: &mu;<sub>r</sub> much greater than 1 (can be thousands).</li>
-        <li>Above the <strong>Curie temperature</strong>, ferromagnets become paramagnetic (domain structure destroyed).</li>
+        <li>Above the Curie temperature, ferromagnets become paramagnetic (domain structure destroyed).</li>
         <li>Examples: Iron (Fe), Nickel (Ni), Cobalt (Co), and their alloys (alnico, permalloy).</li>
         <li>Ferromagnetism is responsible for permanent magnets and electromagnets.</li>
       </ul>
@@ -801,15 +805,15 @@
 
       <h3>The B-H Curve and Hysteresis Loop</h3>
       <p>
-        When a ferromagnetic material is subjected to a cyclic variation of the applied magnetic intensity H (from a large positive value to a large negative value and back), the magnetic induction B in the material does not retrace the same path. Instead, B lags behind H. This phenomenon is called <strong>hysteresis</strong> (from the Greek word for "lagging behind"). The closed curve traced on a B-H graph during one complete cycle is called the <strong>hysteresis loop</strong>.
+        When a ferromagnetic material is subjected to a cyclic variation of the applied magnetic intensity H (from a large positive value to a large negative value and back), the magnetic induction B in the material does not retrace the same path. Instead, B lags behind H. This phenomenon is called hysteresis (from the Greek word for "lagging behind"). The closed curve traced on a B-H graph during one complete cycle is called the hysteresis loop.
       </p>
 
       <h3>Key Parameters from the Hysteresis Loop</h3>
       <ul>
-        <li><strong>Saturation Magnetization:</strong> The maximum value of B reached when all domains are aligned with the applied field.</li>
-        <li><strong>Retentivity (Remanence, B<sub>r</sub>):</strong> The value of B remaining in the material when H is reduced back to zero. It measures the material's ability to retain magnetism.</li>
-        <li><strong>Coercivity (H<sub>c</sub>):</strong> The reverse field required to reduce B back to zero. It measures the material's resistance to demagnetization.</li>
-        <li><strong>Energy dissipation:</strong> The area enclosed by the B-H loop equals the energy dissipated as heat per unit volume per cycle. A wider loop means greater energy loss per cycle.</li>
+        <li>Saturation Magnetization: The maximum value of B reached when all domains are aligned with the applied field.</li>
+        <li>Retentivity (Remanence, B<sub>r</sub>): The value of B remaining in the material when H is reduced back to zero. It measures the material's ability to retain magnetism.</li>
+        <li>Coercivity (H<sub>c</sub>): The reverse field required to reduce B back to zero. It measures the material's resistance to demagnetization.</li>
+        <li>Energy dissipation: The area enclosed by the B-H loop equals the energy dissipated as heat per unit volume per cycle. A wider loop means greater energy loss per cycle.</li>
       </ul>
 
       <div class="formula-box">
@@ -824,8 +828,8 @@
         The shape of the B-H loop determines the practical application of the material:
       </p>
       <ul>
-        <li><strong>Hard ferromagnets</strong> (wide loop, high retentivity, high coercivity): Used for permanent magnets. Examples: steel, alnico, samarium-cobalt, neodymium-iron-boron. Once magnetized, they are difficult to demagnetize.</li>
-        <li><strong>Soft ferromagnets</strong> (narrow loop, low retentivity, low coercivity): Used for transformer cores, electromagnet cores, and motor cores where the field must be switched rapidly. Examples: soft iron, silicon steel, permalloy. They are easy to magnetize and demagnetize.</li>
+        <li>Hard ferromagnets (wide loop, high retentivity, high coercivity): Used for permanent magnets. Examples: steel, alnico, samarium-cobalt, neodymium-iron-boron. Once magnetized, they are difficult to demagnetize.</li>
+        <li>Soft ferromagnets (narrow loop, low retentivity, low coercivity): Used for transformer cores, electromagnet cores, and motor cores where the field must be switched rapidly. Examples: soft iron, silicon steel, permalloy. They are easy to magnetize and demagnetize.</li>
         <li>Heating a ferromagnet above its Curie temperature destroys ferromagnetism permanently (until cooled again).</li>
       </ul>
     </div>
@@ -838,7 +842,7 @@
 
       <h3>Permanent Magnets</h3>
       <p>
-        Permanent magnets are made from <strong>hard ferromagnetic materials</strong> that retain their magnetization indefinitely after the magnetizing field is removed. Their key properties are high retentivity (so they retain strong magnetism) and high coercivity (so they resist demagnetization by stray fields, vibrations, or moderate heating).
+        Permanent magnets are made from hard ferromagnetic materials that retain their magnetization indefinitely after the magnetizing field is removed. Their key properties are high retentivity (so they retain strong magnetism) and high coercivity (so they resist demagnetization by stray fields, vibrations, or moderate heating).
       </p>
       <ul>
         <li>Materials: Steel, alnico (Al, Ni, Co alloy), samarium-cobalt (SmCo<sub>5</sub>), neodymium-iron-boron (NdFeB &mdash; the strongest common permanent magnet material).</li>
@@ -848,7 +852,7 @@
 
       <h3>Electromagnets</h3>
       <p>
-        Electromagnets are made from <strong>soft ferromagnetic materials</strong> (cores) wound with current-carrying coils. They can produce very strong magnetic fields when current flows, and they lose their magnetism when the current is switched off. The key requirements are low retentivity (so the magnet turns off cleanly) and low coercivity (so it can be easily magnetized and demagnetized).
+        Electromagnets are made from soft ferromagnetic materials (cores) wound with current-carrying coils. They can produce very strong magnetic fields when current flows, and they lose their magnetism when the current is switched off. The key requirements are low retentivity (so the magnet turns off cleanly) and low coercivity (so it can be easily magnetized and demagnetized).
       </p>
       <div class="formula-box">
         Field inside solenoid electromagnet: B = &mu;<sub>0</sub>&mu;<sub>r</sub>nI<br>

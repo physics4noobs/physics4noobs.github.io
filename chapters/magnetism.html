@@ -6,7 +6,7 @@
   <title>Moving Charges &amp; Magnetism | Axomiya Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="../js/theme.js"></script>
@@ -109,39 +109,40 @@
         The Biot-Savart law is the fundamental law of magnetostatics that gives the magnetic field
         produced by an infinitesimal current element at any point in space. It is the magnetic
         analogue of Coulomb's law in electrostatics. If a wire carries a steady current I, and
-        d<strong>l</strong> is a tiny vector element of the wire pointing in the direction of
-        current flow, then the magnetic field d<strong>B</strong> at a point P located at
-        position vector <strong>r</strong> from the element is:
+        dl is a tiny vector element of the wire pointing in the direction of
+        current flow, then the magnetic field dB at a point P located at
+        position vector r from the element is:
       </p>
       <div class="formula-box">
-        d<strong>B</strong> = (&mu;<sub>0</sub> / 4&pi;) &times; I(d<strong>l</strong> &times; <strong>r&#770;</strong>) / r&sup2;<br><br>
+        dB = (&mu;<sub>0</sub> / 4&pi;) &times; I(dl &times; r&#770;) / r&sup2;<br><br>
         In terms of the full position vector:<br>
-        d<strong>B</strong> = (&mu;<sub>0</sub> / 4&pi;) &times; I(d<strong>l</strong> &times; <strong>r</strong>) / r&sup3;<br><br>
+        dB = (&mu;<sub>0</sub> / 4&pi;) &times; I(dl &times; r) / r&sup3;<br><br>
         Magnitude form:<br>
         dB = (&mu;<sub>0</sub> / 4&pi;) &times; (I dl sin&theta;) / r&sup2;<br><br>
         where:<br>
         &mu;<sub>0</sub> = 4&pi; &times; 10<sup>&minus;7</sup> T&middot;m&middot;A<sup>&minus;1</sup> (permeability of free space)<br>
-        &theta; = angle between d<strong>l</strong> and position vector <strong>r</strong><br>
+        &theta; = angle between dl and position vector r<br>
         r = distance from current element to point P
       </div>
 
       <h3>Key Characteristics</h3>
       <ul>
-        <li>The magnetic field d<strong>B</strong> is perpendicular to both the current element d<strong>l</strong> and the position vector <strong>r</strong>, as dictated by the cross product.</li>
+        <li>The magnetic field dB is perpendicular to both the current element dl and the position vector r, as dictated by the cross product.</li>
         <li>The field is directly proportional to the current I and the element length dl, and inversely proportional to the square of the distance r.</li>
         <li>The field depends on the angle &theta; between the current direction and the line joining the element to the observation point. It is maximum when &theta; = 90&deg; and zero when &theta; = 0&deg; or 180&deg;.</li>
         <li>For a medium with relative permeability &mu;<sub>r</sub>, replace &mu;<sub>0</sub> with &mu;<sub>0</sub>&mu;<sub>r</sub>.</li>
-        <li>For a complete conductor, the total field is the vector integral: <strong>B</strong> = (&mu;<sub>0</sub>I / 4&pi;) &int; (d<strong>l</strong> &times; <strong>r&#770;</strong>) / r&sup2;.</li>
+        <li>For a complete conductor, the total field is the vector integral: B = (&mu;<sub>0</sub>I / 4&pi;) &int; (dl &times; r&#770;) / r&sup2;.</li>
       </ul>
 
       <h3>Direction: Right-Hand Rule</h3>
       <p>
-        Point the fingers of your right hand in the direction of current flow (d<strong>l</strong>),
-        and curl them towards the position vector <strong>r</strong>. Your thumb points in the
-        direction of d<strong>B</strong>. Equivalently, for a long straight wire, if you grip the
+        Point the fingers of your right hand in the direction of current flow (dl),
+        and curl them towards the position vector r. Your thumb points in the
+        direction of dB. Equivalently, for a long straight wire, if you grip the
         wire with your right hand so that the thumb points along the current, your curled fingers
         give the direction of the circular magnetic field lines.
       </p>
+      <div class="diagram-placeholder">Diagram: Vector diagram showing dl, r vectors and their cross product direction using right-hand rule, plus right hand grip illustration for straight wire</div>
 
       <h3>Comparison with Coulomb's Law</h3>
       <ul>
@@ -186,13 +187,14 @@
       <div class="formula-box">
         B = (&mu;<sub>0</sub>I) / (4&pi;r) &times; (sin&alpha; + sin&beta;)
       </div>
+      <div class="diagram-placeholder">Diagram: Finite straight wire showing observation point at perpendicular distance r, with angles alpha and beta from perpendicular to wire ends</div>
       <p>
         Special cases that appear frequently in JEE problems:
       </p>
       <ul>
-        <li><strong>Infinite wire:</strong> &alpha; = &beta; = 90&deg;, so B = &mu;<sub>0</sub>I / (2&pi;r).</li>
-        <li><strong>Semi-infinite wire</strong> (one end at perpendicular foot): &alpha; = 90&deg;, &beta; = 0&deg;, so B = &mu;<sub>0</sub>I / (4&pi;r).</li>
-        <li><strong>At the midpoint of a finite wire of length L:</strong> sin&alpha; = sin&beta; = L / (2&radic;(r&sup2; + L&sup2;/4)), which gives B = (&mu;<sub>0</sub>IL) / (2&pi;r&radic;(4r&sup2; + L&sup2;)).</li>
+        <li>Infinite wire: &alpha; = &beta; = 90&deg;, so B = &mu;<sub>0</sub>I / (2&pi;r).</li>
+        <li>Semi-infinite wire (one end at perpendicular foot): &alpha; = 90&deg;, &beta; = 0&deg;, so B = &mu;<sub>0</sub>I / (4&pi;r).</li>
+        <li>At the midpoint of a finite wire of length L: sin&alpha; = sin&beta; = L / (2&radic;(r&sup2; + L&sup2;/4)), which gives B = (&mu;<sub>0</sub>IL) / (2&pi;r&radic;(4r&sup2; + L&sup2;)).</li>
       </ul>
 
       <h3>Superposition for Complex Geometries</h3>
@@ -212,7 +214,7 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             The centre of the square is at perpendicular distance r = a/2 from each side.<br>
             Each side subtends equal angles at the centre: &alpha; = &beta; = 45&deg;.<br><br>
             Field due to one side:<br>
@@ -222,7 +224,7 @@
             All four sides contribute fields in the same direction (into or out of the plane),
             so the total field is:<br>
             B<sub>total</sub> = 4 &times; B<sub>1</sub> = 4 &times; (&mu;<sub>0</sub>I&radic;2) / (2&pi;a)<br>
-            <strong>B<sub>total</sub> = 2&radic;2 &mu;<sub>0</sub>I / (&pi;a)</strong>
+            B<sub>total</sub> = 2&radic;2 &mu;<sub>0</sub>I / (&pi;a)
           </p>
         </div>
       </div>
@@ -239,7 +241,7 @@
         A circular loop of radius R carrying current I produces a magnetic field at its centre
         that is directed perpendicular to the plane of the loop (determined by the right-hand
         rule). Using the Biot-Savart law, every element of the loop is at the same distance R
-        from the centre, and d<strong>l</strong> is always perpendicular to <strong>r</strong>
+        from the centre, and dl is always perpendicular to r
         (so sin&theta; = 1). Integrating around the full loop:
       </p>
       <div class="formula-box">
@@ -267,6 +269,7 @@
         magnetic dipole at large distances. This is analogous to how an electric dipole field
         falls off as 1/r&sup3;.
       </p>
+      <div class="diagram-placeholder">Diagram: Circular loop with axial field line pattern showing field strength variation along axis and dipole-like field lines at large distances</div>
 
       <h3>Magnetic Field at the Centre of a Current Arc</h3>
       <p>
@@ -282,9 +285,9 @@
         Quarter circle (&alpha; = &pi;/2): B = &mu;<sub>0</sub>I / (8r)
       </div>
       <p>
-        <strong>JEE Tip:</strong> Straight segments of a wire that pass through the centre of the
-        arc contribute zero field at the centre (since <strong>r</strong> is parallel to
-        d<strong>l</strong>, making d<strong>l</strong> &times; <strong>r</strong> = 0). Only the
+        JEE Tip: Straight segments of a wire that pass through the centre of the
+        arc contribute zero field at the centre (since r is parallel to
+        dl, making dl &times; r = 0). Only the
         curved portions contribute.
       </p>
 
@@ -323,7 +326,7 @@
         N = total turns, L = length of solenoid
       </div>
       <ul>
-        <li>The field inside is <strong>uniform</strong>, parallel to the axis, and independent of the solenoid radius &mdash; it depends only on n and I.</li>
+        <li>The field inside is uniform, parallel to the axis, and independent of the solenoid radius &mdash; it depends only on n and I.</li>
         <li>Near the ends of a finite solenoid, the field is approximately half the interior value.</li>
         <li>The field outside an ideal (infinite) solenoid is exactly zero. For real (finite) solenoids, it is very small.</li>
         <li>A solenoid behaves like a bar magnet &mdash; one end acts as a magnetic north pole and the other as south.</li>
@@ -371,12 +374,12 @@
       <p>
         Ampere's circuital law is one of the four Maxwell's equations and is the magnetic
         analogue of Gauss's law in electrostatics. It states that the line integral of the
-        magnetic field <strong>B</strong> around any closed path (Amperian loop) equals
+        magnetic field B around any closed path (Amperian loop) equals
         &mu;<sub>0</sub> times the total current threading through the surface bounded by that
         path:
       </p>
       <div class="formula-box">
-        &oint; <strong>B</strong> &middot; d<strong>l</strong> = &mu;<sub>0</sub> I<sub>enclosed</sub>
+        &oint; B &middot; dl = &mu;<sub>0</sub> I<sub>enclosed</sub>
       </div>
       <p>
         The law is always true for steady (time-independent) currents, but is most useful as a
@@ -386,21 +389,21 @@
 
       <h3>Choosing the Amperian Loop</h3>
       <p>
-        The key to applying Ampere's law is selecting an Amperian loop on which <strong>B</strong>
-        is either constant and parallel to d<strong>l</strong>, or perpendicular to d<strong>l</strong>
+        The key to applying Ampere's law is selecting an Amperian loop on which B
+        is either constant and parallel to dl, or perpendicular to dl
         (contributing zero). Common choices:
       </p>
       <ul>
-        <li><strong>Straight wire:</strong> Circular loop centred on the wire &mdash; B is constant and tangent to the circle.</li>
-        <li><strong>Solenoid:</strong> Rectangular loop with one side inside and one outside &mdash; only the inside side contributes.</li>
-        <li><strong>Toroid:</strong> Circular loop concentric with the toroid axis.</li>
-        <li><strong>Infinite conducting sheet:</strong> Rectangular loop straddling the sheet.</li>
+        <li>Straight wire: Circular loop centred on the wire &mdash; B is constant and tangent to the circle.</li>
+        <li>Solenoid: Rectangular loop with one side inside and one outside &mdash; only the inside side contributes.</li>
+        <li>Toroid: Circular loop concentric with the toroid axis.</li>
+        <li>Infinite conducting sheet: Rectangular loop straddling the sheet.</li>
       </ul>
 
       <h3>Application: Long Straight Wire</h3>
       <p>
         For a long straight wire carrying current I, choose a circular Amperian loop of radius r
-        centred on the wire. By cylindrical symmetry, <strong>B</strong> is constant in magnitude
+        centred on the wire. By cylindrical symmetry, B is constant in magnitude
         and tangent to the loop at every point:
       </p>
       <div class="formula-box">
@@ -452,22 +455,23 @@
         When a charged particle moves through a region containing both electric and magnetic
         fields, the total electromagnetic force on it is called the Lorentz force:
       </p>
+      <div class="diagram-placeholder">Diagram: Charged particle with velocity vector, magnetic field direction, and force direction using Fleming's left-hand rule</div>
       <div class="formula-box">
-        <strong>F</strong> = q(<strong>E</strong> + <strong>v</strong> &times; <strong>B</strong>)<br><br>
-        Electric force: <strong>F</strong><sub>E</sub> = q<strong>E</strong> (along <strong>E</strong> for +q)<br>
-        Magnetic force: <strong>F</strong><sub>B</sub> = q(<strong>v</strong> &times; <strong>B</strong>)<br>
+        F = q(E + v &times; B)<br><br>
+        Electric force: F<sub>E</sub> = qE (along E for +q)<br>
+        Magnetic force: F<sub>B</sub> = q(v &times; B)<br>
         Magnitude of magnetic force: F<sub>B</sub> = qvB sin&theta;<br>
-        where &theta; = angle between <strong>v</strong> and <strong>B</strong>
+        where &theta; = angle between v and B
       </div>
 
       <h3>Properties of the Magnetic Force</h3>
       <ul>
-        <li>The magnetic force is always <strong>perpendicular</strong> to the velocity, so it acts as a centripetal-type force that changes the direction of motion without changing the speed.</li>
-        <li>Since <strong>F</strong><sub>B</sub> &perp; <strong>v</strong>, the magnetic force does <strong>no work</strong>: W = &int; <strong>F</strong> &middot; d<strong>s</strong> = 0. The kinetic energy remains constant.</li>
-        <li>The force is maximum when <strong>v</strong> &perp; <strong>B</strong> (&theta; = 90&deg;): F<sub>max</sub> = qvB.</li>
-        <li>The force is zero when <strong>v</strong> &parallel; <strong>B</strong> (&theta; = 0&deg; or 180&deg;).</li>
-        <li>A <strong>stationary charge</strong> (v = 0) experiences no magnetic force. Magnetism is inherently a phenomenon of moving charges.</li>
-        <li>For a <strong>positive charge</strong>, the force direction is given by the right-hand rule (point fingers along <strong>v</strong>, curl towards <strong>B</strong>, thumb gives <strong>F</strong>). For a negative charge, the force is reversed.</li>
+        <li>The magnetic force is always perpendicular to the velocity, so it acts as a centripetal-type force that changes the direction of motion without changing the speed.</li>
+        <li>Since F<sub>B</sub> &perp; v, the magnetic force does no work: W = &int; F &middot; ds = 0. The kinetic energy remains constant.</li>
+        <li>The force is maximum when v &perp; B (&theta; = 90&deg;): F<sub>max</sub> = qvB.</li>
+        <li>The force is zero when v &parallel; B (&theta; = 0&deg; or 180&deg;).</li>
+        <li>A stationary charge (v = 0) experiences no magnetic force. Magnetism is inherently a phenomenon of moving charges.</li>
+        <li>For a positive charge, the force direction is given by the right-hand rule (point fingers along v, curl towards B, thumb gives F). For a negative charge, the force is reversed.</li>
       </ul>
 
       <h3>Velocity Selector (Crossed E and B Fields)</h3>
@@ -483,7 +487,7 @@
       <p>
         Only particles moving with exactly this velocity pass through undeflected. Slower particles
         are deflected toward the electric field direction, and faster particles are deflected by the
-        dominant magnetic force. This arrangement is called a <strong>velocity selector</strong>
+        dominant magnetic force. This arrangement is called a velocity selector
         and is a crucial component of mass spectrometers and Thomson's charge-to-mass ratio
         experiment.
       </p>
@@ -501,7 +505,7 @@
         where R = radius of the dees
       </div>
       <p>
-        <strong>Limitation:</strong> At relativistic speeds, the mass increases and the cyclotron
+        Limitation: At relativistic speeds, the mass increases and the cyclotron
         frequency decreases, causing the particle to fall out of sync with the oscillating electric
         field. This limits the cyclotron to non-relativistic particles.
       </p>
@@ -513,7 +517,7 @@
     <div class="theory-section" id="particle-motion">
       <h2>7. Motion of Charged Particles in a Magnetic Field</h2>
 
-      <h3>Case 1: <strong>v</strong> Parallel to <strong>B</strong> (Straight Line)</h3>
+      <h3>Case 1: v Parallel to B (Straight Line)</h3>
       <p>
         When the velocity is parallel (or antiparallel) to the magnetic field, &theta; = 0&deg;
         (or 180&deg;), so sin&theta; = 0 and the magnetic force is zero. The particle continues
@@ -521,15 +525,16 @@
       </p>
       <div class="formula-box">
         F = qvB sin 0&deg; = 0<br>
-        Trajectory: straight line along <strong>B</strong>
+        Trajectory: straight line along B
       </div>
 
-      <h3>Case 2: <strong>v</strong> Perpendicular to <strong>B</strong> (Circular Motion)</h3>
+      <h3>Case 2: v Perpendicular to B (Circular Motion)</h3>
       <p>
         When the velocity is perpendicular to the magnetic field, the magnetic force provides the
         centripetal acceleration for uniform circular motion. The particle moves in a circle in the
-        plane perpendicular to <strong>B</strong>:
+        plane perpendicular to B:
       </p>
+      <div class="diagram-placeholder">Diagram: Charged particle undergoing circular motion in magnetic field, showing radius r, centripetal force, and velocity perpendicular to B</div>
       <div class="formula-box">
         Force balance: mv&sup2;/r = qvB<br><br>
         Radius of circular orbit: r = mv / (qB) = p / (qB)<br>
@@ -538,21 +543,21 @@
         Angular frequency (cyclotron frequency): &omega; = qB / m
       </div>
       <ul>
-        <li><strong>Key insight:</strong> The time period T and frequency f are independent of speed and radius. All particles with the same q/m ratio revolve with the same period, regardless of their energy. This is the operating principle of the cyclotron.</li>
+        <li>Key insight: The time period T and frequency f are independent of speed and radius. All particles with the same q/m ratio revolve with the same period, regardless of their energy. This is the operating principle of the cyclotron.</li>
         <li>The radius r is proportional to momentum (mv). Faster particles trace larger circles but take the same time to complete each revolution.</li>
-        <li>A positive charge circles anticlockwise when <strong>B</strong> points out of the page; a negative charge circles clockwise.</li>
+        <li>A positive charge circles anticlockwise when B points out of the page; a negative charge circles clockwise.</li>
         <li>Kinetic energy is conserved: the magnetic force, being perpendicular to velocity, does no work.</li>
       </ul>
 
-      <h3>Case 3: <strong>v</strong> at Angle &theta; to <strong>B</strong> (Helical Motion)</h3>
+      <h3>Case 3: v at Angle &theta; to B (Helical Motion)</h3>
       <p>
         When the velocity makes an arbitrary angle &theta; with the magnetic field, resolve it into
         parallel and perpendicular components. The parallel component is unaffected (no force), and
         the perpendicular component undergoes circular motion. The combination produces a
-        <strong>helical</strong> (corkscrew) trajectory:
+        helical (corkscrew) trajectory:
       </p>
       <div class="formula-box">
-        v<sub>&parallel;</sub> = v cos&theta; &nbsp; (constant, along <strong>B</strong>)<br>
+        v<sub>&parallel;</sub> = v cos&theta; &nbsp; (constant, along B)<br>
         v<sub>&perp;</sub> = v sin&theta; &nbsp; (produces circular motion)<br><br>
         Radius of helix: r = m(v sin&theta;) / (qB)<br>
         Period: T = 2&pi;m / (qB) &nbsp; (independent of &theta;)<br>
@@ -560,7 +565,7 @@
         p = v<sub>&parallel;</sub> &times; T = (2&pi;mv cos&theta;) / (qB)
       </div>
       <ul>
-        <li>The axis of the helix is parallel to <strong>B</strong>.</li>
+        <li>The axis of the helix is parallel to B.</li>
         <li>The radius depends only on the perpendicular component of velocity.</li>
         <li>The pitch depends on the parallel component &mdash; as &theta; &rarr; 0&deg;, the helix stretches into a straight line; as &theta; &rarr; 90&deg;, it collapses into a circle.</li>
       </ul>
@@ -584,21 +589,21 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br><br>
-            <em>Perpendicular component of velocity:</em><br>
+            <u>Solution:</u><br><br>
+            Perpendicular component of velocity:<br>
             v<sub>&perp;</sub> = v sin 30&deg; = 10<sup>7</sup> &times; 0.5 = 5 &times; 10<sup>6</sup> m/s<br><br>
-            <em>Radius of helix:</em><br>
+            Radius of helix:<br>
             r = mv<sub>&perp;</sub> / (qB)<br>
             r = (9.11 &times; 10<sup>&minus;31</sup> &times; 5 &times; 10<sup>6</sup>) / (1.6 &times; 10<sup>&minus;19</sup> &times; 0.2)<br>
             r = 4.555 &times; 10<sup>&minus;24</sup> / 3.2 &times; 10<sup>&minus;20</sup><br>
-            <strong>r = 1.42 &times; 10<sup>&minus;4</sup> m = 0.142 mm</strong><br><br>
-            <em>Time period:</em><br>
+            r = 1.42 &times; 10<sup>&minus;4</sup> m = 0.142 mm<br><br>
+            Time period:<br>
             T = 2&pi;m / (qB) = (2&pi; &times; 9.11 &times; 10<sup>&minus;31</sup>) / (1.6 &times; 10<sup>&minus;19</sup> &times; 0.2)<br>
-            <strong>T = 1.79 &times; 10<sup>&minus;10</sup> s = 0.179 ns</strong><br><br>
-            <em>Pitch:</em><br>
+            T = 1.79 &times; 10<sup>&minus;10</sup> s = 0.179 ns<br><br>
+            Pitch:<br>
             v<sub>&parallel;</sub> = v cos 30&deg; = 10<sup>7</sup> &times; (&radic;3/2) = 8.66 &times; 10<sup>6</sup> m/s<br>
             p = v<sub>&parallel;</sub> &times; T = 8.66 &times; 10<sup>6</sup> &times; 1.79 &times; 10<sup>&minus;10</sup><br>
-            <strong>p = 1.55 &times; 10<sup>&minus;3</sup> m = 1.55 mm</strong>
+            p = 1.55 &times; 10<sup>&minus;3</sup> m = 1.55 mm
           </p>
         </div>
       </div>
@@ -615,18 +620,18 @@
         A current-carrying conductor placed in an external magnetic field experiences a force.
         This is because the magnetic field exerts a force on each moving charge (drift electron)
         inside the conductor, and these microscopic forces add up to a macroscopic force on the
-        wire. For a straight conductor of length <strong>l</strong> carrying current I in a
-        uniform field <strong>B</strong>:
+        wire. For a straight conductor of length l carrying current I in a
+        uniform field B:
       </p>
       <div class="formula-box">
-        <strong>F</strong> = I(<strong>l</strong> &times; <strong>B</strong>)<br><br>
+        F = I(l &times; B)<br><br>
         Magnitude: F = BIl sin&theta;<br>
-        where &theta; = angle between conductor direction and <strong>B</strong>
+        where &theta; = angle between conductor direction and B
       </div>
       <ul>
         <li>Maximum force when conductor &perp; field (&theta; = 90&deg;): F = BIl.</li>
         <li>Zero force when conductor &parallel; field (&theta; = 0&deg;): F = 0.</li>
-        <li>The direction is given by the cross product, or equivalently, by <strong>Fleming's left-hand rule</strong>: index finger along <strong>B</strong>, middle finger along current (I), thumb gives force (F).</li>
+        <li>The direction is given by the cross product, or equivalently, by Fleming's left-hand rule: index finger along B, middle finger along current (I), thumb gives force (F).</li>
       </ul>
 
       <h3>Force on a Curved Conductor</h3>
@@ -636,29 +641,29 @@
         on the actual path:
       </p>
       <div class="formula-box">
-        <strong>F</strong> = I(<strong>L</strong><sub>eff</sub> &times; <strong>B</strong>)<br>
-        where <strong>L</strong><sub>eff</sub> = vector from start to end of conductor
+        F = I(L<sub>eff</sub> &times; B)<br>
+        where L<sub>eff</sub> = vector from start to end of conductor
       </div>
       <p>
-        <strong>Important corollary:</strong> For a closed current loop in a uniform magnetic field,
+        Important corollary: For a closed current loop in a uniform magnetic field,
         the net force is zero (since L<sub>eff</sub> = 0). However, the loop does experience a
         torque.
       </p>
 
       <h3>Torque on a Current Loop</h3>
       <p>
-        A rectangular coil of N turns, area A, carrying current I in a uniform field <strong>B</strong>
+        A rectangular coil of N turns, area A, carrying current I in a uniform field B
         experiences a torque:
       </p>
       <div class="formula-box">
-        <strong>&tau;</strong> = NI<strong>A</strong> &times; <strong>B</strong> = <strong>m</strong> &times; <strong>B</strong><br><br>
+        &tau; = NIA &times; B = m &times; B<br><br>
         Magnitude: &tau; = NIAB sin&theta;<br>
-        where &theta; = angle between the area normal (n&#770;) and <strong>B</strong>,<br>
-        and <strong>m</strong> = NIA is the magnetic dipole moment.
+        where &theta; = angle between the area normal (n&#770;) and B,<br>
+        and m = NIA is the magnetic dipole moment.
       </div>
       <ul>
-        <li>Maximum torque when loop plane is parallel to <strong>B</strong> (&theta; = 90&deg;): &tau;<sub>max</sub> = NIAB.</li>
-        <li>Zero torque when loop plane is perpendicular to <strong>B</strong> (&theta; = 0&deg;): stable equilibrium.</li>
+        <li>Maximum torque when loop plane is parallel to B (&theta; = 90&deg;): &tau;<sub>max</sub> = NIAB.</li>
+        <li>Zero torque when loop plane is perpendicular to B (&theta; = 0&deg;): stable equilibrium.</li>
         <li>This result holds for any planar loop shape, not just rectangles. The torque depends only on the area and the number of turns.</li>
       </ul>
     </div>
@@ -692,17 +697,17 @@
 
       <h3>Nature of the Force</h3>
       <ul>
-        <li><strong>Parallel currents (same direction):</strong> The wires <strong>attract</strong> each other. The field from each wire at the other wire's location creates a force directed towards the first wire.</li>
-        <li><strong>Anti-parallel currents (opposite directions):</strong> The wires <strong>repel</strong> each other.</li>
-        <li><strong>Memory aid:</strong> "Like currents attract, unlike currents repel" &mdash; opposite to the rule for charges!</li>
+        <li>Parallel currents (same direction): The wires attract each other. The field from each wire at the other wire's location creates a force directed towards the first wire.</li>
+        <li>Anti-parallel currents (opposite directions): The wires repel each other.</li>
+        <li>Memory aid: "Like currents attract, unlike currents repel" &mdash; opposite to the rule for charges!</li>
       </ul>
 
       <h3>Definition of the Ampere</h3>
       <p>
-        The SI unit of current, the ampere, is defined using this force: <em>One ampere is that
+        The SI unit of current, the ampere, is defined using this force: One ampere is that
         steady current which, when maintained in each of two infinitely long straight parallel
         conductors of negligible cross-section placed 1 metre apart in vacuum, produces a force of
-        exactly 2 &times; 10<sup>&minus;7</sup> N per metre of length between them.</em>
+        exactly 2 &times; 10<sup>&minus;7</sup> N per metre of length between them.
       </p>
       <div class="formula-box">
         Verification: For I<sub>1</sub> = I<sub>2</sub> = 1 A, d = 1 m:<br>
@@ -718,13 +723,13 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             Given: d = 5 cm = 0.05 m, I<sub>1</sub> = 10 A, I<sub>2</sub> = 20 A<br><br>
             F/l = (&mu;<sub>0</sub>I<sub>1</sub>I<sub>2</sub>) / (2&pi;d)<br>
             F/l = (4&pi; &times; 10<sup>&minus;7</sup> &times; 10 &times; 20) / (2&pi; &times; 0.05)<br>
             F/l = (8&pi; &times; 10<sup>&minus;5</sup>) / (0.1&pi;)<br>
-            <strong>F/l = 8 &times; 10<sup>&minus;4</sup> N/m = 0.8 mN/m</strong><br><br>
-            Since the currents are in opposite directions, the force is <strong>repulsive</strong>.
+            F/l = 8 &times; 10<sup>&minus;4</sup> N/m = 0.8 mN/m<br><br>
+            Since the currents are in opposite directions, the force is repulsive.
           </p>
         </div>
       </div>
@@ -742,16 +747,16 @@
         quantity that characterises the strength and orientation of the dipole:
       </p>
       <div class="formula-box">
-        <strong>m</strong> = NIA n&#770;<br><br>
+        m = NIA n&#770;<br><br>
         Magnitude: m = NIA<br>
         SI unit: A&middot;m&sup2; (ampere-metre squared) or J/T (joule per tesla)<br><br>
         where N = number of turns, I = current, A = area of loop,<br>
         n&#770; = unit normal to loop plane (right-hand rule)
       </div>
       <p>
-        The direction of <strong>m</strong> is perpendicular to the loop plane, given by the
+        The direction of m is perpendicular to the loop plane, given by the
         right-hand thumb rule: curl the fingers in the direction of current flow, and the thumb
-        points along <strong>m</strong>. The magnetic moment is independent of the shape of the
+        points along m. The magnetic moment is independent of the shape of the
         loop &mdash; it depends only on the enclosed area.
       </p>
 
@@ -761,9 +766,9 @@
         align the dipole moment with the field:
       </p>
       <div class="formula-box">
-        <strong>&tau;</strong> = <strong>m</strong> &times; <strong>B</strong><br>
+        &tau; = m &times; B<br>
         Magnitude: &tau; = mB sin&theta;<br>
-        where &theta; = angle between <strong>m</strong> and <strong>B</strong><br><br>
+        where &theta; = angle between m and B<br><br>
         Maximum torque: &tau;<sub>max</sub> = mB (when &theta; = 90&deg;)<br>
         Zero torque: when &theta; = 0&deg; (stable) or 180&deg; (unstable)
       </div>
@@ -773,7 +778,7 @@
         The potential energy of a magnetic dipole in a uniform field depends on its orientation:
       </p>
       <div class="formula-box">
-        U = &minus;<strong>m</strong> &middot; <strong>B</strong> = &minus;mB cos&theta;<br><br>
+        U = &minus;m &middot; B = &minus;mB cos&theta;<br><br>
         Stable equilibrium (&theta; = 0&deg;): U<sub>min</sub> = &minus;mB<br>
         Unstable equilibrium (&theta; = 180&deg;): U<sub>max</sub> = +mB<br>
         At &theta; = 90&deg;: U = 0<br><br>
@@ -815,7 +820,7 @@
       <p>
         A moving coil galvanometer is based on the torque experienced by a current-carrying coil
         in a magnetic field. It is the fundamental instrument from which ammeters and voltmeters
-        are derived. The key design feature is the use of a <strong>radial magnetic field</strong>
+        are derived. The key design feature is the use of a radial magnetic field
         (achieved with a cylindrical soft-iron core between curved pole pieces), which ensures
         that the plane of the coil is always parallel to the field, regardless of deflection.
         This makes sin&theta; = 1 at all positions, giving a linear relationship between
@@ -845,7 +850,7 @@
         k = torsional spring constant of suspension, &phi; = deflection angle
       </div>
       <p>
-        Since &phi; &prop; I, the galvanometer has a <strong>linear scale</strong>.
+        Since &phi; &prop; I, the galvanometer has a linear scale.
       </p>
 
       <h3>Sensitivity</h3>
@@ -862,9 +867,9 @@
 
       <h3>Conversion to Ammeter</h3>
       <p>
-        An ammeter measures current and must be connected <strong>in series</strong> with the
+        An ammeter measures current and must be connected in series with the
         circuit. To extend the range of a galvanometer, connect a low-resistance
-        <strong>shunt</strong> S in parallel:
+        shunt S in parallel:
       </p>
       <div class="formula-box">
         S = (I<sub>g</sub> &times; R<sub>G</sub>) / (I &minus; I<sub>g</sub>) = R<sub>G</sub> / (n &minus; 1)<br><br>
@@ -880,7 +885,7 @@
 
       <h3>Conversion to Voltmeter</h3>
       <p>
-        A voltmeter measures potential difference and must be connected <strong>in parallel</strong>
+        A voltmeter measures potential difference and must be connected in parallel
         with the circuit element. Connect a high resistance R in series with the galvanometer:
       </p>
       <div class="formula-box">
@@ -900,15 +905,15 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Given:</strong> R<sub>G</sub> = 100 &Omega;, I<sub>g</sub> = 2 mA = 2 &times; 10<sup>&minus;3</sup> A<br><br>
-            <em>(a) Ammeter (0&ndash;10 A):</em><br>
+            Given: R<sub>G</sub> = 100 &Omega;, I<sub>g</sub> = 2 mA = 2 &times; 10<sup>&minus;3</sup> A<br><br>
+            (a) Ammeter (0&ndash;10 A):<br>
             n = I/I<sub>g</sub> = 10 / 0.002 = 5000<br>
             S = R<sub>G</sub>/(n &minus; 1) = 100/4999<br>
-            <strong>S &asymp; 0.02 &Omega;</strong><br>
+            S &asymp; 0.02 &Omega;<br>
             Connect 0.02 &Omega; shunt in parallel with galvanometer.<br><br>
-            <em>(b) Voltmeter (0&ndash;50 V):</em><br>
+            (b) Voltmeter (0&ndash;50 V):<br>
             R = V/I<sub>g</sub> &minus; R<sub>G</sub> = 50/(2 &times; 10<sup>&minus;3</sup>) &minus; 100<br>
-            R = 25000 &minus; 100 = <strong>24,900 &Omega;</strong><br>
+            R = 25000 &minus; 100 = 24,900 &Omega;<br>
             Connect 24.9 k&Omega; resistor in series with galvanometer.
           </p>
         </div>
@@ -927,12 +932,12 @@
         respond, and the material becomes magnetised. Two key quantities describe this:
       </p>
       <div class="formula-box">
-        Magnetisation: <strong>M</strong> = net magnetic moment per unit volume (A/m)<br>
-        Magnetic intensity: <strong>H</strong> = <strong>B</strong>/&mu;<sub>0</sub> &minus; <strong>M</strong><br>
-        Relation: <strong>B</strong> = &mu;<sub>0</sub>(<strong>H</strong> + <strong>M</strong>)<br><br>
+        Magnetisation: M = net magnetic moment per unit volume (A/m)<br>
+        Magnetic intensity: H = B/&mu;<sub>0</sub> &minus; M<br>
+        Relation: B = &mu;<sub>0</sub>(H + M)<br><br>
         Magnetic susceptibility: &chi;<sub>m</sub> = M/H (dimensionless)<br>
-        <strong>M</strong> = &chi;<sub>m</sub><strong>H</strong><br>
-        <strong>B</strong> = &mu;<sub>0</sub>(1 + &chi;<sub>m</sub>)<strong>H</strong> = &mu;<sub>0</sub>&mu;<sub>r</sub><strong>H</strong><br>
+        M = &chi;<sub>m</sub>H<br>
+        B = &mu;<sub>0</sub>(1 + &chi;<sub>m</sub>)H = &mu;<sub>0</sub>&mu;<sub>r</sub>H<br>
         Relative permeability: &mu;<sub>r</sub> = 1 + &chi;<sub>m</sub>
       </div>
 
@@ -940,8 +945,8 @@
       <p>
         Diamagnetic materials have no permanent atomic magnetic dipole moment. When placed in an
         external field, the orbital motion of electrons is slightly modified, inducing tiny
-        magnetic moments that <strong>oppose the applied field</strong> (a consequence of Lenz's
-        law at the atomic level). They are <strong>weakly repelled</strong> by magnetic fields.
+        magnetic moments that oppose the applied field (a consequence of Lenz's
+        law at the atomic level). They are weakly repelled by magnetic fields.
       </p>
       <div class="formula-box">
         Susceptibility: &chi;<sub>m</sub> &lt; 0 (small and negative)<br>
@@ -960,9 +965,9 @@
       <h3>Paramagnetic Materials</h3>
       <p>
         Paramagnetic materials possess permanent atomic magnetic dipole moments (due to unpaired
-        electrons), but these are <strong>randomly oriented</strong> due to thermal agitation in
+        electrons), but these are randomly oriented due to thermal agitation in
         the absence of an external field. When a field is applied, the dipoles tend to align with
-        it, producing a <strong>weak net magnetisation</strong> in the field direction.
+        it, producing a weak net magnetisation in the field direction.
       </p>
       <div class="formula-box">
         Susceptibility: &chi;<sub>m</sub> &gt; 0 (small and positive)<br>
@@ -981,8 +986,8 @@
       <h3>Ferromagnetic Materials</h3>
       <p>
         Ferromagnetic materials have strong permanent atomic magnetic moments that exhibit
-        <strong>spontaneous alignment</strong> within small regions called <strong>magnetic
-        domains</strong> (typically 0.1&ndash;1 mm in size), even without an external field. The
+        spontaneous alignment within small regions called magnetic
+        domains (typically 0.1&ndash;1 mm in size), even without an external field. The
         interaction responsible is the quantum-mechanical exchange interaction. In an external
         field, favourably oriented domains grow at the expense of others, producing very strong
         magnetisation.
@@ -993,21 +998,21 @@
         Relative permeability: &mu;<sub>r</sub> &gt;&gt; 1
       </div>
       <ul>
-        <li><strong>Hysteresis:</strong> When a ferromagnetic material is subjected to a cyclic magnetic field, the B-H curve traces a loop. The area of this hysteresis loop represents the energy dissipated per cycle per unit volume.</li>
-        <li><strong>Retentivity (Remanence):</strong> The magnetisation retained when the external field is reduced to zero. High retentivity is desired for permanent magnets.</li>
-        <li><strong>Coercivity:</strong> The reverse field needed to demagnetise the material completely. High coercivity means the magnet is hard to demagnetise.</li>
-        <li><strong>Saturation:</strong> At sufficiently strong fields, all domains align and magnetisation reaches a maximum.</li>
-        <li><strong>Curie temperature (T<sub>C</sub>):</strong> Above this temperature, thermal energy overcomes the exchange interaction, domains break up, and ferromagnetic behaviour is lost &mdash; the material becomes paramagnetic. For iron: T<sub>C</sub> &asymp; 1043 K.</li>
-        <li><strong>Soft ferromagnets</strong> (soft iron): Low coercivity, narrow hysteresis loop. Used in transformer cores, electromagnets.</li>
-        <li><strong>Hard ferromagnets</strong> (steel, Alnico): High coercivity, wide hysteresis loop. Used in permanent magnets.</li>
+        <li>Hysteresis: When a ferromagnetic material is subjected to a cyclic magnetic field, the B-H curve traces a loop. The area of this hysteresis loop represents the energy dissipated per cycle per unit volume.</li>
+        <li>Retentivity (Remanence): The magnetisation retained when the external field is reduced to zero. High retentivity is desired for permanent magnets.</li>
+        <li>Coercivity: The reverse field needed to demagnetise the material completely. High coercivity means the magnet is hard to demagnetise.</li>
+        <li>Saturation: At sufficiently strong fields, all domains align and magnetisation reaches a maximum.</li>
+        <li>Curie temperature (T<sub>C</sub>): Above this temperature, thermal energy overcomes the exchange interaction, domains break up, and ferromagnetic behaviour is lost &mdash; the material becomes paramagnetic. For iron: T<sub>C</sub> &asymp; 1043 K.</li>
+        <li>Soft ferromagnets (soft iron): Low coercivity, narrow hysteresis loop. Used in transformer cores, electromagnets.</li>
+        <li>Hard ferromagnets (steel, Alnico): High coercivity, wide hysteresis loop. Used in permanent magnets.</li>
         <li>Examples: iron, cobalt, nickel, gadolinium, and their alloys.</li>
       </ul>
 
       <h3>Comparison Table</h3>
       <div class="formula-box">
-        <strong>Diamagnetic:</strong> &chi;<sub>m</sub> &lt; 0, &mu;<sub>r</sub> &lt; 1, weakly repelled, independent of T<br>
-        <strong>Paramagnetic:</strong> &chi;<sub>m</sub> &gt; 0 (small), &mu;<sub>r</sub> &gt; 1, weakly attracted, &chi; &prop; 1/T<br>
-        <strong>Ferromagnetic:</strong> &chi;<sub>m</sub> &gt;&gt; 1, &mu;<sub>r</sub> &gt;&gt; 1, strongly attracted, complex T-dependence
+        Diamagnetic: &chi;<sub>m</sub> &lt; 0, &mu;<sub>r</sub> &lt; 1, weakly repelled, independent of T<br>
+        Paramagnetic: &chi;<sub>m</sub> &gt; 0 (small), &mu;<sub>r</sub> &gt; 1, weakly attracted, &chi; &prop; 1/T<br>
+        Ferromagnetic: &chi;<sub>m</sub> &gt;&gt; 1, &mu;<sub>r</sub> &gt;&gt; 1, strongly attracted, complex T-dependence
       </div>
     </div>
 
@@ -1041,21 +1046,21 @@
       <h3>Elements of Earth's Magnetic Field</h3>
       <p>
         The geomagnetic field at any point on Earth's surface is completely described by three
-        quantities called the <strong>magnetic elements</strong>:
+        quantities called the magnetic elements:
       </p>
       <ul>
         <li>
-          <strong>Declination (&delta;):</strong> The angle between the geographic north and the
+          Declination (&delta;): The angle between the geographic north and the
           horizontal component of Earth's magnetic field (magnetic north) at a place. It varies
           from place to place and changes slowly with time.
         </li>
         <li>
-          <strong>Angle of Dip / Inclination (I or &delta;):</strong> The angle that the total
+          Angle of Dip / Inclination (I or &delta;): The angle that the total
           magnetic field makes with the horizontal plane. At the magnetic equator, dip = 0&deg;
           (field is horizontal). At the magnetic poles, dip = 90&deg; (field is vertical).
         </li>
         <li>
-          <strong>Horizontal Component (B<sub>H</sub>):</strong> The component of the total field
+          Horizontal Component (B<sub>H</sub>): The component of the total field
           in the horizontal plane.
         </li>
       </ul>
@@ -1073,17 +1078,17 @@
         For a magnet placed with its axis along the magnetic meridian:
       </p>
       <ul>
-        <li><strong>Axial position (N-S axis):</strong> Neutral points on the equatorial line (perpendicular bisector). Here, the magnet's equatorial field equals B<sub>H</sub> and is opposite to it.</li>
-        <li><strong>Equatorial position:</strong> Neutral points on the axial line. Here, the magnet's axial field equals B<sub>H</sub> and is opposite to it.</li>
+        <li>Axial position (N-S axis): Neutral points on the equatorial line (perpendicular bisector). Here, the magnet's equatorial field equals B<sub>H</sub> and is opposite to it.</li>
+        <li>Equatorial position: Neutral points on the axial line. Here, the magnet's axial field equals B<sub>H</sub> and is opposite to it.</li>
       </ul>
 
       <h3>Applications and Significance</h3>
       <ul>
-        <li><strong>Navigation:</strong> Magnetic compasses utilise the horizontal component B<sub>H</sub> for directional guidance. The declination must be accounted for in precise navigation.</li>
-        <li><strong>Magnetosphere:</strong> The Earth's magnetic field creates a protective shield (magnetosphere) that deflects solar wind particles and cosmic rays.</li>
-        <li><strong>Van Allen Belts:</strong> Charged particles from the solar wind are trapped in helical paths along Earth's field lines, forming radiation belts.</li>
-        <li><strong>Biological navigation:</strong> Many migratory birds, sea turtles, and other animals sense the geomagnetic field for orientation and long-distance navigation.</li>
-        <li><strong>Palaeomagnetism:</strong> Rocks record the direction of Earth's field at the time of their formation, providing evidence for plate tectonics and magnetic field reversals.</li>
+        <li>Navigation: Magnetic compasses utilise the horizontal component B<sub>H</sub> for directional guidance. The declination must be accounted for in precise navigation.</li>
+        <li>Magnetosphere: The Earth's magnetic field creates a protective shield (magnetosphere) that deflects solar wind particles and cosmic rays.</li>
+        <li>Van Allen Belts: Charged particles from the solar wind are trapped in helical paths along Earth's field lines, forming radiation belts.</li>
+        <li>Biological navigation: Many migratory birds, sea turtles, and other animals sense the geomagnetic field for orientation and long-distance navigation.</li>
+        <li>Palaeomagnetism: Rocks record the direction of Earth's field at the time of their formation, providing evidence for plate tectonics and magnetic field reversals.</li>
       </ul>
     </div>
 
@@ -1112,7 +1117,7 @@
 
       <h3>Ampere's Circuital Law</h3>
       <div class="formula-box">
-        &oint; <strong>B</strong> &middot; d<strong>l</strong> = &mu;<sub>0</sub>I<sub>enclosed</sub><br>
+        &oint; B &middot; dl = &mu;<sub>0</sub>I<sub>enclosed</sub><br>
         B (inside thick wire, r &lt; R) = &mu;<sub>0</sub>Ir / (2&pi;R&sup2;)
       </div>
 

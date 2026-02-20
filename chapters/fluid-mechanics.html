@@ -6,7 +6,7 @@
   <title>Fluid Mechanics | Axomiya Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="../js/theme.js"></script>
@@ -126,9 +126,9 @@
 
         <h3>Key Pressure Definitions</h3>
         <ul>
-          <li><strong>Atmospheric Pressure:</strong> The pressure exerted by the Earth&rsquo;s atmosphere at sea level. 1 atm = 1.013 &times; 10<sup>5</sup> Pa = 760 mm Hg.</li>
-          <li><strong>Gauge Pressure:</strong> The pressure measured above atmospheric pressure. P<sub>gauge</sub> = P &minus; P<sub>atm</sub>.</li>
-          <li><strong>Absolute Pressure:</strong> The total pressure at a point, including atmospheric pressure. P<sub>abs</sub> = P<sub>atm</sub> + P<sub>gauge</sub>.</li>
+          <li>Atmospheric Pressure: The pressure exerted by the Earth&rsquo;s atmosphere at sea level. 1 atm = 1.013 &times; 10<sup>5</sup> Pa = 760 mm Hg.</li>
+          <li>Gauge Pressure: The pressure measured above atmospheric pressure. P<sub>gauge</sub> = P &minus; P<sub>atm</sub>.</li>
+          <li>Absolute Pressure: The total pressure at a point, including atmospheric pressure. P<sub>abs</sub> = P<sub>atm</sub> + P<sub>gauge</sub>.</li>
         </ul>
       </div>
 
@@ -165,6 +165,7 @@
           The point of application of this thrust (center of pressure) is located at a depth of 2h/3
           below the free surface, not at the centroid (which would be at h/2).
         </p>
+        <div class="diagram-placeholder">Diagram: Vertical submerged wall with liquid above, pressure distribution shown as increasing with depth (triangular), center of pressure at 2h/3 marked</div>
 
         <div class="example-box">
           <div class="ex-label">Example: Tank Thrust</div>
@@ -174,7 +175,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Total thrust: F = &rho;g h&sup2; &times; width / 2<br>
               F = 1000 &times; 9.8 &times; 25 &times; 4 / 2<br>
               F = 1000 &times; 9.8 &times; 50<br>
@@ -208,6 +209,7 @@
           The mechanical advantage is the ratio A&#8322;/A&#8321;. Although the force is amplified,
           the work done on both sides is the same (conservation of energy): F&#8321;d&#8321; = F&#8322;d&#8322;.
         </p>
+        <div class="diagram-placeholder">Diagram: Hydraulic system with two pistons of different areas, smaller piston with force F1 and area A1, larger piston with force F2 and area A2, connected by fluid</div>
 
         <div class="example-box">
           <div class="ex-label">Example 1: Hydraulic Lift</div>
@@ -218,7 +220,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               By Pascal&rsquo;s Law: F&#8321;/A&#8321; = F&#8322;/A&#8322;<br><br>
               F&#8322; = F&#8321; &times; (A&#8322; / A&#8321;)<br>
               F&#8322; = 50 &times; (1000 / 10)<br>
@@ -302,7 +304,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using the floating condition:<br>
               V<sub>submerged</sub> &times; &rho;<sub>water</sub> = V &times; &rho;<sub>sphere</sub><br>
               V<sub>submerged</sub> &times; 1000 = 0.1 &times; 600<br>
@@ -333,10 +335,10 @@
 
         <h3>Streamline vs. Turbulent Flow</h3>
         <ul>
-          <li><strong>Streamline (Laminar) Flow:</strong> Fluid particles follow smooth, well-defined paths (streamlines). Adjacent layers slide smoothly past each other. Occurs at low velocities.</li>
-          <li><strong>Turbulent Flow:</strong> Fluid particles move in irregular, chaotic paths with eddies and vortices. Occurs at high velocities.</li>
+          <li>Streamline (Laminar) Flow: Fluid particles follow smooth, well-defined paths (streamlines). Adjacent layers slide smoothly past each other. Occurs at low velocities.</li>
+          <li>Turbulent Flow: Fluid particles move in irregular, chaotic paths with eddies and vortices. Occurs at high velocities.</li>
         </ul>
-      </div>
+        <div class="diagram-placeholder">Diagram: Two flow visualizations side by side - streamline flow showing parallel curved paths, and turbulent flow showing chaotic eddies and vortices</div>
 
       <!-- 7. Bernoulli's Theorem -->
       <div class="theory-section" id="bernoulli">
@@ -358,11 +360,12 @@
 
         <h3>Applications of Bernoulli's Theorem</h3>
         <ul>
-          <li><strong>Venturi Meter:</strong> A device to measure fluid flow rate. The pressure drop across a constriction is related to the velocity (and hence flow rate) by Bernoulli&rsquo;s equation.</li>
-          <li><strong>Lift on an Airfoil:</strong> Air moves faster over the curved upper surface of an airplane wing than the flat lower surface, creating lower pressure above and higher pressure below &mdash; resulting in an upward lift force.</li>
-          <li><strong>Magnus Effect:</strong> A spinning ball moving through air experiences a lateral force because the spin creates a pressure difference on opposite sides of the ball, causing it to curve.</li>
-          <li><strong>Atomiser / Spray Gun:</strong> High-speed air flowing over a tube reduces pressure at the top, drawing liquid up and atomising it into a fine spray.</li>
+          <li>Venturi Meter: A device to measure fluid flow rate. The pressure drop across a constriction is related to the velocity (and hence flow rate) by Bernoulli&rsquo;s equation.</li>
+          <li>Lift on an Airfoil: Air moves faster over the curved upper surface of an airplane wing than the flat lower surface, creating lower pressure above and higher pressure below &mdash; resulting in an upward lift force.</li>
+          <li>Magnus Effect: A spinning ball moving through air experiences a lateral force because the spin creates a pressure difference on opposite sides of the ball, causing it to curve.</li>
+          <li>Atomiser / Spray Gun: High-speed air flowing over a tube reduces pressure at the top, drawing liquid up and atomising it into a fine spray.</li>
         </ul>
+        <div class="diagram-placeholder">Diagram: Airplane wing cross-section (airfoil) showing air velocity faster over curved top surface, pressure distribution with lower pressure above creating lift force upward</div>
 
         <div class="example-box">
           <div class="ex-label">Example 2: Bernoulli's Equation</div>
@@ -374,7 +377,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Step 1: Find v&#8322; using the equation of continuity:<br>
               A&#8321;v&#8321; = A&#8322;v&#8322;<br>
               40 &times; 2 = 20 &times; v&#8322;<br>
@@ -465,7 +468,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using the Pitot tube formula for liquids:<br>
               V = &radic;(2gh)<br>
               V = &radic;(2 &times; 9.8 &times; 0.5)<br>
@@ -541,7 +544,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using the time to empty formula:<br>
               t = (A / a) &radic;(2H / g)<br>
               t = (2 / 0.01) &times; &radic;(2 &times; 10 / 9.8)<br>
@@ -591,10 +594,11 @@
 
         <h3>Types of Contact Angles</h3>
         <ul>
-          <li><strong>Acute angle (&theta; &lt; 90°):</strong> Adhesion &gt; cohesion. Example: water on glass. The meniscus is concave, and the liquid &quot;wets&quot; the surface.</li>
-          <li><strong>Obtuse angle (&theta; &gt; 90°):</strong> Cohesion &gt; adhesion. Example: mercury on glass. The meniscus is convex, and the liquid does not wet the surface.</li>
-          <li><strong>Right angle (&theta; = 90°):</strong> Adhesion = cohesion. The meniscus is flat.</li>
+          <li>Acute angle (&theta; &lt; 90°): Adhesion &gt; cohesion. Example: water on glass. The meniscus is concave, and the liquid &quot;wets&quot; the surface.</li>
+          <li>Obtuse angle (&theta; &gt; 90°): Cohesion &gt; adhesion. Example: mercury on glass. The meniscus is convex, and the liquid does not wet the surface.</li>
+          <li>Right angle (&theta; = 90°): Adhesion = cohesion. The meniscus is flat.</li>
         </ul>
+        <div class="diagram-placeholder">Diagram: Three contact angle scenarios - acute angle (water on glass with concave meniscus), right angle (flat meniscus), and obtuse angle (mercury on glass with convex meniscus)</div>
 
         <div class="example-box">
           <div class="ex-label">Example: Contact Angle</div>
@@ -657,7 +661,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               For a soap bubble (two surfaces):<br>
               &Delta;P = 4T / R<br>
               &Delta;P = 4 &times; 0.025 / 0.02<br>
@@ -706,7 +710,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using h = (2T cos &theta;) / (r &rho; g):<br>
               0.03 = (2 &times; T &times; 1) / (0.0005 &times; 1000 &times; 9.8)<br>
               0.03 = 2T / 4.9<br>
@@ -759,9 +763,9 @@
 
         <h3>Flow Classification</h3>
         <ul>
-          <li><strong>Re &lt; 2000:</strong> Laminar flow &mdash; smooth, orderly flow with layers sliding past each other.</li>
-          <li><strong>2000 &le; Re &le; 4000:</strong> Transition region &mdash; flow can be either laminar or turbulent.</li>
-          <li><strong>Re &gt; 4000:</strong> Turbulent flow &mdash; chaotic, irregular flow with eddies and vortices.</li>
+          <li>Re &lt; 2000: Laminar flow &mdash; smooth, orderly flow with layers sliding past each other.</li>
+          <li>2000 &le; Re &le; 4000: Transition region &mdash; flow can be either laminar or turbulent.</li>
+          <li>Re &gt; 4000: Turbulent flow &mdash; chaotic, irregular flow with eddies and vortices.</li>
         </ul>
 
         <h3>Critical Velocity</h3>
@@ -782,7 +786,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Re = (&rho; V D) / &eta;<br>
               Re = (1000 &times; 2 &times; 0.01) / 0.001<br>
               Re = 20 / 0.001<br>
@@ -819,8 +823,8 @@
 
         <h3>Series and Parallel Combinations</h3>
         <ul>
-          <li><strong>Series:</strong> R<sub>total</sub> = R&#8321; + R&#8322; + ... (resistances add)</li>
-          <li><strong>Parallel:</strong> 1/R<sub>total</sub> = 1/R&#8321; + 1/R&#8322; + ... (reciprocals add)</li>
+          <li>Series: R<sub>total</sub> = R&#8321; + R&#8322; + ... (resistances add)</li>
+          <li>Parallel: 1/R<sub>total</sub> = 1/R&#8321; + 1/R&#8322; + ... (reciprocals add)</li>
         </ul>
 
         <div class="example-box">
@@ -832,7 +836,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               For one capillary:<br>
               R = (8 &eta; L) / (&pi; R<sup>4</sup>)<br>
               R = (8 &times; 0.01 &times; 0.1) / (&pi; &times; (0.001)<sup>4</sup>)<br>
@@ -892,7 +896,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using the terminal velocity formula:<br>
               v<sub>t</sub> = (2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>f</sub>)g) / (9&eta;)<br><br>
               Given: r = 2 mm = 2 &times; 10<sup>&minus;3</sup> m, &rho;<sub>s</sub> = 8000 kg/m&sup3;,
@@ -942,9 +946,9 @@
 
         <h3>Applications</h3>
         <ul>
-          <li><strong>Centrifuge:</strong> Used to separate particles of different densities by rotating them at high angular velocities.</li>
-          <li><strong>Spinning bucket:</strong> The water surface forms a paraboloid when a bucket of water is spun rapidly.</li>
-          <li><strong>Rotating machinery:</strong> Understanding pressure distribution in rotating fluids is important for pump and turbine design.</li>
+          <li>Centrifuge: Used to separate particles of different densities by rotating them at high angular velocities.</li>
+          <li>Spinning bucket: The water surface forms a paraboloid when a bucket of water is spun rapidly.</li>
+          <li>Rotating machinery: Understanding pressure distribution in rotating fluids is important for pump and turbine design.</li>
         </ul>
 
         <div class="example-box">
@@ -956,7 +960,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               The free surface height relative to the lowest point is:<br>
               y = (&omega;&sup2; r&sup2;) / (2g)<br>
               y = (10&sup2; &times; 0.2&sup2;) / (2 &times; 9.8)<br>
@@ -973,25 +977,25 @@
       <div class="theory-section">
         <h2>Key Formulas Summary</h2>
         <div class="formula-box">
-          <strong>Pressure & Hydrostatics:</strong><br>
+          Pressure & Hydrostatics:<br>
           P = F/A &nbsp;&nbsp;|&nbsp;&nbsp; P = P<sub>0</sub> + &rho;gh &nbsp;&nbsp;|&nbsp;&nbsp; F<sub>b</sub> = &rho;Vg<br><br>
-          <strong>Pascal's Law & Hydraulics:</strong><br>
+          Pascal's Law & Hydraulics:<br>
           F&#8321;/A&#8321; = F&#8322;/A&#8322; &nbsp;&nbsp;|&nbsp;&nbsp; Thrust on vertical wall: F = &rho;gh&sup2;/2<br><br>
-          <strong>Fluids in Motion:</strong><br>
+          Fluids in Motion:<br>
           A&#8321;v&#8321; = A&#8322;v&#8322; (Continuity) &nbsp;&nbsp;|&nbsp;&nbsp; P + &frac12;&rho;v&sup2; + &rho;gh = const (Bernoulli)<br><br>
-          <strong>Efflux & Applications:</strong><br>
+          Efflux & Applications:<br>
           V = &radic;(2gh) (Torricelli) &nbsp;&nbsp;|&nbsp;&nbsp; Q = (A&#8321;A&#8322;/&radic;(A&#8321;&sup2;&minus;A&#8322;&sup2;)) &radic;(2gh) (Venturi)<br><br>
-          <strong>Reynolds Number & Flow Classification:</strong><br>
+          Reynolds Number & Flow Classification:<br>
           Re = &rho;VD/&eta; &nbsp;&nbsp;|&nbsp;&nbsp; Re &lt; 2000 (laminar) &nbsp;&nbsp;|&nbsp;&nbsp; Re &gt; 4000 (turbulent)<br><br>
-          <strong>Surface Tension & Capillarity:</strong><br>
+          Surface Tension & Capillarity:<br>
           T = F/l &nbsp;&nbsp;|&nbsp;&nbsp; Drop: &Delta;P = 2T/R &nbsp;&nbsp;|&nbsp;&nbsp; Bubble: &Delta;P = 4T/R<br>
           h = (2T cos &theta;)/(r&rho;g) (Capillary rise)<br><br>
-          <strong>Viscosity & Stokes' Law:</strong><br>
+          Viscosity & Stokes' Law:<br>
           F = &eta;A(dv/dy) &nbsp;&nbsp;|&nbsp;&nbsp; F = 6&pi;&eta;rv (Stokes)<br>
           v<sub>t</sub> = (2r&sup2;(&rho;<sub>s</sub>&minus;&rho;<sub>f</sub>)g)/(9&eta;) (Terminal velocity)<br><br>
-          <strong>Poiseuille's Formula:</strong><br>
+          Poiseuille's Formula:<br>
           Q = (&pi;&Delta;P R<sup>4;)/(8&eta;L) &nbsp;&nbsp;|&nbsp;&nbsp; R<sub>flow</sub> = (8&eta;L)/(&pi;R<sup>4</sup>)<br><br>
-          <strong>Rotating Fluids:</strong><br>
+          Rotating Fluids:<br>
           P = P<sub>0</sub> + &frac12;&rho;&omega;&sup2;r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; y = (&omega;&sup2;r&sup2;)/(2g) (Free surface)
         </div>
       </div>
@@ -1009,7 +1013,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               By Pascal&rsquo;s Law: F&#8321;/A&#8321; = F&#8322;/A&#8322;<br><br>
               F&#8322; = F&#8321; &times; (A&#8322; / A&#8321;)<br>
               F&#8322; = 50 &times; (1000 / 10)<br>
@@ -1030,7 +1034,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Step 1: Find v&#8322; using the equation of continuity:<br>
               A&#8321;v&#8321; = A&#8322;v&#8322;<br>
               40 &times; 2 = 20 &times; v&#8322;<br>
@@ -1056,7 +1060,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using the terminal velocity formula:<br>
               v<sub>t</sub> = (2r&sup2;(&rho;<sub>s</sub> &minus; &rho;<sub>f</sub>)g) / (9&eta;)<br><br>
               Given: r = 2 mm = 2 &times; 10<sup>&minus;3</sup> m, &rho;<sub>s</sub> = 8000 kg/m&sup3;,
@@ -1077,7 +1081,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using h = (2T cos &theta;) / (r &rho; g):<br>
               0.03 = (2 &times; T &times; 1) / (0.0005 &times; 1000 &times; 9.8)<br>
               0.03 = 2T / 4.9<br>
@@ -1096,7 +1100,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Re = (&rho; V D) / &eta;<br>
               Re = (1000 &times; 2 &times; 0.01) / 0.001<br>
               Re = 20 / 0.001 = 20,000<br><br>
@@ -1113,7 +1117,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using the Pitot tube formula for liquids:<br>
               V = &radic;(2gh)<br>
               V = &radic;(2 &times; 9.8 &times; 0.5)<br>
@@ -1131,7 +1135,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Using the floating condition:<br>
               V<sub>submerged</sub> &times; &rho;<sub>water</sub> = V &times; &rho;<sub>sphere</sub><br>
               V<sub>submerged</sub> &times; 1000 = 0.1 &times; 600<br>
@@ -1149,7 +1153,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               For a soap bubble (two surfaces):<br>
               &Delta;P = 4T / R<br>
               &Delta;P = 4 &times; 0.025 / 0.02<br>
@@ -1166,7 +1170,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               Total thrust: F = &rho;g h&sup2; &times; width / 2<br>
               F = 1000 &times; 9.8 &times; 25 &times; 4 / 2<br>
               F = 490,000 N = 490 kN<br><br>
@@ -1184,7 +1188,7 @@
           </p>
           <div class="solution">
             <p>
-              <strong>Solution:</strong><br>
+              <u>Solution:</u><br>
               The free surface height relative to the lowest point is:<br>
               y = (&omega;&sup2; r&sup2;) / (2g)<br>
               y = (10&sup2; &times; 0.2&sup2;) / (2 &times; 9.8)<br>

@@ -6,18 +6,12 @@
   <title>Chapters | Axomiya Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="js/theme.js"></script>
   <style>
     /* --- Chapters Page: Netflix-style rows --- */
-    .chp-page {
-      max-width: 1320px;
-      margin: 92px auto 40px;
-      padding: 0 28px;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
 
     /* Row */
     .chp-row { margin-bottom: 36px; }
@@ -30,11 +24,11 @@
     .chp-row-accent.xii-1 { background: var(--color-accent); }
     .chp-row-accent.xii-2 { background: var(--color-warning, #ff6b35); }
     .chp-row-title {
-      font-family: var(--font-display); font-size: 1rem; font-weight: 600;
-      color: var(--text-primary); letter-spacing: 0.5px; flex: 1;
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+      color: var(--text-primary); flex: 1;
     }
     .chp-row-count {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted);
     }
     .chp-row-arrows { display: flex; gap: 6px; }
     .chp-row-arrow {
@@ -72,7 +66,6 @@
     }
     .chp-track .ch-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.18);
     }
 
     /* Thumbnail area */
@@ -84,38 +77,81 @@
     }
     .ch-thumb svg { width: 72%; height: 72%; overflow: visible; }
 
-    /* Row-specific thumbnail tints */
-    .chp-row:nth-child(1) .ch-thumb { background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,212,255,0.02)); color: rgba(0,212,255,0.45); }
-    .chp-row:nth-child(2) .ch-thumb { background: linear-gradient(135deg, rgba(157,78,221,0.1), rgba(157,78,221,0.02)); color: rgba(157,78,221,0.45); }
-    .chp-row:nth-child(3) .ch-thumb { background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,255,136,0.02)); color: rgba(0,255,136,0.45); }
-    .chp-row:nth-child(4) .ch-thumb { background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(255,107,53,0.02)); color: rgba(255,107,53,0.45); }
+    /* Row-specific thumbnail tints (static) */
+    .chp-row:nth-child(1) .ch-thumb { background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(0,212,255,0.02)); color: rgba(0,212,255,0.45); }
+    .chp-row:nth-child(2) .ch-thumb { background: linear-gradient(135deg, rgba(157,78,221,0.08), rgba(157,78,221,0.02)); color: rgba(157,78,221,0.45); }
+    .chp-row:nth-child(3) .ch-thumb { background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(0,255,136,0.02)); color: rgba(0,255,136,0.45); }
+    .chp-row:nth-child(4) .ch-thumb { background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(255,107,53,0.02)); color: rgba(255,107,53,0.45); }
     .chp-row:nth-child(1) .ch-card:hover .ch-thumb { color: rgba(0,212,255,0.85); }
     .chp-row:nth-child(2) .ch-card:hover .ch-thumb { color: rgba(157,78,221,0.85); }
     .chp-row:nth-child(3) .ch-card:hover .ch-thumb { color: rgba(0,255,136,0.85); }
     .chp-row:nth-child(4) .ch-card:hover .ch-thumb { color: rgba(255,107,53,0.85); }
 
+    /* Breathing border glow on card edges — sweeps across the row */
+    @keyframes glow-cyan {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(0,212,255,0.04), 0 0 4px rgba(0,212,255,0); }
+      50%      { box-shadow: 0 0 0 1px rgba(0,212,255,0.25), 0 0 14px rgba(0,212,255,0.12); }
+    }
+    @keyframes glow-purple {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(157,78,221,0.04), 0 0 4px rgba(157,78,221,0); }
+      50%      { box-shadow: 0 0 0 1px rgba(157,78,221,0.25), 0 0 14px rgba(157,78,221,0.12); }
+    }
+    @keyframes glow-green {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(0,255,136,0.04), 0 0 4px rgba(0,255,136,0); }
+      50%      { box-shadow: 0 0 0 1px rgba(0,255,136,0.25), 0 0 14px rgba(0,255,136,0.12); }
+    }
+    @keyframes glow-orange {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(255,107,53,0.04), 0 0 4px rgba(255,107,53,0); }
+      50%      { box-shadow: 0 0 0 1px rgba(255,107,53,0.25), 0 0 14px rgba(255,107,53,0.12); }
+    }
+
+    /* Assign breathing glow per row */
+    .chp-row:nth-child(1) .ch-card { animation: glow-cyan 3s ease-in-out infinite; }
+    .chp-row:nth-child(2) .ch-card { animation: glow-purple 3s ease-in-out infinite; }
+    .chp-row:nth-child(3) .ch-card { animation: glow-green 3s ease-in-out infinite; }
+    .chp-row:nth-child(4) .ch-card { animation: glow-orange 3s ease-in-out infinite; }
+
+    /* Stagger cards so the glow sweeps across the row like a wave */
+    .chp-track .ch-card:nth-child(1) { animation-delay: 0s; }
+    .chp-track .ch-card:nth-child(2) { animation-delay: 0.5s; }
+    .chp-track .ch-card:nth-child(3) { animation-delay: 1.0s; }
+    .chp-track .ch-card:nth-child(4) { animation-delay: 1.5s; }
+    .chp-track .ch-card:nth-child(5) { animation-delay: 2.0s; }
+
+    /* On hover, lock glow to full */
+    .chp-row:nth-child(1) .ch-card:hover { animation: none; box-shadow: 0 0 0 1px rgba(0,212,255,0.35), 0 0 20px rgba(0,212,255,0.15); }
+    .chp-row:nth-child(2) .ch-card:hover { animation: none; box-shadow: 0 0 0 1px rgba(157,78,221,0.35), 0 0 20px rgba(157,78,221,0.15); }
+    .chp-row:nth-child(3) .ch-card:hover { animation: none; box-shadow: 0 0 0 1px rgba(0,255,136,0.35), 0 0 20px rgba(0,255,136,0.15); }
+    .chp-row:nth-child(4) .ch-card:hover { animation: none; box-shadow: 0 0 0 1px rgba(255,107,53,0.35), 0 0 20px rgba(255,107,53,0.15); }
+
     /* Info section below thumbnail */
     .ch-info { padding: 14px 16px 16px; }
     .chp-page .ch-info .ch-num {
       font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-      color: var(--color-primary); background: rgba(0,212,255,0.06);
       padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px;
       display: inline-block; width: fit-content;
     }
+    .chp-row:nth-child(1) .ch-num { color: rgba(0,212,255,1); background: rgba(0,212,255,0.06); }
+    .chp-row:nth-child(2) .ch-num { color: rgba(157,78,221,1); background: rgba(157,78,221,0.06); }
+    .chp-row:nth-child(3) .ch-num { color: rgba(0,255,136,1); background: rgba(0,255,136,0.06); }
+    .chp-row:nth-child(4) .ch-num { color: rgba(255,107,53,1); background: rgba(255,107,53,0.06); }
     .chp-page .ch-info h3 {
-      font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin: 8px 0 3px;
+      font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; margin: 8px 0 5px;
     }
     .chp-page .ch-info .ch-desc {
-      font-family: 'Inter', sans-serif; font-size: 0.78rem; line-height: 1.4; margin: 0;
+      font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; margin: 0;
       color: var(--text-secondary);
     }
     .chp-page .ch-info .ch-formula {
       font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
       display: block; margin-top: 6px; opacity: 0.7;
     }
+    .chp-row:nth-child(1) .ch-formula { color: rgba(0,212,255,1); }
+    .chp-row:nth-child(2) .ch-formula { color: rgba(157,78,221,1); }
+    .chp-row:nth-child(3) .ch-formula { color: rgba(0,255,136,1); }
+    .chp-row:nth-child(4) .ch-formula { color: rgba(255,107,53,1); }
 
     @media (max-width: 768px) {
-      .chp-page { margin-top: 80px; padding: 0 14px; }
       .chp-track .ch-card { flex: 0 0 200px; }
       .ch-thumb { height: 110px; }
       .chp-row-arrows { display: none; }
@@ -191,6 +227,35 @@
 
   <!-- Chapters Content -->
   <div class="chp-page">
+
+    <!-- Page Header -->
+    <div class="chp-hero">
+      <h1 class="chp-hero-title">Theory &amp; Solved Examples</h1>
+      <p class="chp-hero-sub">Complete JEE Physics &mdash; concept-by-concept, with worked problems at every step.</p>
+      <div class="chp-hero-guide">
+        <div class="chp-guide-step">
+          <span class="chp-guide-num">1</span>
+          <div>
+            <strong>Pick a chapter</strong>
+            <p>Each card below opens a full theory page covering every concept tested in JEE Main &amp; Advanced.</p>
+          </div>
+        </div>
+        <div class="chp-guide-step">
+          <span class="chp-guide-num">2</span>
+          <div>
+            <strong>Read the theory</strong>
+            <p>Concepts are broken into numbered sections with key formulas highlighted in formula boxes. Use the nav bar at the top of each chapter to jump between topics.</p>
+          </div>
+        </div>
+        <div class="chp-guide-step">
+          <span class="chp-guide-num">3</span>
+          <div>
+            <strong>Work through examples</strong>
+            <p>Solved examples are embedded right after the relevant theory. Try the problem yourself first, then expand the solution to check your approach.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Row 1: Grade XI Book 1 -->
     <div class="chp-row">

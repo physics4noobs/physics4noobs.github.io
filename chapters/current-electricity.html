@@ -6,7 +6,7 @@
   <title>Current Electricity | Axomiya Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="../js/theme.js"></script>
@@ -108,10 +108,10 @@
         Electric current is the rate of flow of electric charge through any cross-section of a conductor.
         When a potential difference is maintained across the ends of a conductor, free charges experience a
         net force and begin drifting in a definite direction, constituting an electric current. The SI unit
-        of current is the <strong>ampere (A)</strong>, defined as one coulomb of charge flowing per second.
+        of current is the ampere (A), defined as one coulomb of charge flowing per second.
       </p>
       <p>
-        By convention, the direction of electric current is taken as the direction of flow of <em>positive</em>
+        By convention, the direction of electric current is taken as the direction of flow of positive
         charges. In metallic conductors the actual charge carriers are electrons, so conventional current flows
         opposite to the electron drift. In electrolytes, both positive ions (cations) and negative ions (anions)
         contribute to the current.
@@ -133,7 +133,7 @@
 
       <h3>Current Density</h3>
       <p>
-        Current density <strong>j</strong> is the current per unit cross-sectional area of the conductor, directed
+        Current density j is the current per unit cross-sectional area of the conductor, directed
         along the flow of positive charge. It is a vector quantity, and for a uniform conductor carrying current I
         through area A:
       </p>
@@ -143,7 +143,7 @@
 
       <h3>Resistance and Resistivity</h3>
       <p>
-        <strong>Resistance</strong> (R) is the opposition a conductor offers to the flow of charge. It arises
+        Resistance (R) is the opposition a conductor offers to the flow of charge. It arises
         because moving electrons undergo repeated collisions with the fixed ions of the crystal lattice. The
         resistance of a conductor depends on its material, length, cross-sectional area, and temperature.
       </p>
@@ -154,9 +154,9 @@
         A = cross-sectional area (m&sup2;)
       </div>
       <p>
-        <strong>Resistivity</strong> (&rho;) is an intrinsic property of the material, independent of the shape
+        Resistivity (&rho;) is an intrinsic property of the material, independent of the shape
         or dimensions of the conductor. It is defined as the resistance of a specimen of unit length and unit
-        cross-sectional area. The SI unit is &Omega;&middot;m. <strong>Conductivity</strong> (&sigma;) is the
+        cross-sectional area. The SI unit is &Omega;&middot;m. Conductivity (&sigma;) is the
         reciprocal of resistivity: &sigma; = 1/&rho;, with SI unit S/m (siemens per metre).
       </p>
 
@@ -178,18 +178,18 @@
         In a metal at any temperature above absolute zero, free electrons are in ceaseless random thermal
         motion, much like molecules in an ideal gas. Their thermal speeds are of the order of
         10<sup>5</sup>&ndash;10<sup>6</sup> m/s, but because the motion is completely random in all
-        directions, the <em>average</em> velocity is zero. Therefore, no net current flows in the absence of
+        directions, the average velocity is zero. Therefore, no net current flows in the absence of
         an applied electric field.
       </p>
 
       <h3>Drift Velocity</h3>
       <p>
-        When a potential difference is applied across a conductor, an electric field <strong>E</strong> is
+        When a potential difference is applied across a conductor, an electric field E is
         established inside it. Each free electron experiences a force F = eE opposite to the field (since
         the electron charge is negative). Between successive collisions with lattice ions, an electron
         accelerates and gains a small additional velocity in the direction of the force. This additional
         velocity is lost at each collision, but on average a slow, steady velocity develops along the field
-        direction. This average velocity is called the <strong>drift velocity</strong> (v<sub>d</sub>).
+        direction. This average velocity is called the drift velocity (v<sub>d</sub>).
       </p>
       <div class="formula-box">
         v<sub>d</sub> = eE&tau;/m<br><br>
@@ -222,7 +222,7 @@
 
       <h3>Mobility</h3>
       <p>
-        The <strong>mobility</strong> (&mu;) of a charge carrier is defined as the magnitude of drift velocity
+        The mobility (&mu;) of a charge carrier is defined as the magnitude of drift velocity
         per unit electric field. It characterises how easily a charge carrier moves through the material under
         an applied field.
       </p>
@@ -243,6 +243,7 @@
         Since resistivity &rho; increases with temperature (for metals), &tau; decreases with temperature,
         meaning electrons collide more frequently at higher temperatures.
       </p>
+      <div class="diagram-placeholder">Diagram: Electron moving through lattice with collisions - show drift velocity as average velocity superimposed on random thermal motion</div>
 
       <div class="example-box">
         <div class="ex-label">Example 1 &mdash; Drift Velocity of Conduction Electrons</div>
@@ -253,7 +254,7 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             Given: n = 8 &times; 10<sup>28</sup> m<sup>&minus;3</sup>,
             A = 4 &times; 10<sup>&minus;6</sup> m&sup2;,
             I = 20 A, e = 1.6 &times; 10<sup>&minus;19</sup> C<br><br>
@@ -261,7 +262,7 @@
             v<sub>d</sub> = I/(nAe)<br>
             v<sub>d</sub> = 20 / (8 &times; 10<sup>28</sup> &times; 4 &times; 10<sup>&minus;6</sup> &times; 1.6 &times; 10<sup>&minus;19</sup>)<br>
             v<sub>d</sub> = 20 / (5.12 &times; 10<sup>4</sup>)<br>
-            v<sub>d</sub> = <strong>3.9 &times; 10<sup>&minus;4</sup> m/s</strong>
+            v<sub>d</sub> = 3.9 &times; 10<sup>&minus;4</sup> m/s
           </p>
         </div>
       </div>
@@ -305,15 +306,16 @@
 
       <h3>I-V Characteristics</h3>
       <p>
-        For an <strong>ohmic</strong> conductor, the I-V graph is a straight line through the origin with
+        For an ohmic conductor, the I-V graph is a straight line through the origin with
         slope 1/R. Materials that obey Ohm's law over a wide range of voltages are called ohmic conductors
         (e.g., metallic wires at constant temperature).
       </p>
+      <div class="diagram-placeholder">Diagram: I-V characteristic curve showing linear relationship for ohmic conductor with slope 1/R, and non-linear curves for non-ohmic devices like diodes</div>
 
       <h3>Limitations and Non-Ohmic Devices</h3>
       <ul>
-        <li>Ohm's law is <em>not</em> a fundamental law of nature; it is an empirical relation valid only for ohmic materials.</li>
-        <li>Semiconductor devices (diodes, transistors), gas discharge tubes, and electrolytes are <strong>non-ohmic</strong> &mdash; their I-V curves are nonlinear.</li>
+        <li>Ohm's law is not a fundamental law of nature; it is an empirical relation valid only for ohmic materials.</li>
+        <li>Semiconductor devices (diodes, transistors), gas discharge tubes, and electrolytes are non-ohmic &mdash; their I-V curves are nonlinear.</li>
         <li>Even metallic conductors deviate from Ohm's law at very high current densities where Joule heating raises the temperature appreciably.</li>
       </ul>
 
@@ -325,10 +327,10 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             V = E &times; l = 0.12 &times; 12 = 1.44 V<br><br>
             Using Ohm's law:<br>
-            I = V/R = 1.44/0.072 = <strong>20 A</strong>
+            I = V/R = 1.44/0.072 = 20 A
           </p>
         </div>
       </div>
@@ -345,9 +347,9 @@
         Materials are broadly classified based on their resistivity values:
       </p>
       <ul>
-        <li><strong>Conductors</strong> (metals): &rho; &sim; 10<sup>&minus;8</sup> to 10<sup>&minus;6</sup> &Omega;&middot;m. Examples: copper, aluminium, silver.</li>
-        <li><strong>Semiconductors</strong>: &rho; &sim; 10<sup>&minus;5</sup> to 10<sup>6</sup> &Omega;&middot;m. Examples: silicon, germanium.</li>
-        <li><strong>Insulators</strong>: &rho; &sim; 10<sup>8</sup> to 10<sup>16</sup> &Omega;&middot;m. Examples: glass, rubber, mica.</li>
+        <li>Conductors (metals): &rho; &sim; 10<sup>&minus;8</sup> to 10<sup>&minus;6</sup> &Omega;&middot;m. Examples: copper, aluminium, silver.</li>
+        <li>Semiconductors: &rho; &sim; 10<sup>&minus;5</sup> to 10<sup>6</sup> &Omega;&middot;m. Examples: silicon, germanium.</li>
+        <li>Insulators: &rho; &sim; 10<sup>8</sup> to 10<sup>16</sup> &Omega;&middot;m. Examples: glass, rubber, mica.</li>
       </ul>
 
       <h3>Temperature Dependence in Metals</h3>
@@ -372,7 +374,7 @@
 
       <h3>Temperature Dependence in Semiconductors and Insulators</h3>
       <p>
-        In semiconductors and insulators, resistivity <em>decreases</em> with increasing temperature. Higher
+        In semiconductors and insulators, resistivity decreases with increasing temperature. Higher
         temperatures provide more thermal energy, which excites additional electrons from the valence band to
         the conduction band, increasing the number of charge carriers. The increase in carrier concentration
         far outweighs the increased collision rate, so net resistance falls.
@@ -380,9 +382,9 @@
 
       <h3>Special Alloys</h3>
       <ul>
-        <li><strong>Manganin</strong> (Cu-Mn-Ni alloy): Has a very small and nearly zero temperature coefficient. Ideal for constructing standard resistors and precision instruments.</li>
-        <li><strong>Constantan</strong> (Cu-Ni alloy): Similar low temperature coefficient; used in thermocouples and strain gauges.</li>
-        <li><strong>Nichrome</strong> (Ni-Cr alloy): High resistivity and good oxidation resistance at high temperatures; used in heating elements.</li>
+        <li>Manganin (Cu-Mn-Ni alloy): Has a very small and nearly zero temperature coefficient. Ideal for constructing standard resistors and precision instruments.</li>
+        <li>Constantan (Cu-Ni alloy): Similar low temperature coefficient; used in thermocouples and strain gauges.</li>
+        <li>Nichrome (Ni-Cr alloy): High resistivity and good oxidation resistance at high temperatures; used in heating elements.</li>
       </ul>
 
       <div class="example-box">
@@ -394,14 +396,14 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             R<sub>0</sub> = V/I<sub>0</sub> = 120/1.5 = 80 &Omega; (at 0&deg;C)<br>
             R<sub>T</sub> = V/I<sub>T</sub> = 120/1.33 = 90.23 &Omega; (at T&deg;C)<br><br>
             Using R<sub>T</sub> = R<sub>0</sub>(1 + &alpha;T):<br>
             90.23 = 80(1 + 0.00045 &times; T)<br>
             1 + 0.00045T = 90.23/80 = 1.1279<br>
             0.00045T = 0.1279<br>
-            T = 0.1279/0.00045 = <strong>284&deg;C</strong>
+            T = 0.1279/0.00045 = 284&deg;C
           </p>
         </div>
       </div>
@@ -422,11 +424,11 @@
 
       <h3>Colour Table</h3>
       <ul>
-        <li><strong>Black</strong> = 0, <strong>Brown</strong> = 1, <strong>Red</strong> = 2, <strong>Orange</strong> = 3, <strong>Yellow</strong> = 4</li>
-        <li><strong>Green</strong> = 5, <strong>Blue</strong> = 6, <strong>Violet</strong> = 7, <strong>Grey</strong> = 8, <strong>White</strong> = 9</li>
+        <li>Black = 0, Brown = 1, Red = 2, Orange = 3, Yellow = 4</li>
+        <li>Green = 5, Blue = 6, Violet = 7, Grey = 8, White = 9</li>
       </ul>
       <p>
-        A popular mnemonic to remember the order is: <em>"B B ROY of Great Britain has a Very Good Wife."</em>
+        A popular mnemonic to remember the order is: "B B ROY of Great Britain has a Very Good Wife."
       </p>
 
       <h3>How to Read a Four-Band Resistor</h3>
@@ -437,7 +439,7 @@
         Band 4: Tolerance &mdash; Gold = &plusmn;5%, Silver = &plusmn;10%, No band = &plusmn;20%
       </div>
       <p>
-        <strong>Example:</strong> Yellow &ndash; Violet &ndash; Orange &ndash; Gold = 47 &times; 10<sup>3</sup> &Omega;
+        Example: Yellow &ndash; Violet &ndash; Orange &ndash; Gold = 47 &times; 10<sup>3</sup> &Omega;
         = 47 k&Omega; &plusmn; 5%.
       </p>
 
@@ -452,7 +454,7 @@
       <p>
         Colour-code questions are straightforward marks in competitive exams. Remember the mnemonic and practice
         converting colours to resistance values (and vice versa) quickly. Pay special attention to the
-        tolerance band, which is read from the <em>opposite</em> end of the resistor.
+        tolerance band, which is read from the opposite end of the resistor.
       </p>
     </div>
 
@@ -465,8 +467,8 @@
       <h3>Series Combination</h3>
       <p>
         When resistors are connected end-to-end so that the same current flows through each one, they are
-        said to be in <strong>series</strong>. The total voltage across the combination equals the sum of the
-        individual voltage drops. The equivalent resistance is always <em>greater</em> than the largest
+        said to be in series. The total voltage across the combination equals the sum of the
+        individual voltage drops. The equivalent resistance is always greater than the largest
         individual resistance.
       </p>
       <div class="formula-box">
@@ -486,9 +488,9 @@
 
       <h3>Parallel Combination</h3>
       <p>
-        When resistors are connected across the same pair of nodes so that each has the <em>same</em>
-        potential difference across it, they are said to be in <strong>parallel</strong>. The total current
-        is the sum of the branch currents. The equivalent resistance is always <em>less</em> than the
+        When resistors are connected across the same pair of nodes so that each has the same
+        potential difference across it, they are said to be in parallel. The total current
+        is the sum of the branch currents. The equivalent resistance is always less than the
         smallest individual resistance.
       </p>
       <div class="formula-box">
@@ -508,7 +510,7 @@
         I<sub>2</sub> = I &times; R<sub>1</sub>/(R<sub>1</sub> + R<sub>2</sub>)
       </div>
       <p>
-        Note that the <em>larger</em> current flows through the <em>smaller</em> resistance.
+        Note that the larger current flows through the smaller resistance.
       </p>
 
       <h3>Mixed Combinations</h3>
@@ -534,10 +536,10 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             1/R<sub>eq</sub> = 1/4 + 1/12 = 3/12 + 1/12 = 4/12<br>
-            R<sub>eq</sub> = 12/4 = <strong>3 &Omega;</strong><br><br>
-            Total current: I = V/R<sub>eq</sub> = 24/3 = <strong>8 A</strong><br><br>
+            R<sub>eq</sub> = 12/4 = 3 &Omega;<br><br>
+            Total current: I = V/R<sub>eq</sub> = 24/3 = 8 A<br><br>
             Current through 4 &Omega;: I<sub>1</sub> = V/R<sub>1</sub> = 24/4 = 6 A<br>
             (or by divider rule: I<sub>1</sub> = 8 &times; 12/(4 + 12) = 6 A)<br><br>
             Current through 12 &Omega;: I<sub>2</sub> = V/R<sub>2</sub> = 24/12 = 2 A<br><br>
@@ -555,10 +557,10 @@
 
       <h3>Electromotive Force (EMF)</h3>
       <p>
-        An electric cell converts chemical energy into electrical energy. The <strong>electromotive force</strong>
+        An electric cell converts chemical energy into electrical energy. The electromotive force
         (EMF, denoted E or &epsilon;) of a cell is the work done per unit positive charge by the
         non-electrostatic (chemical) force in taking the charge from the negative terminal to the positive
-        terminal <em>inside</em> the cell. Despite its name, EMF is not a force &mdash; it has units of volts
+        terminal inside the cell. Despite its name, EMF is not a force &mdash; it has units of volts
         and represents the energy supplied per coulomb.
       </p>
       <p>
@@ -568,7 +570,7 @@
 
       <h3>Internal Resistance</h3>
       <p>
-        Every real cell has an internal resistance <strong>r</strong> due to the finite conductivity of its
+        Every real cell has an internal resistance r due to the finite conductivity of its
         electrolyte and electrodes. When the cell delivers current, some energy is dissipated inside the cell
         itself as heat (I&sup2;r), reducing the voltage available at the external terminals.
       </p>
@@ -669,8 +671,8 @@
       <h3>Sign Conventions for Traversing a Loop</h3>
       <ul>
         <li>Choose a direction to traverse the loop (clockwise or anticlockwise).</li>
-        <li><strong>Resistor:</strong> Traversing in the direction of current &rarr; potential change = &minus;IR. Against current &rarr; +IR.</li>
-        <li><strong>Battery:</strong> Traversing from &minus; to + terminal &rarr; potential change = +E. From + to &minus; terminal &rarr; &minus;E.</li>
+        <li>Resistor: Traversing in the direction of current &rarr; potential change = &minus;IR. Against current &rarr; +IR.</li>
+        <li>Battery: Traversing from &minus; to + terminal &rarr; potential change = +E. From + to &minus; terminal &rarr; &minus;E.</li>
       </ul>
 
       <h3>Systematic Approach to Circuit Analysis</h3>
@@ -691,10 +693,10 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             Net EMF: E<sub>net</sub> = E<sub>2</sub> &minus; E<sub>1</sub> = 40 &minus; 10 = 30 V<br>
             Total resistance: R<sub>total</sub> = R + r<sub>1</sub> + r<sub>2</sub> = 15 + 1 + 2 = 18 &Omega;<br><br>
-            Current: I = E<sub>net</sub>/R<sub>total</sub> = 30/18 = <strong>5/3 A &asymp; 1.67 A</strong><br><br>
+            Current: I = E<sub>net</sub>/R<sub>total</sub> = 30/18 = 5/3 A &asymp; 1.67 A<br><br>
             Terminal voltage of E<sub>1</sub> (being charged):<br>
             V<sub>1</sub> = E<sub>1</sub> + Ir<sub>1</sub> = 10 + (5/3)(1) = 35/3 V &asymp; 11.67 V<br><br>
             Terminal voltage of E<sub>2</sub> (discharging):<br>
@@ -717,10 +719,11 @@
         and D), and a battery is connected across the other diagonal (between junctions A and C). The bridge
         is used to measure an unknown resistance with high precision.
       </p>
+      <div class="diagram-placeholder">Diagram: Wheatstone bridge circuit diagram showing diamond configuration with P, Q, R, S resistors, galvanometer across BD, and battery across AC</div>
 
       <h3>Balanced Condition</h3>
       <p>
-        The bridge is said to be <strong>balanced</strong> when no current flows through the galvanometer,
+        The bridge is said to be balanced when no current flows through the galvanometer,
         meaning points B and D are at the same potential. Applying Kirchhoff's laws to the balanced
         bridge gives:
       </p>
@@ -735,7 +738,7 @@
 
       <h3>Key Properties</h3>
       <ul>
-        <li>The balance condition is <em>independent</em> of the battery EMF and the galvanometer resistance.</li>
+        <li>The balance condition is independent of the battery EMF and the galvanometer resistance.</li>
         <li>Maximum sensitivity occurs when all four resistances are of comparable magnitude (ideally P &asymp; Q &asymp; R &asymp; S).</li>
         <li>The bridge is widely used in strain gauges, temperature sensors, and laboratory measurements.</li>
       </ul>
@@ -771,7 +774,7 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
+            <u>Solution:</u><br>
             From first null point: X/Y = 80/20 = 4 &nbsp; &hellip; (i)<br><br>
             With 100 &Omega; in parallel with X:<br>
             Equivalent resistance = 100X/(100 + X)<br>
@@ -781,8 +784,8 @@
             [100(4Y)/(100 + 4Y)] / Y = 3/2<br>
             400/(100 + 4Y) = 3/2<br>
             800 = 300 + 12Y<br>
-            Y = 500/12 = <strong>125/3 &Omega; &asymp; 41.67 &Omega;</strong><br>
-            X = 4Y = <strong>500/3 &Omega; &asymp; 166.67 &Omega;</strong>
+            Y = 500/12 = 125/3 &Omega; &asymp; 41.67 &Omega;<br>
+            X = 4Y = 500/3 &Omega; &asymp; 166.67 &Omega;
           </p>
         </div>
       </div>
@@ -802,7 +805,7 @@
         wire is directly proportional to that length.
       </p>
       <p>
-        This makes the potentiometer a <strong>null method</strong> instrument &mdash; at balance, the
+        This makes the potentiometer a null method instrument &mdash; at balance, the
         galvanometer reads zero, so no current is drawn from the cell being measured. This gives it a
         significant advantage over a voltmeter, which always draws some current and therefore measures
         the terminal voltage rather than the true EMF.
@@ -817,6 +820,7 @@
         where V<sub>AB</sub> is the potential difference across the full length L of the potentiometer wire,
         maintained by an external battery (called the driver cell).
       </p>
+      <div class="diagram-placeholder">Diagram: Potentiometer setup showing wire AB with driver cell, test cell, galvanometer, and jockey at null point</div>
 
       <h3>Comparison of EMFs of Two Cells</h3>
       <p>
@@ -840,7 +844,7 @@
 
       <h3>Conditions for Successful Balancing</h3>
       <ul>
-        <li>The EMF of the driver cell must be <em>greater</em> than the EMF being measured; otherwise no balance point exists.</li>
+        <li>The EMF of the driver cell must be greater than the EMF being measured; otherwise no balance point exists.</li>
         <li>The positive terminals of both the driver cell and the test cell must be connected to the same end of the wire.</li>
         <li>The potentiometer wire should have uniform cross-section and resistivity along its entire length.</li>
       </ul>
@@ -888,7 +892,7 @@
       <h3>Electric Power</h3>
       <p>
         Power is the rate at which electrical energy is delivered or consumed. The SI unit is the
-        <strong>watt</strong> (W), equal to one joule per second.
+        watt (W), equal to one joule per second.
       </p>
       <div class="formula-box">
         P = VI = I&sup2;R = V&sup2;/R<br><br>
@@ -920,7 +924,7 @@
       <h3>Maximum Power Transfer Theorem</h3>
       <p>
         For a battery of EMF E and internal resistance r connected to external resistance R, the power
-        delivered to R is P = I&sup2;R = E&sup2;R/(R + r)&sup2;. This power is <em>maximum</em> when R = r:
+        delivered to R is P = I&sup2;R = E&sup2;R/(R + r)&sup2;. This power is maximum when R = r:
       </p>
       <div class="formula-box">
         P<sub>max</sub> = E&sup2;/(4r)
@@ -938,11 +942,11 @@
         </p>
         <div class="solution">
           <p>
-            <strong>Solution:</strong><br>
-            Power: P = V&sup2;/R = (220)&sup2;/20 = 48400/20 = <strong>2420 W = 2.42 kW</strong><br><br>
-            Current: I = V/R = 220/20 = <strong>11 A</strong><br><br>
+            <u>Solution:</u><br>
+            Power: P = V&sup2;/R = (220)&sup2;/20 = 48400/20 = 2420 W = 2.42 kW<br><br>
+            Current: I = V/R = 220/20 = 11 A<br><br>
             Energy in 5 min: W = Pt = 2420 &times; (5 &times; 60) = 2420 &times; 300<br>
-            W = <strong>726,000 J = 726 kJ = 0.202 kWh</strong>
+            W = 726,000 J = 726 kJ = 0.202 kWh
           </p>
         </div>
       </div>
@@ -956,10 +960,10 @@
 
       <h3>The Seebeck Effect</h3>
       <p>
-        When two dissimilar metals are joined to form a closed loop (a <strong>thermocouple</strong>) and
+        When two dissimilar metals are joined to form a closed loop (a thermocouple) and
         the two junctions are maintained at different temperatures, an EMF is developed in the circuit and
         a current flows. This phenomenon, discovered by Thomas Seebeck in 1821, is called the
-        <strong>Seebeck effect</strong>. The EMF produced is called <strong>thermo-EMF</strong>.
+        Seebeck effect. The EMF produced is called thermo-EMF.
       </p>
       <p>
         The magnitude and direction of the thermo-EMF depend on the pair of metals used and the temperature
@@ -974,7 +978,7 @@
 
       <h3>Thermoelectric Series</h3>
       <p>
-        Metals can be arranged in a <strong>thermoelectric series</strong> such that a metal earlier in the
+        Metals can be arranged in a thermoelectric series such that a metal earlier in the
         series develops a positive potential at the cold junction when paired with a metal later in the
         series. The series (partial): Bi, Ni, Co, Pd, Pt, Cu, Mn, Hg, Pb, Sn, Au, Ag, Zn, Cd, Fe, Sb, Te.
         The farther apart two metals are in the series, the greater the thermo-EMF produced.
@@ -983,9 +987,9 @@
       <h3>Neutral Temperature and Inversion Temperature</h3>
       <p>
         As the temperature of the hot junction is gradually raised (keeping the cold junction fixed), the
-        thermo-EMF first increases, reaches a maximum at the <strong>neutral temperature</strong>
+        thermo-EMF first increases, reaches a maximum at the neutral temperature
         (T<sub>n</sub>), and then decreases, becoming zero and eventually reversing direction at the
-        <strong>inversion temperature</strong> (T<sub>i</sub>).
+        inversion temperature (T<sub>i</sub>).
       </p>
       <div class="formula-box">
         T<sub>n</sub> = (T<sub>cold</sub> + T<sub>i</sub>)/2<br><br>
@@ -995,9 +999,9 @@
 
       <h3>The Peltier Effect</h3>
       <p>
-        The <strong>Peltier effect</strong> is the reverse of the Seebeck effect. When a current is passed
+        The Peltier effect is the reverse of the Seebeck effect. When a current is passed
         through a thermocouple, one junction is heated and the other is cooled. The heat absorbed or released
-        at a junction per unit charge is called the <strong>Peltier coefficient</strong> (&pi;). The Peltier
+        at a junction per unit charge is called the Peltier coefficient (&pi;). The Peltier
         effect is used in thermoelectric coolers and small refrigeration devices.
       </p>
       <div class="formula-box">
@@ -1009,7 +1013,7 @@
       <p>
         William Thomson (Lord Kelvin) predicted that when a current flows through a single conductor
         with a temperature gradient along it, heat is absorbed or evolved (in addition to the Joule
-        heating). This is the <strong>Thomson effect</strong>. The Thomson coefficient (&sigma;<sub>T</sub>)
+        heating). This is the Thomson effect. The Thomson coefficient (&sigma;<sub>T</sub>)
         is the heat absorbed or released per unit current per unit temperature difference per unit time.
       </p>
       <div class="formula-box">
@@ -1022,10 +1026,10 @@
 
       <h3>Applications of Thermoelectricity</h3>
       <ul>
-        <li><strong>Thermocouples:</strong> Used for temperature measurement, especially at extreme temperatures where mercury thermometers fail.</li>
-        <li><strong>Thermoelectric generators (TEG):</strong> Convert waste heat into electrical energy using the Seebeck effect.</li>
-        <li><strong>Peltier coolers:</strong> Solid-state cooling devices used in portable refrigerators, CPU coolers, and scientific instruments.</li>
-        <li><strong>Thermopile:</strong> Multiple thermocouples connected in series for detecting weak thermal radiation.</li>
+        <li>Thermocouples: Used for temperature measurement, especially at extreme temperatures where mercury thermometers fail.</li>
+        <li>Thermoelectric generators (TEG): Convert waste heat into electrical energy using the Seebeck effect.</li>
+        <li>Peltier coolers: Solid-state cooling devices used in portable refrigerators, CPU coolers, and scientific instruments.</li>
+        <li>Thermopile: Multiple thermocouples connected in series for detecting weak thermal radiation.</li>
       </ul>
     </div>
 

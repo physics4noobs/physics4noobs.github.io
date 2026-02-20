@@ -6,7 +6,7 @@
   <title>Rotational Motion | Axomiya Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f52c;</text></svg>">
   <script src="../js/theme.js"></script>
@@ -115,16 +115,16 @@
 
       <h3>Angular Displacement, Velocity, and Acceleration</h3>
       <p>
-        <strong>Angular displacement</strong> (&theta;) is the angle swept by the radius vector of a rotating body,
+        Angular displacement (&theta;) is the angle swept by the radius vector of a rotating body,
         measured in radians. The relationship between linear and angular displacement is s = r&theta;, where s is arc length.
       </p>
       <p>
-        <strong>Angular velocity</strong> (&omega;) is the rate of change of angular displacement: &omega; = d&theta;/dt.
+        Angular velocity (&omega;) is the rate of change of angular displacement: &omega; = d&theta;/dt.
         For a body rotating with angular velocity &omega;, a point at distance r from the axis has tangential velocity
         v = r&omega;. The period and frequency relationships are: &omega; = 2&pi;/T = 2&pi;f.
       </p>
       <p>
-        <strong>Angular acceleration</strong> (&alpha;) is the rate of change of angular velocity: &alpha; = d&omega;/dt.
+        Angular acceleration (&alpha;) is the rate of change of angular velocity: &alpha; = d&omega;/dt.
         A point at distance r has tangential acceleration a<sub>t</sub> = r&alpha; and radial (centripetal)
         acceleration a<sub>r</sub> = &omega;&sup2;r = v&sup2;/r.
       </p>
@@ -133,8 +133,7 @@
         &omega; = 2&pi;/T = 2&pi;f &nbsp;&nbsp;|&nbsp;&nbsp; v = r&omega;<br>
         a<sub>t</sub> = r&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; a<sub>r</sub> = &omega;&sup2;r
       </div>
-
-      <h3>Equations of Rotational Motion (Constant &alpha;)</h3>
+      <div class="diagram-placeholder">Diagram: Rotating disc with point at distance r, showing angular velocity vector, tangential velocity vector, centripetal acceleration toward center, and tangential acceleration</div>
       <p>
         When angular acceleration is constant, the rotational equations are analogous to the linear kinematic
         equations with &theta; replacing s, &omega; replacing v, and &alpha; replacing a:
@@ -158,7 +157,7 @@
           is needed to stop it in 8 seconds? How many revolutions does it cover before stopping?
         </p>
         <div class="solution">
-          <p><strong>Solution:</strong></p>
+          <p><u>Solution:</u></p>
           <p>
             Step 1: &omega;<sub>i</sub> = 2&pi;(50/60) = 5&pi;/3 rad/s, &omega;<sub>f</sub> = 0
           </p>
@@ -169,7 +168,7 @@
             Step 3: &theta; = (&omega;<sub>f</sub>&sup2; - &omega;<sub>i</sub>&sup2;)/(2&alpha;) = (0 - (5&pi;/3)&sup2;) / (2(-5&pi;/24)) = 20&pi;/3 rad
           </p>
           <p>
-            Step 4: Number of revolutions = &theta;/(2&pi;) = (20&pi;/3)/(2&pi;) = <strong>10/3 revolutions (3.33 revolutions)</strong>
+            Step 4: Number of revolutions = &theta;/(2&pi;) = (20&pi;/3)/(2&pi;) = 10/3 revolutions (3.33 revolutions)
           </p>
         </div>
       </div>
@@ -179,7 +178,7 @@
     <div class="theory-section" id="moment-of-inertia">
       <h2>2. Moment of Inertia</h2>
       <p>
-        The <strong>moment of inertia</strong> (I) is the rotational analogue of mass. It measures the resistance
+        The moment of inertia (I) is the rotational analogue of mass. It measures the resistance
         of a body to angular acceleration, just as mass measures resistance to linear acceleration. For a system of
         point masses or a continuous body rotating about a fixed axis, moment of inertia is the sum (or integral)
         of mass elements weighted by the square of their distance from the axis.
@@ -194,10 +193,11 @@
         Moment of inertia is related to rotational kinetic energy: KE<sub>rot</sub> = &frac12;I&omega;&sup2;, analogous
         to translational kinetic energy KE = &frac12;mv&sup2;.
       </p>
+      <div class="diagram-placeholder">Diagram: Several point masses at different distances from rotation axis, with r&#8321;, r&#8322;, r&#8323; labeled, showing how I depends on distance squared</div>
 
       <h3>Radius of Gyration</h3>
       <p>
-        The <strong>radius of gyration</strong> (k) is a distance such that if all mass were concentrated there,
+        The radius of gyration (k) is a distance such that if all mass were concentrated there,
         the moment of inertia would be the same. It is defined by I = Mk&sup2;, so k = &radic;(I/M).
         This provides a convenient comparison of mass distributions across different bodies.
       </p>
@@ -207,15 +207,15 @@
         For common shapes about standard axes:
       </p>
       <div class="formula-box">
-        <strong>Thin Rod</strong> (about center, perpendicular): I = ML&sup2;/12<br>
-        <strong>Thin Rod</strong> (about end, perpendicular): I = ML&sup2;/3<br>
-        <strong>Circular Ring</strong> (about axis through center): I = MR&sup2;<br>
-        <strong>Circular Ring</strong> (about diameter): I = MR&sup2;/2<br>
-        <strong>Solid Disc/Cylinder</strong> (about axis): I = MR&sup2;/2<br>
-        <strong>Solid Disc</strong> (about diameter): I = MR&sup2;/4<br>
-        <strong>Solid Sphere</strong> (about diameter): I = 2MR&sup2;/5<br>
-        <strong>Hollow Sphere</strong> (about diameter): I = 2MR&sup2;/3<br>
-        <strong>Hollow Cylinder</strong> (about axis): I = MR&sup2;
+        Thin Rod (about center, perpendicular): I = ML&sup2;/12<br>
+        Thin Rod (about end, perpendicular): I = ML&sup2;/3<br>
+        Circular Ring (about axis through center): I = MR&sup2;<br>
+        Circular Ring (about diameter): I = MR&sup2;/2<br>
+        Solid Disc/Cylinder (about axis): I = MR&sup2;/2<br>
+        Solid Disc (about diameter): I = MR&sup2;/4<br>
+        Solid Sphere (about diameter): I = 2MR&sup2;/5<br>
+        Hollow Sphere (about diameter): I = 2MR&sup2;/3<br>
+        Hollow Cylinder (about axis): I = MR&sup2;
       </div>
     </div>
 
@@ -234,12 +234,13 @@
       </div>
       <p>
         where I<sub>CM</sub> is the moment of inertia about the centre-of-mass axis, M is total mass, and d is the
-        perpendicular distance between axes. The moment of inertia is <em>minimum</em> about the centre-of-mass axis.
+        perpendicular distance between axes. The moment of inertia is minimum about the centre-of-mass axis.
       </p>
+      <div class="diagram-placeholder">Diagram: Rigid body with two parallel axes: one through center of mass and one at distance d away, showing how parallel axis theorem applies</div>
 
       <h3>Perpendicular Axis Theorem</h3>
       <p>
-        For <strong>planar (2D) bodies only</strong> (like discs, rings, flat plates), the moment of inertia about an
+        For planar (2D) bodies only (like discs, rings, flat plates), the moment of inertia about an
         axis perpendicular to the plane equals the sum of moments of inertia about two mutually perpendicular axes
         in the plane that intersect at the same point.
       </p>
@@ -247,7 +248,7 @@
         I<sub>z</sub> = I<sub>x</sub> + I<sub>y</sub>
       </div>
       <p>
-        This theorem does <em>not</em> apply to 3D bodies like spheres or solid cylinders. It is particularly useful
+        This theorem does not apply to 3D bodies like spheres or solid cylinders. It is particularly useful
         for finding moments of inertia of planar bodies about diameters.
       </p>
 
@@ -258,7 +259,7 @@
           of this axis from the centre of the sphere.
         </p>
         <div class="solution">
-          <p><strong>Solution:</strong></p>
+          <p><u>Solution:</u></p>
           <p>
             Step 1: Given k = R, so I = Mk&sup2; = MR&sup2;
           </p>
@@ -269,7 +270,7 @@
             Step 3: MR&sup2; = (2/5)MR&sup2; + Md&sup2;
           </p>
           <p>
-            Step 4: d&sup2; = R&sup2; - (2/5)R&sup2; = (3/5)R&sup2;, so <strong>d = &radic;0.6 &middot; R &asymp; 0.775R</strong>
+            Step 4: d&sup2; = R&sup2; - (2/5)R&sup2; = (3/5)R&sup2;, so d = &radic;0.6 &middot; R &asymp; 0.775R
           </p>
         </div>
       </div>
@@ -279,7 +280,7 @@
     <div class="theory-section" id="torque">
       <h2>4. Torque</h2>
       <p>
-        <strong>Torque</strong> (or moment of force) is the rotational analogue of force. It measures the ability
+        Torque (or moment of force) is the rotational analogue of force. It measures the ability
         of a force to cause or change rotational motion about a fixed axis. Torque is the cross product of the
         position vector and force vector.
       </p>
@@ -291,14 +292,15 @@
       </div>
 
       <p>
-        where &theta; is the angle between r and F, r<sub>&perp;</sub> = r sin&theta; is the <strong>moment arm</strong>
+        where &theta; is the angle between r and F, r<sub>&perp;</sub> = r sin&theta; is the moment arm
         (perpendicular distance from the axis to the line of action of the force), and F<sub>&perp;</sub> = F sin&theta;
         is the perpendicular component of the force.
       </p>
+      <div class="diagram-placeholder">Diagram: Position vector r from pivot to point of force application, force F at angle, moment arm r_perp shown perpendicular to F, torque direction by right-hand rule</div>
 
       <h3>Couple</h3>
       <p>
-        A <strong>couple</strong> consists of two equal and opposite forces acting along parallel lines that do not coincide.
+        A couple consists of two equal and opposite forces acting along parallel lines that do not coincide.
         A couple produces pure rotation without translation. The torque of a couple is independent of the point about which
         it is calculated and is given by:
       </p>
@@ -312,8 +314,8 @@
         For a rigid body to be in complete equilibrium, two conditions must be simultaneously satisfied:
       </p>
       <ul>
-        <li><strong>Translational equilibrium:</strong> &Sigma;F = 0 (net force is zero)</li>
-        <li><strong>Rotational equilibrium:</strong> &Sigma;&tau; = 0 about any point (net torque is zero)</li>
+        <li>Translational equilibrium: &Sigma;F = 0 (net force is zero)</li>
+        <li>Rotational equilibrium: &Sigma;&tau; = 0 about any point (net torque is zero)</li>
       </ul>
     </div>
 
@@ -333,7 +335,7 @@
       </div>
 
       <p>
-        <strong>Rotational power</strong> P = &tau;&omega; is analogous to translational power P = Fv. The work-energy theorem
+        Rotational power P = &tau;&omega; is analogous to translational power P = Fv. The work-energy theorem
         states that the net work done by torques equals the change in rotational kinetic energy.
       </p>
     </div>
@@ -364,7 +366,7 @@
           in 10 seconds? What is its rotational kinetic energy at 300 rev/min?
         </p>
         <div class="solution">
-          <p><strong>Solution:</strong></p>
+          <p><u>Solution:</u></p>
           <p>
             Step 1: &omega;<sub>f</sub> = 2&pi;(300/60) = 10&pi; rad/s, &omega;<sub>i</sub> = 0
           </p>
@@ -375,10 +377,10 @@
             Step 3: I = &frac12;MR&sup2; = &frac12; &times; 50 &times; (0.5)&sup2; = 6.25 kg&middot;m&sup2;
           </p>
           <p>
-            Step 4: &tau; = I&alpha; = 6.25 &times; &pi; = <strong>19.6 N&middot;m</strong>
+            Step 4: &tau; = I&alpha; = 6.25 &times; &pi; = 19.6 N&middot;m
           </p>
           <p>
-            Step 5: KE = &frac12;I&omega;&sup2; = &frac12; &times; 6.25 &times; (10&pi;)&sup2; = <strong>3084 J</strong>
+            Step 5: KE = &frac12;I&omega;&sup2; = &frac12; &times; 6.25 &times; (10&pi;)&sup2; = 3084 J
           </p>
         </div>
       </div>
@@ -434,7 +436,7 @@
           A particle of mass 1 kg moves along the line y = x + 2 with speed 2 m/s. Find the angular momentum about the origin.
         </p>
         <div class="solution">
-          <p><strong>Solution:</strong></p>
+          <p><u>Solution:</u></p>
           <p>
             Step 1: L = mvr<sub>&perp;</sub> where r<sub>&perp;</sub> is the perpendicular distance from origin to the line of motion
           </p>
@@ -445,7 +447,7 @@
             Step 3: r<sub>&perp;</sub> = |0 - 0 + 2|/&radic;(1&sup2; + 1&sup2;) = 2/&radic;2 = &radic;2 m
           </p>
           <p>
-            Step 4: L = 1 &times; 2 &times; &radic;2 = <strong>2&radic;2 kg&middot;m&sup2;/s &asymp; 2.83 kg&middot;m&sup2;/s</strong>
+            Step 4: L = 1 &times; 2 &times; &radic;2 = 2&radic;2 kg&middot;m&sup2;/s &asymp; 2.83 kg&middot;m&sup2;/s
           </p>
         </div>
       </div>
@@ -466,7 +468,7 @@
       </div>
 
       <p>
-        <strong>Classic examples:</strong> An ice skater pulling in their arms increases angular velocity because moment of
+        Classic examples: An ice skater pulling in their arms increases angular velocity because moment of
         inertia decreases while angular momentum remains constant. A cat twisting to land on its feet uses sequential rotation
         of different body parts, conserving angular momentum about the centre of mass. A diver performing a somersault spins
         faster when tucked.
@@ -479,7 +481,7 @@
           is dropped coaxially onto the turntable. Find the common angular velocity after the disc is placed.
         </p>
         <div class="solution">
-          <p><strong>Solution:</strong></p>
+          <p><u>Solution:</u></p>
           <p>
             Step 1: No external torque acts (internal friction is not external). Angular momentum is conserved.
           </p>
@@ -490,7 +492,7 @@
             Step 3: 4 &times; 2 = (4 + 1) &times; &omega;<sub>f</sub>
           </p>
           <p>
-            Step 4: 8 = 5&omega;<sub>f</sub>, so &omega;<sub>f</sub> = <strong>1.6 rev/s</strong>
+            Step 4: 8 = 5&omega;<sub>f</sub>, so &omega;<sub>f</sub> = 1.6 rev/s
           </p>
           <p>
             Energy is dissipated as heat due to friction between the surfaces during the process.
@@ -560,8 +562,7 @@
         A<sub>CM</sub> = R&alpha; &nbsp;&nbsp;(differentiating the above)<br>
         V<sub>contact</sub> = 0 &nbsp;&nbsp;(instantaneous axis of rotation at contact point)
       </div>
-
-      <h3>Velocities of Different Points</h3>
+      <div class="diagram-placeholder">Diagram: Rolling wheel with contact point at ground, center velocity V_CM pointing forward, angular velocity omega, top point velocity 2V_CM shown</div>
       <p>
         On a rolling wheel, the contact point has zero velocity, the centre has velocity V<sub>CM</sub>, and the top has
         velocity 2V<sub>CM</sub>. For a general point at angle &theta; from the bottom contact point:
@@ -611,10 +612,10 @@
         mass and radius&mdash;it depends only on the shape:
       </p>
       <ul>
-        <li><strong>Solid sphere:</strong> k&sup2;/R&sup2; = 2/5, a = 5g sin&theta;/7 (fastest)</li>
-        <li><strong>Solid cylinder/disc:</strong> k&sup2;/R&sup2; = 1/2, a = 2g sin&theta;/3</li>
-        <li><strong>Hollow sphere:</strong> k&sup2;/R&sup2; = 2/3, a = 3g sin&theta;/5</li>
-        <li><strong>Hollow cylinder/ring:</strong> k&sup2;/R&sup2; = 1, a = g sin&theta;/2 (slowest)</li>
+        <li>Solid sphere: k&sup2;/R&sup2; = 2/5, a = 5g sin&theta;/7 (fastest)</li>
+        <li>Solid cylinder/disc: k&sup2;/R&sup2; = 1/2, a = 2g sin&theta;/3</li>
+        <li>Hollow sphere: k&sup2;/R&sup2; = 2/3, a = 3g sin&theta;/5</li>
+        <li>Hollow cylinder/ring: k&sup2;/R&sup2; = 1, a = g sin&theta;/2 (slowest)</li>
       </ul>
 
       <div class="example-box">
@@ -624,21 +625,21 @@
           a frictionless incline from height 3 m. Find their speeds at the bottom and rank them.
         </p>
         <div class="solution">
-          <p><strong>Solution:</strong></p>
+          <p><u>Solution:</u></p>
           <p>
             Using energy conservation: mgh = &frac12;mV&sup2;(1 + k&sup2;/R&sup2;), so V = &radic;[2gh / (1 + k&sup2;/R&sup2;)]
           </p>
           <p>
-            <strong>Solid sphere</strong> (k&sup2;/R&sup2; = 2/5):<br>
-            V = &radic;[2 &times; 10 &times; 3 / 1.4] = &radic;42.86 = <strong>6.55 m/s</strong>
+            Solid sphere (k&sup2;/R&sup2; = 2/5):<br>
+            V = &radic;[2 &times; 10 &times; 3 / 1.4] = &radic;42.86 = 6.55 m/s
           </p>
           <p>
-            <strong>Solid cylinder</strong> (k&sup2;/R&sup2; = 1/2):<br>
-            V = &radic;[60 / 1.5] = &radic;40 = <strong>6.32 m/s</strong>
+            Solid cylinder (k&sup2;/R&sup2; = 1/2):<br>
+            V = &radic;[60 / 1.5] = &radic;40 = 6.32 m/s
           </p>
           <p>
-            <strong>Hollow sphere</strong> (k&sup2;/R&sup2; = 2/3):<br>
-            V = &radic;[60 / (5/3)] = &radic;36 = <strong>6.0 m/s</strong>
+            Hollow sphere (k&sup2;/R&sup2; = 2/3):<br>
+            V = &radic;[60 / (5/3)] = &radic;36 = 6.0 m/s
           </p>
           <p>
             Ranking (fastest to slowest): Solid sphere &gt; Solid cylinder &gt; Hollow sphere
@@ -684,7 +685,7 @@
           to roll without slipping immediately after impact?
         </p>
         <div class="solution">
-          <p><strong>Solution:</strong></p>
+          <p><u>Solution:</u></p>
           <p>
             For immediate pure rolling: V<sub>CM</sub> = R&omega;
           </p>
@@ -695,7 +696,7 @@
             Angular impulse about CM: I &times; h = I<sub>CM</sub>&omega; = (2/5)mR&sup2; &times; &omega;
           </p>
           <p>
-            Dividing: h = (2/5)mR&sup2; &times; &omega; / mV<sub>CM</sub> = (2/5)R&sup2; &omega; / (R&omega;) = <strong>2R/5</strong>
+            Dividing: h = (2/5)mR&sup2; &times; &omega; / mV<sub>CM</sub> = (2/5)R&sup2; &omega; / (R&omega;) = 2R/5
           </p>
           <p>
             So the cue must strike at height 2R/5 above the centre for immediate pure rolling. For other shapes, h = k&sup2;/R.
@@ -732,7 +733,7 @@
           elastically with one end. Find the puck's velocity after impact, and the CM velocity and angular velocity of the stick.
         </p>
         <div class="solution">
-          <p><strong>Solution:</strong></p>
+          <p><u>Solution:</u></p>
           <p>
             Step 1: Conservation of linear momentum: mv = mv<sub>1</sub> + MV<sub>CM</sub>
           </p>
@@ -825,30 +826,30 @@
     <div class="theory-section">
       <h2>Key Formulas Summary</h2>
       <div class="formula-box">
-        <strong>Rotational Kinematics:</strong><br>
+        Rotational Kinematics:<br>
         &omega; = 2&pi;/T = 2&pi;f &nbsp;&nbsp;|&nbsp;&nbsp; v = r&omega; &nbsp;&nbsp;|&nbsp;&nbsp; a<sub>t</sub> = r&alpha; &nbsp;&nbsp;|&nbsp;&nbsp; a<sub>r</sub> = &omega;&sup2;r<br>
         &omega;<sub>f</sub> = &omega;<sub>i</sub> + &alpha;t &nbsp;&nbsp;|&nbsp;&nbsp; &theta; = &omega;<sub>i</sub>t + &frac12;&alpha;t&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; &omega;<sub>f</sub>&sup2; = &omega;<sub>i</sub>&sup2; + 2&alpha;&theta;<br>
         <br>
-        <strong>Moment of Inertia &amp; Theorems:</strong><br>
+        Moment of Inertia &amp; Theorems:<br>
         I = &Sigma;m<sub>i</sub>r<sub>i</sub>&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; I = Mk&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; I<sub>P</sub> = I<sub>CM</sub> + Md&sup2;<br>
         Ring: MR&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; Disc: &frac12;MR&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; Sphere: &frac23;MR&sup2;/5 &nbsp;&nbsp;|&nbsp;&nbsp; Hollow sphere: &frac23;MR&sup2;<br>
         I<sub>z</sub> = I<sub>x</sub> + I<sub>y</sub> (perpendicular axis, planar bodies only)<br>
         <br>
-        <strong>Torque &amp; Rotational Dynamics:</strong><br>
+        Torque &amp; Rotational Dynamics:<br>
         &tau; = r &times; F &nbsp;&nbsp;|&nbsp;&nbsp; |&tau;| = rF sin&theta; &nbsp;&nbsp;|&nbsp;&nbsp; &tau;<sub>net</sub> = I&alpha;<br>
         &tau;<sub>net</sub> = dL/dt &nbsp;&nbsp;|&nbsp;&nbsp; W = &tau;&Delta;&theta; &nbsp;&nbsp;|&nbsp;&nbsp; P = &tau;&omega;<br>
         <br>
-        <strong>Angular Momentum &amp; Conservation:</strong><br>
+        Angular Momentum &amp; Conservation:<br>
         L = I&omega; (rigid body) &nbsp;&nbsp;|&nbsp;&nbsp; L = mvr<sub>&perp;</sub> (particle)<br>
         If &tau;<sub>ext</sub> = 0, then I<sub>1</sub>&omega;<sub>1</sub> = I<sub>2</sub>&omega;<sub>2</sub><br>
         <br>
-        <strong>Rolling Without Slipping:</strong><br>
+        Rolling Without Slipping:<br>
         V<sub>CM</sub> = R&omega; &nbsp;&nbsp;|&nbsp;&nbsp; A<sub>CM</sub> = R&alpha;<br>
         KE<sub>total</sub> = &frac12;mV&sup2;(1 + k&sup2;/R&sup2;)<br>
         A<sub>incline</sub> = g sin&theta; / (1 + k&sup2;/R&sup2;)<br>
         V<sub>bottom</sub> = &radic;[2gh / (1 + k&sup2;/R&sup2;)]<br>
         <br>
-        <strong>Special Cases:</strong><br>
+        Special Cases:<br>
         Atwood with pulley: a = (m<sub>2</sub> - m<sub>1</sub>)g / (m<sub>1</sub> + m<sub>2</sub> + M/2)<br>
         Transition to rolling: t = 2V<sub>0</sub>/(7&mu;g), V<sub>final</sub> = 5V<sub>0</sub>/7 (solid sphere)<br>
         Striking height for pure rolling: h = k&sup2;/R (billiard ball: h = 2R/5)<br>

@@ -6,7 +6,7 @@
   <title>Flashcards | Axomiya Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
   <!-- KaTeX -->
@@ -24,7 +24,7 @@
       max-width: 1320px;
       margin: 88px auto 40px;
       padding: 0 24px;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: var(--font-body);
     }
 
     /* Two-column: study left, index right */
@@ -83,8 +83,8 @@
       border-radius: var(--radius-sm);
       border: none;
       background: transparent;
-      color: var(--text-secondary);
-      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      font-family: var(--font-body);
       font-size: 0.82rem;
       font-weight: 400;
       cursor: pointer;
@@ -222,7 +222,7 @@
       border-radius: var(--radius-sm);
       background: var(--bg-glass);
       border: 1px solid var(--border-subtle);
-      color: var(--text-secondary);
+      color: var(--text-primary);
       font-size: 0.88rem;
       transition: var(--transition-fast);
     }
@@ -276,7 +276,7 @@
       padding: 10px 24px;
       border-radius: var(--radius-sm);
       border: 1px solid transparent;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-body);
       font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;
@@ -385,7 +385,7 @@
       dominant-baseline: central;
     }
     .fc-ring-info { flex: 1; }
-    .fc-ring-label { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+    .fc-ring-label { font-size: 0.78rem; color: var(--text-primary); line-height: 1.5; }
     .fc-ring-label strong { color: var(--text-primary); font-weight: 600; }
 
     /* Stat rows */
@@ -404,7 +404,7 @@
     .fc-dash-row:last-child { border-bottom: none; }
     .fc-dash-row-label {
       font-size: 0.78rem;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 6px;
@@ -486,7 +486,7 @@
       margin-bottom: 6px;
     }
     .fc-done p {
-      color: var(--text-secondary);
+      color: var(--text-primary);
       font-size: 0.88rem;
       margin-bottom: 16px;
     }
@@ -495,8 +495,8 @@
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-subtle);
       background: var(--bg-glass);
-      color: var(--text-secondary);
-      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      font-family: var(--font-body);
       font-size: 0.82rem;
       cursor: pointer;
       transition: var(--transition-fast);
