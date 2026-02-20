@@ -78,62 +78,54 @@
     }
 
     .sim-header h1 {
-      font-family: 'Nova Square', sans-serif;
-      font-size: clamp(1.3rem, 2vw, 1.8rem);
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
       font-weight: 700;
-      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .sim-btn {
-      padding: 10px 24px;
-      font-size: clamp(0.85rem, 1vw, 1rem);
-      font-weight: 600;
-      font-family: 'Delius', cursive;
-      color: var(--color-primary);
-      background: rgba(0, 212, 255, 0.06);
-      border: 1px solid rgba(0, 212, 255, 0.2);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: var(--transition-fast);
+      color: var(--text-primary);
       letter-spacing: 0.5px;
     }
 
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
     .sim-btn:hover {
-      background: var(--color-primary);
-      color: var(--bg-primary);
-      border-color: var(--color-primary);
-      box-shadow: var(--glow-primary);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
     }
 
     .sim-btn.primary {
-      background: var(--color-primary);
-      color: var(--bg-primary);
-      border-color: var(--color-primary);
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
     }
 
     .sim-btn.primary:hover {
-      box-shadow: var(--glow-primary);
-      filter: brightness(1.1);
+      background: rgba(124, 58, 237, 0.25);
     }
 
     .sim-main-row {
       display: flex;
-      gap: 0;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
     }
 
     .canvas-wrap {
       flex: 1;
-      border: 1px solid var(--border-subtle);
-      border-right: none;
-      border-radius: var(--radius-md) 0 0 0;
       overflow: hidden;
       background: var(--bg-secondary);
-      box-shadow: inset 0 0 60px rgba(0, 212, 255, 0.02);
     }
 
     .canvas-wrap canvas {
@@ -141,34 +133,27 @@
       width: 100%;
     }
 
-    .side-graph {
-      width: 380px;
-      min-width: 300px;
+    .side-data {
+      width: 280px;
+      min-width: 240px;
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-subtle);
-      border-left: 1px solid rgba(0, 212, 255, 0.1);
-      border-radius: 0 var(--radius-md) 0 0;
       padding: 16px;
       display: flex;
       flex-direction: column;
     }
 
-    .side-graph h3 {
-      font-family: 'Nova Square', sans-serif;
-      font-size: clamp(0.75rem, 1vw, 0.95rem);
+    .side-data h3 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
       font-weight: 600;
-      color: var(--color-primary);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
     }
 
-    .side-graph canvas {
-      width: 100%;
-      flex: 1;
-      border-radius: var(--radius-sm);
+    .side-data .data-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
 
     /* Legend */
@@ -178,8 +163,6 @@
       flex-wrap: wrap;
       padding: 10px 20px;
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
       border-top: none;
       min-height: 18px;
@@ -189,7 +172,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.72rem, 0.9vw, 0.82rem);
       color: var(--text-muted);
     }
@@ -207,10 +190,8 @@
       gap: clamp(16px, 2vw, 32px);
       padding: 18px 24px;
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
-      border-top: 1px solid rgba(0, 212, 255, 0.06);
+      border-top: none;
       border-radius: 0 0 var(--radius-md) var(--radius-md);
       flex-wrap: wrap;
     }
@@ -222,7 +203,7 @@
     }
 
     .control-group label {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.85rem, 1vw, 1.05rem);
       color: var(--text-muted);
       white-space: nowrap;
@@ -244,12 +225,12 @@
       background: var(--color-primary);
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+      box-shadow: 0 0 6px rgba(124, 58, 237, 0.3);
       transition: box-shadow 0.2s;
     }
 
     .control-group input[type="range"]::-webkit-slider-thumb:hover {
-      box-shadow: 0 0 14px rgba(0, 212, 255, 0.7);
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
     }
 
     .control-group input[type="range"]::-moz-range-thumb {
@@ -259,42 +240,20 @@
       border-radius: 50%;
       cursor: pointer;
       border: none;
-      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+      box-shadow: 0 0 6px rgba(124, 58, 237, 0.3);
     }
 
     .control-group .val {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.88rem, 1vw, 1.05rem);
       color: var(--text-primary);
       min-width: 36px;
       text-align: right;
     }
 
-    /* Data panel */
-    .data-panel {
-      background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      margin-top: 16px;
-    }
-
-    .data-panel h3 {
-      font-family: 'Nova Square', sans-serif;
-      font-size: clamp(0.8rem, 1vw, 1rem);
-      font-weight: 600;
-      color: var(--color-secondary);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 16px;
-    }
-
     .data-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 0 32px;
+      display: flex;
+      flex-direction: column;
     }
 
     .data-row {
@@ -309,13 +268,13 @@
     }
 
     .data-label {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.88rem, 1vw, 1.05rem);
       color: var(--text-muted);
     }
 
     .data-value {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.92rem, 1.1vw, 1.1rem);
       color: var(--text-primary);
       font-weight: 600;
@@ -324,8 +283,6 @@
     /* Equations */
     .equations-section {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
       padding: 20px 24px;
@@ -333,12 +290,10 @@
     }
 
     .equations-section h3 {
-      font-family: 'Nova Square', sans-serif;
+      font-family: var(--font-display);
       font-size: clamp(0.8rem, 1vw, 1rem);
       font-weight: 600;
-      color: var(--color-secondary);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      color: var(--text-secondary);
       margin-bottom: 14px;
     }
 
@@ -349,7 +304,7 @@
     }
 
     .equation-item {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(1rem, 1.2vw, 1.2rem);
       color: var(--text-primary);
       padding: 8px 16px;
@@ -372,12 +327,10 @@
     }
 
     .qa-section h2 {
-      font-family: 'Nova Square', sans-serif;
+      font-family: var(--font-display);
       font-size: clamp(0.9rem, 1.1vw, 1.1rem);
       font-weight: 600;
-      color: var(--color-secondary);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      color: var(--text-secondary);
       margin-bottom: 16px;
     }
 
@@ -391,12 +344,12 @@
     }
 
     .qa-item:hover {
-      border-color: rgba(0, 212, 255, 0.15);
+      border-color: rgba(124, 58, 237, 0.2);
     }
 
     .qa-q {
       padding: 16px 24px;
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.95rem, 1.1vw, 1.15rem);
       color: var(--text-primary);
       cursor: pointer;
@@ -434,7 +387,7 @@
 
     .qa-a-inner {
       padding: 0 24px 18px;
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.92rem, 1vw, 1.08rem);
       color: var(--text-secondary);
       line-height: 1.75;
@@ -452,9 +405,9 @@
       overflow-y: auto;
     }
 
-    #simArea:fullscreen .side-graph,
-    #simArea:-webkit-full-screen .side-graph {
-      width: 420px;
+    #simArea:fullscreen .side-data,
+    #simArea:-webkit-full-screen .side-data {
+      width: 320px;
     }
 
     #simArea:fullscreen .controls-bar,
@@ -462,15 +415,10 @@
       border-radius: 0;
     }
 
-    #simArea:fullscreen .data-panel,
-    #simArea:-webkit-full-screen .data-panel {
-      margin-top: 12px;
-    }
-
     @media (max-width: 900px) {
       .sim-main-row { flex-direction: column; }
-      .side-graph { width: 100%; border-left: 1px solid var(--border-subtle); border-top: none; border-radius: 0; min-height: 250px; }
-      .canvas-wrap { border-radius: var(--radius-md) var(--radius-md) 0 0; border-right: 1px solid var(--border-subtle); }
+      .side-data { width: 100%; min-width: unset; border-radius: 0; }
+      .canvas-wrap { border-radius: var(--radius-md) var(--radius-md) 0 0; }
     }
     @media (max-width: 768px) {
       .sim-wrapper { padding: 70px 12px 24px; }
@@ -485,9 +433,8 @@
     <div class="sim-header">
       <h1>Projectile Motion</h1>
       <div style="display:flex;gap:8px;">
-        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
-        <button class="sim-btn primary" id="launchBtn">Launch</button>
         <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
       </div>
     </div>
 
@@ -495,9 +442,17 @@
       <div class="canvas-wrap">
         <canvas id="simCanvas"></canvas>
       </div>
-      <div class="side-graph">
-        <h3>Height vs Time</h3>
-        <canvas id="graphCanvas"></canvas>
+      <div class="side-data">
+        <h3>Data</h3>
+        <div class="data-grid">
+          <div class="data-row"><span class="data-label">Initial Velocity (u)</span><span class="data-value" id="d-u">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Launch Angle (&theta;)</span><span class="data-value" id="d-theta">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Time of Flight</span><span class="data-value" id="d-tof">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Range</span><span class="data-value" id="d-range">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Max Height</span><span class="data-value" id="d-hmax">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">U<sub>x</sub></span><span class="data-value" id="d-ux">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">U<sub>y</sub></span><span class="data-value" id="d-uy">&mdash;</span></div>
+        </div>
       </div>
     </div>
     <div class="legend-bar" id="legendBar"></div>
@@ -505,28 +460,17 @@
     <div class="controls-bar">
       <div class="control-group">
         <label>u</label>
-        <input type="range" id="velSlider" min="5" max="100" value="50">
-        <span class="val" id="velVal">50</span><label>m/s</label>
+        <input type="range" id="velSlider" min="80" max="100" value="90">
+        <span class="val" id="velVal">90</span><label>m/s</label>
       </div>
       <div class="control-group">
         <label>&theta;</label>
         <input type="range" id="angleSlider" min="5" max="85" value="45">
         <span class="val" id="angleVal">45</span><label>&deg;</label>
       </div>
+      <button class="sim-btn primary" id="launchBtn" style="margin-right:auto;">Launch</button>
     </div>
 
-    <div class="data-panel">
-      <h3>Data</h3>
-      <div class="data-grid">
-        <div class="data-row"><span class="data-label">Initial Velocity (u)</span><span class="data-value" id="d-u">&mdash;</span></div>
-        <div class="data-row"><span class="data-label">Launch Angle (&theta;)</span><span class="data-value" id="d-theta">&mdash;</span></div>
-        <div class="data-row"><span class="data-label">Time of Flight</span><span class="data-value" id="d-tof">&mdash;</span></div>
-        <div class="data-row"><span class="data-label">Range</span><span class="data-value" id="d-range">&mdash;</span></div>
-        <div class="data-row"><span class="data-label">Max Height</span><span class="data-value" id="d-hmax">&mdash;</span></div>
-        <div class="data-row"><span class="data-label">U<sub>x</sub></span><span class="data-value" id="d-ux">&mdash;</span></div>
-        <div class="data-row"><span class="data-label">U<sub>y</sub></span><span class="data-value" id="d-uy">&mdash;</span></div>
-      </div>
-    </div>
     </div><!-- end #simArea -->
 
     <div class="equations-section">
@@ -597,40 +541,35 @@
     function updateThemeColors() {
       var isLight = document.documentElement.getAttribute('data-theme') === 'light';
       tc = {
-        canvasBg: isLight ? '#eaebf2' : '#08081a',
-        grid: isLight ? 'rgba(0,120,200,0.04)' : 'rgba(0,212,255,0.025)',
-        axis: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)',
+        canvasBg: isLight ? '#e8eaf0' : '#08081a',
+        canvasBgCenter: isLight ? '#f0f2f8' : '#10102a',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.035)',
+        axis: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)',
         axisLabel: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.3)',
         tickText: isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.25)',
+        // Cannon
         cannonBody: isLight ? '#888' : '#555',
         cannonStroke: isLight ? '#555' : '#888',
         cannonMuzzle: isLight ? '#777' : '#444',
         cannonBase: isLight ? '#777' : '#444',
         cannonBaseStroke: isLight ? '#444' : '#666',
         cannonHub: isLight ? '#555' : '#333',
-        cannonGlow: isLight ? 'rgba(0,100,180,0.15)' : 'rgba(0,212,255,0.15)',
-        // graph
-        graphBg: isLight ? '#f0f0f8' : '#0a0a22',
-        graphGrid: isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)',
-        graphAxis: isLight ? '#ccc' : '#2a2a50',
-        graphTick: isLight ? '#999' : '#555',
-        graphLabel: isLight ? '#888' : '#6b6b85',
-        graphCurve: '#00d4ff',
-        graphPeak: isLight ? '#cc2266' : '#FF4A6E',
-        graphDot: isLight ? '#0099cc' : '#fff',
-        graphDotGlow: isLight ? '#0099cc' : '#00d4ff',
-        noDataText: isLight ? '#bbb' : '#555',
+        // Ground
+        groundTop: isLight ? '#8ab060' : '#2a4020',
+        groundBody: isLight ? '#6a9040' : '#1a3010',
+        groundLine: isLight ? 'rgba(100,150,60,0.4)' : 'rgba(60,100,30,0.3)',
+        // Markers
+        markerDash: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.12)',
+        markerText: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.3)',
       };
     }
     updateThemeColors();
-    new MutationObserver(function() { updateThemeColors(); drawScene(); drawGraph(); })
+    new MutationObserver(function() { updateThemeColors(); drawScene(); })
       .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     // === STATE ===
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
-    const graphCanvas = document.getElementById('graphCanvas');
-    const graphCtx = graphCanvas.getContext('2d');
     const G = 9.8;
 
     const COLORS = ['#4A9EFF','#FF4A6E','#4AFF8B','#FFB84A','#B44AFF','#FF4AD4','#4AFFF0','#FFF04A'];
@@ -669,18 +608,7 @@
       scaleX = (canvasW - PADDING * 2) * 0.8 / maxRange;
       scaleY = scaleX;
 
-      // Resize graph canvas
-      const gWrap = graphCanvas.parentElement;
-      const gw = gWrap.clientWidth - 32;
-      const gh = h;
-      graphCanvas.width = gw * dpr;
-      graphCanvas.height = gh * dpr;
-      graphCanvas.style.width = gw + 'px';
-      graphCanvas.style.height = gh + 'px';
-      graphCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
       drawScene();
-      drawGraph();
     }
 
     window.addEventListener('resize', resizeCanvas);
@@ -717,17 +645,39 @@
     const fs = () => Math.max(1, canvasW / 700);
 
     function drawBg() {
-      ctx.fillStyle = tc.canvasBg;
+      // Radial gradient background
+      const grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
+      grad.addColorStop(0, tc.canvasBgCenter);
+      grad.addColorStop(1, tc.canvasBg);
+      ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvasW, canvasH);
 
-      // Grid
-      ctx.strokeStyle = tc.grid;
-      ctx.lineWidth = 1;
+      // Dotted grid
+      ctx.fillStyle = tc.grid;
       for (let x = PADDING; x < canvasW - PADDING; x += 50) {
-        ctx.beginPath(); ctx.moveTo(x, PADDING / 2); ctx.lineTo(x, originY); ctx.stroke();
+        for (let y = PADDING / 2; y < originY; y += 50) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
-      for (let y = PADDING / 2; y < originY; y += 50) {
-        ctx.beginPath(); ctx.moveTo(PADDING, y); ctx.lineTo(canvasW - PADDING, y); ctx.stroke();
+
+      // Ground texture strip
+      const groundH = 8;
+      const gGrad = ctx.createLinearGradient(0, originY, 0, originY + groundH);
+      gGrad.addColorStop(0, tc.groundTop);
+      gGrad.addColorStop(1, tc.groundBody);
+      ctx.fillStyle = gGrad;
+      ctx.fillRect(PADDING, originY, canvasW - PADDING * 2, groundH);
+      // Grass blades
+      ctx.strokeStyle = tc.groundLine;
+      ctx.lineWidth = 1;
+      for (let gx = PADDING; gx < canvasW - PADDING; gx += 6) {
+        const h = 3 + Math.random() * 4;
+        ctx.beginPath();
+        ctx.moveTo(gx, originY);
+        ctx.lineTo(gx + (Math.random() - 0.5) * 3, originY - h);
+        ctx.stroke();
       }
 
       // Axes
@@ -738,7 +688,7 @@
 
       // Tick marks
       ctx.fillStyle = tc.tickText;
-      ctx.font = (9 * fs()) + 'px Delius, cursive';
+      ctx.font = (9 * fs()) + 'px Andika, sans-serif';
       ctx.textAlign = 'center';
       const tickSpacingM = getTickSpacing();
       for (let m = tickSpacingM; m * scaleX + originX < canvasW - PADDING; m += tickSpacingM) {
@@ -757,7 +707,7 @@
 
       // Axis labels
       ctx.fillStyle = tc.axisLabel;
-      ctx.font = (11 * fs()) + 'px Delius, cursive';
+      ctx.font = (11 * fs()) + 'px Andika, sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('x (m)', canvasW - PADDING / 2 + 10, originY + 4);
       ctx.fillText('y (m)', originX, PADDING / 2 - 8);
@@ -778,10 +728,7 @@
       const barrelLen = 28;
       const barrelW = 10;
 
-      // Subtle glow
       ctx.save();
-      ctx.shadowColor = tc.cannonGlow;
-      ctx.shadowBlur = 8;
       ctx.translate(cx, cy);
       ctx.rotate(-rad);
 
@@ -832,6 +779,17 @@
         ctx.stroke();
         ctx.restore();
 
+        // Angle label near launch point
+        if (l.trail.length > 5) {
+          const labelPt = l.trail[Math.min(8, l.trail.length - 1)];
+          ctx.save();
+          ctx.font = (9 * fs()) + 'px Andika, sans-serif';
+          ctx.fillStyle = l.done ? hexToRgba(l.color, 0.5) : l.color;
+          ctx.textAlign = 'left';
+          ctx.fillText(l.angle + '\u00B0', labelPt.px + 6, labelPt.py - 6);
+          ctx.restore();
+        }
+
         // Peak marker
         if (l.peakIdx !== undefined && l.trail[l.peakIdx]) {
           const pk = l.trail[l.peakIdx];
@@ -846,7 +804,7 @@
           ctx.fill();
           // Height label
           if (l.hmax) {
-            ctx.font = (9 * fs()) + 'px Delius, cursive';
+            ctx.font = (9 * fs()) + 'px Andika, sans-serif';
             ctx.fillStyle = l.done ? hexToRgba(l.color, 0.5) : l.color;
             ctx.textAlign = 'center';
             ctx.fillText(l.hmax.toFixed(1) + 'm', pk.px, pk.py - 10);
@@ -856,18 +814,69 @@
       }
     }
 
+    function drawArrow(x0, y0, x1, y1, color, label) {
+      const headLen = 7;
+      const dx = x1 - x0;
+      const dy = y1 - y0;
+      const ang = Math.atan2(dy, dx);
+
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+
+      // Shaft
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+
+      // Arrowhead
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 - headLen * Math.cos(ang - 0.4), y1 - headLen * Math.sin(ang - 0.4));
+      ctx.lineTo(x1 - headLen * Math.cos(ang + 0.4), y1 - headLen * Math.sin(ang + 0.4));
+      ctx.closePath();
+      ctx.fill();
+
+      // Label
+      if (label) {
+        ctx.font = (8 * fs()) + 'px Andika, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, (x0 + x1) / 2 + (dy > 0 ? -10 : dy < 0 ? -10 : 0), (y0 + y1) / 2 + (dx > 0 ? -6 : 6));
+      }
+      ctx.restore();
+    }
+
     function drawBalls() {
+      const vecScale = 0.6; // pixels per m/s for vector length
       for (let l of launches) {
         if (l.done || l.trail.length === 0) continue;
         const last = l.trail[l.trail.length - 1];
+        const bx = last.px;
+        const by = last.py;
+
+        // Draw ball
         ctx.save();
         ctx.shadowColor = l.color;
         ctx.shadowBlur = 10;
         ctx.beginPath();
-        ctx.arc(last.px, last.py, 5, 0, Math.PI * 2);
+        ctx.arc(bx, by, 5, 0, Math.PI * 2);
         ctx.fillStyle = l.color;
         ctx.fill();
         ctx.restore();
+
+        // Compute current velocities
+        const currentVy = l.vy - G * l.t; // positive = upward
+
+        // Vx vector (horizontal, constant) — always points right
+        const vxLen = l.vx * vecScale;
+        drawArrow(bx, by, bx + vxLen, by, '#4AFF8B', 'Vx');
+
+        // Vy vector (vertical, changing) — points up when positive, down when negative
+        const vyLen = currentVy * vecScale;
+        drawArrow(bx, by, bx, by - vyLen, '#FF4A6E', 'Vy');
       }
     }
 
@@ -878,156 +887,142 @@
       return `rgba(${r},${g},${b},${alpha})`;
     }
 
+    // === PARTICLE EFFECTS ===
+    let particles = [];
+
+    function spawnSmoke(x, y, angle) {
+      const rad = angle * Math.PI / 180;
+      for (let i = 0; i < 12; i++) {
+        const spread = (Math.random() - 0.5) * 0.8;
+        const speed = 1 + Math.random() * 2;
+        particles.push({
+          x, y,
+          vx: Math.cos(rad + spread) * speed * 0.5 - Math.random() * 0.5,
+          vy: -Math.sin(rad + spread) * speed * 0.5 - Math.random() * 0.5,
+          life: 1,
+          decay: 0.02 + Math.random() * 0.02,
+          size: 3 + Math.random() * 4,
+          type: 'smoke'
+        });
+      }
+    }
+
+    function spawnImpact(x, y, color) {
+      for (let i = 0; i < 10; i++) {
+        const ang = -Math.PI * Math.random();
+        const speed = 1 + Math.random() * 3;
+        particles.push({
+          x, y,
+          vx: Math.cos(ang) * speed,
+          vy: Math.sin(ang) * speed - Math.random() * 2,
+          life: 1,
+          decay: 0.03 + Math.random() * 0.02,
+          size: 2 + Math.random() * 3,
+          color: color,
+          type: 'impact'
+        });
+      }
+      // Dust puff
+      for (let i = 0; i < 6; i++) {
+        particles.push({
+          x: x + (Math.random() - 0.5) * 20,
+          y: y - Math.random() * 4,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: -0.3 - Math.random() * 0.8,
+          life: 1,
+          decay: 0.015 + Math.random() * 0.01,
+          size: 4 + Math.random() * 5,
+          type: 'dust'
+        });
+      }
+    }
+
+    function updateAndDrawParticles() {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
+        if (p.type === 'impact') p.vy += 0.15; // gravity on impact bits
+
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = p.life;
+        if (p.type === 'smoke' || p.type === 'dust') {
+          const smokeColor = isLight ? 'rgba(120,120,130,' : 'rgba(180,180,200,';
+          ctx.fillStyle = smokeColor + (p.life * 0.4) + ')';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * (1.5 - p.life * 0.5), 0, Math.PI * 2);
+          ctx.fill();
+        } else if (p.type === 'impact') {
+          ctx.fillStyle = p.color || '#FFB84A';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    // === DASHED RANGE/HEIGHT MARKERS ===
+    function drawMarkers() {
+      for (let l of launches) {
+        if (!l.done) continue;
+        const tof = 2 * l.vy / G;
+        const range = l.vx * tof;
+        const hmax = l.vy * l.vy / (2 * G);
+
+        const landPx = originX + range * scaleX;
+        const peakPy = originY - hmax * scaleY;
+        const alpha = 0.4;
+
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1;
+
+        // Vertical dashed line at landing point (range)
+        ctx.strokeStyle = hexToRgba(l.color, 0.2);
+        ctx.beginPath();
+        ctx.moveTo(landPx, originY);
+        ctx.lineTo(landPx, originY - 14);
+        ctx.stroke();
+
+        // Range label
+        ctx.fillStyle = hexToRgba(l.color, alpha);
+        ctx.font = (8 * fs()) + 'px Andika, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(range.toFixed(0) + 'm', landPx, originY - 16);
+
+        ctx.setLineDash([]);
+        ctx.restore();
+      }
+    }
+
     function drawScene() {
       drawBg();
+      drawMarkers();
       drawTrails();
       drawBalls();
+      updateAndDrawParticles();
       drawCannon(parseInt(angleSlider.value));
     }
 
-    // === DRAWING — GRAPH ===
-    function drawGraph() {
-      const W = graphCanvas.width / (window.devicePixelRatio || 1);
-      const H = graphCanvas.height / (window.devicePixelRatio || 1);
-      const PL = 50, PR = 18, PT = 22, PB = 40;
+    // === PHYSICS ===
+    const BARREL_LEN = 28;
 
-      graphCtx.fillStyle = tc.graphBg;
-      graphCtx.fillRect(0, 0, W, H);
-
-      const plotW = W - PL - PR;
-      const plotH = H - PT - PB;
-
-      // Find the last (most recent) launch for graph
-      const last = launches.length > 0 ? launches[launches.length - 1] : null;
-
-      if (!last) {
-        // No data
-        graphCtx.fillStyle = tc.noDataText;
-        graphCtx.font = '13px Delius, cursive';
-        graphCtx.textAlign = 'center';
-        graphCtx.fillText('Launch a projectile', W / 2, H / 2 - 10);
-        graphCtx.fillText('to see the graph', W / 2, H / 2 + 10);
-        return;
-      }
-
-      const tof = 2 * last.vy / G;
-      const hmax = last.vy * last.vy / (2 * G);
-      const tMax = Math.max(tof * 1.1, 1);
-      const hMax = Math.max(hmax * 1.2, 1);
-
-      // Grid
-      graphCtx.strokeStyle = tc.graphGrid;
-      graphCtx.lineWidth = 1;
-      for (let i = 0; i <= 4; i++) {
-        const y = PT + plotH * (1 - i / 4);
-        graphCtx.beginPath(); graphCtx.moveTo(PL, y); graphCtx.lineTo(PL + plotW, y); graphCtx.stroke();
-      }
-      for (let i = 0; i <= 5; i++) {
-        const x = PL + plotW * i / 5;
-        graphCtx.beginPath(); graphCtx.moveTo(x, PT); graphCtx.lineTo(x, PT + plotH); graphCtx.stroke();
-      }
-
-      // Axes frame
-      graphCtx.strokeStyle = tc.graphAxis;
-      graphCtx.lineWidth = 1.5;
-      graphCtx.beginPath();
-      graphCtx.moveTo(PL, PT);
-      graphCtx.lineTo(PL, PT + plotH);
-      graphCtx.lineTo(PL + plotW, PT + plotH);
-      graphCtx.stroke();
-
-      // Axis labels
-      graphCtx.fillStyle = tc.graphLabel;
-      graphCtx.font = '11px Delius, cursive';
-      graphCtx.textAlign = 'center';
-      graphCtx.fillText('Time (s)', PL + plotW / 2, H - 6);
-      graphCtx.save();
-      graphCtx.translate(12, PT + plotH / 2);
-      graphCtx.rotate(-Math.PI / 2);
-      graphCtx.fillText('Height (m)', 0, 0);
-      graphCtx.restore();
-
-      // Tick values
-      graphCtx.fillStyle = tc.graphTick;
-      graphCtx.font = '10px Delius, cursive';
-      graphCtx.textAlign = 'center';
-      for (let i = 0; i <= 5; i++) {
-        const t = (tMax * i / 5).toFixed(1);
-        graphCtx.fillText(t, PL + plotW * i / 5, PT + plotH + 16);
-      }
-      graphCtx.textAlign = 'right';
-      for (let i = 0; i <= 4; i++) {
-        const h = (hMax * i / 4).toFixed(0);
-        graphCtx.fillText(h, PL - 6, PT + plotH * (1 - i / 4) + 4);
-      }
-
-      // Plot the theoretical H vs T curve
-      graphCtx.strokeStyle = tc.graphCurve;
-      graphCtx.lineWidth = 2.5;
-      graphCtx.shadowColor = tc.graphCurve;
-      graphCtx.shadowBlur = 6;
-      graphCtx.beginPath();
-      for (let i = 0; i <= 200; i++) {
-        const t = tof * i / 200;
-        const h = last.vy * t - 0.5 * G * t * t;
-        const px = PL + (t / tMax) * plotW;
-        const py = PT + plotH - (h / hMax) * plotH;
-        if (i === 0) graphCtx.moveTo(px, py); else graphCtx.lineTo(px, py);
-      }
-      graphCtx.stroke();
-      graphCtx.shadowBlur = 0;
-
-      // Peak marker
-      const tPeak = last.vy / G;
-      const peakX = PL + (tPeak / tMax) * plotW;
-      const peakY = PT + plotH - (hmax / hMax) * plotH;
-
-      // Peak dashed lines
-      graphCtx.strokeStyle = tc.graphPeak;
-      graphCtx.lineWidth = 1;
-      graphCtx.setLineDash([4, 4]);
-      graphCtx.beginPath();
-      graphCtx.moveTo(peakX, peakY);
-      graphCtx.lineTo(peakX, PT + plotH);
-      graphCtx.stroke();
-      graphCtx.beginPath();
-      graphCtx.moveTo(PL, peakY);
-      graphCtx.lineTo(peakX, peakY);
-      graphCtx.stroke();
-      graphCtx.setLineDash([]);
-
-      // Peak dot
-      graphCtx.fillStyle = tc.graphPeak;
-      graphCtx.beginPath();
-      graphCtx.arc(peakX, peakY, 4, 0, Math.PI * 2);
-      graphCtx.fill();
-
-      // Peak label
-      graphCtx.fillStyle = tc.graphPeak;
-      graphCtx.font = '10px Delius, cursive';
-      graphCtx.textAlign = 'left';
-      graphCtx.fillText('H=' + hmax.toFixed(1) + 'm', peakX + 8, peakY - 4);
-
-      // Current position dot (if active)
-      if (last.active && last.trail.length > 0) {
-        const currentT = last.t;
-        const currentH = last.vy * currentT - 0.5 * G * currentT * currentT;
-        if (currentH >= 0) {
-          const cx = PL + (currentT / tMax) * plotW;
-          const cy = PT + plotH - (currentH / hMax) * plotH;
-          graphCtx.save();
-          graphCtx.shadowColor = tc.graphDotGlow;
-          graphCtx.shadowBlur = 10;
-          graphCtx.fillStyle = tc.graphDot;
-          graphCtx.beginPath();
-          graphCtx.arc(cx, cy, 5, 0, Math.PI * 2);
-          graphCtx.fill();
-          graphCtx.restore();
-        }
-      }
+    function cannonTip(angleDeg) {
+      const rad = angleDeg * Math.PI / 180;
+      return {
+        px: originX + Math.cos(rad) * BARREL_LEN,
+        py: originY - Math.sin(rad) * BARREL_LEN
+      };
     }
 
-    // === PHYSICS ===
     function toScreen(x, y) {
       return { px: originX + x * scaleX, py: originY - y * scaleY };
     }
@@ -1041,10 +1036,11 @@
       const color = COLORS[colorIndex % COLORS.length];
       colorIndex++;
 
+      const tip = cannonTip(angle);
       const hmax = vy * vy / (2 * G);
       const proj = {
         u, angle, vx, vy, t: 0, color, hmax,
-        trail: [],
+        trail: [{ px: tip.px, py: tip.py }],  // start from cannon tip
         active: true,
         done: false,
         peakIdx: undefined,
@@ -1065,6 +1061,8 @@
 
       updateLegend();
       playBoom();
+      // Launch smoke from cannon tip
+      spawnSmoke(tip.px, tip.py, angle);
       if (!animId) animate();
     }
 
@@ -1096,9 +1094,11 @@
         if (y <= 0 && l.t > 0.05) {
           const tLand = 2 * l.vy / G;
           const xLand = l.vx * tLand;
-          l.trail.push(toScreen(xLand, 0));
+          const landScreen = toScreen(xLand, 0);
+          l.trail.push(landScreen);
           l.active = false;
           l.done = true;
+          spawnImpact(landScreen.px, landScreen.py, l.color);
         } else {
           l.trail.push(toScreen(x, Math.max(y, 0)));
           anyActive = true;
@@ -1106,9 +1106,8 @@
       }
 
       drawScene();
-      drawGraph();
 
-      if (anyActive) {
+      if (anyActive || particles.length > 0) {
         animId = requestAnimationFrame(animate);
       } else {
         animId = null;
@@ -1118,6 +1117,7 @@
     function resetSim() {
       if (animId) { cancelAnimationFrame(animId); animId = null; }
       launches = [];
+      particles = [];
       colorIndex = 0;
       legendBar.innerHTML = '';
       document.getElementById('d-u').innerHTML = '&mdash;';
@@ -1128,7 +1128,6 @@
       document.getElementById('d-ux').innerHTML = '&mdash;';
       document.getElementById('d-uy').innerHTML = '&mdash;';
       drawScene();
-      drawGraph();
     }
 
     // === FULLSCREEN ===

@@ -8,7 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Delius&family=Nova+Square&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="../js/theme.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -65,51 +65,44 @@
     }
 
     .sim-header h1 {
-      font-family: 'Nova Square', sans-serif;
-      font-size: clamp(1.3rem, 2vw, 1.8rem);
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
       font-weight: 700;
-      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .sim-btn {
-      padding: 10px 24px;
-      font-size: clamp(0.85rem, 1vw, 1rem);
-      font-weight: 600;
-      font-family: 'Delius', cursive;
-      color: var(--color-primary);
-      background: rgba(0, 212, 255, 0.06);
-      border: 1px solid rgba(0, 212, 255, 0.2);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: var(--transition-fast);
+      color: var(--text-primary);
       letter-spacing: 0.5px;
     }
 
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
     .sim-btn:hover {
-      background: var(--color-primary);
-      color: var(--bg-primary);
-      border-color: var(--color-primary);
-      box-shadow: var(--glow-primary);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
     }
 
     .sim-main-row {
       display: flex;
-      gap: 0;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
     }
 
     .canvas-wrap {
       flex: 1;
-      border: 1px solid var(--border-subtle);
-      border-right: none;
-      border-radius: var(--radius-md) 0 0 0;
       overflow: hidden;
       background: var(--bg-secondary);
-      box-shadow: inset 0 0 60px rgba(0, 212, 255, 0.02);
     }
 
     .canvas-wrap canvas {
@@ -121,23 +114,16 @@
       width: 380px;
       min-width: 300px;
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-subtle);
-      border-left: 1px solid rgba(0, 212, 255, 0.1);
-      border-radius: 0 var(--radius-md) 0 0;
       padding: 16px;
       display: flex;
       flex-direction: column;
     }
 
     .side-graph h3 {
-      font-family: 'Nova Square', sans-serif;
-      font-size: clamp(0.75rem, 1vw, 0.95rem);
+      font-family: var(--font-display);
+      font-size: 0.9rem;
       font-weight: 600;
-      color: var(--color-primary);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      color: var(--text-secondary);
       margin-bottom: 10px;
     }
 
@@ -152,15 +138,12 @@
       display: flex;
       align-items: center;
       gap: clamp(16px, 2vw, 32px);
-      padding: 18px 24px;
+      padding: 16px 24px;
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
-      border-top: 1px solid rgba(0, 212, 255, 0.06);
+      border-top: none;
       border-radius: 0 0 var(--radius-md) var(--radius-md);
       flex-wrap: wrap;
-      margin-top: 0;
     }
 
     .control-group {
@@ -170,7 +153,7 @@
     }
 
     .control-group label {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.85rem, 1vw, 1.05rem);
       color: var(--text-muted);
       white-space: nowrap;
@@ -192,16 +175,16 @@
       background: var(--color-primary);
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+      box-shadow: 0 0 6px rgba(124, 58, 237, 0.3);
       transition: box-shadow 0.2s;
     }
 
     .control-group input[type="range"]::-webkit-slider-thumb:hover {
-      box-shadow: 0 0 14px rgba(0, 212, 255, 0.7);
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
     }
 
     .control-group .val {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.88rem, 1vw, 1.05rem);
       color: var(--text-primary);
       min-width: 60px;
@@ -214,7 +197,7 @@
       color: var(--text-primary);
       padding: 8px 12px;
       border-radius: var(--radius-sm);
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.85rem, 1vw, 1rem);
       cursor: pointer;
       outline: none;
@@ -222,12 +205,12 @@
     }
 
     .control-group select:hover {
-      border-color: rgba(0, 212, 255, 0.3);
+      border-color: rgba(124, 58, 237, 0.3);
     }
 
     .control-group select:focus {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.1);
+      border-color: rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.08);
     }
 
     .spectrum-bar {
@@ -264,11 +247,9 @@
     /* Data panel */
     .data-panel {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 20px;
+      padding: 20px 24px;
       margin-top: 16px;
     }
 
@@ -279,13 +260,11 @@
     }
 
     .data-panel h3 {
-      font-family: 'Nova Square', sans-serif;
-      font-size: clamp(0.8rem, 1vw, 1rem);
-      font-weight: 600;
-      color: var(--color-secondary);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 16px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 14px;
     }
 
     .data-row {
@@ -300,13 +279,13 @@
     }
 
     .data-label {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.88rem, 1vw, 1.05rem);
       color: var(--text-muted);
     }
 
     .data-value {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.92rem, 1.1vw, 1.1rem);
       color: var(--text-primary);
       font-weight: 600;
@@ -314,19 +293,15 @@
 
     .data-value.emission {
       color: var(--color-accent);
-      text-shadow: 0 0 8px rgba(0, 255, 170, 0.4);
     }
 
     .data-value.no-emission {
       color: var(--color-rose);
-      text-shadow: 0 0 8px rgba(255, 45, 117, 0.4);
     }
 
     /* Equations */
     .equations-section {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
       padding: 20px 24px;
@@ -334,12 +309,10 @@
     }
 
     .equations-section h3 {
-      font-family: 'Nova Square', sans-serif;
-      font-size: clamp(0.8rem, 1vw, 1rem);
-      font-weight: 600;
-      color: var(--color-secondary);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
       margin-bottom: 14px;
     }
 
@@ -350,7 +323,7 @@
     }
 
     .equation-item {
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(1rem, 1.2vw, 1.2rem);
       color: var(--text-primary);
       padding: 8px 16px;
@@ -373,12 +346,10 @@
     }
 
     .qa-section h2 {
-      font-family: 'Nova Square', sans-serif;
-      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
-      font-weight: 600;
-      color: var(--color-secondary);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
       margin-bottom: 16px;
     }
 
@@ -392,12 +363,12 @@
     }
 
     .qa-item:hover {
-      border-color: rgba(0, 212, 255, 0.15);
+      border-color: rgba(124, 58, 237, 0.2);
     }
 
     .qa-q {
       padding: 16px 24px;
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.95rem, 1.1vw, 1.15rem);
       color: var(--text-primary);
       cursor: pointer;
@@ -435,7 +406,7 @@
 
     .qa-a-inner {
       padding: 0 24px 18px;
-      font-family: 'Delius', cursive;
+      font-family: var(--font-body);
       font-size: clamp(0.92rem, 1vw, 1.08rem);
       color: var(--text-secondary);
       line-height: 1.75;
@@ -470,8 +441,7 @@
 
     @media (max-width: 900px) {
       .sim-main-row { flex-direction: column; }
-      .side-graph { width: 100%; border-left: 1px solid var(--border-subtle); border-top: none; border-radius: 0; }
-      .canvas-wrap { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+      .side-graph { width: 100%; min-width: 0; }
     }
     @media (max-width: 768px) {
       .sim-wrapper { padding: 70px 12px 24px; }
@@ -635,23 +605,34 @@
       var isLight = document.documentElement.getAttribute('data-theme') === 'light';
       tc = {
         canvasBg: isLight ? '#eaebf2' : '#08081a',
+        canvasBgCenter: isLight ? '#f0f1f8' : '#0c0c24',
         grid: isLight ? 'rgba(0,120,200,0.04)' : 'rgba(0,212,255,0.025)',
-        tube: isLight ? '#333' : '#ccc',
-        tubeWindow: isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)',
+        tube: isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.25)',
+        tubeGlass: isLight ? 'rgba(200,210,230,0.12)' : 'rgba(100,140,200,0.04)',
+        tubeHighlight: isLight ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.06)',
         vacuum: isLight ? '#555' : '#aaa',
-        cathodeA: isLight ? '#555' : '#999',
-        cathodeB: isLight ? '#777' : '#bbb',
-        cathodeStroke: isLight ? '#333' : '#ddd',
-        anodeA: isLight ? '#666' : '#aaa',
-        anodeB: isLight ? '#888' : '#ccc',
-        anodeStroke: isLight ? '#444' : '#ddd',
+        cathodeA: isLight ? '#555' : '#666',
+        cathodeB: isLight ? '#777' : '#999',
+        cathodeHighlight: isLight ? '#999' : '#ccc',
+        cathodeStroke: isLight ? '#444' : '#888',
+        anodeA: isLight ? '#666' : '#777',
+        anodeB: isLight ? '#888' : '#aaa',
+        anodeHighlight: isLight ? '#aaa' : '#ddd',
+        anodeStroke: isLight ? '#555' : '#888',
         label: isLight ? '#222' : '#e0e0e0',
         wire: isLight ? '#222' : '#ddd',
         lampBody: isLight ? '#e0e0e8' : '#1a1a2a',
-        lampStroke: isLight ? '#333' : '#ccc',
+        lampHighlight: isLight ? '#f8f8ff' : '#2a2a44',
+        lampStroke: isLight ? '#aaa' : '#666',
+        batteryBody: isLight ? '#e8e8ee' : '#141430',
+        batteryStroke: isLight ? '#999' : '#555',
+        batteryPos: isLight ? '#cc3333' : '#ff6666',
+        batteryNeg: isLight ? '#2255aa' : '#6699dd',
         batteryLine: isLight ? '#111' : '#eee',
         ammeterBg: isLight ? '#f0f0f5' : '#0e0e28',
-        ammeterStroke: isLight ? '#222' : '#eee',
+        ammeterHighlight: isLight ? '#fafafe' : '#1a1a3a',
+        ammeterInner: isLight ? '#ccc' : '#333',
+        ammeterStroke: isLight ? '#555' : '#888',
         ammeterText: isLight ? '#111' : '#f0f0f0',
         currentOn: isLight ? '#00b377' : '#4AFF8B',
         currentOff: isLight ? '#888' : '#666',
@@ -662,6 +643,7 @@
         noEmText: isLight ? '#cc2266' : '#FF4A6E',
         noEmSub: isLight ? '#bb5577' : '#aa3355',
         emGlow: isLight ? 'rgba(0,179,119,0.04)' : 'rgba(74,255,139,0.04)',
+        emGlowBright: isLight ? 'rgba(0,179,119,0.08)' : 'rgba(74,255,139,0.06)',
         // graph
         graphBg: isLight ? '#f0f0f8' : '#0a0a22',
         graphGrid: isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)',
@@ -809,15 +791,20 @@
       // Font scale: base at 700px width, scale up for larger screens
       var fs = Math.max(1, W / 700);
 
-      // Background
-      ctx.fillStyle = tc.canvasBg;
+      // Background — radial gradient for depth
+      var bgGrad = ctx.createRadialGradient(W * 0.45, H * 0.4, W * 0.1, W * 0.5, H * 0.5, W * 0.8);
+      bgGrad.addColorStop(0, tc.canvasBgCenter);
+      bgGrad.addColorStop(1, tc.canvasBg);
+      ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, W, H);
 
-      // Grid
+      // Grid — dotted for subtlety
       ctx.strokeStyle = tc.grid;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 0.5;
+      ctx.setLineDash([1, 6]);
       for (var x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
       for (var y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      ctx.setLineDash([]);
 
       // Layout proportions — spread to fill canvas
       var tubeL = W * 0.22;
@@ -829,196 +816,260 @@
       var plateTop = tubeT + 20;
       var plateBot = tubeB - 20;
 
-      // === VACUUM TUBE ===
-      ctx.strokeStyle = tc.tube;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
+      // === VACUUM TUBE (glass effect) ===
       var tubePad = 15;
-      ctx.moveTo(tubeL + tubePad, tubeT);
-      ctx.lineTo(tubeR - tubePad, tubeT);
-      ctx.quadraticCurveTo(tubeR, tubeT, tubeR, tubeT + tubePad);
-      ctx.lineTo(tubeR, tubeB - tubePad);
-      ctx.quadraticCurveTo(tubeR, tubeB, tubeR - tubePad, tubeB);
-      ctx.lineTo(tubeL + tubePad, tubeB);
-      ctx.quadraticCurveTo(tubeL, tubeB, tubeL, tubeB - tubePad);
-      ctx.lineTo(tubeL, tubeT + tubePad);
-      ctx.quadraticCurveTo(tubeL, tubeT, tubeL + tubePad, tubeT);
+      function tubePath() {
+        ctx.beginPath();
+        ctx.moveTo(tubeL + tubePad, tubeT);
+        ctx.lineTo(tubeR - tubePad, tubeT);
+        ctx.quadraticCurveTo(tubeR, tubeT, tubeR, tubeT + tubePad);
+        ctx.lineTo(tubeR, tubeB - tubePad);
+        ctx.quadraticCurveTo(tubeR, tubeB, tubeR - tubePad, tubeB);
+        ctx.lineTo(tubeL + tubePad, tubeB);
+        ctx.quadraticCurveTo(tubeL, tubeB, tubeL, tubeB - tubePad);
+        ctx.lineTo(tubeL, tubeT + tubePad);
+        ctx.quadraticCurveTo(tubeL, tubeT, tubeL + tubePad, tubeT);
+        ctx.closePath();
+      }
+      // Glass fill
+      tubePath();
+      ctx.fillStyle = tc.tubeGlass;
+      ctx.fill();
+      // Inner glow gradient
+      var tubeGlow = ctx.createLinearGradient(tubeL, tubeT, tubeL, tubeB);
+      tubeGlow.addColorStop(0, tc.tubeHighlight);
+      tubeGlow.addColorStop(0.15, 'transparent');
+      tubeGlow.addColorStop(1, 'transparent');
+      tubePath();
+      ctx.fillStyle = tubeGlow;
+      ctx.fill();
+      // Stroke
+      tubePath();
+      ctx.strokeStyle = tc.tube;
+      ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      // Vacuum label (at bottom of tube)
+      // Top highlight (3D glass)
+      ctx.beginPath();
+      ctx.moveTo(tubeL + tubePad + 10, tubeT + 3);
+      ctx.lineTo(tubeR - tubePad - 10, tubeT + 3);
+      ctx.strokeStyle = tc.tubeHighlight;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Vacuum label
       ctx.fillStyle = tc.vacuum;
-      ctx.font = Math.round(12 * fs) + 'px Delius, cursive';
+      ctx.font = Math.round(11 * fs) + 'px Andika, sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('Vacuum', (tubeL + tubeR) / 2, tubeB - 8);
 
-      // Window on tube (where light enters at angle)
-      ctx.strokeStyle = tc.tubeWindow;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(tubeL + tubePad, tubeT);
-      ctx.lineTo((tubeL + tubeR) / 2 - 10, tubeT);
-      ctx.stroke();
-
-      // === CATHODE ===
+      // === CATHODE (metallic 3D) ===
       var cathGrad = ctx.createLinearGradient(cathodeX - 8, 0, cathodeX + 8, 0);
       cathGrad.addColorStop(0, tc.cathodeA);
-      cathGrad.addColorStop(0.5, tc.cathodeB);
+      cathGrad.addColorStop(0.3, tc.cathodeB);
+      cathGrad.addColorStop(0.5, tc.cathodeHighlight);
+      cathGrad.addColorStop(0.7, tc.cathodeB);
       cathGrad.addColorStop(1, tc.cathodeA);
       ctx.fillStyle = cathGrad;
-      ctx.fillRect(cathodeX - 6, plateTop, 12, plateBot - plateTop);
+      ctx.beginPath();
+      ctx.roundRect(cathodeX - 6, plateTop, 12, plateBot - plateTop, 2);
+      ctx.fill();
       ctx.strokeStyle = tc.cathodeStroke;
-      ctx.lineWidth = 1;
-      ctx.strokeRect(cathodeX - 6, plateTop, 12, plateBot - plateTop);
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
 
-      // Glow on cathode if emission
+      // Emission glow halo on cathode surface
       if (emission) {
-        ctx.fillStyle = tc.emGlow;
-        ctx.fillRect(cathodeX + 6, plateTop, 30, plateBot - plateTop);
+        var emGlowGrad = ctx.createLinearGradient(cathodeX + 6, 0, cathodeX + 50, 0);
+        emGlowGrad.addColorStop(0, tc.emGlowBright);
+        emGlowGrad.addColorStop(1, 'transparent');
+        ctx.fillStyle = emGlowGrad;
+        ctx.fillRect(cathodeX + 6, plateTop - 4, 44, plateBot - plateTop + 8);
       }
 
-      // === ANODE ===
+      // === ANODE (metallic 3D) ===
       var anGrad = ctx.createLinearGradient(anodeX - 6, 0, anodeX + 6, 0);
       anGrad.addColorStop(0, tc.anodeA);
-      anGrad.addColorStop(0.5, tc.anodeB);
+      anGrad.addColorStop(0.3, tc.anodeB);
+      anGrad.addColorStop(0.5, tc.anodeHighlight);
+      anGrad.addColorStop(0.7, tc.anodeB);
       anGrad.addColorStop(1, tc.anodeA);
       ctx.fillStyle = anGrad;
-      ctx.fillRect(anodeX - 5, plateTop, 10, plateBot - plateTop);
+      ctx.beginPath();
+      ctx.roundRect(anodeX - 5, plateTop, 10, plateBot - plateTop, 2);
+      ctx.fill();
       ctx.strokeStyle = tc.anodeStroke;
-      ctx.lineWidth = 1;
-      ctx.strokeRect(anodeX - 5, plateTop, 10, plateBot - plateTop);
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
 
-      // Labels (left of cathode, right of anode)
+      // Labels
       ctx.fillStyle = tc.label;
-      ctx.font = Math.round(13 * fs) + 'px Delius, cursive';
+      ctx.font = Math.round(12 * fs) + 'px Andika, sans-serif';
       ctx.textAlign = 'right';
-      ctx.fillText('Cathode', cathodeX - 12, (plateTop + plateBot) / 2 + 4);
+      ctx.fillText('Cathode', cathodeX - 14, (plateTop + plateBot) / 2 + 4);
       ctx.textAlign = 'left';
-      ctx.fillText('Anode', anodeX + 12, (plateTop + plateBot) / 2 + 4);
+      ctx.fillText('Anode', anodeX + 14, (plateTop + plateBot) / 2 + 4);
 
-      // === LIGHT SOURCE (top center, shining diagonally onto cathode) ===
+      // === LIGHT SOURCE (pulsing glow) ===
       var lsX = (tubeL + tubeR) / 2;
       var lsY = H * 0.05;
       var lsR = 20;
-      // Target point on cathode surface (where beam hits)
       var targetX = cathodeX - 6;
       var targetY = (plateTop + plateBot) / 2;
+      var pulse = 0.7 + 0.3 * Math.sin(frameCount * 0.04);
 
-      // Outer glow
+      // Outer glow (pulsing)
+      var outerGlow = ctx.createRadialGradient(lsX, lsY, lsR * 0.5, lsX, lsY, lsR + 16);
+      outerGlow.addColorStop(0, 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + (0.15 * pulse) + ')');
+      outerGlow.addColorStop(1, 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0)');
       ctx.beginPath();
-      ctx.arc(lsX, lsY, lsR + 8, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.08)';
+      ctx.arc(lsX, lsY, lsR + 16, 0, Math.PI * 2);
+      ctx.fillStyle = outerGlow;
       ctx.fill();
 
       // Lamp body
       ctx.beginPath();
       ctx.arc(lsX, lsY, lsR, 0, Math.PI * 2);
-      ctx.fillStyle = tc.lampBody;
+      var lampGrad = ctx.createRadialGradient(lsX - 4, lsY - 4, 2, lsX, lsY, lsR);
+      lampGrad.addColorStop(0, tc.lampHighlight);
+      lampGrad.addColorStop(1, tc.lampBody);
+      ctx.fillStyle = lampGrad;
       ctx.strokeStyle = tc.lampStroke;
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.2;
       ctx.fill();
       ctx.stroke();
 
-      // Inner glow
+      // Inner glow (pulsing)
       ctx.beginPath();
       ctx.arc(lsX, lsY, lsR - 5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.6)';
+      ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + (0.5 + 0.2 * pulse) + ')';
       ctx.shadowColor = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
-      ctx.shadowBlur = 15;
+      ctx.shadowBlur = 12 + 6 * pulse;
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // Light beam cone — diagonal from source down to cathode surface
-      var beamSpread = 12;
+      // Light beam cone — gradient fade
+      var beamSpread = 14;
       ctx.beginPath();
-      ctx.moveTo(lsX - 4, lsY + lsR);
+      ctx.moveTo(lsX - 5, lsY + lsR);
       ctx.lineTo(targetX - beamSpread, plateTop);
       ctx.lineTo(targetX + beamSpread, plateBot);
-      ctx.lineTo(lsX + 4, lsY + lsR);
+      ctx.lineTo(lsX + 5, lsY + lsR);
       ctx.closePath();
-      ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.04)';
+      var beamGrad = ctx.createLinearGradient(lsX, lsY + lsR, targetX, targetY);
+      beamGrad.addColorStop(0, 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.07)');
+      beamGrad.addColorStop(1, 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.02)');
+      ctx.fillStyle = beamGrad;
       ctx.fill();
 
       // Label
       ctx.fillStyle = tc.label;
-      ctx.font = Math.round(12 * fs) + 'px Delius, cursive';
+      ctx.font = Math.round(11 * fs) + 'px Andika, sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText(freq.toFixed(1) + '\u00D710\u00B9\u2074 Hz', lsX + lsR + 6, lsY + 4);
+      ctx.fillText(freq.toFixed(1) + '\u00D710\u00B9\u2074 Hz', lsX + lsR + 8, lsY + 4);
 
-      // === CIRCUIT (below tube, moved up) ===
-      var circBot = H - 30;
-      var amR = 14;
-      var amY = tubeB + (circBot - tubeB) * 0.45; // ammeter on anode wire, upper portion
+      // === CIRCUIT ===
+      var circBot = H - 20;
+      var amR = 16;
+      var circMid = tubeB + (circBot - tubeB) * 0.5;
+      var amY = tubeB + (circMid - tubeB) * 0.6;
 
-      // Battery on bottom wire (moved up)
+      // Battery position — centered on bottom wire, raised
       var batX = (cathodeX + anodeX) / 2;
-      var batY = circBot;
+      var batY = circMid + 8;
 
       ctx.strokeStyle = tc.wire;
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
 
-      // Wire from cathode down to bottom
+      // Wire: cathode down, across to battery
       ctx.beginPath();
       ctx.moveTo(cathodeX, plateBot);
-      ctx.lineTo(cathodeX, circBot);
+      ctx.lineTo(cathodeX, batY);
+      ctx.lineTo(batX - 22, batY);
       ctx.stroke();
 
-      // Wire from anode down to ammeter top
+      // Wire: battery to anode bottom, up to ammeter
       ctx.beginPath();
-      ctx.moveTo(anodeX, plateBot);
-      ctx.lineTo(anodeX, amY - amR);
+      ctx.moveTo(batX + 22, batY);
+      ctx.lineTo(anodeX, batY);
+      ctx.lineTo(anodeX, amY + amR);
       ctx.stroke();
 
-      // Wire from ammeter bottom to circuit bottom
+      // Wire: ammeter top to anode plate
       ctx.beginPath();
-      ctx.moveTo(anodeX, amY + amR);
-      ctx.lineTo(anodeX, circBot);
+      ctx.moveTo(anodeX, amY - amR);
+      ctx.lineTo(anodeX, plateBot);
       ctx.stroke();
+      ctx.lineCap = 'butt';
 
-      // Bottom wire left (cathode to battery)
+      // === BATTERY (2-cell realistic style, flips with voltage) ===
+      var cellW = 4;
+      var cellGap = 6;
+      var cellH1 = 18; // tall plate (positive)
+      var cellH2 = 10; // short plate (negative)
+      // Two cells side by side
+      var cells = [
+        { cx: batX - cellGap },
+        { cx: batX + cellGap }
+      ];
+      // Outer casing
       ctx.beginPath();
-      ctx.moveTo(cathodeX, circBot);
-      ctx.lineTo(batX - 12, circBot);
+      ctx.roundRect(batX - 18, batY - 14, 36, 28, 5);
+      ctx.fillStyle = tc.batteryBody;
+      ctx.fill();
+      ctx.strokeStyle = tc.batteryStroke;
+      ctx.lineWidth = 1.2;
       ctx.stroke();
-
-      // Bottom wire right (battery to anode)
-      ctx.beginPath();
-      ctx.moveTo(batX + 12, circBot);
-      ctx.lineTo(anodeX, circBot);
-      ctx.stroke();
-
-      // Battery symbol
-      ctx.strokeStyle = tc.batteryLine;
-      ctx.lineWidth = 2.5;
-      // Long line (positive)
-      ctx.beginPath();
-      ctx.moveTo(batX - 8, batY - 9);
-      ctx.lineTo(batX - 8, batY + 9);
-      ctx.stroke();
-      // Short line (negative)
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(batX + 8, batY - 5);
-      ctx.lineTo(batX + 8, batY + 5);
-      ctx.stroke();
-      // + and - signs
-      ctx.fillStyle = tc.label;
-      ctx.font = Math.round(11 * fs) + 'px Delius, cursive';
+      // Draw cell plates
+      for (var ci = 0; ci < cells.length; ci++) {
+        var ccx = cells[ci].cx;
+        // Positive plate (tall, thick) — left or right depends on voltage
+        var pOff = voltage >= 0 ? -cellW : cellW;
+        var nOff = voltage >= 0 ? cellW : -cellW;
+        // Positive plate
+        ctx.fillStyle = tc.batteryPos;
+        ctx.fillRect(ccx + pOff - 1.5, batY - cellH1 / 2, 3, cellH1);
+        // Negative plate
+        ctx.fillStyle = tc.batteryNeg;
+        ctx.fillRect(ccx + nOff - 1, batY - cellH2 / 2, 2, cellH2);
+      }
+      // + and - labels outside casing
+      ctx.fillStyle = tc.batteryPos;
+      ctx.font = 'bold ' + Math.round(11 * fs) + 'px Andika, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('+', batX - 8, batY - 14);
-      ctx.fillText('\u2013', batX + 8, batY - 14);
+      if (voltage >= 0) {
+        ctx.fillText('+', batX - 24, batY + 4);
+        ctx.fillStyle = tc.batteryNeg;
+        ctx.fillText('\u2013', batX + 24, batY + 4);
+      } else {
+        ctx.fillText('+', batX + 24, batY + 4);
+        ctx.fillStyle = tc.batteryNeg;
+        ctx.fillText('\u2013', batX - 24, batY + 4);
+      }
 
-      // Ammeter circle (inline on anode wire)
+      // === AMMETER (polished) ===
+      var amGrad = ctx.createRadialGradient(anodeX - 3, amY - 3, 1, anodeX, amY, amR);
+      amGrad.addColorStop(0, tc.ammeterHighlight);
+      amGrad.addColorStop(1, tc.ammeterBg);
       ctx.beginPath();
       ctx.arc(anodeX, amY, amR, 0, Math.PI * 2);
-      ctx.fillStyle = tc.ammeterBg;
+      ctx.fillStyle = amGrad;
+      ctx.fill();
+      // Outer ring
       ctx.strokeStyle = tc.ammeterStroke;
       ctx.lineWidth = 2;
-      ctx.fill();
+      ctx.stroke();
+      // Inner ring for depth
+      ctx.beginPath();
+      ctx.arc(anodeX, amY, amR - 3, 0, Math.PI * 2);
+      ctx.strokeStyle = tc.ammeterInner;
+      ctx.lineWidth = 0.8;
       ctx.stroke();
 
       // A label
       ctx.fillStyle = tc.ammeterText;
-      ctx.font = 'bold ' + Math.round(14 * fs) + 'px Delius, cursive';
+      ctx.font = 'bold ' + Math.round(14 * fs) + 'px Andika, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('A', anodeX, amY);
@@ -1048,23 +1099,23 @@
       ctx.textAlign = 'left';
       ctx.fillText(curStr, curPx + 9, curPy + curH * 0.68);
 
-      // === VOLTAGE READING (to the left of battery) ===
+      // === VOLTAGE READING (above battery casing) ===
       var vStr2 = (voltage >= 0 ? '+' : '') + voltage.toFixed(1) + ' V';
-      ctx.font = 'bold ' + Math.round(14 * fs) + 'px JetBrains Mono, monospace';
-      var vW = ctx.measureText(vStr2).width + 18;
-      var vH = Math.round(24 * fs);
+      ctx.font = 'bold ' + Math.round(12 * fs) + 'px JetBrains Mono, monospace';
+      var vW = ctx.measureText(vStr2).width + 14;
+      var vH = Math.round(20 * fs);
       var vPx = batX - vW / 2;
-      var vPy = batY - 38;
+      var vPy = batY - 14 - vH - 6;
       ctx.fillStyle = tc.formulaBg;
       ctx.beginPath();
       ctx.roundRect(vPx, vPy, vW, vH, 4);
       ctx.fill();
-      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+      ctx.strokeStyle = 'rgba(124,58,237,0.2)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.roundRect(vPx, vPy, vW, vH, 4);
       ctx.stroke();
-      ctx.fillStyle = '#00d4ff';
+      ctx.fillStyle = 'rgba(124,58,237,0.8)';
       ctx.textAlign = 'center';
       ctx.fillText(vStr2, batX, vPy + vH * 0.68);
 
@@ -1079,14 +1130,14 @@
       var dirY = dy / dist;
 
       if (frameCount % spawnRate === 0) {
-        // Spawn near light source with slight spread
         var spread = (Math.random() - 0.5) * 8;
         photons.push({
           x: lsX + spread * dirY,
           y: lsY + lsR + Math.abs(spread * dirX),
           speed: 2.5 + Math.random() * 1.5,
           wave: Math.random() * Math.PI * 2,
-          hitY: plateTop + Math.random() * (plateBot - plateTop)
+          hitY: plateTop + Math.random() * (plateBot - plateTop),
+          trail: []
         });
       }
 
@@ -1094,11 +1145,15 @@
       if (photons.length > 80) photons.splice(0, photons.length - 80);
 
       photons = photons.filter(function(p) {
+        // Store trail positions
+        p.trail.push({ x: p.x, y: p.y });
+        if (p.trail.length > 4) p.trail.shift();
+
         p.x += dirX * p.speed;
         p.y += dirY * p.speed;
         p.wave += 0.15;
 
-        // Hit the cathode surface (reached cathode x position)
+        // Hit the cathode surface
         if (p.x <= cathodeX + 6 && p.y >= plateTop - 5) {
           if (emission) {
             var ke = Math.random() * maxKE();
@@ -1111,31 +1166,41 @@
               vy: speed * Math.sin(angle),
               ke: ke,
               life: 300,
-              turned: false
+              turned: false,
+              trail: []
             });
           }
           return false;
         }
 
-        // Out of bounds
         if (p.y > tubeB + 10 || p.x < tubeL - 10) return false;
 
-        // Draw photon
+        // Draw trailing dots (fading)
+        for (var ti = 0; ti < p.trail.length; ti++) {
+          var ta = (ti + 1) / (p.trail.length + 1) * 0.4;
+          var tr = 2 + ti * 0.3;
+          ctx.beginPath();
+          ctx.arc(p.trail[ti].x, p.trail[ti].y, tr, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + ta + ')';
+          ctx.fill();
+        }
+
+        // Draw photon (main dot)
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.9)';
         ctx.shadowColor = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 10;
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Wave trail (behind the photon, opposite to direction)
-        ctx.strokeStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.2)';
-        ctx.lineWidth = 1;
+        // Wave trail
+        ctx.strokeStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.25)';
+        ctx.lineWidth = 1.2;
         ctx.beginPath();
         for (var i = 0; i < 15; i++) {
-          var tx = p.x - dirX * i * 2 + Math.sin(p.wave - i * 0.5) * dirY * 2.5;
-          var ty = p.y - dirY * i * 2 - Math.sin(p.wave - i * 0.5) * dirX * 2.5;
+          var tx = p.x - dirX * i * 2 + Math.sin(p.wave - i * 0.5) * dirY * 3;
+          var ty = p.y - dirY * i * 2 - Math.sin(p.wave - i * 0.5) * dirX * 3;
           if (i === 0) ctx.moveTo(tx, ty);
           else ctx.lineTo(tx, ty);
         }
@@ -1152,7 +1217,11 @@
         e.life--;
         if (e.life <= 0) return false;
 
-        // Voltage effect: accelerate toward anode (positive V) or away (negative V)
+        // Store trail
+        if (!e.trail) e.trail = [];
+        e.trail.push({ x: e.x, y: e.y });
+        if (e.trail.length > 4) e.trail.shift();
+
         var accel = 0;
         if (voltage >= 0) {
           accel = 0.01 + voltage * 0.015;
@@ -1161,12 +1230,10 @@
         }
         e.vx += accel;
 
-        // Dampen vertical drift with positive voltage (field straightens path)
         if (voltage > 0) {
           e.vy *= 0.98;
         }
 
-        // If electron stopped or turned back
         if (e.vx < 0) {
           e.turned = true;
         }
@@ -1174,34 +1241,38 @@
         e.x += e.vx;
         e.y += e.vy;
 
-        // Reached anode
         if (e.x >= anodeX - 5 && !e.turned) {
           arrivedCount++;
           return false;
         }
 
-        // Turned back past cathode
         if (e.x < cathodeX - 10) return false;
-
-        // Drifted out of tube vertically
         if (e.y < plateTop || e.y > plateBot) return false;
-
-        // Out of bounds
         if (e.x > anodeX + 20) return false;
 
-        // Draw electron
         var alpha = Math.min(1, e.life / 60);
         var eColor = e.turned ? tc.electronTurned : tc.electronColor;
+
+        // Draw trail
+        for (var ti = 0; ti < e.trail.length; ti++) {
+          var ta = (ti + 1) / (e.trail.length + 1) * alpha * 0.4;
+          ctx.beginPath();
+          ctx.arc(e.trail[ti].x, e.trail[ti].y, 3 - ti * 0.4, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + eColor + ',' + ta + ')';
+          ctx.fill();
+        }
+
+        // Draw electron
         ctx.beginPath();
-        ctx.arc(e.x, e.y, 4, 0, Math.PI * 2);
+        ctx.arc(e.x, e.y, 4.5, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(' + eColor + ',' + alpha + ')';
-        ctx.shadowColor = 'rgba(' + eColor + ',0.8)';
-        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(' + eColor + ',0.6)';
+        ctx.shadowBlur = 8;
         ctx.fill();
         ctx.shadowBlur = 0;
         // bright core
         ctx.beginPath();
-        ctx.arc(e.x, e.y, 1.5, 0, Math.PI * 2);
+        ctx.arc(e.x, e.y, 1.8, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(' + tc.electronCore + ',' + (alpha * 0.7) + ')';
         ctx.fill();
 
@@ -1214,10 +1285,10 @@
         ctx.fillRect(cathodeX - 8, plateTop, 16, plateBot - plateTop);
 
         ctx.fillStyle = tc.noEmText;
-        ctx.font = 'bold ' + Math.round(15 * fs) + 'px Delius, cursive';
+        ctx.font = 'bold ' + Math.round(15 * fs) + 'px Andika, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('No Emission', (cathodeX + anodeX) / 2, (tubeT + tubeB) / 2 - 8);
-        ctx.font = Math.round(12 * fs) + 'px Delius, cursive';
+        ctx.font = Math.round(12 * fs) + 'px Andika, sans-serif';
         ctx.fillStyle = tc.noEmSub;
         ctx.fillText('E < \u03C6  (' + photonEnergy().toFixed(2) + ' < ' + workFunction().toFixed(2) + ' eV)', (cathodeX + anodeX) / 2, (tubeT + tubeB) / 2 + 12);
       }
@@ -1286,7 +1357,7 @@
 
       // Axis title labels
       gctx.fillStyle = tc.label;
-      gctx.font = 'bold ' + Math.round(13 * gfs) + 'px Delius, cursive';
+      gctx.font = 'bold ' + Math.round(13 * gfs) + 'px Andika, sans-serif';
       gctx.textAlign = 'center';
       gctx.fillText('V (volts)', padL + plotW / 2, h - 6);
       gctx.save();
@@ -1347,18 +1418,38 @@
 
           // Label with background
           gctx.fillStyle = tc.stopLine;
-          gctx.font = 'bold ' + Math.round(12 * gfs) + 'px Delius, cursive';
+          gctx.font = 'bold ' + Math.round(12 * gfs) + 'px Andika, sans-serif';
           gctx.textAlign = 'center';
           gctx.fillText('-V\u2080', vsX, padT - 6);
         }
 
-        // Draw I-V curve (thick, glowing)
-        gctx.strokeStyle = tc.curve;
-        gctx.lineWidth = 3;
-        gctx.shadowColor = tc.curve;
-        gctx.shadowBlur = 6;
+        // Draw I-V curve with gradient fill underneath
         gctx.beginPath();
         var first = true;
+        for (var px = 0; px <= plotW; px += 1) {
+          var v = (px / plotW) * 10 - 5;
+          var cur = currentAt(v);
+          var cy = padT + plotH * (1 - cur / yMax);
+          if (first) { gctx.moveTo(padL + px, cy); first = false; }
+          else gctx.lineTo(padL + px, cy);
+        }
+        // Fill underneath
+        gctx.lineTo(padL + plotW, padT + plotH);
+        gctx.lineTo(padL, padT + plotH);
+        gctx.closePath();
+        var fillGrad = gctx.createLinearGradient(0, padT, 0, padT + plotH);
+        fillGrad.addColorStop(0, 'rgba(0, 212, 255, 0.08)');
+        fillGrad.addColorStop(1, 'rgba(0, 212, 255, 0)');
+        gctx.fillStyle = fillGrad;
+        gctx.fill();
+
+        // Draw curve line
+        gctx.strokeStyle = tc.curve;
+        gctx.lineWidth = 2.5;
+        gctx.shadowColor = tc.curve;
+        gctx.shadowBlur = 4;
+        gctx.beginPath();
+        first = true;
         for (var px = 0; px <= plotW; px += 1) {
           var v = (px / plotW) * 10 - 5;
           var cur = currentAt(v);
@@ -1381,7 +1472,7 @@
         gctx.setLineDash([]);
 
         gctx.fillStyle = tc.curve;
-        gctx.font = 'bold ' + Math.round(12 * gfs) + 'px Delius, cursive';
+        gctx.font = 'bold ' + Math.round(12 * gfs) + 'px Andika, sans-serif';
         gctx.textAlign = 'right';
         gctx.fillText('I sat = ' + Isat.toFixed(1) + ' \u00B5A', padL + plotW - 4, satY - 8);
 
@@ -1405,12 +1496,13 @@
         gctx.stroke();
         gctx.setLineDash([]);
 
-        // Operating point dot
+        // Operating point dot (pulsing)
+        var opPulse = 5 + 1.5 * Math.sin(Date.now() * 0.004);
         gctx.beginPath();
-        gctx.arc(opX, opY, 6, 0, Math.PI * 2);
+        gctx.arc(opX, opY, opPulse, 0, Math.PI * 2);
         gctx.fillStyle = tc.opPoint;
         gctx.shadowColor = tc.opGlow;
-        gctx.shadowBlur = 14;
+        gctx.shadowBlur = 10 + 4 * Math.sin(Date.now() * 0.004);
         gctx.fill();
         gctx.shadowBlur = 0;
 
@@ -1422,10 +1514,10 @@
       } else {
         // No emission text
         gctx.fillStyle = tc.label;
-        gctx.font = Math.round(15 * gfs) + 'px Delius, cursive';
+        gctx.font = Math.round(15 * gfs) + 'px Andika, sans-serif';
         gctx.textAlign = 'center';
         gctx.fillText('No emission', padL + plotW / 2, padT + plotH / 2 - 6);
-        gctx.font = Math.round(13 * gfs) + 'px Delius, cursive';
+        gctx.font = Math.round(13 * gfs) + 'px Andika, sans-serif';
         gctx.fillText('I = 0', padL + plotW / 2, padT + plotH / 2 + 16);
       }
 
