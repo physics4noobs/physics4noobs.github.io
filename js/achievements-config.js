@@ -1188,23 +1188,10 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
   /* ── Equilibrium Position Finder ── */
   equilibrium: [
     {
-      id: 'found_equilibrium', title: 'Balance Point',
-      description: 'Find an equilibrium position for the test charge',
+      id: 'unequal_line_eq', title: 'Shifted Balance',
+      description: 'Find equilibrium with unequal charge magnitudes in the line setup',
       icon: '\u2696\uFE0F',
-      check: { type: 'global', name: 'equilibriumFound', op: 'eq', value: true }
-    },
-    {
-      id: 'unequal_charges', title: 'Unequal Forces',
-      description: 'Set two charges to different magnitudes',
-      icon: '\uD83D\uDCAA',
-      check: { type: 'custom', fn: function() {
-        if (typeof fixedCharges === 'undefined' || fixedCharges.length < 2) return false;
-        var first = fixedCharges[0].mag;
-        for (var i = 1; i < fixedCharges.length; i++) {
-          if (fixedCharges[i].mag !== first) return true;
-        }
-        return false;
-      }}
+      check: { type: 'global', name: '_achLineUnequalEq', op: 'eq', value: true }
     },
     {
       id: 'all_presets', title: 'Arrangement Explorer',
@@ -1216,6 +1203,12 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
         window._achPresetSeen[preset] = true;
         return window._achPresetSeen.triangle && window._achPresetSeen.line && window._achPresetSeen.square;
       }}
+    },
+    {
+      id: 'triangle_eq', title: 'Triangle Equilibrium',
+      description: 'Find the equilibrium position in the triangle setup',
+      icon: '\uD83D\uDD2C',
+      check: { type: 'global', name: '_achTriangleEq', op: 'eq', value: true }
     }
   ],
 
