@@ -1196,6 +1196,28 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
     }
   ],
 
+  /* ── Electrostatic Potential ── */
+  'electrostatic-potential': [
+    {
+      id: 'zero_potential', title: 'Vanishing Potential',
+      description: 'Move the test point far enough that potential approaches zero',
+      icon: '\uD83C\uDFAF',
+      check: { type: 'global', name: '_achPotentialZero', op: 'eq', value: true }
+    },
+    {
+      id: 'high_potential', title: 'High Voltage',
+      description: 'Maximize charge and bring test point very close',
+      icon: '\u26A1',
+      check: { type: 'global', name: '_achHighPotential', op: 'eq', value: true }
+    },
+    {
+      id: 'medium_effect', title: 'Medium Matters',
+      description: 'Change the medium and observe how potential changes',
+      icon: '\uD83D\uDCA7',
+      check: { type: 'global', name: '_achMediumEffect', op: 'eq', value: true }
+    }
+  ],
+
   /* ── Equilibrium Position Finder ── */
   equilibrium: [
     {
