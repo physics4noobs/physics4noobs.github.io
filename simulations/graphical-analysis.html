@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphical Analysis of Motion | Axomiya Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/achievements.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/sim-tracker.js"></script>
+  <script defer src="../js/achievements-config.js"></script>
+  <script defer src="../js/achievements.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-pendulum"><div class="sp-mount"></div><div class="sp-pivot"></div><div class="sp-arm"><div class="sp-rod"></div><div class="sp-bob"><div class="sp-glow"></div></div></div></div><div class="splash-logo">Axomiya Engineer</div><div class="splash-tagline">Lets Make Physics Fun</div></div>
+<div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link active">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <style>
+    .bg-grid, #particles-canvas { display: none !important; }
+
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-btn.primary {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .sim-btn.primary:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-secondary);
+      transition: box-shadow 0.3s, border-color 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .canvas-wrap.active {
+      border-color: rgba(124, 58, 237, 0.6);
+      box-shadow: 0 0 16px rgba(124, 58, 237, 0.2), inset 0 0 8px rgba(124, 58, 237, 0.05);
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 2vw, 32px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 1vw, 1.05rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Toggle buttons */
+    .toggle-group {
+      display: flex;
+      gap: 0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .toggle-btn {
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .toggle-btn:last-child { border-right: none; }
+
+    .toggle-btn:hover {
+      color: var(--text-primary);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .toggle-btn.active {
+      background: rgba(124, 58, 237, 0.2);
+      color: var(--text-primary);
+      box-shadow: inset 0 -2px 0 rgba(124, 58, 237, 0.6);
+    }
+
+    /* Dropdown */
+    .motion-select {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      outline: none;
+    }
+
+    .motion-select:hover, .motion-select:focus {
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .motion-select option {
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    /* Computed labels */
+    .computed-labels {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .computed-label {
+      font-family: var(--font-body);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+    }
+
+    .computed-label .cl-graph {
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .computed-label .cl-type {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
+    .qa-section {
+      margin-top: 32px;
+    }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
+    }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 300px;
+    }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .canvas-wrap { border-radius: 0; }
+    }
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 12px; padding: 12px; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Graphical Analysis of Motion</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+      </div>
+    </div>
+
+    <div class="sim-main-row">
+      <div class="canvas-wrap active" id="xt-wrap">
+        <canvas id="xtCanvas"></canvas>
+      </div>
+      <div class="canvas-wrap" id="vt-wrap">
+        <canvas id="vtCanvas"></canvas>
+      </div>
+      <div class="canvas-wrap" id="at-wrap">
+        <canvas id="atCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="control-group">
+        <label>Active Graph</label>
+        <div class="toggle-group">
+          <button class="toggle-btn active" data-graph="xt">x-t</button>
+          <button class="toggle-btn" data-graph="vt">v-t</button>
+          <button class="toggle-btn" data-graph="at">a-t</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Graph Shape</label>
+        <select class="motion-select" id="shapeSelect"></select>
+      </div>
+      <div class="computed-labels" id="computedLabels"></div>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Relationships</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Velocity from position</span>
+          v = dx/dt (slope of x-t graph)
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Acceleration from velocity</span>
+          a = dv/dt (slope of v-t graph)
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Displacement from velocity</span>
+          &Delta;x = &int;v dt (area under v-t graph)
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Velocity change from acceleration</span>
+          &Delta;v = &int;a dt (area under a-t graph)
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How do you find velocity from a position-time graph?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The <strong>slope</strong> of a position-time (x-t) graph at any point gives the instantaneous velocity. A steeper slope means higher speed. A positive slope means motion in the positive direction, while a negative slope indicates motion in the negative direction. For a straight-line x-t graph, the velocity is constant.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How do you find displacement from a velocity-time graph?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The <strong>area under</strong> a velocity-time (v-t) graph between two time values gives the displacement during that interval. Areas above the time axis represent positive displacement, and areas below represent negative displacement. For constant velocity, this area is a rectangle; for uniform acceleration, it's a trapezoid.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What does a curved x-t graph indicate?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          A curved x-t graph indicates <strong>non-uniform velocity</strong>, which means the object is accelerating. If the curve bends upward (concave up), the object is speeding up. If it bends downward (concave down), the object is slowing down. The curvature is directly related to the magnitude of acceleration.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What does zero velocity on v-t mean for x-t?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          When velocity is zero on the v-t graph, the x-t graph has a <strong>horizontal tangent</strong> (zero slope) at that instant. This could mean the object is momentarily at rest &mdash; for example, at the peak of upward motion before falling back, or during a direction reversal. The position isn't changing at that instant.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How are the three motion graphs related?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The three graphs are connected by <strong>calculus</strong>: velocity is the derivative of position (v = dx/dt), and acceleration is the derivative of velocity (a = dv/dt). Going the other way, position is the integral of velocity, and velocity is the integral of acceleration. This means: slope of x-t = v-t value, slope of v-t = a-t value, area under v-t = change in x, area under a-t = change in v.
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        canvasBg: isLight ? '#e8eaf0' : '#08081a',
+        canvasBgCenter: isLight ? '#f0f2f8' : '#10102a',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.035)',
+        axis: isLight ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.2)',
+        axisLabel: isLight ? 'rgba(0,0,0,0.45)' : 'rgba(255,255,255,0.4)',
+        tickText: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.3)',
+        graphLabel: isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.45)',
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); drawAll(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === GRAPH SHAPE DATA ===
+    // For each active graph, 5 shapes. Each shape defines functions + descriptions for all 3 graphs.
+    // T = 5s. Values chosen so all graphs look clean and aesthetic with nice round numbers.
+    var T = 5;
+
+    var SHAPE_LABELS = [
+      'Horizontal line',
+      'Increasing straight line',
+      'Decreasing straight line',
+      'Increasing parabola',
+      'Decreasing parabola'
+    ];
+
+    var SHAPE_DATA = {
+      xt: [
+        { // Horizontal line: x = 10
+          xt: { fn: function(t) { return 10; }, desc: 'Horizontal line' },
+          vt: { fn: function(t) { return 0; }, desc: 'Horizontal line at 0' },
+          at: { fn: function(t) { return 0; }, desc: 'Horizontal line at 0' }
+        },
+        { // Increasing line: x = 4t
+          xt: { fn: function(t) { return 4 * t; }, desc: 'Increasing straight line' },
+          vt: { fn: function(t) { return 4; }, desc: 'Horizontal line at 4' },
+          at: { fn: function(t) { return 0; }, desc: 'Horizontal line at 0' }
+        },
+        { // Decreasing line: x = 20 - 4t
+          xt: { fn: function(t) { return 20 - 4 * t; }, desc: 'Decreasing straight line' },
+          vt: { fn: function(t) { return -4; }, desc: 'Horizontal line at \u22124' },
+          at: { fn: function(t) { return 0; }, desc: 'Horizontal line at 0' }
+        },
+        { // Increasing parabola: x = t\u00B2
+          xt: { fn: function(t) { return t * t; }, desc: 'Increasing parabola' },
+          vt: { fn: function(t) { return 2 * t; }, desc: 'Increasing straight line' },
+          at: { fn: function(t) { return 2; }, desc: 'Horizontal line at +2' }
+        },
+        { // Decreasing parabola: x = 25 - t\u00B2
+          xt: { fn: function(t) { return 25 - t * t; }, desc: 'Decreasing parabola' },
+          vt: { fn: function(t) { return -2 * t; }, desc: 'Decreasing straight line' },
+          at: { fn: function(t) { return -2; }, desc: 'Horizontal line at \u22122' }
+        }
+      ],
+      vt: [
+        { // Horizontal line: v = 4
+          vt: { fn: function(t) { return 4; }, desc: 'Horizontal line' },
+          xt: { fn: function(t) { return 4 * t; }, desc: 'Increasing straight line' },
+          at: { fn: function(t) { return 0; }, desc: 'Horizontal line at 0' }
+        },
+        { // Increasing line: v = 2t
+          vt: { fn: function(t) { return 2 * t; }, desc: 'Increasing straight line' },
+          xt: { fn: function(t) { return t * t; }, desc: 'Increasing parabola' },
+          at: { fn: function(t) { return 2; }, desc: 'Horizontal line at +2' }
+        },
+        { // Decreasing line: v = 10 - 2t
+          vt: { fn: function(t) { return 10 - 2 * t; }, desc: 'Decreasing straight line' },
+          xt: { fn: function(t) { return 10 * t - t * t; }, desc: 'Parabola (rises then falls)' },
+          at: { fn: function(t) { return -2; }, desc: 'Horizontal line at \u22122' }
+        },
+        { // Increasing parabola: v = 0.8t\u00B2
+          vt: { fn: function(t) { return 0.8 * t * t; }, desc: 'Increasing parabola' },
+          xt: { fn: function(t) { return 0.8 * t * t * t / 3; }, desc: 'Cubic curve (increasing)' },
+          at: { fn: function(t) { return 1.6 * t; }, desc: 'Increasing straight line' }
+        },
+        { // Decreasing parabola: v = 20 - 0.8t\u00B2
+          vt: { fn: function(t) { return 20 - 0.8 * t * t; }, desc: 'Decreasing parabola' },
+          xt: { fn: function(t) { return 20 * t - 0.8 * t * t * t / 3; }, desc: 'Cubic curve (leveling off)' },
+          at: { fn: function(t) { return -1.6 * t; }, desc: 'Decreasing straight line' }
+        }
+      ],
+      at: [
+        { // Horizontal line: a = 0
+          at: { fn: function(t) { return 0; }, desc: 'Horizontal line at 0' },
+          vt: { fn: function(t) { return 4; }, desc: 'Horizontal line at 4' },
+          xt: { fn: function(t) { return 4 * t; }, desc: 'Increasing straight line' }
+        },
+        { // Increasing line: a = 1.6t
+          at: { fn: function(t) { return 1.6 * t; }, desc: 'Increasing straight line' },
+          vt: { fn: function(t) { return 0.8 * t * t; }, desc: 'Increasing parabola' },
+          xt: { fn: function(t) { return 0.8 * t * t * t / 3; }, desc: 'Cubic curve (increasing)' }
+        },
+        { // Decreasing line: a = 8 - 1.6t
+          at: { fn: function(t) { return 8 - 1.6 * t; }, desc: 'Decreasing straight line' },
+          vt: { fn: function(t) { return 8 * t - 0.8 * t * t; }, desc: 'Parabola (rises then falls)' },
+          xt: { fn: function(t) { return 4 * t * t - 0.8 * t * t * t / 3; }, desc: 'Cubic curve (rises, slows)' }
+        },
+        { // Horizontal line positive: a = +2
+          at: { fn: function(t) { return 2; }, desc: 'Horizontal line at +2' },
+          vt: { fn: function(t) { return 2 * t; }, desc: 'Increasing straight line' },
+          xt: { fn: function(t) { return t * t; }, desc: 'Increasing parabola' }
+        },
+        { // Horizontal line negative: a = -2
+          at: { fn: function(t) { return -2; }, desc: 'Horizontal line at \u22122' },
+          vt: { fn: function(t) { return 10 - 2 * t; }, desc: 'Decreasing straight line' },
+          xt: { fn: function(t) { return 10 * t - t * t; }, desc: 'Parabola (rises then falls)' }
+        }
+      ]
+    };
+
+    // For a-t graph, dropdown labels are different (lines vs constants)
+    var SHAPE_LABELS_AT = [
+      'Horizontal line (a = 0)',
+      'Increasing straight line',
+      'Decreasing straight line',
+      'Horizontal line (a = +2)',
+      'Horizontal line (a = \u22122)'
+    ];
+
+    var GRAPH_COLORS = {
+      xt: '#00d4ff',
+      vt: '#b44aff',
+      at: '#4aff8b'
+    };
+
+    var GRAPH_LABELS = {
+      xt: 'x-t',
+      vt: 'v-t',
+      at: 'a-t'
+    };
+
+    var GRAPH_Y_LABELS = {
+      xt: 'x (m)',
+      vt: 'v (m/s)',
+      at: 'a (m/s\u00B2)'
+    };
+
+    // === STATE ===
+    var activeGraph = 'xt';
+    var shapeIndex = 1; // default: increasing straight line
+    var changeCount = 0;
+    var seenShapes = {};
+
+    var canvases = {
+      xt: document.getElementById('xtCanvas'),
+      vt: document.getElementById('vtCanvas'),
+      at: document.getElementById('atCanvas')
+    };
+    var ctxs = {
+      xt: canvases.xt.getContext('2d'),
+      vt: canvases.vt.getContext('2d'),
+      at: canvases.at.getContext('2d')
+    };
+
+    var PADDING = 50;
+
+    // === CANVAS SIZING ===
+    function resizeCanvases() {
+      var keys = ['xt', 'vt', 'at'];
+      var dpr = window.devicePixelRatio || 1;
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var wrap = canvases[key].parentElement;
+        var w = wrap.clientWidth;
+        var isFS = !!document.fullscreenElement;
+        var h = isFS ? wrap.clientHeight : Math.max(250, window.innerHeight * 0.4);
+        canvases[key].width = w * dpr;
+        canvases[key].height = h * dpr;
+        canvases[key].style.width = w + 'px';
+        canvases[key].style.height = h + 'px';
+        ctxs[key].setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      drawAll();
+    }
+
+    window.addEventListener('resize', resizeCanvases);
+
+    // === DRAWING ===
+    function sampleFn(fn, tMax, steps) {
+      var pts = [];
+      for (var i = 0; i <= steps; i++) {
+        var t = (i / steps) * tMax;
+        pts.push({ t: t, y: fn(t) });
+      }
+      return pts;
+    }
+
+    function getYRange(pts) {
+      var minY = Infinity, maxY = -Infinity;
+      for (var i = 0; i < pts.length; i++) {
+        if (pts[i].y < minY) minY = pts[i].y;
+        if (pts[i].y > maxY) maxY = pts[i].y;
+      }
+      // Always include 0
+      if (minY > 0) minY = 0;
+      if (maxY < 0) maxY = 0;
+      // Ensure minimum range so flat lines don't fill the canvas
+      var range = maxY - minY;
+      if (range < 2) {
+        var center = (maxY + minY) / 2;
+        minY = center - 1.5;
+        maxY = center + 1.5;
+        // Re-include 0
+        if (minY > 0) minY = 0;
+        if (maxY < 0) maxY = 0;
+      }
+      // Padding
+      range = maxY - minY;
+      minY -= range * 0.08;
+      maxY += range * 0.08;
+      return { min: minY, max: maxY };
+    }
+
+    function niceTickInterval(range, maxTicks) {
+      var rough = range / maxTicks;
+      var pow = Math.pow(10, Math.floor(Math.log10(rough)));
+      var frac = rough / pow;
+      var nice;
+      if (frac <= 1.5) nice = 1;
+      else if (frac <= 3) nice = 2;
+      else if (frac <= 7) nice = 5;
+      else nice = 10;
+      return nice * pow;
+    }
+
+    function getCurrentFns() {
+      return SHAPE_DATA[activeGraph][shapeIndex];
+    }
+
+    function drawGraph(key) {
+      var canvas = canvases[key];
+      var ctx = ctxs[key];
+      var w = canvas.width / (window.devicePixelRatio || 1);
+      var h = canvas.height / (window.devicePixelRatio || 1);
+      var fns = getCurrentFns();
+      var fn = fns[key].fn;
+      var color = GRAPH_COLORS[key];
+      var label = GRAPH_LABELS[key];
+      var yLabel = GRAPH_Y_LABELS[key];
+
+      // Sample points
+      var pts = sampleFn(fn, T, 200);
+      var yRange = getYRange(pts);
+
+      // Plot area
+      var plotL = PADDING;
+      var plotR = w - 20;
+      var plotT = 30;
+      var plotB = h - PADDING;
+      var plotW = plotR - plotL;
+      var plotH = plotB - plotT;
+
+      // Scale functions
+      function sx(t) { return plotL + (t / T) * plotW; }
+      function sy(y) { return plotB - ((y - yRange.min) / (yRange.max - yRange.min)) * plotH; }
+
+      // Background
+      var grad = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w * 0.7);
+      grad.addColorStop(0, tc.canvasBgCenter);
+      grad.addColorStop(1, tc.canvasBg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Dotted grid
+      ctx.fillStyle = tc.grid;
+      var gridSpacing = 40;
+      for (var gx = plotL; gx <= plotR; gx += gridSpacing) {
+        for (var gy = plotT; gy <= plotB; gy += gridSpacing) {
+          ctx.beginPath();
+          ctx.arc(gx, gy, 1, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Axes
+      ctx.strokeStyle = tc.axis;
+      ctx.lineWidth = 1;
+      // X axis (at y=0 if in range, else at bottom)
+      var xAxisY = (yRange.min <= 0 && yRange.max >= 0) ? sy(0) : plotB;
+      ctx.beginPath(); ctx.moveTo(plotL, xAxisY); ctx.lineTo(plotR, xAxisY); ctx.stroke();
+      // Y axis
+      ctx.beginPath(); ctx.moveTo(plotL, plotT); ctx.lineTo(plotL, plotB); ctx.stroke();
+
+      // Tick marks - X axis (time)
+      var tInterval = niceTickInterval(T, 6);
+      ctx.fillStyle = tc.tickText;
+      ctx.font = (9 * Math.max(1, w / 400)) + 'px Andika, sans-serif';
+      ctx.textAlign = 'center';
+      for (var tt = tInterval; tt <= T; tt += tInterval) {
+        var tx = sx(tt);
+        ctx.strokeStyle = tc.axis;
+        ctx.beginPath(); ctx.moveTo(tx, xAxisY - 3); ctx.lineTo(tx, xAxisY + 3); ctx.stroke();
+        ctx.fillText(tt.toFixed(tt % 1 === 0 ? 0 : 1) + 's', tx, xAxisY + 14);
+      }
+
+      // Tick marks - Y axis
+      var yInterval = niceTickInterval(yRange.max - yRange.min, 6);
+      var yStart = Math.ceil(yRange.min / yInterval) * yInterval;
+      ctx.textAlign = 'right';
+      for (var yy = yStart; yy <= yRange.max; yy += yInterval) {
+        var tyy = sy(yy);
+        if (tyy < plotT || tyy > plotB) continue;
+        ctx.strokeStyle = tc.axis;
+        ctx.beginPath(); ctx.moveTo(plotL - 3, tyy); ctx.lineTo(plotL + 3, tyy); ctx.stroke();
+        var yText = Math.abs(yy) < 0.001 ? '0' : yy.toFixed(yy % 1 === 0 ? 0 : 1);
+        ctx.fillText(yText, plotL - 6, tyy + 3);
+      }
+
+      // Axis labels
+      ctx.fillStyle = tc.axisLabel;
+      ctx.font = 'bold ' + (10 * Math.max(1, w / 400)) + 'px Andika, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('t (s)', (plotL + plotR) / 2, plotB + 36);
+      ctx.save();
+      ctx.translate(14, (plotT + plotB) / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText(yLabel, 0, 0);
+      ctx.restore();
+
+      // Graph label (top-left)
+      ctx.fillStyle = tc.graphLabel;
+      ctx.font = 'bold ' + (13 * Math.max(1, w / 400)) + 'px Orbitron, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(label, plotL + 8, plotT + 18);
+
+      // Draw curve
+      ctx.save();
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 8;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.5;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      for (var i = 0; i < pts.length; i++) {
+        var px = sx(pts[i].t);
+        var py = sy(pts[i].y);
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawAll() {
+      drawGraph('xt');
+      drawGraph('vt');
+      drawGraph('at');
+    }
+
+    // === CONTROLS ===
+    function populateDropdown() {
+      var sel = document.getElementById('shapeSelect');
+      sel.innerHTML = '';
+      var labels = (activeGraph === 'at') ? SHAPE_LABELS_AT : SHAPE_LABELS;
+      for (var i = 0; i < labels.length; i++) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = labels[i];
+        sel.appendChild(opt);
+      }
+      sel.value = shapeIndex;
+    }
+
+    function updateComputedLabels() {
+      var container = document.getElementById('computedLabels');
+      container.innerHTML = '';
+      var fns = getCurrentFns();
+      var others = ['xt', 'vt', 'at'];
+      for (var i = 0; i < others.length; i++) {
+        var k = others[i];
+        if (k === activeGraph) continue;
+        var div = document.createElement('div');
+        div.className = 'computed-label';
+        div.innerHTML = '<span class="cl-graph">' + GRAPH_LABELS[k] + ':</span> <span class="cl-type">' + fns[k].desc + '</span>';
+        container.appendChild(div);
+      }
+    }
+
+    function setActiveGraph(graph) {
+      activeGraph = graph;
+      shapeIndex = 0; // reset to first shape for the new graph
+      // Update toggle buttons
+      var btns = document.querySelectorAll('.toggle-btn');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle('active', btns[i].dataset.graph === graph);
+      }
+      // Update canvas wrap borders
+      var wraps = document.querySelectorAll('.canvas-wrap');
+      wraps.forEach(function(w) { w.classList.remove('active'); });
+      document.getElementById(graph + '-wrap').classList.add('active');
+      // Re-populate dropdown and update
+      populateDropdown();
+      updateComputedLabels();
+      drawAll();
+
+      // Achievement: graph switcher
+      if (graph !== 'xt') {
+        window._achGraphSwitched = true;
+        if (window.AchievementEngine) AchievementEngine.check();
+      }
+    }
+
+    function setShapeIndex(idx) {
+      shapeIndex = idx;
+      changeCount++;
+      seenShapes[activeGraph + '-' + idx] = true;
+
+      // Achievement tracking
+      window._achChangeCount = changeCount;
+      window._achSeenCount = Object.keys(seenShapes).length;
+      var labels = (activeGraph === 'at') ? SHAPE_LABELS_AT : SHAPE_LABELS;
+      window._achCurrentShape = labels[idx];
+
+      drawAll();
+      updateComputedLabels();
+
+      if (window.AchievementEngine) AchievementEngine.check();
+    }
+
+    // Event listeners
+    document.querySelectorAll('.toggle-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        setActiveGraph(this.dataset.graph);
+      });
+    });
+
+    document.getElementById('shapeSelect').addEventListener('change', function() {
+      setShapeIndex(parseInt(this.value));
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      activeGraph = 'xt';
+      shapeIndex = 1;
+      changeCount = 0;
+      seenShapes = {};
+      window._achChangeCount = 0;
+      window._achSeenCount = 0;
+      window._achCurrentShape = '';
+      window._achGraphSwitched = false;
+      setActiveGraph('xt');
+      shapeIndex = 1;
+      document.getElementById('shapeSelect').value = shapeIndex;
+      drawAll();
+      updateComputedLabels();
+    });
+
+    // Fullscreen
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(resizeCanvases, 100);
+      setTimeout(resizeCanvases, 300);
+    });
+
+    // Init
+    populateDropdown();
+    updateComputedLabels();
+    resizeCanvases();
+    window._achChangeCount = 0;
+    window._achSeenCount = 0;
+    window._achCurrentShape = SHAPE_LABELS[shapeIndex];
+    window._achGraphSwitched = false;
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -40,6 +40,81 @@
     .sim-card:not(:hover) .proj-dot {
       cx: 20; cy: 100; opacity: 1;
     }
+
+    /* Vector Addition thumbnail hover animation */
+    .vec-thumb .vec-a, .vec-thumb .vec-b, .vec-thumb .vec-r {
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+    }
+    .sim-card:hover .vec-a {
+      animation: vecDraw 0.5s ease-out forwards;
+    }
+    .sim-card:hover .vec-b {
+      animation: vecDraw 0.5s ease-out 0.3s forwards;
+    }
+    .sim-card:hover .vec-r {
+      animation: vecDraw 0.6s ease-out 0.7s forwards;
+    }
+    .sim-card:hover .vec-dash1, .sim-card:hover .vec-dash2 {
+      animation: vecDash 0.4s ease-out 0.6s forwards;
+    }
+    .vec-thumb .vec-dash1, .vec-thumb .vec-dash2 { opacity: 0; }
+    @keyframes vecDraw {
+      0%   { stroke-dashoffset: 120; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes vecDash {
+      0%   { opacity: 0; }
+      100% { opacity: 0.5; }
+    }
+    .sim-card:not(:hover) .vec-a,
+    .sim-card:not(:hover) .vec-b,
+    .sim-card:not(:hover) .vec-r {
+      stroke-dashoffset: 120;
+    }
+    .sim-card:not(:hover) .vec-dash1,
+    .sim-card:not(:hover) .vec-dash2 { opacity: 0; }
+
+    /* Boat River thumbnail hover animation */
+    .boat-thumb .boat-path {
+      stroke-dasharray: 140;
+      stroke-dashoffset: 140;
+    }
+    .boat-thumb .boat-icon {
+      transition: none;
+    }
+    .boat-thumb .wave1, .boat-thumb .wave2, .boat-thumb .wave3 {
+      animation: waveFlow 2s linear infinite;
+    }
+    .boat-thumb .wave2 { animation-delay: -0.6s; }
+    .boat-thumb .wave3 { animation-delay: -1.2s; }
+    @keyframes waveFlow {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(20px); }
+    }
+    .sim-card:hover .boat-path {
+      animation: boatDraw 1.4s ease-out forwards;
+    }
+    .sim-card:hover .boat-icon {
+      animation: boatMove 1.4s ease-out forwards;
+    }
+    @keyframes boatDraw {
+      0%   { stroke-dashoffset: 140; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes boatMove {
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(15px, -25px); }
+      50%  { transform: translate(30px, -50px); }
+      75%  { transform: translate(45px, -70px); }
+      100% { transform: translate(55px, -85px); }
+    }
+    .sim-card:not(:hover) .boat-path {
+      stroke-dashoffset: 140;
+    }
+    .sim-card:not(:hover) .boat-icon {
+      transform: translate(0, 0);
+    }
     /* Photoelectric effect thumbnail hover animation */
     .sim-card:hover .pe-photon {
       animation: pePhoton 1s ease-in forwards;
@@ -63,6 +138,32 @@
     }
     .sim-card:not(:hover) .pe-electron {
       cx: 85; opacity: 0;
+    }
+
+    /* Graphical Analysis thumbnail hover animation */
+    .graph-thumb .graph-parabola,
+    .graph-thumb .graph-line,
+    .graph-thumb .graph-flat {
+      stroke-dasharray: 160;
+      stroke-dashoffset: 160;
+    }
+    .sim-card:hover .graph-parabola {
+      animation: graphDraw 0.6s ease-out forwards;
+    }
+    .sim-card:hover .graph-line {
+      animation: graphDraw 0.5s ease-out 0.3s forwards;
+    }
+    .sim-card:hover .graph-flat {
+      animation: graphDraw 0.4s ease-out 0.6s forwards;
+    }
+    @keyframes graphDraw {
+      0%   { stroke-dashoffset: 160; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .sim-card:not(:hover) .graph-parabola,
+    .sim-card:not(:hover) .graph-line,
+    .sim-card:not(:hover) .graph-flat {
+      stroke-dashoffset: 160;
     }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -158,7 +259,7 @@
           <div class="carousel-header">
             <span class="ch-accent" style="background: #00d4ff;"></span>
             <span class="ch-label">Kinematics</span>
-            <span class="ch-count">6 sims</span>
+            <span class="ch-count">4 sims</span>
             <div class="carousel-arrows">
               <button class="carousel-arrow carousel-prev" aria-label="Scroll left">&#8249;</button>
               <button class="carousel-arrow carousel-next" aria-label="Scroll right">&#8250;</button>
@@ -183,7 +284,25 @@
                 </div>
               </a>
               <a href="simulations/vector-addition.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2818);"><span style="position: relative; z-index: 1;">&#10132;</span></div>
+                <div class="sim-preview vec-thumb" style="background: #111;">
+                  <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
+                    <!-- Vector A (cyan) -->
+                    <line class="vec-a" x1="30" y1="90" x2="120" y2="40" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round"/>
+                    <polygon points="120,40 110,46 112,52" fill="#00d4ff" opacity="0"/>
+                    <text x="65" y="55" fill="#00d4ff" font-size="11" font-weight="bold" opacity="0.7">A</text>
+                    <!-- Vector B (purple) -->
+                    <line class="vec-b" x1="30" y1="90" x2="100" y2="90" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+                    <polygon points="100,90 92,84 92,96" fill="#7c3aed" opacity="0"/>
+                    <text x="62" y="105" fill="#7c3aed" font-size="11" font-weight="bold" opacity="0.7">B</text>
+                    <!-- Parallelogram dashes -->
+                    <line class="vec-dash1" x1="120" y1="40" x2="185" y2="40" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                    <line class="vec-dash2" x1="100" y1="90" x2="185" y2="40" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                    <!-- Resultant R (green) -->
+                    <line class="vec-r" x1="30" y1="90" x2="185" y2="40" stroke="#00ffaa" stroke-width="2.5" stroke-linecap="round"/>
+                    <polygon points="185,40 175,46 177,34" fill="#00ffaa" opacity="0"/>
+                    <text x="115" y="56" fill="#00ffaa" font-size="11" font-weight="bold" opacity="0.7">R</text>
+                  </svg>
+                </div>
                 <div class="sim-body">
                   <div class="sim-grade">Grade XI &bull; Kinematics</div>
                   <div class="sim-title">Vector Addition</div>
@@ -191,26 +310,32 @@
                   <div class="sim-link">Launch Simulation &rarr;</div>
                 </div>
               </a>
-              <a href="simulations/vector-components.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a1628);"><span style="position: relative; z-index: 1;">&#128208;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Kinematics</div>
-                  <div class="sim-title">Vector Components</div>
-                  <div class="sim-desc">Resolve a vector into x and y components. See how magnitude and angle relate.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
-                </div>
-              </a>
-              <a href="simulations/projectile-angles.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#127942;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Kinematics</div>
-                  <div class="sim-title">Projectile: Angle Comparison</div>
-                  <div class="sim-desc">Launch multiple projectiles at different angles simultaneously. Which goes farthest?</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
-                </div>
-              </a>
               <a href="simulations/boat-river.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #0a1628);"><span style="position: relative; z-index: 1;">&#9973;</span></div>
+                <div class="sim-preview boat-thumb" style="background: #0a1220; overflow:hidden;">
+                  <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
+                    <!-- Banks -->
+                    <rect x="0" y="0" width="200" height="18" fill="rgba(0,255,170,0.08)"/>
+                    <rect x="0" y="102" width="200" height="18" fill="rgba(0,255,170,0.08)"/>
+                    <line x1="0" y1="18" x2="200" y2="18" stroke="rgba(0,255,170,0.4)" stroke-width="1.5"/>
+                    <line x1="0" y1="102" x2="200" y2="102" stroke="rgba(0,255,170,0.4)" stroke-width="1.5"/>
+                    <!-- River waves -->
+                    <path class="wave1" d="M-20,40 Q0,35 20,40 Q40,45 60,40 Q80,35 100,40 Q120,45 140,40 Q160,35 180,40 Q200,45 220,40" fill="none" stroke="rgba(80,180,255,0.12)" stroke-width="1"/>
+                    <path class="wave2" d="M-20,60 Q0,55 20,60 Q40,65 60,60 Q80,55 100,60 Q120,65 140,60 Q160,55 180,60 Q200,65 220,60" fill="none" stroke="rgba(80,180,255,0.15)" stroke-width="1.5"/>
+                    <path class="wave3" d="M-20,80 Q0,75 20,80 Q40,85 60,80 Q80,75 100,80 Q120,85 140,80 Q160,75 180,80 Q200,85 220,80" fill="none" stroke="rgba(80,180,255,0.1)" stroke-width="1"/>
+                    <!-- Current arrow -->
+                    <line x1="140" y1="50" x2="180" y2="50" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
+                    <polygon points="180,50 174,46 174,54" fill="#00d4ff" opacity="0.4"/>
+                    <!-- Boat path (diagonal crossing) -->
+                    <path class="boat-path" d="M60,100 Q75,70 90,50 Q105,30 120,18" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <!-- Boat icon -->
+                    <g class="boat-icon">
+                      <path d="M55,100 L65,96 L65,104 Z" fill="#e8e0d0"/>
+                      <rect x="56" y="97" width="6" height="6" rx="1" fill="#c8b898"/>
+                      <line x1="59" y1="97" x2="59" y2="90" stroke="#ddd" stroke-width="0.8"/>
+                      <polygon points="59,90 63,92 59,93" fill="#ff4444"/>
+                    </g>
+                  </svg>
+                </div>
                 <div class="sim-body">
                   <div class="sim-grade">Grade XI &bull; Kinematics</div>
                   <div class="sim-title">Boat Crossing a River</div>
@@ -218,15 +343,24 @@
                   <div class="sim-link">Launch Simulation &rarr;</div>
                 </div>
               </a>
-              <a href="simulations/rain-man.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#127783;&#65039;</span></div>
+              <a href="simulations/graphical-analysis.html" class="sim-card reveal">
+                <div class="sim-preview graph-thumb" style="background: #111;">
+                  <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
+                    <line x1="25" y1="100" x2="185" y2="100" stroke="#333" stroke-width="1"/>
+                    <line x1="25" y1="10" x2="25" y2="100" stroke="#333" stroke-width="1"/>
+                    <path class="graph-parabola" d="M30,95 Q60,90 90,60 Q120,30 160,15" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round"/>
+                    <path class="graph-line" d="M30,95 L160,25" fill="none" stroke="#b44aff" stroke-width="2.5" stroke-linecap="round"/>
+                    <path class="graph-flat" d="M30,50 L160,50" fill="none" stroke="#4aff8b" stroke-width="2.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
                 <div class="sim-body">
                   <div class="sim-grade">Grade XI &bull; Kinematics</div>
-                  <div class="sim-title">Rain Man Problem</div>
-                  <div class="sim-desc">Man walking in rain. See how the apparent rain angle changes with walking speed.</div>
+                  <div class="sim-title">Graphical Analysis of Motion</div>
+                  <div class="sim-desc">Pick a motion type and see x-t, v-t, and a-t graphs update together. Understand slope and area relationships.</div>
                   <div class="sim-link">Launch Simulation &rarr;</div>
                 </div>
               </a>
+
             </div>
           </div>
         </div>

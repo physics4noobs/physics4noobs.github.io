@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/achievements.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="js/theme.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -173,6 +174,26 @@
   <script src="js/main.js"></script>
   <script>
     (function() {
+      // Achievement totals per simulation
+      var SIM_ACHIEVEMENT_COUNTS = {
+        kinematics: 3, pendulum: 3, calorimetry: 3, 'ac-circuits': 3,
+        'rotational-motion': 3, 'vector-addition': 3, beats: 3, 'ray-optics': 3,
+        'work-power-energy': 3, collisions: 3,
+        'hookes-law': 3, 'pulley-wire-constraint': 3, thermodynamics: 3,
+        'atwood-machine': 3, 'work-done': 3, 'newtons-laws': 3, manometer: 3,
+        'center-of-mass': 3, 'magnus-effect': 3, 'rolling-vs-rotation': 3,
+        'current-electricity': 3, 'hydrostatic-paradox': 3, 'em-waves': 3,
+        waves: 3, 'shm-waves': 3, 'continuity-equation': 3,
+        'conservation-momentum': 3, emi: 3, 'static-kinetic-friction': 3,
+        'boat-river': 3, 'gravity-variation': 3, gravitation: 3,
+        'poissons-ratio': 3, 'fluid-dynamics': 3, 'doppler-effect': 3,
+        'wave-optics': 3, 'goat-vs-boat': 3, venturimeter: 3,
+        'angular-momentum': 3, 'pascals-law': 3, 'inclined-plane-race': 3,
+        'wire-ring-constraint': 3, magnetism: 3,
+        electrostatics: 3, 'modulus-elasticity': 3, 'modern-physics': 3,
+        'graphical-analysis': 3
+      };
+
       function waitForFirebase(cb) {
         if (typeof firebase !== 'undefined' && firebase.auth) { cb(); return; }
         setTimeout(function() { waitForFirebase(cb); }, 100);
@@ -208,6 +229,15 @@
           return Math.floor(seconds / 3600) + 'h ' + Math.floor((seconds % 3600) / 60) + 'm';
         }
 
+        function countAchievements(achMap) {
+          if (!achMap) return 0;
+          var count = 0;
+          for (var key in achMap) {
+            if (achMap[key] && achMap[key].unlocked) count++;
+          }
+          return count;
+        }
+
         function loadProgress(uid) {
           db.collection('users').doc(uid).collection('simulations')
             .orderBy('lastVisited', 'desc')
@@ -227,6 +257,7 @@
 
               var totalVisits = 0;
               var totalTime = 0;
+              var totalDiscoveries = 0;
               var mostPracticed = { name: '', visits: 0 };
 
               snapshot.forEach(function(doc) {
@@ -237,14 +268,32 @@
                   mostPracticed = { name: d.name || doc.id, visits: d.visitCount };
                 }
 
+                var achUnlocked = countAchievements(d.achievements);
+                var achTotal = SIM_ACHIEVEMENT_COUNTS[doc.id] || 0;
+                totalDiscoveries += achUnlocked;
+
                 var lastDate = d.lastVisited ? d.lastVisited.toDate().toLocaleDateString() : 'N/A';
                 var card = document.createElement('div');
                 card.className = 'progress-card';
+
+                var achHtml = '';
+                if (achTotal > 0) {
+                  var pct = Math.round(achUnlocked / achTotal * 100);
+                  var isComplete = achUnlocked === achTotal;
+                  achHtml =
+                    '<div class="progress-ach-row">' +
+                      (isComplete ? '<span class="progress-ach-trophy">&#127942;</span>' : '') +
+                      '<span class="progress-ach-text">' + achUnlocked + '/' + achTotal + ' Discoveries</span>' +
+                      '<div class="progress-ach-bar"><div class="progress-ach-fill" style="width:' + pct + '%"></div></div>' +
+                    '</div>';
+                }
+
                 card.innerHTML =
                   '<h3>' + (d.name || doc.id) + '</h3>' +
                   '<div class="progress-stat"><span>Visits</span><span class="stat-value">' + (d.visitCount || 0) + '</span></div>' +
                   '<div class="progress-stat"><span>Time Spent</span><span class="stat-value">' + formatTime(d.totalTimeSpent || 0) + '</span></div>' +
-                  '<div class="progress-stat"><span>Last Visited</span><span class="stat-value">' + lastDate + '</span></div>';
+                  '<div class="progress-stat"><span>Last Visited</span><span class="stat-value">' + lastDate + '</span></div>' +
+                  achHtml;
                 grid.appendChild(card);
               });
 
@@ -252,7 +301,7 @@
                 '<div class="summary-card"><div class="summary-num">' + snapshot.size + '</div><div class="summary-label">Simulations Visited</div></div>' +
                 '<div class="summary-card"><div class="summary-num">' + totalVisits + '</div><div class="summary-label">Total Visits</div></div>' +
                 '<div class="summary-card"><div class="summary-num">' + formatTime(totalTime) + '</div><div class="summary-label">Total Study Time</div></div>' +
-                '<div class="summary-card"><div class="summary-num" style="font-size:1rem;">' + mostPracticed.name + '</div><div class="summary-label">Most Practiced</div></div>';
+                '<div class="summary-card"><div class="summary-num">' + totalDiscoveries + '</div><div class="summary-label">Total Discoveries</div></div>';
             });
         }
       });
