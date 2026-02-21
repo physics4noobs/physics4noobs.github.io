@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal Law of Gravitation | Axomiya Engineer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Law of Gravitation | Axomiya Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <link rel="stylesheet" href="../css/achievements.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="../js/theme.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -16,17 +17,20 @@
   <script defer src="../js/firebase-config.js"></script>
   <script defer src="../js/auth.js"></script>
   <script defer src="../js/sim-tracker.js"></script>
-  <link rel="stylesheet" href="../css/achievements.css">
   <script defer src="../js/achievements-config.js"></script>
   <script defer src="../js/achievements.js"></script>
 </head>
 <body>
-
   <!-- Splash Screen -->
   <div class="splash-screen" id="splash"><div class="splash-pendulum"><div class="sp-mount"></div><div class="sp-pivot"></div><div class="sp-arm"><div class="sp-rod"></div><div class="sp-bob"><div class="sp-glow"></div></div></div></div><div class="splash-logo">Axomiya Engineer</div><div class="splash-tagline">Lets Make Physics Fun</div></div>
 <div class="bg-grid"></div>
-
-    <nav class="navbar scrolled"><div class="nav-container"><a href="../index.html" class="nav-logo" id="nav-logo"><div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div><div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div></a><div class="nav-links">
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
         <div class="nav-item">
           <a href="../index.html" class="nav-link">Home</a>
         </div>
@@ -42,7 +46,14 @@
         <div class="nav-item">
           <a href="../flashcards.html" class="nav-link">Flashcards</a>
         </div>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button><button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button><div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div><a href="../index.html#contact" class="nav-cta">Contact Me</a></div><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
   <script>
     (function(){
       var s=document.getElementById('splash');
@@ -53,245 +64,1639 @@
     })();
   </script>
 
-    <div class="sim-page-container">
+  <style>
+    .bg-grid, #particles-canvas { display: none !important; }
 
-        <h1>&#127759; Universal Law of Gravitation</h1>
-        <p class="subtitle">Grade XI - Gravitation</p>
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
 
-        <div class="sim-canvas-wrapper">
-            <canvas id="simCanvas" width="850" height="450"></canvas>
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
 
-            <div class="sim-controls">
-                <div class="control-group">
-                    <label>Mass 1: <span id="mass1Val">50</span> × 10¹⁰ kg</label>
-                    <input type="range" id="mass1" min="1" max="100" value="50" step="1">
-                </div>
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
 
-                <div class="control-group">
-                    <label>Mass 2: <span id="mass2Val">30</span> × 10¹⁰ kg</label>
-                    <input type="range" id="mass2" min="1" max="100" value="30" step="1">
-                </div>
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
 
-                <div class="control-group">
-                    <label>Distance r: <span id="distanceVal">150</span> px</label>
-                    <input type="range" id="distance" min="50" max="300" value="150" step="10">
-                </div>
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
 
-                <div class="stats-panel">
-                    <div class="stat-item">M₁: <span id="statM1">50.0</span> × 10¹⁰ kg</div>
-                    <div class="stat-item">M₂: <span id="statM2">30.0</span> × 10¹⁰ kg</div>
-                    <div class="stat-item">r: <span id="statR">150</span> px</div>
-                    <div class="stat-item">Force F: <span id="statF">0.000</span> × 10⁸ N</div>
-                    <div class="stat-item">G: 6.674 × 10⁻¹¹ Nm²/kg²</div>
-                </div>
-            </div>
-        </div>
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
 
-        <div class="sim-info">
-            <h2>About This Simulation</h2>
-            <p>Every mass attracts every other mass with a force proportional to the product of their masses and inversely proportional to the square of the distance between them.</p>
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
 
-            <div class="formula-box">
-                F = GMm/r² &nbsp;|&nbsp; G = 6.674 × 10⁻¹¹ Nm²/kg²
-            </div>
-        </div>
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    /* Side Data Panel */
+    .side-data {
+      width: 320px;
+      min-width: 280px;
+      background: var(--bg-card);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-data h3 {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .data-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+    }
+
+    .data-label {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .data-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .data-value.force-val { color: #ffcc00; }
+    .data-value.attractive { color: #f59e0b; }
+
+    .data-formula {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 6px 8px;
+      margin-top: 8px;
+      line-height: 1.5;
+      word-break: break-all;
+    }
+
+    .data-formula .hl {
+      color: #ffcc00;
+      font-weight: 700;
+    }
+
+    .plot-label {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    .plot-wrap {
+      flex: 1;
+      min-height: 120px;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-secondary);
+      display: flex;
+    }
+
+    .plot-wrap canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2.5vw, 24px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .control-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border-subtle);
+    }
+
+    .charge-ctrl {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 2px 4px;
+    }
+
+    .mass-label {
+      min-width: 36px;
+      height: 32px;
+      padding: 4px 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      border-radius: var(--radius-sm);
+      border: 1px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mass-label.amber {
+      background: rgba(245,158,11,0.18);
+      border-color: rgba(245,158,11,0.4);
+      color: #f59e0b;
+    }
+
+    .mass-label.purple {
+      background: rgba(124,58,237,0.18);
+      border-color: rgba(124,58,237,0.4);
+      color: #a78bfa;
+    }
+
+    .mag-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .mag-btn {
+      width: 20px;
+      height: 24px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 0;
+      line-height: 1;
+      transition: var(--transition-fast);
+    }
+
+    .mag-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .mag-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      min-width: 14px;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
+    .qa-section {
+      margin-top: 32px;
+    }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
+    }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 500px;
+    }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
+      position: relative;
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .side-data { width: 100%; min-width: unset; }
+    }
+
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 8px; padding: 12px; }
+    }
+
+    /* === Tutorial Overlay === */
+    .sim-tutorial {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+
+    .tut-hint {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .tut-arrows-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tut-label {
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.92);
+      color: #1a1a2e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .tut-dismiss {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 32px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tut-dismiss:hover {
+      background: #e8e0f8;
+      transform: translateX(-50%) scale(1.04);
+    }
+
+    @media (max-width: 900px) {
+      .sim-tutorial { display: none !important; }
+      #helpBtn { display: none; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Universal Law of Gravitation</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="helpBtn">? Help</button>
+      </div>
     </div>
 
-    <script>
-        const canvas = document.getElementById('simCanvas');
-        const ctx = canvas.getContext('2d');
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div class="side-data">
+        <h3>Data</h3>
+        <div class="data-grid">
+          <div class="data-row">
+            <span class="data-label">|F|</span>
+            <span class="data-value force-val" id="dataForce">&mdash;</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">r</span>
+            <span class="data-value" id="dataDist">&mdash;</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Type</span>
+            <span class="data-value attractive" id="dataType">Attractive</span>
+          </div>
+        </div>
+        <div class="data-formula" id="dataSubstitution">&mdash;</div>
+        <div class="plot-label">F vs r</div>
+        <div class="plot-wrap">
+          <canvas id="plotCanvas"></canvas>
+        </div>
+      </div>
+    </div>
 
-        const G = 6.674e-11;
-        let mass1 = 50;
-        let mass2 = 30;
-        let distance = 150;
+    <div class="controls-bar">
+      <div class="control-group" id="m1Ctrl">
+        <label>M1:</label>
+      </div>
 
-        const mass1Slider = document.getElementById('mass1');
-        const mass2Slider = document.getElementById('mass2');
-        const distanceSlider = document.getElementById('distance');
+      <div class="control-sep"></div>
 
-        mass1Slider.oninput = function() {
-            mass1 = parseFloat(this.value);
-            document.getElementById('mass1Val').textContent = mass1;
-            updateStats();
-            draw();
-        };
+      <div class="control-group" id="m2Ctrl">
+        <label>M2:</label>
+      </div>
 
-        mass2Slider.oninput = function() {
-            mass2 = parseFloat(this.value);
-            document.getElementById('mass2Val').textContent = mass2;
-            updateStats();
-            draw();
-        };
+      <div class="control-sep"></div>
 
-        distanceSlider.oninput = function() {
-            distance = parseFloat(this.value);
-            document.getElementById('distanceVal').textContent = distance;
-            updateStats();
-            draw();
-        };
+      <button class="sim-btn" id="resetArrangement">&#8635; Reset</button>
+    </div>
 
-        function calculateForce() {
-            const m1 = mass1 * 1e10;
-            const m2 = mass2 * 1e10;
-            const r = distance * 1e6;
-            return (G * m1 * m2) / (r * r);
+    <!-- Tutorial Overlay -->
+    <div class="sim-tutorial" id="simTutorial" style="display:none;">
+      <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
+
+      <div class="tut-hint" id="tutHintMass">
+        <div class="tut-label">Adjust mass values</div>
+      </div>
+      <div class="tut-hint" id="tutHintDrag">
+        <div class="tut-label">Drag M&#8322; to change distance</div>
+      </div>
+      <div class="tut-hint" id="tutHintArrows">
+        <div class="tut-label">Observe the force arrows</div>
+      </div>
+
+      <button class="tut-dismiss">Got it, let's start!</button>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Newton's Law of Gravitation</span>
+          F = Gm&#8321;m&#8322;/r&sup2;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Gravitational Constant</span>
+          G = 6.674 &times; 10&#8315;&#185;&#185; N&middot;m&sup2;/kg&sup2;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Inverse Square Law</span>
+          F &prop; 1/r&sup2;
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What is Newton's Universal Law of Gravitation?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Newton's Universal Law of Gravitation states that every particle in the universe attracts every other particle with a force that is <strong>directly proportional</strong> to the product of their masses and <strong>inversely proportional</strong> to the square of the distance between their centres. Mathematically: F = Gm&#8321;m&#8322;/r&sup2;, where G = 6.674 &times; 10&#8315;&#185;&#185; N&middot;m&sup2;/kg&sup2; is the universal gravitational constant.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens when you double the distance?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Since gravitational force follows an <strong>inverse-square law</strong>, doubling the distance reduces the force to <strong>one-quarter</strong> of its original value. If r &rarr; 2r, then F &rarr; F/4. This rapid decrease with distance explains why gravity is only significant for very large masses or very small separations.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How does increasing mass affect gravitational force?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Gravitational force is <strong>directly proportional</strong> to the product of the two masses. Doubling either mass doubles the force; doubling both masses quadruples it. This is why massive objects like planets and stars exert such strong gravitational pulls, while the gravitational attraction between everyday objects is negligible.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How is Newton's Law similar to Coulomb's Law?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Both follow an <strong>inverse-square law</strong>: the force is proportional to the product of two quantities (masses or charges) and inversely proportional to the square of the distance. However, gravity is always <strong>attractive</strong>, while Coulomb's force can be attractive or repulsive. Also, the electrostatic force is enormously stronger &mdash; about 10&sup3;&sup6; times stronger than gravity for elementary particles.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Why is gravity always attractive?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Unlike electric charge, mass has only one &ldquo;sign&rdquo; &mdash; it is always <strong>positive</strong>. There is no &ldquo;negative mass&rdquo; in classical physics. Since the gravitational force is proportional to the product of two positive masses, the force is always positive (attractive). This is fundamentally different from electrostatics, where opposite charges attract and like charges repel.
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        bg: isLight ? '#e8eaf0' : '#080818',
+        bgCenter: isLight ? '#f0f2f8' : '#0a0a24',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.04)',
+        text: isLight ? '#333' : '#fff',
+        labelBg: isLight ? 'rgba(255,255,255,0.88)' : 'rgba(10,10,30,0.88)',
+        labelBorder: isLight ? 'rgba(124,58,237,0.35)' : 'rgba(124,58,237,0.35)',
+        labelText: isLight ? '#7c3aed' : '#a78bfa'
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === CANVAS SETUP ===
+    var canvas = document.getElementById('simCanvas');
+    var ctx = canvas.getContext('2d');
+    var canvasW, canvasH;
+
+    function resizeCanvas() {
+      var wrap = canvas.parentElement;
+      var isFS = !!document.fullscreenElement;
+      var w = wrap.clientWidth;
+      var h = isFS ? wrap.clientHeight : Math.max(350, window.innerHeight - 300);
+      var dpr = window.devicePixelRatio || 1;
+
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      canvasW = w;
+      canvasH = h;
+
+      generateStars();
+      resetPositions();
+    }
+
+    window.addEventListener('resize', function() {
+      resizeCanvas();
+      resizePlotCanvas();
+    });
+
+    // === SIMULATION STATE ===
+    var PLANET_RADIUS = 20;
+    var PIXELS_PER_METER = 200;
+    var G_REAL = 6.674e-11;
+    var G_DISPLAY = 120000;
+    var MASS_SCALE = 1e10;
+    var MAX_MAG = 5;
+    var DAMPING = 0.94;
+    var DT = 0.06;
+    var GRAB_RADIUS = 22;
+
+    var m1 = { x: 0, y: 0, mag: 1 };
+    var m2 = { x: 0, y: 0, mag: 1 };
+
+    var driftVx = 0, driftVy = 0;
+    var draggingM2 = false;
+    var docked = true;
+    var glowPhase = 0;
+
+    // Achievement tracking
+    var _achCloseEncounter = false;
+    var _achBinarySystem = false;
+    var _achStrongPull = false;
+
+    // Planet color palettes (from gravity-equilibrium)
+    var planetColors = [
+      { light: '#fbbf24', dark: '#d97706', glow: '245,158,11', band1: 'rgba(180,100,20,0.25)', band2: 'rgba(220,140,40,0.18)', ring: 'rgba(210,170,100,' },
+      { light: '#a78bfa', dark: '#7c3aed', glow: '124,58,237', band1: 'rgba(80,40,160,0.25)', band2: 'rgba(140,100,200,0.18)', ring: 'rgba(180,160,220,' }
+    ];
+
+    // === STARFIELD ===
+    var stars = [];
+    function generateStars() {
+      stars = [];
+      var count = Math.floor(canvasW * canvasH / 1200);
+      for (var i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvasW,
+          y: Math.random() * canvasH,
+          size: 0.3 + Math.random() * 1.4,
+          brightness: 0.3 + Math.random() * 0.7,
+          twinkleSpeed: 0.5 + Math.random() * 2.5,
+          twinkleOffset: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function resetPositions() {
+      var cy = canvasH / 2;
+      m1.x = canvasW * 0.18;
+      m1.y = cy;
+      m2.x = canvasW * 0.65;
+      m2.y = cy;
+      driftVx = 0;
+      driftVy = 0;
+    }
+
+    function resetAll() {
+      m1.mag = 1;
+      m2.mag = 1;
+      docked = true;
+      forceHistory = [];
+      _achCloseEncounter = false;
+      _achBinarySystem = false;
+      _achStrongPull = false;
+      resetPositions();
+      buildMassControls();
+    }
+
+    // === MASS CONTROLS ===
+    function buildMassControls() {
+      buildOneMassCtrl('m1Ctrl', m1, 'M\u2081', 'amber');
+      buildOneMassCtrl('m2Ctrl', m2, 'M\u2082', 'purple');
+    }
+
+    function buildOneMassCtrl(containerId, mass, label, colorClass) {
+      var container = document.getElementById(containerId);
+      var ctrls = container.querySelectorAll('.charge-ctrl');
+      for (var i = 0; i < ctrls.length; i++) ctrls[i].remove();
+
+      var wrap = document.createElement('div');
+      wrap.className = 'charge-ctrl';
+
+      // Mass label
+      var lbl = document.createElement('div');
+      lbl.className = 'mass-label ' + colorClass;
+      lbl.textContent = label;
+
+      // Magnitude stepper
+      var stepper = document.createElement('div');
+      stepper.className = 'mag-stepper';
+      var downBtn = document.createElement('button');
+      downBtn.className = 'mag-btn';
+      downBtn.textContent = '\u25BC';
+      var magVal = document.createElement('span');
+      magVal.className = 'mag-val';
+      magVal.textContent = mass.mag;
+      var upBtn = document.createElement('button');
+      upBtn.className = 'mag-btn';
+      upBtn.textContent = '\u25B2';
+
+      downBtn.addEventListener('click', function() {
+        if (mass.mag > 1) {
+          mass.mag--;
+          magVal.textContent = mass.mag;
+          driftVx = 0;
+          driftVy = 0;
+        }
+      });
+      upBtn.addEventListener('click', function() {
+        if (mass.mag < MAX_MAG) {
+          mass.mag++;
+          magVal.textContent = mass.mag;
+          driftVx = 0;
+          driftVy = 0;
+        }
+      });
+
+      stepper.appendChild(downBtn);
+      stepper.appendChild(magVal);
+      stepper.appendChild(upBtn);
+
+      wrap.appendChild(lbl);
+      wrap.appendChild(stepper);
+      container.appendChild(wrap);
+    }
+
+    // === RESET BUTTONS ===
+    document.getElementById('resetBtn').addEventListener('click', resetAll);
+    document.getElementById('resetArrangement').addEventListener('click', resetAll);
+
+    // === PHYSICS ===
+    function getDistPx() {
+      var dx = m2.x - m1.x;
+      var dy = m2.y - m1.y;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function getRealForce() {
+      var rPx = getDistPx();
+      var rMeters = rPx / PIXELS_PER_METER;
+      if (rMeters < 0.01) rMeters = 0.01;
+      var massProduct = m1.mag * MASS_SCALE * m2.mag * MASS_SCALE;
+      return G_REAL * massProduct / (rMeters * rMeters);
+    }
+
+    function getCanvasForce() {
+      var rPx = getDistPx();
+      if (rPx < 12) rPx = 12;
+      return G_DISPLAY * m1.mag * m2.mag / (rPx * rPx);
+    }
+
+    function formatForce(f) {
+      var abs = Math.abs(f);
+      if (abs >= 1) return abs.toFixed(2) + ' N';
+      if (abs >= 0.001) return (abs * 1000).toFixed(2) + ' mN';
+      return (abs * 1e6).toFixed(2) + ' \u00B5N';
+    }
+
+    function getForceUnit(f) {
+      var abs = Math.abs(f);
+      if (abs >= 1) return { val: abs, unit: 'N', scale: 1 };
+      if (abs >= 0.001) return { val: abs * 1000, unit: 'mN', scale: 1000 };
+      return { val: abs * 1e6, unit: '\u00B5N', scale: 1e6 };
+    }
+
+    // === DRAWING ===
+    function drawBackground() {
+      var grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
+      grad.addColorStop(0, tc.bgCenter);
+      grad.addColorStop(1, tc.bg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var gridColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)';
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1;
+      for (var x = 40; x < canvasW; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvasH);
+        ctx.stroke();
+      }
+      for (var y = 40; y < canvasH; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvasW, y);
+        ctx.stroke();
+      }
+
+      // Starfield
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        var twinkle = 0.5 + 0.5 * Math.sin(glowPhase * s.twinkleSpeed + s.twinkleOffset);
+        var alpha = s.brightness * twinkle * (isLight ? 0.15 : 0.8);
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(220,230,255,' + alpha + ')';
+        ctx.fill();
+      }
+    }
+
+    function drawDistanceLine() {
+      var dx = m2.x - m1.x;
+      var dy = m2.y - m1.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var rMeters = dist / PIXELS_PER_METER;
+
+      ctx.save();
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(m1.x, m1.y);
+      ctx.lineTo(m2.x, m2.y);
+      ctx.strokeStyle = 'rgba(180,120,255,0.5)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+
+      var midX = (m1.x + m2.x) / 2;
+      var midY = (m1.y + m2.y) / 2;
+      var text = 'r = ' + rMeters.toFixed(2) + ' m';
+      ctx.font = 'bold 12px "Inter", sans-serif';
+      var tw = ctx.measureText(text).width;
+      var pillW = tw + 16;
+      var pillH = 24;
+
+      ctx.fillStyle = tc.labelBg;
+      ctx.beginPath();
+      ctx.roundRect(midX - pillW / 2, midY - pillH / 2 - 14, pillW, pillH, 12);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(180,120,255,0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = tc.labelText;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, midX, midY - 14);
+    }
+
+    function drawForceArrows() {
+      var dx = m2.x - m1.x;
+      var dy = m2.y - m1.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 1) return;
+
+      var nx = dx / dist;
+      var ny = dy / dist;
+
+      var force = getCanvasForce();
+      if (force < 0.01) return;
+
+      var arrowLen = Math.min(80, 10 + 12 * Math.log(1 + force * 0.5));
+
+      // Gravity is always attractive:
+      // M2 is pulled TOWARD M1: direction is -nx, -ny
+      // M1 is pulled TOWARD M2: direction is +nx, +ny
+      drawArrow(m2.x, m2.y, -nx, -ny, arrowLen, PLANET_RADIUS + (m2.mag - 1) * 3);
+      drawArrow(m1.x, m1.y, nx, ny, arrowLen, PLANET_RADIUS + (m1.mag - 1) * 3);
+    }
+
+    function drawArrow(cx, cy, dirX, dirY, len, bodyR) {
+      var startX = cx + dirX * (bodyR + 4);
+      var startY = cy + dirY * (bodyR + 4);
+      var endX = startX + dirX * len;
+      var endY = startY + dirY * len;
+
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.strokeStyle = 'rgba(255,200,0,0.85)';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      var headLen = 10;
+      var angle = Math.atan2(dirY, dirX);
+      ctx.beginPath();
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(endX - headLen * Math.cos(angle - 0.4), endY - headLen * Math.sin(angle - 0.4));
+      ctx.lineTo(endX - headLen * Math.cos(angle + 0.4), endY - headLen * Math.sin(angle + 0.4));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255,200,0,0.9)';
+      ctx.fill();
+    }
+
+    function drawForceMagnitudeLabel() {
+      var f = getRealForce();
+      var fu = getForceUnit(f);
+      var text = 'F = ' + fu.val.toFixed(2) + ' ' + fu.unit + ' (attraction)';
+
+      ctx.font = 'bold 13px "Inter", sans-serif';
+      var tw = ctx.measureText(text).width;
+      var pillW = tw + 24;
+      var pillH = 28;
+      var pillX = canvasW / 2 - pillW / 2;
+      var pillY = 20;
+
+      ctx.fillStyle = tc.labelBg;
+      ctx.beginPath();
+      ctx.roundRect(pillX, pillY, pillW, pillH, 14);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,200,0,0.4)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(255,200,0,0.95)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, canvasW / 2, pillY + pillH / 2);
+    }
+
+    function drawMass(mass, pcIdx, label, isFixed) {
+      var pc = planetColors[pcIdx];
+      var pulse = 0.5 + 0.5 * Math.sin(glowPhase * (isFixed ? 1 : 1.3));
+      var r = PLANET_RADIUS + (mass.mag - 1) * 3;
+      var glowRadius = (28 + (mass.mag - 1) * 6) + 10 * pulse;
+      var glowAlpha = 0.2 + 0.15 * pulse;
+
+      // Glow
+      var glowGrad = ctx.createRadialGradient(mass.x, mass.y, 0, mass.x, mass.y, glowRadius);
+      glowGrad.addColorStop(0, 'rgba(' + pc.glow + ',' + glowAlpha + ')');
+      glowGrad.addColorStop(0.6, 'rgba(' + pc.glow + ',' + (glowAlpha * 0.4) + ')');
+      glowGrad.addColorStop(1, 'rgba(' + pc.glow + ',0)');
+      ctx.beginPath();
+      ctx.arc(mass.x, mass.y, glowRadius, 0, Math.PI * 2);
+      ctx.fillStyle = glowGrad;
+      ctx.fill();
+
+      // Saturn ring (back half)
+      ctx.save();
+      var ringA = r * 2.0 + mass.mag * 2;
+      var ringB = r * 0.45;
+      ctx.beginPath();
+      ctx.ellipse(mass.x, mass.y, ringA, ringB, 0, Math.PI, Math.PI * 2);
+      ctx.strokeStyle = pc.ring + (0.2 + 0.08 * pulse) + ')';
+      ctx.lineWidth = 2.5 + mass.mag * 0.3;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(mass.x, mass.y, ringA * 0.78, ringB * 0.78, 0, Math.PI, Math.PI * 2);
+      ctx.strokeStyle = pc.ring + (0.12 + 0.05 * pulse) + ')';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.restore();
+
+      // Planet body
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(mass.x, mass.y, r, 0, Math.PI * 2);
+      ctx.clip();
+
+      var grad = ctx.createRadialGradient(mass.x - r * 0.3, mass.y - r * 0.3, 0, mass.x, mass.y, r);
+      grad.addColorStop(0, pc.light);
+      grad.addColorStop(1, pc.dark);
+      ctx.fillStyle = grad;
+      ctx.shadowColor = pc.dark;
+      ctx.shadowBlur = 12 + 6 * pulse;
+      ctx.fillRect(mass.x - r, mass.y - r, r * 2, r * 2);
+      ctx.shadowBlur = 0;
+
+      // Surface bands
+      var bandCount = 4 + mass.mag;
+      for (var b = 0; b < bandCount; b++) {
+        var by = mass.y - r + (r * 2 / bandCount) * b;
+        var bh = r * 2 / bandCount;
+        ctx.fillStyle = (b % 2 === 0) ? pc.band1 : pc.band2;
+        ctx.fillRect(mass.x - r, by, r * 2, bh);
+      }
+
+      // Polar darkening
+      var poleGrad = ctx.createLinearGradient(mass.x, mass.y - r, mass.x, mass.y + r);
+      poleGrad.addColorStop(0, 'rgba(0,0,0,0.15)');
+      poleGrad.addColorStop(0.3, 'rgba(0,0,0,0)');
+      poleGrad.addColorStop(0.7, 'rgba(0,0,0,0)');
+      poleGrad.addColorStop(1, 'rgba(0,0,0,0.12)');
+      ctx.fillStyle = poleGrad;
+      ctx.fillRect(mass.x - r, mass.y - r, r * 2, r * 2);
+
+      // Specular highlight
+      var specGrad = ctx.createRadialGradient(mass.x - r * 0.35, mass.y - r * 0.35, 0, mass.x, mass.y, r);
+      specGrad.addColorStop(0, 'rgba(255,255,255,0.3)');
+      specGrad.addColorStop(0.4, 'rgba(255,255,255,0.05)');
+      specGrad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = specGrad;
+      ctx.fillRect(mass.x - r, mass.y - r, r * 2, r * 2);
+
+      ctx.restore();
+
+      // Saturn ring (front half)
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(mass.x, mass.y, ringA, ringB, 0, 0, Math.PI);
+      ctx.strokeStyle = pc.ring + (0.3 + 0.1 * pulse) + ')';
+      ctx.lineWidth = 2.5 + mass.mag * 0.3;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(mass.x, mass.y, ringA * 0.78, ringB * 0.78, 0, 0, Math.PI);
+      ctx.strokeStyle = pc.ring + (0.18 + 0.06 * pulse) + ')';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.restore();
+
+      // Label below planet
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.font = 'bold 13px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      var subLabel = label;
+      if (isFixed) subLabel += ' (FIXED)';
+      ctx.fillText(subLabel, mass.x, mass.y + r + 6);
+    }
+
+    // === PLOT CANVAS & DATA PANEL ===
+    var plotCanvas = document.getElementById('plotCanvas');
+    var pctx = plotCanvas.getContext('2d');
+    var forceHistory = [];
+    var MAX_HISTORY = 60;
+
+    function resizePlotCanvas() {
+      var wrap = plotCanvas.parentElement;
+      var w = wrap.clientWidth;
+      var h = wrap.clientHeight || 160;
+      var dpr = window.devicePixelRatio || 1;
+      plotCanvas.width = w * dpr;
+      plotCanvas.height = h * dpr;
+      plotCanvas.style.width = w + 'px';
+      plotCanvas.style.height = h + 'px';
+      pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function recordForcePoint() {
+      var rPx = getDistPx();
+      var rMeters = rPx / PIXELS_PER_METER;
+      var f = getRealForce();
+      forceHistory.push({ r: rMeters, f: f });
+      if (forceHistory.length > MAX_HISTORY) forceHistory.shift();
+    }
+
+    function drawPlot() {
+      var wrap = plotCanvas.parentElement;
+      var w = wrap.clientWidth;
+      var h = wrap.clientHeight || 160;
+      if (plotCanvas.width !== Math.round(w * (window.devicePixelRatio || 1))) resizePlotCanvas();
+
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var bgColor = isLight ? '#f0f2f8' : '#0c0c20';
+      var gridColor = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)';
+      var axisColor = isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.2)';
+      var textColor = isLight ? '#666' : '#888';
+      var curveColor = '#ffcc00';
+      var dotColor = '#f59e0b';
+
+      pctx.fillStyle = bgColor;
+      pctx.fillRect(0, 0, w, h);
+
+      var pad = { left: 36, right: 12, top: 16, bottom: 24 };
+      var pw = w - pad.left - pad.right;
+      var ph = h - pad.top - pad.bottom;
+
+      var rMeters = getDistPx() / PIXELS_PER_METER;
+      var currentF = getRealForce();
+      var fu = getForceUnit(currentF);
+
+      var rMin = 0.1;
+      var rMax = Math.max(2, rMeters * 1.5);
+
+      var massProduct = m1.mag * MASS_SCALE * m2.mag * MASS_SCALE;
+      var fAtRmin = G_REAL * massProduct / (rMin * rMin);
+      var fMax = fAtRmin * fu.scale;
+      if (fMax < 1) fMax = 1;
+
+      // Grid lines
+      pctx.strokeStyle = gridColor;
+      pctx.lineWidth = 1;
+      for (var gi = 1; gi <= 4; gi++) {
+        var gy = pad.top + ph * (1 - gi / 4);
+        pctx.beginPath();
+        pctx.moveTo(pad.left, gy);
+        pctx.lineTo(pad.left + pw, gy);
+        pctx.stroke();
+      }
+
+      // Axes
+      pctx.strokeStyle = axisColor;
+      pctx.lineWidth = 1.5;
+      pctx.beginPath();
+      pctx.moveTo(pad.left, pad.top);
+      pctx.lineTo(pad.left, pad.top + ph);
+      pctx.lineTo(pad.left + pw, pad.top + ph);
+      pctx.stroke();
+
+      // Axis labels
+      pctx.fillStyle = textColor;
+      pctx.font = '600 9px "Inter", sans-serif';
+      pctx.textAlign = 'center';
+      pctx.textBaseline = 'top';
+      pctx.fillText('r (m)', pad.left + pw / 2, h - 10);
+      pctx.save();
+      pctx.translate(10, pad.top + ph / 2);
+      pctx.rotate(-Math.PI / 2);
+      pctx.fillText('F (' + fu.unit + ')', 0, 0);
+      pctx.restore();
+
+      // Theoretical curve
+      pctx.beginPath();
+      pctx.strokeStyle = curveColor;
+      pctx.lineWidth = 1.5;
+      pctx.globalAlpha = 0.5;
+      var steps = 80;
+      for (var si = 0; si <= steps; si++) {
+        var rr = rMin + (rMax - rMin) * si / steps;
+        var ff = G_REAL * massProduct / (rr * rr) * fu.scale;
+        var px = pad.left + (rr - rMin) / (rMax - rMin) * pw;
+        var py = pad.top + ph * (1 - Math.min(ff / fMax, 1));
+        if (si === 0) pctx.moveTo(px, py);
+        else pctx.lineTo(px, py);
+      }
+      pctx.stroke();
+      pctx.globalAlpha = 1;
+
+      // Scatter recorded points
+      for (var hi = 0; hi < forceHistory.length; hi++) {
+        var pt = forceHistory[hi];
+        if (pt.r < rMin || pt.r > rMax) continue;
+        var px = pad.left + (pt.r - rMin) / (rMax - rMin) * pw;
+        var fScaled = pt.f * fu.scale;
+        var py = pad.top + ph * (1 - Math.min(fScaled / fMax, 1));
+        var alpha = 0.3 + 0.5 * (hi / forceHistory.length);
+        pctx.beginPath();
+        pctx.arc(px, py, 2.5, 0, Math.PI * 2);
+        pctx.fillStyle = 'rgba(245,158,11,' + alpha + ')';
+        pctx.fill();
+      }
+
+      // Current point
+      var curPx = pad.left + (rMeters - rMin) / (rMax - rMin) * pw;
+      var curFScaled = currentF * fu.scale;
+      var curPy = pad.top + ph * (1 - Math.min(curFScaled / fMax, 1));
+      if (rMeters >= rMin && rMeters <= rMax) {
+        pctx.beginPath();
+        pctx.arc(curPx, curPy, 4, 0, Math.PI * 2);
+        pctx.fillStyle = dotColor;
+        pctx.shadowColor = dotColor;
+        pctx.shadowBlur = 6;
+        pctx.fill();
+        pctx.shadowBlur = 0;
+      }
+
+      // R-axis tick labels
+      pctx.fillStyle = textColor;
+      pctx.font = '9px "JetBrains Mono", monospace';
+      pctx.textAlign = 'center';
+      pctx.textBaseline = 'top';
+      var rTicks = [rMin, (rMin + rMax) / 2, rMax];
+      for (var ti = 0; ti < rTicks.length; ti++) {
+        var tx = pad.left + (rTicks[ti] - rMin) / (rMax - rMin) * pw;
+        pctx.fillText(rTicks[ti].toFixed(1), tx, pad.top + ph + 3);
+      }
+
+      // F-axis tick labels
+      pctx.textAlign = 'right';
+      pctx.textBaseline = 'middle';
+      var fTicks = [0, fMax / 2, fMax];
+      for (var ti = 0; ti < fTicks.length; ti++) {
+        var ty = pad.top + ph * (1 - fTicks[ti] / fMax);
+        var lbl = fTicks[ti] < 10 ? fTicks[ti].toFixed(1) : Math.round(fTicks[ti]);
+        pctx.fillText(lbl, pad.left - 4, ty);
+      }
+    }
+
+    function updateDataPanel() {
+      var rPx = getDistPx();
+      var rMeters = rPx / PIXELS_PER_METER;
+      document.getElementById('dataDist').textContent = rMeters.toFixed(3) + ' m';
+
+      var f = getRealForce();
+      var fu = getForceUnit(f);
+      var forceStr = fu.val.toFixed(2) + ' ' + fu.unit;
+      document.getElementById('dataForce').textContent = forceStr;
+
+      // Formula substitution
+      var sub = document.getElementById('dataSubstitution');
+      sub.innerHTML =
+        'F = G\u00B7m\u2081m\u2082 / r\u00B2' +
+        '<br>= 6.674e\u207B\u00B9\u00B9\u00D7' + m1.mag + '\u00D7' + m2.mag + '\u00D710\u00B2\u2070 / ' + rMeters.toFixed(2) + '\u00B2' +
+        '<br><span class="hl">= ' + forceStr + '</span>';
+    }
+
+    function drawFrame() {
+      drawBackground();
+      drawDistanceLine();
+      drawForceArrows();
+      drawForceMagnitudeLabel();
+      drawMass(m1, 0, 'M\u2081', true);
+      drawMass(m2, 1, 'M\u2082', false);
+      updateDataPanel();
+    }
+
+    function draw() {
+      drawFrame();
+    }
+
+    // === ANIMATION LOOP ===
+    var animRunning = false;
+
+    function animLoop() {
+      if (!animRunning) return;
+      glowPhase += 0.02;
+      if (glowPhase > Math.PI * 2) glowPhase -= Math.PI * 2;
+
+      // Drift physics when not dragging and undocked
+      if (!draggingM2 && !docked) {
+        var dx = m1.x - m2.x; // direction toward M1 (always attractive)
+        var dy = m1.y - m2.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 12) dist = 12;
+        var nx = dx / dist;
+        var ny = dy / dist;
+
+        var force = getCanvasForce();
+
+        driftVx += force * nx * DT;
+        driftVy += force * ny * DT;
+        driftVx *= DAMPING;
+        driftVy *= DAMPING;
+
+        var speed = Math.sqrt(driftVx * driftVx + driftVy * driftVy);
+        if (speed > 6) {
+          driftVx = driftVx / speed * 6;
+          driftVy = driftVy / speed * 6;
         }
 
-        function updateStats() {
-            const force = calculateForce();
-            document.getElementById('statM1').textContent = mass1.toFixed(1);
-            document.getElementById('statM2').textContent = mass2.toFixed(1);
-            document.getElementById('statR').textContent = distance;
-            document.getElementById('statF').textContent = (force / 1e8).toFixed(3);
+        m2.x += driftVx;
+        m2.y += driftVy;
+
+        // Prevent M2 overlapping M1
+        var minDist = 2 * PLANET_RADIUS + 4;
+        dx = m2.x - m1.x;
+        dy = m2.y - m1.y;
+        dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < minDist && dist > 0) {
+          m2.x = m1.x + (dx / dist) * minDist;
+          m2.y = m1.y + (dy / dist) * minDist;
+          driftVx *= -0.3;
+          driftVy *= -0.3;
         }
 
-        function drawGradientSphere(x, y, radius, color1, color2) {
-            const gradient = ctx.createRadialGradient(x - radius/3, y - radius/3, radius/10, x, y, radius);
-            gradient.addColorStop(0, color2);
-            gradient.addColorStop(1, color1);
+        // Clamp to canvas bounds and bounce
+        var margin = PLANET_RADIUS + 2;
+        if (m2.x < margin) { m2.x = margin; driftVx = Math.abs(driftVx) * 0.3; }
+        if (m2.x > canvasW - margin) { m2.x = canvasW - margin; driftVx = -Math.abs(driftVx) * 0.3; }
+        if (m2.y < margin) { m2.y = margin; driftVy = Math.abs(driftVy) * 0.3; }
+        if (m2.y > canvasH - margin) { m2.y = canvasH - margin; driftVy = -Math.abs(driftVy) * 0.3; }
+      }
 
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.fill();
+      // Achievement checks
+      var closeDist = getDistPx();
+      if (closeDist < 80) {
+        _achCloseEncounter = true;
+      }
+      if (m1.mag === m2.mag) {
+        _achBinarySystem = true;
+      }
+      if (m1.mag === 5 && m2.mag === 5 && closeDist < 80) {
+        _achStrongPull = true;
+      }
 
-            ctx.strokeStyle = color1;
-            ctx.lineWidth = 2;
-            ctx.stroke();
+      drawFrame();
+      if (Math.round(glowPhase * 50) % 3 === 0) {
+        recordForcePoint();
+        drawPlot();
+      }
+      requestAnimationFrame(animLoop);
+    }
+
+    function startAnim() {
+      if (!animRunning) {
+        animRunning = true;
+        requestAnimationFrame(animLoop);
+      }
+    }
+
+    function stopAnim() {
+      animRunning = false;
+    }
+
+    // === DRAG INTERACTION ===
+    function getCanvasPos(e) {
+      var rect = canvas.getBoundingClientRect();
+      if (e.touches) {
+        return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+      }
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function isOverM2(mx, my) {
+      return Math.hypot(mx - m2.x, my - m2.y) < GRAB_RADIUS;
+    }
+
+    canvas.addEventListener('mousedown', function(e) {
+      var pos = getCanvasPos(e);
+      if (isOverM2(pos.x, pos.y)) {
+        draggingM2 = true;
+        docked = false;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'grabbing';
+        e.preventDefault();
+      }
+    });
+
+    canvas.addEventListener('mousemove', function(e) {
+      var pos = getCanvasPos(e);
+      if (draggingM2) {
+        m2.x = Math.max(PLANET_RADIUS, Math.min(canvasW - PLANET_RADIUS, pos.x));
+        m2.y = Math.max(PLANET_RADIUS, Math.min(canvasH - PLANET_RADIUS, pos.y));
+        // Prevent overlap with M1
+        var dx = m2.x - m1.x;
+        var dy = m2.y - m1.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var minDist = 2 * PLANET_RADIUS + 4;
+        if (dist < minDist && dist > 0) {
+          m2.x = m1.x + (dx / dist) * minDist;
+          m2.y = m1.y + (dy / dist) * minDist;
+        }
+      } else {
+        canvas.style.cursor = isOverM2(pos.x, pos.y) ? 'grab' : 'default';
+      }
+    });
+
+    canvas.addEventListener('mouseup', function() {
+      if (draggingM2) {
+        draggingM2 = false;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'default';
+      }
+    });
+
+    canvas.addEventListener('mouseleave', function() {
+      if (draggingM2) {
+        draggingM2 = false;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'default';
+      }
+    });
+
+    // Touch support
+    canvas.addEventListener('touchstart', function(e) {
+      var pos = getCanvasPos(e);
+      if (isOverM2(pos.x, pos.y)) {
+        draggingM2 = true;
+        docked = false;
+        driftVx = 0;
+        driftVy = 0;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', function(e) {
+      if (draggingM2) {
+        e.preventDefault();
+        var rect = canvas.getBoundingClientRect();
+        var tx = e.touches[0].clientX - rect.left;
+        var ty = e.touches[0].clientY - rect.top;
+        m2.x = Math.max(PLANET_RADIUS, Math.min(canvasW - PLANET_RADIUS, tx));
+        m2.y = Math.max(PLANET_RADIUS, Math.min(canvasH - PLANET_RADIUS, ty));
+        var dx = m2.x - m1.x;
+        var dy = m2.y - m1.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var minDist = 2 * PLANET_RADIUS + 4;
+        if (dist < minDist && dist > 0) {
+          m2.x = m1.x + (dx / dist) * minDist;
+          m2.y = m1.y + (dy / dist) * minDist;
+        }
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', function() {
+      if (draggingM2) {
+        draggingM2 = false;
+        driftVx = 0;
+        driftVy = 0;
+      }
+    });
+
+    canvas.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+    // === FULLSCREEN ===
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(function() { resizeCanvas(); resizePlotCanvas(); }, 100);
+      setTimeout(function() { resizeCanvas(); resizePlotCanvas(); }, 300);
+    });
+
+    // === TUTORIAL OVERLAY ===
+    function drawCurvedArrow(svg, x1, y1, x2, y2) {
+      var ns = 'http://www.w3.org/2000/svg';
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+      var cx1 = x1 + dx * 0.2;
+      var cy1 = y1 + dy * 0.6;
+      var cx2 = x1 + dx * 0.8;
+      var cy2 = y1 + dy * 0.4;
+
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d',
+        'M' + x1 + ',' + y1 +
+        ' C' + cx1 + ',' + cy1 +
+        ' ' + cx2 + ',' + cy2 +
+        ' ' + x2 + ',' + y2
+      );
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgba(255,255,255,0.85)');
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(path);
+
+      var angle = Math.atan2(y2 - cy2, x2 - cx2);
+      var headLen = 10;
+      var a1x = x2 - headLen * Math.cos(angle - 0.4);
+      var a1y = y2 - headLen * Math.sin(angle - 0.4);
+      var a2x = x2 - headLen * Math.cos(angle + 0.4);
+      var a2y = y2 - headLen * Math.sin(angle + 0.4);
+      var arrow = document.createElementNS(ns, 'polygon');
+      arrow.setAttribute('points',
+        x2 + ',' + y2 + ' ' +
+        a1x + ',' + a1y + ' ' +
+        a2x + ',' + a2y
+      );
+      arrow.setAttribute('fill', 'rgba(255,255,255,0.85)');
+      svg.appendChild(arrow);
+    }
+
+    function positionTutorialHints() {
+      var area = document.getElementById('simArea');
+      var areaRect = area.getBoundingClientRect();
+      var svg = document.getElementById('tutArrowsSvg');
+      svg.innerHTML = '';
+
+      var targets = [
+        { hint: 'tutHintMass',   el: document.getElementById('m1Ctrl'), type: 'bottom' },
+        { hint: 'tutHintDrag',   el: document.getElementById('simCanvas'), type: 'canvas' },
+        { hint: 'tutHintArrows', el: document.getElementById('simCanvas'), type: 'canvas-low' }
+      ];
+
+      var placed = [];
+
+      for (var i = 0; i < targets.length; i++) {
+        var t = targets[i];
+        var hintEl = document.getElementById(t.hint);
+        if (!t.el) continue;
+        var elRect = t.el.getBoundingClientRect();
+        var cx = elRect.left + elRect.width / 2 - areaRect.left;
+        var cy = elRect.top - areaRect.top;
+
+        if (t.type === 'canvas') {
+          var midX = elRect.left + elRect.width / 2 - areaRect.left;
+          var midY = elRect.top + elRect.height * 0.35 - areaRect.top;
+          hintEl.style.left = midX + 'px';
+          hintEl.style.top = midY + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+          hintEl.style.right = '';
+          continue;
         }
 
-        function drawArrow(x1, y1, x2, y2, color, label) {
-            ctx.strokeStyle = color;
-            ctx.fillStyle = color;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
+        if (t.type === 'canvas-low') {
+          var midX = elRect.left + elRect.width / 2 - areaRect.left;
+          var midY = elRect.top + elRect.height * 0.55 - areaRect.top;
+          hintEl.style.left = midX + 'px';
+          hintEl.style.top = midY + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+          hintEl.style.right = '';
+          continue;
+        }
 
-            const angle = Math.atan2(y2 - y1, x2 - x1);
-            ctx.beginPath();
-            ctx.moveTo(x2, y2);
-            ctx.lineTo(x2 - 15 * Math.cos(angle - Math.PI / 6), y2 - 15 * Math.sin(angle - Math.PI / 6));
-            ctx.lineTo(x2 - 15 * Math.cos(angle + Math.PI / 6), y2 - 15 * Math.sin(angle + Math.PI / 6));
-            ctx.closePath();
-            ctx.fill();
+        hintEl.style.left = cx + 'px';
+        hintEl.style.transform = 'translateX(-50%)';
+        hintEl.style.top = '0px';
 
-            if (label) {
-                ctx.font = '12px JetBrains Mono, monospace';
-                ctx.fillText(label, (x1 + x2) / 2, (y1 + y2) / 2 - 10);
+        var hintRect = hintEl.getBoundingClientRect();
+        var hintW = hintRect.width;
+        var hintH = hintRect.height;
+
+        var desiredTop = cy - 50;
+        var hintLeft = cx - hintW / 2;
+        var hintRight = hintLeft + hintW;
+
+        var finalTop = desiredTop;
+        for (var j = 0; j < placed.length; j++) {
+          var p = placed[j];
+          if (hintRight > p.left && hintLeft < p.right) {
+            if (finalTop + hintH > p.top && finalTop < p.bottom) {
+              finalTop = p.top - hintH - 8;
             }
+          }
         }
 
-        function drawFieldLines(x, y, maxRadius, color, count) {
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 1;
-            for (let i = 1; i <= count; i++) {
-                const radius = (maxRadius / count) * i;
-                ctx.globalAlpha = 0.3 - (i * 0.05);
-                ctx.beginPath();
-                ctx.arc(x, y, radius, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-            ctx.globalAlpha = 1;
-        }
+        hintEl.style.top = finalTop + 'px';
+        placed.push({
+          left: hintLeft,
+          right: hintRight,
+          top: finalTop,
+          bottom: finalTop + hintH
+        });
 
-        function drawGraph() {
-            const graphX = 650;
-            const graphY = 320;
-            const graphW = 150;
-            const graphH = 100;
+        var arrowStartX = cx;
+        var arrowStartY = finalTop + hintH + 2;
+        var arrowEndX = cx;
+        var arrowEndY = cy + 2;
+        drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+      }
+    }
 
-            ctx.strokeStyle = 'rgba(0,212,255,0.5)';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(graphX, graphY, graphW, graphH);
+    function showTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.display = '';
+      el.offsetHeight;
+      el.style.opacity = '1';
+      positionTutorialHints();
+    }
 
-            ctx.fillStyle = '#00d4ff';
-            ctx.font = '10px JetBrains Mono, monospace';
-            ctx.fillText('F vs r (1/r²)', graphX, graphY - 5);
+    window.addEventListener('resize', function() {
+      if (document.getElementById('simTutorial').style.display !== 'none') {
+        positionTutorialHints();
+      }
+    });
 
-            ctx.strokeStyle = '#ff2d75';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            for (let i = 0; i <= graphW; i += 2) {
-                const r = 50 + (i / graphW) * 250;
-                const normalizedR = r / 50;
-                const f = 1 / (normalizedR * normalizedR);
-                const plotX = graphX + i;
-                const plotY = graphY + graphH - (f * graphH * 0.8);
+    function dismissTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.opacity = '0';
+      setTimeout(function() { el.style.display = 'none'; }, 400);
+      localStorage.setItem('tut-gravitation', '1');
+    }
 
-                if (i === 0) {
-                    ctx.moveTo(plotX, plotY);
-                } else {
-                    ctx.lineTo(plotX, plotY);
-                }
-            }
-            ctx.stroke();
+    if (!localStorage.getItem('tut-gravitation')) {
+      showTutorial();
+    }
 
-            const currentX = graphX + ((distance - 50) / 250) * graphW;
-            const normalizedR = distance / 50;
-            const currentF = 1 / (normalizedR * normalizedR);
-            const currentY = graphY + graphH - (currentF * graphH * 0.8);
+    document.getElementById('simTutorial').addEventListener('click', dismissTutorial);
+    document.getElementById('helpBtn').addEventListener('click', showTutorial);
 
-            ctx.fillStyle = '#00ffaa';
-            ctx.beginPath();
-            ctx.arc(currentX, currentY, 4, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        function draw() {
-            ctx.fillStyle = '#080818';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            const centerY = canvas.height / 2;
-            const centerX = canvas.width / 2;
-
-            const radius1 = Math.min(20 + mass1 * 0.4, 60);
-            const radius2 = Math.min(20 + mass2 * 0.4, 60);
-
-            const x1 = centerX - distance / 2;
-            const x2 = centerX + distance / 2;
-
-            drawFieldLines(x1, centerY, 120, 'rgba(0,212,255,0.3)', 5);
-            drawFieldLines(x2, centerY, 100, 'rgba(124,58,237,0.3)', 5);
-
-            drawGradientSphere(x1, centerY, radius1, '#00d4ff', '#00ffaa');
-            drawGradientSphere(x2, centerY, radius2, '#7c3aed', '#ff2d75');
-
-            ctx.fillStyle = '#00d4ff';
-            ctx.font = '14px JetBrains Mono, monospace';
-            ctx.fillText('M₁', x1 - 10, centerY + radius1 + 20);
-            ctx.fillText('M₂', x2 - 10, centerY + radius2 + 20);
-
-            const force = calculateForce();
-            const maxArrowLength = 80;
-            const arrowScale = Math.min(force / 1e7, 1);
-            const arrowLength = 30 + arrowScale * maxArrowLength;
-
-            drawArrow(x1 + radius1 + 10, centerY, x1 + radius1 + 10 + arrowLength, centerY, '#ff2d75', 'F₁₂');
-            drawArrow(x2 - radius2 - 10, centerY, x2 - radius2 - 10 - arrowLength, centerY, '#ff2d75', 'F₂₁');
-
-            ctx.strokeStyle = '#00ffaa';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([5, 5]);
-            ctx.beginPath();
-            ctx.moveTo(x1, centerY + radius1 + 40);
-            ctx.lineTo(x2, centerY + radius2 + 40);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            ctx.fillStyle = '#00ffaa';
-            ctx.font = '12px JetBrains Mono, monospace';
-            ctx.fillText('r', centerX - 10, centerY + radius1 + 55);
-
-            drawGraph();
-        }
-
-        updateStats();
-        draw();
-    </script>
-
-    <script src="../js/main.js"></script>
+    // === INIT ===
+    resizeCanvas();
+    resizePlotCanvas();
+    buildMassControls();
+    startAnim();
+  </script>
+  <script src="../js/main.js"></script>
 </body>
 </html>

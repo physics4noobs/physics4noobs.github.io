@@ -878,32 +878,21 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
   gravitation: [
     {
       id: 'close', title: 'Close Encounter',
-      description: 'Set distance to minimum (50)',
+      description: 'Bring the masses very close together',
       icon: '\uD83E\uDD1D',
-      check: { type: 'slider', id: 'distance', op: 'eq', value: 50 }
+      check: { type: 'global', name: '_achCloseEncounter', op: 'eq', value: true }
     },
     {
       id: 'binary', title: 'Binary System',
       description: 'Set both masses equal',
       icon: '\u2696\uFE0F',
-      check: { type: 'custom', fn: function() {
-        var s1 = document.getElementById('mass1');
-        var s2 = document.getElementById('mass2');
-        return s1 && s2 && s1.value === s2.value;
-      }}
+      check: { type: 'global', name: '_achBinarySystem', op: 'eq', value: true }
     },
     {
       id: 'max_force', title: 'Strong Pull',
-      description: 'Max masses + min distance',
+      description: 'Set both masses to maximum and bring them close',
       icon: '\uD83D\uDCAA',
-      check: { type: 'custom', fn: function() {
-        var m1 = document.getElementById('mass1');
-        var m2 = document.getElementById('mass2');
-        var d = document.getElementById('distance');
-        return m1 && m2 && d &&
-               parseFloat(m1.value) === 100 && parseFloat(m2.value) === 100 &&
-               parseFloat(d.value) === 50;
-      }}
+      check: { type: 'global', name: '_achStrongPull', op: 'eq', value: true }
     }
   ],
 
