@@ -1521,12 +1521,12 @@
       ctx.save();
       ctx.globalAlpha = crashPhase;
 
-      // Pulsing yellow-red ring around crashed planet
-      var flashPulse = 0.5 + 0.5 * Math.sin(glowPhase * 4);
-      var colorShift = 0.5 + 0.5 * Math.sin(glowPhase * 2.5); // slow color oscillation
-      var ringR = Math.round(255);
-      var ringG = Math.round(208 * (1 - colorShift) + 60 * colorShift); // 208 (yellow) → 60 (red)
-      var ringB = Math.round(0);
+      // Pulsing yellow-red ring around crashed planet (fast oscillation)
+      var flashPulse = 0.5 + 0.5 * Math.sin(glowPhase * 6);
+      var colorShift = 0.5 + 0.5 * Math.sin(glowPhase * 5); // fast yellow↔red
+      var ringR = 255;
+      var ringG = Math.round(208 * (1 - colorShift) + 40 * colorShift); // 208 (yellow) → 40 (red)
+      var ringB = 0;
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, pr + 8 + 5 * flashPulse, 0, Math.PI * 2);
@@ -1535,8 +1535,8 @@
       ctx.stroke();
 
       // Second ring (offset color phase)
-      var colorShift2 = 0.5 + 0.5 * Math.sin(glowPhase * 2.5 + 1.5);
-      var ringG2 = Math.round(208 * (1 - colorShift2) + 60 * colorShift2);
+      var colorShift2 = 0.5 + 0.5 * Math.sin(glowPhase * 5 + 1.5);
+      var ringG2 = Math.round(208 * (1 - colorShift2) + 40 * colorShift2);
       ctx.beginPath();
       ctx.arc(p.x, p.y, pr + 16 + 3 * flashPulse, 0, Math.PI * 2);
       ctx.strokeStyle = 'rgba(' + ringR + ',' + ringG2 + ',' + ringB + ',' + (0.2 + 0.15 * flashPulse) + ')';
@@ -1546,13 +1546,19 @@
       // Third faint outer ring
       ctx.beginPath();
       ctx.arc(p.x, p.y, pr + 24 + 4 * (1 - flashPulse), 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255,' + Math.round(100 * (1 - colorShift)) + ',0,' + (0.08 + 0.07 * flashPulse) + ')';
+      ctx.strokeStyle = 'rgba(255,' + Math.round(80 * (1 - colorShift)) + ',0,' + (0.08 + 0.07 * flashPulse) + ')';
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
       // === Center-top banner ===
       var bannerX = canvasW / 2;
       var bannerY = 28;
+
+      // Shared color for text + border (same yellow-red pulsation)
+      var textR = 255;
+      var textG = Math.round(208 * (1 - colorShift) + 40 * colorShift);
+      var textB = 0;
+      var pulsColor = 'rgb(' + textR + ',' + textG + ',' + textB + ')';
 
       // Hazard stripe background
       var warnLabel = 'Satellite has crashed.';
@@ -1570,18 +1576,18 @@
       ctx.roundRect(pillX, pillY, pillW, pillH, 18);
       ctx.fill();
 
-      // Yellow border
-      ctx.strokeStyle = 'rgba(255,208,0,0.7)';
+      // Pulsating border (matches ring colors)
+      ctx.strokeStyle = 'rgba(' + textR + ',' + textG + ',' + textB + ',0.7)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Hazard diagonal stripes inside border (clipped)
+      // Hazard diagonal stripes inside border (clipped, also color-matched)
       ctx.save();
       ctx.beginPath();
       ctx.roundRect(pillX, pillY, pillW, pillH, 18);
       ctx.clip();
       var stripeW = 8;
-      ctx.strokeStyle = 'rgba(255,208,0,0.06)';
+      ctx.strokeStyle = 'rgba(' + textR + ',' + textG + ',' + textB + ',0.06)';
       ctx.lineWidth = stripeW;
       for (var si = -pillH; si < pillW + pillH; si += stripeW * 2.5) {
         ctx.beginPath();
@@ -1597,8 +1603,8 @@
       var spinAngle = glowPhase * 1.5;
       drawRadioactiveSymbol(symX, symY, 10, crashPhase, spinAngle);
 
-      // Text
-      ctx.fillStyle = '#ffd000';
+      // Text (pulsates yellow↔red with rings)
+      ctx.fillStyle = pulsColor;
       ctx.font = 'bold 14px "Inter", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';

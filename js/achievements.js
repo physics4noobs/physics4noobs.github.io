@@ -134,7 +134,7 @@
   function openPanel() {
     panel.classList.add('open');
     overlay.classList.add('visible');
-    toggle.style.display = 'none';
+    if (!allComplete()) toggle.style.display = 'none';
   }
 
   function allComplete() {
@@ -146,7 +146,7 @@
   function closePanel() {
     panel.classList.remove('open');
     overlay.classList.remove('visible');
-    if (!allComplete()) toggle.style.display = '';
+    toggle.style.display = '';
   }
 
   toggle.addEventListener('click', openPanel);
@@ -178,17 +178,27 @@
     document.getElementById('ach-prog-fill').style.width = (count / achievements.length * 100) + '%';
 
     var comp = document.getElementById('ach-complete');
+    // Manage completion tick on toggle
+    var tick = toggle.querySelector('.ach-complete-tick');
     if (count === achievements.length) {
       comp.classList.add('visible');
-      // All done — keep toggle but make it subtle, no badge
       toggle.style.display = '';
       toggle.classList.add('completed');
       var badge = toggle.querySelector('.ach-badge-count');
       if (badge) badge.style.display = 'none';
+      // Add tick if not already present
+      if (!tick) {
+        tick = document.createElement('span');
+        tick.className = 'ach-complete-tick';
+        tick.innerHTML = '&#10003;';
+        toggle.appendChild(tick);
+      }
+      tick.style.display = '';
     } else {
       comp.classList.remove('visible');
       toggle.style.display = '';
       toggle.classList.remove('completed');
+      if (tick) tick.style.display = 'none';
     }
 
     document.getElementById('ach-signin-hint').style.display = signedIn ? 'none' : '';
