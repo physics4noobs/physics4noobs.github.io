@@ -502,9 +502,9 @@
       </div>
 
       <div class="qa-item">
-        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Why does the drift depend on crossing time?</div>
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Can the boat ever reach directly opposite if v<sub>r</sub> &gt; v<sub>b</sub>?</div>
         <div class="qa-a"><div class="qa-a-inner">
-          Drift = v<sub>r</sub> &times; t. The river pushes the boat sideways at a constant rate v<sub>r</sub>, so the longer the boat spends in the water, the more it drifts. This is why aiming upstream (to reduce drift) <strong>increases crossing time</strong> and thus partially offsets the benefit. The minimum-drift angle balances these two effects optimally.
+          <strong>No.</strong> To land directly opposite, the boat must cancel the river&rsquo;s push entirely, which requires v<sub>b</sub> sin&theta; = v<sub>r</sub>. When v<sub>r</sub> &gt; v<sub>b</sub>, sin&theta; would need to exceed 1, which is impossible. The boat can still cross, but it will <strong>always drift downstream</strong>. In this case the best strategy is to minimise drift, not eliminate it. Try setting v<sub>river</sub> &gt; v<sub>boat</sub> in the simulation to see this!
         </div></div>
       </div>
     </div>
