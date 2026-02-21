@@ -395,6 +395,7 @@
     /* Fullscreen */
     #simArea {
       background: var(--bg-primary);
+      position: relative;
     }
 
     #simArea:fullscreen,
@@ -435,6 +436,83 @@
       .controls-bar { gap: 12px; padding: 12px; }
       .control-group input[type="range"] { width: 80px; }
     }
+
+    /* === Tutorial Overlay === */
+    .sim-tutorial {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+
+    .tut-hint {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .tut-arrows-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tut-label {
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.92);
+      color: #1a1a2e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .tut-dismiss {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 32px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tut-dismiss:hover {
+      background: #e8e0f8;
+      transform: translateX(-50%) scale(1.04);
+    }
+
+    @media (max-width: 900px) {
+      .sim-tutorial { display: none !important; }
+      #helpBtn { display: none; }
+    }
   </style>
 
   <div class="sim-wrapper">
@@ -444,6 +522,7 @@
       <div style="display:flex;gap:8px;">
         <button class="sim-btn" id="resetBtn">Reset</button>
         <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="helpBtn">? Help</button>
       </div>
     </div>
 
@@ -486,6 +565,32 @@
         <span class="val" id="angleBVal">120&deg;</span>
       </div>
       <button class="sim-btn primary" id="animateBtn" style="margin-left:auto;">Animate Derivation</button>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div class="sim-tutorial" id="simTutorial" style="display:none;">
+      <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
+
+      <div class="tut-hint" id="tutMagA">
+        <div class="tut-label">Set magnitude of vector A</div>
+      </div>
+      <div class="tut-hint" id="tutAngleA">
+        <div class="tut-label">Set direction of vector A</div>
+      </div>
+      <div class="tut-hint" id="tutMagB">
+        <div class="tut-label">Set magnitude of vector B</div>
+      </div>
+      <div class="tut-hint" id="tutAngleB">
+        <div class="tut-label">Set direction of vector B</div>
+      </div>
+      <div class="tut-hint" id="tutAnimate">
+        <div class="tut-label">Play the derivation step-by-step</div>
+      </div>
+      <div class="tut-hint" id="tutData">
+        <div class="tut-label">Live resultant data updates here</div>
+      </div>
+
+      <button class="tut-dismiss">Got it, let's start!</button>
     </div>
 
     </div><!-- end #simArea -->
@@ -1362,6 +1467,155 @@
     // === EVENT LISTENERS ===
     document.getElementById('resetBtn').addEventListener('click', resetSim);
     document.getElementById('animateBtn').addEventListener('click', startAnimation);
+
+    // === TUTORIAL OVERLAY ===
+    function showTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.display = '';
+      el.offsetHeight; // force reflow for transition
+      el.style.opacity = '1';
+      positionTutorialHints();
+    }
+
+    window.addEventListener('resize', function() {
+      if (document.getElementById('simTutorial').style.display !== 'none') {
+        positionTutorialHints();
+      }
+    });
+
+    function dismissTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.opacity = '0';
+      setTimeout(function() { el.style.display = 'none'; }, 400);
+      localStorage.setItem('tut-vector-addition', '1');
+    }
+
+    function drawCurvedArrow(svg, x1, y1, x2, y2) {
+      var ns = 'http://www.w3.org/2000/svg';
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+      var cx1 = x1 + dx * 0.2;
+      var cy1 = y1 + dy * 0.6;
+      var cx2 = x1 + dx * 0.8;
+      var cy2 = y1 + dy * 0.4;
+
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d',
+        'M' + x1 + ',' + y1 +
+        ' C' + cx1 + ',' + cy1 +
+        ' ' + cx2 + ',' + cy2 +
+        ' ' + x2 + ',' + y2
+      );
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgba(255,255,255,0.85)');
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(path);
+
+      var angle = Math.atan2(y2 - cy2, x2 - cx2);
+      var headLen = 10;
+      var a1x = x2 - headLen * Math.cos(angle - 0.4);
+      var a1y = y2 - headLen * Math.sin(angle - 0.4);
+      var a2x = x2 - headLen * Math.cos(angle + 0.4);
+      var a2y = y2 - headLen * Math.sin(angle + 0.4);
+      var arrow = document.createElementNS(ns, 'polygon');
+      arrow.setAttribute('points',
+        x2 + ',' + y2 + ' ' +
+        a1x + ',' + a1y + ' ' +
+        a2x + ',' + a2y
+      );
+      arrow.setAttribute('fill', 'rgba(255,255,255,0.85)');
+      svg.appendChild(arrow);
+    }
+
+    function positionTutorialHints() {
+      var area = document.getElementById('simArea');
+      var areaRect = area.getBoundingClientRect();
+      var svg = document.getElementById('tutArrowsSvg');
+      svg.innerHTML = '';
+
+      var targets = [
+        { hint: 'tutMagA',    el: document.getElementById('magA'),       type: 'bottom' },
+        { hint: 'tutAngleA',  el: document.getElementById('angleA'),     type: 'bottom' },
+        { hint: 'tutMagB',    el: document.getElementById('magB'),       type: 'bottom' },
+        { hint: 'tutAngleB',  el: document.getElementById('angleB'),     type: 'bottom' },
+        { hint: 'tutAnimate', el: document.getElementById('animateBtn'), type: 'bottom' },
+        { hint: 'tutData',    el: document.querySelector('.side-data'),   type: 'side'   }
+      ];
+
+      var placed = [];
+
+      for (var i = 0; i < targets.length; i++) {
+        var t = targets[i];
+        var hintEl = document.getElementById(t.hint);
+        var elRect = t.el.getBoundingClientRect();
+        var cx = elRect.left + elRect.width / 2 - areaRect.left;
+        var cy = elRect.top - areaRect.top;
+
+        if (t.type === 'side') {
+          var midY = elRect.top + elRect.height / 2 - areaRect.top;
+          hintEl.style.top = midY + 'px';
+          hintEl.style.right = (areaRect.right - elRect.left + 8) + 'px';
+          hintEl.style.left = '';
+          hintEl.style.transform = '';
+
+          var hRect = hintEl.getBoundingClientRect();
+          var arrowStartX = hRect.right - areaRect.left + 4;
+          var arrowStartY = hRect.top + hRect.height / 2 - areaRect.top;
+          var arrowEndX = elRect.left - areaRect.left - 2;
+          var arrowEndY = midY;
+          drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+          continue;
+        }
+
+        hintEl.style.left = cx + 'px';
+        hintEl.style.transform = 'translateX(-50%)';
+        hintEl.style.top = '0px';
+
+        var hintRect = hintEl.getBoundingClientRect();
+        var hintW = hintRect.width;
+        var hintH = hintRect.height;
+
+        var desiredTop = cy - 50;
+        var hintLeft = cx - hintW / 2;
+        var hintRight = hintLeft + hintW;
+
+        var finalTop = desiredTop;
+        for (var j = 0; j < placed.length; j++) {
+          var p = placed[j];
+          if (hintRight > p.left && hintLeft < p.right) {
+            if (finalTop + hintH > p.top && finalTop < p.bottom) {
+              finalTop = p.top - hintH - 8;
+            }
+          }
+        }
+
+        hintEl.style.top = finalTop + 'px';
+        placed.push({
+          left: hintLeft,
+          right: hintRight,
+          top: finalTop,
+          bottom: finalTop + hintH
+        });
+
+        var arrowStartX = cx;
+        var arrowStartY = finalTop + hintH + 2;
+        var arrowEndX = cx;
+        var arrowEndY = cy + 2;
+        drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+      }
+    }
+
+    // Auto-show on first visit
+    if (!localStorage.getItem('tut-vector-addition')) {
+      showTutorial();
+    }
+
+    // Dismiss on click anywhere on overlay
+    document.getElementById('simTutorial').addEventListener('click', dismissTutorial);
+
+    // Help button re-shows overlay
+    document.getElementById('helpBtn').addEventListener('click', showTutorial);
 
     // Init
     resizeCanvas();
