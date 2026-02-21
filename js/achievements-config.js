@@ -817,7 +817,7 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
   'boat-river': [
     {
       id: 'mad_sailor', title: 'Mad Sailor',
-      description: 'Set angle to -90\u00B0 \u2014 the boat can never cross!',
+      description: 'Find the angle where the boat can never cross the river.',
       icon: '\uD83E\uDD2A',
       check: { type: 'custom', fn: function() {
         var ba = document.getElementById('boatAngle');
