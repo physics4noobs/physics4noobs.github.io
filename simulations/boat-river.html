@@ -407,6 +407,9 @@
         <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
       </div>
     </div>
+    <p style="font-family: var(--font-body); font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.6;">
+      Set the boat angle (&theta;), boat speed, and river speed using the sliders or by typing values below. A negative angle aims upstream to fight the current. Hit <strong style="color:var(--text-primary);">Launch</strong> to see how the river current affects the boat's path, drift, and crossing time.
+    </p>
 
     <div class="sim-main-row">
       <div class="canvas-wrap">
@@ -1048,6 +1051,41 @@
       ctx.fillText('v(boat/river)', startX + vbx * pxScale * vecScale + 8, startY + vby * pxScale * vecScale - 5);
       ctx.fillStyle = '#00d4ff';
       ctx.fillText('v_river', startX + vrx * pxScale * vecScale + 8, startY + 14);
+
+      // Angle arc and label at start
+      if (angle !== 0) {
+        var arcRadius = 30;
+        // The perpendicular direction is straight up (-PI/2)
+        // Boat direction angle from positive x-axis: atan2(vby, vbx)
+        var perpAngle = -Math.PI / 2; // straight up (perpendicular to banks)
+        var boatDir = Math.atan2(vby, vbx);
+        // Draw arc from perpendicular to boat direction
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+        ctx.lineWidth = 1.5;
+        // Dashed perpendicular reference line
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(startX, startY - 50);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        // Arc from perpendicular to boat angle
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        var arcStart = angle < 0 ? boatDir : perpAngle;
+        var arcEnd = angle < 0 ? perpAngle : boatDir;
+        ctx.arc(startX, startY, arcRadius, arcStart, arcEnd);
+        ctx.stroke();
+        // Angle label
+        var labelAngle = (perpAngle + boatDir) / 2;
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = 'bold 12px Andika, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(angle + '\u00B0', startX + Math.cos(labelAngle) * (arcRadius + 14), startY + Math.sin(labelAngle) * (arcRadius + 14));
+        ctx.restore();
+      }
 
       // Boat at start position (only when not animating)
       // Nose points along boat's own velocity (not resultant)
