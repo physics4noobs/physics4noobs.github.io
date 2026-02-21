@@ -740,7 +740,7 @@
 
     // === SIMULATION STATE ===
     var PLANET_RADIUS = 20;
-    var PIXELS_PER_METER = 200;
+    var PIXELS_PER_METER = 80;
     var G_REAL = 6.674e-11;
     var G_DISPLAY = 120000;
     var MASS_SCALE = 1e10;
@@ -787,9 +787,9 @@
 
     function resetPositions() {
       var cy = canvasH / 2;
-      m1.x = canvasW * 0.18;
+      m1.x = canvasW * 0.15;
       m1.y = cy;
-      m2.x = canvasW * 0.65;
+      m2.x = canvasW * 0.82;
       m2.y = cy;
       driftVx = 0;
       driftVy = 0;
