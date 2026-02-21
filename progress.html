@@ -16,6 +16,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script defer src="js/firebase-config.js"></script>
   <script defer src="js/auth.js"></script>
+  <script defer src="js/achievements-config.js"></script>
 </head>
 <body>
 
@@ -112,12 +113,47 @@
       <div id="progress-dashboard" style="display:none;">
         <div class="summary-cards" id="summary-cards"></div>
 
+        <div class="progress-heatmap" id="progress-heatmap">
+          <div class="heatmap-label">Activity &mdash; last 90 days</div>
+          <div class="heatmap-grid" id="heatmap-grid"></div>
+          <div class="heatmap-legend">
+            <span>Less</span>
+            <span class="hm-cell" data-level="0"></span>
+            <span class="hm-cell" data-level="1"></span>
+            <span class="hm-cell" data-level="2"></span>
+            <span class="hm-cell" data-level="3"></span>
+            <span>More</span>
+          </div>
+        </div>
+
         <div class="progress-tabs">
           <button class="progress-tab active" data-target="progress-sims">Simulations</button>
           <button class="progress-tab" data-target="progress-tests">Tests</button>
         </div>
 
         <div class="progress-tab-content active" id="progress-sims">
+          <div class="progress-controls">
+            <div class="pc-group">
+              <span class="pc-label">Sort:</span>
+              <button class="pc-btn active" data-sort="lastVisited">Last Visited</button>
+              <button class="pc-btn" data-sort="mostVisited">Most Visited</button>
+              <button class="pc-btn" data-sort="mostTime">Most Time</button>
+              <button class="pc-btn" data-sort="completion">Completion</button>
+            </div>
+            <div class="pc-group">
+              <span class="pc-label">Filter:</span>
+              <button class="pc-btn active" data-filter="all">All</button>
+              <button class="pc-btn" data-filter="mastered">Mastered</button>
+              <button class="pc-btn" data-filter="incomplete">Incomplete</button>
+            </div>
+          </div>
+          <div class="progress-header-row" id="progress-header-row">
+            <span class="ph-sim">Simulation</span>
+            <span class="ph-stat">Visits</span>
+            <span class="ph-stat">Time</span>
+            <span class="ph-stat">Last Visited</span>
+            <span class="ph-ach">Discoveries</span>
+          </div>
           <div class="progress-list" id="progress-list"></div>
           <p id="no-data-msg" style="text-align:center; color:var(--text-muted); display:none; margin-top: 40px;">
             No simulations visited yet. <a href="simulations.html" style="color:var(--color-primary);">Start exploring!</a>
@@ -162,8 +198,8 @@
       <div class="footer-col">
         <h4>Resources</h4>
         <a href="chapters.html">Chapters</a>
-        
-        
+
+
         <a href="simulations.html">Simulations</a>
       </div>
       <div class="footer-col">
@@ -192,7 +228,75 @@
   <script src="js/main.js"></script>
   <script>
     (function() {
-      // Achievement totals per simulation
+      /* ── Emoji map for each simulation ── */
+      var SIM_EMOJI_MAP = {
+        'kinematics': '\uD83C\uDFAF', 'vector-addition': '\uD83E\uDDED', 'boat-river': '\u26F5',
+        'graphical-analysis': '\uD83D\uDCCA', 'newtons-laws': '\uD83D\uDCA5', 'static-kinetic-friction': '\uD83E\uDDF1',
+        'pulley-wire-constraint': '\u2699\uFE0F', 'wire-ring-constraint': '\uD83D\uDD17',
+        'work-power-energy': '\u26A1', 'work-done': '\uD83D\uDCCF', 'collisions': '\uD83D\uDCA2',
+        'conservation-momentum': '\uD83C\uDFB1', 'rotational-motion': '\uD83C\uDFA1', 'center-of-mass': '\u2696\uFE0F',
+        'goat-vs-boat': '\uD83D\uDC10', 'inclined-plane-race': '\uD83C\uDFCE\uFE0F', 'atwood-machine': '\uD83E\uDE9C',
+        'angular-momentum': '\uD83C\uDF00', 'rolling-vs-rotation': '\uD83D\uDEDE',
+        'gravitation': '\uD83C\uDF0D', 'gravity-variation': '\uD83C\uDF11', 'gravity-equilibrium': '\u2696\uFE0F',
+        'hookes-law': '\uD83E\uDDEE', 'modulus-elasticity': '\uD83D\uDCCF', 'poissons-ratio': '\u2194\uFE0F',
+        'fluid-dynamics': '\uD83C\uDF0A', 'manometer': '\uD83E\uDE7B', 'hydrostatic-paradox': '\uD83E\uDEA3',
+        'pascals-law': '\uD83D\uDEE2\uFE0F', 'continuity-equation': '\uD83D\uDEB0', 'venturimeter': '\uD83D\uDD2C',
+        'magnus-effect': '\u26BE',
+        'thermodynamics': '\uD83C\uDF21\uFE0F', 'calorimetry': '\uD83D\uDD25',
+        'shm-waves': '\uD83C\uDF1F', 'pendulum': '\uD83D\uDD70\uFE0F',
+        'waves': '\uD83C\uDF0A', 'beats': '\uD83C\uDFB5', 'doppler-effect': '\uD83D\uDE91',
+        'electrostatics': '\u26A1', 'equilibrium': '\uD83D\uDD0E',
+        'current-electricity': '\uD83D\uDD0B', 'magnetism': '\uD83E\uDDF2',
+        'emi': '\u2728', 'ac-circuits': '\uD83D\uDCC9',
+        'em-waves': '\uD83D\uDCE1', 'ray-optics': '\uD83D\uDD2D', 'wave-optics': '\uD83C\uDF08',
+        'modern-physics': '\u2699\uFE0F'
+      };
+
+      /* ── Map simId -> chapter key ── */
+      var CHAPTER_MAP = {
+        'kinematics': 'kinematics', 'vector-addition': 'kinematics', 'boat-river': 'kinematics', 'graphical-analysis': 'kinematics',
+        'newtons-laws': 'newtons-laws', 'static-kinetic-friction': 'newtons-laws', 'pulley-wire-constraint': 'newtons-laws', 'wire-ring-constraint': 'newtons-laws',
+        'work-power-energy': 'wpe', 'work-done': 'wpe', 'collisions': 'wpe', 'conservation-momentum': 'wpe',
+        'rotational-motion': 'rotational', 'center-of-mass': 'rotational', 'goat-vs-boat': 'rotational', 'inclined-plane-race': 'rotational', 'atwood-machine': 'rotational', 'angular-momentum': 'rotational', 'rolling-vs-rotation': 'rotational',
+        'gravitation': 'gravitation', 'gravity-variation': 'gravitation', 'gravity-equilibrium': 'gravitation',
+        'hookes-law': 'mechanical-props', 'modulus-elasticity': 'mechanical-props', 'poissons-ratio': 'mechanical-props',
+        'fluid-dynamics': 'fluids', 'manometer': 'fluids', 'hydrostatic-paradox': 'fluids', 'pascals-law': 'fluids', 'continuity-equation': 'fluids', 'venturimeter': 'fluids', 'magnus-effect': 'fluids',
+        'thermodynamics': 'thermo', 'calorimetry': 'thermo',
+        'shm-waves': 'shm', 'pendulum': 'shm',
+        'waves': 'waves', 'beats': 'waves', 'doppler-effect': 'waves',
+        'electrostatics': 'electrostatics', 'equilibrium': 'electrostatics',
+        'current-electricity': 'current',
+        'magnetism': 'magnetism',
+        'emi': 'emi', 'ac-circuits': 'ac',
+        'em-waves': 'em-waves',
+        'ray-optics': 'ray-optics', 'wave-optics': 'wave-optics',
+        'modern-physics': 'modern-physics'
+      };
+
+      /* ── Ordered chapter metadata ── */
+      var CHAPTER_META = [
+        { key: 'kinematics', label: 'Kinematics', color: '#00d4ff' },
+        { key: 'newtons-laws', label: "Newton's Laws", color: '#ff6b6b' },
+        { key: 'wpe', label: 'Work, Power & Energy', color: '#fbbf24' },
+        { key: 'rotational', label: 'Rotational Motion', color: '#a78bfa' },
+        { key: 'gravitation', label: 'Gravitation', color: '#34d399' },
+        { key: 'mechanical-props', label: 'Mechanical Properties', color: '#f472b6' },
+        { key: 'fluids', label: 'Fluid Mechanics', color: '#38bdf8' },
+        { key: 'thermo', label: 'KTG & Thermodynamics', color: '#fb923c' },
+        { key: 'shm', label: 'Simple Harmonic Motion', color: '#c084fc' },
+        { key: 'waves', label: 'Waves', color: '#2dd4bf' },
+        { key: 'electrostatics', label: 'Electrostatics & Capacitance', color: '#facc15' },
+        { key: 'current', label: 'Current Electricity', color: '#4ade80' },
+        { key: 'magnetism', label: 'Moving Charges & Magnetism', color: '#f87171' },
+        { key: 'emi', label: 'Electromagnetic Induction', color: '#818cf8' },
+        { key: 'ac', label: 'Alternating Current', color: '#22d3ee' },
+        { key: 'em-waves', label: 'Electromagnetic Waves', color: '#e879f9' },
+        { key: 'ray-optics', label: 'Ray Optics', color: '#fca5a5' },
+        { key: 'wave-optics', label: 'Wave Optics', color: '#67e8f9' },
+        { key: 'modern-physics', label: 'Modern Physics', color: '#d946ef' }
+      ];
+
+      /* ── Achievement totals per simulation ── */
       var SIM_ACHIEVEMENT_COUNTS = {
         kinematics: 3, pendulum: 3, calorimetry: 3, 'ac-circuits': 3,
         'rotational-motion': 3, 'vector-addition': 3, beats: 3, 'ray-optics': 3,
@@ -209,8 +313,13 @@
         'angular-momentum': 3, 'pascals-law': 3, 'inclined-plane-race': 3,
         'wire-ring-constraint': 3, magnetism: 3,
         electrostatics: 3, 'modulus-elasticity': 3, 'modern-physics': 3,
-        'graphical-analysis': 3
+        'graphical-analysis': 3, equilibrium: 3, 'gravity-equilibrium': 3
       };
+
+      /* ── State ── */
+      var currentSort = 'lastVisited';
+      var currentFilter = 'all';
+      var rawSimData = [];
 
       function waitForFirebase(cb) {
         if (typeof firebase !== 'undefined' && firebase.auth) { cb(); return; }
@@ -256,6 +365,22 @@
           return count;
         }
 
+        function formatShortDate(dateObj) {
+          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          return months[dateObj.getMonth()] + ' ' + dateObj.getDate();
+        }
+
+        function toDateKey(d) {
+          return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+
+        function getTrophy(unlocked, total) {
+          if (total === 0 || unlocked === 0) return '';
+          if (unlocked === total) return '\uD83E\uDD47'; // gold
+          if (unlocked >= Math.ceil(total * 2 / 3)) return '\uD83E\uDD48'; // silver
+          return '\uD83E\uDD49'; // bronze
+        }
+
         // Reset all achievements button
         var resetBtn = document.getElementById('reset-ach-btn');
         var resetWrap = document.getElementById('reset-ach-wrap');
@@ -297,80 +422,278 @@
           });
         });
 
-        function formatShortDate(dateObj) {
-          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          return months[dateObj.getMonth()] + ' ' + dateObj.getDate();
-        }
+        // Sort/filter button handlers
+        document.querySelectorAll('.pc-btn[data-sort]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.pc-btn[data-sort]').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            currentSort = btn.getAttribute('data-sort');
+            renderSimList();
+          });
+        });
+        document.querySelectorAll('.pc-btn[data-filter]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.pc-btn[data-filter]').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-filter');
+            renderSimList();
+          });
+        });
 
         function loadProgress(uid) {
           currentUid = uid;
           resetWrap.style.display = '';
           db.collection('users').doc(uid).collection('simulations')
-            .orderBy('lastVisited', 'desc')
             .get()
             .then(function(snapshot) {
-              var list = document.getElementById('progress-list');
-              var summaryEl = document.getElementById('summary-cards');
               var noData = document.getElementById('no-data-msg');
-              list.innerHTML = '';
-              summaryEl.innerHTML = '';
 
               if (snapshot.empty) {
                 noData.style.display = 'block';
+                document.getElementById('summary-cards').innerHTML = '';
+                document.getElementById('progress-list').innerHTML = '';
+                document.getElementById('heatmap-grid').innerHTML = '';
                 return;
               }
               noData.style.display = 'none';
 
-              var totalVisits = 0;
-              var totalTime = 0;
-              var totalDiscoveries = 0;
-              var mostPracticed = { name: '', visits: 0 };
-
+              rawSimData = [];
               snapshot.forEach(function(doc) {
                 var d = doc.data();
-                var visits = d.visitCount || 0;
-                var timeSpent = d.totalTimeSpent || 0;
-                totalVisits += visits;
-                totalTime += timeSpent;
-                if (visits > mostPracticed.visits) {
-                  mostPracticed = { name: d.name || doc.id, visits: visits };
-                }
-
                 var achUnlocked = countAchievements(d.achievements);
                 var achTotal = SIM_ACHIEVEMENT_COUNTS[doc.id] || 0;
-                totalDiscoveries += achUnlocked;
-
-                var lastDate = d.lastVisited ? formatShortDate(d.lastVisited.toDate()) : '—';
-                var pct = achTotal > 0 ? Math.round(achUnlocked / achTotal * 100) : 0;
-                var isMastered = achTotal > 0 && achUnlocked === achTotal;
-
-                var row = document.createElement('div');
-                row.className = 'progress-row' + (isMastered ? ' mastered' : '');
-
-                var visitLabel = visits === 1 ? '1 visit' : visits + ' visits';
-
-                row.innerHTML =
-                  '<span class="pr-star">⭐</span>' +
-                  '<span class="pr-name">' + (d.name || doc.id) + '</span>' +
-                  '<span class="pr-stat">' + visitLabel + '</span>' +
-                  '<span class="pr-stat">' + formatTime(timeSpent) + '</span>' +
-                  '<span class="pr-stat">' + lastDate + '</span>' +
-                  (achTotal > 0
-                    ? '<span class="pr-ach">' +
-                        '<span class="pr-ach-text">' + achUnlocked + '/' + achTotal + '</span>' +
-                        '<span class="pr-ach-bar"><span class="pr-ach-fill" style="width:' + pct + '%"></span></span>' +
-                      '</span>'
-                    : '');
-
-                list.appendChild(row);
+                var lastDate = d.lastVisited ? d.lastVisited.toDate() : null;
+                rawSimData.push({
+                  id: doc.id,
+                  name: d.name || doc.id,
+                  visits: d.visitCount || 0,
+                  time: d.totalTimeSpent || 0,
+                  lastVisited: lastDate,
+                  achUnlocked: achUnlocked,
+                  achTotal: achTotal,
+                  achievements: d.achievements || {},
+                  mastered: achTotal > 0 && achUnlocked === achTotal
+                });
               });
 
-              summaryEl.innerHTML =
-                '<div class="summary-card"><div class="summary-num">' + snapshot.size + '</div><div class="summary-label">Simulations Visited</div></div>' +
-                '<div class="summary-card"><div class="summary-num">' + totalVisits + '</div><div class="summary-label">Total Visits</div></div>' +
-                '<div class="summary-card"><div class="summary-num">' + formatTime(totalTime) + '</div><div class="summary-label">Total Study Time</div></div>' +
-                '<div class="summary-card"><div class="summary-num">' + totalDiscoveries + '</div><div class="summary-label">Total Discoveries</div></div>';
+              renderSummaryCards();
+              renderHeatmap();
+              renderSimList();
             });
+        }
+
+        function renderSummaryCards() {
+          var el = document.getElementById('summary-cards');
+          var totalVisits = 0, totalTime = 0, totalDiscoveries = 0;
+          rawSimData.forEach(function(s) {
+            totalVisits += s.visits;
+            totalTime += s.time;
+            totalDiscoveries += s.achUnlocked;
+          });
+
+          el.innerHTML =
+            '<div class="summary-card sc-visited"><div class="sc-icon">\uD83E\uDDED</div><div class="summary-num">' + rawSimData.length + '</div><div class="summary-label">Sims Visited</div></div>' +
+            '<div class="summary-card sc-total"><div class="sc-icon">\uD83D\uDC41\uFE0F</div><div class="summary-num">' + totalVisits + '</div><div class="summary-label">Total Visits</div></div>' +
+            '<div class="summary-card sc-time"><div class="sc-icon">\u23F1\uFE0F</div><div class="summary-num">' + formatTime(totalTime) + '</div><div class="summary-label">Study Time</div></div>' +
+            '<div class="summary-card sc-discoveries"><div class="sc-icon">\uD83C\uDFC6</div><div class="summary-num">' + totalDiscoveries + '</div><div class="summary-label">Discoveries</div></div>';
+        }
+
+        function renderHeatmap() {
+          var grid = document.getElementById('heatmap-grid');
+          grid.innerHTML = '';
+
+          // Collect all lastVisited date keys
+          var dateCounts = {};
+          rawSimData.forEach(function(s) {
+            if (s.lastVisited) {
+              var key = toDateKey(s.lastVisited);
+              dateCounts[key] = (dateCounts[key] || 0) + 1;
+            }
+          });
+
+          // Build 90-day grid
+          var today = new Date();
+          today.setHours(0, 0, 0, 0);
+          for (var i = 89; i >= 0; i--) {
+            var day = new Date(today);
+            day.setDate(day.getDate() - i);
+            var key = toDateKey(day);
+            var count = dateCounts[key] || 0;
+            var level = 0;
+            if (count >= 4) level = 3;
+            else if (count >= 2) level = 2;
+            else if (count >= 1) level = 1;
+
+            var cell = document.createElement('span');
+            cell.className = 'hm-cell';
+            cell.setAttribute('data-level', level);
+            cell.title = key + ': ' + count + ' sim' + (count !== 1 ? 's' : '');
+            grid.appendChild(cell);
+          }
+        }
+
+        function renderSimList() {
+          var list = document.getElementById('progress-list');
+          var headerRow = document.getElementById('progress-header-row');
+          list.innerHTML = '';
+
+          // Filter
+          var filtered = rawSimData.filter(function(s) {
+            if (currentFilter === 'mastered') return s.mastered;
+            if (currentFilter === 'incomplete') return !s.mastered;
+            return true;
+          });
+
+          // Sort
+          var sorted = filtered.slice();
+          if (currentSort === 'lastVisited') {
+            sorted.sort(function(a, b) {
+              if (!a.lastVisited) return 1;
+              if (!b.lastVisited) return -1;
+              return b.lastVisited - a.lastVisited;
+            });
+          } else if (currentSort === 'mostVisited') {
+            sorted.sort(function(a, b) { return b.visits - a.visits; });
+          } else if (currentSort === 'mostTime') {
+            sorted.sort(function(a, b) { return b.time - a.time; });
+          } else if (currentSort === 'completion') {
+            sorted.sort(function(a, b) {
+              var pctA = a.achTotal > 0 ? a.achUnlocked / a.achTotal : 0;
+              var pctB = b.achTotal > 0 ? b.achUnlocked / b.achTotal : 0;
+              return pctB - pctA;
+            });
+          }
+
+          // Grouped view for "Last Visited" sort, flat for others
+          if (currentSort === 'lastVisited') {
+            headerRow.style.display = 'none';
+            renderGrouped(list, sorted);
+          } else {
+            headerRow.style.display = 'flex';
+            renderFlat(list, sorted);
+          }
+        }
+
+        function renderGrouped(list, data) {
+          // Group sims by chapter
+          var groups = {};
+          data.forEach(function(s) {
+            var ch = CHAPTER_MAP[s.id] || 'other';
+            if (!groups[ch]) groups[ch] = [];
+            groups[ch].push(s);
+          });
+
+          CHAPTER_META.forEach(function(ch) {
+            var sims = groups[ch.key];
+            if (!sims || sims.length === 0) return;
+
+            var section = document.createElement('div');
+            section.className = 'progress-chapter';
+
+            var toggle = document.createElement('button');
+            toggle.className = 'pch-toggle';
+            toggle.innerHTML =
+              '<span class="pch-bar" style="background:' + ch.color + '"></span>' +
+              '<span class="pch-label">' + ch.label + '</span>' +
+              '<span class="pch-count">' + sims.length + ' sim' + (sims.length !== 1 ? 's' : '') + '</span>' +
+              '<span class="pch-arrow">\u25BC</span>';
+
+            var rows = document.createElement('div');
+            rows.className = 'progress-chapter-rows';
+
+            sims.forEach(function(s) {
+              rows.appendChild(buildRow(s));
+            });
+
+            toggle.addEventListener('click', function() {
+              rows.classList.toggle('collapsed');
+              toggle.classList.toggle('collapsed');
+            });
+
+            section.appendChild(toggle);
+            section.appendChild(rows);
+            list.appendChild(section);
+          });
+        }
+
+        function renderFlat(list, data) {
+          data.forEach(function(s) {
+            list.appendChild(buildRow(s));
+          });
+        }
+
+        function buildRow(s) {
+          var emoji = SIM_EMOJI_MAP[s.id] || '\uD83D\uDD2C';
+          var lastDate = s.lastVisited ? formatShortDate(s.lastVisited) : '\u2014';
+          var pct = s.achTotal > 0 ? Math.round(s.achUnlocked / s.achTotal * 100) : 0;
+          var trophy = getTrophy(s.achUnlocked, s.achTotal);
+
+          var row = document.createElement('a');
+          row.href = 'simulations/' + s.id + '.html';
+          row.className = 'progress-row' + (s.mastered ? ' mastered' : '');
+
+          var visitLabel = s.visits === 1 ? '1 visit' : s.visits + ' visits';
+
+          row.innerHTML =
+            '<span class="pr-emoji">' + emoji + '</span>' +
+            '<span class="pr-name">' + s.name + '</span>' +
+            (trophy ? '<span class="pr-trophy">' + trophy + '</span>' : '') +
+            '<span class="pr-stat">' + visitLabel + '</span>' +
+            '<span class="pr-stat">' + formatTime(s.time) + '</span>' +
+            '<span class="pr-stat">' + lastDate + '</span>' +
+            (s.achTotal > 0
+              ? '<span class="pr-ach" data-sim-id="' + s.id + '">' +
+                  '<span class="pr-ach-text">' + s.achUnlocked + '/' + s.achTotal + '</span>' +
+                  '<span class="pr-ach-bar"><span class="pr-ach-fill" style="width:' + pct + '%"></span></span>' +
+                '</span>'
+              : '') +
+            '<div class="pr-ach-detail" style="display:none;"></div>';
+
+          // Achievement area click -> expand detail (prevent navigation)
+          var achEl = row.querySelector('.pr-ach');
+          if (achEl) {
+            achEl.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleAchDetail(row, s);
+            });
+          }
+
+          return row;
+        }
+
+        function toggleAchDetail(row, s) {
+          var detail = row.querySelector('.pr-ach-detail');
+          if (!detail) return;
+
+          if (detail.style.display !== 'none') {
+            detail.style.display = 'none';
+            return;
+          }
+
+          // Build detail content from SIM_ACHIEVEMENTS_CONFIG
+          var config = (typeof window.SIM_ACHIEVEMENTS_CONFIG !== 'undefined') ? window.SIM_ACHIEVEMENTS_CONFIG[s.id] : null;
+          if (!config) {
+            detail.innerHTML = '<div class="pad-item">No achievement details available</div>';
+            detail.style.display = '';
+            return;
+          }
+
+          var html = '';
+          config.forEach(function(ach) {
+            var isUnlocked = s.achievements && s.achievements[ach.id] && s.achievements[ach.id].unlocked;
+            html += '<div class="pad-item' + (isUnlocked ? ' unlocked' : '') + '">' +
+              '<span class="pad-icon">' + (ach.icon || '\uD83C\uDFC6') + '</span>' +
+              '<span class="pad-text">' +
+                '<span class="pad-title">' + ach.title + '</span>' +
+                '<span class="pad-desc">' + ach.description + '</span>' +
+              '</span>' +
+              '<span class="pad-status">' + (isUnlocked ? '\u2705' : '\uD83D\uDD12') + '</span>' +
+            '</div>';
+          });
+
+          detail.innerHTML = html;
+          detail.style.display = '';
         }
       });
     })();
