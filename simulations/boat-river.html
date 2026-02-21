@@ -551,7 +551,7 @@
       val = Math.max(-90, Math.min(90, val));
       boatAngleSlider.value = val;
       angleInput.value = val;
-      draw();
+      resetSim();
     }
 
     function syncBoatSpeed(val) {
@@ -559,7 +559,7 @@
       val = Math.round(val * 2) / 2; // snap to 0.5 steps
       boatSpeedSlider.value = val;
       boatSpeedInput.value = val;
-      draw();
+      resetSim();
     }
 
     function syncRiverSpeed(val) {
@@ -567,7 +567,7 @@
       val = Math.round(val * 2) / 2;
       riverSpeedSlider.value = val;
       riverSpeedInput.value = val;
-      draw();
+      resetSim();
     }
 
     boatAngleSlider.oninput = function() { syncAngle(this.value); };
@@ -1032,7 +1032,7 @@
 
       drawBackground();
 
-      // Velocity vectors from start
+      // Velocity vectors from start (no v_net before launch)
       var vecScale = 3;
       ctx.save();
       ctx.shadowBlur = 6;
@@ -1040,18 +1040,14 @@
       drawArrow(startX, startY, startX + vbx * pxScale * vecScale, startY + vby * pxScale * vecScale, '#00ffaa', 2);
       ctx.shadowColor = '#00d4ff';
       drawArrow(startX, startY, startX + vrx * pxScale * vecScale, startY, '#00d4ff', 2);
-      ctx.shadowColor = '#7c3aed';
-      drawArrow(startX, startY, startX + vx * pxScale * vecScale, startY + vy * pxScale * vecScale, '#7c3aed', 3);
       ctx.restore();
 
-      // Vector labels
+      // Vector labels (no v_net before launch)
       ctx.font = '11px Andika, sans-serif';
       ctx.fillStyle = '#00ffaa';
       ctx.fillText('v(boat/river)', startX + vbx * pxScale * vecScale + 8, startY + vby * pxScale * vecScale - 5);
       ctx.fillStyle = '#00d4ff';
       ctx.fillText('v_river', startX + vrx * pxScale * vecScale + 8, startY + 14);
-      ctx.fillStyle = '#7c3aed';
-      ctx.fillText('v_net', startX + vx * pxScale * vecScale + 8, startY + vy * pxScale * vecScale + 14);
 
       // Boat at start position (only when not animating)
       // Nose points along boat's own velocity (not resultant)
@@ -1171,6 +1167,15 @@
       drawArrow(startX, startY, startX + vx * pxScale * vecScale, startY + vy * pxScale * vecScale, '#7c3aed', 3);
       ctx.restore();
 
+      // Vector labels
+      ctx.font = '11px Andika, sans-serif';
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText('v(boat/river)', startX + vbx * pxScale * vecScale + 8, startY + vby * pxScale * vecScale - 5);
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('v_river', startX + vrx * pxScale * vecScale + 8, startY + 14);
+      ctx.fillStyle = '#7c3aed';
+      ctx.fillText('v_net', startX + vx * pxScale * vecScale + 8, startY + vy * pxScale * vecScale + 14);
+
       // Boat
       drawBoat(boat.x, boat.y, boat.angle);
 
@@ -1241,6 +1246,15 @@
       ctx.shadowColor = '#7c3aed';
       drawArrow(startX, startY, startX + vx * pxScale * vecScale, startY + vy * pxScale * vecScale, '#7c3aed', 3);
       ctx.restore();
+
+      // Vector labels
+      ctx.font = '11px Andika, sans-serif';
+      ctx.fillStyle = '#00ffaa';
+      ctx.fillText('v(boat/river)', startX + vbx * pxScale * vecScale + 8, startY + vby * pxScale * vecScale - 5);
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillText('v_river', startX + vrx * pxScale * vecScale + 8, startY + 14);
+      ctx.fillStyle = '#7c3aed';
+      ctx.fillText('v_net', startX + vx * pxScale * vecScale + 8, startY + vy * pxScale * vecScale + 14);
 
       // Landed boat
       drawBoat(landedBoat.x, landedBoat.y, landedBoat.angle);
