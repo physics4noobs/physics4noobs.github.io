@@ -632,10 +632,23 @@
 
     function addChargeToCanvas(q) {
       if (charges.length >= MAX_CHARGES) return;
-      // Place near center with slight random offset so multiple clicks don't stack exactly
-      var offsetX = (Math.random() - 0.5) * 80;
-      var offsetY = (Math.random() - 0.5) * 80;
-      charges.push({ x: canvasW / 2 + offsetX, y: canvasH / 2 + offsetY, q: q });
+      // Place with good spacing — avoid overlapping existing charges
+      var MIN_DIST = 150;
+      var cx = canvasW / 2, cy = canvasH / 2;
+      var x, y, attempts = 0;
+      do {
+        var spread = 200 + charges.length * 60;
+        x = cx + (Math.random() - 0.5) * spread;
+        y = cy + (Math.random() - 0.5) * spread;
+        var tooClose = false;
+        for (var i = 0; i < charges.length; i++) {
+          if (Math.hypot(x - charges[i].x, y - charges[i].y) < MIN_DIST) {
+            tooClose = true; break;
+          }
+        }
+        attempts++;
+      } while (tooClose && attempts < 50);
+      charges.push({ x: x, y: y, q: q });
       updateChargeButtons();
       draw();
     }
@@ -937,7 +950,7 @@
       for (var ci = 0; ci < positiveCharges.length; ci++) {
         var c = positiveCharges[ci];
         for (var li = 0; li < LINES_PER_CHARGE; li++) {
-          var angle = (2 * Math.PI * li) / LINES_PER_CHARGE;
+          var angle = (2 * Math.PI * li) / LINES_PER_CHARGE + Math.PI / LINES_PER_CHARGE;
           var startX = c.x + 14 * Math.cos(angle);
           var startY = c.y + 14 * Math.sin(angle);
           var points = traceFieldLine(startX, startY, 1);
@@ -955,7 +968,7 @@
       for (var ci = 0; ci < negativeCharges.length; ci++) {
         var c = negativeCharges[ci];
         for (var li = 0; li < LINES_PER_CHARGE; li++) {
-          var angle = (2 * Math.PI * li) / LINES_PER_CHARGE;
+          var angle = (2 * Math.PI * li) / LINES_PER_CHARGE + Math.PI / LINES_PER_CHARGE;
           var startX = c.x + 14 * Math.cos(angle);
           var startY = c.y + 14 * Math.sin(angle);
           var points = traceFieldLine(startX, startY, -1);
