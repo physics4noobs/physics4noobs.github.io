@@ -740,10 +740,10 @@
 
     // === SIMULATION STATE ===
     var PLANET_RADIUS = 20;
-    var PIXELS_PER_METER = 80;
+    var KM_PER_PIXEL = 100;          // 1 px = 100 km
     var G_REAL = 6.674e-11;
     var G_DISPLAY = 120000;
-    var MASS_SCALE = 1e10;
+    var MASS_SCALE = 1e12;            // each mag unit = 10¹² kg
     var MAX_MAG = 5;
     var DAMPING = 0.94;
     var DT = 0.06;
@@ -878,8 +878,9 @@
 
     function getRealForce() {
       var rPx = getDistPx();
-      var rMeters = rPx / PIXELS_PER_METER;
-      if (rMeters < 0.01) rMeters = 0.01;
+      var rKm = rPx * KM_PER_PIXEL;
+      var rMeters = rKm * 1000;       // convert km → m for SI formula
+      if (rMeters < 1000) rMeters = 1000;
       var massProduct = m1.mag * MASS_SCALE * m2.mag * MASS_SCALE;
       return G_REAL * massProduct / (rMeters * rMeters);
     }
@@ -902,6 +903,18 @@
       if (abs >= 1) return { val: abs, unit: 'N', scale: 1 };
       if (abs >= 0.001) return { val: abs * 1000, unit: 'mN', scale: 1000 };
       return { val: abs * 1e6, unit: '\u00B5N', scale: 1e6 };
+    }
+
+    // Distance formatter: km → appropriate unit
+    function formatDist(km) {
+      if (km >= 1e6) return (km / 1e6).toFixed(2) + ' M km';
+      if (km >= 1000) return (km / 1000).toFixed(1) + ' \u00D710\u00B3 km';
+      return Math.round(km).toLocaleString() + ' km';
+    }
+
+    // Get distance in km
+    function getDistKm() {
+      return getDistPx() * KM_PER_PIXEL;
     }
 
     // === DRAWING ===
@@ -945,7 +958,7 @@
       var dx = m2.x - m1.x;
       var dy = m2.y - m1.y;
       var dist = Math.sqrt(dx * dx + dy * dy);
-      var rMeters = dist / PIXELS_PER_METER;
+      var rKm = dist * KM_PER_PIXEL;
 
       ctx.save();
       ctx.setLineDash([6, 4]);
@@ -960,7 +973,7 @@
 
       var midX = (m1.x + m2.x) / 2;
       var midY = (m1.y + m2.y) / 2;
-      var text = 'r = ' + rMeters.toFixed(2) + ' m';
+      var text = 'r = ' + formatDist(rKm);
       ctx.font = 'bold 12px "Inter", sans-serif';
       var tw = ctx.measureText(text).width;
       var pillW = tw + 16;
@@ -1171,10 +1184,9 @@
     }
 
     function recordForcePoint() {
-      var rPx = getDistPx();
-      var rMeters = rPx / PIXELS_PER_METER;
+      var rKm = getDistKm();
       var f = getRealForce();
-      forceHistory.push({ r: rMeters, f: f });
+      forceHistory.push({ r: rKm, f: f });
       if (forceHistory.length > MAX_HISTORY) forceHistory.shift();
     }
 
@@ -1199,15 +1211,16 @@
       var pw = w - pad.left - pad.right;
       var ph = h - pad.top - pad.bottom;
 
-      var rMeters = getDistPx() / PIXELS_PER_METER;
+      var rKm = getDistKm();
       var currentF = getRealForce();
       var fu = getForceUnit(currentF);
 
-      var rMin = 0.1;
-      var rMax = Math.max(2, rMeters * 1.5);
+      var rMinKm = 1000;              // 1,000 km
+      var rMaxKm = Math.max(rMinKm * 3, rKm * 1.5);
 
       var massProduct = m1.mag * MASS_SCALE * m2.mag * MASS_SCALE;
-      var fAtRmin = G_REAL * massProduct / (rMin * rMin);
+      var rMinM = rMinKm * 1000;
+      var fAtRmin = G_REAL * massProduct / (rMinM * rMinM);
       var fMax = fAtRmin * fu.scale;
       if (fMax < 1) fMax = 1;
 
@@ -1236,7 +1249,7 @@
       pctx.font = '600 9px "Inter", sans-serif';
       pctx.textAlign = 'center';
       pctx.textBaseline = 'top';
-      pctx.fillText('r (m)', pad.left + pw / 2, h - 10);
+      pctx.fillText('r (\u00D710\u00B3 km)', pad.left + pw / 2, h - 10);
       pctx.save();
       pctx.translate(10, pad.top + ph / 2);
       pctx.rotate(-Math.PI / 2);
@@ -1250,9 +1263,10 @@
       pctx.globalAlpha = 0.5;
       var steps = 80;
       for (var si = 0; si <= steps; si++) {
-        var rr = rMin + (rMax - rMin) * si / steps;
-        var ff = G_REAL * massProduct / (rr * rr) * fu.scale;
-        var px = pad.left + (rr - rMin) / (rMax - rMin) * pw;
+        var rr = rMinKm + (rMaxKm - rMinKm) * si / steps;
+        var rrM = rr * 1000;
+        var ff = G_REAL * massProduct / (rrM * rrM) * fu.scale;
+        var px = pad.left + (rr - rMinKm) / (rMaxKm - rMinKm) * pw;
         var py = pad.top + ph * (1 - Math.min(ff / fMax, 1));
         if (si === 0) pctx.moveTo(px, py);
         else pctx.lineTo(px, py);
@@ -1263,8 +1277,8 @@
       // Scatter recorded points
       for (var hi = 0; hi < forceHistory.length; hi++) {
         var pt = forceHistory[hi];
-        if (pt.r < rMin || pt.r > rMax) continue;
-        var px = pad.left + (pt.r - rMin) / (rMax - rMin) * pw;
+        if (pt.r < rMinKm || pt.r > rMaxKm) continue;
+        var px = pad.left + (pt.r - rMinKm) / (rMaxKm - rMinKm) * pw;
         var fScaled = pt.f * fu.scale;
         var py = pad.top + ph * (1 - Math.min(fScaled / fMax, 1));
         var alpha = 0.3 + 0.5 * (hi / forceHistory.length);
@@ -1275,10 +1289,10 @@
       }
 
       // Current point
-      var curPx = pad.left + (rMeters - rMin) / (rMax - rMin) * pw;
+      var curPx = pad.left + (rKm - rMinKm) / (rMaxKm - rMinKm) * pw;
       var curFScaled = currentF * fu.scale;
       var curPy = pad.top + ph * (1 - Math.min(curFScaled / fMax, 1));
-      if (rMeters >= rMin && rMeters <= rMax) {
+      if (rKm >= rMinKm && rKm <= rMaxKm) {
         pctx.beginPath();
         pctx.arc(curPx, curPy, 4, 0, Math.PI * 2);
         pctx.fillStyle = dotColor;
@@ -1293,10 +1307,10 @@
       pctx.font = '9px "JetBrains Mono", monospace';
       pctx.textAlign = 'center';
       pctx.textBaseline = 'top';
-      var rTicks = [rMin, (rMin + rMax) / 2, rMax];
+      var rTicks = [rMinKm, (rMinKm + rMaxKm) / 2, rMaxKm];
       for (var ti = 0; ti < rTicks.length; ti++) {
-        var tx = pad.left + (rTicks[ti] - rMin) / (rMax - rMin) * pw;
-        pctx.fillText(rTicks[ti].toFixed(1), tx, pad.top + ph + 3);
+        var tx = pad.left + (rTicks[ti] - rMinKm) / (rMaxKm - rMinKm) * pw;
+        pctx.fillText((rTicks[ti] / 1000).toFixed(0), tx, pad.top + ph + 3);
       }
 
       // F-axis tick labels
@@ -1311,9 +1325,9 @@
     }
 
     function updateDataPanel() {
-      var rPx = getDistPx();
-      var rMeters = rPx / PIXELS_PER_METER;
-      document.getElementById('dataDist').textContent = rMeters.toFixed(3) + ' m';
+      var rKm = getDistKm();
+      var rMeters = rKm * 1000;
+      document.getElementById('dataDist').textContent = formatDist(rKm);
 
       var f = getRealForce();
       var fu = getForceUnit(f);
@@ -1321,10 +1335,11 @@
       document.getElementById('dataForce').textContent = forceStr;
 
       // Formula substitution
+      var rDisplay = (rKm >= 1000) ? (rKm / 1000).toFixed(1) + '\u00D710\u2076' : Math.round(rKm) + '\u00D710\u00B3';
       var sub = document.getElementById('dataSubstitution');
       sub.innerHTML =
         'F = G\u00B7m\u2081m\u2082 / r\u00B2' +
-        '<br>= 6.674e\u207B\u00B9\u00B9\u00D7' + m1.mag + '\u00D7' + m2.mag + '\u00D710\u00B2\u2070 / ' + rMeters.toFixed(2) + '\u00B2' +
+        '<br>= 6.674e\u207B\u00B9\u00B9\u00D7' + m1.mag + '\u00D7' + m2.mag + '\u00D710\u00B2\u2074 / (' + rDisplay + ')\u00B2' +
         '<br><span class="hl">= ' + forceStr + '</span>';
     }
 
