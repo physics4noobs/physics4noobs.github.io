@@ -622,13 +622,35 @@
       background: var(--bg-secondary);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
+      min-height: 56px;
     }
+
+    /* === Equation active state === */
+    .equation-item { transition: border-color 0.3s, background 0.3s, box-shadow 0.3s; }
+    .equation-item.active { border-color: rgba(124,58,237,0.6); background: rgba(124,58,237,0.08); box-shadow: 0 0 8px rgba(124,58,237,0.15); }
+
+    /* === Subtitle === */
+    .sim-subtitle { font-size: 0.78rem; color: var(--text-muted); margin: 2px 0 0; font-weight: 400; }
+
+    /* === Ghost checkbox disabled === */
+    .control-group label:has(input:disabled) { opacity: 0.4; cursor: not-allowed; }
+
+    /* === Investigate overlay light theme === */
+    [data-theme="light"] .investigate-overlay { background: rgba(240,240,255,0.92); }
+    [data-theme="light"] .investigate-title { color: #333; }
+    [data-theme="light"] .investigate-label { color: rgba(0,0,0,0.65); }
+
+    /* === Data panel min-height === */
+    .data-value { min-height: 42px; }
   </style>
 
   <div class="sim-wrapper">
     <div id="simArea">
     <div class="sim-header">
-      <h1>Gauss's Law</h1>
+      <div>
+        <h1>Gauss's Law</h1>
+        <p class="sim-subtitle">Explore how electric flux through a closed surface depends only on the enclosed charge</p>
+      </div>
       <div style="display:flex;gap:8px;">
         <button class="sim-btn" id="resetBtn">Reset</button>
         <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
@@ -714,13 +736,16 @@
     <div class="sim-tutorial" id="simTutorial" style="display:none;">
       <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
       <div class="tut-hint" id="tutHintMode">
-        <div class="tut-label">Switch between Center, Corner, and Edge modes</div>
+        <div class="tut-label">Switch modes &amp; use 'Why Q/8?' to explore charge fractions</div>
       </div>
       <div class="tut-hint" id="tutHintCanvas">
         <div class="tut-label">Drag to rotate the 3D cube</div>
       </div>
       <div class="tut-hint" id="tutHintData">
         <div class="tut-label">Watch how flux changes with charge position</div>
+      </div>
+      <div class="tut-hint" id="tutHintGhost">
+        <div class="tut-label">Toggle ghost cubes to see the tiling argument</div>
       </div>
       <button class="tut-dismiss">Got it, let's start!</button>
     </div>
@@ -730,23 +755,23 @@
     <div class="equations-section">
       <h3>Key Equations</h3>
       <div class="equations-grid">
-        <div class="equation-item">
+        <div class="equation-item" id="eqGauss">
           <span class="eq-label">Gauss's Law</span>
           &Phi; = Q<sub>enc</sub> / &epsilon;&#8320;
         </div>
-        <div class="equation-item">
+        <div class="equation-item" id="eqCenter">
           <span class="eq-label">Center of Cube</span>
           &Phi;<sub>face</sub> = Q / 6&epsilon;&#8320;
         </div>
-        <div class="equation-item">
+        <div class="equation-item" id="eqCorner">
           <span class="eq-label">Corner of Cube</span>
           &Phi;<sub>total</sub> = Q / 8&epsilon;&#8320;
         </div>
-        <div class="equation-item">
+        <div class="equation-item" id="eqEdge">
           <span class="eq-label">Edge of Cube</span>
           &Phi;<sub>total</sub> = Q / 4&epsilon;&#8320;
         </div>
-        <div class="equation-item">
+        <div class="equation-item" id="eqCoulomb">
           <span class="eq-label">Coulomb Constant</span>
           k = 1/4&pi;&epsilon;&#8320; = 9 &times; 10&sup9; N&middot;m&sup2;/C&sup2;
         </div>
@@ -774,6 +799,13 @@
         <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Why do you need 8 cubes when the charge is at a corner?</div>
         <div class="qa-a"><div class="qa-a-inner">
           A corner of a cube is shared by exactly 8 cubes that can tile together to completely surround the charge. By Gauss's Law, the total flux through all 8 cubes combined is Q/&epsilon;&#8320;. Since each cube is identical by symmetry, each receives Q/8&epsilon;&#8320; of the total flux. The 3 faces adjacent to the corner carry zero flux because the electric field is tangential (parallel) to them. The 3 opposite faces each receive Q/24&epsilon;&#8320;.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens when the charge is at the midpoint of an edge?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          An edge of a cube is shared by exactly 4 cubes. By Gauss's Law, each cube encloses Q/4 of the total flux. The 2 faces that share the edge carry zero flux because the electric field is parallel to them at every point. The remaining 4 faces share the flux, but not equally &mdash; the faces closer to the charge subtend a larger solid angle and receive more flux.
         </div></div>
       </div>
 
@@ -1110,7 +1142,17 @@
       document.getElementById('modeCenterBtn').className = 'sim-btn' + (newMode === 'center' ? ' active' : '');
       document.getElementById('modeCornerBtn').className = 'sim-btn' + (newMode === 'corner' ? ' active' : '');
       document.getElementById('modeEdgeBtn').className = 'sim-btn' + (newMode === 'edge' ? ' active' : '');
+      var ghostCheck = document.getElementById('ghostCheck');
+      if (newMode === 'center') {
+        ghostCheck.disabled = true;
+        ghostCheck.checked = false;
+        showGhosts = false;
+        ghostProgress = 0;
+      } else {
+        ghostCheck.disabled = false;
+      }
       updateInvestigateBtn();
+      updateEquationHighlight();
     }
 
     document.getElementById('modeCenterBtn').addEventListener('click', function() { setMode('center'); });
@@ -1134,12 +1176,15 @@
       showGhosts = false;
       document.getElementById('chargeSlider').value = 5;
       document.getElementById('chargeInput').value = 5;
-      document.getElementById('ghostCheck').checked = false;
+      var ghostCheck = document.getElementById('ghostCheck');
+      ghostCheck.checked = false;
+      ghostCheck.disabled = true;
       document.getElementById('modeCenterBtn').className = 'sim-btn active';
       document.getElementById('modeCornerBtn').className = 'sim-btn';
       document.getElementById('modeEdgeBtn').className = 'sim-btn';
       updateSignBtn();
       updateInvestigateBtn();
+      updateEquationHighlight();
       if (invOpen) closeInvestigate();
     }
 
@@ -1235,6 +1280,13 @@
 
         // Face flux label (only for main cube, not ghosts)
         if (!wireOnly && alpha > 0.9) {
+          // Back-face culling: compute face normal from rotated vertices
+          var rv = face.verts;
+          var e1 = [rotatedVerts[rv[1]][0]-rotatedVerts[rv[0]][0], rotatedVerts[rv[1]][1]-rotatedVerts[rv[0]][1], rotatedVerts[rv[1]][2]-rotatedVerts[rv[0]][2]];
+          var e2 = [rotatedVerts[rv[3]][0]-rotatedVerts[rv[0]][0], rotatedVerts[rv[3]][1]-rotatedVerts[rv[0]][1], rotatedVerts[rv[3]][2]-rotatedVerts[rv[0]][2]];
+          var fnormal = vec3cross(e1, e2);
+          if (fnormal[2] > 0) { ctx.restore(); continue; } // back-facing, skip label
+
           var cx2d = 0, cy2d = 0;
           for (var pi = 0; pi < pts.length; pi++) { cx2d += pts[pi].x; cy2d += pts[pi].y; }
           cx2d /= pts.length;
@@ -1248,7 +1300,7 @@
             fluxLabel = formatSci(faceFluxVal);
           }
 
-          ctx.font = '9px "JetBrains Mono", monospace';
+          ctx.font = 'bold 11px "JetBrains Mono", monospace';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillStyle = isAdjacentFace(fi, MODE) ? 'rgba(150,150,150,0.6)' : tc.labelText;
@@ -1343,6 +1395,52 @@
         ctx.fillStyle = 'rgba(150,150,200,0.18)';
         ctx.fill();
         ctx.restore();
+
+        // Ray-plane intersections with cube faces → draw penetration dots
+        var s = CUBE_SIZE;
+        // Face plane definitions: [axis, value, bound1axis, bound2axis]
+        var facePlanes = [
+          { axis: 2, val: -s, b1: 0, b2: 1, fi: 0 }, // Back: z=-s
+          { axis: 2, val:  s, b1: 0, b2: 1, fi: 1 }, // Front: z=+s
+          { axis: 1, val: -s, b1: 0, b2: 2, fi: 2 }, // Top: y=-s
+          { axis: 1, val:  s, b1: 0, b2: 2, fi: 3 }, // Bottom: y=+s
+          { axis: 0, val: -s, b1: 1, b2: 2, fi: 4 }, // Left: x=-s
+          { axis: 0, val:  s, b1: 1, b2: 2, fi: 5 }  // Right: x=+s
+        ];
+        var dir3 = [xi, yi, zi];
+        for (var fp = 0; fp < facePlanes.length; fp++) {
+          var fp_ = facePlanes[fp];
+          var dComp = dir3[fp_.axis];
+          if (Math.abs(dComp) < 1e-10) continue;
+          var t_ = (fp_.val - chargePos3D[fp_.axis]) / dComp;
+          if (t_ <= 0) continue;
+          var hit = [
+            chargePos3D[0] + xi * t_,
+            chargePos3D[1] + yi * t_,
+            chargePos3D[2] + zi * t_
+          ];
+          // Check bounds
+          if (hit[fp_.b1] < -s - 0.5 || hit[fp_.b1] > s + 0.5) continue;
+          if (hit[fp_.b2] < -s - 0.5 || hit[fp_.b2] > s + 0.5) continue;
+          // Project hit point
+          var rotHit = rotatePoint(hit, rotX, rotY);
+          var projHit = project(rotHit);
+          var isAdj = isAdjacentFace(fp_.fi, MODE);
+          ctx.save();
+          ctx.beginPath();
+          if (isAdj) {
+            ctx.arc(projHit.x, projHit.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(150,150,150,0.5)';
+          } else {
+            ctx.arc(projHit.x, projHit.y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffcc00';
+            ctx.shadowColor = '#ffcc00';
+            ctx.shadowBlur = 6;
+          }
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          ctx.restore();
+        }
       }
     }
 
@@ -1464,24 +1562,24 @@
       ctx.fillStyle = tc.labelText;
       ctx.textBaseline = 'top';
       var qLabel = signChar + 'Q';
-      if (MODE === 'corner') qLabel = 'Q_enc = Q/8';
-      else if (MODE === 'edge') qLabel = 'Q_enc = Q/4';
+      if (MODE === 'corner') qLabel = 'Qenc = Q/8';
+      else if (MODE === 'edge') qLabel = 'Qenc = Q/4';
       ctx.fillText(qLabel, projCharge.x, projCharge.y + r + 4);
     }
 
     function drawModeBadge() {
       var modeLabel = MODE.charAt(0).toUpperCase() + MODE.slice(1);
       var cubeInfo = '';
-      if (MODE === 'corner') cubeInfo = ' \u2022 1 of 8 cubes \u2022 Q_enc = Q/8';
-      else if (MODE === 'edge') cubeInfo = ' \u2022 1 of 4 cubes \u2022 Q_enc = Q/4';
-      else cubeInfo = ' \u2022 Q_enc = Q';
+      if (MODE === 'corner') cubeInfo = ' \u2022 1 of 8 cubes \u2022 Qenc = Q/8';
+      else if (MODE === 'edge') cubeInfo = ' \u2022 1 of 4 cubes \u2022 Qenc = Q/4';
+      else cubeInfo = ' \u2022 Qenc = Q';
       var badgeText = modeLabel + cubeInfo;
 
       ctx.font = 'bold 11px "Inter", sans-serif';
       var tw = ctx.measureText(badgeText).width;
       var pw = tw + 20;
       var ph = 26;
-      var bx = canvasW / 2 - pw / 2;
+      var bx = canvasW - pw - 14;
       var by = 14;
 
       ctx.save();
@@ -1495,7 +1593,7 @@
       ctx.fillStyle = tc.labelText;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(badgeText, canvasW / 2, by + ph / 2);
+      ctx.fillText(badgeText, bx + pw / 2, by + ph / 2);
       ctx.restore();
     }
 
@@ -1548,14 +1646,121 @@
       document.getElementById('explainText').textContent = getExplanation(MODE);
     }
 
+    function drawTangentArrows() {
+      if (MODE !== 'corner' && MODE !== 'edge') return;
+      var s = CUBE_SIZE;
+      var chargePos3D = getCurrentChargePos3D();
+      // Face centroids and normals
+      var faceCentroids = [
+        [0, 0, -s], // Back
+        [0, 0,  s], // Front
+        [0, -s, 0], // Top
+        [0,  s, 0], // Bottom
+        [-s, 0, 0], // Left
+        [ s, 0, 0]  // Right
+      ];
+      var faceNormals = [
+        [0, 0, -1], // Back
+        [0, 0,  1], // Front
+        [0, -1, 0], // Top
+        [0,  1, 0], // Bottom
+        [-1, 0, 0], // Left
+        [ 1, 0, 0]  // Right
+      ];
+      for (var fi = 0; fi < 6; fi++) {
+        if (!isAdjacentFace(fi, MODE)) continue;
+        var centroid = faceCentroids[fi];
+        var normal = faceNormals[fi];
+        // E-field direction at centroid
+        var diff = vec3sub(centroid, chargePos3D);
+        var dlen = vec3len(diff);
+        if (dlen < 1e-10) continue;
+        var dir = [diff[0]/dlen, diff[1]/dlen, diff[2]/dlen];
+        // Project onto face plane: tangent = dir - dot(dir, normal)*normal
+        var dn = vec3dot(dir, normal);
+        var tangent = [dir[0] - dn*normal[0], dir[1] - dn*normal[1], dir[2] - dn*normal[2]];
+        var tlen = vec3len(tangent);
+        if (tlen < 1e-10) continue;
+        tangent = [tangent[0]/tlen, tangent[1]/tlen, tangent[2]/tlen];
+        // Scale to 25px in 3D terms (use canvas units roughly)
+        var arrowScale = 30;
+        var endPoint3D = [centroid[0] + tangent[0]*arrowScale, centroid[1] + tangent[1]*arrowScale, centroid[2] + tangent[2]*arrowScale];
+        // Project both centroid and endpoint
+        var rotCentroid = rotatePoint(centroid, rotX, rotY);
+        var rotEnd = rotatePoint(endPoint3D, rotX, rotY);
+        var pCentroid = project(rotCentroid);
+        var pEnd = project(rotEnd);
+        // Draw arrow
+        var dx = pEnd.x - pCentroid.x;
+        var dy = pEnd.y - pCentroid.y;
+        var len2d = Math.sqrt(dx*dx + dy*dy);
+        if (len2d < 2) continue;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(180,180,180,0.7)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(pCentroid.x, pCentroid.y);
+        ctx.lineTo(pEnd.x, pEnd.y);
+        ctx.stroke();
+        // Arrowhead
+        var aAngle = Math.atan2(dy, dx);
+        var hLen = 7;
+        ctx.beginPath();
+        ctx.moveTo(pEnd.x, pEnd.y);
+        ctx.lineTo(pEnd.x - hLen*Math.cos(aAngle-0.4), pEnd.y - hLen*Math.sin(aAngle-0.4));
+        ctx.lineTo(pEnd.x - hLen*Math.cos(aAngle+0.4), pEnd.y - hLen*Math.sin(aAngle+0.4));
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(180,180,180,0.7)';
+        ctx.fill();
+        // Label "E ∥ face"
+        ctx.font = '9px Inter, sans-serif';
+        ctx.fillStyle = 'rgba(180,180,180,0.85)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        var labelX = pEnd.x + Math.cos(aAngle)*12;
+        var labelY = pEnd.y + Math.sin(aAngle)*12;
+        ctx.fillText('E \u2225 face', labelX, labelY);
+        ctx.restore();
+      }
+    }
+
+    function drawAxisTriad() {
+      var originX = canvasW - 50;
+      var originY = canvasH - 50;
+      var axisLen = 25;
+      var axes = [
+        { dir: [1,0,0], color: '#ff4444', label: 'X' },
+        { dir: [0,1,0], color: '#44ff44', label: 'Y' },
+        { dir: [0,0,1], color: '#4488ff', label: 'Z' }
+      ];
+      for (var i = 0; i < axes.length; i++) {
+        var rotated = rotatePoint(axes[i].dir, rotX, rotY);
+        var ex = originX + rotated[0] * axisLen;
+        var ey = originY + rotated[1] * axisLen;
+        ctx.beginPath();
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(ex, ey);
+        ctx.strokeStyle = axes[i].color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = axes[i].color;
+        ctx.font = 'bold 10px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(axes[i].label, ex + (rotated[0] > 0 ? 8 : -8), ey + (rotated[1] > 0 ? 8 : -8));
+      }
+    }
+
     function drawFrame() {
       if (!canvasW || !canvasH) return;
       drawBackground();
       drawFieldLines();
       var ghostData = drawGhostCubes();
       var mainCube = drawCubeAt(0, 0, 0, 1, false);
+      drawTangentArrows();
       drawCharge(mainCube.projVerts, ghostData);
       drawModeBadge();
+      drawAxisTriad();
       updateDataPanel();
     }
 
@@ -1617,6 +1822,19 @@
     document.getElementById('camLeft').addEventListener('click', function() { rotY -= CAM_STEP; rotVelX = rotVelY = 0; });
     document.getElementById('camRight').addEventListener('click', function() { rotY += CAM_STEP; rotVelX = rotVelY = 0; });
     document.getElementById('camStab').addEventListener('click', function() { rotX = -0.45; rotY = 0.65; rotVelX = rotVelY = 0; });
+
+    // === KEYBOARD SHORTCUTS ===
+    window.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (invOpen) return;
+      switch(e.key) {
+        case 'ArrowUp': rotX -= CAM_STEP; rotVelX = rotVelY = 0; e.preventDefault(); break;
+        case 'ArrowDown': rotX += CAM_STEP; rotVelX = rotVelY = 0; e.preventDefault(); break;
+        case 'ArrowLeft': rotY -= CAM_STEP; rotVelX = rotVelY = 0; e.preventDefault(); break;
+        case 'ArrowRight': rotY += CAM_STEP; rotVelX = rotVelY = 0; e.preventDefault(); break;
+        case 'r': case 'R': rotX = -0.45; rotY = 0.65; rotVelX = rotVelY = 0; break;
+      }
+    });
 
     // === INVESTIGATE OVERLAY ===
     var invCanvas = document.getElementById('investigateCanvas');
@@ -1740,8 +1958,14 @@
       // Background
       invCtx.clearRect(0, 0, w, h);
       var bgGrad = invCtx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.7);
-      bgGrad.addColorStop(0, 'rgba(20, 15, 40, 1)');
-      bgGrad.addColorStop(1, 'rgba(8, 8, 20, 1)');
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        bgGrad.addColorStop(0, 'rgba(235, 230, 250, 1)');
+        bgGrad.addColorStop(1, 'rgba(215, 215, 235, 1)');
+      } else {
+        bgGrad.addColorStop(0, 'rgba(20, 15, 40, 1)');
+        bgGrad.addColorStop(1, 'rgba(8, 8, 20, 1)');
+      }
       invCtx.fillStyle = bgGrad;
       invCtx.fillRect(0, 0, w, h);
 
@@ -1753,9 +1977,9 @@
       // Draw sphere background (faint outline)
       invCtx.beginPath();
       invCtx.arc(projCenter.x, projCenter.y, projR, 0, Math.PI * 2);
-      invCtx.fillStyle = 'rgba(80, 60, 140, 0.08)';
+      invCtx.fillStyle = isLight ? 'rgba(80, 60, 140, 0.05)' : 'rgba(80, 60, 140, 0.08)';
       invCtx.fill();
-      invCtx.strokeStyle = 'rgba(124, 58, 237, 0.25)';
+      invCtx.strokeStyle = isLight ? 'rgba(124, 58, 237, 0.35)' : 'rgba(124, 58, 237, 0.25)';
       invCtx.lineWidth = 1.5;
       invCtx.stroke();
 
@@ -1790,7 +2014,7 @@
         : [[1,0,0],[0,0,1]];        // YZ, XY normals (dividing x and z)
 
       for (var gi = 0; gi < gcPlanes.length; gi++) {
-        drawGreatCircle(invCtx, cx, cy, R, fov, gcPlanes[gi]);
+        drawGreatCircle(invCtx, cx, cy, R, fov, gcPlanes[gi], isLight);
       }
 
       // === DRAW WIREFRAME CUBE AROUND HIGHLIGHTED OCTANT ===
@@ -1808,8 +2032,8 @@
       invCtx.font = 'bold 18px "JetBrains Mono", monospace';
       invCtx.textAlign = 'center';
       invCtx.textBaseline = 'middle';
-      invCtx.fillStyle = '#fff';
-      invCtx.shadowColor = 'rgba(0,0,0,0.7)';
+      invCtx.fillStyle = isLight ? '#333' : '#fff';
+      invCtx.shadowColor = isLight ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)';
       invCtx.shadowBlur = 6;
       invCtx.fillText(isCorner ? '1/8' : '1/4', projLabel.x, projLabel.y);
       invCtx.shadowBlur = 0;
@@ -1925,7 +2149,7 @@
       }
     }
 
-    function drawGreatCircle(ctx2, cx, cy, R, fov, normal) {
+    function drawGreatCircle(ctx2, cx, cy, R, fov, normal, isLightTheme) {
       // Draw a great circle with the given normal vector
       // Find two orthogonal vectors in the plane
       var nx = normal[0], ny = normal[1], nz = normal[2];
@@ -1956,7 +2180,9 @@
         ctx2.beginPath();
         ctx2.moveTo(pts[i].x, pts[i].y);
         ctx2.lineTo(pts[i+1].x, pts[i+1].y);
-        ctx2.strokeStyle = isFront ? 'rgba(200, 180, 255, 0.6)' : 'rgba(200, 180, 255, 0.15)';
+        ctx2.strokeStyle = isLightTheme
+          ? (isFront ? 'rgba(80, 40, 160, 0.6)' : 'rgba(80, 40, 160, 0.15)')
+          : (isFront ? 'rgba(200, 180, 255, 0.6)' : 'rgba(200, 180, 255, 0.15)');
         ctx2.lineWidth = isFront ? 1.5 : 0.8;
         if (!isFront) {
           ctx2.setLineDash([3, 4]);
@@ -2120,7 +2346,8 @@
       var targets = [
         { hint: 'tutHintMode',   el: document.querySelector('.mode-btn-group'), type: 'bottom' },
         { hint: 'tutHintCanvas', el: document.getElementById('simCanvas'),       type: 'canvas' },
-        { hint: 'tutHintData',   el: document.querySelector('.side-data'),        type: 'bottom' }
+        { hint: 'tutHintData',   el: document.querySelector('.side-data'),        type: 'bottom' },
+        { hint: 'tutHintGhost',  el: document.getElementById('ghostCheck'),       type: 'bottom' }
       ];
 
       var placed = [];
@@ -2209,10 +2436,25 @@
     document.getElementById('simTutorial').addEventListener('click', dismissTutorial);
     document.getElementById('helpBtn').addEventListener('click', showTutorial);
 
+    // === EQUATION HIGHLIGHTING ===
+    function updateEquationHighlight() {
+      var ids = ['eqGauss','eqCenter','eqCorner','eqEdge','eqCoulomb'];
+      for (var i = 0; i < ids.length; i++) {
+        document.getElementById(ids[i]).classList.remove('active');
+      }
+      document.getElementById('eqGauss').classList.add('active');
+      if (MODE === 'center') document.getElementById('eqCenter').classList.add('active');
+      else if (MODE === 'corner') document.getElementById('eqCorner').classList.add('active');
+      else if (MODE === 'edge') document.getElementById('eqEdge').classList.add('active');
+    }
+
     // === INIT ===
     chargeFrom = getChargePos3D('center');
     chargeTo = getChargePos3D('center');
+    // Disable ghost checkbox in initial center mode
+    document.getElementById('ghostCheck').disabled = true;
     resizeCanvas();
+    updateEquationHighlight();
     startAnim();
   </script>
   <script src="../js/main.js"></script>
