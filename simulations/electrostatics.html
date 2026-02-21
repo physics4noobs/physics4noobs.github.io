@@ -588,7 +588,7 @@
       };
     }
     updateThemeColors();
-    new MutationObserver(function() { updateThemeColors(); draw(); })
+    new MutationObserver(function() { updateThemeColors(); invalidateField(); draw(); })
       .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     // === CANVAS SETUP ===
@@ -707,7 +707,7 @@
         dragStarted = true;
         charges[draggingCharge].x = mx;
         charges[draggingCharge].y = my;
-        draw();
+        invalidateField(); // glow loop will pick it up next frame
       } else if (!eraserMode) {
         canvas.style.cursor = findChargeAt(mx, my) >= 0 ? 'grab' : 'default';
       }
@@ -752,7 +752,7 @@
         var rect = canvas.getBoundingClientRect();
         charges[touchDragIdx].x = touch.clientX - rect.left;
         charges[touchDragIdx].y = touch.clientY - rect.top;
-        draw();
+        invalidateField(); // glow loop will pick it up next frame
       }
     }, { passive: false });
 
@@ -818,20 +818,28 @@
       return points;
     }
 
-    function drawArrow(x, y, dx, dy, size) {
-      var angle = Math.atan2(dy, dx);
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(angle);
-      ctx.beginPath();
-      ctx.moveTo(size, 0);
-      ctx.lineTo(-size * 0.6, -size * 0.5);
-      ctx.lineTo(-size * 0.6, size * 0.5);
-      ctx.closePath();
-      ctx.fillStyle = tc.arrow;
-      ctx.fill();
-      ctx.restore();
+    // === OFFSCREEN CACHE FOR FIELD LINES ===
+    var fieldCache = document.createElement('canvas');
+    var fieldCtx = fieldCache.getContext('2d');
+    var fieldDirty = true; // recompute field lines when true
+
+    function invalidateField() { fieldDirty = true; }
+
+    // === GLOW ANIMATION ===
+    var glowPhase = 0;
+    var glowRunning = false;
+    function glowLoop() {
+      if (!glowRunning) return;
+      glowPhase += 0.02;
+      if (glowPhase > Math.PI * 2) glowPhase -= Math.PI * 2;
+      drawFrame();
+      requestAnimationFrame(glowLoop);
     }
+
+    function startGlow() {
+      if (!glowRunning) { glowRunning = true; requestAnimationFrame(glowLoop); }
+    }
+    function stopGlow() { glowRunning = false; }
 
     // === DRAWING ===
     function drawBackground() {
@@ -841,13 +849,22 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvasW, canvasH);
 
-      ctx.fillStyle = tc.grid;
-      for (var x = 0; x < canvasW; x += 40) {
-        for (var y = 0; y < canvasH; y += 40) {
-          ctx.beginPath();
-          ctx.arc(x, y, 1, 0, Math.PI * 2);
-          ctx.fill();
-        }
+      // Graph paper grid
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var gridColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)';
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1;
+      for (var x = 40; x < canvasW; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvasH);
+        ctx.stroke();
+      }
+      for (var y = 40; y < canvasH; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvasW, y);
+        ctx.stroke();
       }
     }
 
@@ -865,9 +882,49 @@
       document.getElementById('netCharge').textContent = net === 0 ? '0' : sign + Math.abs(net) + 'Q';
     }
 
-    function draw() {
-      drawBackground();
-      updateDataPanel();
+    // Helper: draw a smooth curve through points using quadratic bezier
+    function drawSmoothLine(target, points) {
+      if (points.length < 2) return;
+      target.beginPath();
+      target.moveTo(points[0].x, points[0].y);
+      if (points.length === 2) {
+        target.lineTo(points[1].x, points[1].y);
+      } else {
+        for (var j = 1; j < points.length - 1; j++) {
+          var cpx = (points[j].x + points[j + 1].x) / 2;
+          var cpy = (points[j].y + points[j + 1].y) / 2;
+          target.quadraticCurveTo(points[j].x, points[j].y, cpx, cpy);
+        }
+        var last = points[points.length - 1];
+        target.lineTo(last.x, last.y);
+      }
+      target.strokeStyle = tc.fieldLine;
+      target.lineWidth = 1.5;
+      target.stroke();
+    }
+
+    function drawArrowOn(target, x, y, dx, dy, size) {
+      var angle = Math.atan2(dy, dx);
+      target.save();
+      target.translate(x, y);
+      target.rotate(angle);
+      target.beginPath();
+      target.moveTo(size, 0);
+      target.lineTo(-size * 0.6, -size * 0.5);
+      target.lineTo(-size * 0.6, size * 0.5);
+      target.closePath();
+      target.fillStyle = tc.arrow;
+      target.fill();
+      target.restore();
+    }
+
+    // Recompute field lines onto offscreen canvas
+    function rebuildFieldCache() {
+      var dpr = window.devicePixelRatio || 1;
+      fieldCache.width = canvasW * dpr;
+      fieldCache.height = canvasH * dpr;
+      fieldCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      fieldCtx.clearRect(0, 0, canvasW, canvasH);
 
       var positiveCharges = [];
       var negativeCharges = [];
@@ -876,7 +933,7 @@
         else negativeCharges.push(charges[i]);
       }
 
-      // Draw field lines from positive charges
+      // Field lines from positive charges
       for (var ci = 0; ci < positiveCharges.length; ci++) {
         var c = positiveCharges[ci];
         for (var li = 0; li < LINES_PER_CHARGE; li++) {
@@ -884,28 +941,17 @@
           var startX = c.x + 14 * Math.cos(angle);
           var startY = c.y + 14 * Math.sin(angle);
           var points = traceFieldLine(startX, startY, 1);
-
           if (points.length > 1) {
-            ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y);
-            for (var j = 1; j < points.length; j++) {
-              ctx.lineTo(points[j].x, points[j].y);
-            }
-            ctx.strokeStyle = tc.fieldLine;
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-
+            drawSmoothLine(fieldCtx, points);
             var arrowInterval = Math.floor(points.length / 3);
             for (var a = arrowInterval; a < points.length - 1; a += arrowInterval) {
-              var dx = points[a + 1].x - points[a].x;
-              var dy = points[a + 1].y - points[a].y;
-              drawArrow(points[a].x, points[a].y, dx, dy, 5);
+              drawArrowOn(fieldCtx, points[a].x, points[a].y, points[a+1].x - points[a].x, points[a+1].y - points[a].y, 5);
             }
           }
         }
       }
 
-      // Draw field lines from negative charges (traced backward — shows lines coming in from infinity)
+      // Field lines from negative charges (backward trace)
       for (var ci = 0; ci < negativeCharges.length; ci++) {
         var c = negativeCharges[ci];
         for (var li = 0; li < LINES_PER_CHARGE; li++) {
@@ -913,59 +959,75 @@
           var startX = c.x + 14 * Math.cos(angle);
           var startY = c.y + 14 * Math.sin(angle);
           var points = traceFieldLine(startX, startY, -1);
-
           if (points.length < 2) continue;
-
-          // Skip lines that end near a positive charge — already drawn from that charge
           var lastPt = points[points.length - 1];
           var hitsPositive = false;
           for (var pi = 0; pi < positiveCharges.length; pi++) {
             if (Math.hypot(lastPt.x - positiveCharges[pi].x, lastPt.y - positiveCharges[pi].y) < 20) {
-              hitsPositive = true;
-              break;
+              hitsPositive = true; break;
             }
           }
           if (hitsPositive) continue;
-
-          if (points.length > 1) {
-            ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y);
-            for (var j = 1; j < points.length; j++) {
-              ctx.lineTo(points[j].x, points[j].y);
-            }
-            ctx.strokeStyle = tc.fieldLine;
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-
-            // Arrows point toward the negative charge (reverse direction)
-            var arrowInterval = Math.floor(points.length / 3);
-            for (var a = arrowInterval; a < points.length - 1; a += arrowInterval) {
-              var dx = points[a].x - points[a + 1].x;
-              var dy = points[a].y - points[a + 1].y;
-              drawArrow(points[a].x, points[a].y, dx, dy, 5);
-            }
+          drawSmoothLine(fieldCtx, points);
+          var arrowInterval = Math.floor(points.length / 3);
+          for (var a = arrowInterval; a < points.length - 1; a += arrowInterval) {
+            drawArrowOn(fieldCtx, points[a].x, points[a].y, points[a].x - points[a+1].x, points[a].y - points[a+1].y, 5);
           }
         }
       }
 
-      // Draw charges
+      fieldDirty = false;
+    }
+
+    // Called when charges change (add/remove/move/clear)
+    function draw() {
+      invalidateField();
+      drawFrame();
+      if (charges.length > 0) { startGlow(); } else { stopGlow(); }
+    }
+
+    // Fast composite frame — called every animation tick
+    function drawFrame() {
+      drawBackground();
+      updateDataPanel();
+
+      // Rebuild field cache only when charges changed
+      if (fieldDirty) rebuildFieldCache();
+
+      // Stamp cached field lines
+      if (charges.length > 0) {
+        ctx.drawImage(fieldCache, 0, 0, canvasW, canvasH);
+      }
+
+      // Draw charges with pulsing glow (cheap — just circles)
+      var pulse = 0.5 + 0.5 * Math.sin(glowPhase);
+      var positiveCharges = [];
+      var negativeCharges = [];
+      for (var i = 0; i < charges.length; i++) {
+        if (charges[i].q > 0) positiveCharges.push(charges[i]);
+        else negativeCharges.push(charges[i]);
+      }
+
       for (var i = 0; i < charges.length; i++) {
         var c = charges[i];
-        // Glow
-        var glowGrad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 30);
+        var glowRadius = 28 + 10 * pulse;
+        var glowAlpha = 0.2 + 0.15 * pulse;
+
+        var glowGrad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, glowRadius);
         if (c.q > 0) {
-          glowGrad.addColorStop(0, 'rgba(255,45,117,0.3)');
+          glowGrad.addColorStop(0, 'rgba(255,45,117,' + glowAlpha + ')');
+          glowGrad.addColorStop(0.6, 'rgba(255,45,117,' + (glowAlpha * 0.4) + ')');
           glowGrad.addColorStop(1, 'rgba(255,45,117,0)');
         } else {
-          glowGrad.addColorStop(0, 'rgba(0,212,255,0.3)');
+          glowGrad.addColorStop(0, 'rgba(0,212,255,' + glowAlpha + ')');
+          glowGrad.addColorStop(0.6, 'rgba(0,212,255,' + (glowAlpha * 0.4) + ')');
           glowGrad.addColorStop(1, 'rgba(0,212,255,0)');
         }
         ctx.beginPath();
-        ctx.arc(c.x, c.y, 30, 0, Math.PI * 2);
+        ctx.arc(c.x, c.y, glowRadius, 0, Math.PI * 2);
         ctx.fillStyle = glowGrad;
         ctx.fill();
 
-        // Charge body
         ctx.beginPath();
         ctx.arc(c.x, c.y, 12, 0, Math.PI * 2);
         var grad = ctx.createRadialGradient(c.x - 3, c.y - 3, 0, c.x, c.y, 12);
@@ -978,16 +1040,46 @@
         }
         ctx.fillStyle = grad;
         ctx.shadowColor = c.q > 0 ? '#ff2d75' : '#00d4ff';
-        ctx.shadowBlur = 15;
+        ctx.shadowBlur = 12 + 6 * pulse;
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // + or - symbol
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 16px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(c.q > 0 ? '+' : '\u2212', c.x, c.y);
+      }
+
+      // Dipole label
+      if (positiveCharges.length === 1 && negativeCharges.length === 1) {
+        var pc = positiveCharges[0], nc = negativeCharges[0];
+        var midX = (pc.x + nc.x) / 2;
+        var midY = (pc.y + nc.y) / 2;
+        var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+        ctx.save();
+        var labelText = 'Dipole';
+        ctx.font = 'bold 13px "Inter", sans-serif';
+        var tw = ctx.measureText(labelText).width;
+        var pillW = tw + 20;
+        var pillH = 26;
+        var pillX = midX - pillW / 2;
+        var pillY = midY - 28 - pillH;
+
+        ctx.fillStyle = isLight ? 'rgba(255,255,255,0.88)' : 'rgba(10,10,30,0.88)';
+        ctx.beginPath();
+        ctx.roundRect(pillX, pillY, pillW, pillH, 13);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(124,58,237,0.35)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = isLight ? '#7c3aed' : '#a78bfa';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(labelText, midX, pillY + pillH / 2);
+        ctx.restore();
       }
     }
 
