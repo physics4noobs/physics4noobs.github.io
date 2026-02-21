@@ -1215,8 +1215,9 @@
       var currentF = getRealForce();
       var fu = getForceUnit(currentF);
 
-      var rMinKm = 1000;              // 1,000 km
-      var rMaxKm = Math.max(rMinKm * 3, rKm * 1.5);
+      // Fixed range so the steep 1/r² rise is always visible
+      var rMinKm = 3000;              // left edge: 3,000 km (just below closest approach)
+      var rMaxKm = canvasW * KM_PER_PIXEL;  // right edge: full canvas width in km
 
       var massProduct = m1.mag * MASS_SCALE * m2.mag * MASS_SCALE;
       var rMinM = rMinKm * 1000;
