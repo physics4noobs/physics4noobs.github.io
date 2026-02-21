@@ -1185,6 +1185,28 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
     }
   ],
 
+  /* ── Coulomb's Law ── */
+  'coulombs-law': [
+    {
+      id: 'inverse_square', title: 'Inverse Square',
+      description: 'Double the distance and observe force drops to \u00BC',
+      icon: '\uD83D\uDCCF',
+      check: { type: 'global', name: '_achInverseSquare', op: 'eq', value: true }
+    },
+    {
+      id: 'medium_matters', title: 'Medium Matters',
+      description: 'Change the medium to water and see force dramatically decrease',
+      icon: '\uD83D\uDCA7',
+      check: { type: 'global', name: '_achMediumMatters', op: 'eq', value: true }
+    },
+    {
+      id: 'max_repulsion', title: 'Maximum Repulsion',
+      description: 'Set both charges to +5\u00B5C and bring them very close',
+      icon: '\u26A1',
+      check: { type: 'global', name: '_achMaxRepulsion', op: 'eq', value: true }
+    }
+  ],
+
   /* ── Equilibrium Position Finder ── */
   equilibrium: [
     {
