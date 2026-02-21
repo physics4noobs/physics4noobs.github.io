@@ -717,6 +717,8 @@
     var equilibriumFound = false; // achievement tracking
     var _achLineUnequalEq = false; // achievement: line + unequal mags + equilibrium
     var _achTriangleEq = false;    // achievement: triangle + equilibrium
+    var eqCelebPhase = 0;          // celebration animation phase (0 = not celebrating)
+    var eqCelebParticles = [];     // sparkle particles
     var showField = false; // toggle for field vector grid
 
     // === PRESET SYSTEM ===
@@ -1059,15 +1061,76 @@
       ctx.fill();
     }
 
-    function drawEquilibriumLabel() {
+    // Draw individual force contribution arrows from each fixed charge to test charge
+    function drawIndividualForces() {
       if (fixedCharges.length === 0) return;
+      var tx = testCharge.x, ty = testCharge.y;
+
+      for (var i = 0; i < fixedCharges.length; i++) {
+        var c = fixedCharges[i];
+        var dx = tx - c.x;
+        var dy = ty - c.y;
+        var r = Math.sqrt(dx * dx + dy * dy);
+        if (r < 12) r = 12;
+
+        // Force direction: repel if same sign, attract if opposite
+        var F = kConst * testCharge.q * c.q * c.mag / (r * r);
+        var fx = F * dx / r;
+        var fy = F * dy / r;
+        var fmag = Math.sqrt(fx * fx + fy * fy);
+        if (fmag < 0.05) continue;
+
+        var nx = fx / fmag;
+        var ny = fy / fmag;
+
+        // Arrow length: log scale
+        var arrowLen = Math.min(50, 8 + 10 * Math.log(1 + fmag * 0.4));
+
+        var startX = tx + nx * (TEST_RADIUS + 2);
+        var startY = ty + ny * (TEST_RADIUS + 2);
+        var endX = startX + nx * arrowLen;
+        var endY = startY + ny * arrowLen;
+
+        // Color by charge sign: pink for positive, cyan for negative
+        var arrowAlpha = 0.45;
+        var color = c.q > 0 ? 'rgba(255,80,140,' + arrowAlpha + ')' : 'rgba(0,190,255,' + arrowAlpha + ')';
+
+        // Dashed shaft
+        ctx.save();
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Small arrowhead
+        var headLen = 6;
+        var angle = Math.atan2(ny, nx);
+        ctx.beginPath();
+        ctx.moveTo(endX, endY);
+        ctx.lineTo(endX - headLen * Math.cos(angle - 0.45), endY - headLen * Math.sin(angle - 0.45));
+        ctx.lineTo(endX - headLen * Math.cos(angle + 0.45), endY - headLen * Math.sin(angle + 0.45));
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    var isAtEquilibrium = false; // tracks current frame equilibrium state
+
+    function checkEquilibrium() {
+      if (fixedCharges.length === 0) return false;
 
       var force = getNetForce(testCharge.x, testCharge.y);
       var mag = Math.sqrt(force.x * force.x + force.y * force.y);
-      if (mag >= EQUILIBRIUM_THRESHOLD) return;
+      if (mag >= EQUILIBRIUM_THRESHOLD) return false;
 
       // Must be within the charge arrangement — not out in empty space
-      // Compute bounding box of fixed charges with some padding
       var minCx = fixedCharges[0].x, maxCx = fixedCharges[0].x;
       var minCy = fixedCharges[0].y, maxCy = fixedCharges[0].y;
       for (var i = 1; i < fixedCharges.length; i++) {
@@ -1076,42 +1139,129 @@
         if (fixedCharges[i].y < minCy) minCy = fixedCharges[i].y;
         if (fixedCharges[i].y > maxCy) maxCy = fixedCharges[i].y;
       }
-      // Padding: 60% of the arrangement's span (or at least 80px)
       var spanX = maxCx - minCx;
       var spanY = maxCy - minCy;
       var padX = Math.max(80, spanX * 0.6);
       var padY = Math.max(80, spanY * 0.6);
       if (testCharge.x < minCx - padX || testCharge.x > maxCx + padX ||
-          testCharge.y < minCy - padY || testCharge.y > maxCy + padY) return;
+          testCharge.y < minCy - padY || testCharge.y > maxCy + padY) return false;
 
-      // Must not be sitting right on top of a fixed charge (trivial zero)
+      // Must not be sitting right on top of a fixed charge
       for (var i = 0; i < fixedCharges.length; i++) {
-        if (Math.hypot(testCharge.x - fixedCharges[i].x, testCharge.y - fixedCharges[i].y) < 20) return;
+        if (Math.hypot(testCharge.x - fixedCharges[i].x, testCharge.y - fixedCharges[i].y) < 20) return false;
       }
 
-      equilibriumFound = true;
+      return true;
+    }
 
-      // Achievement: line preset with unequal magnitudes
-      if (preset === 'line' && fixedCharges.length === 2 && fixedCharges[0].mag !== fixedCharges[1].mag) {
-        _achLineUnequalEq = true;
+    function spawnCelebParticles() {
+      var tx = testCharge.x, ty = testCharge.y;
+      for (var i = 0; i < 12; i++) {
+        var angle = (Math.PI * 2 * i) / 12 + Math.random() * 0.3;
+        var speed = 1.2 + Math.random() * 1.5;
+        eqCelebParticles.push({
+          x: tx, y: ty,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1.0, // 1 = full, fades to 0
+          size: 2 + Math.random() * 2.5
+        });
       }
-      // Achievement: triangle preset equilibrium
-      if (preset === 'triangle') {
-        _achTriangleEq = true;
-      }
+    }
 
-      var tx = testCharge.x;
-      var ty = testCharge.y - TEST_RADIUS - 28;
+    function drawEquilibriumCelebration() {
+      var atEq = checkEquilibrium();
+
+      // Transition: just entered equilibrium
+      if (atEq && !isAtEquilibrium) {
+        eqCelebPhase = 0.01; // start celebration
+        spawnCelebParticles();
+        equilibriumFound = true;
+        // Achievements
+        if (preset === 'line' && fixedCharges.length === 2 && fixedCharges[0].mag !== fixedCharges[1].mag) {
+          _achLineUnequalEq = true;
+        }
+        if (preset === 'triangle') {
+          _achTriangleEq = true;
+        }
+      }
+      isAtEquilibrium = atEq;
+
+      if (!atEq && eqCelebPhase === 0) return;
+
+      var tx = testCharge.x, ty = testCharge.y;
+
+      // Advance celebration phase
+      if (atEq) {
+        eqCelebPhase = Math.min(eqCelebPhase + 0.03, 1.0);
+      } else {
+        // Fade out when leaving equilibrium
+        eqCelebPhase = Math.max(eqCelebPhase - 0.05, 0);
+        if (eqCelebPhase <= 0) { eqCelebParticles = []; return; }
+      }
 
       ctx.save();
+
+      // Pulsing expanding rings
+      var ringPulse = 0.5 + 0.5 * Math.sin(glowPhase * 2);
+      for (var ri = 0; ri < 3; ri++) {
+        var ringRadius = TEST_RADIUS + 10 + ri * 14 + ringPulse * 6;
+        var ringAlpha = (0.25 - ri * 0.07) * eqCelebPhase;
+        ctx.beginPath();
+        ctx.arc(tx, ty, ringRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(0,200,83,' + ringAlpha + ')';
+        ctx.lineWidth = 1.5 - ri * 0.3;
+        ctx.stroke();
+      }
+
+      // Sparkle particles
+      for (var i = eqCelebParticles.length - 1; i >= 0; i--) {
+        var p = eqCelebParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.97;
+        p.vy *= 0.97;
+        p.life -= 0.012;
+        if (p.life <= 0) { eqCelebParticles.splice(i, 1); continue; }
+
+        var alpha = p.life * eqCelebPhase;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,230,100,' + alpha + ')';
+        ctx.shadowColor = 'rgba(0,230,100,' + (alpha * 0.6) + ')';
+        ctx.shadowBlur = 6;
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+
+      // Spawn new particles occasionally while at equilibrium
+      if (atEq && Math.random() < 0.15) {
+        var angle = Math.random() * Math.PI * 2;
+        var speed = 0.5 + Math.random() * 1.0;
+        eqCelebParticles.push({
+          x: tx + Math.cos(angle) * (TEST_RADIUS + 5),
+          y: ty + Math.sin(angle) * (TEST_RADIUS + 5),
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 0.7 + Math.random() * 0.3,
+          size: 1.5 + Math.random() * 2
+        });
+        // Limit particle count
+        if (eqCelebParticles.length > 30) eqCelebParticles.shift();
+      }
+
+      // Label pill with fade-in
+      var labelAlpha = eqCelebPhase;
+      var labelY = ty - TEST_RADIUS - 28;
       var labelText = 'Equilibrium!';
       ctx.font = 'bold 13px "Inter", sans-serif';
       var tw = ctx.measureText(labelText).width;
       var pillW = tw + 24;
       var pillH = 28;
       var pillX = tx - pillW / 2;
-      var pillY = ty - pillH / 2;
+      var pillY = labelY - pillH / 2;
 
+      ctx.globalAlpha = labelAlpha;
       ctx.fillStyle = tc.labelBg;
       ctx.beginPath();
       ctx.roundRect(pillX, pillY, pillW, pillH, 14);
@@ -1123,7 +1273,9 @@
       ctx.fillStyle = '#00c853';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(labelText, tx, ty);
+      ctx.fillText(labelText, tx, labelY);
+      ctx.globalAlpha = 1;
+
       ctx.restore();
     }
 
@@ -1316,9 +1468,10 @@
       drawFieldGrid();
       drawGeometryOverlay();
       drawFixedCharges();
+      drawIndividualForces();
       drawForceArrow();
       drawTestCharge();
-      drawEquilibriumLabel();
+      drawEquilibriumCelebration();
     }
 
     function draw() {
