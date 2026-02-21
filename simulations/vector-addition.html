@@ -250,6 +250,31 @@
       text-align: right;
     }
 
+    .control-group input[type="number"] {
+      width: 58px;
+      padding: 4px 6px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      -moz-appearance: textfield;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .control-group input[type="number"]:focus {
+      border-color: var(--color-primary);
+    }
+
+    .control-group input[type="number"]::-webkit-inner-spin-button,
+    .control-group input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
     .data-grid {
       display: flex;
       flex-direction: column;
@@ -520,6 +545,7 @@
     <div class="sim-header">
       <h1>Vector Addition</h1>
       <div style="display:flex;gap:8px;">
+        <button class="sim-btn primary" id="animateBtn">Animate Derivation</button>
         <button class="sim-btn" id="resetBtn">Reset</button>
         <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
         <button class="sim-btn" id="helpBtn">? Help</button>
@@ -547,41 +573,39 @@
       <div class="control-group">
         <label>|A|</label>
         <input type="range" id="magA" min="1" max="10" value="5" step="0.5">
-        <span class="val" id="magAVal">5.0</span>
+        <input type="number" id="magAInput" min="1" max="10" value="5" step="0.5">
       </div>
       <div class="control-group">
         <label>&theta;<sub>A</sub></label>
         <input type="range" id="angleA" min="0" max="360" value="30">
-        <span class="val" id="angleAVal">30&deg;</span>
+        <input type="number" id="angleAInput" min="0" max="360" value="30" step="1">
+        <label>&deg;</label>
       </div>
       <div class="control-group">
         <label>|B|</label>
         <input type="range" id="magB" min="1" max="10" value="4" step="0.5">
-        <span class="val" id="magBVal">4.0</span>
+        <input type="number" id="magBInput" min="1" max="10" value="4" step="0.5">
       </div>
       <div class="control-group">
         <label>&theta;<sub>B</sub></label>
         <input type="range" id="angleB" min="0" max="360" value="120">
-        <span class="val" id="angleBVal">120&deg;</span>
+        <input type="number" id="angleBInput" min="0" max="360" value="120" step="1">
+        <label>&deg;</label>
       </div>
-      <button class="sim-btn primary" id="animateBtn" style="margin-left:auto;">Animate Derivation</button>
     </div>
 
     <!-- Tutorial Overlay -->
     <div class="sim-tutorial" id="simTutorial" style="display:none;">
       <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
 
+      <div class="tut-hint" id="tutDrag">
+        <div class="tut-label">Drag the arrowheads to move vectors</div>
+      </div>
       <div class="tut-hint" id="tutMagA">
         <div class="tut-label">Set magnitude of vector A</div>
       </div>
       <div class="tut-hint" id="tutAngleA">
         <div class="tut-label">Set direction of vector A</div>
-      </div>
-      <div class="tut-hint" id="tutMagB">
-        <div class="tut-label">Set magnitude of vector B</div>
-      </div>
-      <div class="tut-hint" id="tutAngleB">
-        <div class="tut-label">Set direction of vector B</div>
       </div>
       <div class="tut-hint" id="tutAnimate">
         <div class="tut-label">Play the derivation step-by-step</div>
@@ -692,11 +716,36 @@
     const angleASlider = document.getElementById('angleA');
     const magBSlider = document.getElementById('magB');
     const angleBSlider = document.getElementById('angleB');
+    const magAInput = document.getElementById('magAInput');
+    const angleAInput = document.getElementById('angleAInput');
+    const magBInput = document.getElementById('magBInput');
+    const angleBInput = document.getElementById('angleBInput');
 
-    magASlider.oninput = function() { document.getElementById('magAVal').textContent = parseFloat(this.value).toFixed(1); draw(); };
-    angleASlider.oninput = function() { document.getElementById('angleAVal').innerHTML = this.value + '&deg;'; draw(); };
-    magBSlider.oninput = function() { document.getElementById('magBVal').textContent = parseFloat(this.value).toFixed(1); draw(); };
-    angleBSlider.oninput = function() { document.getElementById('angleBVal').innerHTML = this.value + '&deg;'; draw(); };
+    function syncMagA(val) {
+      val = Math.max(1, Math.min(10, Math.round(parseFloat(val) * 2) / 2 || 1));
+      magASlider.value = val; magAInput.value = val; draw();
+    }
+    function syncAngleA(val) {
+      val = Math.max(0, Math.min(360, Math.round(parseFloat(val) || 0)));
+      angleASlider.value = val; angleAInput.value = val; draw();
+    }
+    function syncMagB(val) {
+      val = Math.max(1, Math.min(10, Math.round(parseFloat(val) * 2) / 2 || 1));
+      magBSlider.value = val; magBInput.value = val; draw();
+    }
+    function syncAngleB(val) {
+      val = Math.max(0, Math.min(360, Math.round(parseFloat(val) || 0)));
+      angleBSlider.value = val; angleBInput.value = val; draw();
+    }
+
+    magASlider.oninput = function() { syncMagA(this.value); };
+    magAInput.onchange = function() { syncMagA(this.value); };
+    angleASlider.oninput = function() { syncAngleA(this.value); };
+    angleAInput.onchange = function() { syncAngleA(this.value); };
+    magBSlider.oninput = function() { syncMagB(this.value); };
+    magBInput.onchange = function() { syncMagB(this.value); };
+    angleBSlider.oninput = function() { syncAngleB(this.value); };
+    angleBInput.onchange = function() { syncAngleB(this.value); };
 
     // Interactive drag state
     let dragging = null; // 'A' or 'B'
@@ -954,58 +1003,57 @@
       const endRx = wx(Rx);
       const endRy = wy(Ry);
 
-      // === PARALLELOGRAM FILL ===
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(originX, originY);
-      ctx.lineTo(endAx, endAy);
-      ctx.lineTo(endRx, endRy);
-      ctx.lineTo(endBx, endBy);
-      ctx.closePath();
-      ctx.fillStyle = tc.paraFill;
-      ctx.fill();
-      ctx.restore();
+      // === PARALLELOGRAM FILL & PROJECTIONS (only when R > 0) ===
+      if (magR > 0.05) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(endAx, endAy);
+        ctx.lineTo(endRx, endRy);
+        ctx.lineTo(endBx, endBy);
+        ctx.closePath();
+        ctx.fillStyle = tc.paraFill;
+        ctx.fill();
+        ctx.restore();
 
-      // Parallelogram dashed lines
-      ctx.save();
-      ctx.setLineDash([5, 5]);
-      ctx.strokeStyle = tc.parallelogram;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(endAx, endAy);
-      ctx.lineTo(endRx, endRy);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(endBx, endBy);
-      ctx.lineTo(endRx, endRy);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.restore();
+        // Parallelogram dashed lines
+        ctx.save();
+        ctx.setLineDash([5, 5]);
+        ctx.strokeStyle = tc.parallelogram;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(endAx, endAy);
+        ctx.lineTo(endRx, endRy);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(endBx, endBy);
+        ctx.lineTo(endRx, endRy);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
 
-      // === COMPONENT PROJECTION LINES ===
-      ctx.save();
-      ctx.setLineDash([4, 4]);
-      ctx.lineWidth = 1;
-      // Rx projection (vertical dashed from R tip to x-axis)
-      ctx.strokeStyle = tc.projLine;
-      ctx.beginPath();
-      ctx.moveTo(endRx, endRy);
-      ctx.lineTo(endRx, originY);
-      ctx.stroke();
-      // Ry projection (horizontal dashed from R tip to y-axis)
-      ctx.beginPath();
-      ctx.moveTo(endRx, endRy);
-      ctx.lineTo(originX, endRy);
-      ctx.stroke();
-      // Small marks on axes
-      ctx.setLineDash([]);
-      ctx.fillStyle = tc.labelR;
-      ctx.font = (9 * fs()) + 'px Andika, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('Rx', endRx, originY + 16 * fs());
-      ctx.textAlign = 'right';
-      ctx.fillText('Ry', originX - 6, endRy + 3);
-      ctx.restore();
+        // Component projection lines
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = tc.projLine;
+        ctx.beginPath();
+        ctx.moveTo(endRx, endRy);
+        ctx.lineTo(endRx, originY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(endRx, endRy);
+        ctx.lineTo(originX, endRy);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = tc.labelR;
+        ctx.font = (9 * fs()) + 'px Andika, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Rx', endRx, originY + 16 * fs());
+        ctx.textAlign = 'right';
+        ctx.fillText('Ry', originX - 6, endRy + 3);
+        ctx.restore();
+      }
 
       // Angle arc between A and B
       var arcRadius = Math.min(40, Math.min(scaleX, scaleY) * Math.min(magA, magB) * 0.6);
@@ -1026,11 +1074,15 @@
       drawArrow(originX, originY, endBx, endBy, tc.labelB, 3);
       ctx.restore();
 
-      ctx.save();
-      ctx.shadowColor = tc.labelR;
-      ctx.shadowBlur = 10;
-      drawArrow(originX, originY, endRx, endRy, tc.labelR, 4);
-      ctx.restore();
+      // Only draw R arrow and label if magnitude is non-negligible
+      var showR = magR > 0.05;
+      if (showR) {
+        ctx.save();
+        ctx.shadowColor = tc.labelR;
+        ctx.shadowBlur = 10;
+        drawArrow(originX, originY, endRx, endRy, tc.labelR, 4);
+        ctx.restore();
+      }
 
       // Labels at arrow tips
       var labelFs = (12 * fs()) + 'px Andika, sans-serif';
@@ -1044,9 +1096,11 @@
       ctx.fillStyle = tc.labelB;
       ctx.fillText('B', endBx + 10, endBy - 10);
 
-      ctx.fillStyle = tc.labelR;
-      ctx.font = 'bold ' + labelFs;
-      ctx.fillText('R', endRx + 10, endRy - 10);
+      if (showR) {
+        ctx.fillStyle = tc.labelR;
+        ctx.font = 'bold ' + labelFs;
+        ctx.fillText('R', endRx + 10, endRy - 10);
+      }
 
 
       // === DRAG HANDLES (subtle circles at arrowheads) ===
@@ -1356,18 +1410,25 @@
       // Clamp magnitude to slider range
       mag = Math.max(1, Math.min(10, Math.round(mag * 2) / 2)); // snap to 0.5 steps
 
-      if (dragging === 'A') {
-        magASlider.value = mag;
-        angleASlider.value = Math.round(angle);
-        document.getElementById('magAVal').textContent = mag.toFixed(1);
-        document.getElementById('angleAVal').innerHTML = Math.round(angle) + '&deg;';
-      } else {
-        magBSlider.value = mag;
-        angleBSlider.value = Math.round(angle);
-        document.getElementById('magBVal').textContent = mag.toFixed(1);
-        document.getElementById('angleBVal').innerHTML = Math.round(angle) + '&deg;';
+      // Sticky angles: snap near axis values
+      var snapAngles = [0, 90, 180, 270, 360];
+      var SNAP_RANGE = 5; // degrees
+      var roundedAngle = Math.round(angle);
+      for (var s = 0; s < snapAngles.length; s++) {
+        if (Math.abs(roundedAngle - snapAngles[s]) <= SNAP_RANGE) {
+          roundedAngle = snapAngles[s];
+          break;
+        }
       }
-      draw();
+      if (roundedAngle === 360) roundedAngle = 0;
+
+      if (dragging === 'A') {
+        syncMagA(mag);
+        syncAngleA(roundedAngle);
+      } else {
+        syncMagB(mag);
+        syncAngleB(roundedAngle);
+      }
     });
 
     function stopDrag() {
@@ -1418,18 +1479,25 @@
       if (angle < 0) angle += 360;
       mag = Math.max(1, Math.min(10, Math.round(mag * 2) / 2));
 
-      if (dragging === 'A') {
-        magASlider.value = mag;
-        angleASlider.value = Math.round(angle);
-        document.getElementById('magAVal').textContent = mag.toFixed(1);
-        document.getElementById('angleAVal').innerHTML = Math.round(angle) + '&deg;';
-      } else {
-        magBSlider.value = mag;
-        angleBSlider.value = Math.round(angle);
-        document.getElementById('magBVal').textContent = mag.toFixed(1);
-        document.getElementById('angleBVal').innerHTML = Math.round(angle) + '&deg;';
+      // Sticky angles: snap near axis values
+      var snapAngles = [0, 90, 180, 270, 360];
+      var SNAP_RANGE = 5;
+      var roundedAngle = Math.round(angle);
+      for (var s = 0; s < snapAngles.length; s++) {
+        if (Math.abs(roundedAngle - snapAngles[s]) <= SNAP_RANGE) {
+          roundedAngle = snapAngles[s];
+          break;
+        }
       }
-      draw();
+      if (roundedAngle === 360) roundedAngle = 0;
+
+      if (dragging === 'A') {
+        syncMagA(mag);
+        syncAngleA(roundedAngle);
+      } else {
+        syncMagB(mag);
+        syncAngleB(roundedAngle);
+      }
     }, { passive: false });
 
     canvas.addEventListener('touchend', stopDrag);
@@ -1438,15 +1506,10 @@
       if (animId) { cancelAnimationFrame(animId); animId = null; }
       animating = false;
       animProgress = 0;
-      magASlider.value = 5;
-      angleASlider.value = 30;
-      magBSlider.value = 4;
-      angleBSlider.value = 120;
-      document.getElementById('magAVal').textContent = '5.0';
-      document.getElementById('angleAVal').innerHTML = '30&deg;';
-      document.getElementById('magBVal').textContent = '4.0';
-      document.getElementById('angleBVal').innerHTML = '120&deg;';
-      draw();
+      syncMagA(5);
+      syncAngleA(30);
+      syncMagB(4);
+      syncAngleB(120);
     }
 
     // === FULLSCREEN ===
@@ -1535,10 +1598,9 @@
       svg.innerHTML = '';
 
       var targets = [
+        { hint: 'tutDrag',    el: document.getElementById('simCanvas'),  type: 'canvas' },
         { hint: 'tutMagA',    el: document.getElementById('magA'),       type: 'bottom' },
         { hint: 'tutAngleA',  el: document.getElementById('angleA'),     type: 'bottom' },
-        { hint: 'tutMagB',    el: document.getElementById('magB'),       type: 'bottom' },
-        { hint: 'tutAngleB',  el: document.getElementById('angleB'),     type: 'bottom' },
         { hint: 'tutAnimate', el: document.getElementById('animateBtn'), type: 'bottom' },
         { hint: 'tutData',    el: document.querySelector('.side-data'),   type: 'side'   }
       ];
@@ -1551,6 +1613,17 @@
         var elRect = t.el.getBoundingClientRect();
         var cx = elRect.left + elRect.width / 2 - areaRect.left;
         var cy = elRect.top - areaRect.top;
+
+        if (t.type === 'canvas') {
+          // Position in center of canvas
+          var midX = elRect.left + elRect.width / 2 - areaRect.left;
+          var midY = elRect.top + elRect.height * 0.35 - areaRect.top;
+          hintEl.style.left = midX + 'px';
+          hintEl.style.top = midY + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+          hintEl.style.right = '';
+          continue;
+        }
 
         if (t.type === 'side') {
           var midY = elRect.top + elRect.height / 2 - areaRect.top;
