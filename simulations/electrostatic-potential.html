@@ -616,6 +616,7 @@
     <div class="sim-header">
       <h1>Electrostatic Potential</h1>
       <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="fieldLinesBtn">Field Lines</button>
         <button class="sim-btn" id="resetBtn">Reset</button>
         <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
         <button class="sim-btn" id="helpBtn">? Help</button>
@@ -819,6 +820,7 @@
     var kappa = 1;
     var draggingQ2 = false;
     var glowPhase = 0;
+    var showFieldLines = false;
 
     // Achievement tracking
     var _achPotentialZero = false;
@@ -1537,10 +1539,71 @@
         '<br><span class="hl">= ' + potStr + '</span>';
     }
 
+    // === ELECTRIC FIELD LINES ===
+    function drawFieldLines() {
+      if (!showFieldLines) return;
+      var NUM_LINES = 12;
+      var maxLen = Math.max(canvasW, canvasH) * 1.2;
+      var step = 4;
+      var isPos = q1.sign > 0;
+
+      for (var i = 0; i < NUM_LINES; i++) {
+        var angle = (i / NUM_LINES) * Math.PI * 2;
+        ctx.beginPath();
+        var startR = CHARGE_RADIUS + (q1.mag - 1) * 3 + 6;
+        var sx = q1.x + Math.cos(angle) * startR;
+        var sy = q1.y + Math.sin(angle) * startR;
+        ctx.moveTo(sx, sy);
+
+        var px = sx, py = sy;
+        var totalLen = 0;
+        while (totalLen < maxLen) {
+          // For a single point charge, field is purely radial
+          var dx = px - q1.x;
+          var dy = py - q1.y;
+          var r = Math.sqrt(dx * dx + dy * dy);
+          if (r < 1) break;
+          var nx = dx / r;
+          var ny = dy / r;
+          // For +Q field points outward, for -Q inward
+          if (!isPos) { nx = -nx; ny = -ny; }
+          px += nx * step;
+          py += ny * step;
+          totalLen += step;
+          // Stop if out of canvas
+          if (px < -20 || px > canvasW + 20 || py < -20 || py > canvasH + 20) break;
+          ctx.lineTo(px, py);
+        }
+
+        ctx.strokeStyle = 'rgba(255,200,0,0.25)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Arrowhead at 40% along the line
+        var arrowR = startR + maxLen * 0.25;
+        var ax = q1.x + Math.cos(angle) * arrowR;
+        var ay = q1.y + Math.sin(angle) * arrowR;
+        if (ax > 0 && ax < canvasW && ay > 0 && ay < canvasH) {
+          var adx = isPos ? Math.cos(angle) : -Math.cos(angle);
+          var ady = isPos ? Math.sin(angle) : -Math.sin(angle);
+          var headLen = 8;
+          var a = Math.atan2(ady, adx);
+          ctx.beginPath();
+          ctx.moveTo(ax + adx * headLen * 0.5, ay + ady * headLen * 0.5);
+          ctx.lineTo(ax - headLen * Math.cos(a - 0.5), ay - headLen * Math.sin(a - 0.5));
+          ctx.lineTo(ax - headLen * Math.cos(a + 0.5), ay - headLen * Math.sin(a + 0.5));
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(255,200,0,0.4)';
+          ctx.fill();
+        }
+      }
+    }
+
     function drawFrame() {
       drawBackground();
       drawMediumOverlay();
       drawPotentialGradient();
+      drawFieldLines();
       drawEquipotentialCircles();
       drawDistanceLine();
       drawElectricFieldDirection();
@@ -1684,6 +1747,12 @@
     });
 
     canvas.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+    // === FIELD LINES TOGGLE ===
+    document.getElementById('fieldLinesBtn').addEventListener('click', function() {
+      showFieldLines = !showFieldLines;
+      this.classList.toggle('active', showFieldLines);
+    });
 
     // === FULLSCREEN ===
     document.getElementById('fullscreenBtn').addEventListener('click', function() {
