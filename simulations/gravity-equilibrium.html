@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravitational Equilibrium | Axomiya Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/achievements.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/sim-tracker.js"></script>
+  <script defer src="../js/achievements-config.js"></script>
+  <script defer src="../js/achievements.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-pendulum"><div class="sp-mount"></div><div class="sp-pivot"></div><div class="sp-arm"><div class="sp-rod"></div><div class="sp-bob"><div class="sp-glow"></div></div></div></div><div class="splash-logo">Axomiya Engineer</div><div class="splash-tagline">Lets Make Physics Fun</div></div>
+<div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link active">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <style>
+    .bg-grid, #particles-canvas { display: none !important; }
+
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-btn.primary {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .sim-btn.primary:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .sim-btn.active {
+      background: rgba(124, 58, 237, 0.18);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 10px rgba(124,58,237,0.25);
+      transform: scale(1.06);
+    }
+
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2.5vw, 24px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .control-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border-subtle);
+    }
+
+    .charge-ctrl {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 2px 4px;
+    }
+
+    .mass-label {
+      min-width: 36px;
+      height: 32px;
+      padding: 4px 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      border-radius: var(--radius-sm);
+      border: 1px solid;
+      background: rgba(245,158,11,0.18);
+      border-color: rgba(245,158,11,0.4);
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mag-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .mag-btn {
+      width: 20px;
+      height: 24px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 0;
+      line-height: 1;
+      transition: var(--transition-fast);
+    }
+
+    .mag-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .mag-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      min-width: 14px;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
+    .qa-section {
+      margin-top: 32px;
+    }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
+    }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 500px;
+    }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
+      position: relative;
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 8px; padding: 12px; }
+    }
+
+    /* === Tutorial Overlay === */
+    .sim-tutorial {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+
+    .tut-hint {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .tut-arrows-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tut-label {
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.92);
+      color: #1a1a2e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .tut-dismiss {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 32px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tut-dismiss:hover {
+      background: #e8e0f8;
+      transform: translateX(-50%) scale(1.04);
+    }
+
+    @media (max-width: 900px) {
+      .sim-tutorial { display: none !important; }
+      #helpBtn { display: none; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Gravitational Equilibrium &mdash; Lagrange Point Explorer</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="helpBtn">? Help</button>
+      </div>
+    </div>
+
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="control-group" id="massControls">
+        <label>Masses:</label>
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="control-sep"></div>
+
+      <button class="sim-btn" id="resetArrangement">&#8635; Reset</button>
+
+      <div class="control-sep"></div>
+
+      <button class="sim-btn" id="showFieldBtn">Show Field</button>
+
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div class="sim-tutorial" id="simTutorial" style="display:none;">
+      <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
+
+      <div class="tut-hint" id="tutHintMass">
+        <div class="tut-label">Adjust planet masses</div>
+      </div>
+      <div class="tut-hint" id="tutHintDrag">
+        <div class="tut-label">Drag the satellite to find equilibrium</div>
+      </div>
+      <div class="tut-hint" id="tutHintField">
+        <div class="tut-label">Show the gravitational field</div>
+      </div>
+
+      <button class="tut-dismiss">Got it, let's start!</button>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Newton's Law of Gravitation</span>
+          F = GM&#8321;M&#8322;/r&sup2;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Equilibrium Condition</span>
+          &Sigma;F = 0
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Gravitational Field</span>
+          g = GM/r&sup2;
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What is gravitational equilibrium?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Gravitational equilibrium occurs when the <strong>net gravitational force</strong> on an object is zero. At this point, the gravitational pulls from all surrounding masses cancel each other out exactly, so the object experiences no net acceleration. This is the fundamental concept behind Lagrange points in orbital mechanics.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Where is the equilibrium point between two equal masses?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          For two equal masses, the gravitational equilibrium point lies <strong>exactly at the midpoint</strong> between them along the line connecting their centers. At this point, the gravitational pull from each mass is equal in magnitude but opposite in direction, resulting in zero net force. This is a special case of the L1 Lagrange point.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How does changing one planet's mass shift the equilibrium?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          When one planet is more massive, the equilibrium point shifts <strong>toward the lighter planet</strong>. This is because the heavier planet exerts a stronger gravitational pull, so you must be closer to the lighter planet for its weaker pull to match the stronger pull from the distant heavier planet. The equilibrium always lies on the line between the two masses.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What are Lagrange points?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Lagrange points are five special positions in the orbital plane of two large bodies (like the Sun and Earth) where a small object can maintain a stable position relative to both. The <strong>L1 point</strong> lies between the two bodies &mdash; this is what this simulation demonstrates. L2 is beyond the smaller body, L3 is behind the larger body, and L4/L5 form equilateral triangles. The James Webb Space Telescope orbits the Sun-Earth L2 point.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Is gravitational equilibrium stable or unstable?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The L1 point (between two masses) is <strong>unstable</strong> along the line connecting the masses. If the satellite is nudged slightly toward one planet, that planet's gravity becomes stronger (inverse-square law), pulling it further away from equilibrium. However, it is stable in the perpendicular direction. In real space missions, spacecraft at L1 use small periodic thruster corrections to maintain their position. Only the L4 and L5 points can be truly stable under certain mass ratio conditions.
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        bg: isLight ? '#e8eaf0' : '#080818',
+        bgCenter: isLight ? '#f0f2f8' : '#0a0a24',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.04)',
+        text: isLight ? '#333' : '#fff',
+        labelBg: isLight ? 'rgba(255,255,255,0.88)' : 'rgba(10,10,30,0.88)',
+        labelBorder: isLight ? 'rgba(124,58,237,0.35)' : 'rgba(124,58,237,0.35)',
+        labelText: isLight ? '#7c3aed' : '#a78bfa'
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === CANVAS SETUP ===
+    var canvas = document.getElementById('simCanvas');
+    var ctx = canvas.getContext('2d');
+    var canvasW, canvasH;
+
+    function resizeCanvas() {
+      var wrap = canvas.parentElement;
+      var isFS = !!document.fullscreenElement;
+      var w = wrap.clientWidth;
+      var h = isFS ? wrap.clientHeight : Math.max(350, window.innerHeight - 300);
+      var dpr = window.devicePixelRatio || 1;
+
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      canvasW = w;
+      canvasH = h;
+
+      // Reposition planets to new canvas center
+      generateStars();
+      setupArrangement();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    // === SIMULATION STATE ===
+    var G_CONST = 120000;            // scaled gravitational constant
+    var planets = [
+      { x: 0, y: 0, mass: 1 },      // Planet 1 (left)
+      { x: 0, y: 0, mass: 1 }       // Planet 2 (right)
+    ];
+    var satellite = { x: 0, y: 0 };
+    var draggingSat = false;
+    var driftVx = 0, driftVy = 0;
+    var DAMPING = 0.94;
+    var DT = 0.06;
+    var EQUILIBRIUM_THRESHOLD = 3.0;
+    var PLANET_RADIUS = 36;
+    var SAT_RADIUS = 10;
+    var GRAB_RADIUS = 22;
+    var MAX_MASS = 5;
+    var showField = false;
+    var satDocked = true; // satellite is frozen until first drag
+    var satCrashed = false; // satellite hit a planet
+    var crashedPlanetIdx = -1;
+    var crashPhase = 0; // 0→1 fade-in for crash warning
+
+    // Achievement tracking
+    var _achUnequalMassEq = false;
+    var _achGravFieldShown = false;
+    var _achExtremeMassEq = false;
+    var eqCelebPhase = 0;
+    var eqCelebParticles = [];
+    var isAtEquilibrium = false;
+
+    // === ARRANGEMENT SETUP ===
+    function setupArrangement() {
+      var cx = canvasW / 2;
+      var cy = canvasH / 2;
+      var spread = Math.min(canvasW, canvasH) * 0.3;
+      var lineHalf = spread * 1.8;
+
+      planets[0].x = cx - lineHalf;
+      planets[0].y = cy;
+      planets[1].x = cx + lineHalf;
+      planets[1].y = cy;
+
+      // Dock satellite bottom-left, away from equilibrium line
+      satellite.x = cx - lineHalf * 0.7;
+      satellite.y = canvasH - 50;
+      driftVx = 0;
+      driftVy = 0;
+      satDocked = true;
+      satCrashed = false;
+      crashedPlanetIdx = -1;
+      crashPhase = 0;
+
+      draw();
+    }
+
+    // === MASS CONTROLS ===
+    var massControlsContainer = document.getElementById('massControls');
+
+    function buildMassControls() {
+      // Remove existing controls (keep label)
+      var ctrls = massControlsContainer.querySelectorAll('.charge-ctrl');
+      for (var i = 0; i < ctrls.length; i++) ctrls[i].remove();
+
+      for (var i = 0; i < planets.length; i++) {
+        (function(idx) {
+          var wrap = document.createElement('div');
+          wrap.className = 'charge-ctrl';
+
+          // Mass label
+          var lbl = document.createElement('div');
+          lbl.className = 'mass-label';
+          lbl.textContent = 'M' + (idx + 1);
+
+          // Magnitude stepper
+          var stepper = document.createElement('div');
+          stepper.className = 'mag-stepper';
+          var downBtn = document.createElement('button');
+          downBtn.className = 'mag-btn';
+          downBtn.textContent = '\u25BC';
+          var magVal = document.createElement('span');
+          magVal.className = 'mag-val';
+          magVal.textContent = planets[idx].mass;
+          var upBtn = document.createElement('button');
+          upBtn.className = 'mag-btn';
+          upBtn.textContent = '\u25B2';
+
+          downBtn.addEventListener('click', function() {
+            if (planets[idx].mass > 1) {
+              planets[idx].mass--;
+              magVal.textContent = planets[idx].mass;
+              driftVx = 0;
+              driftVy = 0;
+            }
+          });
+          upBtn.addEventListener('click', function() {
+            if (planets[idx].mass < MAX_MASS) {
+              planets[idx].mass++;
+              magVal.textContent = planets[idx].mass;
+              driftVx = 0;
+              driftVy = 0;
+            }
+          });
+
+          stepper.appendChild(downBtn);
+          stepper.appendChild(magVal);
+          stepper.appendChild(upBtn);
+
+          wrap.appendChild(lbl);
+          wrap.appendChild(stepper);
+          massControlsContainer.appendChild(wrap);
+        })(i);
+      }
+    }
+
+    buildMassControls();
+
+    // === RESET ===
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      planets[0].mass = 1;
+      planets[1].mass = 1;
+      buildMassControls();
+      setupArrangement();
+    });
+
+    document.getElementById('resetArrangement').addEventListener('click', function() {
+      planets[0].mass = 1;
+      planets[1].mass = 1;
+      buildMassControls();
+      setupArrangement();
+    });
+
+    // === SHOW FIELD TOGGLE ===
+    var showFieldBtn = document.getElementById('showFieldBtn');
+    showFieldBtn.addEventListener('click', function() {
+      showField = !showField;
+      showFieldBtn.classList.toggle('active', showField);
+      showFieldBtn.textContent = showField ? 'Hide Field' : 'Show Field';
+      _achGravFieldShown = true;
+    });
+
+    // === PHYSICS ===
+    // Gravity is always attractive: force points FROM satellite TOWARD planet
+    function getNetForce(px, py) {
+      var Fx = 0, Fy = 0;
+      for (var i = 0; i < planets.length; i++) {
+        var p = planets[i];
+        var dx = p.x - px;  // vector from satellite toward planet
+        var dy = p.y - py;
+        var r2 = dx * dx + dy * dy;
+        var r = Math.sqrt(r2);
+        if (r < 12) r = 12;
+        // F = G * M / r^2 (satellite mass cancels for equilibrium)
+        var F = G_CONST * p.mass / (r * r);
+        Fx += F * dx / r;
+        Fy += F * dy / r;
+      }
+      return { x: Fx, y: Fy };
+    }
+
+    // === STARFIELD ===
+    var stars = [];
+    function generateStars() {
+      stars = [];
+      var count = Math.floor(canvasW * canvasH / 1200);
+      for (var i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvasW,
+          y: Math.random() * canvasH,
+          size: 0.3 + Math.random() * 1.4,
+          brightness: 0.3 + Math.random() * 0.7,
+          twinkleSpeed: 0.5 + Math.random() * 2.5,
+          twinkleOffset: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    // === DRAWING ===
+    function drawBackground() {
+      var grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
+      grad.addColorStop(0, tc.bgCenter);
+      grad.addColorStop(1, tc.bg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      // Graph paper grid
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var gridColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)';
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1;
+      for (var x = 40; x < canvasW; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvasH);
+        ctx.stroke();
+      }
+      for (var y = 40; y < canvasH; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvasW, y);
+        ctx.stroke();
+      }
+
+      // Starfield
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        var twinkle = 0.5 + 0.5 * Math.sin(glowPhase * s.twinkleSpeed + s.twinkleOffset);
+        var alpha = s.brightness * twinkle * (isLight ? 0.15 : 0.8);
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(220,230,255,' + alpha + ')';
+        ctx.fill();
+      }
+    }
+
+    var glowPhase = 0;
+
+    // Planet color palettes per index
+    var planetColors = [
+      { light: '#fbbf24', dark: '#d97706', glow: '245,158,11', band1: 'rgba(180,100,20,0.25)', band2: 'rgba(220,140,40,0.18)', ring: 'rgba(210,170,100,' },
+      { light: '#a78bfa', dark: '#7c3aed', glow: '124,58,237', band1: 'rgba(80,40,160,0.25)', band2: 'rgba(140,100,200,0.18)', ring: 'rgba(180,160,220,' }
+    ];
+
+    function drawPlanets() {
+      var pulse = 0.5 + 0.5 * Math.sin(glowPhase);
+
+      for (var i = 0; i < planets.length; i++) {
+        var p = planets[i];
+        var pc = planetColors[i];
+        var r = PLANET_RADIUS + (p.mass - 1) * 3;
+        var glowRadius = (28 + (p.mass - 1) * 6) + 10 * pulse;
+        var glowAlpha = 0.2 + 0.15 * pulse;
+
+        // Glow
+        var glowGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowRadius);
+        glowGrad.addColorStop(0, 'rgba(' + pc.glow + ',' + glowAlpha + ')');
+        glowGrad.addColorStop(0.6, 'rgba(' + pc.glow + ',' + (glowAlpha * 0.4) + ')');
+        glowGrad.addColorStop(1, 'rgba(' + pc.glow + ',0)');
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, glowRadius, 0, Math.PI * 2);
+        ctx.fillStyle = glowGrad;
+        ctx.fill();
+
+        // Saturn ring (behind planet — draw lower half first)
+        ctx.save();
+        var ringA = r * 2.0 + p.mass * 2;
+        var ringB = r * 0.45;
+        // Back half of ring (behind planet)
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y, ringA, ringB, 0, Math.PI, Math.PI * 2);
+        ctx.strokeStyle = pc.ring + (0.2 + 0.08 * pulse) + ')';
+        ctx.lineWidth = 2.5 + p.mass * 0.3;
+        ctx.stroke();
+        // Second ring track (thinner, offset)
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y, ringA * 0.78, ringB * 0.78, 0, Math.PI, Math.PI * 2);
+        ctx.strokeStyle = pc.ring + (0.12 + 0.05 * pulse) + ')';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.restore();
+
+        // Planet body
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.clip();
+
+        // Base gradient
+        var grad = ctx.createRadialGradient(p.x - r * 0.3, p.y - r * 0.3, 0, p.x, p.y, r);
+        grad.addColorStop(0, pc.light);
+        grad.addColorStop(1, pc.dark);
+        ctx.fillStyle = grad;
+        ctx.shadowColor = pc.dark;
+        ctx.shadowBlur = 12 + 6 * pulse;
+        ctx.fillRect(p.x - r, p.y - r, r * 2, r * 2);
+        ctx.shadowBlur = 0;
+
+        // Surface bands (horizontal stripes)
+        var bandCount = 4 + p.mass;
+        for (var b = 0; b < bandCount; b++) {
+          var by = p.y - r + (r * 2 / bandCount) * b;
+          var bh = r * 2 / bandCount;
+          ctx.fillStyle = (b % 2 === 0) ? pc.band1 : pc.band2;
+          ctx.fillRect(p.x - r, by, r * 2, bh);
+        }
+
+        // Subtle polar darkening
+        var poleGrad = ctx.createLinearGradient(p.x, p.y - r, p.x, p.y + r);
+        poleGrad.addColorStop(0, 'rgba(0,0,0,0.15)');
+        poleGrad.addColorStop(0.3, 'rgba(0,0,0,0)');
+        poleGrad.addColorStop(0.7, 'rgba(0,0,0,0)');
+        poleGrad.addColorStop(1, 'rgba(0,0,0,0.12)');
+        ctx.fillStyle = poleGrad;
+        ctx.fillRect(p.x - r, p.y - r, r * 2, r * 2);
+
+        // Specular highlight
+        var specGrad = ctx.createRadialGradient(p.x - r * 0.35, p.y - r * 0.35, 0, p.x, p.y, r);
+        specGrad.addColorStop(0, 'rgba(255,255,255,0.3)');
+        specGrad.addColorStop(0.4, 'rgba(255,255,255,0.05)');
+        specGrad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = specGrad;
+        ctx.fillRect(p.x - r, p.y - r, r * 2, r * 2);
+
+        ctx.restore();
+
+        // Saturn ring front half (in front of planet)
+        ctx.save();
+        var ringA2 = r * 2.0 + p.mass * 2;
+        var ringB2 = r * 0.45;
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y, ringA2, ringB2, 0, 0, Math.PI);
+        ctx.strokeStyle = pc.ring + (0.3 + 0.1 * pulse) + ')';
+        ctx.lineWidth = 2.5 + p.mass * 0.3;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y, ringA2 * 0.78, ringB2 * 0.78, 0, 0, Math.PI);
+        ctx.strokeStyle = pc.ring + (0.18 + 0.06 * pulse) + ')';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.restore();
+
+        // Label above planet
+        var labelY = p.y - r - 14;
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        ctx.font = 'bold 13px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        var subscript = i === 0 ? '\u2081' : '\u2082';
+        ctx.fillText('M' + subscript, p.x, labelY);
+      }
+    }
+
+    // Dashed lines from each planet to satellite (distance indicators)
+    function drawDistanceLines() {
+      var sx = satellite.x, sy = satellite.y;
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+      ctx.save();
+      ctx.setLineDash([5, 5]);
+      ctx.lineWidth = 1;
+      ctx.lineCap = 'round';
+
+      for (var i = 0; i < planets.length; i++) {
+        var p = planets[i];
+        var pc = planetColors[i];
+        var pr = PLANET_RADIUS + (p.mass - 1) * 3;
+
+        // Direction from planet to satellite
+        var dx = sx - p.x;
+        var dy = sy - p.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < pr + SAT_RADIUS + 5) continue;
+        var nx = dx / dist;
+        var ny = dy / dist;
+
+        // Start from planet edge, end at satellite edge
+        var x1 = p.x + nx * (pr + 3);
+        var y1 = p.y + ny * (pr + 3);
+        var x2 = sx - nx * (SAT_RADIUS + 3);
+        var y2 = sy - ny * (SAT_RADIUS + 3);
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = 'rgba(' + pc.glow + ',' + (isLight ? 0.2 : 0.18) + ')';
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    function drawSatellite() {
+      var pulse = 0.5 + 0.5 * Math.sin(glowPhase * 1.3);
+      var sx = satellite.x, sy = satellite.y;
+
+      // Glow — soft blue-white
+      var glowRadius = 28 + 10 * pulse;
+      var glowAlpha = 0.15 + 0.1 * pulse;
+      var glowGrad = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowRadius);
+      glowGrad.addColorStop(0, 'rgba(140,180,255,' + glowAlpha + ')');
+      glowGrad.addColorStop(0.6, 'rgba(140,180,255,' + (glowAlpha * 0.3) + ')');
+      glowGrad.addColorStop(1, 'rgba(140,180,255,0)');
+      ctx.beginPath();
+      ctx.arc(sx, sy, glowRadius, 0, Math.PI * 2);
+      ctx.fillStyle = glowGrad;
+      ctx.fill();
+
+      ctx.save();
+
+      // Solar panels (two rectangles on each side)
+      var panelW = 14, panelH = 8, panelGap = 7;
+      ctx.shadowColor = 'rgba(60,130,255,0.5)';
+      ctx.shadowBlur = 6 + 3 * pulse;
+
+      // Left panel
+      var grad1 = ctx.createLinearGradient(sx - panelGap - panelW, sy - panelH / 2, sx - panelGap, sy + panelH / 2);
+      grad1.addColorStop(0, '#1a4a8a');
+      grad1.addColorStop(0.5, '#2668c4');
+      grad1.addColorStop(1, '#1a4a8a');
+      ctx.fillStyle = grad1;
+      ctx.fillRect(sx - panelGap - panelW, sy - panelH / 2, panelW, panelH);
+      // Panel grid lines
+      ctx.strokeStyle = 'rgba(100,180,255,0.35)';
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(sx - panelGap - panelW, sy - panelH / 2, panelW, panelH);
+      ctx.beginPath();
+      ctx.moveTo(sx - panelGap - panelW / 2, sy - panelH / 2);
+      ctx.lineTo(sx - panelGap - panelW / 2, sy + panelH / 2);
+      ctx.moveTo(sx - panelGap - panelW, sy);
+      ctx.lineTo(sx - panelGap, sy);
+      ctx.stroke();
+
+      // Right panel
+      var grad2 = ctx.createLinearGradient(sx + panelGap, sy - panelH / 2, sx + panelGap + panelW, sy + panelH / 2);
+      grad2.addColorStop(0, '#1a4a8a');
+      grad2.addColorStop(0.5, '#2668c4');
+      grad2.addColorStop(1, '#1a4a8a');
+      ctx.fillStyle = grad2;
+      ctx.fillRect(sx + panelGap, sy - panelH / 2, panelW, panelH);
+      ctx.strokeStyle = 'rgba(100,180,255,0.35)';
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(sx + panelGap, sy - panelH / 2, panelW, panelH);
+      ctx.beginPath();
+      ctx.moveTo(sx + panelGap + panelW / 2, sy - panelH / 2);
+      ctx.lineTo(sx + panelGap + panelW / 2, sy + panelH / 2);
+      ctx.moveTo(sx + panelGap, sy);
+      ctx.lineTo(sx + panelGap + panelW, sy);
+      ctx.stroke();
+
+      // Panel arms (connecting rods)
+      ctx.strokeStyle = 'rgba(180,200,220,0.6)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(sx - panelGap, sy);
+      ctx.lineTo(sx - 4, sy);
+      ctx.moveTo(sx + panelGap, sy);
+      ctx.lineTo(sx + 4, sy);
+      ctx.stroke();
+
+      // Satellite body (central box)
+      ctx.shadowColor = 'rgba(160,190,230,0.6)';
+      ctx.shadowBlur = 8 + 4 * pulse;
+      var bodySize = 7;
+      var bodyGrad = ctx.createRadialGradient(sx - 1, sy - 1, 0, sx, sy, bodySize * 1.2);
+      bodyGrad.addColorStop(0, '#d0d8e8');
+      bodyGrad.addColorStop(1, '#8898b0');
+      ctx.fillStyle = bodyGrad;
+      ctx.beginPath();
+      ctx.roundRect(sx - bodySize, sy - bodySize, bodySize * 2, bodySize * 2, 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Body edge highlight
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      // Antenna (top)
+      ctx.strokeStyle = 'rgba(220,230,240,0.8)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(sx, sy - bodySize);
+      ctx.lineTo(sx, sy - bodySize - 6);
+      ctx.stroke();
+      // Antenna dish (small arc)
+      ctx.beginPath();
+      ctx.arc(sx, sy - bodySize - 6, 2.5, Math.PI * 0.8, Math.PI * 0.2, true);
+      ctx.strokeStyle = 'rgba(220,230,240,0.7)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // "Drag me" hint when docked
+      if (satDocked) {
+        var hintAlpha = 0.5 + 0.3 * Math.sin(glowPhase * 2);
+        ctx.font = 'bold 11px "Inter", sans-serif';
+        var hintText = 'Drag me!';
+        var htw = ctx.measureText(hintText).width;
+        var hpw = htw + 16;
+        var hph = 22;
+        var hpx = sx - hpw / 2;
+        var hpy = sy + bodySize + 14;
+
+        ctx.fillStyle = 'rgba(10,10,30,' + (0.7 * hintAlpha) + ')';
+        ctx.beginPath();
+        ctx.roundRect(hpx, hpy, hpw, hph, 11);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(140,180,255,' + (0.4 * hintAlpha) + ')';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(180,210,255,' + hintAlpha + ')';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(hintText, sx, hpy + hph / 2);
+      }
+
+      ctx.restore();
+    }
+
+    function drawForceArrow() {
+      var force = getNetForce(satellite.x, satellite.y);
+      var mag = Math.sqrt(force.x * force.x + force.y * force.y);
+      if (mag < EQUILIBRIUM_THRESHOLD) return;
+
+      var arrowLen = Math.min(80, 10 + 12 * Math.log(1 + mag * 0.5));
+      var nx = force.x / mag;
+      var ny = force.y / mag;
+
+      var startX = satellite.x + nx * (SAT_RADIUS + 4);
+      var startY = satellite.y + ny * (SAT_RADIUS + 4);
+      var endX = startX + nx * arrowLen;
+      var endY = startY + ny * arrowLen;
+
+      // Arrow shaft
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.strokeStyle = 'rgba(255,200,0,0.85)';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Arrowhead
+      var headLen = 10;
+      var angle = Math.atan2(ny, nx);
+      ctx.beginPath();
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(endX - headLen * Math.cos(angle - 0.4), endY - headLen * Math.sin(angle - 0.4));
+      ctx.lineTo(endX - headLen * Math.cos(angle + 0.4), endY - headLen * Math.sin(angle + 0.4));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255,200,0,0.9)';
+      ctx.fill();
+    }
+
+    // Draw individual force arrows from each planet (always toward planet)
+    function drawIndividualForces() {
+      var sx = satellite.x, sy = satellite.y;
+
+      for (var i = 0; i < planets.length; i++) {
+        var p = planets[i];
+        var dx = p.x - sx;
+        var dy = p.y - sy;
+        var r = Math.sqrt(dx * dx + dy * dy);
+        if (r < 12) r = 12;
+
+        var F = G_CONST * p.mass / (r * r);
+        var fx = F * dx / r;
+        var fy = F * dy / r;
+        var fmag = Math.sqrt(fx * fx + fy * fy);
+        if (fmag < 0.05) continue;
+
+        var nx = fx / fmag;
+        var ny = fy / fmag;
+
+        var arrowLen = Math.min(50, 8 + 10 * Math.log(1 + fmag * 0.4));
+
+        var startX = sx + nx * (SAT_RADIUS + 2);
+        var startY = sy + ny * (SAT_RADIUS + 2);
+        var endX = startX + nx * arrowLen;
+        var endY = startY + ny * arrowLen;
+
+        // Color matches planet
+        var arrowAlpha = 0.5;
+        var pc = planetColors[i];
+        var color = 'rgba(' + pc.glow + ',' + arrowAlpha + ')';
+
+        // Dashed shaft
+        ctx.save();
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Small arrowhead
+        var headLen = 6;
+        var angle = Math.atan2(ny, nx);
+        ctx.beginPath();
+        ctx.moveTo(endX, endY);
+        ctx.lineTo(endX - headLen * Math.cos(angle - 0.45), endY - headLen * Math.sin(angle - 0.45));
+        ctx.lineTo(endX - headLen * Math.cos(angle + 0.45), endY - headLen * Math.sin(angle + 0.45));
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function checkEquilibrium() {
+      var force = getNetForce(satellite.x, satellite.y);
+      var mag = Math.sqrt(force.x * force.x + force.y * force.y);
+      if (mag >= EQUILIBRIUM_THRESHOLD) return false;
+
+      // Must be within planet region
+      var minCx = planets[0].x, maxCx = planets[0].x;
+      var minCy = planets[0].y, maxCy = planets[0].y;
+      for (var i = 1; i < planets.length; i++) {
+        if (planets[i].x < minCx) minCx = planets[i].x;
+        if (planets[i].x > maxCx) maxCx = planets[i].x;
+        if (planets[i].y < minCy) minCy = planets[i].y;
+        if (planets[i].y > maxCy) maxCy = planets[i].y;
+      }
+      var spanX = maxCx - minCx;
+      var spanY = maxCy - minCy;
+      var padX = Math.max(80, spanX * 0.6);
+      var padY = Math.max(80, spanY * 0.6);
+      if (satellite.x < minCx - padX || satellite.x > maxCx + padX ||
+          satellite.y < minCy - padY || satellite.y > maxCy + padY) return false;
+
+      // Not on top of a planet
+      for (var i = 0; i < planets.length; i++) {
+        if (Math.hypot(satellite.x - planets[i].x, satellite.y - planets[i].y) < 20) return false;
+      }
+
+      return true;
+    }
+
+    function spawnCelebParticles() {
+      var sx = satellite.x, sy = satellite.y;
+      for (var i = 0; i < 12; i++) {
+        var angle = (Math.PI * 2 * i) / 12 + Math.random() * 0.3;
+        var speed = 1.2 + Math.random() * 1.5;
+        eqCelebParticles.push({
+          x: sx, y: sy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1.0,
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    function drawEquilibriumCelebration() {
+      var atEq = checkEquilibrium();
+
+      // Transition: just entered equilibrium
+      if (atEq && !isAtEquilibrium) {
+        eqCelebPhase = 0.01;
+        spawnCelebParticles();
+        // Achievement checks
+        if (planets[0].mass !== planets[1].mass) {
+          _achUnequalMassEq = true;
+        }
+        if ((planets[0].mass === 1 && planets[1].mass === 5) ||
+            (planets[0].mass === 5 && planets[1].mass === 1)) {
+          _achExtremeMassEq = true;
+        }
+      }
+      isAtEquilibrium = atEq;
+
+      if (!atEq && eqCelebPhase === 0) return;
+
+      var sx = satellite.x, sy = satellite.y;
+
+      if (atEq) {
+        eqCelebPhase = Math.min(eqCelebPhase + 0.03, 1.0);
+      } else {
+        eqCelebPhase = Math.max(eqCelebPhase - 0.05, 0);
+        if (eqCelebPhase <= 0) { eqCelebParticles = []; return; }
+      }
+
+      ctx.save();
+
+      // Pulsing rings — amber tinted
+      var ringPulse = 0.5 + 0.5 * Math.sin(glowPhase * 2);
+      for (var ri = 0; ri < 3; ri++) {
+        var ringRadius = SAT_RADIUS + 10 + ri * 14 + ringPulse * 6;
+        var ringAlpha = (0.25 - ri * 0.07) * eqCelebPhase;
+        ctx.beginPath();
+        ctx.arc(sx, sy, ringRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(245,158,11,' + ringAlpha + ')';
+        ctx.lineWidth = 1.5 - ri * 0.3;
+        ctx.stroke();
+      }
+
+      // Sparkle particles
+      for (var i = eqCelebParticles.length - 1; i >= 0; i--) {
+        var pt = eqCelebParticles[i];
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.vx *= 0.97;
+        pt.vy *= 0.97;
+        pt.life -= 0.012;
+        if (pt.life <= 0) { eqCelebParticles.splice(i, 1); continue; }
+
+        var alpha = pt.life * eqCelebPhase;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, pt.size * pt.life, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(251,191,36,' + alpha + ')';
+        ctx.shadowColor = 'rgba(251,191,36,' + (alpha * 0.6) + ')';
+        ctx.shadowBlur = 6;
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+
+      // Spawn new particles while at equilibrium
+      if (atEq && Math.random() < 0.15) {
+        var angle = Math.random() * Math.PI * 2;
+        var speed = 0.5 + Math.random() * 1.0;
+        eqCelebParticles.push({
+          x: sx + Math.cos(angle) * (SAT_RADIUS + 5),
+          y: sy + Math.sin(angle) * (SAT_RADIUS + 5),
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 0.7 + Math.random() * 0.3,
+          size: 1.5 + Math.random() * 2
+        });
+        if (eqCelebParticles.length > 30) eqCelebParticles.shift();
+      }
+
+      // Label pill
+      var labelAlpha = eqCelebPhase;
+      var labelY = sy - SAT_RADIUS - 28;
+      var labelText = 'Equilibrium!';
+      ctx.font = 'bold 13px "Inter", sans-serif';
+      var tw = ctx.measureText(labelText).width;
+      var pillW = tw + 24;
+      var pillH = 28;
+      var pillX = sx - pillW / 2;
+      var pillY = labelY - pillH / 2;
+
+      ctx.globalAlpha = labelAlpha;
+      ctx.fillStyle = tc.labelBg;
+      ctx.beginPath();
+      ctx.roundRect(pillX, pillY, pillW, pillH, 14);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(245,158,11,0.5)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(labelText, sx, labelY);
+      ctx.globalAlpha = 1;
+
+      ctx.restore();
+    }
+
+    // Draw gravitational field vector grid
+    function drawFieldGrid() {
+      if (!showField) return;
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var spacing = 36;
+      var maxArrow = 14;
+      var minArrow = 3;
+
+      for (var gx = spacing; gx < canvasW; gx += spacing) {
+        for (var gy = spacing; gy < canvasH; gy += spacing) {
+          // Skip if too close to any planet
+          var tooClose = false;
+          for (var ci = 0; ci < planets.length; ci++) {
+            if (Math.hypot(gx - planets[ci].x, gy - planets[ci].y) < 22) {
+              tooClose = true; break;
+            }
+          }
+          if (tooClose) continue;
+          if (Math.hypot(gx - satellite.x, gy - satellite.y) < 20) continue;
+
+          // Compute gravitational field at this point
+          var gfx = 0, gfy = 0;
+          for (var ci = 0; ci < planets.length; ci++) {
+            var p = planets[ci];
+            var dx = p.x - gx;
+            var dy = p.y - gy;
+            var r2 = dx * dx + dy * dy;
+            var r = Math.sqrt(r2);
+            if (r < 12) r = 12;
+            var g = G_CONST * p.mass / (r * r);
+            gfx += g * dx / r;
+            gfy += g * dy / r;
+          }
+
+          var gmag = Math.sqrt(gfx * gfx + gfy * gfy);
+          if (gmag < 0.1) continue;
+
+          var len = Math.min(maxArrow, minArrow + 3.5 * Math.log(1 + gmag * 0.3));
+          var nx = gfx / gmag;
+          var ny = gfy / gmag;
+
+          var alpha = Math.min(0.55, 0.12 + 0.1 * Math.log(1 + gmag * 0.2));
+
+          var sx = gx - nx * len * 0.4;
+          var sy = gy - ny * len * 0.4;
+          var ex = gx + nx * len * 0.6;
+          var ey = gy + ny * len * 0.6;
+
+          // Amber/orange color for gravity field
+          var arrowColor = isLight ? 'rgba(180,100,0,' + alpha + ')' : 'rgba(245,180,50,' + alpha + ')';
+
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(ex, ey);
+          ctx.strokeStyle = arrowColor;
+          ctx.lineWidth = 1.2;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+
+          var headLen = 4;
+          var angle = Math.atan2(ny, nx);
+          ctx.beginPath();
+          ctx.moveTo(ex, ey);
+          ctx.lineTo(ex - headLen * Math.cos(angle - 0.5), ey - headLen * Math.sin(angle - 0.5));
+          ctx.lineTo(ex - headLen * Math.cos(angle + 0.5), ey - headLen * Math.sin(angle + 0.5));
+          ctx.closePath();
+          ctx.fillStyle = arrowColor;
+          ctx.fill();
+        }
+      }
+    }
+
+    // Geometry overlay: dashed line + midpoint
+    function drawGeometryOverlay() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var lineColor = isLight ? 'rgba(124,58,237,0.12)' : 'rgba(124,58,237,0.15)';
+      var dotColor = isLight ? 'rgba(124,58,237,0.25)' : 'rgba(124,58,237,0.3)';
+      var labelColor = isLight ? 'rgba(124,58,237,0.35)' : 'rgba(124,58,237,0.4)';
+
+      var a = planets[0], b = planets[1];
+
+      ctx.save();
+      ctx.setLineDash([6, 6]);
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+
+      // Midpoint
+      var midX = (a.x + b.x) / 2;
+      var midY = (a.y + b.y) / 2;
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.arc(midX, midY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = dotColor;
+      ctx.fill();
+      ctx.font = '11px "Inter", sans-serif';
+      ctx.fillStyle = labelColor;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('midpoint', midX, midY - 8);
+
+      ctx.restore();
+    }
+
+    // Draw the radioactive trefoil symbol (three blades + center circle)
+    function drawRadioactiveSymbol(cx, cy, size, alpha, rotation) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(rotation);
+      ctx.globalAlpha = alpha;
+
+      var outerR = size;
+      var innerR = size * 0.35;
+      var bladeGap = 0.18; // gap angle in radians between blades
+
+      // Three blades
+      for (var b = 0; b < 3; b++) {
+        var startAngle = b * (Math.PI * 2 / 3) + bladeGap;
+        var endAngle = (b + 1) * (Math.PI * 2 / 3) - bladeGap;
+
+        ctx.beginPath();
+        ctx.arc(0, 0, outerR, startAngle, endAngle);
+        ctx.arc(0, 0, innerR, endAngle, startAngle, true);
+        ctx.closePath();
+        ctx.fillStyle = '#ffd000';
+        ctx.fill();
+      }
+
+      // Center circle
+      ctx.beginPath();
+      ctx.arc(0, 0, innerR * 0.55, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffd000';
+      ctx.fill();
+
+      // Inner hole
+      ctx.beginPath();
+      ctx.arc(0, 0, innerR * 0.25, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a1a00';
+      ctx.fill();
+
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    function drawCrashWarning() {
+      if (crashPhase <= 0) return;
+      var p = planets[crashedPlanetIdx];
+      if (!p) return;
+      var pr = PLANET_RADIUS + (p.mass - 1) * 3;
+
+      ctx.save();
+      ctx.globalAlpha = crashPhase;
+
+      // Pulsing yellow-red ring around crashed planet
+      var flashPulse = 0.5 + 0.5 * Math.sin(glowPhase * 4);
+      var colorShift = 0.5 + 0.5 * Math.sin(glowPhase * 2.5); // slow color oscillation
+      var ringR = Math.round(255);
+      var ringG = Math.round(208 * (1 - colorShift) + 60 * colorShift); // 208 (yellow) → 60 (red)
+      var ringB = Math.round(0);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, pr + 8 + 5 * flashPulse, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(' + ringR + ',' + ringG + ',' + ringB + ',' + (0.5 + 0.3 * flashPulse) + ')';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Second ring (offset color phase)
+      var colorShift2 = 0.5 + 0.5 * Math.sin(glowPhase * 2.5 + 1.5);
+      var ringG2 = Math.round(208 * (1 - colorShift2) + 60 * colorShift2);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, pr + 16 + 3 * flashPulse, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(' + ringR + ',' + ringG2 + ',' + ringB + ',' + (0.2 + 0.15 * flashPulse) + ')';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Third faint outer ring
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, pr + 24 + 4 * (1 - flashPulse), 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,' + Math.round(100 * (1 - colorShift)) + ',0,' + (0.08 + 0.07 * flashPulse) + ')';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // === Center-top banner ===
+      var bannerX = canvasW / 2;
+      var bannerY = 28;
+
+      // Hazard stripe background
+      var warnLabel = 'Satellite has crashed.';
+      ctx.font = 'bold 14px "Inter", sans-serif';
+      var tw = ctx.measureText(warnLabel).width;
+      var iconSpace = 36; // space for radioactive symbol on left
+      var pillW = tw + iconSpace + 30;
+      var pillH = 36;
+      var pillX = bannerX - pillW / 2;
+      var pillY = bannerY;
+
+      // Black background
+      ctx.fillStyle = 'rgba(20,20,0,0.92)';
+      ctx.beginPath();
+      ctx.roundRect(pillX, pillY, pillW, pillH, 18);
+      ctx.fill();
+
+      // Yellow border
+      ctx.strokeStyle = 'rgba(255,208,0,0.7)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Hazard diagonal stripes inside border (clipped)
+      ctx.save();
+      ctx.beginPath();
+      ctx.roundRect(pillX, pillY, pillW, pillH, 18);
+      ctx.clip();
+      var stripeW = 8;
+      ctx.strokeStyle = 'rgba(255,208,0,0.06)';
+      ctx.lineWidth = stripeW;
+      for (var si = -pillH; si < pillW + pillH; si += stripeW * 2.5) {
+        ctx.beginPath();
+        ctx.moveTo(pillX + si, pillY + pillH);
+        ctx.lineTo(pillX + si + pillH, pillY);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Spinning radioactive symbol on the left
+      var symX = pillX + iconSpace / 2 + 10;
+      var symY = pillY + pillH / 2;
+      var spinAngle = glowPhase * 1.5;
+      drawRadioactiveSymbol(symX, symY, 10, crashPhase, spinAngle);
+
+      // Text
+      ctx.fillStyle = '#ffd000';
+      ctx.font = 'bold 14px "Inter", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(warnLabel, pillX + iconSpace + (pillW - iconSpace) / 2, pillY + pillH / 2);
+
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    function drawFrame() {
+      drawBackground();
+      drawFieldGrid();
+      drawGeometryOverlay();
+      drawDistanceLines();
+      drawPlanets();
+      drawIndividualForces();
+      drawForceArrow();
+      drawSatellite();
+      drawEquilibriumCelebration();
+      drawCrashWarning();
+    }
+
+    function draw() {
+      drawFrame();
+    }
+
+    // === ANIMATION LOOP ===
+    var animRunning = false;
+
+    function animLoop() {
+      if (!animRunning) return;
+      glowPhase += 0.02;
+      if (glowPhase > Math.PI * 2) glowPhase -= Math.PI * 2;
+
+      // Advance crash warning fade
+      if (satCrashed) {
+        crashPhase = Math.min(crashPhase + 0.04, 1.0);
+      } else {
+        crashPhase = Math.max(crashPhase - 0.06, 0);
+      }
+
+      // Drift physics when not dragging (and not docked or crashed)
+      if (!draggingSat && !satDocked && !satCrashed) {
+        var force = getNetForce(satellite.x, satellite.y);
+        var fMag = Math.sqrt(force.x * force.x + force.y * force.y);
+
+        // Sticky equilibrium: progressive damping near equilibrium
+        var STICKY_THRESHOLD = EQUILIBRIUM_THRESHOLD * 8;
+        if (fMag < STICKY_THRESHOLD) {
+          var nearPlanet = false;
+          for (var ci = 0; ci < planets.length; ci++) {
+            var cd = Math.hypot(satellite.x - planets[ci].x, satellite.y - planets[ci].y);
+            if (cd < 500) { nearPlanet = true; break; }
+          }
+          if (nearPlanet) {
+            // Much stronger progressive damping for gravity
+            // At edge (ratio≈1): factor ≈ 0.85 (gentle braking)
+            // At equilibrium (ratio≈0): factor ≈ 0.3 (very heavy)
+            var ratio = fMag / STICKY_THRESHOLD;
+            var stickyDamp = 0.3 + 0.55 * ratio;
+            driftVx *= stickyDamp;
+            driftVy *= stickyDamp;
+            // Snap to rest when very close to equilibrium
+            if (fMag < EQUILIBRIUM_THRESHOLD && Math.abs(driftVx) < 0.15 && Math.abs(driftVy) < 0.15) {
+              driftVx = 0;
+              driftVy = 0;
+            }
+          }
+        }
+
+        driftVx += force.x * DT;
+        driftVy += force.y * DT;
+        driftVx *= DAMPING;
+        driftVy *= DAMPING;
+
+        // Clamp velocity
+        var speed = Math.sqrt(driftVx * driftVx + driftVy * driftVy);
+        var maxSpeed = 6;
+        if (speed > maxSpeed) {
+          driftVx = driftVx / speed * maxSpeed;
+          driftVy = driftVy / speed * maxSpeed;
+        }
+
+        satellite.x += driftVx;
+        satellite.y += driftVy;
+
+        // Clamp to canvas bounds and bounce
+        var margin = SAT_RADIUS + 2;
+        if (satellite.x < margin) { satellite.x = margin; driftVx = Math.abs(driftVx) * 0.3; }
+        if (satellite.x > canvasW - margin) { satellite.x = canvasW - margin; driftVx = -Math.abs(driftVx) * 0.3; }
+        if (satellite.y < margin) { satellite.y = margin; driftVy = Math.abs(driftVy) * 0.3; }
+        if (satellite.y > canvasH - margin) { satellite.y = canvasH - margin; driftVy = -Math.abs(driftVy) * 0.3; }
+
+        // Crash detection: satellite hits planet surface
+        for (var ci = 0; ci < planets.length; ci++) {
+          var cp = planets[ci];
+          var cpr = PLANET_RADIUS + (cp.mass - 1) * 3;
+          var cd = Math.hypot(satellite.x - cp.x, satellite.y - cp.y);
+          if (cd < cpr + SAT_RADIUS * 0.5) {
+            // Snap satellite to planet center and freeze
+            satellite.x = cp.x;
+            satellite.y = cp.y;
+            driftVx = 0;
+            driftVy = 0;
+            satCrashed = true;
+            crashedPlanetIdx = ci;
+            break;
+          }
+        }
+      }
+
+      drawFrame();
+      requestAnimationFrame(animLoop);
+    }
+
+    function startAnim() {
+      if (!animRunning) {
+        animRunning = true;
+        requestAnimationFrame(animLoop);
+      }
+    }
+
+    function stopAnim() {
+      animRunning = false;
+    }
+
+    // === DRAG INTERACTION ===
+    function getCanvasPos(e) {
+      var rect = canvas.getBoundingClientRect();
+      if (e.touches) {
+        return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+      }
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function isOverSat(mx, my) {
+      return Math.hypot(mx - satellite.x, my - satellite.y) < GRAB_RADIUS;
+    }
+
+    canvas.addEventListener('mousedown', function(e) {
+      var pos = getCanvasPos(e);
+      if (isOverSat(pos.x, pos.y)) {
+        draggingSat = true;
+        satDocked = false;
+        satCrashed = false;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'grabbing';
+        e.preventDefault();
+      }
+    });
+
+    canvas.addEventListener('mousemove', function(e) {
+      var pos = getCanvasPos(e);
+      if (draggingSat) {
+        satellite.x = Math.max(SAT_RADIUS, Math.min(canvasW - SAT_RADIUS, pos.x));
+        satellite.y = Math.max(SAT_RADIUS, Math.min(canvasH - SAT_RADIUS, pos.y));
+      } else {
+        canvas.style.cursor = isOverSat(pos.x, pos.y) ? 'grab' : 'default';
+      }
+    });
+
+    canvas.addEventListener('mouseup', function() {
+      if (draggingSat) {
+        draggingSat = false;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'default';
+      }
+    });
+
+    canvas.addEventListener('mouseleave', function() {
+      if (draggingSat) {
+        draggingSat = false;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'default';
+      }
+    });
+
+    // Touch support
+    canvas.addEventListener('touchstart', function(e) {
+      var pos = getCanvasPos(e);
+      if (isOverSat(pos.x, pos.y)) {
+        draggingSat = true;
+        satDocked = false;
+        satCrashed = false;
+        driftVx = 0;
+        driftVy = 0;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', function(e) {
+      if (draggingSat) {
+        e.preventDefault();
+        var rect = canvas.getBoundingClientRect();
+        var tx = e.touches[0].clientX - rect.left;
+        var ty = e.touches[0].clientY - rect.top;
+        satellite.x = Math.max(SAT_RADIUS, Math.min(canvasW - SAT_RADIUS, tx));
+        satellite.y = Math.max(SAT_RADIUS, Math.min(canvasH - SAT_RADIUS, ty));
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', function() {
+      if (draggingSat) {
+        draggingSat = false;
+        driftVx = 0;
+        driftVy = 0;
+      }
+    });
+
+    canvas.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+    // === FULLSCREEN ===
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(resizeCanvas, 100);
+      setTimeout(resizeCanvas, 300);
+    });
+
+    // === TUTORIAL OVERLAY ===
+    function drawCurvedArrow(svg, x1, y1, x2, y2) {
+      var ns = 'http://www.w3.org/2000/svg';
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+      var cx1 = x1 + dx * 0.2;
+      var cy1 = y1 + dy * 0.6;
+      var cx2 = x1 + dx * 0.8;
+      var cy2 = y1 + dy * 0.4;
+
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d',
+        'M' + x1 + ',' + y1 +
+        ' C' + cx1 + ',' + cy1 +
+        ' ' + cx2 + ',' + cy2 +
+        ' ' + x2 + ',' + y2
+      );
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgba(255,255,255,0.85)');
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(path);
+
+      var angle = Math.atan2(y2 - cy2, x2 - cx2);
+      var headLen = 10;
+      var a1x = x2 - headLen * Math.cos(angle - 0.4);
+      var a1y = y2 - headLen * Math.sin(angle - 0.4);
+      var a2x = x2 - headLen * Math.cos(angle + 0.4);
+      var a2y = y2 - headLen * Math.sin(angle + 0.4);
+      var arrow = document.createElementNS(ns, 'polygon');
+      arrow.setAttribute('points',
+        x2 + ',' + y2 + ' ' +
+        a1x + ',' + a1y + ' ' +
+        a2x + ',' + a2y
+      );
+      arrow.setAttribute('fill', 'rgba(255,255,255,0.85)');
+      svg.appendChild(arrow);
+    }
+
+    function positionTutorialHints() {
+      var area = document.getElementById('simArea');
+      var areaRect = area.getBoundingClientRect();
+      var svg = document.getElementById('tutArrowsSvg');
+      svg.innerHTML = '';
+
+      var targets = [
+        { hint: 'tutHintMass',  el: massControlsContainer,                    type: 'bottom' },
+        { hint: 'tutHintDrag',  el: document.getElementById('simCanvas'),     type: 'canvas' },
+        { hint: 'tutHintField', el: document.getElementById('showFieldBtn'),  type: 'bottom' }
+      ];
+
+      var placed = [];
+
+      for (var i = 0; i < targets.length; i++) {
+        var t = targets[i];
+        var hintEl = document.getElementById(t.hint);
+        if (!t.el) continue;
+        var elRect = t.el.getBoundingClientRect();
+        var cx = elRect.left + elRect.width / 2 - areaRect.left;
+        var cy = elRect.top - areaRect.top;
+
+        if (t.type === 'canvas') {
+          var midX = elRect.left + elRect.width / 2 - areaRect.left;
+          var midY = elRect.top + elRect.height * 0.35 - areaRect.top;
+          hintEl.style.left = midX + 'px';
+          hintEl.style.top = midY + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+          hintEl.style.right = '';
+          continue;
+        }
+
+        hintEl.style.left = cx + 'px';
+        hintEl.style.transform = 'translateX(-50%)';
+        hintEl.style.top = '0px';
+
+        var hintRect = hintEl.getBoundingClientRect();
+        var hintW = hintRect.width;
+        var hintH = hintRect.height;
+
+        var desiredTop = cy - 50;
+        var hintLeft = cx - hintW / 2;
+        var hintRight = hintLeft + hintW;
+
+        var finalTop = desiredTop;
+        for (var j = 0; j < placed.length; j++) {
+          var pl = placed[j];
+          if (hintRight > pl.left && hintLeft < pl.right) {
+            if (finalTop + hintH > pl.top && finalTop < pl.bottom) {
+              finalTop = pl.top - hintH - 8;
+            }
+          }
+        }
+
+        hintEl.style.top = finalTop + 'px';
+        placed.push({
+          left: hintLeft,
+          right: hintRight,
+          top: finalTop,
+          bottom: finalTop + hintH
+        });
+
+        var arrowStartX = cx;
+        var arrowStartY = finalTop + hintH + 2;
+        var arrowEndX = cx;
+        var arrowEndY = cy + 2;
+        drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+      }
+    }
+
+    function showTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.display = '';
+      el.offsetHeight;
+      el.style.opacity = '1';
+      positionTutorialHints();
+    }
+
+    window.addEventListener('resize', function() {
+      if (document.getElementById('simTutorial').style.display !== 'none') {
+        positionTutorialHints();
+      }
+    });
+
+    function dismissTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.opacity = '0';
+      setTimeout(function() { el.style.display = 'none'; }, 400);
+      localStorage.setItem('tut-gravity-equilibrium', '1');
+    }
+
+    if (!localStorage.getItem('tut-gravity-equilibrium')) {
+      showTutorial();
+    }
+
+    document.getElementById('simTutorial').addEventListener('click', dismissTutorial);
+    document.getElementById('helpBtn').addEventListener('click', showTutorial);
+
+    // === INIT ===
+    resizeCanvas();
+    startAnim();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -27,6 +27,17 @@
   border-color: rgba(124, 58, 237, 0.3);
 }
 
+.ach-toggle.completed {
+  opacity: 0.35;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.ach-toggle.completed:hover {
+  opacity: 0.8;
+  border-color: var(--border-subtle);
+}
+
 .ach-toggle .ach-badge-count {
   position: absolute;
   top: -4px;

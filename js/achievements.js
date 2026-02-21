@@ -180,11 +180,15 @@
     var comp = document.getElementById('ach-complete');
     if (count === achievements.length) {
       comp.classList.add('visible');
-      // All done — hide the toggle button
-      toggle.style.display = 'none';
+      // All done — keep toggle but make it subtle, no badge
+      toggle.style.display = '';
+      toggle.classList.add('completed');
+      var badge = toggle.querySelector('.ach-badge-count');
+      if (badge) badge.style.display = 'none';
     } else {
       comp.classList.remove('visible');
       toggle.style.display = '';
+      toggle.classList.remove('completed');
     }
 
     document.getElementById('ach-signin-hint').style.display = signedIn ? 'none' : '';

@@ -1212,6 +1212,28 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
     }
   ],
 
+  /* ── Gravitational Equilibrium ── */
+  'gravity-equilibrium': [
+    {
+      id: 'unequal_mass_eq', title: 'Shifted Gravity',
+      description: 'Find equilibrium with unequal planet masses',
+      icon: '\uD83E\uDE90',
+      check: { type: 'global', name: '_achUnequalMassEq', op: 'eq', value: true }
+    },
+    {
+      id: 'gravity_field_explorer', title: 'Field Observer',
+      description: 'Toggle the gravitational field display',
+      icon: '\uD83D\uDD2D',
+      check: { type: 'global', name: '_achGravFieldShown', op: 'eq', value: true }
+    },
+    {
+      id: 'extreme_mass_eq', title: 'David vs Goliath',
+      description: 'Find equilibrium with one planet at max mass and the other at minimum',
+      icon: '\u2696\uFE0F',
+      check: { type: 'global', name: '_achExtremeMassEq', op: 'eq', value: true }
+    }
+  ],
+
   /* ── Electrostatics ── */
   electrostatics: [
     {
