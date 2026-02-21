@@ -98,7 +98,7 @@
   var toggle = document.createElement('button');
   toggle.className = 'ach-toggle';
   toggle.setAttribute('aria-label', 'Achievements');
-  toggle.innerHTML = '<span style="display:block">&#127942;</span><span class="ach-badge-count" style="display:none">0</span>';
+  toggle.innerHTML = '<span style="display:block">&#127942;</span>';
   document.body.appendChild(toggle);
 
   var panel = document.createElement('div');
@@ -137,10 +137,16 @@
     toggle.style.display = 'none';
   }
 
+  function allComplete() {
+    var count = 0;
+    for (var k in unlocked) { if (unlocked[k] && unlocked[k].unlocked) count++; }
+    return count === achievements.length;
+  }
+
   function closePanel() {
     panel.classList.remove('open');
     overlay.classList.remove('visible');
-    toggle.style.display = '';
+    if (!allComplete()) toggle.style.display = '';
   }
 
   toggle.addEventListener('click', openPanel);
@@ -171,13 +177,15 @@
     document.getElementById('ach-prog-text').textContent = count + '/' + achievements.length + ' Discoveries';
     document.getElementById('ach-prog-fill').style.width = (count / achievements.length * 100) + '%';
 
-    var badge = toggle.querySelector('.ach-badge-count');
-    if (count > 0) { badge.textContent = count; badge.style.display = ''; }
-    else { badge.style.display = 'none'; }
-
     var comp = document.getElementById('ach-complete');
-    if (count === achievements.length) comp.classList.add('visible');
-    else comp.classList.remove('visible');
+    if (count === achievements.length) {
+      comp.classList.add('visible');
+      // All done — hide the toggle button
+      toggle.style.display = 'none';
+    } else {
+      comp.classList.remove('visible');
+      toggle.style.display = '';
+    }
 
     document.getElementById('ach-signin-hint').style.display = signedIn ? 'none' : '';
   }
