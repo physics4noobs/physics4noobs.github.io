@@ -535,9 +535,9 @@
       </div>
 
       <div class="qa-item">
-        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Can the boat ever reach directly opposite if v<sub>r</sub> &gt; v<sub>b</sub>?</div>
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Why does aiming upstream increase the crossing time?</div>
         <div class="qa-a"><div class="qa-a-inner">
-          <strong>No.</strong> To land directly opposite, the boat must cancel the river&rsquo;s push entirely, which requires v<sub>b</sub> sin&theta; = v<sub>r</sub>. When v<sub>r</sub> &gt; v<sub>b</sub>, sin&theta; would need to exceed 1, which is impossible. The boat can still cross, but it will <strong>always drift downstream</strong>. In this case the best strategy is to minimise drift, not eliminate it. Try setting v<sub>river</sub> &gt; v<sub>boat</sub> in the simulation to see this!
+          When the boat aims upstream, part of its velocity is used to fight the current instead of crossing the river. The crossing component becomes v<sub>b</sub> cos&theta;, which <strong>decreases</strong> as &theta; increases. So crossing time t = d / (v<sub>b</sub> cos&theta;) gets longer. This creates a trade-off: aiming more upstream reduces drift but makes the crossing slower, giving the river more time to push the boat sideways.
           <br><button class="qa-copy" onclick="copyQA(this)">&#128203; Copy</button>
         </div></div>
       </div>
