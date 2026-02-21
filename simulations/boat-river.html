@@ -304,7 +304,7 @@
       margin-bottom: 2px;
     }
 
-    #simArea { background: var(--bg-primary); }
+    #simArea { background: var(--bg-primary); position: relative; }
 
     #simArea:fullscreen,
     #simArea:-webkit-full-screen {
@@ -425,6 +425,106 @@
       border-color: rgba(74, 222, 128, 0.3);
       background: rgba(74, 222, 128, 0.08);
     }
+
+    /* === Tutorial Overlay === */
+    .sim-tutorial {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+
+    .tut-hint {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .tut-arrow {
+      font-size: 1.5rem;
+      line-height: 1;
+      animation: tut-bounce 1.4s ease-in-out infinite;
+    }
+
+    .tut-hint-up .tut-arrow { animation-name: tut-bounce-down; }
+
+    .tut-label {
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.92);
+      color: #1a1a2e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .tut-dismiss {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 32px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tut-dismiss:hover {
+      background: #e8e0f8;
+      transform: translateX(-50%) scale(1.04);
+    }
+
+    @keyframes tut-bounce {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(6px); }
+    }
+
+    @keyframes tut-bounce-down {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    @media (max-width: 900px) {
+      .tut-hint {
+        position: static !important;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+      .tut-dismiss {
+        position: static;
+        transform: none;
+        margin-top: 18px;
+      }
+      .tut-dismiss:hover { transform: scale(1.04); }
+      .sim-tutorial {
+        justify-content: center;
+        gap: 0;
+        padding: 24px 12px;
+      }
+    }
   </style>
 
   <div class="sim-wrapper">
@@ -434,12 +534,9 @@
       <div style="display:flex;gap:8px;">
         <button class="sim-btn" id="resetBtn">Reset</button>
         <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="helpBtn">? Help</button>
       </div>
     </div>
-    <p style="font-family: var(--font-body); font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.6;">
-      Set the boat angle (&theta;), boat speed, and river speed using the sliders or by typing values below. A negative angle aims upstream to fight the current. Hit <strong style="color:var(--text-primary);">Launch</strong> to see how the river current affects the boat's path, drift, and crossing time.
-    </p>
-
     <div class="sim-main-row">
       <div class="canvas-wrap">
         <canvas id="simCanvas"></canvas>
@@ -477,6 +574,31 @@
         <input type="number" id="riverSpeedInput" min="1" max="10" value="3" step="0.5">
         <label>m/s</label>
       </div>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div class="sim-tutorial" id="simTutorial" style="display:none;">
+      <div class="tut-hint tut-hint-up" id="tutLaunch">
+        <div class="tut-label">Click Launch to fire the boat</div>
+        <div class="tut-arrow">&#8595;</div>
+      </div>
+      <div class="tut-hint tut-hint-up" id="tutAngle">
+        <div class="tut-label">Adjust the boat angle (&theta;)</div>
+        <div class="tut-arrow">&#8595;</div>
+      </div>
+      <div class="tut-hint tut-hint-up" id="tutBoatSpeed">
+        <div class="tut-label">Set boat speed</div>
+        <div class="tut-arrow">&#8595;</div>
+      </div>
+      <div class="tut-hint tut-hint-up" id="tutRiverSpeed">
+        <div class="tut-label">Set river current speed</div>
+        <div class="tut-arrow">&#8595;</div>
+      </div>
+      <div class="tut-hint" id="tutData">
+        <div class="tut-label">Live data updates here</div>
+        <div class="tut-arrow">&#8594;</div>
+      </div>
+      <button class="tut-dismiss">Got it, let's start!</button>
     </div>
 
     </div><!-- end #simArea -->
@@ -1383,6 +1505,74 @@
     // === EVENT LISTENERS ===
     document.getElementById('resetBtn').addEventListener('click', resetSim);
     document.getElementById('launchBtn').addEventListener('click', launch);
+
+    // === TUTORIAL OVERLAY ===
+    function showTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.display = '';
+      // Force reflow then set opacity for transition
+      el.offsetHeight;
+      el.style.opacity = '1';
+      positionTutorialHints();
+    }
+
+    window.addEventListener('resize', function() {
+      if (document.getElementById('simTutorial').style.display !== 'none') {
+        positionTutorialHints();
+      }
+    });
+
+    function dismissTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.opacity = '0';
+      setTimeout(function() { el.style.display = 'none'; }, 400);
+      localStorage.setItem('tut-boat-river', '1');
+    }
+
+    function positionTutorialHints() {
+      var area = document.getElementById('simArea');
+      var areaRect = area.getBoundingClientRect();
+
+      var targets = [
+        { hint: 'tutLaunch', el: document.getElementById('launchBtn') },
+        { hint: 'tutAngle', el: document.getElementById('boatAngle') },
+        { hint: 'tutBoatSpeed', el: document.getElementById('boatSpeed') },
+        { hint: 'tutRiverSpeed', el: document.getElementById('riverSpeed') },
+        { hint: 'tutData', el: document.querySelector('.side-data') }
+      ];
+
+      for (var i = 0; i < targets.length; i++) {
+        var t = targets[i];
+        var hintEl = document.getElementById(t.hint);
+        var elRect = t.el.getBoundingClientRect();
+        var cx = elRect.left + elRect.width / 2 - areaRect.left;
+        var cy = elRect.top - areaRect.top;
+
+        if (t.hint === 'tutData') {
+          // Position to the left of the side-data panel, vertically centered
+          var midY = elRect.top + elRect.height / 2 - areaRect.top;
+          hintEl.style.top = midY + 'px';
+          hintEl.style.right = (areaRect.right - elRect.left + 8) + 'px';
+          hintEl.style.left = '';
+        } else {
+          // Position above the control element
+          hintEl.style.left = cx + 'px';
+          hintEl.style.top = (cy - 40) + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+        }
+      }
+    }
+
+    // First visit auto-show
+    if (!localStorage.getItem('tut-boat-river')) {
+      showTutorial();
+    }
+
+    // Dismiss on click anywhere on overlay
+    document.getElementById('simTutorial').addEventListener('click', dismissTutorial);
+
+    // Help button re-shows overlay
+    document.getElementById('helpBtn').addEventListener('click', showTutorial);
 
     // Init
     resizeCanvas();
