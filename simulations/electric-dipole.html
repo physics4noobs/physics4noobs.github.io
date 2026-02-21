@@ -971,68 +971,114 @@
       ctx.fillRect(0, 0, canvasW, canvasH);
     }
 
+    function traceFieldLine(startX, startY, direction, stopCharge) {
+      // direction: +1 = along field, -1 = against field
+      var step = 3;
+      var maxSteps = 500;
+      var points = [{ x: startX, y: startY }];
+      var arrowX = -1, arrowY = -1, arrowDX = 0, arrowDY = 0;
+      var recorded30 = false;
+      var px = startX, py = startY;
+
+      for (var s = 0; s < maxSteps; s++) {
+        var f = getFieldAt(px, py);
+        var fmag = Math.sqrt(f.x * f.x + f.y * f.y);
+        if (fmag < 1e-12) break;
+        var nx = direction * f.x / fmag;
+        var ny = direction * f.y / fmag;
+
+        px += nx * step;
+        py += ny * step;
+
+        // Stop if hit the stop charge
+        var dToStop = Math.sqrt((px - stopCharge.x) * (px - stopCharge.x) + (py - stopCharge.y) * (py - stopCharge.y));
+        if (dToStop < CHARGE_RADIUS) break;
+
+        // Stop if off canvas
+        if (px < -30 || px > canvasW + 30 || py < -30 || py > canvasH + 30) break;
+
+        points.push({ x: px, y: py });
+
+        // Record arrow position at ~30% along
+        if (!recorded30 && s > maxSteps * 0.15) {
+          // Arrow always points along the actual field direction (toward -q)
+          var af = getFieldAt(px, py);
+          var afm = Math.sqrt(af.x * af.x + af.y * af.y);
+          if (afm > 0) {
+            arrowX = px; arrowY = py;
+            arrowDX = af.x / afm; arrowDY = af.y / afm;
+          }
+          recorded30 = true;
+        }
+      }
+      return { points: points, arrowX: arrowX, arrowY: arrowY, arrowDX: arrowDX, arrowDY: arrowDY };
+    }
+
     function drawDipoleFieldLines() {
       if (!showFieldLines && viewMode !== 'field') return;
 
       var NUM_LINES = 12;
-      var step = 3;
-      var maxSteps = 400;
+      var startR = CHARGE_RADIUS + 6;
 
       for (var i = 0; i < NUM_LINES; i++) {
         var angle = (i / NUM_LINES) * Math.PI * 2;
-        var startR = CHARGE_RADIUS + 6;
+
+        // Lines starting from +q (trace along field direction, stop at -q or edge)
         var sx = qPlus.x + Math.cos(angle) * startR;
         var sy = qPlus.y + Math.sin(angle) * startR;
+        var result = traceFieldLine(sx, sy, +1, qMinus);
 
-        ctx.beginPath();
-        ctx.moveTo(sx, sy);
+        if (result.points.length > 1) {
+          ctx.beginPath();
+          ctx.moveTo(result.points[0].x, result.points[0].y);
+          for (var j = 1; j < result.points.length; j++) {
+            ctx.lineTo(result.points[j].x, result.points[j].y);
+          }
+          ctx.strokeStyle = 'rgba(255,200,0,0.3)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
 
-        var px = sx, py = sy;
-        var arrowX = -1, arrowY = -1, arrowDX = 0, arrowDY = 0;
-        var recorded30 = false;
-
-        for (var s = 0; s < maxSteps; s++) {
-          var f = getFieldAt(px, py);
-          var fmag = Math.sqrt(f.x * f.x + f.y * f.y);
-          if (fmag < 1e-12) break;
-          var nx = f.x / fmag;
-          var ny = f.y / fmag;
-
-          px += nx * step;
-          py += ny * step;
-
-          // Stop if hit -q
-          var dToMinus = Math.sqrt((px - qMinus.x) * (px - qMinus.x) + (py - qMinus.y) * (py - qMinus.y));
-          if (dToMinus < CHARGE_RADIUS) break;
-
-          // Stop if off canvas
-          if (px < -30 || px > canvasW + 30 || py < -30 || py > canvasH + 30) break;
-
-          ctx.lineTo(px, py);
-
-          // Record arrow position at ~30% along
-          if (!recorded30 && s > maxSteps * 0.15) {
-            arrowX = px; arrowY = py;
-            arrowDX = nx; arrowDY = ny;
-            recorded30 = true;
+          if (result.arrowX > 0 && result.arrowX < canvasW && result.arrowY > 0 && result.arrowY < canvasH) {
+            var headLen = 8;
+            var a = Math.atan2(result.arrowDY, result.arrowDX);
+            ctx.beginPath();
+            ctx.moveTo(result.arrowX + result.arrowDX * headLen * 0.5, result.arrowY + result.arrowDY * headLen * 0.5);
+            ctx.lineTo(result.arrowX - headLen * Math.cos(a - 0.5), result.arrowY - headLen * Math.sin(a - 0.5));
+            ctx.lineTo(result.arrowX - headLen * Math.cos(a + 0.5), result.arrowY - headLen * Math.sin(a + 0.5));
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(255,200,0,0.45)';
+            ctx.fill();
           }
         }
 
-        ctx.strokeStyle = 'rgba(255,200,0,0.3)';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
+        // Lines ending at -q (trace against field from -q outward, then draw reversed)
+        var sx2 = qMinus.x + Math.cos(angle) * startR;
+        var sy2 = qMinus.y + Math.sin(angle) * startR;
+        var result2 = traceFieldLine(sx2, sy2, -1, qPlus);
 
-        // Arrowhead
-        if (arrowX > 0 && arrowX < canvasW && arrowY > 0 && arrowY < canvasH) {
-          var headLen = 8;
-          var a = Math.atan2(arrowDY, arrowDX);
+        if (result2.points.length > 1) {
+          // Draw in reverse so the line goes toward -q (along the field)
           ctx.beginPath();
-          ctx.moveTo(arrowX + arrowDX * headLen * 0.5, arrowY + arrowDY * headLen * 0.5);
-          ctx.lineTo(arrowX - headLen * Math.cos(a - 0.5), arrowY - headLen * Math.sin(a - 0.5));
-          ctx.lineTo(arrowX - headLen * Math.cos(a + 0.5), arrowY - headLen * Math.sin(a + 0.5));
-          ctx.closePath();
-          ctx.fillStyle = 'rgba(255,200,0,0.45)';
-          ctx.fill();
+          var last = result2.points.length - 1;
+          ctx.moveTo(result2.points[last].x, result2.points[last].y);
+          for (var j = last - 1; j >= 0; j--) {
+            ctx.lineTo(result2.points[j].x, result2.points[j].y);
+          }
+          ctx.strokeStyle = 'rgba(255,200,0,0.3)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          if (result2.arrowX > 0 && result2.arrowX < canvasW && result2.arrowY > 0 && result2.arrowY < canvasH) {
+            var headLen = 8;
+            var a2 = Math.atan2(result2.arrowDY, result2.arrowDX);
+            ctx.beginPath();
+            ctx.moveTo(result2.arrowX + result2.arrowDX * headLen * 0.5, result2.arrowY + result2.arrowDY * headLen * 0.5);
+            ctx.lineTo(result2.arrowX - headLen * Math.cos(a2 - 0.5), result2.arrowY - headLen * Math.sin(a2 - 0.5));
+            ctx.lineTo(result2.arrowX - headLen * Math.cos(a2 + 0.5), result2.arrowY - headLen * Math.sin(a2 + 0.5));
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(255,200,0,0.45)';
+            ctx.fill();
+          }
         }
       }
     }
