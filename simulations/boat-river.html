@@ -1126,6 +1126,7 @@
         // Keep animating drift marker pulse
         landedBoat = { x: boat.x, y: riverTop, angle: boat.angle };
         boat = null;
+        if (window.AchievementEngine) AchievementEngine.check();
         animateLanded();
       }
     }

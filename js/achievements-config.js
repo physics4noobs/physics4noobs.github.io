@@ -817,24 +817,34 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
   'boat-river': [
     {
       id: 'mad_sailor', title: 'Mad Sailor',
-      description: 'Set angle to -90° — the boat can never cross!',
+      description: 'Set angle to -90\u00B0 \u2014 the boat can never cross!',
       icon: '\uD83E\uDD2A',
-      check: { type: 'slider', id: 'boatAngle', op: 'eq', value: -90 }
+      check: { type: 'custom', fn: function() {
+        var ba = document.getElementById('boatAngle');
+        return ba && parseFloat(ba.value) === -90;
+      }}
     },
     {
       id: 'min_time', title: 'Minimum Time',
-      description: 'Point the boat straight across (angle = 0)',
+      description: 'Cross the river with angle = 0\u00B0',
       icon: '\u23F1\uFE0F',
-      check: { type: 'slider', id: 'boatAngle', op: 'eq', value: 0 }
+      check: { type: 'custom', fn: function() {
+        if (typeof landedBoat === 'undefined' || !landedBoat) return false;
+        var ba = document.getElementById('boatAngle');
+        return ba && parseFloat(ba.value) === 0;
+      }}
     },
     {
       id: 'min_drift', title: 'Zero Drift',
-      description: 'Angle the boat upstream to cancel drift',
+      description: 'Cross the river with zero drift by angling upstream',
       icon: '\uD83C\uDFAF',
       check: { type: 'custom', fn: function() {
-        if (typeof boat === 'undefined' || !boat) return false;
+        if (typeof landedBoat === 'undefined' || !landedBoat) return false;
         var ba = document.getElementById('boatAngle');
-        return ba && parseFloat(ba.value) < 0 && boat.y <= 50;
+        if (!ba || parseFloat(ba.value) >= 0) return false;
+        // Check drift is near zero (landing x close to start x)
+        var drift = Math.abs(landedBoat.x - startX);
+        return drift < 10; // within 10px = effectively zero drift
       }}
     }
   ],
