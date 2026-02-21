@@ -1185,6 +1185,40 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
     }
   ],
 
+  /* ── Equilibrium Position Finder ── */
+  equilibrium: [
+    {
+      id: 'found_equilibrium', title: 'Balance Point',
+      description: 'Find an equilibrium position for the test charge',
+      icon: '\u2696\uFE0F',
+      check: { type: 'global', name: 'equilibriumFound', op: 'eq', value: true }
+    },
+    {
+      id: 'unequal_charges', title: 'Unequal Forces',
+      description: 'Set two charges to different magnitudes',
+      icon: '\uD83D\uDCAA',
+      check: { type: 'custom', fn: function() {
+        if (typeof fixedCharges === 'undefined' || fixedCharges.length < 2) return false;
+        var first = fixedCharges[0].mag;
+        for (var i = 1; i < fixedCharges.length; i++) {
+          if (fixedCharges[i].mag !== first) return true;
+        }
+        return false;
+      }}
+    },
+    {
+      id: 'all_presets', title: 'Arrangement Explorer',
+      description: 'Try all three charge arrangements',
+      icon: '\uD83D\uDD0D',
+      check: { type: 'custom', fn: function() {
+        if (typeof preset === 'undefined') return false;
+        if (!window._achPresetSeen) window._achPresetSeen = {};
+        window._achPresetSeen[preset] = true;
+        return window._achPresetSeen.triangle && window._achPresetSeen.line && window._achPresetSeen.square;
+      }}
+    }
+  ],
+
   /* ── Electrostatics ── */
   electrostatics: [
     {

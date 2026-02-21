@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equilibrium Position Finder | Axomiya Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/achievements.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/sim-tracker.js"></script>
+  <script defer src="../js/achievements-config.js"></script>
+  <script defer src="../js/achievements.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-pendulum"><div class="sp-mount"></div><div class="sp-pivot"></div><div class="sp-arm"><div class="sp-rod"></div><div class="sp-bob"><div class="sp-glow"></div></div></div></div><div class="splash-logo">Axomiya Engineer</div><div class="splash-tagline">Lets Make Physics Fun</div></div>
+<div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link active">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <style>
+    .bg-grid, #particles-canvas { display: none !important; }
+
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-btn.primary {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .sim-btn.primary:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .sim-btn.active {
+      background: rgba(124, 58, 237, 0.18);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 10px rgba(124,58,237,0.25);
+      transform: scale(1.06);
+    }
+
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2.5vw, 24px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .control-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border-subtle);
+    }
+
+    .sim-select {
+      padding: 7px 28px 7px 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237c3aed'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 10px 6px;
+    }
+
+    .sim-select:hover {
+      border-color: rgba(124, 58, 237, 0.3);
+      background-color: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-select:focus {
+      outline: none;
+      border-color: rgba(124, 58, 237, 0.5);
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.15);
+    }
+
+    .sign-btn {
+      min-width: 36px;
+      height: 32px;
+      padding: 4px 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      border-radius: var(--radius-sm);
+      border: 1px solid;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sign-btn.pos {
+      background: rgba(255,45,117,0.18);
+      border-color: rgba(255,45,117,0.4);
+      color: #ff5a92;
+    }
+
+    .sign-btn.neg {
+      background: rgba(0,212,255,0.10);
+      border-color: rgba(0,212,255,0.3);
+      color: #00d4ff;
+    }
+
+    .sign-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .test-charge-btn {
+      min-width: 48px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .test-charge-btn.pos-test {
+      background: rgba(0,200,83,0.15);
+      border-color: rgba(0,200,83,0.4);
+      color: #00c853;
+    }
+
+    .test-charge-btn.neg-test {
+      background: rgba(255,170,50,0.15);
+      border-color: rgba(255,170,50,0.4);
+      color: #ffaa32;
+    }
+
+    .charge-ctrl {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 2px 4px;
+    }
+
+    .mag-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .mag-btn {
+      width: 20px;
+      height: 24px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 0;
+      line-height: 1;
+      transition: var(--transition-fast);
+    }
+
+    .mag-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .mag-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      min-width: 14px;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
+    .qa-section {
+      margin-top: 32px;
+    }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
+    }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 500px;
+    }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
+      position: relative;
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 8px; padding: 12px; }
+    }
+
+    /* === Tutorial Overlay === */
+    .sim-tutorial {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+
+    .tut-hint {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .tut-arrows-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tut-label {
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.92);
+      color: #1a1a2e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .tut-dismiss {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 32px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tut-dismiss:hover {
+      background: #e8e0f8;
+      transform: translateX(-50%) scale(1.04);
+    }
+
+    @media (max-width: 900px) {
+      .sim-tutorial { display: none !important; }
+      #helpBtn { display: none; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Equilibrium Position Finder</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="helpBtn">? Help</button>
+      </div>
+    </div>
+
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="control-group">
+        <label>Preset:</label>
+        <select class="sim-select" id="presetSelect">
+          <option value="triangle">Triangle</option>
+          <option value="line">Line</option>
+          <option value="square">Square</option>
+        </select>
+      </div>
+
+      <div class="control-sep"></div>
+
+      <div class="control-group" id="signToggles">
+        <label>Charges:</label>
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="control-sep"></div>
+
+      <div class="control-group">
+        <label>Test charge:</label>
+        <button class="sim-btn test-charge-btn pos-test" id="testChargeBtn">+q</button>
+      </div>
+
+      <div class="control-sep"></div>
+
+      <button class="sim-btn" id="resetArrangement">&#8635; Reset</button>
+
+      <div class="control-sep"></div>
+
+      <button class="sim-btn" id="showFieldBtn">Show Field</button>
+
+      <span style="font-size: clamp(0.72rem, 0.85vw, 0.82rem); color: var(--text-muted); margin-left: auto;">Drag the green test charge to find equilibrium</span>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div class="sim-tutorial" id="simTutorial" style="display:none;">
+      <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
+
+      <div class="tut-hint" id="tutHintPreset">
+        <div class="tut-label">Select a charge arrangement</div>
+      </div>
+      <div class="tut-hint" id="tutHintDrag">
+        <div class="tut-label">Drag the green test charge to find equilibrium</div>
+      </div>
+      <div class="tut-hint" id="tutHintSigns">
+        <div class="tut-label">Toggle charge signs</div>
+      </div>
+
+      <button class="tut-dismiss">Got it, let's start!</button>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Coulomb's Law</span>
+          F = kq&#8321;q&#8322;/r&sup2;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Equilibrium Condition</span>
+          &Sigma;F = 0
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Electric Field</span>
+          E = kq/r&sup2;
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What is electrostatic equilibrium?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Electrostatic equilibrium occurs when the <strong>net electric force</strong> on a charge is zero. At this point, the forces from all surrounding charges cancel each other out exactly, so the charge experiences no acceleration and remains stationary. This is a key concept in understanding how charges arrange themselves in conductors and charge distributions.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Can equilibrium exist between two like charges?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Yes, but only for a charge of <strong>opposite sign</strong> placed between them. Two like charges (e.g. both positive) repel a positive test charge from both sides, so there exists a point exactly between them where the repulsive forces balance. However, this equilibrium is <strong>unstable</strong> &mdash; any sideways displacement will cause the test charge to be pushed away. For a negative test charge between two positives, the equilibrium is <strong>stable</strong> along the line but unstable perpendicular to it.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What is the difference between stable and unstable equilibrium?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          In <strong>stable equilibrium</strong>, if a charge is slightly displaced, the net force pushes it back toward the equilibrium position &mdash; like a ball in a bowl. In <strong>unstable equilibrium</strong>, any small displacement causes the charge to accelerate away from the equilibrium point &mdash; like a ball balanced on top of a hill. Earnshaw's theorem states that no arrangement of static charges can create a stable equilibrium in all three dimensions.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Where is the equilibrium point for a dipole test charge?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          For a test charge near a dipole (one positive and one negative charge), equilibrium points can be found along the axis connecting the two charges, but <strong>outside</strong> the dipole. The exact position depends on the magnitudes of the charges. Between the charges, both forces point in the same direction for a positive test charge, so no equilibrium exists there. The equilibrium is always <strong>unstable</strong>.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How does changing charge signs affect equilibrium position?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Changing a charge's sign <strong>reverses</strong> the direction of its force on the test charge. This shifts the equilibrium position because the balance of forces changes. For example, flipping a positive charge to negative in a symmetric arrangement breaks the symmetry and moves the equilibrium point toward the newly negative charge (for a positive test charge), or may eliminate the equilibrium entirely. Experimenting with sign toggles in this simulation lets you see these shifts directly.
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        bg: isLight ? '#e8eaf0' : '#080818',
+        bgCenter: isLight ? '#f0f2f8' : '#0a0a24',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.04)',
+        text: isLight ? '#333' : '#fff',
+        labelBg: isLight ? 'rgba(255,255,255,0.88)' : 'rgba(10,10,30,0.88)',
+        labelBorder: isLight ? 'rgba(124,58,237,0.35)' : 'rgba(124,58,237,0.35)',
+        labelText: isLight ? '#7c3aed' : '#a78bfa'
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === CANVAS SETUP ===
+    var canvas = document.getElementById('simCanvas');
+    var ctx = canvas.getContext('2d');
+    var canvasW, canvasH;
+
+    function resizeCanvas() {
+      var wrap = canvas.parentElement;
+      var isFS = !!document.fullscreenElement;
+      var w = wrap.clientWidth;
+      var h = isFS ? wrap.clientHeight : Math.max(350, window.innerHeight - 300);
+      var dpr = window.devicePixelRatio || 1;
+
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      canvasW = w;
+      canvasH = h;
+
+      // Reposition charges to new canvas center
+      applyPreset(preset);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    // === SIMULATION STATE ===
+    var kConst = 50000; // Scaled Coulomb constant — large enough for visible forces
+    var preset = 'triangle';
+    var fixedCharges = []; // [{x, y, q: +1/-1, mag: 1..5}]
+    var testCharge = { x: 0, y: 0, q: 1 };
+    var draggingTest = false;
+    var driftVx = 0, driftVy = 0;
+    var DAMPING = 0.95;
+    var DT = 0.08;
+    var EQUILIBRIUM_THRESHOLD = 2.5; // net force must be below this to show label
+    var CHARGE_RADIUS = 12;
+    var TEST_RADIUS = 14;
+    var GRAB_RADIUS = 22;
+    var MAX_MAG = 5;
+    var equilibriumFound = false; // achievement tracking
+    var showField = false; // toggle for field vector grid
+
+    // === PRESET SYSTEM ===
+    function applyPreset(name) {
+      preset = name;
+      var cx = canvasW / 2;
+      var cy = canvasH / 2;
+      var spread = Math.min(canvasW, canvasH) * 0.25;
+
+      if (name === 'triangle') {
+        var side = spread * 1.8; // larger triangle
+        var h = side * Math.sqrt(3) / 2;
+        fixedCharges = [
+          { x: cx, y: cy - h * 0.67, q: 1, mag: 1 },
+          { x: cx - side / 2, y: cy + h * 0.33, q: 1, mag: 1 },
+          { x: cx + side / 2, y: cy + h * 0.33, q: 1, mag: 1 }
+        ];
+      } else if (name === 'line') {
+        var lineHalf = spread * 1.6;
+        fixedCharges = [
+          { x: cx - lineHalf, y: cy, q: 1, mag: 1 },
+          { x: cx + lineHalf, y: cy, q: 1, mag: 1 }
+        ];
+      } else if (name === 'square') {
+        var half = spread * 0.7;
+        fixedCharges = [
+          { x: cx - half, y: cy - half, q: 1, mag: 1 },
+          { x: cx + half, y: cy - half, q: -1, mag: 1 },
+          { x: cx + half, y: cy + half, q: 1, mag: 1 },
+          { x: cx - half, y: cy + half, q: -1, mag: 1 }
+        ];
+      }
+
+      // Reset test charge offset from center so it's not at a trivial symmetry point
+      testCharge.x = cx + 30;
+      testCharge.y = cy + 20;
+      driftVx = 0;
+      driftVy = 0;
+
+      updateSignButtons();
+      draw();
+    }
+
+    // Preset dropdown
+    var presetSelect = document.getElementById('presetSelect');
+
+    function setActivePreset(name) {
+      presetSelect.value = name;
+      applyPreset(name);
+    }
+
+    presetSelect.addEventListener('change', function() {
+      applyPreset(presetSelect.value);
+    });
+
+    // === SIGN TOGGLE + MAGNITUDE BUTTONS ===
+    var signTogglesContainer = document.getElementById('signToggles');
+
+    function updateSignButtons() {
+      // Remove existing charge controls (keep the label)
+      var ctrls = signTogglesContainer.querySelectorAll('.charge-ctrl');
+      for (var i = 0; i < ctrls.length; i++) ctrls[i].remove();
+
+      for (var i = 0; i < fixedCharges.length; i++) {
+        (function(idx) {
+          var wrap = document.createElement('div');
+          wrap.className = 'charge-ctrl';
+
+          // Sign toggle button
+          var btn = document.createElement('button');
+          btn.className = 'sign-btn ' + (fixedCharges[idx].q > 0 ? 'pos' : 'neg');
+          function updateBtnLabel() {
+            var sign = fixedCharges[idx].q > 0 ? '+' : '\u2212';
+            btn.textContent = 'Q' + (idx + 1) + ' ' + sign;
+            btn.className = 'sign-btn ' + (fixedCharges[idx].q > 0 ? 'pos' : 'neg');
+          }
+          updateBtnLabel();
+          btn.addEventListener('click', function() {
+            fixedCharges[idx].q *= -1;
+            updateBtnLabel();
+            driftVx = 0;
+            driftVy = 0;
+          });
+
+          // Magnitude stepper
+          var stepper = document.createElement('div');
+          stepper.className = 'mag-stepper';
+          var downBtn = document.createElement('button');
+          downBtn.className = 'mag-btn';
+          downBtn.textContent = '\u25BC';
+          var magVal = document.createElement('span');
+          magVal.className = 'mag-val';
+          magVal.textContent = fixedCharges[idx].mag;
+          var upBtn = document.createElement('button');
+          upBtn.className = 'mag-btn';
+          upBtn.textContent = '\u25B2';
+
+          downBtn.addEventListener('click', function() {
+            if (fixedCharges[idx].mag > 1) {
+              fixedCharges[idx].mag--;
+              magVal.textContent = fixedCharges[idx].mag;
+              driftVx = 0;
+              driftVy = 0;
+            }
+          });
+          upBtn.addEventListener('click', function() {
+            if (fixedCharges[idx].mag < MAX_MAG) {
+              fixedCharges[idx].mag++;
+              magVal.textContent = fixedCharges[idx].mag;
+              driftVx = 0;
+              driftVy = 0;
+            }
+          });
+
+          stepper.appendChild(downBtn);
+          stepper.appendChild(magVal);
+          stepper.appendChild(upBtn);
+
+          wrap.appendChild(btn);
+          wrap.appendChild(stepper);
+          signTogglesContainer.appendChild(wrap);
+        })(i);
+      }
+    }
+
+    // === TEST CHARGE TOGGLE ===
+    var testChargeBtn = document.getElementById('testChargeBtn');
+    testChargeBtn.addEventListener('click', function() {
+      testCharge.q *= -1;
+      if (testCharge.q > 0) {
+        testChargeBtn.textContent = '+q';
+        testChargeBtn.className = 'sim-btn test-charge-btn pos-test';
+      } else {
+        testChargeBtn.textContent = '\u2212q';
+        testChargeBtn.className = 'sim-btn test-charge-btn neg-test';
+      }
+      driftVx = 0;
+      driftVy = 0;
+      draw();
+    });
+
+    // === RESET ===
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      testCharge.q = 1;
+      testChargeBtn.textContent = '+q';
+      testChargeBtn.className = 'sim-btn test-charge-btn pos-test';
+      setActivePreset(preset);
+    });
+
+    document.getElementById('resetArrangement').addEventListener('click', function() {
+      testCharge.q = 1;
+      testChargeBtn.textContent = '+q';
+      testChargeBtn.className = 'sim-btn test-charge-btn pos-test';
+      setActivePreset(preset);
+    });
+
+    // === SHOW FIELD TOGGLE ===
+    var showFieldBtn = document.getElementById('showFieldBtn');
+    showFieldBtn.addEventListener('click', function() {
+      showField = !showField;
+      showFieldBtn.classList.toggle('active', showField);
+      showFieldBtn.textContent = showField ? 'Hide Field' : 'Show Field';
+    });
+
+    // === PHYSICS ===
+    function getNetForce(px, py) {
+      var Fx = 0, Fy = 0;
+      for (var i = 0; i < fixedCharges.length; i++) {
+        var c = fixedCharges[i];
+        var dx = px - c.x;
+        var dy = py - c.y;
+        var r2 = dx * dx + dy * dy;
+        var r = Math.sqrt(r2);
+        if (r < 12) r = 12; // Prevent singularity near charge body
+        // Force = k * qTest * (qSign * magnitude) / r²
+        var F = kConst * testCharge.q * c.q * c.mag / (r * r);
+        Fx += F * dx / r;
+        Fy += F * dy / r;
+      }
+      return { x: Fx, y: Fy };
+    }
+
+    // === DRAWING ===
+    function drawBackground() {
+      var grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
+      grad.addColorStop(0, tc.bgCenter);
+      grad.addColorStop(1, tc.bg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      // Graph paper grid
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var gridColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)';
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1;
+      for (var x = 40; x < canvasW; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvasH);
+        ctx.stroke();
+      }
+      for (var y = 40; y < canvasH; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvasW, y);
+        ctx.stroke();
+      }
+    }
+
+    var glowPhase = 0;
+
+    function drawFixedCharges() {
+      var pulse = 0.5 + 0.5 * Math.sin(glowPhase);
+
+      for (var i = 0; i < fixedCharges.length; i++) {
+        var c = fixedCharges[i];
+        // Scale radius by magnitude: base 12, grows with mag
+        var r = CHARGE_RADIUS + (c.mag - 1) * 3;
+        var glowRadius = (28 + (c.mag - 1) * 6) + 10 * pulse;
+        var glowAlpha = 0.2 + 0.15 * pulse;
+
+        // Glow
+        var glowGrad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, glowRadius);
+        if (c.q > 0) {
+          glowGrad.addColorStop(0, 'rgba(255,45,117,' + glowAlpha + ')');
+          glowGrad.addColorStop(0.6, 'rgba(255,45,117,' + (glowAlpha * 0.4) + ')');
+          glowGrad.addColorStop(1, 'rgba(255,45,117,0)');
+        } else {
+          glowGrad.addColorStop(0, 'rgba(0,212,255,' + glowAlpha + ')');
+          glowGrad.addColorStop(0.6, 'rgba(0,212,255,' + (glowAlpha * 0.4) + ')');
+          glowGrad.addColorStop(1, 'rgba(0,212,255,0)');
+        }
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, glowRadius, 0, Math.PI * 2);
+        ctx.fillStyle = glowGrad;
+        ctx.fill();
+
+        // Charge body
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, r, 0, Math.PI * 2);
+        var grad = ctx.createRadialGradient(c.x - 3, c.y - 3, 0, c.x, c.y, r);
+        if (c.q > 0) {
+          grad.addColorStop(0, '#ff5a92');
+          grad.addColorStop(1, '#ff2d75');
+        } else {
+          grad.addColorStop(0, '#33e0ff');
+          grad.addColorStop(1, '#00d4ff');
+        }
+        ctx.fillStyle = grad;
+        ctx.shadowColor = c.q > 0 ? '#ff2d75' : '#00d4ff';
+        ctx.shadowBlur = 12 + 6 * pulse;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Label — show sign and magnitude
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold ' + (12 + c.mag) + 'px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        var sign = c.q > 0 ? '+' : '\u2212';
+        ctx.fillText(sign + c.mag, c.x, c.y);
+      }
+    }
+
+    function drawTestCharge() {
+      var pulse = 0.5 + 0.5 * Math.sin(glowPhase * 1.3);
+      var tx = testCharge.x, ty = testCharge.y;
+
+      // Glow
+      var glowRadius = 30 + 12 * pulse;
+      var glowAlpha = 0.25 + 0.15 * pulse;
+      var glowGrad = ctx.createRadialGradient(tx, ty, 0, tx, ty, glowRadius);
+      glowGrad.addColorStop(0, 'rgba(0,200,83,' + glowAlpha + ')');
+      glowGrad.addColorStop(0.6, 'rgba(0,200,83,' + (glowAlpha * 0.4) + ')');
+      glowGrad.addColorStop(1, 'rgba(0,200,83,0)');
+      ctx.beginPath();
+      ctx.arc(tx, ty, glowRadius, 0, Math.PI * 2);
+      ctx.fillStyle = glowGrad;
+      ctx.fill();
+
+      // Body
+      ctx.beginPath();
+      ctx.arc(tx, ty, TEST_RADIUS, 0, Math.PI * 2);
+      var grad = ctx.createRadialGradient(tx - 3, ty - 3, 0, tx, ty, TEST_RADIUS);
+      grad.addColorStop(0, '#4cff8e');
+      grad.addColorStop(1, '#00c853');
+      ctx.fillStyle = grad;
+      ctx.shadowColor = '#00c853';
+      ctx.shadowBlur = 14 + 6 * pulse;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Label
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 14px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(testCharge.q > 0 ? '+q' : '\u2212q', tx, ty);
+    }
+
+    function drawForceArrow() {
+      var force = getNetForce(testCharge.x, testCharge.y);
+      var mag = Math.sqrt(force.x * force.x + force.y * force.y);
+      if (mag < EQUILIBRIUM_THRESHOLD) return;
+
+      // Scale arrow length: log scale so it doesn't get too huge
+      var arrowLen = Math.min(80, 10 + 12 * Math.log(1 + mag * 0.5));
+      var nx = force.x / mag;
+      var ny = force.y / mag;
+
+      var startX = testCharge.x + nx * (TEST_RADIUS + 4);
+      var startY = testCharge.y + ny * (TEST_RADIUS + 4);
+      var endX = startX + nx * arrowLen;
+      var endY = startY + ny * arrowLen;
+
+      // Arrow shaft
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.strokeStyle = 'rgba(255,200,0,0.85)';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Arrowhead
+      var headLen = 10;
+      var angle = Math.atan2(ny, nx);
+      ctx.beginPath();
+      ctx.moveTo(endX, endY);
+      ctx.lineTo(endX - headLen * Math.cos(angle - 0.4), endY - headLen * Math.sin(angle - 0.4));
+      ctx.lineTo(endX - headLen * Math.cos(angle + 0.4), endY - headLen * Math.sin(angle + 0.4));
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255,200,0,0.9)';
+      ctx.fill();
+    }
+
+    function drawEquilibriumLabel() {
+      if (fixedCharges.length === 0) return;
+
+      var force = getNetForce(testCharge.x, testCharge.y);
+      var mag = Math.sqrt(force.x * force.x + force.y * force.y);
+      if (mag >= EQUILIBRIUM_THRESHOLD) return;
+
+      // Must be within the charge arrangement — not out in empty space
+      // Compute bounding box of fixed charges with some padding
+      var minCx = fixedCharges[0].x, maxCx = fixedCharges[0].x;
+      var minCy = fixedCharges[0].y, maxCy = fixedCharges[0].y;
+      for (var i = 1; i < fixedCharges.length; i++) {
+        if (fixedCharges[i].x < minCx) minCx = fixedCharges[i].x;
+        if (fixedCharges[i].x > maxCx) maxCx = fixedCharges[i].x;
+        if (fixedCharges[i].y < minCy) minCy = fixedCharges[i].y;
+        if (fixedCharges[i].y > maxCy) maxCy = fixedCharges[i].y;
+      }
+      // Padding: 60% of the arrangement's span (or at least 80px)
+      var spanX = maxCx - minCx;
+      var spanY = maxCy - minCy;
+      var padX = Math.max(80, spanX * 0.6);
+      var padY = Math.max(80, spanY * 0.6);
+      if (testCharge.x < minCx - padX || testCharge.x > maxCx + padX ||
+          testCharge.y < minCy - padY || testCharge.y > maxCy + padY) return;
+
+      // Must not be sitting right on top of a fixed charge (trivial zero)
+      for (var i = 0; i < fixedCharges.length; i++) {
+        if (Math.hypot(testCharge.x - fixedCharges[i].x, testCharge.y - fixedCharges[i].y) < 20) return;
+      }
+
+      // Must be in a region where individual forces are non-negligible
+      // (i.e., at least one charge exerts meaningful force — rules out "far from everything")
+      var maxSingleForce = 0;
+      for (var i = 0; i < fixedCharges.length; i++) {
+        var c = fixedCharges[i];
+        var r = Math.hypot(testCharge.x - c.x, testCharge.y - c.y);
+        if (r < 12) r = 12;
+        var f = kConst * c.mag / (r * r);
+        if (f > maxSingleForce) maxSingleForce = f;
+      }
+      // The strongest individual force must be at least 5× the threshold
+      // This ensures we're in a region where forces are actively cancelling, not just absent
+      if (maxSingleForce < EQUILIBRIUM_THRESHOLD * 5) return;
+
+      equilibriumFound = true; // achievement tracking
+
+      var tx = testCharge.x;
+      var ty = testCharge.y - TEST_RADIUS - 28;
+
+      ctx.save();
+      var labelText = 'Equilibrium!';
+      ctx.font = 'bold 13px "Inter", sans-serif';
+      var tw = ctx.measureText(labelText).width;
+      var pillW = tw + 24;
+      var pillH = 28;
+      var pillX = tx - pillW / 2;
+      var pillY = ty - pillH / 2;
+
+      ctx.fillStyle = tc.labelBg;
+      ctx.beginPath();
+      ctx.roundRect(pillX, pillY, pillW, pillH, 14);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,200,83,0.5)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#00c853';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(labelText, tx, ty);
+      ctx.restore();
+    }
+
+    // Draw field vector grid across the canvas
+    function drawFieldGrid() {
+      if (!showField || fixedCharges.length === 0) return;
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var spacing = 36; // grid spacing in px
+      var maxArrow = 14;
+      var minArrow = 3;
+
+      for (var gx = spacing; gx < canvasW; gx += spacing) {
+        for (var gy = spacing; gy < canvasH; gy += spacing) {
+          // Skip if too close to any fixed charge
+          var tooClose = false;
+          for (var ci = 0; ci < fixedCharges.length; ci++) {
+            if (Math.hypot(gx - fixedCharges[ci].x, gy - fixedCharges[ci].y) < 22) {
+              tooClose = true; break;
+            }
+          }
+          if (tooClose) continue;
+          // Also skip if too close to test charge
+          if (Math.hypot(gx - testCharge.x, gy - testCharge.y) < 20) continue;
+
+          // Compute field at this point (using unit test charge)
+          var Ex = 0, Ey = 0;
+          for (var ci = 0; ci < fixedCharges.length; ci++) {
+            var c = fixedCharges[ci];
+            var dx = gx - c.x;
+            var dy = gy - c.y;
+            var r2 = dx * dx + dy * dy;
+            var r = Math.sqrt(r2);
+            if (r < 12) r = 12;
+            var E = kConst * c.q * c.mag / (r * r);
+            Ex += E * dx / r;
+            Ey += E * dy / r;
+          }
+
+          var emag = Math.sqrt(Ex * Ex + Ey * Ey);
+          if (emag < 0.1) continue;
+
+          // Arrow length: log scale, clamped
+          var len = Math.min(maxArrow, minArrow + 3.5 * Math.log(1 + emag * 0.3));
+          var nx = Ex / emag;
+          var ny = Ey / emag;
+
+          // Opacity based on field strength
+          var alpha = Math.min(0.55, 0.12 + 0.1 * Math.log(1 + emag * 0.2));
+
+          var sx = gx - nx * len * 0.4;
+          var sy = gy - ny * len * 0.4;
+          var ex = gx + nx * len * 0.6;
+          var ey = gy + ny * len * 0.6;
+
+          var arrowColor = isLight ? 'rgba(0,120,200,' + alpha + ')' : 'rgba(0,200,255,' + alpha + ')';
+
+          // Shaft
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(ex, ey);
+          ctx.strokeStyle = arrowColor;
+          ctx.lineWidth = 1.2;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+
+          // Arrowhead
+          var headLen = 4;
+          var angle = Math.atan2(ny, nx);
+          ctx.beginPath();
+          ctx.moveTo(ex, ey);
+          ctx.lineTo(ex - headLen * Math.cos(angle - 0.5), ey - headLen * Math.sin(angle - 0.5));
+          ctx.lineTo(ex - headLen * Math.cos(angle + 0.5), ey - headLen * Math.sin(angle + 0.5));
+          ctx.closePath();
+          ctx.fillStyle = arrowColor;
+          ctx.fill();
+        }
+      }
+    }
+
+    // Draw light geometry guides (triangle edges + centroid, square edges + center, line)
+    function drawGeometryOverlay() {
+      if (fixedCharges.length < 2) return;
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var lineColor = isLight ? 'rgba(124,58,237,0.12)' : 'rgba(124,58,237,0.15)';
+      var dotColor = isLight ? 'rgba(124,58,237,0.25)' : 'rgba(124,58,237,0.3)';
+      var labelColor = isLight ? 'rgba(124,58,237,0.35)' : 'rgba(124,58,237,0.4)';
+
+      ctx.save();
+      ctx.setLineDash([6, 6]);
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 1.5;
+
+      if (preset === 'triangle' && fixedCharges.length === 3) {
+        var a = fixedCharges[0], b = fixedCharges[1], c = fixedCharges[2];
+        // Triangle edges
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.lineTo(c.x, c.y);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Centroid
+        var centX = (a.x + b.x + c.x) / 3;
+        var centY = (a.y + b.y + c.y) / 3;
+
+        // Medians (very faint)
+        ctx.strokeStyle = isLight ? 'rgba(124,58,237,0.06)' : 'rgba(124,58,237,0.08)';
+        ctx.setLineDash([3, 5]);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y); ctx.lineTo((b.x + c.x) / 2, (b.y + c.y) / 2);
+        ctx.moveTo(b.x, b.y); ctx.lineTo((a.x + c.x) / 2, (a.y + c.y) / 2);
+        ctx.moveTo(c.x, c.y); ctx.lineTo((a.x + b.x) / 2, (a.y + b.y) / 2);
+        ctx.stroke();
+
+        // Centroid dot
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.arc(centX, centY, 4, 0, Math.PI * 2);
+        ctx.fillStyle = dotColor;
+        ctx.fill();
+
+        // Centroid label
+        ctx.font = '11px "Inter", sans-serif';
+        ctx.fillStyle = labelColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText('centroid', centX, centY - 8);
+
+      } else if (preset === 'line' && fixedCharges.length === 2) {
+        var a = fixedCharges[0], b = fixedCharges[1];
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+
+        // Midpoint
+        var midX = (a.x + b.x) / 2;
+        var midY = (a.y + b.y) / 2;
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.arc(midX, midY, 4, 0, Math.PI * 2);
+        ctx.fillStyle = dotColor;
+        ctx.fill();
+        ctx.font = '11px "Inter", sans-serif';
+        ctx.fillStyle = labelColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText('midpoint', midX, midY - 8);
+
+      } else if (preset === 'square' && fixedCharges.length === 4) {
+        var a = fixedCharges[0], b = fixedCharges[1];
+        var c = fixedCharges[2], d = fixedCharges[3];
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.lineTo(c.x, c.y);
+        ctx.lineTo(d.x, d.y);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Diagonals
+        ctx.strokeStyle = isLight ? 'rgba(124,58,237,0.06)' : 'rgba(124,58,237,0.08)';
+        ctx.setLineDash([3, 5]);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y); ctx.lineTo(c.x, c.y);
+        ctx.moveTo(b.x, b.y); ctx.lineTo(d.x, d.y);
+        ctx.stroke();
+
+        // Center
+        var cenX = (a.x + b.x + c.x + d.x) / 4;
+        var cenY = (a.y + b.y + c.y + d.y) / 4;
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.arc(cenX, cenY, 4, 0, Math.PI * 2);
+        ctx.fillStyle = dotColor;
+        ctx.fill();
+        ctx.font = '11px "Inter", sans-serif';
+        ctx.fillStyle = labelColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText('center', cenX, cenY - 8);
+      }
+
+      ctx.restore();
+    }
+
+    function drawFrame() {
+      drawBackground();
+      drawFieldGrid();
+      drawGeometryOverlay();
+      drawFixedCharges();
+      drawForceArrow();
+      drawTestCharge();
+      drawEquilibriumLabel();
+    }
+
+    function draw() {
+      drawFrame();
+    }
+
+    // === ANIMATION LOOP ===
+    var animRunning = false;
+
+    function animLoop() {
+      if (!animRunning) return;
+      glowPhase += 0.02;
+      if (glowPhase > Math.PI * 2) glowPhase -= Math.PI * 2;
+
+      // Drift physics when not dragging
+      if (!draggingTest) {
+        var force = getNetForce(testCharge.x, testCharge.y);
+        var fMag = Math.sqrt(force.x * force.x + force.y * force.y);
+
+        // Sticky equilibrium: if force is very small and we're near charges,
+        // snap velocity to zero so the charge locks onto the equilibrium point
+        var STICKY_THRESHOLD = EQUILIBRIUM_THRESHOLD * 1.5;
+        if (fMag < STICKY_THRESHOLD) {
+          // Check that at least one charge is reasonably close (not just far-away zero)
+          var nearCharge = false;
+          for (var ci = 0; ci < fixedCharges.length; ci++) {
+            var cd = Math.hypot(testCharge.x - fixedCharges[ci].x, testCharge.y - fixedCharges[ci].y);
+            if (cd < 300) { nearCharge = true; break; }
+          }
+          if (nearCharge) {
+            // Apply heavy damping — charge settles into equilibrium
+            driftVx *= 0.6;
+            driftVy *= 0.6;
+            // If velocity is tiny, kill it completely
+            if (Math.abs(driftVx) < 0.05 && Math.abs(driftVy) < 0.05) {
+              driftVx = 0;
+              driftVy = 0;
+            }
+          }
+        }
+
+        driftVx += force.x * DT;
+        driftVy += force.y * DT;
+        driftVx *= DAMPING;
+        driftVy *= DAMPING;
+
+        // Clamp velocity
+        var speed = Math.sqrt(driftVx * driftVx + driftVy * driftVy);
+        var maxSpeed = 6;
+        if (speed > maxSpeed) {
+          driftVx = driftVx / speed * maxSpeed;
+          driftVy = driftVy / speed * maxSpeed;
+        }
+
+        testCharge.x += driftVx;
+        testCharge.y += driftVy;
+
+        // Clamp to canvas bounds and bounce
+        var margin = TEST_RADIUS + 2;
+        if (testCharge.x < margin) { testCharge.x = margin; driftVx = Math.abs(driftVx) * 0.3; }
+        if (testCharge.x > canvasW - margin) { testCharge.x = canvasW - margin; driftVx = -Math.abs(driftVx) * 0.3; }
+        if (testCharge.y < margin) { testCharge.y = margin; driftVy = Math.abs(driftVy) * 0.3; }
+        if (testCharge.y > canvasH - margin) { testCharge.y = canvasH - margin; driftVy = -Math.abs(driftVy) * 0.3; }
+      }
+
+      drawFrame();
+      requestAnimationFrame(animLoop);
+    }
+
+    function startAnim() {
+      if (!animRunning) {
+        animRunning = true;
+        requestAnimationFrame(animLoop);
+      }
+    }
+
+    function stopAnim() {
+      animRunning = false;
+    }
+
+    // === DRAG INTERACTION ===
+    function getCanvasPos(e) {
+      var rect = canvas.getBoundingClientRect();
+      if (e.touches) {
+        return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+      }
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function isOverTest(mx, my) {
+      return Math.hypot(mx - testCharge.x, my - testCharge.y) < GRAB_RADIUS;
+    }
+
+    canvas.addEventListener('mousedown', function(e) {
+      var pos = getCanvasPos(e);
+      if (isOverTest(pos.x, pos.y)) {
+        draggingTest = true;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'grabbing';
+        e.preventDefault();
+      }
+    });
+
+    canvas.addEventListener('mousemove', function(e) {
+      var pos = getCanvasPos(e);
+      if (draggingTest) {
+        testCharge.x = Math.max(TEST_RADIUS, Math.min(canvasW - TEST_RADIUS, pos.x));
+        testCharge.y = Math.max(TEST_RADIUS, Math.min(canvasH - TEST_RADIUS, pos.y));
+      } else {
+        canvas.style.cursor = isOverTest(pos.x, pos.y) ? 'grab' : 'default';
+      }
+    });
+
+    canvas.addEventListener('mouseup', function() {
+      if (draggingTest) {
+        draggingTest = false;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'default';
+      }
+    });
+
+    canvas.addEventListener('mouseleave', function() {
+      if (draggingTest) {
+        draggingTest = false;
+        driftVx = 0;
+        driftVy = 0;
+        canvas.style.cursor = 'default';
+      }
+    });
+
+    // Touch support
+    canvas.addEventListener('touchstart', function(e) {
+      var pos = getCanvasPos(e);
+      if (isOverTest(pos.x, pos.y)) {
+        draggingTest = true;
+        driftVx = 0;
+        driftVy = 0;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', function(e) {
+      if (draggingTest) {
+        e.preventDefault();
+        var rect = canvas.getBoundingClientRect();
+        var tx = e.touches[0].clientX - rect.left;
+        var ty = e.touches[0].clientY - rect.top;
+        testCharge.x = Math.max(TEST_RADIUS, Math.min(canvasW - TEST_RADIUS, tx));
+        testCharge.y = Math.max(TEST_RADIUS, Math.min(canvasH - TEST_RADIUS, ty));
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', function() {
+      if (draggingTest) {
+        draggingTest = false;
+        driftVx = 0;
+        driftVy = 0;
+      }
+    });
+
+    canvas.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+    // === FULLSCREEN ===
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(resizeCanvas, 100);
+      setTimeout(resizeCanvas, 300);
+    });
+
+    // === TUTORIAL OVERLAY ===
+    function drawCurvedArrow(svg, x1, y1, x2, y2) {
+      var ns = 'http://www.w3.org/2000/svg';
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+      var cx1 = x1 + dx * 0.2;
+      var cy1 = y1 + dy * 0.6;
+      var cx2 = x1 + dx * 0.8;
+      var cy2 = y1 + dy * 0.4;
+
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d',
+        'M' + x1 + ',' + y1 +
+        ' C' + cx1 + ',' + cy1 +
+        ' ' + cx2 + ',' + cy2 +
+        ' ' + x2 + ',' + y2
+      );
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgba(255,255,255,0.85)');
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(path);
+
+      var angle = Math.atan2(y2 - cy2, x2 - cx2);
+      var headLen = 10;
+      var a1x = x2 - headLen * Math.cos(angle - 0.4);
+      var a1y = y2 - headLen * Math.sin(angle - 0.4);
+      var a2x = x2 - headLen * Math.cos(angle + 0.4);
+      var a2y = y2 - headLen * Math.sin(angle + 0.4);
+      var arrow = document.createElementNS(ns, 'polygon');
+      arrow.setAttribute('points',
+        x2 + ',' + y2 + ' ' +
+        a1x + ',' + a1y + ' ' +
+        a2x + ',' + a2y
+      );
+      arrow.setAttribute('fill', 'rgba(255,255,255,0.85)');
+      svg.appendChild(arrow);
+    }
+
+    function positionTutorialHints() {
+      var area = document.getElementById('simArea');
+      var areaRect = area.getBoundingClientRect();
+      var svg = document.getElementById('tutArrowsSvg');
+      svg.innerHTML = '';
+
+      var targets = [
+        { hint: 'tutHintPreset', el: document.getElementById('presetSelect'), type: 'bottom' },
+        { hint: 'tutHintDrag',   el: document.getElementById('simCanvas'),     type: 'canvas' },
+        { hint: 'tutHintSigns',  el: signTogglesContainer,                     type: 'bottom' }
+      ];
+
+      var placed = [];
+
+      for (var i = 0; i < targets.length; i++) {
+        var t = targets[i];
+        var hintEl = document.getElementById(t.hint);
+        if (!t.el) continue;
+        var elRect = t.el.getBoundingClientRect();
+        var cx = elRect.left + elRect.width / 2 - areaRect.left;
+        var cy = elRect.top - areaRect.top;
+
+        if (t.type === 'canvas') {
+          var midX = elRect.left + elRect.width / 2 - areaRect.left;
+          var midY = elRect.top + elRect.height * 0.35 - areaRect.top;
+          hintEl.style.left = midX + 'px';
+          hintEl.style.top = midY + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+          hintEl.style.right = '';
+          continue;
+        }
+
+        hintEl.style.left = cx + 'px';
+        hintEl.style.transform = 'translateX(-50%)';
+        hintEl.style.top = '0px';
+
+        var hintRect = hintEl.getBoundingClientRect();
+        var hintW = hintRect.width;
+        var hintH = hintRect.height;
+
+        var desiredTop = cy - 50;
+        var hintLeft = cx - hintW / 2;
+        var hintRight = hintLeft + hintW;
+
+        var finalTop = desiredTop;
+        for (var j = 0; j < placed.length; j++) {
+          var p = placed[j];
+          if (hintRight > p.left && hintLeft < p.right) {
+            if (finalTop + hintH > p.top && finalTop < p.bottom) {
+              finalTop = p.top - hintH - 8;
+            }
+          }
+        }
+
+        hintEl.style.top = finalTop + 'px';
+        placed.push({
+          left: hintLeft,
+          right: hintRight,
+          top: finalTop,
+          bottom: finalTop + hintH
+        });
+
+        var arrowStartX = cx;
+        var arrowStartY = finalTop + hintH + 2;
+        var arrowEndX = cx;
+        var arrowEndY = cy + 2;
+        drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+      }
+    }
+
+    function showTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.display = '';
+      el.offsetHeight;
+      el.style.opacity = '1';
+      positionTutorialHints();
+    }
+
+    window.addEventListener('resize', function() {
+      if (document.getElementById('simTutorial').style.display !== 'none') {
+        positionTutorialHints();
+      }
+    });
+
+    function dismissTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.opacity = '0';
+      setTimeout(function() { el.style.display = 'none'; }, 400);
+      localStorage.setItem('tut-equilibrium', '1');
+    }
+
+    if (!localStorage.getItem('tut-equilibrium')) {
+      showTutorial();
+    }
+
+    document.getElementById('simTutorial').addEventListener('click', dismissTutorial);
+    document.getElementById('helpBtn').addEventListener('click', showTutorial);
+
+    // === INIT ===
+    resizeCanvas();
+    startAnim();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
