@@ -111,11 +111,26 @@
 
       <div id="progress-dashboard" style="display:none;">
         <div class="summary-cards" id="summary-cards"></div>
-        <h2 style="font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 24px; letter-spacing: 1px;">Simulation History</h2>
-        <div class="progress-grid" id="progress-grid"></div>
-        <p id="no-data-msg" style="text-align:center; color:var(--text-muted); display:none; margin-top: 40px;">
-          No simulations visited yet. <a href="simulations.html" style="color:var(--color-primary);">Start exploring!</a>
-        </p>
+
+        <div class="progress-tabs">
+          <button class="progress-tab active" data-target="progress-sims">Simulations</button>
+          <button class="progress-tab" data-target="progress-tests">Tests</button>
+        </div>
+
+        <div class="progress-tab-content active" id="progress-sims">
+          <div class="progress-list" id="progress-list"></div>
+          <p id="no-data-msg" style="text-align:center; color:var(--text-muted); display:none; margin-top: 40px;">
+            No simulations visited yet. <a href="simulations.html" style="color:var(--color-primary);">Start exploring!</a>
+          </p>
+        </div>
+
+        <div class="progress-tab-content" id="progress-tests">
+          <div class="progress-coming-soon">
+            <span>🧪</span>
+            <p>Tests coming soon</p>
+          </div>
+        </div>
+
         <div id="reset-ach-wrap" style="display:none; margin-top: 40px; text-align: center;">
           <button id="reset-ach-btn" style="padding: 10px 24px; font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; color: #ff4a6e; background: rgba(255,74,110,0.08); border: 1px solid rgba(255,74,110,0.3); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s;">Reset All Achievements</button>
         </div>
@@ -271,6 +286,22 @@
             });
         });
 
+        // Tab switching
+        var tabs = document.querySelectorAll('.progress-tab');
+        tabs.forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            tabs.forEach(function(t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            document.querySelectorAll('.progress-tab-content').forEach(function(c) { c.classList.remove('active'); });
+            document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+          });
+        });
+
+        function formatShortDate(dateObj) {
+          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          return months[dateObj.getMonth()] + ' ' + dateObj.getDate();
+        }
+
         function loadProgress(uid) {
           currentUid = uid;
           resetWrap.style.display = '';
@@ -278,10 +309,10 @@
             .orderBy('lastVisited', 'desc')
             .get()
             .then(function(snapshot) {
-              var grid = document.getElementById('progress-grid');
+              var list = document.getElementById('progress-list');
               var summaryEl = document.getElementById('summary-cards');
               var noData = document.getElementById('no-data-msg');
-              grid.innerHTML = '';
+              list.innerHTML = '';
               summaryEl.innerHTML = '';
 
               if (snapshot.empty) {
@@ -297,49 +328,41 @@
 
               snapshot.forEach(function(doc) {
                 var d = doc.data();
-                totalVisits += d.visitCount || 0;
-                totalTime += d.totalTimeSpent || 0;
-                if ((d.visitCount || 0) > mostPracticed.visits) {
-                  mostPracticed = { name: d.name || doc.id, visits: d.visitCount };
+                var visits = d.visitCount || 0;
+                var timeSpent = d.totalTimeSpent || 0;
+                totalVisits += visits;
+                totalTime += timeSpent;
+                if (visits > mostPracticed.visits) {
+                  mostPracticed = { name: d.name || doc.id, visits: visits };
                 }
 
                 var achUnlocked = countAchievements(d.achievements);
                 var achTotal = SIM_ACHIEVEMENT_COUNTS[doc.id] || 0;
                 totalDiscoveries += achUnlocked;
 
-                var lastDate = d.lastVisited ? d.lastVisited.toDate().toLocaleDateString() : 'N/A';
-                var card = document.createElement('div');
-                card.className = 'progress-card';
+                var lastDate = d.lastVisited ? formatShortDate(d.lastVisited.toDate()) : '—';
+                var pct = achTotal > 0 ? Math.round(achUnlocked / achTotal * 100) : 0;
+                var isMastered = achTotal > 0 && achUnlocked === achTotal;
 
-                var achHtml = '';
-                var expertHtml = '';
-                if (achTotal > 0) {
-                  var pct = Math.round(achUnlocked / achTotal * 100);
-                  var isComplete = achUnlocked === achTotal;
-                  if (isComplete) {
-                    card.className += ' mastered';
-                    expertHtml =
-                      '<div class="progress-expert-badge">' +
-                        '<span class="progress-expert-star">&#11088;</span>' +
-                        '<span class="progress-expert-label">Expert</span>' +
-                      '</div>';
-                  }
-                  achHtml =
-                    '<div class="progress-ach-row">' +
-                      (isComplete ? '<span class="progress-ach-trophy">&#127942;</span>' : '') +
-                      '<span class="progress-ach-text">' + achUnlocked + '/' + achTotal + ' Discoveries</span>' +
-                      '<div class="progress-ach-bar"><div class="progress-ach-fill" style="width:' + pct + '%"></div></div>' +
-                    '</div>';
-                }
+                var row = document.createElement('div');
+                row.className = 'progress-row' + (isMastered ? ' mastered' : '');
 
-                card.innerHTML =
-                  expertHtml +
-                  '<h3>' + (d.name || doc.id) + '</h3>' +
-                  '<div class="progress-stat"><span>Visits</span><span class="stat-value">' + (d.visitCount || 0) + '</span></div>' +
-                  '<div class="progress-stat"><span>Time Spent</span><span class="stat-value">' + formatTime(d.totalTimeSpent || 0) + '</span></div>' +
-                  '<div class="progress-stat"><span>Last Visited</span><span class="stat-value">' + lastDate + '</span></div>' +
-                  achHtml;
-                grid.appendChild(card);
+                var visitLabel = visits === 1 ? '1 visit' : visits + ' visits';
+
+                row.innerHTML =
+                  '<span class="pr-star">⭐</span>' +
+                  '<span class="pr-name">' + (d.name || doc.id) + '</span>' +
+                  '<span class="pr-stat">' + visitLabel + '</span>' +
+                  '<span class="pr-stat">' + formatTime(timeSpent) + '</span>' +
+                  '<span class="pr-stat">' + lastDate + '</span>' +
+                  (achTotal > 0
+                    ? '<span class="pr-ach">' +
+                        '<span class="pr-ach-text">' + achUnlocked + '/' + achTotal + '</span>' +
+                        '<span class="pr-ach-bar"><span class="pr-ach-fill" style="width:' + pct + '%"></span></span>' +
+                      '</span>'
+                    : '');
+
+                list.appendChild(row);
               });
 
               summaryEl.innerHTML =
