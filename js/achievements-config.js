@@ -10,13 +10,13 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
   kinematics: [
     {
       id: 'max_range_angle', title: 'Maximum Range',
-      description: 'Launch a projectile at exactly 45\u00B0',
+      description: 'Make the projectile travel the maximum possible range',
       icon: '\uD83C\uDFAF',
       check: { type: 'global-array', name: 'launches', find: { done: true, angle: 45 } }
     },
     {
-      id: 'complementary_angles', title: 'Complementary Pair',
-      description: 'Launch at two angles that sum to 90\u00B0 (e.g. 30\u00B0 + 60\u00B0)',
+      id: 'complementary_angles', title: 'Same Range, Different Angles',
+      description: 'Launch two projectiles with different angles but the same range',
       icon: '\uD83E\uDD1D',
       check: { type: 'custom', fn: function() {
         if (typeof launches === 'undefined') return false;
@@ -33,7 +33,7 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
     },
     {
       id: 'trajectory_collector', title: 'Trajectory Collector',
-      description: 'Launch 5 or more projectiles',
+      description: 'Fill the sky with 5 different trajectories',
       icon: '\uD83D\uDCDA',
       check: { type: 'global-array', name: 'launches', filter: { done: true }, count: { op: 'gte', value: 5 } }
     }

@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/achievements.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="../js/theme.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -16,7 +17,6 @@
   <script defer src="../js/firebase-config.js"></script>
   <script defer src="../js/auth.js"></script>
   <script defer src="../js/sim-tracker.js"></script>
-  <link rel="stylesheet" href="../css/achievements.css">
   <script defer src="../js/achievements-config.js"></script>
   <script defer src="../js/achievements.js"></script>
 </head>
@@ -64,71 +64,585 @@
     })();
   </script>
 
-  <div class="sim-page-container">
-    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#9889; Electric Field Lines</h1>
-    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Electrostatics &amp; Capacitance</p>
+  <style>
+    .bg-grid, #particles-canvas { display: none !important; }
 
-    <div class="sim-canvas-wrapper">
-      <canvas id="simCanvas" width="850" height="450"></canvas>
-      <div class="sim-controls">
-        <button onclick="presetDipole()">&#8723; Dipole</button>
-        <button onclick="presetTwoPositive()">&#43;&#43; Two Positive</button>
-        <button onclick="clearAll()">&#8635; Clear All</button>
-        <span style="font-size: 0.78rem; color: var(--text-muted); margin-left: auto;">Click canvas: Left = +Q &nbsp;|&nbsp; Right-click = &minus;Q</span>
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-btn.primary {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .sim-btn.primary:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    .side-data {
+      width: 220px;
+      min-width: 200px;
+      background: var(--bg-card);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-data h3 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .data-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .data-row:last-child { border-bottom: none; }
+
+    .data-label {
+      font-family: var(--font-body);
+      font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+      color: var(--text-muted);
+    }
+
+    .data-value {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 1vw, 1rem);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 3.5vw, 40px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 1vw, 1.05rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
+    .qa-section {
+      margin-top: 32px;
+    }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
+    }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 500px;
+    }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
+      position: relative;
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .side-data { width: 100%; min-width: unset; }
+    }
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 12px; padding: 12px; }
+    }
+
+    /* === Tutorial Overlay === */
+    .sim-tutorial {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+
+    .tut-hint {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .tut-arrows-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tut-label {
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.92);
+      color: #1a1a2e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .tut-dismiss {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 32px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tut-dismiss:hover {
+      background: #e8e0f8;
+      transform: translateX(-50%) scale(1.04);
+    }
+
+    @media (max-width: 900px) {
+      .sim-tutorial { display: none !important; }
+      #helpBtn { display: none; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Electric Field Lines</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="helpBtn">? Help</button>
       </div>
     </div>
 
-    <div class="sim-info">
-      <h2>About This Simulation</h2>
-      <p>Place positive and negative charges on the canvas by clicking (left-click for positive, right-click for negative). Electric field lines emanate from positive charges and terminate at negative charges, with arrows showing the field direction. The density and curvature of lines represent the field strength and direction at each point in space.</p>
-      <div class="formula-box" style="margin-top: 16px;">
-        F = kq&#8321;q&#8322;/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; E = kq/r&sup2; &nbsp;&nbsp;|&nbsp;&nbsp; k = 8.99 &times; 10&#8313; N&middot;m&sup2;/C&sup2;
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div class="side-data">
+        <h3>Data</h3>
+        <div class="data-grid">
+          <div class="data-row"><span class="data-label">Positive</span><span class="data-value" id="posCount">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Negative</span><span class="data-value" id="negCount">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Total</span><span class="data-value" id="totalCount">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Net Charge</span><span class="data-value" id="netCharge">&mdash;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <button class="sim-btn primary" id="dipoleBtn">&plusmn; Dipole</button>
+      <button class="sim-btn" id="twoPosBtn">++ Two Positive</button>
+      <button class="sim-btn" id="clearBtn">&#8635; Clear All</button>
+      <span style="font-size: clamp(0.72rem, 0.85vw, 0.82rem); color: var(--text-muted); margin-left: auto;">Click: +Q &nbsp;|&nbsp; Right-click: &minus;Q</span>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div class="sim-tutorial" id="simTutorial" style="display:none;">
+      <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
+
+      <div class="tut-hint" id="tutHintDipole">
+        <div class="tut-label">Load a dipole preset</div>
+      </div>
+      <div class="tut-hint" id="tutHintTwoPos">
+        <div class="tut-label">Try two like charges</div>
+      </div>
+      <div class="tut-hint" id="tutHintClear">
+        <div class="tut-label">Clear all charges</div>
+      </div>
+      <div class="tut-hint" id="tutHintData">
+        <div class="tut-label">Live charge data</div>
+      </div>
+
+      <button class="tut-dismiss">Got it, let's start!</button>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Coulomb's Law</span>
+          F = kq&#8321;q&#8322;/r&sup2;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Electric Field</span>
+          E = kq/r&sup2;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Coulomb's Constant</span>
+          k = 8.99 &times; 10&#8313; N&middot;m&sup2;/C&sup2;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Superposition</span>
+          E&#8345;&#8337;&#8348; = &Sigma; E&#7522;
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What do electric field lines represent?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Electric field lines are imaginary lines drawn to represent the <strong>direction and strength</strong> of the electric field at various points in space. The tangent to a field line at any point gives the direction of the electric field at that point. The density of lines (how close they are together) indicates the field strength &mdash; closer lines mean a stronger field.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Why do field lines never cross each other?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Field lines never cross because the electric field has a <strong>unique direction</strong> at every point in space. If two lines crossed, it would imply two different field directions at the same point, which is physically impossible. The net field is always a single vector obtained by superposition of all contributing fields.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How does the field pattern differ between a dipole and two like charges?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          For a <strong>dipole</strong> (one positive and one negative charge), field lines start from the positive charge and terminate on the negative charge, forming continuous curves that connect them. For <strong>two like charges</strong> (e.g. both positive), field lines emanate outward from both charges and repel each other &mdash; there is a <strong>null point</strong> between them where the field is zero, and no field lines connect the two charges.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens to the field strength as you move away from a point charge?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The electric field follows an <strong>inverse-square law</strong>: E = kq/r&sup2;. This means the field strength decreases with the square of the distance from the charge. At twice the distance, the field is four times weaker. This is reflected in the field line pattern &mdash; lines spread apart as they move away from the charge, indicating a weaker field.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How is superposition applied to electric fields?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The <strong>principle of superposition</strong> states that the net electric field at any point is the <strong>vector sum</strong> of the individual fields produced by each charge. Each charge creates its own field independently, and you add the E-field vectors (both magnitude and direction) from all charges to get the resultant field. This is why multiple charges create complex, curved field line patterns.
+        </div></div>
       </div>
     </div>
   </div>
 
   <script>
-    const canvas = document.getElementById('simCanvas');
-    const ctx = canvas.getContext('2d');
-    const k = 500; // Scaled Coulomb constant for visual purposes
-    let charges = [];
-    const LINES_PER_CHARGE = 16;
-    const STEP_SIZE = 3;
-    const MAX_STEPS = 800;
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        bg: isLight ? '#e8eaf0' : '#080818',
+        bgCenter: isLight ? '#f0f2f8' : '#0a0a24',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.04)',
+        fieldLine: isLight ? 'rgba(0,150,200,0.45)' : 'rgba(0,212,255,0.4)',
+        arrow: isLight ? 'rgba(0,150,200,0.65)' : 'rgba(0,212,255,0.6)',
+        statsOverlayBg: isLight ? 'rgba(240,242,248,0.85)' : 'rgba(10,10,30,0.85)',
+        statsOverlayBorder: isLight ? 'rgba(0,120,200,0.15)' : 'rgba(0,212,255,0.2)',
+        statsText: isLight ? '#0078c8' : '#00d4ff',
+        text: isLight ? '#333' : '#fff'
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-    canvas.addEventListener('click', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      const x = (e.clientX - rect.left) * scaleX;
-      const y = (e.clientY - rect.top) * scaleY;
-      charges.push({ x, y, q: 1 });
+    // === CANVAS SETUP ===
+    var canvas = document.getElementById('simCanvas');
+    var ctx = canvas.getContext('2d');
+    var canvasW, canvasH;
+
+    function resizeCanvas() {
+      var wrap = canvas.parentElement;
+      var isFS = !!document.fullscreenElement;
+      var w = wrap.clientWidth;
+      var h = isFS ? wrap.clientHeight : Math.max(350, window.innerHeight - 300);
+      var dpr = window.devicePixelRatio || 1;
+
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      canvasW = w;
+      canvasH = h;
+
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    // === SIMULATION STATE ===
+    var k = 500; // Scaled Coulomb constant for visual purposes
+    var charges = [];
+    var LINES_PER_CHARGE = 16;
+    var STEP_SIZE = 3;
+    var MAX_STEPS = 800;
+
+    // === CHARGE PLACEMENT ===
+    canvas.addEventListener('click', function(e) {
+      var rect = canvas.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      charges.push({ x: x, y: y, q: 1 });
       draw();
     });
 
-    canvas.addEventListener('contextmenu', (e) => {
+    canvas.addEventListener('contextmenu', function(e) {
       e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      const x = (e.clientX - rect.left) * scaleX;
-      const y = (e.clientY - rect.top) * scaleY;
-      charges.push({ x, y, q: -1 });
+      var rect = canvas.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      charges.push({ x: x, y: y, q: -1 });
       draw();
     });
 
+    // === PRESETS ===
     function presetDipole() {
+      var cx = canvasW / 2, cy = canvasH / 2;
       charges = [
-        { x: 300, y: 225, q: 1 },
-        { x: 550, y: 225, q: -1 }
+        { x: cx - 120, y: cy, q: 1 },
+        { x: cx + 120, y: cy, q: -1 }
       ];
       draw();
     }
 
     function presetTwoPositive() {
+      var cx = canvasW / 2, cy = canvasH / 2;
       charges = [
-        { x: 300, y: 225, q: 1 },
-        { x: 550, y: 225, q: 1 }
+        { x: cx - 120, y: cy, q: 1 },
+        { x: cx + 120, y: cy, q: 1 }
       ];
       draw();
     }
@@ -138,15 +652,17 @@
       draw();
     }
 
+    // === PHYSICS ===
     function getField(x, y) {
-      let Ex = 0, Ey = 0;
-      for (const c of charges) {
-        const dx = x - c.x;
-        const dy = y - c.y;
-        const r2 = dx * dx + dy * dy;
-        const r = Math.sqrt(r2);
-        if (r < 8) return null; // Too close to charge
-        const E = k * c.q / r2;
+      var Ex = 0, Ey = 0;
+      for (var i = 0; i < charges.length; i++) {
+        var c = charges[i];
+        var dx = x - c.x;
+        var dy = y - c.y;
+        var r2 = dx * dx + dy * dy;
+        var r = Math.sqrt(r2);
+        if (r < 8) return null;
+        var E = k * c.q / r2;
         Ex += E * dx / r;
         Ey += E * dy / r;
       }
@@ -154,43 +670,42 @@
     }
 
     function traceFieldLine(startX, startY, direction) {
-      const points = [{ x: startX, y: startY }];
-      let x = startX, y = startY;
+      var points = [{ x: startX, y: startY }];
+      var x = startX, y = startY;
 
-      for (let i = 0; i < MAX_STEPS; i++) {
-        const field = getField(x, y);
+      for (var i = 0; i < MAX_STEPS; i++) {
+        var field = getField(x, y);
         if (!field) break;
 
-        const mag = Math.sqrt(field.x * field.x + field.y * field.y);
+        var mag = Math.sqrt(field.x * field.x + field.y * field.y);
         if (mag < 0.001) break;
 
-        const dx = direction * STEP_SIZE * field.x / mag;
-        const dy = direction * STEP_SIZE * field.y / mag;
+        var dx = direction * STEP_SIZE * field.x / mag;
+        var dy = direction * STEP_SIZE * field.y / mag;
         x += dx;
         y += dy;
 
-        // Out of bounds
-        if (x < -20 || x > canvas.width + 20 || y < -20 || y > canvas.height + 20) break;
+        if (x < -20 || x > canvasW + 20 || y < -20 || y > canvasH + 20) break;
 
-        // Check if reached a negative charge
-        let hitCharge = false;
-        for (const c of charges) {
-          const dist = Math.sqrt((x - c.x) ** 2 + (y - c.y) ** 2);
+        var hitCharge = false;
+        for (var j = 0; j < charges.length; j++) {
+          var c = charges[j];
+          var dist = Math.sqrt((x - c.x) * (x - c.x) + (y - c.y) * (y - c.y));
           if (dist < 12 && c.q * direction < 0) {
-            points.push({ x, y });
+            points.push({ x: x, y: y });
             hitCharge = true;
             break;
           }
         }
         if (hitCharge) break;
 
-        points.push({ x, y });
+        points.push({ x: x, y: y });
       }
       return points;
     }
 
     function drawArrow(x, y, dx, dy, size) {
-      const angle = Math.atan2(dy, dx);
+      var angle = Math.atan2(dy, dx);
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(angle);
@@ -199,53 +714,77 @@
       ctx.lineTo(-size * 0.6, -size * 0.5);
       ctx.lineTo(-size * 0.6, size * 0.5);
       ctx.closePath();
-      ctx.fillStyle = 'rgba(0, 212, 255, 0.6)';
+      ctx.fillStyle = tc.arrow;
       ctx.fill();
       ctx.restore();
     }
 
+    // === DRAWING ===
     function drawBackground() {
-      ctx.fillStyle = '#080818';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 40) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      var grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
+      grad.addColorStop(0, tc.bgCenter);
+      grad.addColorStop(1, tc.bg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      ctx.fillStyle = tc.grid;
+      for (var x = 0; x < canvasW; x += 40) {
+        for (var y = 0; y < canvasH; y += 40) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
-      for (let y = 0; y < canvas.height; y += 40) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+
+    function updateDataPanel() {
+      var pos = 0, neg = 0;
+      for (var i = 0; i < charges.length; i++) {
+        if (charges[i].q > 0) pos++;
+        else neg++;
       }
+      document.getElementById('posCount').textContent = pos;
+      document.getElementById('negCount').textContent = neg;
+      document.getElementById('totalCount').textContent = pos + neg;
+      var net = pos - neg;
+      var sign = net > 0 ? '+' : (net < 0 ? '\u2212' : '');
+      document.getElementById('netCharge').textContent = net === 0 ? '0' : sign + Math.abs(net) + 'Q';
     }
 
     function draw() {
       drawBackground();
+      updateDataPanel();
+
+      var positiveCharges = [];
+      var negativeCharges = [];
+      for (var i = 0; i < charges.length; i++) {
+        if (charges[i].q > 0) positiveCharges.push(charges[i]);
+        else negativeCharges.push(charges[i]);
+      }
 
       // Draw field lines from positive charges
-      const positiveCharges = charges.filter(c => c.q > 0);
-      const negativeCharges = charges.filter(c => c.q < 0);
-
-      for (const c of positiveCharges) {
-        for (let i = 0; i < LINES_PER_CHARGE; i++) {
-          const angle = (2 * Math.PI * i) / LINES_PER_CHARGE;
-          const startX = c.x + 14 * Math.cos(angle);
-          const startY = c.y + 14 * Math.sin(angle);
-          const points = traceFieldLine(startX, startY, 1);
+      for (var ci = 0; ci < positiveCharges.length; ci++) {
+        var c = positiveCharges[ci];
+        for (var li = 0; li < LINES_PER_CHARGE; li++) {
+          var angle = (2 * Math.PI * li) / LINES_PER_CHARGE;
+          var startX = c.x + 14 * Math.cos(angle);
+          var startY = c.y + 14 * Math.sin(angle);
+          var points = traceFieldLine(startX, startY, 1);
 
           if (points.length > 1) {
             ctx.beginPath();
             ctx.moveTo(points[0].x, points[0].y);
-            for (let j = 1; j < points.length; j++) {
+            for (var j = 1; j < points.length; j++) {
               ctx.lineTo(points[j].x, points[j].y);
             }
-            ctx.strokeStyle = 'rgba(0,212,255,0.4)';
+            ctx.strokeStyle = tc.fieldLine;
             ctx.lineWidth = 1.5;
             ctx.stroke();
 
-            // Draw arrows along the line
-            const arrowInterval = Math.floor(points.length / 3);
-            for (let a = arrowInterval; a < points.length - 1; a += arrowInterval) {
-              const dx = points[a + 1].x - points[a].x;
-              const dy = points[a + 1].y - points[a].y;
+            var arrowInterval = Math.floor(points.length / 3);
+            for (var a = arrowInterval; a < points.length - 1; a += arrowInterval) {
+              var dx = points[a + 1].x - points[a].x;
+              var dy = points[a + 1].y - points[a].y;
               drawArrow(points[a].x, points[a].y, dx, dy, 5);
             }
           }
@@ -254,27 +793,28 @@
 
       // If only negative charges, draw lines going inward
       if (positiveCharges.length === 0) {
-        for (const c of negativeCharges) {
-          for (let i = 0; i < LINES_PER_CHARGE; i++) {
-            const angle = (2 * Math.PI * i) / LINES_PER_CHARGE;
-            const startX = c.x + 14 * Math.cos(angle);
-            const startY = c.y + 14 * Math.sin(angle);
-            const points = traceFieldLine(startX, startY, -1);
+        for (var ci = 0; ci < negativeCharges.length; ci++) {
+          var c = negativeCharges[ci];
+          for (var li = 0; li < LINES_PER_CHARGE; li++) {
+            var angle = (2 * Math.PI * li) / LINES_PER_CHARGE;
+            var startX = c.x + 14 * Math.cos(angle);
+            var startY = c.y + 14 * Math.sin(angle);
+            var points = traceFieldLine(startX, startY, -1);
 
             if (points.length > 1) {
               ctx.beginPath();
               ctx.moveTo(points[0].x, points[0].y);
-              for (let j = 1; j < points.length; j++) {
+              for (var j = 1; j < points.length; j++) {
                 ctx.lineTo(points[j].x, points[j].y);
               }
-              ctx.strokeStyle = 'rgba(0,212,255,0.4)';
+              ctx.strokeStyle = tc.fieldLine;
               ctx.lineWidth = 1.5;
               ctx.stroke();
 
-              const arrowInterval = Math.floor(points.length / 3);
-              for (let a = arrowInterval; a < points.length - 1; a += arrowInterval) {
-                const dx = points[a].x - points[a + 1].x;
-                const dy = points[a].y - points[a + 1].y;
+              var arrowInterval = Math.floor(points.length / 3);
+              for (var a = arrowInterval; a < points.length - 1; a += arrowInterval) {
+                var dx = points[a].x - points[a + 1].x;
+                var dy = points[a].y - points[a + 1].y;
                 drawArrow(points[a].x, points[a].y, dx, dy, 5);
               }
             }
@@ -283,9 +823,10 @@
       }
 
       // Draw charges
-      for (const c of charges) {
+      for (var i = 0; i < charges.length; i++) {
+        var c = charges[i];
         // Glow
-        const glowGrad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 30);
+        var glowGrad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 30);
         if (c.q > 0) {
           glowGrad.addColorStop(0, 'rgba(255,45,117,0.3)');
           glowGrad.addColorStop(1, 'rgba(255,45,117,0)');
@@ -301,7 +842,7 @@
         // Charge body
         ctx.beginPath();
         ctx.arc(c.x, c.y, 12, 0, Math.PI * 2);
-        const grad = ctx.createRadialGradient(c.x - 3, c.y - 3, 0, c.x, c.y, 12);
+        var grad = ctx.createRadialGradient(c.x - 3, c.y - 3, 0, c.x, c.y, 12);
         if (c.q > 0) {
           grad.addColorStop(0, '#ff5a92');
           grad.addColorStop(1, '#ff2d75');
@@ -322,21 +863,182 @@
         ctx.textBaseline = 'middle';
         ctx.fillText(c.q > 0 ? '+' : '\u2212', c.x, c.y);
       }
-
-      // Stats overlay
-      ctx.fillStyle = 'rgba(10,10,30,0.85)';
-      ctx.fillRect(10, 10, 180, 50);
-      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
-      ctx.strokeRect(10, 10, 180, 50);
-      ctx.fillStyle = '#00d4ff';
-      ctx.font = '12px "JetBrains Mono", monospace';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'top';
-      ctx.fillText(`Positive: ${charges.filter(c => c.q > 0).length}`, 20, 18);
-      ctx.fillText(`Negative: ${charges.filter(c => c.q < 0).length}`, 20, 38);
     }
 
-    draw();
+    // === CONTROLS ===
+    document.getElementById('dipoleBtn').addEventListener('click', presetDipole);
+    document.getElementById('twoPosBtn').addEventListener('click', presetTwoPositive);
+    document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      clearAll();
+    });
+
+    // Fullscreen
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(resizeCanvas, 100);
+      setTimeout(resizeCanvas, 300);
+    });
+
+    // === TUTORIAL OVERLAY ===
+    function drawCurvedArrow(svg, x1, y1, x2, y2) {
+      var ns = 'http://www.w3.org/2000/svg';
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+      var cx1 = x1 + dx * 0.2;
+      var cy1 = y1 + dy * 0.6;
+      var cx2 = x1 + dx * 0.8;
+      var cy2 = y1 + dy * 0.4;
+
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d',
+        'M' + x1 + ',' + y1 +
+        ' C' + cx1 + ',' + cy1 +
+        ' ' + cx2 + ',' + cy2 +
+        ' ' + x2 + ',' + y2
+      );
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgba(255,255,255,0.85)');
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(path);
+
+      var angle = Math.atan2(y2 - cy2, x2 - cx2);
+      var headLen = 10;
+      var a1x = x2 - headLen * Math.cos(angle - 0.4);
+      var a1y = y2 - headLen * Math.sin(angle - 0.4);
+      var a2x = x2 - headLen * Math.cos(angle + 0.4);
+      var a2y = y2 - headLen * Math.sin(angle + 0.4);
+      var arrow = document.createElementNS(ns, 'polygon');
+      arrow.setAttribute('points',
+        x2 + ',' + y2 + ' ' +
+        a1x + ',' + a1y + ' ' +
+        a2x + ',' + a2y
+      );
+      arrow.setAttribute('fill', 'rgba(255,255,255,0.85)');
+      svg.appendChild(arrow);
+    }
+
+    function positionTutorialHints() {
+      var area = document.getElementById('simArea');
+      var areaRect = area.getBoundingClientRect();
+      var svg = document.getElementById('tutArrowsSvg');
+      svg.innerHTML = '';
+
+      var targets = [
+        { hint: 'tutHintDipole', el: document.getElementById('dipoleBtn'),  type: 'bottom' },
+        { hint: 'tutHintTwoPos', el: document.getElementById('twoPosBtn'), type: 'bottom' },
+        { hint: 'tutHintClear',  el: document.getElementById('clearBtn'),  type: 'bottom' },
+        { hint: 'tutHintData',   el: document.querySelector('.side-data'),  type: 'side'   }
+      ];
+
+      var placed = [];
+
+      for (var i = 0; i < targets.length; i++) {
+        var t = targets[i];
+        var hintEl = document.getElementById(t.hint);
+        if (!t.el) continue;
+        var elRect = t.el.getBoundingClientRect();
+        var cx = elRect.left + elRect.width / 2 - areaRect.left;
+        var cy = elRect.top - areaRect.top;
+
+        if (t.type === 'side') {
+          var midY = elRect.top + elRect.height / 2 - areaRect.top;
+          hintEl.style.top = midY + 'px';
+          hintEl.style.right = (areaRect.right - elRect.left + 8) + 'px';
+          hintEl.style.left = '';
+          hintEl.style.transform = '';
+
+          var hRect = hintEl.getBoundingClientRect();
+          var arrowStartX = hRect.right - areaRect.left + 4;
+          var arrowStartY = hRect.top + hRect.height / 2 - areaRect.top;
+          var arrowEndX = elRect.left - areaRect.left - 2;
+          var arrowEndY = midY;
+          drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+          continue;
+        }
+
+        hintEl.style.left = cx + 'px';
+        hintEl.style.transform = 'translateX(-50%)';
+        hintEl.style.top = '0px';
+
+        var hintRect = hintEl.getBoundingClientRect();
+        var hintW = hintRect.width;
+        var hintH = hintRect.height;
+
+        var desiredTop = cy - 50;
+        var hintLeft = cx - hintW / 2;
+        var hintRight = hintLeft + hintW;
+
+        var finalTop = desiredTop;
+        for (var j = 0; j < placed.length; j++) {
+          var p = placed[j];
+          if (hintRight > p.left && hintLeft < p.right) {
+            if (finalTop + hintH > p.top && finalTop < p.bottom) {
+              finalTop = p.top - hintH - 8;
+            }
+          }
+        }
+
+        hintEl.style.top = finalTop + 'px';
+        placed.push({
+          left: hintLeft,
+          right: hintRight,
+          top: finalTop,
+          bottom: finalTop + hintH
+        });
+
+        var arrowStartX = cx;
+        var arrowStartY = finalTop + hintH + 2;
+        var arrowEndX = cx;
+        var arrowEndY = cy + 2;
+        drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+      }
+    }
+
+    function showTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.display = '';
+      el.offsetHeight;
+      el.style.opacity = '1';
+      positionTutorialHints();
+    }
+
+    window.addEventListener('resize', function() {
+      if (document.getElementById('simTutorial').style.display !== 'none') {
+        positionTutorialHints();
+      }
+    });
+
+    function dismissTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.opacity = '0';
+      setTimeout(function() { el.style.display = 'none'; }, 400);
+      localStorage.setItem('tut-electrostatics', '1');
+    }
+
+    // Auto-show on first visit
+    if (!localStorage.getItem('tut-electrostatics')) {
+      showTutorial();
+    }
+
+    // Dismiss on click anywhere on overlay
+    document.getElementById('simTutorial').addEventListener('click', dismissTutorial);
+
+    // Help button re-shows overlay
+    document.getElementById('helpBtn').addEventListener('click', showTutorial);
+
+    // === INIT ===
+    resizeCanvas();
   </script>
   <script src="../js/main.js"></script>
 </body>

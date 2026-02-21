@@ -254,6 +254,31 @@
       text-align: right;
     }
 
+    .control-group input[type="number"] {
+      width: 58px;
+      padding: 4px 6px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      -moz-appearance: textfield;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .control-group input[type="number"]:focus {
+      border-color: var(--color-primary);
+    }
+
+    .control-group input[type="number"]::-webkit-inner-spin-button,
+    .control-group input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
     .data-grid {
       display: flex;
       flex-direction: column;
@@ -547,8 +572,8 @@
           <div class="data-row"><span class="data-label">Time of Flight</span><span class="data-value" id="d-tof">&mdash;</span></div>
           <div class="data-row"><span class="data-label">Range</span><span class="data-value" id="d-range">&mdash;</span></div>
           <div class="data-row"><span class="data-label">Max Height</span><span class="data-value" id="d-hmax">&mdash;</span></div>
-          <div class="data-row"><span class="data-label">U<sub>x</sub></span><span class="data-value" id="d-ux">&mdash;</span></div>
-          <div class="data-row"><span class="data-label">U<sub>y</sub></span><span class="data-value" id="d-uy">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">V<sub>x</sub></span><span class="data-value" id="d-vx">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">V<sub>y</sub></span><span class="data-value" id="d-vy">&mdash;</span></div>
         </div>
       </div>
     </div>
@@ -558,12 +583,14 @@
       <div class="control-group">
         <label>u</label>
         <input type="range" id="velSlider" min="80" max="100" value="90">
-        <span class="val" id="velVal">90</span><label>m/s</label>
+        <input type="number" id="velInput" min="80" max="100" value="90" step="1">
+        <label>m/s</label>
       </div>
       <div class="control-group">
         <label>&theta;</label>
         <input type="range" id="angleSlider" min="5" max="85" value="30">
-        <span class="val" id="angleVal">30</span><label>&deg;</label>
+        <input type="number" id="angleInput" min="5" max="85" value="30" step="1">
+        <label>&deg;</label>
       </div>
       <button class="sim-btn primary" id="launchBtn" style="margin-right:auto;">Launch</button>
     </div>
@@ -672,9 +699,9 @@
         cannonBaseStroke: isLight ? '#444' : '#666',
         cannonHub: isLight ? '#555' : '#333',
         // Ground
-        groundTop: isLight ? '#8ab060' : '#2a4020',
-        groundBody: isLight ? '#6a9040' : '#1a3010',
-        groundLine: isLight ? 'rgba(100,150,60,0.4)' : 'rgba(60,100,30,0.3)',
+        groundTop: isLight ? '#5dba2f' : '#3a8520',
+        groundBody: isLight ? '#3da010' : '#256515',
+        groundLine: isLight ? 'rgba(60,200,30,0.55)' : 'rgba(50,180,30,0.45)',
         // Markers
         markerDash: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.12)',
         markerText: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.3)',
@@ -696,12 +723,26 @@
 
     const velSlider = document.getElementById('velSlider');
     const angleSlider = document.getElementById('angleSlider');
-    const velVal = document.getElementById('velVal');
-    const angleVal = document.getElementById('angleVal');
+    const velInput = document.getElementById('velInput');
+    const angleInput = document.getElementById('angleInput');
     const legendBar = document.getElementById('legendBar');
 
-    velSlider.oninput = function() { velVal.textContent = this.value; drawScene(); };
-    angleSlider.oninput = function() { angleVal.textContent = this.value; drawScene(); };
+    function syncVel(val) {
+      val = Math.max(80, Math.min(100, Math.round(parseFloat(val) || 80)));
+      velSlider.value = val;
+      velInput.value = val;
+      drawScene();
+    }
+    function syncAngle(val) {
+      val = Math.max(5, Math.min(85, Math.round(parseFloat(val) || 5)));
+      angleSlider.value = val;
+      angleInput.value = val;
+      drawScene();
+    }
+    velSlider.oninput = function() { syncVel(this.value); };
+    velInput.onchange = function() { syncVel(this.value); };
+    angleSlider.oninput = function() { syncAngle(this.value); };
+    angleInput.onchange = function() { syncAngle(this.value); };
 
     // === CANVAS SIZING ===
     const PADDING = 50;
@@ -963,8 +1004,10 @@
 
     function drawBalls() {
       const vecScale = 0.6; // pixels per m/s for vector length
+      var activeLaunches = [];
       for (let l of launches) {
         if (l.done || l.trail.length === 0) continue;
+        activeLaunches.push(l);
         const last = l.trail[l.trail.length - 1];
         const bx = last.px;
         const by = last.py;
@@ -989,6 +1032,17 @@
         // Vy vector (vertical, changing) — points up when positive, down when negative
         const vyLen = currentVy * vecScale;
         drawArrow(bx, by, bx, by - vyLen, '#FF4A6E', 'Vy');
+      }
+
+      // Update live velocity display
+      if (activeLaunches.length === 1) {
+        var al = activeLaunches[0];
+        var curVy = al.vy - G * al.t;
+        document.getElementById('d-vx').textContent = al.vx.toFixed(1) + ' m/s';
+        document.getElementById('d-vy').textContent = curVy.toFixed(1) + ' m/s';
+      } else if (activeLaunches.length > 1) {
+        document.getElementById('d-vx').textContent = 'Invalid';
+        document.getElementById('d-vy').textContent = 'Invalid';
       }
     }
 
@@ -1168,8 +1222,17 @@
       document.getElementById('d-tof').textContent = tof + ' s';
       document.getElementById('d-range').textContent = range + ' m';
       document.getElementById('d-hmax').textContent = hmax.toFixed(1) + ' m';
-      document.getElementById('d-ux').textContent = vx.toFixed(1) + ' m/s';
-      document.getElementById('d-uy').textContent = vy.toFixed(1) + ' m/s';
+
+      // Show live velocity — "Invalid" if multiple active launches
+      var activeCount = 0;
+      for (var li = 0; li < launches.length; li++) { if (!launches[li].done) activeCount++; }
+      if (activeCount > 1) {
+        document.getElementById('d-vx').textContent = 'Invalid';
+        document.getElementById('d-vy').textContent = 'Invalid';
+      } else {
+        document.getElementById('d-vx').textContent = vx.toFixed(1) + ' m/s';
+        document.getElementById('d-vy').textContent = vy.toFixed(1) + ' m/s';
+      }
 
       updateLegend();
       playBoom();
@@ -1238,8 +1301,8 @@
       document.getElementById('d-tof').innerHTML = '&mdash;';
       document.getElementById('d-range').innerHTML = '&mdash;';
       document.getElementById('d-hmax').innerHTML = '&mdash;';
-      document.getElementById('d-ux').innerHTML = '&mdash;';
-      document.getElementById('d-uy').innerHTML = '&mdash;';
+      document.getElementById('d-vx').innerHTML = '&mdash;';
+      document.getElementById('d-vy').innerHTML = '&mdash;';
       drawScene();
     }
 

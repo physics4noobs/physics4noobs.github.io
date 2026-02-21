@@ -761,6 +761,18 @@
     var changeCount = 0;
     var seenShapes = {};
 
+    // === ANIMATION STATE ===
+    var animState = {
+      morphProgress: 1,     // 0→1 morph between shapes
+      drawProgress: 1,      // 0→1 curve reveal
+      dotT: 0,              // 0→T travelling dot
+      dotActive: false,     // dot loop running
+      prevFns: null,        // old shape functions for morph
+      scrubberT: -1,        // -1=hidden, 0-T=position
+      animating: false,     // any animation active
+      lastTimestamp: 0
+    };
+
     var canvases = {
       xt: document.getElementById('xtCanvas'),
       vt: document.getElementById('vtCanvas'),
@@ -852,8 +864,18 @@
       var ctx = ctxs[key];
       var w = canvas.width / (window.devicePixelRatio || 1);
       var h = canvas.height / (window.devicePixelRatio || 1);
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+      // Get function with morphing interpolation
       var fns = getCurrentFns();
       var fn = fns[key].fn;
+      if (animState.morphProgress < 1 && animState.prevFns) {
+        var prevFn = animState.prevFns[key].fn;
+        var p = animState.morphProgress;
+        var baseFn = fn;
+        fn = function(t) { return prevFn(t) * (1 - p) + baseFn(t) * p; };
+      }
+
       var color = GRAPH_COLORS[key];
       var label = GRAPH_LABELS[key];
       var yLabel = GRAPH_Y_LABELS[key];
@@ -861,6 +883,9 @@
       // Sample points
       var pts = sampleFn(fn, T, 200);
       var yRange = getYRange(pts);
+
+      // How many points to draw (animated reveal)
+      var drawCount = Math.max(1, Math.floor(animState.drawProgress * pts.length));
 
       // Plot area
       var plotL = PADDING;
@@ -881,15 +906,15 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
 
-      // Dotted grid
-      ctx.fillStyle = tc.grid;
+      // Graph paper grid (full lines instead of dots)
+      ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)';
+      ctx.lineWidth = 1;
       var gridSpacing = 40;
       for (var gx = plotL; gx <= plotR; gx += gridSpacing) {
-        for (var gy = plotT; gy <= plotB; gy += gridSpacing) {
-          ctx.beginPath();
-          ctx.arc(gx, gy, 1, 0, Math.PI * 2);
-          ctx.fill();
-        }
+        ctx.beginPath(); ctx.moveTo(gx, plotT); ctx.lineTo(gx, plotB); ctx.stroke();
+      }
+      for (var gy = plotT; gy <= plotB; gy += gridSpacing) {
+        ctx.beginPath(); ctx.moveTo(plotL, gy); ctx.lineTo(plotR, gy); ctx.stroke();
       }
 
       // Axes
@@ -943,29 +968,229 @@
       ctx.textAlign = 'left';
       ctx.fillText(label, plotL + 8, plotT + 18);
 
-      // Draw curve
-      ctx.save();
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 8;
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 2.5;
-      ctx.lineJoin = 'round';
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      for (var i = 0; i < pts.length; i++) {
-        var px = sx(pts[i].t);
-        var py = sy(pts[i].y);
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
+      // Area shading (v-t and a-t only, drawn before curve)
+      if (key !== 'xt' && drawCount > 1) {
+        var zeroY = sy(0);
+        for (var i = 0; i < drawCount - 1; i++) {
+          var ax1 = sx(pts[i].t), ay1 = sy(pts[i].y);
+          var ax2 = sx(pts[i + 1].t), ay2 = sy(pts[i + 1].y);
+          var avgVal = (pts[i].y + pts[i + 1].y) / 2;
+          ctx.save();
+          ctx.globalAlpha = 0.08;
+          ctx.fillStyle = avgVal >= 0 ? color : '#ff5050';
+          ctx.beginPath();
+          ctx.moveTo(ax1, zeroY);
+          ctx.lineTo(ax1, ay1);
+          ctx.lineTo(ax2, ay2);
+          ctx.lineTo(ax2, zeroY);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        }
       }
-      ctx.stroke();
-      ctx.restore();
+
+      // Enhanced 3-pass neon glow curve
+      var passes = [
+        { blur: 24, alpha: 0.15, width: 8 },
+        { blur: 14, alpha: 1, width: 3.5 },
+        { blur: 0, alpha: 1, width: 2.5 }
+      ];
+      for (var pass = 0; pass < passes.length; pass++) {
+        ctx.save();
+        ctx.shadowColor = color;
+        ctx.shadowBlur = passes[pass].blur;
+        ctx.globalAlpha = passes[pass].alpha;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = passes[pass].width;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        for (var i = 0; i < drawCount; i++) {
+          var px = sx(pts[i].t);
+          var py = sy(pts[i].y);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // Leading edge glow dot during curve drawing
+      if (animState.drawProgress < 1 && drawCount > 0) {
+        var edgePt = pts[drawCount - 1];
+        ctx.save();
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 16;
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(sx(edgePt.t), sy(edgePt.y), 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Animated dot traversal (loops after curve draw finishes)
+      if (animState.dotActive && animState.drawProgress >= 1) {
+        var dotVal = fn(animState.dotT);
+        var dotPx = sx(animState.dotT);
+        var dotPy = sy(dotVal);
+        var pulse = 0.5 + 0.5 * Math.sin(Date.now() / 200);
+        ctx.save();
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 10 + 6 * pulse;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(dotPx, dotPy, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(dotPx, dotPy, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Interactive scrubber
+      if (animState.scrubberT >= 0 && animState.scrubberT <= T) {
+        var scrubX = sx(animState.scrubberT);
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(scrubX, plotT);
+        ctx.lineTo(scrubX, plotB);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Dot at curve intersection
+        var scrubVal = fn(animState.scrubberT);
+        var csY = sy(scrubVal);
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(scrubX, csY, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Value tooltip pill
+        var units = key === 'xt' ? ' m' : (key === 'vt' ? ' m/s' : ' m/s\u00B2');
+        var varName = GRAPH_LABELS[key].charAt(0);
+        var valText = varName + ' = ' + scrubVal.toFixed(1) + units;
+        ctx.font = 'bold 11px JetBrains Mono, monospace';
+        var tw = ctx.measureText(valText).width;
+        var pillX = scrubX + 12;
+        var pillY = csY - 12;
+        if (pillX + tw + 16 > plotR) pillX = scrubX - tw - 28;
+        if (pillY - 10 < plotT) pillY = csY + 20;
+        var rx = pillX - 8, ry = pillY - 10, rw = tw + 16, rh = 20, rr = 6;
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.beginPath();
+        ctx.moveTo(rx + rr, ry);
+        ctx.lineTo(rx + rw - rr, ry);
+        ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rr);
+        ctx.lineTo(rx + rw, ry + rh - rr);
+        ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - rr, ry + rh);
+        ctx.lineTo(rx + rr, ry + rh);
+        ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rr);
+        ctx.lineTo(rx, ry + rr);
+        ctx.quadraticCurveTo(rx, ry, rx + rr, ry);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.fillText(valText, pillX, pillY + 4);
+
+        // Slope indicator on active graph only
+        if (key === activeGraph) {
+          var sdt = 0.01;
+          var st1 = Math.max(animState.scrubberT - sdt, 0);
+          var st2 = Math.min(animState.scrubberT + sdt, T);
+          var slope = (fn(st2) - fn(st1)) / (st2 - st1);
+          var tanLen = 40;
+          var screenDxPerT = plotW / T;
+          var screenDyPerY = -plotH / (yRange.max - yRange.min);
+          var tanDx = screenDxPerT * 0.1;
+          var tanDy = screenDyPerY * slope * 0.1;
+          var tanMag = Math.sqrt(tanDx * tanDx + tanDy * tanDy);
+          if (tanMag > 0) {
+            tanDx = tanDx / tanMag * tanLen;
+            tanDy = tanDy / tanMag * tanLen;
+          }
+          var derivColors = { xt: GRAPH_COLORS.vt, vt: GRAPH_COLORS.at, at: GRAPH_COLORS.at };
+          var tanColor = derivColors[key];
+          ctx.strokeStyle = tanColor;
+          ctx.lineWidth = 2;
+          ctx.shadowColor = tanColor;
+          ctx.shadowBlur = 6;
+          ctx.beginPath();
+          ctx.moveTo(scrubX - tanDx, csY - tanDy);
+          ctx.lineTo(scrubX + tanDx, csY + tanDy);
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+          var slopeText = 'slope = ' + slope.toFixed(1);
+          ctx.font = 'bold 10px JetBrains Mono, monospace';
+          ctx.fillStyle = tanColor;
+          var slw = ctx.measureText(slopeText).width;
+          var slopeLabelX = scrubX + tanDx + 6;
+          var slopeLabelY = csY + tanDy - 4;
+          if (slopeLabelX + slw > plotR) slopeLabelX = scrubX - tanDx - slw - 6;
+          ctx.fillText(slopeText, slopeLabelX, slopeLabelY);
+        }
+        ctx.restore();
+      }
     }
 
     function drawAll() {
       drawGraph('xt');
       drawGraph('vt');
       drawGraph('at');
+    }
+
+    // === ANIMATION LOOP ===
+    function animLoop(timestamp) {
+      if (!animState.animating) return;
+      var dt = animState.lastTimestamp ? (timestamp - animState.lastTimestamp) / 1000 : 0.016;
+      animState.lastTimestamp = timestamp;
+      if (dt > 0.1) dt = 0.1;
+
+      var needsRedraw = false;
+
+      // Morph progress (400ms)
+      if (animState.morphProgress < 1) {
+        animState.morphProgress = Math.min(1, animState.morphProgress + dt / 0.4);
+        needsRedraw = true;
+        if (animState.morphProgress >= 1) {
+          animState.prevFns = null;
+          animState.drawProgress = 0; // start curve reveal after morph
+        }
+      }
+      // Draw progress (800ms)
+      else if (animState.drawProgress < 1) {
+        animState.drawProgress = Math.min(1, animState.drawProgress + dt / 0.8);
+        needsRedraw = true;
+        if (animState.drawProgress >= 1) {
+          animState.dotActive = true;
+          animState.dotT = 0;
+        }
+      }
+      // Dot traversal (3s loop)
+      else if (animState.dotActive) {
+        animState.dotT += dt * (T / 3);
+        if (animState.dotT > T) animState.dotT -= T;
+        needsRedraw = true;
+      }
+
+      if (needsRedraw) {
+        drawAll();
+        requestAnimationFrame(animLoop);
+      } else {
+        animState.animating = false;
+      }
+    }
+
+    function startAnimation() {
+      animState.animating = true;
+      animState.lastTimestamp = 0;
+      requestAnimationFrame(animLoop);
     }
 
     // === CONTROLS ===
@@ -998,8 +1223,15 @@
     }
 
     function setActiveGraph(graph) {
+      // Store previous functions for morphing
+      animState.prevFns = getCurrentFns();
       activeGraph = graph;
-      shapeIndex = 0; // reset to first shape for the new graph
+      shapeIndex = 0;
+      animState.morphProgress = 0;
+      animState.drawProgress = 1; // will reset to 0 after morph
+      animState.dotActive = false;
+      animState.dotT = 0;
+
       // Update toggle buttons
       var btns = document.querySelectorAll('.toggle-btn');
       for (var i = 0; i < btns.length; i++) {
@@ -1012,7 +1244,7 @@
       // Re-populate dropdown and update
       populateDropdown();
       updateComputedLabels();
-      drawAll();
+      startAnimation();
 
       // Achievement: graph switcher
       if (graph !== 'xt') {
@@ -1022,6 +1254,13 @@
     }
 
     function setShapeIndex(idx) {
+      // Store previous functions for morphing
+      animState.prevFns = getCurrentFns();
+      animState.morphProgress = 0;
+      animState.drawProgress = 1; // will reset to 0 after morph
+      animState.dotActive = false;
+      animState.dotT = 0;
+
       shapeIndex = idx;
       changeCount++;
       seenShapes[activeGraph + '-' + idx] = true;
@@ -1032,8 +1271,8 @@
       var labels = (activeGraph === 'at') ? SHAPE_LABELS_AT : SHAPE_LABELS;
       window._achCurrentShape = labels[idx];
 
-      drawAll();
       updateComputedLabels();
+      startAnimation();
 
       if (window.AchievementEngine) AchievementEngine.check();
     }
@@ -1058,6 +1297,14 @@
       window._achSeenCount = 0;
       window._achCurrentShape = '';
       window._achGraphSwitched = false;
+      // Reset animation state
+      animState.morphProgress = 1;
+      animState.drawProgress = 1;
+      animState.dotActive = false;
+      animState.dotT = 0;
+      animState.prevFns = null;
+      animState.scrubberT = -1;
+      animState.animating = false;
       setActiveGraph('xt');
       shapeIndex = 1;
       document.getElementById('shapeSelect').value = shapeIndex;
@@ -1228,6 +1475,32 @@
 
     // Help button re-shows overlay
     document.getElementById('helpBtn').addEventListener('click', showTutorial);
+
+    // === SCRUBBER MOUSE/TOUCH HANDLERS ===
+    ['xt', 'vt', 'at'].forEach(function(key) {
+      function getScrubberT(e) {
+        var rect = canvases[key].getBoundingClientRect();
+        var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        var cw = rect.width;
+        var pL = PADDING;
+        var pR = cw - 20;
+        var t = ((x - pL) / (pR - pL)) * T;
+        return Math.max(0, Math.min(T, t));
+      }
+      canvases[key].addEventListener('mousemove', function(e) {
+        animState.scrubberT = getScrubberT(e);
+        drawAll();
+      });
+      canvases[key].addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        animState.scrubberT = getScrubberT(e);
+        drawAll();
+      }, { passive: false });
+      canvases[key].addEventListener('mouseleave', function() {
+        animState.scrubberT = -1;
+        drawAll();
+      });
+    });
 
     // Init
     populateDropdown();
