@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electric Flux | Axomiya Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/achievements.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/sim-tracker.js"></script>
+  <script defer src="../js/achievements-config.js"></script>
+  <script defer src="../js/achievements.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-pendulum"><div class="sp-mount"></div><div class="sp-pivot"></div><div class="sp-arm"><div class="sp-rod"></div><div class="sp-bob"><div class="sp-glow"></div></div></div></div><div class="splash-logo">Axomiya Engineer</div><div class="splash-tagline">Lets Make Physics Fun</div></div>
+<div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-mount"></div><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-rod"></div><div class="pendulum-bob"><div class="bob-glow"></div></div></div></div></div>
+        <div class="logo-text"><span class="brand-name">Axomiya Engineer</span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link active">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-name" id="auth-user-name"></span><div class="dropdown"><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <style>
+    .bg-grid, #particles-canvas { display: none !important; }
+
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-btn.primary {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .sim-btn.primary:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .sim-btn.active {
+      background: rgba(124, 58, 237, 0.18);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 10px rgba(124,58,237,0.25);
+      transform: scale(1.06);
+    }
+
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    /* Side Data Panel */
+    .side-data {
+      width: 320px;
+      min-width: 280px;
+      background: var(--bg-card);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-data h3 {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .data-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+    }
+
+    .data-label {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .data-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .data-value.flux-val { color: #ffcc00; }
+
+    .data-formula {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 6px 8px;
+      margin-top: 8px;
+      line-height: 1.5;
+      word-break: break-all;
+    }
+
+    .data-formula .hl {
+      color: #ffcc00;
+      font-weight: 700;
+    }
+
+    .plot-label {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    .plot-wrap {
+      flex: 1;
+      min-height: 120px;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-secondary);
+      display: flex;
+    }
+
+    .plot-wrap canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2.5vw, 24px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .control-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border-subtle);
+    }
+
+    .slider-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      min-width: 48px;
+    }
+
+    .num-input {
+      width: 58px;
+      padding: 4px 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    .num-input:focus {
+      border-color: rgba(124, 58, 237, 0.5);
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.15);
+    }
+
+    .sign-btn {
+      min-width: 32px;
+      height: 30px;
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      border-radius: var(--radius-sm);
+      border: 1px solid;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sign-btn.pos {
+      background: rgba(255,45,117,0.18);
+      border-color: rgba(255,45,117,0.4);
+      color: #ff5a92;
+    }
+
+    .sign-btn.neg {
+      background: rgba(0,212,255,0.10);
+      border-color: rgba(0,212,255,0.3);
+      color: #00d4ff;
+    }
+
+    .sign-btn:hover {
+      transform: scale(1.08);
+    }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
+    .qa-section {
+      margin-top: 32px;
+    }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
+    }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 500px;
+    }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
+      position: relative;
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .side-data { width: 100%; min-width: unset; }
+    }
+
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 8px; padding: 12px; }
+    }
+
+    /* === Tutorial Overlay === */
+    .sim-tutorial {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+
+    .tut-hint {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .tut-arrows-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tut-label {
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.92);
+      color: #1a1a2e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .tut-dismiss {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 32px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tut-dismiss:hover {
+      background: #e8e0f8;
+      transform: translateX(-50%) scale(1.04);
+    }
+
+    @media (max-width: 900px) {
+      .sim-tutorial { display: none !important; }
+      #helpBtn { display: none; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Electric Flux</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="helpBtn">? Help</button>
+      </div>
+    </div>
+
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div class="side-data">
+        <h3>Data</h3>
+        <div class="data-grid">
+          <div class="data-row">
+            <span class="data-label">&Phi;</span>
+            <span class="data-value flux-val" id="dataFlux">&mdash;</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">E (at surface)</span>
+            <span class="data-value" id="dataField">&mdash;</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">A (area)</span>
+            <span class="data-value" id="dataArea">&mdash;</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">&theta;</span>
+            <span class="data-value" id="dataTheta">&mdash;</span>
+          </div>
+        </div>
+        <div class="data-formula" id="dataSubstitution">&mdash;</div>
+        <div class="plot-label">&Phi; vs &theta;</div>
+        <div class="plot-wrap">
+          <canvas id="plotCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="control-group" id="chargeCtrl">
+        <button class="sign-btn pos" id="signBtn">+</button>
+        <label>Q:</label>
+        <input type="range" id="chargeSlider" min="1" max="10" step="1" value="5">
+        <input type="number" class="num-input" id="chargeInput" min="1" max="10" step="1" value="5">
+        <span class="slider-val">&micro;C</span>
+      </div>
+
+      <div class="control-sep"></div>
+
+      <div class="control-group" id="areaCtrl">
+        <label>Area Height:</label>
+        <input type="range" id="areaSlider" min="60" max="350" step="10" value="160">
+        <input type="number" class="num-input" id="areaInput" min="60" max="350" step="10" value="160">
+        <span class="slider-val">px</span>
+      </div>
+
+      <div class="control-sep"></div>
+
+      <div class="control-group" id="thetaCtrl">
+        <label>&theta;:</label>
+        <input type="range" id="thetaSlider" min="0" max="90" step="1" value="0">
+        <input type="number" class="num-input" id="thetaInput" min="0" max="90" step="1" value="0">
+        <span class="slider-val">&deg;</span>
+      </div>
+
+      <div class="control-sep"></div>
+
+      <button class="sim-btn" id="resetArrangement">&#8635; Reset</button>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div class="sim-tutorial" id="simTutorial" style="display:none;">
+      <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
+
+      <div class="tut-hint" id="tutHintTheta">
+        <div class="tut-label">Adjust the angle &theta; to rotate the surface</div>
+      </div>
+      <div class="tut-hint" id="tutHintCanvas">
+        <div class="tut-label">Watch how field lines pass through the surface</div>
+      </div>
+      <div class="tut-hint" id="tutHintData">
+        <div class="tut-label">Compare the flux value with cos &theta;</div>
+      </div>
+
+      <button class="tut-dismiss">Got it, let's start!</button>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Electric Flux</span>
+          &Phi; = E &middot; A &middot; cos &theta;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Electric Field</span>
+          E = kQ / r&sup2;
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Maximum Flux</span>
+          &Phi;<sub>max</sub> = E &middot; A (when &theta; = 0&deg;)
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Zero Flux</span>
+          &Phi; = 0 (when &theta; = 90&deg;)
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Gauss's Law</span>
+          &Phi;<sub>closed</sub> = Q / &epsilon;&#8320;
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What is electric flux?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Electric flux (&Phi;) is a measure of the number of electric field lines passing through a given surface. Mathematically, it is defined as &Phi; = E &middot; A &middot; cos &theta;, where E is the electric field strength, A is the area of the surface, and &theta; is the angle between the electric field direction and the area vector (normal to the surface). It is measured in N&middot;m&sup2;/C (newton-metre squared per coulomb).
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Why does flux depend on cos &theta;?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Flux depends on cos &theta; because only the <strong>component of the electric field perpendicular to the surface</strong> contributes to the flux. When &theta; = 0&deg;, the field is fully perpendicular to the surface and all field lines pass through it. As &theta; increases, the effective "cross-section" of the surface facing the field decreases as cos &theta;, meaning fewer field lines pierce through. At &theta; = 90&deg;, the surface is parallel to the field and no lines pass through &mdash; the flux is zero.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens to flux when the surface is parallel to the field?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          When the surface is parallel to the electric field, the area vector (normal to the surface) is <strong>perpendicular</strong> to the field direction, making &theta; = 90&deg;. Since cos 90&deg; = 0, the electric flux through the surface is <strong>zero</strong>. No field lines pass through the surface &mdash; they all run along it. You can verify this in the simulation by setting &theta; to 90&deg;.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How is electric flux related to Gauss's Law?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Gauss's Law states that the <strong>total electric flux through any closed surface</strong> is equal to the net charge enclosed divided by the permittivity of free space: &Phi; = Q<sub>enclosed</sub> / &epsilon;&#8320;. This is one of Maxwell's equations and is extremely powerful for calculating electric fields of symmetric charge distributions (spheres, cylinders, planes). The simulation shows flux through an open surface, but the concept extends to closed surfaces in Gauss's Law.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Can electric flux be negative?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Yes! Electric flux can be negative when the electric field lines pass through the surface in the direction <strong>opposite</strong> to the area vector. This happens when the angle &theta; between E and A is greater than 90&deg; (cos &theta; becomes negative). For a closed surface, flux is positive for field lines leaving the surface and negative for lines entering it. A net positive flux indicates a positive enclosed charge, while net negative flux indicates a negative enclosed charge.
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        bg: isLight ? '#e8eaf0' : '#080818',
+        bgCenter: isLight ? '#f0f2f8' : '#0a0a24',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.04)',
+        text: isLight ? '#333' : '#fff',
+        labelBg: isLight ? 'rgba(255,255,255,0.88)' : 'rgba(10,10,30,0.88)',
+        labelBorder: isLight ? 'rgba(124,58,237,0.35)' : 'rgba(124,58,237,0.35)',
+        labelText: isLight ? '#7c3aed' : '#a78bfa'
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === CANVAS SETUP ===
+    var canvas = document.getElementById('simCanvas');
+    var ctx = canvas.getContext('2d');
+    var canvasW, canvasH;
+
+    function resizeCanvas() {
+      var wrap = canvas.parentElement;
+      var isFS = !!document.fullscreenElement;
+      var w = wrap.clientWidth;
+      var h = isFS ? wrap.clientHeight : Math.max(350, window.innerHeight - 300);
+      var dpr = window.devicePixelRatio || 1;
+
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      canvasW = w;
+      canvasH = h;
+      updatePositions();
+    }
+
+    window.addEventListener('resize', function() {
+      resizeCanvas();
+      resizePlotCanvas();
+    });
+
+    // === SIMULATION STATE ===
+    var CHARGE_MAG = 5;
+    var CHARGE_SIGN = 1;       // +1 or -1
+    var SURFACE_WIDTH = 80;    // fixed visual width (perspective depth)
+    var SURFACE_HEIGHT = 160;  // controllable: grows up/down
+    var THETA_DEG = 0;
+    var NUM_FIELD_LINES = 48;  // dense, light lines
+    var PIXELS_PER_METER = 150;
+    var K_COULOMB = 9e9;
+
+    var charge = { x: 0, y: 0 };
+    var surfaceCenter = { x: 0, y: 0 };
+    var flowPhase = 0;
+    var glowPhase = 0;
+
+    // Achievement tracking
+    var _achMaxFlux = false;
+    var _achZeroFlux = false;
+    var _achHalfFlux = false;
+
+    function updatePositions() {
+      charge.x = canvasW * 0.15;
+      charge.y = canvasH / 2;
+      surfaceCenter.x = canvasW * 0.62;
+      surfaceCenter.y = canvasH / 2;
+    }
+
+    function resetAll() {
+      CHARGE_MAG = 5;
+      CHARGE_SIGN = 1;
+      SURFACE_HEIGHT = 160;
+      THETA_DEG = 0;
+      document.getElementById('chargeSlider').value = 5;
+      document.getElementById('chargeInput').value = 5;
+      document.getElementById('areaSlider').value = 160;
+      document.getElementById('areaInput').value = 160;
+      document.getElementById('thetaSlider').value = 0;
+      document.getElementById('thetaInput').value = 0;
+      updateSignBtn();
+      plotHistory = [];
+      updatePositions();
+    }
+
+    // === SIGN TOGGLE ===
+    function updateSignBtn() {
+      var btn = document.getElementById('signBtn');
+      if (CHARGE_SIGN > 0) {
+        btn.textContent = '+';
+        btn.className = 'sign-btn pos';
+      } else {
+        btn.textContent = '\u2212';
+        btn.className = 'sign-btn neg';
+      }
+    }
+
+    document.getElementById('signBtn').addEventListener('click', function() {
+      CHARGE_SIGN *= -1;
+      updateSignBtn();
+    });
+
+    // === SLIDER + INPUT SYNC ===
+    function syncCharge(val) {
+      val = Math.max(1, Math.min(10, parseInt(val) || 1));
+      CHARGE_MAG = val;
+      document.getElementById('chargeSlider').value = val;
+      document.getElementById('chargeInput').value = val;
+    }
+    document.getElementById('chargeSlider').addEventListener('input', function() { syncCharge(this.value); });
+    document.getElementById('chargeInput').addEventListener('input', function() { syncCharge(this.value); });
+
+    function checkAchievements() {
+      if (SURFACE_HEIGHT >= 350 && THETA_DEG === 0) _achMaxFlux = true;
+      if (THETA_DEG === 90) _achZeroFlux = true;
+      if (THETA_DEG === 60) _achHalfFlux = true;
+    }
+
+    function syncArea(val) {
+      val = Math.max(60, Math.min(350, parseInt(val) || 60));
+      SURFACE_HEIGHT = val;
+      document.getElementById('areaSlider').value = val;
+      document.getElementById('areaInput').value = val;
+      checkAchievements();
+    }
+    document.getElementById('areaSlider').addEventListener('input', function() { syncArea(this.value); });
+    document.getElementById('areaInput').addEventListener('input', function() { syncArea(this.value); });
+
+    function syncTheta(val) {
+      val = Math.max(0, Math.min(90, parseInt(val) || 0));
+      THETA_DEG = val;
+      document.getElementById('thetaSlider').value = val;
+      document.getElementById('thetaInput').value = val;
+      checkAchievements();
+    }
+    document.getElementById('thetaSlider').addEventListener('input', function() { syncTheta(this.value); });
+    document.getElementById('thetaInput').addEventListener('input', function() { syncTheta(this.value); });
+
+    // === RESET BUTTONS ===
+    document.getElementById('resetBtn').addEventListener('click', resetAll);
+    document.getElementById('resetArrangement').addEventListener('click', resetAll);
+
+    // === PHYSICS ===
+    function getSurfaceDistMeters() {
+      var dx = surfaceCenter.x - charge.x;
+      var dy = surfaceCenter.y - charge.y;
+      return Math.sqrt(dx * dx + dy * dy) / PIXELS_PER_METER;
+    }
+
+    function getElectricField() {
+      var r = getSurfaceDistMeters();
+      if (r < 0.01) r = 0.01;
+      var Q = CHARGE_MAG * 1e-6;
+      return K_COULOMB * Q / (r * r);
+    }
+
+    function getSurfaceAreaM2() {
+      var wM = SURFACE_WIDTH / PIXELS_PER_METER;
+      var hM = SURFACE_HEIGHT / PIXELS_PER_METER;  // SURFACE_HEIGHT controlled by area slider
+      return wM * hM;
+    }
+
+    function getFlux() {
+      var E = getElectricField();
+      var A = getSurfaceAreaM2();
+      var thetaRad = THETA_DEG * Math.PI / 180;
+      return E * A * Math.cos(thetaRad);
+    }
+
+    function formatSci(val) {
+      if (Math.abs(val) === 0) return '0';
+      var exp = Math.floor(Math.log10(Math.abs(val)));
+      var mantissa = val / Math.pow(10, exp);
+      return mantissa.toFixed(2) + '\u00D710' + superscript(exp);
+    }
+
+    function superscript(n) {
+      var sup = { '0': '\u2070', '1': '\u00B9', '2': '\u00B2', '3': '\u00B3', '4': '\u2074',
+                  '5': '\u2075', '6': '\u2076', '7': '\u2077', '8': '\u2078', '9': '\u2079', '-': '\u207B' };
+      var s = String(n);
+      var result = '';
+      for (var i = 0; i < s.length; i++) result += sup[s[i]] || s[i];
+      return result;
+    }
+
+    // === DRAWING HELPERS ===
+    function roundedRect(ctx, x, y, w, h, r) {
+      if (r > w / 2) r = w / 2;
+      if (r > h / 2) r = h / 2;
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.arcTo(x + w, y, x + w, y + r, r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+      ctx.lineTo(x + r, y + h);
+      ctx.arcTo(x, y + h, x, y + h - r, r);
+      ctx.lineTo(x, y + r);
+      ctx.arcTo(x, y, x + r, y, r);
+      ctx.closePath();
+    }
+
+    // === DRAWING ===
+    function drawBackground() {
+      var grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
+      grad.addColorStop(0, tc.bgCenter);
+      grad.addColorStop(1, tc.bg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var gridColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.035)';
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1;
+      for (var x = 40; x < canvasW; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvasH);
+        ctx.stroke();
+      }
+      for (var y = 40; y < canvasH; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvasW, y);
+        ctx.stroke();
+      }
+    }
+
+    function drawCharge() {
+      var pulse = 0.5 + 0.5 * Math.sin(glowPhase);
+      var r = 18 + (CHARGE_MAG - 1) * 2;
+      var glowRadius = (30 + (CHARGE_MAG - 1) * 4) + 10 * pulse;
+      var glowAlpha = 0.2 + 0.15 * pulse;
+      var isPos = CHARGE_SIGN > 0;
+
+      // Glow
+      var glowGrad = ctx.createRadialGradient(charge.x, charge.y, 0, charge.x, charge.y, glowRadius);
+      if (isPos) {
+        glowGrad.addColorStop(0, 'rgba(255,45,117,' + glowAlpha + ')');
+        glowGrad.addColorStop(0.6, 'rgba(255,45,117,' + (glowAlpha * 0.4) + ')');
+        glowGrad.addColorStop(1, 'rgba(255,45,117,0)');
+      } else {
+        glowGrad.addColorStop(0, 'rgba(0,212,255,' + glowAlpha + ')');
+        glowGrad.addColorStop(0.6, 'rgba(0,212,255,' + (glowAlpha * 0.4) + ')');
+        glowGrad.addColorStop(1, 'rgba(0,212,255,0)');
+      }
+      ctx.beginPath();
+      ctx.arc(charge.x, charge.y, glowRadius, 0, Math.PI * 2);
+      ctx.fillStyle = glowGrad;
+      ctx.fill();
+
+      // Body
+      ctx.beginPath();
+      ctx.arc(charge.x, charge.y, r, 0, Math.PI * 2);
+      var grad = ctx.createRadialGradient(charge.x - 3, charge.y - 3, 0, charge.x, charge.y, r);
+      if (isPos) {
+        grad.addColorStop(0, '#ff5a92');
+        grad.addColorStop(1, '#ff2d75');
+      } else {
+        grad.addColorStop(0, '#33e0ff');
+        grad.addColorStop(1, '#00d4ff');
+      }
+      ctx.fillStyle = grad;
+      ctx.shadowColor = isPos ? '#ff2d75' : '#00d4ff';
+      ctx.shadowBlur = 12 + 6 * pulse;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Label
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold ' + (13 + CHARGE_MAG) + 'px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      var signChar = isPos ? '+' : '\u2212';
+      ctx.fillText(signChar + CHARGE_MAG, charge.x, charge.y);
+
+      ctx.font = 'bold 11px "Inter", sans-serif';
+      ctx.fillStyle = tc.labelText;
+      ctx.textBaseline = 'top';
+      ctx.fillText(signChar + 'Q', charge.x, charge.y + r + 6);
+    }
+
+    // Get surface corners in canvas coordinates (rotated by theta)
+    function getSurfaceCorners() {
+      var thetaRad = THETA_DEG * Math.PI / 180;
+      var hw = SURFACE_WIDTH / 2;
+      var hh = SURFACE_HEIGHT / 2;
+
+      // Surface normal direction at theta=0 points left (toward charge), i.e., along -x
+      // The surface itself at theta=0 is vertical (perpendicular to x-axis)
+      // When theta increases, the surface rotates so its normal tilts away from E direction
+
+      // Surface edge direction at theta=0 is vertical (along y-axis)
+      // As theta increases, top edge tilts toward charge, bottom tilts away (rotation about center)
+      var cosT = Math.cos(thetaRad);
+      var sinT = Math.sin(thetaRad);
+
+      // Surface spans along a direction perpendicular to its normal
+      // At theta=0, surface is vertical, normal points along -x (toward charge)
+      // Surface edge direction: (0, 1) rotated by theta in the x-y plane
+      var edgeDx = sinT;  // x component of edge direction
+      var edgeDy = cosT;  // y component of edge direction
+
+      var cx = surfaceCenter.x;
+      var cy = surfaceCenter.y;
+
+      return {
+        top:    { x: cx - edgeDx * hh, y: cy - edgeDy * hh },
+        bottom: { x: cx + edgeDx * hh, y: cy + edgeDy * hh },
+        // For 3D effect, offset the width perpendicular to edge
+        // Width is into/out of screen but we show a small perspective offset
+        widthPx: SURFACE_WIDTH * cosT * 0.3 + 8 // perspective width
+      };
+    }
+
+    function drawSurface() {
+      var thetaRad = THETA_DEG * Math.PI / 180;
+      var corners = getSurfaceCorners();
+
+      // Surface color based on theta: green (0) -> yellow (45) -> red (90)
+      var t = THETA_DEG / 90;
+      var r = Math.round(40 + 215 * t);
+      var g = Math.round(220 - 120 * t);
+      var b = Math.round(80 - 50 * t);
+      var surfColor = 'rgba(' + r + ',' + g + ',' + b + ',0.35)';
+      var surfBorder = 'rgba(' + r + ',' + g + ',' + b + ',0.8)';
+
+      // Draw the surface as a filled rectangle with perspective
+      var wHalf = corners.widthPx / 2;
+      // Normal direction (perpendicular to edge)
+      var edgeDx = corners.bottom.x - corners.top.x;
+      var edgeDy = corners.bottom.y - corners.top.y;
+      var edgeLen = Math.sqrt(edgeDx * edgeDx + edgeDy * edgeDy);
+      var nx = -edgeDy / edgeLen;
+      var ny = edgeDx / edgeLen;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(corners.top.x - nx * wHalf, corners.top.y - ny * wHalf);
+      ctx.lineTo(corners.top.x + nx * wHalf, corners.top.y + ny * wHalf);
+      ctx.lineTo(corners.bottom.x + nx * wHalf, corners.bottom.y + ny * wHalf);
+      ctx.lineTo(corners.bottom.x - nx * wHalf, corners.bottom.y - ny * wHalf);
+      ctx.closePath();
+      ctx.fillStyle = surfColor;
+      ctx.fill();
+      ctx.strokeStyle = surfBorder;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.restore();
+
+      // Draw area vector arrow (normal to surface, pointing away from charge)
+      var arrowLen = 60;
+      // Normal to surface pointing toward the right (away from charge at theta=0)
+      var normalAngle = thetaRad; // angle from horizontal
+      var nxDir = Math.cos(normalAngle);
+      var nyDir = -Math.sin(normalAngle);
+
+      var ax = surfaceCenter.x;
+      var ay = surfaceCenter.y;
+      var aex = ax + nxDir * arrowLen;
+      var aey = ay + nyDir * arrowLen;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(aex, aey);
+      ctx.strokeStyle = '#00d4ff';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Arrowhead
+      var headLen = 12;
+      var angle = Math.atan2(aey - ay, aex - ax);
+      ctx.beginPath();
+      ctx.moveTo(aex, aey);
+      ctx.lineTo(aex - headLen * Math.cos(angle - 0.4), aey - headLen * Math.sin(angle - 0.4));
+      ctx.lineTo(aex - headLen * Math.cos(angle + 0.4), aey - headLen * Math.sin(angle + 0.4));
+      ctx.closePath();
+      ctx.fillStyle = '#00d4ff';
+      ctx.fill();
+
+      // Label "A"
+      ctx.font = 'bold 14px "Inter", sans-serif';
+      ctx.fillStyle = '#00d4ff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('\u20D7A', aex + nxDir * 14, aey + nyDir * 14);
+      ctx.restore();
+
+      // Draw theta arc between E direction (horizontal right) and area vector
+      if (THETA_DEG > 2) {
+        var arcRadius = 35;
+        ctx.save();
+        ctx.beginPath();
+        // E direction is 0 (rightward), A direction is at -thetaRad
+        ctx.arc(surfaceCenter.x, surfaceCenter.y, arcRadius, -thetaRad, 0);
+        ctx.strokeStyle = 'rgba(255,200,0,0.7)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Theta label
+        var midAngle = -thetaRad / 2;
+        var labelR = arcRadius + 14;
+        ctx.font = 'bold 12px "Inter", sans-serif';
+        ctx.fillStyle = 'rgba(255,200,0,0.9)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('\u03B8=' + THETA_DEG + '\u00B0', surfaceCenter.x + labelR * Math.cos(midAngle), surfaceCenter.y + labelR * Math.sin(midAngle));
+        ctx.restore();
+      }
+    }
+
+    function lineIntersectsSurface(x1, y1, x2, y2) {
+      // Check if the line segment from (x1,y1) to (x2,y2) intersects the surface line segment
+      var corners = getSurfaceCorners();
+      var x3 = corners.top.x, y3 = corners.top.y;
+      var x4 = corners.bottom.x, y4 = corners.bottom.y;
+
+      var denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+      if (Math.abs(denom) < 0.001) return null;
+
+      var t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
+      var u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
+
+      if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+        return {
+          x: x1 + t * (x2 - x1),
+          y: y1 + t * (y2 - y1)
+        };
+      }
+      return null;
+    }
+
+    function drawFieldLines() {
+      var linesThrough = 0;
+      var maxLen = Math.sqrt(canvasW * canvasW + canvasH * canvasH);
+      var startR = 22 + (CHARGE_MAG - 1) * 2;
+      var isPos = CHARGE_SIGN > 0;
+
+      for (var i = 0; i < NUM_FIELD_LINES; i++) {
+        var angle = (i / NUM_FIELD_LINES) * Math.PI * 2;
+
+        // For positive charge: lines go outward. For negative: lines come inward.
+        // We always draw from charge outward for intersection test, but flip arrows.
+        var sx = charge.x + Math.cos(angle) * startR;
+        var sy = charge.y + Math.sin(angle) * startR;
+        var ex = charge.x + Math.cos(angle) * maxLen;
+        var ey = charge.y + Math.sin(angle) * maxLen;
+
+        // Check intersection with surface
+        var intersection = lineIntersectsSurface(sx, sy, ex, ey);
+        var passesThrough = intersection !== null;
+        if (passesThrough) linesThrough++;
+
+        // Draw field line - light and thin
+        ctx.save();
+        if (passesThrough) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.6)';
+          ctx.lineWidth = 1.2;
+        } else {
+          ctx.strokeStyle = 'rgba(150,150,200,0.15)';
+          ctx.lineWidth = 0.8;
+        }
+
+        // Animated dashes
+        ctx.setLineDash([8, 6]);
+        ctx.lineDashOffset = isPos ? -flowPhase * 40 : flowPhase * 40;
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(ex, ey);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+
+        // Small arrowhead at midpoint (direction depends on sign)
+        var midFrac = 0.3;
+        var mx = sx + (ex - sx) * midFrac;
+        var my = sy + (ey - sy) * midFrac;
+        var headLen = 6;
+        var arrowAngle = isPos ? angle : angle + Math.PI;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(mx + Math.cos(arrowAngle) * headLen, my + Math.sin(arrowAngle) * headLen);
+        ctx.lineTo(mx + Math.cos(arrowAngle + 2.6) * headLen * 0.5, my + Math.sin(arrowAngle + 2.6) * headLen * 0.5);
+        ctx.lineTo(mx + Math.cos(arrowAngle - 2.6) * headLen * 0.5, my + Math.sin(arrowAngle - 2.6) * headLen * 0.5);
+        ctx.closePath();
+        ctx.fillStyle = passesThrough ? 'rgba(255,220,50,0.55)' : 'rgba(150,150,200,0.18)';
+        ctx.fill();
+        ctx.restore();
+
+        // Glowing dot at intersection
+        if (passesThrough && intersection) {
+          ctx.save();
+          var glowR = 5 + 2 * Math.sin(glowPhase * 2);
+          var igr = ctx.createRadialGradient(intersection.x, intersection.y, 0, intersection.x, intersection.y, glowR);
+          igr.addColorStop(0, 'rgba(255,255,100,0.8)');
+          igr.addColorStop(0.5, 'rgba(255,220,50,0.4)');
+          igr.addColorStop(1, 'rgba(255,220,50,0)');
+          ctx.beginPath();
+          ctx.arc(intersection.x, intersection.y, glowR, 0, Math.PI * 2);
+          ctx.fillStyle = igr;
+          ctx.fill();
+
+          // Small center dot
+          ctx.beginPath();
+          ctx.arc(intersection.x, intersection.y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffcc';
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      // Line count badge near surface
+      var badgeX = surfaceCenter.x + 50;
+      var badgeY = surfaceCenter.y - SURFACE_HEIGHT / 2 - 20;
+      var badgeText = linesThrough + ' lines through';
+      ctx.font = 'bold 11px "Inter", sans-serif';
+      var tw = ctx.measureText(badgeText).width;
+      var pw = tw + 16;
+      var ph = 24;
+
+      ctx.save();
+      roundedRect(ctx, badgeX - pw / 2, badgeY - ph / 2, pw, ph, 12);
+      ctx.fillStyle = tc.labelBg;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,220,50,0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(255,220,50,0.95)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(badgeText, badgeX, badgeY);
+      ctx.restore();
+
+      return linesThrough;
+    }
+
+    function drawFluxMeter(flux, maxFlux) {
+      // Draw a circular gauge in the top-right corner
+      var meterX = canvasW - 70;
+      var meterY = 70;
+      var meterR = 45;
+
+      ctx.save();
+
+      // Background circle
+      ctx.beginPath();
+      ctx.arc(meterX, meterY, meterR, 0, Math.PI * 2);
+      ctx.fillStyle = tc.labelBg;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(124,58,237,0.3)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Gauge arc (from -135deg to +135deg = 270deg sweep)
+      var startAngle = Math.PI * 0.75; // 135deg
+      var endAngle = Math.PI * 2.25;   // 405deg
+      var sweepAngle = endAngle - startAngle;
+
+      // Background arc
+      ctx.beginPath();
+      ctx.arc(meterX, meterY, meterR - 8, startAngle, endAngle);
+      ctx.strokeStyle = 'rgba(150,150,200,0.15)';
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Value arc
+      var frac = maxFlux > 0 ? Math.max(0, Math.min(1, flux / maxFlux)) : 0;
+      var valAngle = startAngle + sweepAngle * frac;
+
+      // Color gradient based on fraction
+      var arcColor;
+      if (frac > 0.7) arcColor = '#34d399';
+      else if (frac > 0.3) arcColor = '#fbbf24';
+      else arcColor = '#ff5a5a';
+
+      ctx.beginPath();
+      ctx.arc(meterX, meterY, meterR - 8, startAngle, valAngle);
+      ctx.strokeStyle = arcColor;
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Needle
+      var needleLen = meterR - 14;
+      var needleAngle = startAngle + sweepAngle * frac;
+      ctx.beginPath();
+      ctx.moveTo(meterX, meterY);
+      ctx.lineTo(meterX + Math.cos(needleAngle) * needleLen, meterY + Math.sin(needleAngle) * needleLen);
+      ctx.strokeStyle = tc.text;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Center dot
+      ctx.beginPath();
+      ctx.arc(meterX, meterY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = arcColor;
+      ctx.fill();
+
+      // Label
+      ctx.font = 'bold 10px "Inter", sans-serif';
+      ctx.fillStyle = tc.text;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText('\u03A6 Meter', meterX, meterY + meterR - 4);
+
+      // Value text
+      ctx.font = 'bold 11px "JetBrains Mono", monospace';
+      ctx.fillStyle = arcColor;
+      ctx.textBaseline = 'middle';
+      ctx.fillText(Math.round(frac * 100) + '%', meterX, meterY + 14);
+
+      ctx.restore();
+    }
+
+    // === PLOT CANVAS ===
+    var plotCanvas = document.getElementById('plotCanvas');
+    var pctx = plotCanvas.getContext('2d');
+    var plotHistory = [];
+    var MAX_HISTORY = 91;
+
+    function resizePlotCanvas() {
+      var wrap = plotCanvas.parentElement;
+      var w = wrap.clientWidth;
+      var h = wrap.clientHeight || 160;
+      var dpr = window.devicePixelRatio || 1;
+      plotCanvas.width = w * dpr;
+      plotCanvas.height = h * dpr;
+      plotCanvas.style.width = w + 'px';
+      plotCanvas.style.height = h + 'px';
+      pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function recordPlotPoint() {
+      var exists = false;
+      for (var i = 0; i < plotHistory.length; i++) {
+        if (plotHistory[i].theta === THETA_DEG) { exists = true; break; }
+      }
+      if (!exists) {
+        plotHistory.push({ theta: THETA_DEG, flux: getFlux() });
+        plotHistory.sort(function(a, b) { return a.theta - b.theta; });
+      }
+    }
+
+    function drawPlot() {
+      var wrap = plotCanvas.parentElement;
+      var w = wrap.clientWidth;
+      var h = wrap.clientHeight || 160;
+      if (plotCanvas.width !== Math.round(w * (window.devicePixelRatio || 1))) resizePlotCanvas();
+
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var bgColor = isLight ? '#f0f2f8' : '#0c0c20';
+      var gridColor = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)';
+      var axisColor = isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.2)';
+      var textColor = isLight ? '#666' : '#888';
+      var curveColor = 'rgba(124,58,237,0.5)';
+      var dotColor = '#ffcc00';
+
+      pctx.fillStyle = bgColor;
+      pctx.fillRect(0, 0, w, h);
+
+      var pad = { left: 36, right: 12, top: 16, bottom: 24 };
+      var pw = w - pad.left - pad.right;
+      var ph = h - pad.top - pad.bottom;
+
+      // Theoretical cos curve
+      var E = getElectricField();
+      var A = getSurfaceAreaM2();
+      var maxFlux = E * A;
+
+      // Grid lines
+      pctx.strokeStyle = gridColor;
+      pctx.lineWidth = 1;
+      for (var gi = 1; gi <= 4; gi++) {
+        var gy = pad.top + ph * (1 - gi / 4);
+        pctx.beginPath();
+        pctx.moveTo(pad.left, gy);
+        pctx.lineTo(pad.left + pw, gy);
+        pctx.stroke();
+      }
+
+      // Axes
+      pctx.strokeStyle = axisColor;
+      pctx.lineWidth = 1.5;
+      pctx.beginPath();
+      pctx.moveTo(pad.left, pad.top);
+      pctx.lineTo(pad.left, pad.top + ph);
+      pctx.lineTo(pad.left + pw, pad.top + ph);
+      pctx.stroke();
+
+      // Axis labels
+      pctx.fillStyle = textColor;
+      pctx.font = '600 9px "Inter", sans-serif';
+      pctx.textAlign = 'center';
+      pctx.textBaseline = 'top';
+      pctx.fillText('\u03B8 (\u00B0)', pad.left + pw / 2, h - 10);
+      pctx.save();
+      pctx.translate(10, pad.top + ph / 2);
+      pctx.rotate(-Math.PI / 2);
+      pctx.fillText('\u03A6', 0, 0);
+      pctx.restore();
+
+      // Theoretical cos curve (smooth)
+      pctx.beginPath();
+      pctx.strokeStyle = curveColor;
+      pctx.lineWidth = 1.5;
+      var steps = 90;
+      for (var si = 0; si <= steps; si++) {
+        var theta = si;
+        var flux = maxFlux * Math.cos(theta * Math.PI / 180);
+        var px = pad.left + (theta / 90) * pw;
+        var py = pad.top + ph * (1 - flux / maxFlux);
+        if (si === 0) pctx.moveTo(px, py);
+        else pctx.lineTo(px, py);
+      }
+      pctx.stroke();
+
+      // Current point (bright)
+      var curFlux = getFlux();
+      var curPx = pad.left + (THETA_DEG / 90) * pw;
+      var curFNorm = maxFlux > 0 ? curFlux / maxFlux : 0;
+      var curPy = pad.top + ph * (1 - curFNorm);
+      pctx.beginPath();
+      pctx.arc(curPx, curPy, 4, 0, Math.PI * 2);
+      pctx.fillStyle = dotColor;
+      pctx.shadowColor = dotColor;
+      pctx.shadowBlur = 6;
+      pctx.fill();
+      pctx.shadowBlur = 0;
+
+      // Theta-axis tick labels
+      pctx.fillStyle = textColor;
+      pctx.font = '9px "JetBrains Mono", monospace';
+      pctx.textAlign = 'center';
+      pctx.textBaseline = 'top';
+      var thetaTicks = [0, 30, 60, 90];
+      for (var ti = 0; ti < thetaTicks.length; ti++) {
+        var tx = pad.left + (thetaTicks[ti] / 90) * pw;
+        pctx.fillText(thetaTicks[ti] + '\u00B0', tx, pad.top + ph + 3);
+      }
+
+      // Flux-axis labels
+      pctx.textAlign = 'right';
+      pctx.textBaseline = 'middle';
+      pctx.fillText('max', pad.left - 4, pad.top);
+      pctx.fillText('0', pad.left - 4, pad.top + ph);
+    }
+
+    function updateDataPanel() {
+      var E = getElectricField();
+      var A = getSurfaceAreaM2();
+      var flux = getFlux();
+      var signChar = CHARGE_SIGN > 0 ? '+' : '\u2212';
+
+      document.getElementById('dataFlux').textContent = formatSci(flux) + ' N\u00B7m\u00B2/C';
+      document.getElementById('dataField').textContent = formatSci(E) + ' N/C';
+      document.getElementById('dataArea').textContent = A.toFixed(4) + ' m\u00B2';
+      document.getElementById('dataTheta').textContent = THETA_DEG + '\u00B0';
+
+      var sub = document.getElementById('dataSubstitution');
+      sub.innerHTML =
+        '\u03A6 = E\u00B7A\u00B7cos\u03B8' +
+        '<br>= ' + formatSci(E) + '\u00D7' + A.toFixed(4) + '\u00D7cos(' + THETA_DEG + '\u00B0)' +
+        '<br><span class="hl">= ' + formatSci(flux) + ' N\u00B7m\u00B2/C</span>' +
+        '<br>Q = ' + signChar + CHARGE_MAG + ' \u00B5C';
+    }
+
+    function drawFrame() {
+      drawBackground();
+      var linesThrough = drawFieldLines();
+      drawSurface();
+      drawCharge();
+
+      var E = getElectricField();
+      var A = getSurfaceAreaM2();
+      var maxFlux = E * A;
+      var flux = getFlux();
+      drawFluxMeter(flux, maxFlux);
+      updateDataPanel();
+    }
+
+    function draw() {
+      drawFrame();
+    }
+
+    // === ANIMATION LOOP ===
+    var animRunning = false;
+
+    function animLoop() {
+      if (!animRunning) return;
+      glowPhase += 0.02;
+      flowPhase += 0.015;
+      if (glowPhase > Math.PI * 2) glowPhase -= Math.PI * 2;
+
+      drawFrame();
+
+      if (Math.round(glowPhase * 50) % 5 === 0) {
+        recordPlotPoint();
+        drawPlot();
+      }
+
+      requestAnimationFrame(animLoop);
+    }
+
+    function startAnim() {
+      if (!animRunning) {
+        animRunning = true;
+        requestAnimationFrame(animLoop);
+      }
+    }
+
+    // === FULLSCREEN ===
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(function() { resizeCanvas(); resizePlotCanvas(); }, 100);
+      setTimeout(function() { resizeCanvas(); resizePlotCanvas(); }, 300);
+    });
+
+    // === TUTORIAL OVERLAY ===
+    function drawCurvedArrow(svg, x1, y1, x2, y2) {
+      var ns = 'http://www.w3.org/2000/svg';
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+      var cx1 = x1 + dx * 0.2;
+      var cy1 = y1 + dy * 0.6;
+      var cx2 = x1 + dx * 0.8;
+      var cy2 = y1 + dy * 0.4;
+
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d',
+        'M' + x1 + ',' + y1 +
+        ' C' + cx1 + ',' + cy1 +
+        ' ' + cx2 + ',' + cy2 +
+        ' ' + x2 + ',' + y2
+      );
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgba(255,255,255,0.85)');
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(path);
+
+      var angle = Math.atan2(y2 - cy2, x2 - cx2);
+      var headLen = 10;
+      var a1x = x2 - headLen * Math.cos(angle - 0.4);
+      var a1y = y2 - headLen * Math.sin(angle - 0.4);
+      var a2x = x2 - headLen * Math.cos(angle + 0.4);
+      var a2y = y2 - headLen * Math.sin(angle + 0.4);
+      var arrow = document.createElementNS(ns, 'polygon');
+      arrow.setAttribute('points',
+        x2 + ',' + y2 + ' ' +
+        a1x + ',' + a1y + ' ' +
+        a2x + ',' + a2y
+      );
+      arrow.setAttribute('fill', 'rgba(255,255,255,0.85)');
+      svg.appendChild(arrow);
+    }
+
+    function positionTutorialHints() {
+      var area = document.getElementById('simArea');
+      var areaRect = area.getBoundingClientRect();
+      var svg = document.getElementById('tutArrowsSvg');
+      svg.innerHTML = '';
+
+      var targets = [
+        { hint: 'tutHintTheta', el: document.getElementById('thetaCtrl'), type: 'bottom' },
+        { hint: 'tutHintCanvas', el: document.getElementById('simCanvas'), type: 'canvas' },
+        { hint: 'tutHintData', el: document.querySelector('.side-data'), type: 'bottom' }
+      ];
+
+      var placed = [];
+
+      for (var i = 0; i < targets.length; i++) {
+        var t = targets[i];
+        var hintEl = document.getElementById(t.hint);
+        if (!t.el) continue;
+        var elRect = t.el.getBoundingClientRect();
+        var cx = elRect.left + elRect.width / 2 - areaRect.left;
+        var cy = elRect.top - areaRect.top;
+
+        if (t.type === 'canvas') {
+          var midX = elRect.left + elRect.width / 2 - areaRect.left;
+          var midY = elRect.top + elRect.height * 0.35 - areaRect.top;
+          hintEl.style.left = midX + 'px';
+          hintEl.style.top = midY + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+          hintEl.style.right = '';
+          continue;
+        }
+
+        hintEl.style.left = cx + 'px';
+        hintEl.style.transform = 'translateX(-50%)';
+        hintEl.style.top = '0px';
+
+        var hintRect = hintEl.getBoundingClientRect();
+        var hintW = hintRect.width;
+        var hintH = hintRect.height;
+
+        var desiredTop = cy - 50;
+        var hintLeft = cx - hintW / 2;
+        var hintRight = hintLeft + hintW;
+
+        var finalTop = desiredTop;
+        for (var j = 0; j < placed.length; j++) {
+          var p = placed[j];
+          if (hintRight > p.left && hintLeft < p.right) {
+            if (finalTop + hintH > p.top && finalTop < p.bottom) {
+              finalTop = p.top - hintH - 8;
+            }
+          }
+        }
+
+        hintEl.style.top = finalTop + 'px';
+        placed.push({
+          left: hintLeft,
+          right: hintRight,
+          top: finalTop,
+          bottom: finalTop + hintH
+        });
+
+        var arrowStartX = cx;
+        var arrowStartY = finalTop + hintH + 2;
+        var arrowEndX = cx;
+        var arrowEndY = cy + 2;
+        drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+      }
+    }
+
+    function showTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.display = '';
+      el.offsetHeight;
+      el.style.opacity = '1';
+      positionTutorialHints();
+    }
+
+    window.addEventListener('resize', function() {
+      if (document.getElementById('simTutorial').style.display !== 'none') {
+        positionTutorialHints();
+      }
+    });
+
+    function dismissTutorial() {
+      var el = document.getElementById('simTutorial');
+      el.style.opacity = '0';
+      setTimeout(function() { el.style.display = 'none'; }, 400);
+      localStorage.setItem('tut-electric-flux', '1');
+    }
+
+    if (!localStorage.getItem('tut-electric-flux')) {
+      showTutorial();
+    }
+
+    document.getElementById('simTutorial').addEventListener('click', dismissTutorial);
+    document.getElementById('helpBtn').addEventListener('click', showTutorial);
+
+    // === INIT ===
+    resizeCanvas();
+    resizePlotCanvas();
+    startAnim();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

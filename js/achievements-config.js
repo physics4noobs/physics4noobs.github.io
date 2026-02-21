@@ -1405,5 +1405,49 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
                typeof electrons !== 'undefined' && electrons.length === 0;
       }}
     }
+  ],
+
+  /* ── Electric Flux ── */
+  'electric-flux': [
+    {
+      id: 'max_flux', title: 'Maximum Flux',
+      description: 'Achieve the highest possible electric flux through the surface',
+      icon: '\uD83C\uDF0A',
+      check: { type: 'global', name: '_achMaxFlux', op: 'eq', value: true }
+    },
+    {
+      id: 'zero_flux', title: 'Total Block',
+      description: 'Make zero field lines pass through the surface',
+      icon: '\uD83D\uDEAB',
+      check: { type: 'global', name: '_achZeroFlux', op: 'eq', value: true }
+    },
+    {
+      id: 'half_flux', title: 'Half Measure',
+      description: 'Get the flux to exactly half of its maximum value',
+      icon: '\u2696\uFE0F',
+      check: { type: 'global', name: '_achHalfFlux', op: 'eq', value: true }
+    }
+  ],
+
+  /* ── Gauss's Law ── */
+  'gauss-law': [
+    {
+      id: 'gauss_center', title: 'Perfect Symmetry',
+      description: 'Observe equal flux through every face of the cube',
+      icon: '\uD83C\uDFAF',
+      check: { type: 'global', name: '_achGaussCenter', op: 'eq', value: true }
+    },
+    {
+      id: 'gauss_corner', title: 'Shared Charge',
+      description: 'Discover what happens when the charge sits at a corner',
+      icon: '\uD83D\uDCD0',
+      check: { type: 'global', name: '_achGaussCorner', op: 'eq', value: true }
+    },
+    {
+      id: 'gauss_edge', title: 'Edge Case',
+      description: 'Find the flux when the charge is on an edge',
+      icon: '\uD83D\uDD00',
+      check: { type: 'global', name: '_achGaussEdge', op: 'eq', value: true }
+    }
   ]
 };
