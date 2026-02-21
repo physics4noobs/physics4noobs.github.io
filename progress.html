@@ -312,9 +312,18 @@
                 card.className = 'progress-card';
 
                 var achHtml = '';
+                var expertHtml = '';
                 if (achTotal > 0) {
                   var pct = Math.round(achUnlocked / achTotal * 100);
                   var isComplete = achUnlocked === achTotal;
+                  if (isComplete) {
+                    card.className += ' mastered';
+                    expertHtml =
+                      '<div class="progress-expert-badge">' +
+                        '<span class="progress-expert-star">&#11088;</span>' +
+                        '<span class="progress-expert-label">Expert</span>' +
+                      '</div>';
+                  }
                   achHtml =
                     '<div class="progress-ach-row">' +
                       (isComplete ? '<span class="progress-ach-trophy">&#127942;</span>' : '') +
@@ -324,6 +333,7 @@
                 }
 
                 card.innerHTML =
+                  expertHtml +
                   '<h3>' + (d.name || doc.id) + '</h3>' +
                   '<div class="progress-stat"><span>Visits</span><span class="stat-value">' + (d.visitCount || 0) + '</span></div>' +
                   '<div class="progress-stat"><span>Time Spent</span><span class="stat-value">' + formatTime(d.totalTimeSpent || 0) + '</span></div>' +
