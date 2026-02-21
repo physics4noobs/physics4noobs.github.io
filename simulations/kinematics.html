@@ -509,8 +509,8 @@
       </div>
       <div class="control-group">
         <label>&theta;</label>
-        <input type="range" id="angleSlider" min="0" max="85" value="30">
-        <input type="number" id="angleInput" min="0" max="85" value="30">
+        <input type="range" id="angleSlider" min="-90" max="90" value="30">
+        <input type="number" id="angleInput" min="-90" max="90" value="30">
         <label>&deg;</label>
       </div>
       <button class="sim-btn primary" id="launchBtn" style="margin-right:auto;">Launch</button>
@@ -640,9 +640,9 @@
 
     function syncAngle(val) {
       val = parseInt(val) || 0;
-      // Snap to 0 when close
-      if (val > 0 && val <= SNAP_THRESHOLD) val = 0;
-      val = Math.max(0, Math.min(85, val));
+      // Snap to 0 when close from either side
+      if (Math.abs(val) > 0 && Math.abs(val) <= SNAP_THRESHOLD) val = 0;
+      val = Math.max(-90, Math.min(90, val));
       angleSlider.value = val;
       angleInput.value = val;
       drawScene();
@@ -1035,9 +1035,9 @@
     function drawMarkers() {
       for (let l of launches) {
         if (!l.done) continue;
-        const tof = 2 * l.vy / G;
+        const tof = l.vy > 0 ? (2 * l.vy / G) : 0;
         const range = l.vx * tof;
-        const hmax = l.vy * l.vy / (2 * G);
+        const hmax = l.vy > 0 ? (l.vy * l.vy / (2 * G)) : 0;
 
         const landPx = originX + range * scaleX;
         const peakPy = originY - hmax * scaleY;
@@ -1111,13 +1111,13 @@
       launches.push(proj);
 
       // Update data panel
-      const tof = (2 * u * Math.sin(rad) / G).toFixed(2);
-      const range = (u * u * Math.sin(2 * rad) / G).toFixed(1);
+      var tof = vy > 0 ? (2 * vy / G) : 0;
+      var range = vy > 0 ? (vx * tof) : 0;
       document.getElementById('d-u').textContent = u + ' m/s';
       document.getElementById('d-theta').textContent = angle + '\u00B0';
-      document.getElementById('d-tof').textContent = tof + ' s';
-      document.getElementById('d-range').textContent = range + ' m';
-      document.getElementById('d-hmax').textContent = hmax.toFixed(1) + ' m';
+      document.getElementById('d-tof').textContent = tof.toFixed(2) + ' s';
+      document.getElementById('d-range').textContent = range.toFixed(1) + ' m';
+      document.getElementById('d-hmax').textContent = (vy > 0 ? hmax : 0).toFixed(1) + ' m';
       document.getElementById('d-ux').textContent = vx.toFixed(1) + ' m/s';
       document.getElementById('d-uy').textContent = vy.toFixed(1) + ' m/s';
 
@@ -1153,10 +1153,11 @@
           l.peakIdx = Math.max(0, l.trail.length - 1);
         }
 
-        if (y <= 0 && l.t > 0.05) {
-          const tLand = 2 * l.vy / G;
-          const xLand = l.vx * tLand;
-          const landScreen = toScreen(xLand, 0);
+        if (y <= 0 && l.t > 0.025) {
+          // For positive vy: tLand = 2*vy/G. For zero/negative vy: lands at t=0 (ground level).
+          var tLand = l.vy > 0 ? (2 * l.vy / G) : 0;
+          var xLand = l.vx * tLand;
+          const landScreen = toScreen(Math.max(xLand, 0), 0);
           l.trail.push(landScreen);
           l.active = false;
           l.done = true;
