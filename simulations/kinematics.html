@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/achievements.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="../js/theme.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -16,6 +17,8 @@
   <script defer src="../js/firebase-config.js"></script>
   <script defer src="../js/auth.js"></script>
   <script defer src="../js/sim-tracker.js"></script>
+  <script defer src="../js/achievements-config.js"></script>
+  <script defer src="../js/achievements.js"></script>
 </head>
 <body>
   <!-- Splash Screen -->
@@ -402,7 +405,22 @@
     #simArea:-webkit-full-screen {
       background: var(--bg-primary);
       padding: 16px 24px;
-      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
     }
 
     #simArea:fullscreen .side-data,
@@ -465,8 +483,8 @@
       </div>
       <div class="control-group">
         <label>&theta;</label>
-        <input type="range" id="angleSlider" min="5" max="85" value="45">
-        <span class="val" id="angleVal">45</span><label>&deg;</label>
+        <input type="range" id="angleSlider" min="5" max="85" value="30">
+        <span class="val" id="angleVal">30</span><label>&deg;</label>
       </div>
       <button class="sim-btn primary" id="launchBtn" style="margin-right:auto;">Launch</button>
     </div>
@@ -592,8 +610,9 @@
 
     function resizeCanvas() {
       const wrap = canvas.parentElement;
+      const isFS = !!document.fullscreenElement;
       const w = wrap.clientWidth;
-      const h = Math.min(Math.max(350, window.innerHeight * 0.55), window.innerHeight * 0.55);
+      const h = isFS ? wrap.clientHeight : Math.max(350, window.innerHeight * 0.55);
       const dpr = window.devicePixelRatio || 1;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
@@ -604,8 +623,8 @@
       canvasH = h;
       originX = PADDING;
       originY = canvasH - PADDING;
-      const maxRange = (100 * 100) / G;
-      scaleX = (canvasW - PADDING * 2) * 0.8 / maxRange;
+      const maxRange = 1050;
+      scaleX = (canvasW - PADDING * 2) / maxRange;
       scaleY = scaleX;
 
       drawScene();
@@ -683,7 +702,7 @@
       // Axes
       ctx.strokeStyle = tc.axis;
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(canvasW - PADDING / 2, originY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(canvasW - PADDING, originY); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(originX, originY); ctx.lineTo(originX, PADDING / 2); ctx.stroke();
 
       // Tick marks
@@ -705,12 +724,6 @@
         ctx.fillText(m + 'm', originX - 6, py + 3);
       }
 
-      // Axis labels
-      ctx.fillStyle = tc.axisLabel;
-      ctx.font = (11 * fs()) + 'px Andika, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('x (m)', canvasW - PADDING / 2 + 10, originY + 4);
-      ctx.fillText('y (m)', originX, PADDING / 2 - 8);
     }
 
     function getTickSpacing() {
@@ -1099,6 +1112,7 @@
           l.active = false;
           l.done = true;
           spawnImpact(landScreen.px, landScreen.py, l.color);
+          if (window.AchievementEngine) AchievementEngine.check();
         } else {
           l.trail.push(toScreen(x, Math.max(y, 0)));
           anyActive = true;

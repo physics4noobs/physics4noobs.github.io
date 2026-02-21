@@ -16,6 +16,9 @@
   <script defer src="../js/firebase-config.js"></script>
   <script defer src="../js/auth.js"></script>
   <script defer src="../js/sim-tracker.js"></script>
+  <link rel="stylesheet" href="../css/achievements.css">
+  <script defer src="../js/achievements-config.js"></script>
+  <script defer src="../js/achievements.js"></script>
 </head>
 <body>
   <!-- Splash Screen -->
@@ -61,30 +64,522 @@
     })();
   </script>
 
-  <div class="sim-page-container">
-    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#10132; Vector Addition</h1>
-    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Kinematics</p>
+  <style>
+    .bg-grid, #particles-canvas { display: none !important; }
 
-    <div class="sim-canvas-wrapper">
-      <canvas id="simCanvas" width="850" height="450"></canvas>
-      <div class="sim-controls">
-        <label>Vector A Magnitude: <input type="range" id="magA" min="1" max="10" value="5" step="0.5"> <span id="magAVal">5</span></label>
-        <label>Vector A Angle: <input type="range" id="angleA" min="0" max="360" value="30"> <span id="angleAVal">30</span>&deg;</label>
-        <label>Vector B Magnitude: <input type="range" id="magB" min="1" max="10" value="4" step="0.5"> <span id="magBVal">4</span></label>
-        <label>Vector B Angle: <input type="range" id="angleB" min="0" max="360" value="120"> <span id="angleBVal">120</span>&deg;</label>
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-btn.primary {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .sim-btn.primary:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .side-data {
+      width: 200px;
+      min-width: 180px;
+      background: var(--bg-card);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-data h3 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #00ffaa;
+      margin-bottom: 12px;
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+
+
+    /* Legend */
+    .legend-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      min-height: 18px;
+    }
+
+    .legend-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-body);
+      font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 2vw, 32px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 1vw, 1.05rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .control-group input[type="range"] {
+      width: clamp(100px, 10vw, 160px);
+      -webkit-appearance: none;
+      background: var(--border-subtle);
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(124, 58, 237, 0.3);
+      transition: box-shadow 0.2s;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    .control-group input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 6px rgba(124, 58, 237, 0.3);
+    }
+
+    .control-group .val {
+      font-family: var(--font-body);
+      font-size: clamp(0.88rem, 1vw, 1.05rem);
+      color: var(--text-primary);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .data-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+    }
+
+    .data-label {
+      font-family: var(--font-body);
+      font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+      color: var(--text-muted);
+    }
+
+    .data-value {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 1vw, 1rem);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
+    .qa-section {
+      margin-top: 32px;
+    }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
+    }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 300px;
+    }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .side-data { width: 100%; min-width: unset; }
+      .canvas-wrap { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+    }
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 12px; padding: 12px; }
+      .control-group input[type="range"] { width: 80px; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Vector Addition</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
       </div>
     </div>
 
-    <div class="sim-info">
-      <h2>About This Simulation</h2>
-      <p>Visualize vector addition using the parallelogram law. Adjust the magnitude and direction of two vectors to see how their resultant changes. The resultant vector is shown in green, connecting the origin to the opposite corner of the parallelogram.</p>
-      <div class="formula-box" style="margin-top: 16px;">
-        R = &radic;(A&sup2; + B&sup2; + 2AB cos&theta;) &nbsp;&nbsp;|&nbsp;&nbsp; tan&alpha; = B sin&theta; / (A + B cos&theta;)
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div class="side-data">
+        <h3>Resultant</h3>
+        <div class="data-grid">
+          <div class="data-row"><span class="data-label">|R|</span><span class="data-value" id="d-magR">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">&theta;<sub>R</sub></span><span class="data-value" id="d-angleR">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">R<sub>x</sub></span><span class="data-value" id="d-Rx">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">R<sub>y</sub></span><span class="data-value" id="d-Ry">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">&theta;<sub>AB</sub></span><span class="data-value" id="d-angleBetween">&mdash;</span></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="controls-bar">
+      <div class="control-group">
+        <label>|A|</label>
+        <input type="range" id="magA" min="1" max="10" value="5" step="0.5">
+        <span class="val" id="magAVal">5.0</span>
+      </div>
+      <div class="control-group">
+        <label>&theta;<sub>A</sub></label>
+        <input type="range" id="angleA" min="0" max="360" value="30">
+        <span class="val" id="angleAVal">30&deg;</span>
+      </div>
+      <div class="control-group">
+        <label>|B|</label>
+        <input type="range" id="magB" min="1" max="10" value="4" step="0.5">
+        <span class="val" id="magBVal">4.0</span>
+      </div>
+      <div class="control-group">
+        <label>&theta;<sub>B</sub></label>
+        <input type="range" id="angleB" min="0" max="360" value="120">
+        <span class="val" id="angleBVal">120&deg;</span>
+      </div>
+      <button class="sim-btn primary" id="animateBtn" style="margin-left:auto;">Animate Derivation</button>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Magnitude</span>
+          R = &radic;(A&sup2; + B&sup2; + 2AB cos&theta;)
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Direction</span>
+          tan &alpha; = B sin&theta; / (A + B cos&theta;)
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Component Form</span>
+          R<sub>x</sub> = A<sub>x</sub> + B<sub>x</sub> , R<sub>y</sub> = A<sub>y</sub> + B<sub>y</sub>
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Components</span>
+          A<sub>x</sub> = |A| cos&theta;<sub>A</sub> , A<sub>y</sub> = |A| sin&theta;<sub>A</sub>
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What is the parallelogram law of vector addition?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          If two vectors are represented in magnitude and direction by two adjacent sides of a parallelogram, then their <strong>resultant</strong> is represented by the diagonal of the parallelogram passing through their common point. Place both vectors tail-to-tail, complete the parallelogram, and the diagonal from the origin gives the resultant vector.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">When is the resultant of two vectors maximum or minimum?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The resultant is <strong>maximum</strong> when the angle between the vectors is <strong>0&deg;</strong> (same direction): R<sub>max</sub> = A + B. The resultant is <strong>minimum</strong> when the angle is <strong>180&deg;</strong> (opposite directions): R<sub>min</sub> = |A &minus; B|. Try setting both angles equal in the simulation to see maximum resultant!
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Can two vectors of different magnitudes give a zero resultant?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          <strong>No.</strong> Two vectors can only cancel each other (give zero resultant) if they have <strong>equal magnitudes</strong> and are in <strong>opposite directions</strong> (180&deg; apart). For three or more vectors, different magnitudes can produce a zero resultant if they form a closed polygon.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How do you find the direction of the resultant?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The direction is found using <strong>tan &alpha; = B sin&theta; / (A + B cos&theta;)</strong>, where &theta; is the angle between the two vectors and &alpha; is the angle the resultant makes with vector A. Alternatively, compute R<sub>x</sub> and R<sub>y</sub> and use <strong>&theta;<sub>R</sub> = arctan(R<sub>y</sub> / R<sub>x</sub>)</strong>.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens when two vectors are perpendicular?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          When &theta; = 90&deg;, the formula simplifies to <strong>R = &radic;(A&sup2; + B&sup2;)</strong> since cos 90&deg; = 0. This is just the Pythagorean theorem! The resultant forms the hypotenuse of a right triangle with A and B as the two sides. Try setting the angle difference to 90&deg; in the simulation.
+        </div></div>
       </div>
     </div>
   </div>
 
   <script>
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        canvasBg: isLight ? '#e8eaf0' : '#08081a',
+        canvasBgCenter: isLight ? '#f0f2f8' : '#10102a',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.035)',
+        axis: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)',
+        tickText: isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.25)',
+        parallelogram: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.15)',
+        arcFill: isLight ? 'rgba(124,58,237,0.08)' : 'rgba(124,58,237,0.12)',
+        arcStroke: isLight ? 'rgba(124,58,237,0.3)' : 'rgba(124,58,237,0.4)',
+        labelA: '#00d4ff',
+        labelB: '#7c3aed',
+        labelR: '#00ffaa',
+        paraFill: isLight ? 'rgba(124,58,237,0.06)' : 'rgba(124,58,237,0.08)',
+        projLine: isLight ? 'rgba(0,255,170,0.25)' : 'rgba(0,255,170,0.2)',
+        axisArrow: isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.3)',
+        axisLabel: isLight ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)',
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === STATE ===
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -93,62 +588,182 @@
     const magBSlider = document.getElementById('magB');
     const angleBSlider = document.getElementById('angleB');
 
-    magASlider.oninput = () => { document.getElementById('magAVal').textContent = magASlider.value; draw(); };
-    angleASlider.oninput = () => { document.getElementById('angleAVal').textContent = angleASlider.value; draw(); };
-    magBSlider.oninput = () => { document.getElementById('magBVal').textContent = magBSlider.value; draw(); };
-    angleBSlider.oninput = () => { document.getElementById('angleBVal').textContent = angleBSlider.value; draw(); };
+    magASlider.oninput = function() { document.getElementById('magAVal').textContent = parseFloat(this.value).toFixed(1); draw(); };
+    angleASlider.oninput = function() { document.getElementById('angleAVal').innerHTML = this.value + '&deg;'; draw(); };
+    magBSlider.oninput = function() { document.getElementById('magBVal').textContent = parseFloat(this.value).toFixed(1); draw(); };
+    angleBSlider.oninput = function() { document.getElementById('angleBVal').innerHTML = this.value + '&deg;'; draw(); };
 
-    const originX = 120;
-    const originY = canvas.height - 80;
-    const scale = 35;
+    // Interactive drag state
+    let dragging = null; // 'A' or 'B'
+    const DRAG_RADIUS = 18; // px grab radius around arrowhead
 
-    function drawBackground() {
-      ctx.fillStyle = '#080818';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // === CANVAS SIZING ===
+    const PADDING = 50;
+    let originX, originY, scaleX, scaleY, canvasW, canvasH;
 
-      // Grid
-      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 40) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      const isFS = !!document.fullscreenElement;
+      const w = wrap.clientWidth;
+      var h;
+      if (isFS) {
+        h = wrap.clientHeight;
+      } else {
+        // Navbar ~64px, sim-header ~52px, legend ~38px, controls ~70px, wrapper padding ~80+40
+        // Total non-canvas overhead ≈ 300px
+        h = window.innerHeight - 300;
+        h = Math.max(350, h);
       }
-      for (let y = 0; y < canvas.height; y += 40) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-      }
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvasW = w;
+      canvasH = h;
 
-      // Axes with tick marks
-      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(40, originY);
-      ctx.lineTo(canvas.width - 40, originY);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(originX, 40);
-      ctx.lineTo(originX, canvas.height - 40);
-      ctx.stroke();
+      // Origin at center of canvas
+      originX = canvasW / 2;
+      originY = canvasH / 2;
 
-      // Tick marks
-      ctx.lineWidth = 1;
-      for (let i = 1; i <= 10; i++) {
-        ctx.beginPath();
-        ctx.moveTo(originX + i * scale, originY - 5);
-        ctx.lineTo(originX + i * scale, originY + 5);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(originX - 5, originY - i * scale);
-        ctx.lineTo(originX + 5, originY - i * scale);
-        ctx.stroke();
-      }
+      // Separate scales for X and Y so axes fill the canvas proportionally
+      const maxMag = 10;
+      scaleX = ((canvasW / 2) - PADDING) / maxMag;
+      scaleY = ((canvasH / 2) - PADDING) / maxMag;
+
+      draw();
     }
 
-    function drawArrow(x1, y1, x2, y2, color, width = 3) {
+    window.addEventListener('resize', resizeCanvas);
+
+    // === DRAWING ===
+    const fs = () => Math.max(1, canvasW / 700);
+    // World-to-screen helpers
+    function wx(x) { return originX + x * scaleX; }
+    function wy(y) { return originY - y * scaleY; }
+
+    function drawBg() {
+      // Radial gradient background
+      const grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
+      grad.addColorStop(0, tc.canvasBgCenter);
+      grad.addColorStop(1, tc.canvasBg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      // Dotted grid
+      ctx.fillStyle = tc.grid;
+      for (let x = PADDING; x < canvasW - PADDING; x += 50) {
+        for (let y = PADDING / 2; y < canvasH - PADDING / 2; y += 50) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Axes — span ±10 units from origin
+      const AXIS_MAX = 10;
+      var axisLenX = AXIS_MAX * scaleX;
+      var axisLenY = AXIS_MAX * scaleY;
+      ctx.strokeStyle = tc.axis;
+      ctx.lineWidth = 1;
+      // X-axis
+      ctx.beginPath();
+      ctx.moveTo(originX - axisLenX - 10, originY);
+      ctx.lineTo(originX + axisLenX + 10, originY);
+      ctx.stroke();
+      // Y-axis
+      ctx.beginPath();
+      ctx.moveTo(originX, originY + axisLenY + 10);
+      ctx.lineTo(originX, originY - axisLenY - 10);
+      ctx.stroke();
+
+      // Tick marks — ±10 from origin
+      ctx.fillStyle = tc.tickText;
+      ctx.font = (9 * fs()) + 'px Andika, sans-serif';
+      const tickStep = getTickStep();
+
+      // X-axis ticks
+      ctx.textAlign = 'center';
+      for (let i = tickStep; i <= AXIS_MAX; i += tickStep) {
+        const px = originX + i * scaleX;
+        ctx.strokeStyle = tc.axis;
+        ctx.beginPath(); ctx.moveTo(px, originY - 4); ctx.lineTo(px, originY + 4); ctx.stroke();
+        ctx.fillText(i, px, originY + 14 * fs());
+      }
+      for (let i = -tickStep; i >= -AXIS_MAX; i -= tickStep) {
+        const px = originX + i * scaleX;
+        ctx.strokeStyle = tc.axis;
+        ctx.beginPath(); ctx.moveTo(px, originY - 4); ctx.lineTo(px, originY + 4); ctx.stroke();
+        ctx.fillText(i, px, originY + 14 * fs());
+      }
+
+      // Y-axis ticks
+      ctx.textAlign = 'right';
+      for (let i = tickStep; i <= AXIS_MAX; i += tickStep) {
+        const py = originY - i * scaleY;
+        ctx.strokeStyle = tc.axis;
+        ctx.beginPath(); ctx.moveTo(originX - 4, py); ctx.lineTo(originX + 4, py); ctx.stroke();
+        ctx.fillText(i, originX - 6, py + 3);
+      }
+      for (let i = -tickStep; i >= -AXIS_MAX; i -= tickStep) {
+        const py = originY - i * scaleY;
+        ctx.strokeStyle = tc.axis;
+        ctx.beginPath(); ctx.moveTo(originX - 4, py); ctx.lineTo(originX + 4, py); ctx.stroke();
+        ctx.fillText(i, originX - 6, py + 3);
+      }
+
+      // Origin label
+      ctx.fillStyle = tc.tickText;
+      ctx.textAlign = 'right';
+      ctx.fillText('O', originX - 8, originY + 14 * fs());
+
+      // Axis arrow tips at ±10 boundary
+      var arrSize = 8;
+      var xEnd = originX + axisLenX + 10;
+      var yEnd = originY - axisLenY - 10;
+      ctx.fillStyle = tc.axisArrow;
+      // X-axis arrow (positive end)
+      ctx.beginPath();
+      ctx.moveTo(xEnd, originY);
+      ctx.lineTo(xEnd - arrSize, originY - arrSize / 2);
+      ctx.lineTo(xEnd - arrSize, originY + arrSize / 2);
+      ctx.closePath();
+      ctx.fill();
+      // Y-axis arrow (positive end, top)
+      ctx.beginPath();
+      ctx.moveTo(originX, yEnd);
+      ctx.lineTo(originX - arrSize / 2, yEnd + arrSize);
+      ctx.lineTo(originX + arrSize / 2, yEnd + arrSize);
+      ctx.closePath();
+      ctx.fill();
+
+      // Axis labels
+      ctx.fillStyle = tc.axisLabel;
+      ctx.font = 'bold ' + (12 * fs()) + 'px Andika, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('x', xEnd + 6, originY);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('y', originX, yEnd - 4);
+      ctx.textBaseline = 'alphabetic';
+    }
+
+    function getTickStep() {
+      // Axes always span 10 units — use step 2 for clean labels
+      return 2;
+    }
+
+    function drawArrow(x1, y1, x2, y2, color, width) {
       const headlen = 12;
       const angle = Math.atan2(y2 - y1, x2 - x1);
 
+      ctx.save();
       ctx.strokeStyle = color;
       ctx.fillStyle = color;
       ctx.lineWidth = width;
+      ctx.lineCap = 'round';
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
@@ -160,10 +775,49 @@
       ctx.lineTo(x2 - headlen * Math.cos(angle + Math.PI / 6), y2 - headlen * Math.sin(angle + Math.PI / 6));
       ctx.closePath();
       ctx.fill();
+      ctx.restore();
+    }
+
+    function drawAngleArc(angle1Rad, angle2Rad, radius) {
+      // Compute screen-space angles of the two vectors
+      // Vector on screen: (cos(a)*scaleX, -sin(a)*scaleY)
+      var screenA1 = Math.atan2(-Math.sin(angle1Rad) * scaleY, Math.cos(angle1Rad) * scaleX);
+      var screenA2 = Math.atan2(-Math.sin(angle2Rad) * scaleY, Math.cos(angle2Rad) * scaleX);
+
+      // Determine sweep direction — take the shorter arc
+      var diff = screenA2 - screenA1;
+      while (diff > Math.PI) diff -= 2 * Math.PI;
+      while (diff < -Math.PI) diff += 2 * Math.PI;
+      var counterClockwise = diff < 0;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(originX, originY);
+      ctx.arc(originX, originY, radius, screenA1, screenA2, counterClockwise);
+      ctx.closePath();
+      ctx.fillStyle = tc.arcFill;
+      ctx.fill();
+      ctx.strokeStyle = tc.arcStroke;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(originX, originY, radius, screenA1, screenA2, counterClockwise);
+      ctx.stroke();
+
+      // Angle label — show the true world-space angle between vectors
+      var midScreen = screenA1 + diff / 2;
+      var labelR = radius + 14;
+      ctx.fillStyle = tc.arcStroke;
+      ctx.font = (10 * fs()) + 'px Andika, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      var angleDiff = Math.abs(angle2Rad - angle1Rad) * 180 / Math.PI;
+      if (angleDiff > 180) angleDiff = 360 - angleDiff;
+      ctx.fillText(angleDiff.toFixed(0) + '\u00B0', originX + Math.cos(midScreen) * labelR, originY + Math.sin(midScreen) * labelR);
+      ctx.restore();
     }
 
     function draw() {
-      drawBackground();
+      drawBg();
 
       const magA = parseFloat(magASlider.value);
       const angleA = parseFloat(angleASlider.value);
@@ -187,21 +841,30 @@
       const magR = Math.sqrt(Rx * Rx + Ry * Ry);
       const angleR = Math.atan2(Ry, Rx) * 180 / Math.PI;
 
-      // Vector A endpoint
-      const endAx = originX + Ax * scale;
-      const endAy = originY - Ay * scale;
+      // Screen coordinates
+      const endAx = wx(Ax);
+      const endAy = wy(Ay);
+      const endBx = wx(Bx);
+      const endBy = wy(By);
+      const endRx = wx(Rx);
+      const endRy = wy(Ry);
 
-      // Vector B endpoint (from origin)
-      const endBx = originX + Bx * scale;
-      const endBy = originY - By * scale;
+      // === PARALLELOGRAM FILL ===
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(originX, originY);
+      ctx.lineTo(endAx, endAy);
+      ctx.lineTo(endRx, endRy);
+      ctx.lineTo(endBx, endBy);
+      ctx.closePath();
+      ctx.fillStyle = tc.paraFill;
+      ctx.fill();
+      ctx.restore();
 
-      // Resultant endpoint
-      const endRx = originX + Rx * scale;
-      const endRy = originY - Ry * scale;
-
-      // Draw parallelogram (dashed lines)
+      // Parallelogram dashed lines
+      ctx.save();
       ctx.setLineDash([5, 5]);
-      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.strokeStyle = tc.parallelogram;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(endAx, endAy);
@@ -212,43 +875,496 @@
       ctx.lineTo(endRx, endRy);
       ctx.stroke();
       ctx.setLineDash([]);
+      ctx.restore();
 
-      // Draw vectors
-      drawArrow(originX, originY, endAx, endAy, '#00d4ff', 3);
-      drawArrow(originX, originY, endBx, endBy, '#7c3aed', 3);
-      drawArrow(originX, originY, endRx, endRy, '#00ffaa', 4);
+      // === COMPONENT PROJECTION LINES ===
+      ctx.save();
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1;
+      // Rx projection (vertical dashed from R tip to x-axis)
+      ctx.strokeStyle = tc.projLine;
+      ctx.beginPath();
+      ctx.moveTo(endRx, endRy);
+      ctx.lineTo(endRx, originY);
+      ctx.stroke();
+      // Ry projection (horizontal dashed from R tip to y-axis)
+      ctx.beginPath();
+      ctx.moveTo(endRx, endRy);
+      ctx.lineTo(originX, endRy);
+      ctx.stroke();
+      // Small marks on axes
+      ctx.setLineDash([]);
+      ctx.fillStyle = tc.labelR;
+      ctx.font = (9 * fs()) + 'px Andika, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Rx', endRx, originY + 16 * fs());
+      ctx.textAlign = 'right';
+      ctx.fillText('Ry', originX - 6, endRy + 3);
+      ctx.restore();
 
-      // Draw labels
-      ctx.font = '14px "JetBrains Mono", monospace';
-      ctx.fillStyle = '#00d4ff';
+      // Angle arc between A and B
+      var arcRadius = Math.min(40, Math.min(scaleX, scaleY) * Math.min(magA, magB) * 0.6);
+      if (arcRadius > 15) {
+        drawAngleArc(radA, radB, arcRadius);
+      }
+
+      // Draw vectors with glow
+      ctx.save();
+      ctx.shadowColor = tc.labelA;
+      ctx.shadowBlur = 8;
+      drawArrow(originX, originY, endAx, endAy, tc.labelA, 3);
+      ctx.restore();
+
+      ctx.save();
+      ctx.shadowColor = tc.labelB;
+      ctx.shadowBlur = 8;
+      drawArrow(originX, originY, endBx, endBy, tc.labelB, 3);
+      ctx.restore();
+
+      ctx.save();
+      ctx.shadowColor = tc.labelR;
+      ctx.shadowBlur = 10;
+      drawArrow(originX, originY, endRx, endRy, tc.labelR, 4);
+      ctx.restore();
+
+      // Labels at arrow tips
+      var labelFs = (12 * fs()) + 'px Andika, sans-serif';
+      ctx.font = labelFs;
+      ctx.textBaseline = 'middle';
+
+      ctx.fillStyle = tc.labelA;
+      ctx.textAlign = 'left';
       ctx.fillText('A', endAx + 10, endAy - 10);
-      ctx.fillStyle = '#7c3aed';
+
+      ctx.fillStyle = tc.labelB;
       ctx.fillText('B', endBx + 10, endBy - 10);
-      ctx.fillStyle = '#00ffaa';
+
+      ctx.fillStyle = tc.labelR;
+      ctx.font = 'bold ' + labelFs;
       ctx.fillText('R', endRx + 10, endRy - 10);
 
-      // Draw stats panel
-      ctx.fillStyle = 'rgba(10,10,30,0.85)';
-      ctx.fillRect(canvas.width - 250, 10, 240, 130);
-      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
-      ctx.strokeRect(canvas.width - 250, 10, 240, 130);
 
-      ctx.font = '12px "JetBrains Mono", monospace';
-      ctx.fillStyle = '#00d4ff';
-      ctx.fillText(`|A| = ${magA.toFixed(1)}`, canvas.width - 240, 32);
-      ctx.fillStyle = '#7c3aed';
-      ctx.fillText(`|B| = ${magB.toFixed(1)}`, canvas.width - 240, 52);
-      ctx.fillStyle = '#00ffaa';
-      ctx.fillText(`|R| = ${magR.toFixed(2)}`, canvas.width - 240, 72);
-      ctx.fillText(`Angle = ${angleR >= 0 ? angleR.toFixed(1) : (360 + angleR).toFixed(1)}°`, canvas.width - 240, 92);
+      // === DRAG HANDLES (subtle circles at arrowheads) ===
+      ctx.save();
+      ctx.globalAlpha = dragging ? 0.5 : 0.2;
+      ctx.strokeStyle = tc.labelA;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(endAx, endAy, DRAG_RADIUS, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.strokeStyle = tc.labelB;
+      ctx.beginPath();
+      ctx.arc(endBx, endBy, DRAG_RADIUS, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
 
-      ctx.fillStyle = '#ffffff';
-      const thetaDiff = angleB - angleA;
-      ctx.fillText(`Angle between A & B:`, canvas.width - 240, 112);
-      ctx.fillText(`${thetaDiff >= 0 ? thetaDiff : (360 + thetaDiff)}°`, canvas.width - 240, 128);
+      // Derivation animation overlay
+      drawDerivation(magA, angleA, magB, angleB, radA, radB, Ax, Ay, Bx, By, Rx, Ry, endAx, endAy, endBx, endBy, endRx, endRy);
+
+      // Update data panel
+      var angleBetween = angleB - angleA;
+      if (angleBetween < 0) angleBetween += 360;
+      if (angleBetween > 180) angleBetween = 360 - angleBetween;
+
+      document.getElementById('d-magR').textContent = magR.toFixed(2);
+      var displayAngleR = angleR >= 0 ? angleR : 360 + angleR;
+      document.getElementById('d-angleR').innerHTML = displayAngleR.toFixed(1) + '&deg;';
+      document.getElementById('d-Rx').textContent = Rx.toFixed(2);
+      document.getElementById('d-Ry').textContent = Ry.toFixed(2);
+      document.getElementById('d-angleBetween').innerHTML = angleBetween.toFixed(0) + '&deg;';
     }
 
-    draw();
+    // === DERIVATION ANIMATION ===
+    let animating = false;
+    let animProgress = 0;
+    let animId = null;
+    const ANIM_DURATION = 3000; // ms total
+    let animStartTime = 0;
+
+    function startAnimation() {
+      if (animating) return;
+      animating = true;
+      window._achDerivationPlayed = true;
+      animProgress = 0;
+      animStartTime = performance.now();
+      animateFrame();
+    }
+
+    function animateFrame() {
+      var now = performance.now();
+      animProgress = Math.min(1, (now - animStartTime) / ANIM_DURATION);
+      draw();
+      if (animProgress < 1) {
+        animId = requestAnimationFrame(animateFrame);
+      } else {
+        animId = null;
+        // Keep animating = true so the derivation stays visible
+      }
+    }
+
+    function drawDerivation(magA, angleA, magB, angleB, radA, radB, Ax, Ay, Bx, By, Rx, Ry, endAx, endAy, endBx, endBy, endRx, endRy) {
+      if (!animating) return;
+
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var t = animProgress;
+
+      // Phase 1 (0-0.3): Draw vector B translated to tip of A (triangle law)
+      // Phase 2 (0.3-0.6): Drop perpendicular from R tip to the line extending A
+      // Phase 3 (0.6-1.0): Label the right triangle sides and show the formula
+
+      var phase1 = Math.min(1, t / 0.3);
+      var phase2 = Math.min(1, Math.max(0, (t - 0.3) / 0.3));
+      var phase3 = Math.min(1, Math.max(0, (t - 0.6) / 0.4));
+
+      // Easing
+      phase1 = easeInOut(phase1);
+      phase2 = easeInOut(phase2);
+      phase3 = easeInOut(phase3);
+
+      ctx.save();
+
+      // Phase 1: Translated B vector from tip of A to tip of R
+      if (phase1 > 0) {
+        var bStartX = originX + phase1 * Ax * scaleX;
+        var bStartY = originY - phase1 * Ay * scaleY;
+        var bEndX = bStartX + phase1 * Bx * scaleX;
+        var bEndY = bStartY - phase1 * By * scaleY;
+
+        ctx.globalAlpha = phase1 * 0.8;
+        ctx.setLineDash([6, 4]);
+        drawArrow(bStartX, bStartY, bEndX, bEndY, '#7c3aed', 2);
+        ctx.setLineDash([]);
+
+        // Label "B" on the translated vector
+        if (phase1 > 0.5) {
+          ctx.globalAlpha = (phase1 - 0.5) * 2;
+          ctx.fillStyle = '#7c3aed';
+          ctx.font = (11 * fs()) + 'px Andika, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('B', (bStartX + bEndX) / 2 + 12, (bStartY + bEndY) / 2 - 8);
+        }
+      }
+
+      // Phase 2: Drop perpendicular from R-tip to extended A-line
+      if (phase2 > 0) {
+        ctx.globalAlpha = phase2 * 0.9;
+
+        // The angle between A and B
+        var thetaBetween = radB - radA;
+
+        // Foot of perpendicular from R tip onto line through A direction
+        // Project R onto A direction: foot = A + B*cos(theta_between) along A direction
+        var projLen = magA + magB * Math.cos(thetaBetween); // length along A direction
+        var footX = wx(projLen * Math.cos(radA));
+        var footY = wy(projLen * Math.sin(radA));
+
+        // Extend the A-direction line to the foot
+        var extColor = isLight ? 'rgba(0,212,255,0.3)' : 'rgba(0,212,255,0.25)';
+        ctx.strokeStyle = extColor;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(endAx, endAy);
+        ctx.lineTo(footX, footY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Perpendicular line from foot to R tip (animated)
+        var perpEndX = footX + phase2 * (endRx - footX);
+        var perpEndY = footY + phase2 * (endRy - footY);
+
+        ctx.strokeStyle = '#ff6b6b';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        ctx.moveTo(footX, footY);
+        ctx.lineTo(perpEndX, perpEndY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Right angle marker at foot
+        if (phase2 > 0.5) {
+          var markerSize = 8;
+          // Direction along A
+          var dAx = Math.cos(radA);
+          var dAy = -Math.sin(radA);
+          // Direction perpendicular (toward R tip)
+          var pDx = endRx - footX;
+          var pDy = endRy - footY;
+          var pLen = Math.sqrt(pDx * pDx + pDy * pDy);
+          if (pLen > 0) {
+            pDx /= pLen; pDy /= pLen;
+          }
+
+          ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          // Determine direction of A extension relative to foot
+          var signA = projLen >= magA ? -1 : 1;
+          ctx.moveTo(footX + signA * dAx * markerSize, footY + signA * dAy * markerSize);
+          ctx.lineTo(footX + signA * dAx * markerSize + pDx * markerSize, footY + signA * dAy * markerSize + pDy * markerSize);
+          ctx.lineTo(footX + pDx * markerSize, footY + pDy * markerSize);
+          ctx.stroke();
+        }
+      }
+
+      // Phase 3: Labels on triangle sides
+      if (phase3 > 0) {
+        ctx.globalAlpha = phase3;
+
+        var thetaBetween2 = radB - radA;
+        var projLen2 = magA + magB * Math.cos(thetaBetween2);
+        var footX2 = wx(projLen2 * Math.cos(radA));
+        var footY2 = wy(projLen2 * Math.sin(radA));
+
+        var perpHeight = Math.abs(magB * Math.sin(thetaBetween2));
+        var baseLen = projLen2;
+
+        ctx.font = 'bold ' + (10 * fs()) + 'px Andika, sans-serif';
+
+        // Label base: "A + B cos\u03B8"
+        var baseMidX = (originX + footX2) / 2;
+        var baseMidY = (originY + footY2) / 2;
+        ctx.fillStyle = tc.labelA;
+        ctx.textAlign = 'center';
+        var offsetX = Math.sin(radA) * 18;
+        var offsetY = Math.cos(radA) * 18;
+        ctx.fillText('A + Bcos\u03B8', baseMidX + offsetX, baseMidY + offsetY);
+
+        // Label perpendicular: "B sin\u03B8"
+        var perpMidX = (footX2 + endRx) / 2;
+        var perpMidY = (footY2 + endRy) / 2;
+        ctx.fillStyle = '#ff6b6b';
+        ctx.textAlign = 'left';
+        ctx.fillText('Bsin\u03B8', perpMidX + 10, perpMidY);
+
+        // Label hypotenuse: "R"
+        var hypMidX = (originX + endRx) / 2;
+        var hypMidY = (originY + endRy) / 2;
+        ctx.fillStyle = tc.labelR;
+        ctx.font = 'bold ' + (12 * fs()) + 'px Andika, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('R', hypMidX - 14, hypMidY - 10);
+
+        // Formula box at top-left
+        if (phase3 > 0.3) {
+          var boxAlpha = (phase3 - 0.3) / 0.7;
+          ctx.globalAlpha = boxAlpha;
+          var pad = 14;
+          var titleFont = Math.round(10 * fs());
+          var formulaFont = Math.round(11 * fs());
+
+          // Measure text to size box dynamically
+          ctx.font = titleFont + 'px Andika, sans-serif';
+          var titleText = 'By Pythagoras on the right triangle:';
+          var titleW = ctx.measureText(titleText).width;
+          ctx.font = 'bold ' + formulaFont + 'px Andika, sans-serif';
+          var formulaText = 'R\u00B2 = (A + Bcos\u03B8)\u00B2 + (Bsin\u03B8)\u00B2';
+          var formulaW = ctx.measureText(formulaText).width;
+
+          var boxW = Math.max(titleW, formulaW) + pad * 2;
+          var boxH = 52;
+          var boxX = 20;
+          var boxY = 20;
+
+          ctx.fillStyle = isLight ? 'rgba(255,255,255,0.92)' : 'rgba(10,10,30,0.92)';
+          ctx.beginPath();
+          ctx.roundRect(boxX, boxY, boxW, boxH, 8);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(124,58,237,0.3)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          ctx.fillStyle = isLight ? '#333' : '#eee';
+          ctx.font = titleFont + 'px Andika, sans-serif';
+          ctx.textAlign = 'left';
+          ctx.fillText(titleText, boxX + pad, boxY + 18);
+          ctx.font = 'bold ' + formulaFont + 'px Andika, sans-serif';
+          ctx.fillStyle = tc.labelR;
+          ctx.fillText(formulaText, boxX + pad, boxY + 38);
+        }
+      }
+
+      ctx.restore();
+    }
+
+    function easeInOut(t) {
+      return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    }
+
+
+    // === INTERACTIVE DRAG-TO-SET VECTORS ===
+    canvas.addEventListener('mousedown', function(e) {
+      var rect = canvas.getBoundingClientRect();
+      var mx = e.clientX - rect.left;
+      var my = e.clientY - rect.top;
+
+      var magA = parseFloat(magASlider.value);
+      var radA = parseFloat(angleASlider.value) * Math.PI / 180;
+      var eAx = wx(magA * Math.cos(radA));
+      var eAy = wy(magA * Math.sin(radA));
+
+      var magB = parseFloat(magBSlider.value);
+      var radB = parseFloat(angleBSlider.value) * Math.PI / 180;
+      var eBx = wx(magB * Math.cos(radB));
+      var eBy = wy(magB * Math.sin(radB));
+
+      var distA = Math.hypot(mx - eAx, my - eAy);
+      var distB = Math.hypot(mx - eBx, my - eBy);
+
+      if (distA < DRAG_RADIUS) { dragging = 'A'; canvas.style.cursor = 'grabbing'; }
+      else if (distB < DRAG_RADIUS) { dragging = 'B'; canvas.style.cursor = 'grabbing'; }
+    });
+
+    canvas.addEventListener('mousemove', function(e) {
+      if (!dragging) {
+        // Show grab cursor when hovering over arrowheads
+        var rect = canvas.getBoundingClientRect();
+        var mx = e.clientX - rect.left;
+        var my = e.clientY - rect.top;
+        var magA = parseFloat(magASlider.value);
+        var radA = parseFloat(angleASlider.value) * Math.PI / 180;
+        var eAx = wx(magA * Math.cos(radA));
+        var eAy = wy(magA * Math.sin(radA));
+        var magB = parseFloat(magBSlider.value);
+        var radB = parseFloat(angleBSlider.value) * Math.PI / 180;
+        var eBx = wx(magB * Math.cos(radB));
+        var eBy = wy(magB * Math.sin(radB));
+        if (Math.hypot(mx - eAx, my - eAy) < DRAG_RADIUS || Math.hypot(mx - eBx, my - eBy) < DRAG_RADIUS) {
+          canvas.style.cursor = 'grab';
+        } else {
+          canvas.style.cursor = 'default';
+        }
+        return;
+      }
+
+      var rect = canvas.getBoundingClientRect();
+      var mx = e.clientX - rect.left;
+      var my = e.clientY - rect.top;
+
+      var worldX = (mx - originX) / scaleX;
+      var worldY = -(my - originY) / scaleY;
+      var mag = Math.sqrt(worldX * worldX + worldY * worldY);
+      var angle = Math.atan2(worldY, worldX) * 180 / Math.PI;
+      if (angle < 0) angle += 360;
+
+      // Clamp magnitude to slider range
+      mag = Math.max(1, Math.min(10, Math.round(mag * 2) / 2)); // snap to 0.5 steps
+
+      if (dragging === 'A') {
+        magASlider.value = mag;
+        angleASlider.value = Math.round(angle);
+        document.getElementById('magAVal').textContent = mag.toFixed(1);
+        document.getElementById('angleAVal').innerHTML = Math.round(angle) + '&deg;';
+      } else {
+        magBSlider.value = mag;
+        angleBSlider.value = Math.round(angle);
+        document.getElementById('magBVal').textContent = mag.toFixed(1);
+        document.getElementById('angleBVal').innerHTML = Math.round(angle) + '&deg;';
+      }
+      draw();
+    });
+
+    function stopDrag() {
+      if (dragging) {
+        dragging = null;
+        canvas.style.cursor = 'default';
+      }
+    }
+    canvas.addEventListener('mouseup', stopDrag);
+    canvas.addEventListener('mouseleave', stopDrag);
+
+    // Touch support for drag
+    canvas.addEventListener('touchstart', function(e) {
+      var touch = e.touches[0];
+      var rect = canvas.getBoundingClientRect();
+      var mx = touch.clientX - rect.left;
+      var my = touch.clientY - rect.top;
+
+      var magA = parseFloat(magASlider.value);
+      var radA = parseFloat(angleASlider.value) * Math.PI / 180;
+      var eAx = wx(magA * Math.cos(radA));
+      var eAy = wy(magA * Math.sin(radA));
+      var magB = parseFloat(magBSlider.value);
+      var radB = parseFloat(angleBSlider.value) * Math.PI / 180;
+      var eBx = wx(magB * Math.cos(radB));
+      var eBy = wy(magB * Math.sin(radB));
+
+      var distA = Math.hypot(mx - eAx, my - eAy);
+      var distB = Math.hypot(mx - eBx, my - eBy);
+      var touchR = DRAG_RADIUS * 1.5; // larger touch target
+
+      if (distA < touchR) { dragging = 'A'; e.preventDefault(); }
+      else if (distB < touchR) { dragging = 'B'; e.preventDefault(); }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', function(e) {
+      if (!dragging) return;
+      e.preventDefault();
+      var touch = e.touches[0];
+      var rect = canvas.getBoundingClientRect();
+      var mx = touch.clientX - rect.left;
+      var my = touch.clientY - rect.top;
+
+      var worldX = (mx - originX) / scaleX;
+      var worldY = -(my - originY) / scaleY;
+      var mag = Math.sqrt(worldX * worldX + worldY * worldY);
+      var angle = Math.atan2(worldY, worldX) * 180 / Math.PI;
+      if (angle < 0) angle += 360;
+      mag = Math.max(1, Math.min(10, Math.round(mag * 2) / 2));
+
+      if (dragging === 'A') {
+        magASlider.value = mag;
+        angleASlider.value = Math.round(angle);
+        document.getElementById('magAVal').textContent = mag.toFixed(1);
+        document.getElementById('angleAVal').innerHTML = Math.round(angle) + '&deg;';
+      } else {
+        magBSlider.value = mag;
+        angleBSlider.value = Math.round(angle);
+        document.getElementById('magBVal').textContent = mag.toFixed(1);
+        document.getElementById('angleBVal').innerHTML = Math.round(angle) + '&deg;';
+      }
+      draw();
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', stopDrag);
+
+    function resetSim() {
+      if (animId) { cancelAnimationFrame(animId); animId = null; }
+      animating = false;
+      animProgress = 0;
+      magASlider.value = 5;
+      angleASlider.value = 30;
+      magBSlider.value = 4;
+      angleBSlider.value = 120;
+      document.getElementById('magAVal').textContent = '5.0';
+      document.getElementById('angleAVal').innerHTML = '30&deg;';
+      document.getElementById('magBVal').textContent = '4.0';
+      document.getElementById('angleBVal').innerHTML = '120&deg;';
+      draw();
+    }
+
+    // === FULLSCREEN ===
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(resizeCanvas, 100);
+      setTimeout(resizeCanvas, 300);
+    });
+
+    // === EVENT LISTENERS ===
+    document.getElementById('resetBtn').addEventListener('click', resetSim);
+    document.getElementById('animateBtn').addEventListener('click', startAnimation);
+
+    // Init
+    resizeCanvas();
   </script>
   <script src="../js/main.js"></script>
 </body>

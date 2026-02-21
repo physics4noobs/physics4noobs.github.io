@@ -16,6 +16,9 @@
   <script defer src="../js/firebase-config.js"></script>
   <script defer src="../js/auth.js"></script>
   <script defer src="../js/sim-tracker.js"></script>
+  <link rel="stylesheet" href="../css/achievements.css">
+  <script defer src="../js/achievements-config.js"></script>
+  <script defer src="../js/achievements.js"></script>
 </head>
 <body>
   <!-- Splash Screen -->
@@ -61,33 +64,447 @@
     })();
   </script>
 
-  <div class="sim-page-container">
-    <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px; letter-spacing: 1px;">&#9973; Boat Crossing a River</h1>
-    <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XI &bull; Kinematics</p>
+  <style>
+    .bg-grid, #particles-canvas { display: none !important; }
 
-    <div class="sim-canvas-wrapper">
-      <canvas id="simCanvas" width="850" height="450"></canvas>
-      <div class="sim-controls">
-        <label>Boat Speed: <input type="range" id="boatSpeed" min="1" max="10" value="5" step="0.5"> <span id="boatVal">5</span> m/s</label>
-        <label>River Speed: <input type="range" id="riverSpeed" min="1" max="10" value="3" step="0.5"> <span id="riverVal">3</span> m/s</label>
-        <label>Boat Angle: <input type="range" id="boatAngle" min="-60" max="60" value="0"> <span id="angleVal">0</span>&deg;</label>
-        <button onclick="launch()">&#9654; Launch</button>
-        <button onclick="setMinTime()">Min Time</button>
-        <button onclick="setMinDrift()">Min Drift</button>
-        <button onclick="resetSim()">&#8635; Reset</button>
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-btn.primary {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .sim-btn.primary:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    .side-data {
+      width: 220px;
+      min-width: 200px;
+      background: var(--bg-card);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-data h3 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .data-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .data-row:last-child { border-bottom: none; }
+
+    .data-label {
+      font-family: var(--font-body);
+      font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+      color: var(--text-muted);
+    }
+
+    .data-value {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 1vw, 1rem);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 2vw, 24px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 1vw, 1.05rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .control-group input[type="range"] {
+      width: clamp(80px, 8vw, 140px);
+      -webkit-appearance: none;
+      background: var(--border-subtle);
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(124, 58, 237, 0.3);
+    }
+
+    .control-group input[type="range"]::-moz-range-thumb {
+      width: 16px; height: 16px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    .control-group .val {
+      font-family: var(--font-body);
+      font-size: clamp(0.88rem, 1vw, 1.05rem);
+      color: var(--text-primary);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    #simArea { background: var(--bg-primary); }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1; min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1; min-height: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .side-data { width: 100%; min-width: unset; }
+    }
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 12px; padding: 12px; }
+    }
+
+    .qa-section { margin-top: 32px; }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover { border-color: rgba(124, 58, 237, 0.2); }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover { background: var(--bg-glass-hover); }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after { content: '\2212'; }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a { max-height: 300px; }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Boat Crossing a River</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
       </div>
     </div>
 
-    <div class="sim-info">
-      <h2>About This Simulation</h2>
-      <p>A boat crosses a river with a current. Explore how the boat angle affects crossing time and drift. Find the conditions for minimum time and minimum drift. The boat's velocity relative to water is shown in green, the river's velocity in cyan, and the resultant velocity in purple.</p>
-      <div class="formula-box" style="margin-top: 16px;">
-        t = d/(v<sub>b</sub> cos&theta;) &nbsp;&nbsp;|&nbsp;&nbsp; drift = v<sub>r</sub> &times; t &nbsp;&nbsp;|&nbsp;&nbsp; Min drift: sin&theta; = v<sub>r</sub>/v<sub>b</sub>
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div class="side-data">
+        <h3>Data</h3>
+        <div class="data-grid">
+          <div class="data-row"><span class="data-label">River Width</span><span class="data-value" id="d-width">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">v<sub>x</sub> (horizontal)</span><span class="data-value" id="d-vx">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">v<sub>y</sub> (vertical)</span><span class="data-value" id="d-vy">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">|v<sub>net</sub>|</span><span class="data-value" id="d-resultant">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Crossing Time</span><span class="data-value" id="d-time">&mdash;</span></div>
+          <div class="data-row"><span class="data-label">Drift</span><span class="data-value" id="d-drift">&mdash;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <button class="sim-btn primary" id="launchBtn">&#9654; Launch</button>
+      <div class="control-group">
+        <label>&theta;</label>
+        <input type="range" id="boatAngle" min="-90" max="90" value="-30">
+        <span class="val" id="angleVal">-30&deg;</span>
+      </div>
+      <div class="control-group">
+        <label>v<sub>boat</sub></label>
+        <input type="range" id="boatSpeed" min="1" max="10" value="5" step="0.5">
+        <span class="val" id="boatVal">5.0</span>
+      </div>
+      <div class="control-group">
+        <label>v<sub>river</sub></label>
+        <input type="range" id="riverSpeed" min="1" max="10" value="3" step="0.5">
+        <span class="val" id="riverVal">3.0</span>
+      </div>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Equations</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Crossing Time</span>
+          t = d / (v<sub>b</sub> cos&theta;)
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Drift</span>
+          drift = v<sub>r</sub> &times; t
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Min Drift Condition</span>
+          sin&theta; = v<sub>r</sub> / v<sub>b</sub>
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How does a boat cross a river in the shortest time?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          To cross in the <strong>shortest time</strong>, the boat must aim <strong>perpendicular to the banks</strong> (&theta; = 0&deg;). This maximises the component of velocity across the river (v<sub>b</sub> cos&theta; is maximum when &theta; = 0). The crossing time is then t = d/v<sub>b</sub>. Note that the boat will drift downstream, but it reaches the other bank fastest.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What angle gives minimum drift, and when is it possible?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Minimum drift occurs when the boat aims upstream at an angle such that <strong>sin&theta; = v<sub>r</sub>/v<sub>b</sub></strong>. This is only possible when v<sub>b</sub> &gt; v<sub>r</sub>. At this angle, the boat's upstream component exactly cancels the river current's downstream push, so the boat lands directly opposite its starting point with <strong>zero drift</strong>. Try the "Min Drift" button to see this!
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens when the river speed is greater than the boat speed?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          When v<sub>r</sub> &gt; v<sub>b</sub>, the boat <strong>cannot go straight across</strong> &mdash; it will always drift downstream no matter what angle it aims at. Zero drift becomes impossible because sin&theta; = v<sub>r</sub>/v<sub>b</sub> &gt; 1 has no solution. The boat can still cross the river, but it will always land downstream of its starting point.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How do you find the resultant velocity of the boat?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The resultant velocity is the <strong>vector sum</strong> of the boat's velocity relative to water and the river's velocity. If the boat aims at angle &theta; from perpendicular with speed v<sub>b</sub>, and the river flows at v<sub>r</sub>, then: v<sub>x</sub> = v<sub>b</sub> sin&theta; + v<sub>r</sub> and v<sub>y</sub> = v<sub>b</sub> cos&theta;. The resultant speed is |v| = &radic;(v<sub>x</sub>&sup2; + v<sub>y</sub>&sup2;). This resultant determines the actual path the boat follows.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Why does the drift depend on crossing time?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Drift = v<sub>r</sub> &times; t. The river pushes the boat sideways at a constant rate v<sub>r</sub>, so the longer the boat spends in the water, the more it drifts. This is why aiming upstream (to reduce drift) <strong>increases crossing time</strong> and thus partially offsets the benefit. The minimum-drift angle balances these two effects optimally.
+        </div></div>
       </div>
     </div>
   </div>
 
   <script>
+    // === THEME ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        bg: isLight ? '#e8eaf0' : '#080818',
+        bgCenter: isLight ? '#f0f2f8' : '#0a0a24',
+        grid: isLight ? 'rgba(0,120,200,0.06)' : 'rgba(0,212,255,0.04)',
+        river: isLight ? 'rgba(0,120,220,0.12)' : 'rgba(0,150,255,0.15)',
+        bank: isLight ? 'rgba(60,140,80,0.7)' : 'rgba(0,255,170,0.5)',
+        bankFill: isLight ? 'rgba(80,160,60,0.15)' : 'rgba(0,255,170,0.06)',
+        text: isLight ? '#333' : '#fff',
+        boatHull: isLight ? '#2a5a8a' : '#e8e0d0',
+        boatDeck: isLight ? '#3a7ab8' : '#c8b898',
+        boatCabin: isLight ? '#f5f0e0' : '#8b7355',
+        boatMast: isLight ? '#444' : '#ddd',
+        flag: '#ff4444',
+        wake: isLight ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.25)',
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === ELEMENTS ===
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -95,90 +512,349 @@
     const riverSpeedSlider = document.getElementById('riverSpeed');
     const boatAngleSlider = document.getElementById('boatAngle');
 
-    boatSpeedSlider.oninput = () => { document.getElementById('boatVal').textContent = boatSpeedSlider.value; draw(); };
-    riverSpeedSlider.oninput = () => { document.getElementById('riverVal').textContent = riverSpeedSlider.value; draw(); };
-    boatAngleSlider.oninput = () => { document.getElementById('angleVal').textContent = boatAngleSlider.value; draw(); };
+    boatSpeedSlider.oninput = function() { document.getElementById('boatVal').textContent = parseFloat(this.value).toFixed(1); draw(); };
+    riverSpeedSlider.oninput = function() { document.getElementById('riverVal').textContent = parseFloat(this.value).toFixed(1); draw(); };
+    boatAngleSlider.oninput = function() { document.getElementById('angleVal').innerHTML = this.value + '&deg;'; draw(); };
 
-    const riverTop = 50;
-    const riverHeight = 300;
-    const riverBottom = riverTop + riverHeight;
-    const startX = 100;
-    const startY = riverBottom;
-    const scale = 15;
+    // === CANVAS SIZING ===
+    let canvasW, canvasH, riverTop, riverHeight, riverBottom, startX, startY, pxScale;
+
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      const isFS = !!document.fullscreenElement;
+      const w = wrap.clientWidth;
+      const h = isFS ? wrap.clientHeight : Math.max(350, window.innerHeight - 300);
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvasW = w;
+      canvasH = h;
+
+      // Layout river to fill canvas proportionally
+      var bankMargin = canvasH * 0.12;
+      riverTop = bankMargin;
+      riverHeight = canvasH - 2 * bankMargin;
+      riverBottom = riverTop + riverHeight;
+      startX = canvasW * 0.4;
+      startY = riverBottom;
+      pxScale = riverHeight / 25; // 25 world-units across the river
+
+
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
 
     let animId = null;
     let boat = null;
+    let landedBoat = null;
     let trail = [];
-    let particles = [];
+    let waveTime = 0;
+    let bgAnimId = null;
 
-    // Initialize river particles
-    for (let i = 0; i < 50; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: riverTop + Math.random() * riverHeight
-      });
+    // Continuous background animation loop (waves always flow)
+    function bgLoop() {
+      waveTime += 0.03;
+      if (!boat && !landedBoat) {
+        draw();
+      }
+      bgAnimId = requestAnimationFrame(bgLoop);
+    }
+
+    // === DRAWING ===
+
+    // Bank texture: grass/sand stippling + dashes
+    function drawBankTexture(x, y, w, h) {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+      // Base fill with subtle vertical gradient
+      var bankGrad = ctx.createLinearGradient(x, y, x, y + h);
+      if (isLight) {
+        bankGrad.addColorStop(0, 'rgba(90,160,70,0.18)');
+        bankGrad.addColorStop(1, 'rgba(140,120,60,0.12)');
+      } else {
+        bankGrad.addColorStop(0, 'rgba(0,255,170,0.08)');
+        bankGrad.addColorStop(1, 'rgba(0,200,120,0.04)');
+      }
+      ctx.fillStyle = bankGrad;
+      ctx.fillRect(x, y, w, h);
+
+      // Stipple dots (scattered for grass/sand)
+      var dotColor = isLight ? 'rgba(60,130,50,0.15)' : 'rgba(0,255,170,0.06)';
+      ctx.fillStyle = dotColor;
+      // Use deterministic pseudo-random pattern based on position
+      for (var dx = 5; dx < w; dx += 12) {
+        for (var dy = 3; dy < h; dy += 10) {
+          var offsetX = ((dx * 7 + dy * 13) % 9) - 4;
+          var offsetY = ((dx * 11 + dy * 3) % 7) - 3;
+          var r = 0.8 + ((dx * 3 + dy * 5) % 5) * 0.2;
+          ctx.beginPath();
+          ctx.arc(x + dx + offsetX, y + dy + offsetY, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Small grass dashes near the river edge
+      var dashColor = isLight ? 'rgba(40,120,40,0.2)' : 'rgba(0,255,170,0.1)';
+      ctx.strokeStyle = dashColor;
+      ctx.lineWidth = 1;
+      var edgeY = (y === 0) ? y + h - 6 : y + 4; // near bank edge
+      for (var gx = 8; gx < w; gx += 18) {
+        var gOff = ((gx * 7) % 5) - 2;
+        ctx.beginPath();
+        ctx.moveTo(x + gx + gOff, edgeY);
+        ctx.lineTo(x + gx + gOff + 1, edgeY - 4);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x + gx + gOff + 4, edgeY);
+        ctx.lineTo(x + gx + gOff + 3, edgeY - 3);
+        ctx.stroke();
+      }
+    }
+
+    // V-shaped wake trail behind the moving boat
+    function drawWakeTrail(bx, by) {
+      if (trail.length < 3) return;
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var len = trail.length;
+
+      // Draw V-shaped wake spreading out behind boat
+      ctx.save();
+      for (var i = Math.max(0, len - 40); i < len - 1; i++) {
+        var age = (len - 1 - i) / 40; // 0 = newest, 1 = oldest
+        var spread = age * 18;         // V opens wider behind
+        var alpha = (1 - age) * 0.35;
+        if (alpha <= 0) continue;
+
+        var px = trail[i].x;
+        var py = trail[i].y;
+        var nextPx = trail[i + 1].x;
+        var nextPy = trail[i + 1].y;
+        var dx = nextPx - px;
+        var dy = nextPy - py;
+        var perpX = -dy;
+        var perpY = dx;
+        var pLen = Math.sqrt(perpX * perpX + perpY * perpY) || 1;
+        perpX /= pLen;
+        perpY /= pLen;
+
+        // Left and right wake lines
+        ctx.strokeStyle = isLight
+          ? 'rgba(255,255,255,' + alpha + ')'
+          : 'rgba(150,220,255,' + alpha + ')';
+        ctx.lineWidth = 1.5 * (1 - age * 0.6);
+
+        // Left wake line
+        ctx.beginPath();
+        ctx.moveTo(px + perpX * spread * 0.3, py + perpY * spread * 0.3);
+        ctx.lineTo(px + perpX * spread, py + perpY * spread);
+        ctx.stroke();
+
+        // Right wake line
+        ctx.beginPath();
+        ctx.moveTo(px - perpX * spread * 0.3, py - perpY * spread * 0.3);
+        ctx.lineTo(px - perpX * spread, py - perpY * spread);
+        ctx.stroke();
+      }
+
+      // Foam particles along wake
+      ctx.fillStyle = isLight
+        ? 'rgba(255,255,255,0.4)'
+        : 'rgba(200,240,255,0.25)';
+      for (var j = Math.max(0, len - 30); j < len; j++) {
+        var fAge = (len - 1 - j) / 30;
+        var fSpread = fAge * 14;
+        var fAlpha = (1 - fAge) * 0.35;
+        if (fAlpha <= 0) continue;
+        ctx.globalAlpha = fAlpha;
+        // 2-3 foam dots per trail point
+        for (var f = 0; f < 3; f++) {
+          var fOff = ((j * 7 + f * 13) % 11) - 5;
+          var fOff2 = ((j * 3 + f * 17) % 9) - 4;
+          ctx.beginPath();
+          ctx.arc(trail[j].x + fOff * fSpread * 0.12, trail[j].y + fOff2 * fSpread * 0.12, 1 + fAge, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    // Drift marker: pulsing circle + measurement at landing
+    var driftPulse = 0;
+    function drawDriftMarker(landX, landY) {
+      driftPulse += 0.06;
+      var pulse = 0.5 + 0.5 * Math.sin(driftPulse * 3);
+      var radius = 6 + pulse * 4;
+
+      // Pulsing outer ring
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255,45,117,' + (0.4 + pulse * 0.4) + ')';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(landX, landY, radius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Inner dot
+      ctx.fillStyle = 'rgba(255,45,117,' + (0.6 + pulse * 0.3) + ')';
+      ctx.beginPath();
+      ctx.arc(landX, landY, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Glow
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = 'rgba(255,45,117,' + (0.3 + pulse * 0.3) + ')';
+      ctx.beginPath();
+      ctx.arc(landX, landY, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Measurement line from start to landing (horizontal)
+      var driftPx = landX - startX;
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = 'rgba(255,45,117,0.5)';
+      ctx.lineWidth = 1.5;
+      // Vertical reference at start
+      ctx.beginPath(); ctx.moveTo(startX, riverTop - 4); ctx.lineTo(startX, riverTop - 28); ctx.stroke();
+      // Vertical reference at landing
+      ctx.beginPath(); ctx.moveTo(landX, riverTop - 4); ctx.lineTo(landX, riverTop - 28); ctx.stroke();
+      // Horizontal measurement line
+      ctx.strokeStyle = 'rgba(255,45,117,0.7)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(startX, riverTop - 20); ctx.lineTo(landX, riverTop - 20); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Arrow heads on measurement line
+      if (Math.abs(driftPx) > 20) {
+        var dir = driftPx > 0 ? 1 : -1;
+        ctx.fillStyle = '#ff2d75';
+        // Left arrow
+        ctx.beginPath();
+        ctx.moveTo(startX, riverTop - 20);
+        ctx.lineTo(startX + 6 * dir, riverTop - 24);
+        ctx.lineTo(startX + 6 * dir, riverTop - 16);
+        ctx.closePath();
+        ctx.fill();
+        // Right arrow
+        ctx.beginPath();
+        ctx.moveTo(landX, riverTop - 20);
+        ctx.lineTo(landX - 6 * dir, riverTop - 24);
+        ctx.lineTo(landX - 6 * dir, riverTop - 16);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Drift value label
+      var driftWorld = Math.abs(driftPx / pxScale);
+      var driftVal = (driftWorld < 0.15 ? 0 : driftWorld).toFixed(1);
+      ctx.fillStyle = '#ff2d75';
+      ctx.font = 'bold 12px Andika, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(driftVal + ' m', (startX + landX) / 2, riverTop - 30);
+      ctx.textAlign = 'left';
+
+      ctx.restore();
     }
 
     function drawBackground() {
-      ctx.fillStyle = '#080818';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Gradient background
+      var grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
+      grad.addColorStop(0, tc.bgCenter);
+      grad.addColorStop(1, tc.bg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvasW, canvasH);
 
-      // Grid
-      ctx.strokeStyle = 'rgba(0,212,255,0.04)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 40) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-      }
-      for (let y = 0; y < canvas.height; y += 40) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      // Grid dots
+      ctx.fillStyle = tc.grid;
+      for (var x = 0; x < canvasW; x += 40) {
+        for (var y = 0; y < canvasH; y += 40) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
-      // River
-      ctx.fillStyle = 'rgba(0,150,255,0.15)';
-      ctx.fillRect(0, riverTop, canvas.width, riverHeight);
+      // Bank fills with texture (grass/sand stippling)
+      drawBankTexture(0, 0, canvasW, riverTop);
+      drawBankTexture(0, riverBottom, canvasW, canvasH - riverBottom);
+
+      // River water — vertical gradient (darker at banks, lighter in middle)
+      var riverGrad = ctx.createLinearGradient(0, riverTop, 0, riverBottom);
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        riverGrad.addColorStop(0, 'rgba(0,80,180,0.22)');
+        riverGrad.addColorStop(0.5, 'rgba(0,120,220,0.08)');
+        riverGrad.addColorStop(1, 'rgba(0,80,180,0.22)');
+      } else {
+        riverGrad.addColorStop(0, 'rgba(0,100,200,0.25)');
+        riverGrad.addColorStop(0.5, 'rgba(0,150,255,0.08)');
+        riverGrad.addColorStop(1, 'rgba(0,100,200,0.25)');
+      }
+      ctx.fillStyle = riverGrad;
+      ctx.fillRect(0, riverTop, canvasW, riverHeight);
+
+      // Animated wave lines flowing rightward (same direction as river current)
+      var rs = parseFloat(riverSpeedSlider.value);
+      var waveRows = Math.floor(riverHeight / 20);
+      for (var w = 0; w < waveRows; w++) {
+        var wy = riverTop + 14 + w * (riverHeight / waveRows);
+        // Alternate between thicker/thinner waves for depth
+        var isMajor = w % 3 === 0;
+        var waveAlpha = isMajor
+          ? 0.12 + 0.05 * Math.sin(waveTime * 1.5 + w)
+          : 0.06 + 0.03 * Math.sin(waveTime * 2 + w * 0.7);
+        ctx.strokeStyle = isLight
+          ? 'rgba(0,100,200,' + waveAlpha + ')'
+          : 'rgba(80,180,255,' + waveAlpha + ')';
+        ctx.lineWidth = isMajor ? 1.8 : 1;
+        ctx.beginPath();
+        for (var wx = -20; wx < canvasW + 20; wx += 2) {
+          // Negative phase so waves scroll rightward with increasing waveTime
+          var phase = -waveTime * rs * 0.8 + w * 1.4;
+          var amp = isMajor ? 5 : 3;
+          var yOff = Math.sin(wx * 0.03 + phase) * amp + Math.sin(wx * 0.07 + phase * 1.5) * (amp * 0.4);
+          if (wx === -20) ctx.moveTo(wx, wy + yOff);
+          else ctx.lineTo(wx, wy + yOff);
+        }
+        ctx.stroke();
+      }
 
       // River banks
-      ctx.strokeStyle = 'rgba(0,255,170,0.5)';
+      ctx.strokeStyle = tc.bank;
       ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(0, riverTop);
-      ctx.lineTo(canvas.width, riverTop);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(0, riverBottom);
-      ctx.lineTo(canvas.width, riverBottom);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, riverTop); ctx.lineTo(canvasW, riverTop); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, riverBottom); ctx.lineTo(canvasW, riverBottom); ctx.stroke();
 
-      // River particles (flowing)
-      const riverSpeed = parseFloat(riverSpeedSlider.value);
-      ctx.fillStyle = 'rgba(0,212,255,0.4)';
-      for (let p of particles) {
-        p.x += riverSpeed * 0.5;
-        if (p.x > canvas.width) p.x = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      // Bank labels on the left
+      ctx.fillStyle = tc.bank;
+      ctx.font = '11px Andika, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('Far Bank', 12, riverTop - 8);
+      ctx.fillText('Near Bank', 12, riverBottom + 16);
     }
 
-    function drawArrow(x1, y1, x2, y2, color, width = 2) {
-      const headlen = 10;
-      const angle = Math.atan2(y2 - y1, x2 - x1);
-
+    function drawArrow(x1, y1, x2, y2, color, width) {
+      var headlen = 10;
+      var angle = Math.atan2(y2 - y1, x2 - x1);
+      ctx.save();
       ctx.strokeStyle = color;
       ctx.fillStyle = color;
       ctx.lineWidth = width;
+      ctx.lineCap = 'round';
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
       ctx.stroke();
-
       ctx.beginPath();
       ctx.moveTo(x2, y2);
       ctx.lineTo(x2 - headlen * Math.cos(angle - Math.PI / 6), y2 - headlen * Math.sin(angle - Math.PI / 6));
       ctx.lineTo(x2 - headlen * Math.cos(angle + Math.PI / 6), y2 - headlen * Math.sin(angle + Math.PI / 6));
       ctx.closePath();
       ctx.fill();
+      ctx.restore();
     }
 
     function drawBoat(x, y, angle) {
@@ -186,231 +862,366 @@
       ctx.translate(x, y);
       ctx.rotate(angle);
 
-      ctx.fillStyle = '#ffffff';
+      var s = Math.max(1, canvasW / 700); // scale factor for boat size
+
+      // Wake spray behind boat
+      ctx.globalAlpha = 0.3;
+      ctx.fillStyle = tc.wake;
       ctx.beginPath();
-      ctx.moveTo(10, 0);
-      ctx.lineTo(-5, -6);
-      ctx.lineTo(-5, 6);
+      ctx.moveTo(-14 * s, 0);
+      ctx.lineTo(-22 * s, -8 * s);
+      ctx.lineTo(-18 * s, 0);
+      ctx.lineTo(-22 * s, 8 * s);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Hull (pointed bow shape)
+      ctx.fillStyle = tc.boatHull;
+      ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(18 * s, 0);              // bow tip
+      ctx.quadraticCurveTo(12 * s, -8 * s, -10 * s, -7 * s);  // top curve
+      ctx.lineTo(-14 * s, -5 * s);         // stern top
+      ctx.quadraticCurveTo(-15 * s, 0, -14 * s, 5 * s);       // stern curve
+      ctx.lineTo(-10 * s, 7 * s);          // stern bottom
+      ctx.quadraticCurveTo(12 * s, 8 * s, 18 * s, 0);         // bottom curve
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Deck
+      ctx.fillStyle = tc.boatDeck;
+      ctx.beginPath();
+      ctx.moveTo(14 * s, 0);
+      ctx.quadraticCurveTo(8 * s, -5 * s, -6 * s, -4.5 * s);
+      ctx.lineTo(-10 * s, -3 * s);
+      ctx.quadraticCurveTo(-11 * s, 0, -10 * s, 3 * s);
+      ctx.lineTo(-6 * s, 4.5 * s);
+      ctx.quadraticCurveTo(8 * s, 5 * s, 14 * s, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      // Cabin
+      ctx.fillStyle = tc.boatCabin;
+      ctx.beginPath();
+      ctx.roundRect(-5 * s, -3 * s, 8 * s, 6 * s, 2 * s);
+      ctx.fill();
+
+      // Mast
+      ctx.strokeStyle = tc.boatMast;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -14 * s);
+      ctx.stroke();
+
+      // Flag
+      ctx.fillStyle = tc.flag;
+      ctx.beginPath();
+      ctx.moveTo(0, -14 * s);
+      ctx.lineTo(6 * s, -12 * s);
+      ctx.lineTo(0, -10 * s);
       ctx.closePath();
       ctx.fill();
 
       ctx.restore();
     }
 
+    function updateDataPanel(crossingTime, drift, vx, vy, boatSpeed, riverSpeed, angle) {
+      var riverWidth = (riverHeight / pxScale).toFixed(1);
+      document.getElementById('d-width').textContent = riverWidth + ' m';
+      document.getElementById('d-vx').textContent = vx.toFixed(2) + ' m/s';
+      document.getElementById('d-vy').textContent = Math.abs(vy).toFixed(2) + ' m/s';
+      var resultant = Math.sqrt(vx * vx + vy * vy);
+      document.getElementById('d-resultant').textContent = resultant.toFixed(2) + ' m/s';
+      var ang = Math.abs(parseFloat(document.getElementById('boatAngle').value));
+      var isUndefined = ang >= 90;
+      // Crossing time: counts up from 0 while animating, shows final value when landed
+      if (boat) {
+        document.getElementById('d-time').textContent = physicsElapsed.toFixed(2) + ' s';
+      } else if (landedBoat) {
+        document.getElementById('d-time').textContent = physicsElapsed.toFixed(2) + ' s';
+      } else {
+        document.getElementById('d-time').textContent = isUndefined ? 'Not Defined' : crossingTime.toFixed(2) + ' s';
+      }
+      if (isUndefined) {
+        document.getElementById('d-drift').textContent = 'Not Defined';
+      } else {
+        var driftDisplay = Math.abs(drift) < 0.15 ? 0 : drift;
+        document.getElementById('d-drift').textContent = driftDisplay.toFixed(1) + ' m';
+      }
+    }
+
     function draw() {
-      const boatSpeed = parseFloat(boatSpeedSlider.value);
-      const riverSpeed = parseFloat(riverSpeedSlider.value);
-      const angle = parseFloat(boatAngleSlider.value);
-      const rad = angle * Math.PI / 180;
+      var boatSpeed = parseFloat(boatSpeedSlider.value);
+      var riverSpeed = parseFloat(riverSpeedSlider.value);
+      var angle = parseFloat(boatAngleSlider.value);
+      var rad = angle * Math.PI / 180;
 
-      // Calculate velocities
-      const vbx = boatSpeed * Math.sin(rad);
-      const vby = -boatSpeed * Math.cos(rad);
-      const vrx = riverSpeed;
-      const vry = 0;
+      var vbx = boatSpeed * Math.sin(rad);
+      var vby = -boatSpeed * Math.cos(rad);
+      var vrx = riverSpeed;
+      var vx = vbx + vrx;
+      var vy = vby;
 
-      const vx = vbx + vrx;
-      const vy = vby + vry;
-
-      const crossingTime = riverHeight / scale / (boatSpeed * Math.cos(rad));
-      const drift = riverSpeed * crossingTime;
+      var crossingTime = riverHeight / pxScale / (boatSpeed * Math.cos(rad));
+      var drift = vx * crossingTime;
 
       drawBackground();
 
-      // Draw velocity vectors from start position
-      const vecScale = 3;
-      drawArrow(startX, startY, startX + vbx * scale * vecScale, startY + vby * scale * vecScale, '#00ffaa', 2);
-      drawArrow(startX, startY, startX + vrx * scale * vecScale, startY + vry * scale * vecScale, '#00d4ff', 2);
-      drawArrow(startX, startY, startX + vx * scale * vecScale, startY + vy * scale * vecScale, '#7c3aed', 3);
+      // Velocity vectors from start
+      var vecScale = 3;
+      ctx.save();
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = '#00ffaa';
+      drawArrow(startX, startY, startX + vbx * pxScale * vecScale, startY + vby * pxScale * vecScale, '#00ffaa', 2);
+      ctx.shadowColor = '#00d4ff';
+      drawArrow(startX, startY, startX + vrx * pxScale * vecScale, startY, '#00d4ff', 2);
+      ctx.shadowColor = '#7c3aed';
+      drawArrow(startX, startY, startX + vx * pxScale * vecScale, startY + vy * pxScale * vecScale, '#7c3aed', 3);
+      ctx.restore();
 
-      // Labels for vectors
-      ctx.font = '12px "JetBrains Mono", monospace';
+      // Vector labels
+      ctx.font = '11px Andika, sans-serif';
       ctx.fillStyle = '#00ffaa';
-      ctx.fillText('v_boat', startX + vbx * scale * vecScale + 5, startY + vby * scale * vecScale - 5);
+      ctx.fillText('v(boat/river)', startX + vbx * pxScale * vecScale + 8, startY + vby * pxScale * vecScale - 5);
       ctx.fillStyle = '#00d4ff';
-      ctx.fillText('v_river', startX + vrx * scale * vecScale + 5, startY + 15);
+      ctx.fillText('v_river', startX + vrx * pxScale * vecScale + 8, startY + 14);
       ctx.fillStyle = '#7c3aed';
-      ctx.fillText('v_resultant', startX + vx * scale * vecScale + 5, startY + vy * scale * vecScale + 15);
+      ctx.fillText('v_net', startX + vx * pxScale * vecScale + 8, startY + vy * pxScale * vecScale + 14);
 
-      // Draw stats
-      ctx.fillStyle = 'rgba(10,10,30,0.85)';
-      ctx.fillRect(canvas.width - 260, 10, 250, 150);
-      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
-      ctx.strokeRect(canvas.width - 260, 10, 250, 150);
-
-      ctx.font = '12px "JetBrains Mono", monospace';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(`Boat Speed: ${boatSpeed.toFixed(1)} m/s`, canvas.width - 250, 30);
-      ctx.fillText(`River Speed: ${riverSpeed.toFixed(1)} m/s`, canvas.width - 250, 50);
-      ctx.fillText(`Angle: ${angle}° from ⊥`, canvas.width - 250, 70);
-      ctx.fillText(`Time to cross: ${crossingTime.toFixed(2)} s`, canvas.width - 250, 90);
-      ctx.fillText(`Drift: ${drift.toFixed(1)} m`, canvas.width - 250, 110);
-
-      const resultantSpeed = Math.sqrt(vx * vx + vy * vy);
-      ctx.fillText(`Resultant: ${resultantSpeed.toFixed(2)} m/s`, canvas.width - 250, 130);
-
-      if (boatSpeed > riverSpeed) {
-        const minDriftAngle = -Math.asin(riverSpeed / boatSpeed) * 180 / Math.PI;
-        ctx.fillStyle = '#00ffaa';
-        ctx.fillText(`Min drift angle: ${minDriftAngle.toFixed(1)}°`, canvas.width - 250, 150);
+      // Boat at start position (only when not animating)
+      // Nose points along boat's own velocity (not resultant)
+      if (!boat) {
+        drawBoat(startX, startY, Math.atan2(vby, vbx));
       }
+
+      updateDataPanel(crossingTime, drift, vx, vy, boatSpeed, riverSpeed, angle);
     }
+
+    var animStartTime = 0;
+    var animDuration = 2500; // minimum 2.5s to cross
+    var physicsElapsed = 0; // accumulated physics time in seconds
 
     function launch() {
       if (animId) cancelAnimationFrame(animId);
       trail = [];
+      landedBoat = null;
+      driftPulse = 0;
+      physicsElapsed = 0;
 
-      const boatSpeed = parseFloat(boatSpeedSlider.value);
-      const riverSpeed = parseFloat(riverSpeedSlider.value);
-      const angle = parseFloat(boatAngleSlider.value);
-      const rad = angle * Math.PI / 180;
+      var boatSpeed = parseFloat(boatSpeedSlider.value);
+      var riverSpeed = parseFloat(riverSpeedSlider.value);
+      var angle = parseFloat(boatAngleSlider.value);
+      var rad = angle * Math.PI / 180;
 
-      const vbx = boatSpeed * Math.sin(rad);
-      const vby = -boatSpeed * Math.cos(rad);
-      const vrx = riverSpeed;
+      var vbx = boatSpeed * Math.sin(rad);
+      var vby = -boatSpeed * Math.cos(rad);
+      var vrx = riverSpeed;
+      var vx = vbx + vrx;
+      var vy = vby;
 
-      const vx = vbx + vrx;
-      const vy = vby;
+      // Total pixel displacement for the crossing
+      var totalDy = riverHeight; // pixels to travel vertically (bottom to top)
+      var physTime = totalDy / (Math.abs(vy) * pxScale); // frames at speed=1/frame
+
+      // Ensure animation takes at least 2.5s (~150 frames at 60fps)
+      var minFrames = animDuration / (1000 / 60);
+      var dt = Math.min(1, physTime > 0 ? minFrames > 0 ? Math.min(0.4, totalDy / (Math.abs(vy * pxScale) * minFrames)) : 0.4 : 0.4);
+
+      // Simpler: compute dt so that crossing takes at least animDuration
+      // vy * pxScale * dt * numFrames = riverHeight
+      // numFrames = animDuration / 16.67
+      var numFrames = animDuration / 16.67;
+      var neededDt = riverHeight / (Math.abs(vy * pxScale) * numFrames);
+      dt = Math.min(0.4, neededDt);
 
       boat = {
         x: startX,
         y: startY,
-        vx: vx * scale,
-        vy: vy * scale,
-        angle: Math.atan2(vx, -vy)
+        vx: vx * pxScale,
+        vy: vy * pxScale,
+        dt: dt,
+        angle: Math.atan2(vby, vbx)  // nose along boat's own velocity
       };
 
+      animStartTime = performance.now();
       animate();
     }
 
     function animate() {
       if (!boat) return;
 
-      boat.x += boat.vx * 0.5;
-      boat.y += boat.vy * 0.5;
+      waveTime += 0.03;
+      physicsElapsed += boat.dt;
+      boat.x += boat.vx * boat.dt;
+      boat.y += boat.vy * boat.dt;
       trail.push({ x: boat.x, y: boat.y });
 
       drawBackground();
 
-      // Draw trail
-      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-      ctx.lineWidth = 2;
+      // Trail — dashed path line
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = 1.5;
       ctx.setLineDash([5, 5]);
       ctx.beginPath();
       if (trail.length > 0) {
         ctx.moveTo(trail[0].x, trail[0].y);
-        for (let i = 1; i < trail.length; i++) {
-          ctx.lineTo(trail[i].x, trail[i].y);
-        }
+        for (var i = 1; i < trail.length; i++) ctx.lineTo(trail[i].x, trail[i].y);
       }
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Draw drift lines
+      // Animated V-shaped wake trail
+      drawWakeTrail(boat.x, boat.y);
+
+      // Drift reference line from start
       ctx.setLineDash([3, 3]);
-      ctx.strokeStyle = 'rgba(255,45,117,0.4)';
-      ctx.beginPath();
-      ctx.moveTo(startX, riverTop);
-      ctx.lineTo(startX, riverBottom);
-      ctx.stroke();
-
-      if (boat.y <= riverTop) {
-        ctx.beginPath();
-        ctx.moveTo(boat.x, riverTop);
-        ctx.lineTo(boat.x, riverBottom);
-        ctx.stroke();
-
-        ctx.strokeStyle = 'rgba(255,45,117,0.6)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(startX, riverTop - 20);
-        ctx.lineTo(boat.x, riverTop - 20);
-        ctx.stroke();
-
-        ctx.fillStyle = '#ff2d75';
-        ctx.font = '12px "JetBrains Mono", monospace';
-        ctx.fillText('drift', (startX + boat.x) / 2 - 15, riverTop - 25);
-      }
+      ctx.strokeStyle = 'rgba(255,45,117,0.3)';
+      ctx.beginPath(); ctx.moveTo(startX, riverTop); ctx.lineTo(startX, riverBottom); ctx.stroke();
       ctx.setLineDash([]);
 
-      // Redraw velocity vectors
-      const boatSpeed = parseFloat(boatSpeedSlider.value);
-      const riverSpeed = parseFloat(riverSpeedSlider.value);
-      const angle = parseFloat(boatAngleSlider.value);
-      const rad = angle * Math.PI / 180;
-      const vbx = boatSpeed * Math.sin(rad);
-      const vby = -boatSpeed * Math.cos(rad);
-      const vrx = riverSpeed;
-      const vx = vbx + vrx;
-      const vy = vby;
-      const vecScale = 3;
+      // When boat reaches far bank — pulsing drift marker
+      if (boat.y <= riverTop) {
+        drawDriftMarker(boat.x, riverTop);
+      }
 
-      drawArrow(startX, startY, startX + vbx * scale * vecScale, startY + vby * scale * vecScale, '#00ffaa', 2);
-      drawArrow(startX, startY, startX + vrx * scale * vecScale, startY, '#00d4ff', 2);
-      drawArrow(startX, startY, startX + vx * scale * vecScale, startY + vy * scale * vecScale, '#7c3aed', 3);
+      // Velocity vectors
+      var boatSpeed = parseFloat(boatSpeedSlider.value);
+      var riverSpeed = parseFloat(riverSpeedSlider.value);
+      var angle = parseFloat(boatAngleSlider.value);
+      var rad = angle * Math.PI / 180;
+      var vbx = boatSpeed * Math.sin(rad);
+      var vby = -boatSpeed * Math.cos(rad);
+      var vrx = riverSpeed;
+      var vx = vbx + vrx;
+      var vy = vby;
+      var vecScale = 3;
 
-      // Draw boat
+      ctx.save();
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = '#00ffaa';
+      drawArrow(startX, startY, startX + vbx * pxScale * vecScale, startY + vby * pxScale * vecScale, '#00ffaa', 2);
+      ctx.shadowColor = '#00d4ff';
+      drawArrow(startX, startY, startX + vrx * pxScale * vecScale, startY, '#00d4ff', 2);
+      ctx.shadowColor = '#7c3aed';
+      drawArrow(startX, startY, startX + vx * pxScale * vecScale, startY + vy * pxScale * vecScale, '#7c3aed', 3);
+      ctx.restore();
+
+      // Boat
       drawBoat(boat.x, boat.y, boat.angle);
 
-      // Draw stats
-      const crossingTime = riverHeight / scale / (boatSpeed * Math.cos(rad));
-      const drift = riverSpeed * crossingTime;
-      const currentTime = (startY - boat.y) / scale / (boatSpeed * Math.cos(rad));
-
-      ctx.fillStyle = 'rgba(10,10,30,0.85)';
-      ctx.fillRect(canvas.width - 260, 10, 250, 170);
-      ctx.strokeStyle = 'rgba(0,212,255,0.2)';
-      ctx.strokeRect(canvas.width - 260, 10, 250, 170);
-
-      ctx.font = '12px "JetBrains Mono", monospace';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(`Boat Speed: ${boatSpeed.toFixed(1)} m/s`, canvas.width - 250, 30);
-      ctx.fillText(`River Speed: ${riverSpeed.toFixed(1)} m/s`, canvas.width - 250, 50);
-      ctx.fillText(`Angle: ${angle}° from ⊥`, canvas.width - 250, 70);
-      ctx.fillText(`Time to cross: ${crossingTime.toFixed(2)} s`, canvas.width - 250, 90);
-      ctx.fillText(`Drift: ${drift.toFixed(1)} m`, canvas.width - 250, 110);
-
-      const resultantSpeed = Math.sqrt(vx * vx + vy * vy);
-      ctx.fillText(`Resultant: ${resultantSpeed.toFixed(2)} m/s`, canvas.width - 250, 130);
-      ctx.fillStyle = '#00ffaa';
-      ctx.fillText(`Current time: ${currentTime.toFixed(2)} s`, canvas.width - 250, 150);
+      // Update data panel
+      var crossingTime = riverHeight / pxScale / (boatSpeed * Math.cos(rad));
+      var drift = vx * crossingTime;
+      updateDataPanel(crossingTime, drift, vx, vy, boatSpeed, riverSpeed, angle);
 
       if (boat.y > riverTop) {
         animId = requestAnimationFrame(animate);
       } else {
         boat.y = riverTop;
         drawBoat(boat.x, boat.y, boat.angle);
+        // Keep animating drift marker pulse
+        landedBoat = { x: boat.x, y: riverTop, angle: boat.angle };
+        boat = null;
+        animateLanded();
       }
     }
 
-    function setMinTime() {
-      boatAngleSlider.value = 0;
-      document.getElementById('angleVal').textContent = 0;
-      draw();
-    }
 
-    function setMinDrift() {
-      const boatSpeed = parseFloat(boatSpeedSlider.value);
-      const riverSpeed = parseFloat(riverSpeedSlider.value);
+    function animateLanded() {
+      waveTime += 0.03;
+      drawBackground();
 
-      if (boatSpeed > riverSpeed) {
-        const minAngle = -Math.asin(riverSpeed / boatSpeed) * 180 / Math.PI;
-        boatAngleSlider.value = Math.round(minAngle);
-        document.getElementById('angleVal').textContent = Math.round(minAngle);
-        draw();
-      } else {
-        alert('Boat speed must be greater than river speed for minimum drift!');
+      // Redraw trail
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      if (trail.length > 0) {
+        ctx.moveTo(trail[0].x, trail[0].y);
+        for (var i = 1; i < trail.length; i++) ctx.lineTo(trail[i].x, trail[i].y);
       }
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Wake trail (fading)
+      drawWakeTrail(landedBoat.x, landedBoat.y);
+
+      // Start reference line
+      ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = 'rgba(255,45,117,0.3)';
+      ctx.beginPath(); ctx.moveTo(startX, riverTop); ctx.lineTo(startX, riverBottom); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Pulsing drift marker
+      drawDriftMarker(landedBoat.x, riverTop);
+
+      // Velocity vectors at start
+      var boatSpeed = parseFloat(boatSpeedSlider.value);
+      var riverSpeed = parseFloat(riverSpeedSlider.value);
+      var angle = parseFloat(boatAngleSlider.value);
+      var rad = angle * Math.PI / 180;
+      var vbx = boatSpeed * Math.sin(rad);
+      var vby = -boatSpeed * Math.cos(rad);
+      var vrx = riverSpeed;
+      var vx = vbx + vrx;
+      var vy = vby;
+      var vecScale = 3;
+      ctx.save();
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = '#00ffaa';
+      drawArrow(startX, startY, startX + vbx * pxScale * vecScale, startY + vby * pxScale * vecScale, '#00ffaa', 2);
+      ctx.shadowColor = '#00d4ff';
+      drawArrow(startX, startY, startX + vrx * pxScale * vecScale, startY, '#00d4ff', 2);
+      ctx.shadowColor = '#7c3aed';
+      drawArrow(startX, startY, startX + vx * pxScale * vecScale, startY + vy * pxScale * vecScale, '#7c3aed', 3);
+      ctx.restore();
+
+      // Landed boat
+      drawBoat(landedBoat.x, landedBoat.y, landedBoat.angle);
+
+      // Data panel
+      var crossingTime = riverHeight / pxScale / (boatSpeed * Math.cos(rad));
+      var drift = vx * crossingTime;
+      updateDataPanel(crossingTime, drift, vx, vy, boatSpeed, riverSpeed, angle);
+
+      animId = requestAnimationFrame(animateLanded);
     }
 
     function resetSim() {
       if (animId) cancelAnimationFrame(animId);
       boat = null;
+      landedBoat = null;
       trail = [];
+      driftPulse = 0;
+      physicsElapsed = 0;
       draw();
     }
 
-    draw();
+    // === FULLSCREEN ===
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var el = document.getElementById('simArea');
+      if (!document.fullscreenElement) {
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      }
+    });
+    document.addEventListener('fullscreenchange', function() {
+      setTimeout(resizeCanvas, 100);
+      setTimeout(resizeCanvas, 300);
+    });
+
+    // === EVENT LISTENERS ===
+    document.getElementById('resetBtn').addEventListener('click', resetSim);
+    document.getElementById('launchBtn').addEventListener('click', launch);
+
+    // Init
+    resizeCanvas();
+    bgLoop();
   </script>
   <script src="../js/main.js"></script>
 </body>
