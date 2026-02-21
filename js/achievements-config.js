@@ -1218,6 +1218,28 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
     }
   ],
 
+  /* ── Electric Dipole ── */
+  'electric-dipole': [
+    {
+      id: 'axial', title: 'Axial Explorer',
+      description: 'Place the test point on the axial line of the dipole',
+      icon: '\u27A1\uFE0F',
+      check: { type: 'global', name: '_achAxialPoint', op: 'eq', value: true }
+    },
+    {
+      id: 'equatorial', title: 'Equatorial Discovery',
+      description: 'Place the test point on the equatorial line where V = 0',
+      icon: '\u2B06\uFE0F',
+      check: { type: 'global', name: '_achEquatorialPoint', op: 'eq', value: true }
+    },
+    {
+      id: 'toggle', title: 'Dual Perspective',
+      description: 'Toggle between electric field and potential views',
+      icon: '\uD83D\uDD04',
+      check: { type: 'global', name: '_achFieldToggle', op: 'eq', value: true }
+    }
+  ],
+
   /* ── Equilibrium Position Finder ── */
   equilibrium: [
     {
