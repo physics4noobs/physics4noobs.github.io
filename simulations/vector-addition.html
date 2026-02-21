@@ -1601,7 +1601,7 @@
         { hint: 'tutDrag',    el: document.getElementById('simCanvas'),  type: 'canvas' },
         { hint: 'tutMagA',    el: document.getElementById('magA'),       type: 'bottom' },
         { hint: 'tutAngleA',  el: document.getElementById('angleA'),     type: 'bottom' },
-        { hint: 'tutAnimate', el: document.getElementById('animateBtn'), type: 'bottom' },
+        { hint: 'tutAnimate', el: document.getElementById('animateBtn'), type: 'below' },
         { hint: 'tutData',    el: document.querySelector('.side-data'),   type: 'side'   }
       ];
 
@@ -1622,6 +1622,23 @@
           hintEl.style.top = midY + 'px';
           hintEl.style.transform = 'translateX(-50%)';
           hintEl.style.right = '';
+          continue;
+        }
+
+        if (t.type === 'below') {
+          // Position hint below the target element with arrow pointing up
+          hintEl.style.left = cx + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+          var belowTop = elRect.bottom - areaRect.top + 12;
+          hintEl.style.top = belowTop + 'px';
+          hintEl.style.right = '';
+
+          var hRect = hintEl.getBoundingClientRect();
+          var arrowStartX = cx;
+          var arrowStartY = belowTop - 2;
+          var arrowEndX = cx;
+          var arrowEndY = elRect.bottom - areaRect.top + 2;
+          drawCurvedArrow(svg, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
           continue;
         }
 

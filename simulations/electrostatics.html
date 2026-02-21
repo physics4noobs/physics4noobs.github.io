@@ -205,6 +205,18 @@
       white-space: nowrap;
     }
 
+    .charge-btn {
+      min-width: 48px;
+      font-size: 1rem !important;
+      transition: var(--transition-fast);
+      opacity: 0.55;
+    }
+    .charge-btn.active {
+      opacity: 1;
+      box-shadow: 0 0 10px rgba(124,58,237,0.25);
+      transform: scale(1.06);
+    }
+
     /* Equations */
     .equations-section {
       background: var(--bg-card);
@@ -466,21 +478,23 @@
     </div>
 
     <div class="controls-bar">
-      <button class="sim-btn primary" id="dipoleBtn">&plusmn; Dipole</button>
-      <button class="sim-btn" id="twoPosBtn">++ Two Positive</button>
+      <button class="sim-btn charge-btn active" id="placePosBtn" style="background:rgba(255,45,117,0.18);border-color:rgba(255,45,117,0.4);color:#ff5a92;font-weight:700;">+Q</button>
+      <button class="sim-btn charge-btn" id="placeNegBtn" style="background:rgba(0,212,255,0.10);border-color:rgba(0,212,255,0.3);color:#00d4ff;font-weight:700;">&minus;Q</button>
+      <button class="sim-btn charge-btn" id="eraserBtn" style="background:rgba(255,170,50,0.12);border-color:rgba(255,170,50,0.3);color:#ffaa32;font-weight:700;">&#9003; Eraser</button>
+      <span style="width:1px;height:24px;background:var(--border-subtle);"></span>
       <button class="sim-btn" id="clearBtn">&#8635; Clear All</button>
-      <span style="font-size: clamp(0.72rem, 0.85vw, 0.82rem); color: var(--text-muted); margin-left: auto;">Click: +Q &nbsp;|&nbsp; Right-click: &minus;Q</span>
+      <span style="font-size: clamp(0.72rem, 0.85vw, 0.82rem); color: var(--text-muted); margin-left: auto;">Click buttons to add charges &bull; Drag to move</span>
     </div>
 
     <!-- Tutorial Overlay -->
     <div class="sim-tutorial" id="simTutorial" style="display:none;">
       <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
 
-      <div class="tut-hint" id="tutHintDipole">
-        <div class="tut-label">Load a dipole preset</div>
+      <div class="tut-hint" id="tutHintPlace">
+        <div class="tut-label">Click +Q or &minus;Q to add charges</div>
       </div>
-      <div class="tut-hint" id="tutHintTwoPos">
-        <div class="tut-label">Try two like charges</div>
+      <div class="tut-hint" id="tutHintDrag">
+        <div class="tut-label">Drag charges to reposition them</div>
       </div>
       <div class="tut-hint" id="tutHintClear">
         <div class="tut-label">Clear all charges</div>
@@ -610,45 +624,145 @@
     var STEP_SIZE = 3;
     var MAX_STEPS = 800;
 
-    // === CHARGE PLACEMENT ===
-    canvas.addEventListener('click', function(e) {
-      var rect = canvas.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
-      charges.push({ x: x, y: y, q: 1 });
-      draw();
-    });
+    // === CHARGE PLACEMENT — click buttons to add charges ===
+    var placePosBtn = document.getElementById('placePosBtn');
+    var placeNegBtn = document.getElementById('placeNegBtn');
 
-    canvas.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-      var rect = canvas.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
-      charges.push({ x: x, y: y, q: -1 });
-      draw();
-    });
+    var MAX_CHARGES = 5;
 
-    // === PRESETS ===
-    function presetDipole() {
-      var cx = canvasW / 2, cy = canvasH / 2;
-      charges = [
-        { x: cx - 120, y: cy, q: 1 },
-        { x: cx + 120, y: cy, q: -1 }
-      ];
+    function addChargeToCanvas(q) {
+      if (charges.length >= MAX_CHARGES) return;
+      // Place near center with slight random offset so multiple clicks don't stack exactly
+      var offsetX = (Math.random() - 0.5) * 80;
+      var offsetY = (Math.random() - 0.5) * 80;
+      charges.push({ x: canvasW / 2 + offsetX, y: canvasH / 2 + offsetY, q: q });
+      updateChargeButtons();
       draw();
     }
 
-    function presetTwoPositive() {
-      var cx = canvasW / 2, cy = canvasH / 2;
-      charges = [
-        { x: cx - 120, y: cy, q: 1 },
-        { x: cx + 120, y: cy, q: 1 }
-      ];
-      draw();
+    function updateChargeButtons() {
+      var atLimit = charges.length >= MAX_CHARGES;
+      placePosBtn.disabled = atLimit;
+      placeNegBtn.disabled = atLimit;
+      placePosBtn.style.opacity = atLimit ? '0.35' : '';
+      placeNegBtn.style.opacity = atLimit ? '0.35' : '';
     }
+
+    var eraserMode = false;
+    var eraserBtn = document.getElementById('eraserBtn');
+
+    placePosBtn.addEventListener('click', function() {
+      eraserMode = false;
+      eraserBtn.classList.remove('active');
+      addChargeToCanvas(1);
+    });
+    placeNegBtn.addEventListener('click', function() {
+      eraserMode = false;
+      eraserBtn.classList.remove('active');
+      addChargeToCanvas(-1);
+    });
+    eraserBtn.addEventListener('click', function() {
+      eraserMode = !eraserMode;
+      eraserBtn.classList.toggle('active', eraserMode);
+      canvas.style.cursor = eraserMode ? 'pointer' : 'default';
+    });
+
+    // === DRAG & PLACE ===
+    var draggingCharge = null;
+    var dragStarted = false;
+    var GRAB_RADIUS = 18;
+
+    function findChargeAt(mx, my) {
+      for (var i = charges.length - 1; i >= 0; i--) {
+        var c = charges[i];
+        if (Math.hypot(mx - c.x, my - c.y) < GRAB_RADIUS) return i;
+      }
+      return -1;
+    }
+
+    canvas.addEventListener('mousedown', function(e) {
+      var rect = canvas.getBoundingClientRect();
+      var mx = e.clientX - rect.left;
+      var my = e.clientY - rect.top;
+      var idx = findChargeAt(mx, my);
+      if (idx >= 0) {
+        if (eraserMode) {
+          charges.splice(idx, 1);
+          updateChargeButtons();
+          draw();
+          return;
+        }
+        draggingCharge = idx;
+        dragStarted = false;
+        canvas.style.cursor = 'grabbing';
+        e.preventDefault();
+      }
+    });
+
+    canvas.addEventListener('mousemove', function(e) {
+      var rect = canvas.getBoundingClientRect();
+      var mx = e.clientX - rect.left;
+      var my = e.clientY - rect.top;
+      if (draggingCharge !== null) {
+        dragStarted = true;
+        charges[draggingCharge].x = mx;
+        charges[draggingCharge].y = my;
+        draw();
+      } else if (!eraserMode) {
+        canvas.style.cursor = findChargeAt(mx, my) >= 0 ? 'grab' : 'default';
+      }
+    });
+
+    canvas.addEventListener('mouseup', function(e) {
+      if (draggingCharge !== null) {
+        draggingCharge = null;
+        canvas.style.cursor = 'default';
+        return;
+      }
+    });
+
+    canvas.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+    // Touch drag support
+    var touchDragIdx = null;
+
+    canvas.addEventListener('touchstart', function(e) {
+      var touch = e.touches[0];
+      var rect = canvas.getBoundingClientRect();
+      var mx = touch.clientX - rect.left;
+      var my = touch.clientY - rect.top;
+      var idx = findChargeAt(mx, my);
+      if (idx >= 0) {
+        if (eraserMode) {
+          charges.splice(idx, 1);
+          updateChargeButtons();
+          draw();
+          e.preventDefault();
+          return;
+        }
+        touchDragIdx = idx;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', function(e) {
+      if (touchDragIdx !== null) {
+        e.preventDefault();
+        var touch = e.touches[0];
+        var rect = canvas.getBoundingClientRect();
+        charges[touchDragIdx].x = touch.clientX - rect.left;
+        charges[touchDragIdx].y = touch.clientY - rect.top;
+        draw();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', function() {
+      touchDragIdx = null;
+    });
 
     function clearAll() {
       charges = [];
+      updateChargeButtons();
       draw();
     }
 
@@ -791,32 +905,44 @@
         }
       }
 
-      // If only negative charges, draw lines going inward
-      if (positiveCharges.length === 0) {
-        for (var ci = 0; ci < negativeCharges.length; ci++) {
-          var c = negativeCharges[ci];
-          for (var li = 0; li < LINES_PER_CHARGE; li++) {
-            var angle = (2 * Math.PI * li) / LINES_PER_CHARGE;
-            var startX = c.x + 14 * Math.cos(angle);
-            var startY = c.y + 14 * Math.sin(angle);
-            var points = traceFieldLine(startX, startY, -1);
+      // Draw field lines from negative charges (traced backward — shows lines coming in from infinity)
+      for (var ci = 0; ci < negativeCharges.length; ci++) {
+        var c = negativeCharges[ci];
+        for (var li = 0; li < LINES_PER_CHARGE; li++) {
+          var angle = (2 * Math.PI * li) / LINES_PER_CHARGE;
+          var startX = c.x + 14 * Math.cos(angle);
+          var startY = c.y + 14 * Math.sin(angle);
+          var points = traceFieldLine(startX, startY, -1);
 
-            if (points.length > 1) {
-              ctx.beginPath();
-              ctx.moveTo(points[0].x, points[0].y);
-              for (var j = 1; j < points.length; j++) {
-                ctx.lineTo(points[j].x, points[j].y);
-              }
-              ctx.strokeStyle = tc.fieldLine;
-              ctx.lineWidth = 1.5;
-              ctx.stroke();
+          if (points.length < 2) continue;
 
-              var arrowInterval = Math.floor(points.length / 3);
-              for (var a = arrowInterval; a < points.length - 1; a += arrowInterval) {
-                var dx = points[a].x - points[a + 1].x;
-                var dy = points[a].y - points[a + 1].y;
-                drawArrow(points[a].x, points[a].y, dx, dy, 5);
-              }
+          // Skip lines that end near a positive charge — already drawn from that charge
+          var lastPt = points[points.length - 1];
+          var hitsPositive = false;
+          for (var pi = 0; pi < positiveCharges.length; pi++) {
+            if (Math.hypot(lastPt.x - positiveCharges[pi].x, lastPt.y - positiveCharges[pi].y) < 20) {
+              hitsPositive = true;
+              break;
+            }
+          }
+          if (hitsPositive) continue;
+
+          if (points.length > 1) {
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (var j = 1; j < points.length; j++) {
+              ctx.lineTo(points[j].x, points[j].y);
+            }
+            ctx.strokeStyle = tc.fieldLine;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Arrows point toward the negative charge (reverse direction)
+            var arrowInterval = Math.floor(points.length / 3);
+            for (var a = arrowInterval; a < points.length - 1; a += arrowInterval) {
+              var dx = points[a].x - points[a + 1].x;
+              var dy = points[a].y - points[a + 1].y;
+              drawArrow(points[a].x, points[a].y, dx, dy, 5);
             }
           }
         }
@@ -866,8 +992,6 @@
     }
 
     // === CONTROLS ===
-    document.getElementById('dipoleBtn').addEventListener('click', presetDipole);
-    document.getElementById('twoPosBtn').addEventListener('click', presetTwoPositive);
     document.getElementById('clearBtn').addEventListener('click', clearAll);
 
     document.getElementById('resetBtn').addEventListener('click', function() {
@@ -935,10 +1059,10 @@
       svg.innerHTML = '';
 
       var targets = [
-        { hint: 'tutHintDipole', el: document.getElementById('dipoleBtn'),  type: 'bottom' },
-        { hint: 'tutHintTwoPos', el: document.getElementById('twoPosBtn'), type: 'bottom' },
-        { hint: 'tutHintClear',  el: document.getElementById('clearBtn'),  type: 'bottom' },
-        { hint: 'tutHintData',   el: document.querySelector('.side-data'),  type: 'side'   }
+        { hint: 'tutHintPlace',  el: document.getElementById('placePosBtn'), type: 'bottom' },
+        { hint: 'tutHintDrag',   el: document.getElementById('simCanvas'),   type: 'canvas' },
+        { hint: 'tutHintClear',  el: document.getElementById('clearBtn'),    type: 'bottom' },
+        { hint: 'tutHintData',   el: document.querySelector('.side-data'),    type: 'side'   }
       ];
 
       var placed = [];
@@ -950,6 +1074,16 @@
         var elRect = t.el.getBoundingClientRect();
         var cx = elRect.left + elRect.width / 2 - areaRect.left;
         var cy = elRect.top - areaRect.top;
+
+        if (t.type === 'canvas') {
+          var midX = elRect.left + elRect.width / 2 - areaRect.left;
+          var midY = elRect.top + elRect.height * 0.35 - areaRect.top;
+          hintEl.style.left = midX + 'px';
+          hintEl.style.top = midY + 'px';
+          hintEl.style.transform = 'translateX(-50%)';
+          hintEl.style.right = '';
+          continue;
+        }
 
         if (t.type === 'side') {
           var midY = elRect.top + elRect.height / 2 - areaRect.top;
