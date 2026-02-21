@@ -635,12 +635,8 @@
             <span class="data-value force-val" id="dataForce">&mdash;</span>
           </div>
           <div class="data-row">
-            <span class="data-label">r&#x208A;</span>
-            <span class="data-value" id="dataDistPlus">&mdash;</span>
-          </div>
-          <div class="data-row">
-            <span class="data-label">r&#x208B;</span>
-            <span class="data-value" id="dataDistMinus">&mdash;</span>
+            <span class="data-label">r</span>
+            <span class="data-value" id="dataDistCenter">&mdash;</span>
           </div>
           <div class="data-row">
             <span class="data-label">p</span>
@@ -664,7 +660,7 @@
       <div class="control-sep"></div>
       <div class="control-group">
         <label>Dipole:</label>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-primary);">q = &plusmn;2 &micro;C, d = 0.45 m</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-primary);">q = &plusmn;5 &micro;C, d = 0.70 m</span>
       </div>
       <div class="control-sep"></div>
       <button class="sim-btn" id="resetArrangement">&#8635; Reset</button>
@@ -809,8 +805,10 @@
     var K_COULOMB = 9e9;
     var GRAB_RADIUS = 28;
     var PROBE_RADIUS = 10;
-    var DIPOLE_SEP = 90;            // separation between +q and -q in pixels
-    var DIPOLE_CHARGE = 2;          // fixed charge magnitude in µC
+    var DIPOLE_SEP = 140;           // separation between +q and -q in pixels
+    var DIPOLE_CHARGE = 5;          // fixed charge magnitude in µC
+    var SNAP_THRESHOLD = 20;        // px distance to snap to axial/equatorial lines
+    var snappedTo = '';             // '' | 'axial' | 'equatorial'
 
     var qPlus  = { x: 0, y: 0 };   // +q (left of center)
     var qMinus = { x: 0, y: 0 };   // -q (right of center)
@@ -837,7 +835,7 @@
     }
 
     function resetAll() {
-      history = [];
+      plotHistory = [];
       resetPositions();
     }
 
@@ -914,6 +912,19 @@
     }
 
     // === DRAWING ===
+    function roundedRect(c, x, y, w, h, r) {
+      c.moveTo(x + r, y);
+      c.lineTo(x + w - r, y);
+      c.quadraticCurveTo(x + w, y, x + w, y + r);
+      c.lineTo(x + w, y + h - r);
+      c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      c.lineTo(x + r, y + h);
+      c.quadraticCurveTo(x, y + h, x, y + h - r);
+      c.lineTo(x, y + r);
+      c.quadraticCurveTo(x, y, x + r, y);
+      c.closePath();
+    }
+
     function drawBackground() {
       var grad = ctx.createRadialGradient(canvasW / 2, canvasH / 2, 0, canvasW / 2, canvasH / 2, canvasW * 0.7);
       grad.addColorStop(0, tc.bgCenter);
@@ -1090,7 +1101,7 @@
       var pillY = canvasH - 40;
       ctx.fillStyle = 'rgba(10,10,30,0.72)';
       ctx.beginPath();
-      ctx.roundRect(pillX, pillY, pillW, pillH, 9);
+      roundedRect(ctx, pillX, pillY, pillW, pillH, 9);
       ctx.fill();
       ctx.strokeStyle = 'rgba(160,100,255,0.4)';
       ctx.lineWidth = 1;
@@ -1147,7 +1158,7 @@
       var pillH = 20;
       ctx.fillStyle = tc.labelBg;
       ctx.beginPath();
-      ctx.roundRect(mx - pillW / 2, my - pillH / 2 - 12, pillW, pillH, 10);
+      roundedRect(ctx, mx - pillW / 2, my - pillH / 2 - 12, pillW, pillH, 10);
       ctx.fill();
       ctx.strokeStyle = borderColor;
       ctx.lineWidth = 1;
@@ -1180,7 +1191,7 @@
 
       ctx.fillStyle = tc.labelBg;
       ctx.beginPath();
-      ctx.roundRect(pillX, pillY, pillW, pillH, 14);
+      roundedRect(ctx, pillX, pillY, pillW, pillH, 14);
       ctx.fill();
       ctx.strokeStyle = borderColor;
       ctx.lineWidth = 1.5;
@@ -1332,6 +1343,103 @@
       ctx.restore();
     }
 
+    function drawSnapFormula() {
+      if (!snappedTo) return;
+
+      var mid = getDipoleMidpoint();
+      var rFromCenter = distPx(testPt, mid) / PIXELS_PER_METER;
+      var q = DIPOLE_CHARGE * 1e-6;
+      var d = DIPOLE_SEP / PIXELS_PER_METER;
+      var p = q * d;
+
+      var formulaLines = [];
+      var highlightColor;
+
+      if (snappedTo === 'axial') {
+        highlightColor = 'rgba(255,90,146,0.9)';
+        if (viewMode === 'potential') {
+          var vApprox = K_COULOMB * p / (rFromCenter * rFromCenter);
+          // Sign depends on which side: left of +q → positive, right of -q → positive too
+          var sign = (testPt.x > mid.x) ? -1 : 1;
+          // Actually for axial: V = kp/r² (along +q direction) or V = -kp/r² (along -q direction)
+          // Exact: if test is to the right of center (toward -q side), V < 0; to left of center, V > 0
+          if (testPt.x > mid.x) vApprox = -vApprox;
+          formulaLines.push('AXIAL POINT (r >> a)');
+          formulaLines.push('V \u2248 kp\u00B7cos\u03B8 / r\u00B2');
+          formulaLines.push('  = ' + formatPotential(vApprox));
+          formulaLines.push('|E| \u2248 2kp / r\u00B3');
+          var eApprox = 2 * K_COULOMB * p / (rFromCenter * rFromCenter * rFromCenter);
+          formulaLines.push('  = ' + formatField(eApprox));
+        } else {
+          formulaLines.push('AXIAL POINT (r >> a)');
+          formulaLines.push('|E| \u2248 2kp / r\u00B3');
+          var eApprox = 2 * K_COULOMB * p / (rFromCenter * rFromCenter * rFromCenter);
+          formulaLines.push('  = ' + formatField(eApprox));
+        }
+      } else if (snappedTo === 'equatorial') {
+        highlightColor = 'rgba(0,212,255,0.9)';
+        if (viewMode === 'potential') {
+          formulaLines.push('EQUATORIAL POINT (r >> a)');
+          formulaLines.push('V = 0 (always on equatorial line)');
+          formulaLines.push('|E| \u2248 kp / r\u00B3');
+          var eApprox = K_COULOMB * p / (rFromCenter * rFromCenter * rFromCenter);
+          formulaLines.push('  = ' + formatField(eApprox));
+        } else {
+          formulaLines.push('EQUATORIAL POINT (r >> a)');
+          formulaLines.push('|E| \u2248 kp / r\u00B3');
+          var eApprox = K_COULOMB * p / (rFromCenter * rFromCenter * rFromCenter);
+          formulaLines.push('  = ' + formatField(eApprox));
+        }
+      }
+
+      // Draw formula popup near test point
+      ctx.font = '600 11px "JetBrains Mono", monospace';
+      var maxW = 0;
+      for (var i = 0; i < formulaLines.length; i++) {
+        var w = ctx.measureText(formulaLines[i]).width;
+        if (w > maxW) maxW = w;
+      }
+      var padX = 14, padY = 8;
+      var lineH = 16;
+      var boxW = maxW + padX * 2;
+      var boxH = formulaLines.length * lineH + padY * 2;
+      var boxX = testPt.x + 30;
+      var boxY = testPt.y - boxH / 2;
+
+      // Keep on screen
+      if (boxX + boxW > canvasW - 10) boxX = testPt.x - boxW - 30;
+      if (boxY < 10) boxY = 10;
+      if (boxY + boxH > canvasH - 10) boxY = canvasH - boxH - 10;
+
+      ctx.save();
+      ctx.fillStyle = tc.labelBg;
+      ctx.beginPath();
+      // Manual rounded rect for compatibility
+      var cr = 10;
+      ctx.moveTo(boxX + cr, boxY);
+      ctx.lineTo(boxX + boxW - cr, boxY);
+      ctx.quadraticCurveTo(boxX + boxW, boxY, boxX + boxW, boxY + cr);
+      ctx.lineTo(boxX + boxW, boxY + boxH - cr);
+      ctx.quadraticCurveTo(boxX + boxW, boxY + boxH, boxX + boxW - cr, boxY + boxH);
+      ctx.lineTo(boxX + cr, boxY + boxH);
+      ctx.quadraticCurveTo(boxX, boxY + boxH, boxX, boxY + boxH - cr);
+      ctx.lineTo(boxX, boxY + cr);
+      ctx.quadraticCurveTo(boxX, boxY, boxX + cr, boxY);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = highlightColor;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      for (var i = 0; i < formulaLines.length; i++) {
+        ctx.fillStyle = (i === 0) ? highlightColor : tc.labelText;
+        ctx.fillText(formulaLines[i], boxX + padX, boxY + padY + i * lineH);
+      }
+      ctx.restore();
+    }
+
     // === DRAW FRAME ===
     function drawFrame() {
       drawBackground();
@@ -1339,19 +1447,19 @@
       drawDipoleFieldLines();
       drawDipoleAxis();
       if (viewMode === 'potential') drawVZeroLine();
-      drawDistanceLines();
       if (viewMode === 'field') drawFieldArrowAtTest();
       drawValueLabel();
       drawCharge(qPlus, '+q', true);
       drawCharge(qMinus, '\u2212q', true);
       drawTestPoint(testPt);
+      drawSnapFormula();
       updateDataPanel();
     }
 
     // === PLOT CANVAS & DATA PANEL ===
     var plotCanvas = document.getElementById('plotCanvas');
     var pctx = plotCanvas.getContext('2d');
-    var history = [];
+    var plotHistory = [];
     var MAX_HISTORY = 60;
 
     function resizePlotCanvas() {
@@ -1382,8 +1490,8 @@
       } else {
         val = getRealField().mag;
       }
-      history.push({ r: rM, val: val });
-      if (history.length > MAX_HISTORY) history.shift();
+      plotHistory.push({ r: rM, val: val });
+      if (plotHistory.length > MAX_HISTORY) plotHistory.shift();
     }
 
     function drawPlot() {
@@ -1484,14 +1592,14 @@
       pctx.stroke();
       pctx.globalAlpha = 1;
 
-      // Scatter recorded history
-      for (var hi = 0; hi < history.length; hi++) {
-        var pt = history[hi];
+      // Scatter recorded plotHistory
+      for (var hi = 0; hi < plotHistory.length; hi++) {
+        var pt = plotHistory[hi];
         if (pt.r < rMin || pt.r > rMax) continue;
         var ppx2 = pad.left + (pt.r - rMin) / (rMax - rMin) * pw;
         var pvy = viewMode === 'potential' ? Math.abs(pt.val) : pt.val / 1000;
         var ppy2 = pad.top + ph * (1 - Math.min(pvy / yMax, 1));
-        var alpha = 0.3 + 0.5 * (hi / history.length);
+        var alpha = 0.3 + 0.5 * (hi / plotHistory.length);
         pctx.beginPath();
         pctx.arc(ppx2, ppy2, 2.5, 0, Math.PI * 2);
         pctx.fillStyle = viewMode === 'potential'
@@ -1537,14 +1645,13 @@
     }
 
     function updateDataPanel() {
-      var rPlusM = distPx(testPt, qPlus) / PIXELS_PER_METER;
-      var rMinusM = distPx(testPt, qMinus) / PIXELS_PER_METER;
+      var mid = getDipoleMidpoint();
+      var rCenterM = distPx(testPt, mid) / PIXELS_PER_METER;
       var q = DIPOLE_CHARGE * 1e-6;
       var dMeters = DIPOLE_SEP / PIXELS_PER_METER;
       var dipMoment = q * dMeters;
 
-      document.getElementById('dataDistPlus').textContent = rPlusM.toFixed(3) + ' m';
-      document.getElementById('dataDistMinus').textContent = rMinusM.toFixed(3) + ' m';
+      document.getElementById('dataDistCenter').textContent = rCenterM.toFixed(3) + ' m';
 
       // Dipole moment
       var pExp = dipMoment.toExponential(2);
@@ -1560,10 +1667,14 @@
         forceEl.textContent = potStr;
         forceEl.className = 'data-value force-val';
 
-        sub.innerHTML =
-          'V = kq(1/r\u208A \u2212 1/r\u208B)' +
-          '<br>= 9e9\u00D72\u00D710\u207B\u2076\u00D7(1/' + rPlusM.toFixed(2) + '\u22121/' + rMinusM.toFixed(2) + ')' +
-          '<br><span class="hl">= ' + potStr + '</span>';
+        var subText = 'V = kq(1/r\u208A \u2212 1/r\u208B)';
+        if (snappedTo === 'axial') {
+          subText += '<br>\u2248 kp/r\u00B2 (axial approx.)';
+        } else if (snappedTo === 'equatorial') {
+          subText += '<br>= 0 (equatorial line)';
+        }
+        subText += '<br><span class="hl">= ' + potStr + '</span>';
+        sub.innerHTML = subText;
       } else {
         document.getElementById('dataMainLabel').textContent = '|E|';
         var ef = getRealField();
@@ -1571,10 +1682,14 @@
         forceEl.textContent = fieldStr;
         forceEl.className = 'data-value force-val';
 
-        sub.innerHTML =
-          '|E| = |E\u208A + E\u208B|' +
-          '<br>r\u208A=' + rPlusM.toFixed(2) + 'm, r\u208B=' + rMinusM.toFixed(2) + 'm' +
-          '<br><span class="hl">= ' + fieldStr + '</span>';
+        var subText = '|E| = |E\u208A + E\u208B|';
+        if (snappedTo === 'axial') {
+          subText += '<br>\u2248 2kp/r\u00B3 (axial approx.)';
+        } else if (snappedTo === 'equatorial') {
+          subText += '<br>\u2248 kp/r\u00B3 (equatorial approx.)';
+        }
+        subText += '<br><span class="hl">= ' + fieldStr + '</span>';
+        sub.innerHTML = subText;
       }
     }
 
@@ -1585,7 +1700,7 @@
       document.getElementById('fieldBtn').classList.remove('active');
       document.getElementById('dataMainLabel').textContent = 'V';
       document.getElementById('plotLabel').textContent = 'V vs r';
-      history = [];
+      plotHistory = [];
       _achFieldToggle = true;
     });
 
@@ -1595,7 +1710,7 @@
       document.getElementById('potentialBtn').classList.remove('active');
       document.getElementById('dataMainLabel').textContent = '|E|';
       document.getElementById('plotLabel').textContent = '|E| vs r';
-      history = [];
+      plotHistory = [];
       _achFieldToggle = true;
     });
 
@@ -1633,6 +1748,23 @@
       if (d2 < minD && d2 > 0) {
         testPt.x = qMinus.x + (dx2 / d2) * minD;
         testPt.y = qMinus.y + (dy2 / d2) * minD;
+      }
+
+      // Snap to axial or equatorial lines
+      var midY = (qPlus.y + qMinus.y) / 2;
+      var midX = (qPlus.x + qMinus.x) / 2;
+      var distToAxial = Math.abs(testPt.y - midY);
+      var distToEquatorial = Math.abs(testPt.x - midX);
+      var distFromCenter = Math.sqrt((testPt.x - midX) * (testPt.x - midX) + (testPt.y - midY) * (testPt.y - midY));
+
+      if (distToAxial < SNAP_THRESHOLD && distFromCenter > CHARGE_RADIUS * 2) {
+        testPt.y = midY;
+        snappedTo = 'axial';
+      } else if (distToEquatorial < SNAP_THRESHOLD && distFromCenter > CHARGE_RADIUS * 2) {
+        testPt.x = midX;
+        snappedTo = 'equatorial';
+      } else {
+        snappedTo = '';
       }
     }
 
