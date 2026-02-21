@@ -508,22 +508,8 @@
     }
 
     @media (max-width: 900px) {
-      .tut-hint {
-        position: static !important;
-        justify-content: center;
-        margin-bottom: 10px;
-      }
-      .tut-dismiss {
-        position: static;
-        transform: none;
-        margin-top: 18px;
-      }
-      .tut-dismiss:hover { transform: scale(1.04); }
-      .sim-tutorial {
-        justify-content: center;
-        gap: 0;
-        padding: 24px 12px;
-      }
+      .sim-tutorial { display: none !important; }
+      #helpBtn { display: none; }
     }
   </style>
 
@@ -1541,6 +1527,9 @@
         { hint: 'tutData', el: document.querySelector('.side-data') }
       ];
 
+      // First pass: compute initial positions and measure hint sizes
+      var placed = []; // track placed hint rects for collision detection
+
       for (var i = 0; i < targets.length; i++) {
         var t = targets[i];
         var hintEl = document.getElementById(t.hint);
@@ -1549,17 +1538,50 @@
         var cy = elRect.top - areaRect.top;
 
         if (t.hint === 'tutData') {
-          // Position to the left of the side-data panel, vertically centered
           var midY = elRect.top + elRect.height / 2 - areaRect.top;
           hintEl.style.top = midY + 'px';
           hintEl.style.right = (areaRect.right - elRect.left + 8) + 'px';
           hintEl.style.left = '';
-        } else {
-          // Position above the control element
-          hintEl.style.left = cx + 'px';
-          hintEl.style.top = (cy - 40) + 'px';
-          hintEl.style.transform = 'translateX(-50%)';
+          hintEl.style.transform = '';
+          continue;
         }
+
+        // Position above the control, centered
+        hintEl.style.left = cx + 'px';
+        hintEl.style.transform = 'translateX(-50%)';
+        hintEl.style.top = '0px'; // temp to measure
+
+        // Measure hint dimensions
+        var hintRect = hintEl.getBoundingClientRect();
+        var hintW = hintRect.width;
+        var hintH = hintRect.height;
+
+        // Desired top position (above the target element)
+        var desiredTop = cy - 40;
+        var hintLeft = cx - hintW / 2;
+        var hintRight = hintLeft + hintW;
+
+        // Check collision with already-placed hints and nudge upward
+        var finalTop = desiredTop;
+        for (var j = 0; j < placed.length; j++) {
+          var p = placed[j];
+          // Check horizontal overlap
+          if (hintRight > p.left && hintLeft < p.right) {
+            // Check vertical overlap
+            if (finalTop + hintH > p.top && finalTop < p.bottom) {
+              // Move above the colliding hint
+              finalTop = p.top - hintH - 6;
+            }
+          }
+        }
+
+        hintEl.style.top = finalTop + 'px';
+        placed.push({
+          left: hintLeft,
+          right: hintRight,
+          top: finalTop,
+          bottom: finalTop + hintH
+        });
       }
     }
 
