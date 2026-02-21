@@ -387,7 +387,7 @@
       transition: max-height 0.3s ease;
     }
 
-    .qa-item.open .qa-a { max-height: 300px; }
+    .qa-item.open .qa-a { max-height: 500px; }
 
     .qa-a-inner {
       padding: 0 24px 18px;
@@ -395,6 +395,35 @@
       font-size: clamp(0.92rem, 1vw, 1.08rem);
       color: var(--text-secondary);
       line-height: 1.75;
+    }
+
+    .qa-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      padding: 5px 12px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .qa-copy:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .qa-copy.copied {
+      color: #4ade80;
+      border-color: rgba(74, 222, 128, 0.3);
+      background: rgba(74, 222, 128, 0.08);
     }
   </style>
 
@@ -477,6 +506,7 @@
         <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How does a boat cross a river in the shortest time?</div>
         <div class="qa-a"><div class="qa-a-inner">
           To cross in the <strong>shortest time</strong>, the boat must aim <strong>perpendicular to the banks</strong> (&theta; = 0&deg;). This maximises the component of velocity across the river (v<sub>b</sub> cos&theta; is maximum when &theta; = 0). The crossing time is then t = d/v<sub>b</sub>. Note that the boat will drift downstream, but it reaches the other bank fastest.
+          <br><button class="qa-copy" onclick="copyQA(this)">&#128203; Copy</button>
         </div></div>
       </div>
 
@@ -484,6 +514,7 @@
         <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What angle gives minimum drift, and when is it possible?</div>
         <div class="qa-a"><div class="qa-a-inner">
           Minimum drift occurs when the boat aims upstream at an angle such that <strong>sin&theta; = v<sub>r</sub>/v<sub>b</sub></strong>. This is only possible when v<sub>b</sub> &gt; v<sub>r</sub>. At this angle, the boat's upstream component exactly cancels the river current's downstream push, so the boat lands directly opposite its starting point with <strong>zero drift</strong>. Try the "Min Drift" button to see this!
+          <br><button class="qa-copy" onclick="copyQA(this)">&#128203; Copy</button>
         </div></div>
       </div>
 
@@ -491,6 +522,7 @@
         <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens when the river speed is greater than the boat speed?</div>
         <div class="qa-a"><div class="qa-a-inner">
           When v<sub>r</sub> &gt; v<sub>b</sub>, the boat <strong>cannot go straight across</strong> &mdash; it will always drift downstream no matter what angle it aims at. Zero drift becomes impossible because sin&theta; = v<sub>r</sub>/v<sub>b</sub> &gt; 1 has no solution. The boat can still cross the river, but it will always land downstream of its starting point.
+          <br><button class="qa-copy" onclick="copyQA(this)">&#128203; Copy</button>
         </div></div>
       </div>
 
@@ -498,6 +530,7 @@
         <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How do you find the resultant velocity of the boat?</div>
         <div class="qa-a"><div class="qa-a-inner">
           The resultant velocity is the <strong>vector sum</strong> of the boat's velocity relative to water and the river's velocity. If the boat aims at angle &theta; from perpendicular with speed v<sub>b</sub>, and the river flows at v<sub>r</sub>, then: v<sub>x</sub> = v<sub>b</sub> sin&theta; + v<sub>r</sub> and v<sub>y</sub> = v<sub>b</sub> cos&theta;. The resultant speed is |v| = &radic;(v<sub>x</sub>&sup2; + v<sub>y</sub>&sup2;). This resultant determines the actual path the boat follows.
+          <br><button class="qa-copy" onclick="copyQA(this)">&#128203; Copy</button>
         </div></div>
       </div>
 
@@ -505,10 +538,28 @@
         <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Can the boat ever reach directly opposite if v<sub>r</sub> &gt; v<sub>b</sub>?</div>
         <div class="qa-a"><div class="qa-a-inner">
           <strong>No.</strong> To land directly opposite, the boat must cancel the river&rsquo;s push entirely, which requires v<sub>b</sub> sin&theta; = v<sub>r</sub>. When v<sub>r</sub> &gt; v<sub>b</sub>, sin&theta; would need to exceed 1, which is impossible. The boat can still cross, but it will <strong>always drift downstream</strong>. In this case the best strategy is to minimise drift, not eliminate it. Try setting v<sub>river</sub> &gt; v<sub>boat</sub> in the simulation to see this!
+          <br><button class="qa-copy" onclick="copyQA(this)">&#128203; Copy</button>
         </div></div>
       </div>
     </div>
   </div>
+
+  <script>
+    function copyQA(btn) {
+      var item = btn.closest('.qa-item');
+      var q = item.querySelector('.qa-q').textContent.trim();
+      var a = item.querySelector('.qa-a-inner').textContent.replace('Copy', '').trim();
+      var text = 'Q: ' + q + '\n\nA: ' + a;
+      navigator.clipboard.writeText(text).then(function() {
+        btn.classList.add('copied');
+        btn.innerHTML = '&#10003; Copied';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          btn.innerHTML = '&#128203; Copy';
+        }, 2000);
+      });
+    }
+  </script>
 
   <script>
     // === THEME ===
