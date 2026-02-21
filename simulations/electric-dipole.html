@@ -664,7 +664,7 @@
       <div class="control-sep"></div>
       <div class="control-group">
         <label>Dipole:</label>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-primary);">q = &plusmn;2 &micro;C, d = 0.30 m</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-primary);">q = &plusmn;2 &micro;C, d = 0.45 m</span>
       </div>
       <div class="control-sep"></div>
       <button class="sim-btn" id="resetArrangement">&#8635; Reset</button>
@@ -804,12 +804,12 @@
     });
 
     // === SIMULATION STATE ===
-    var CHARGE_RADIUS = 12;
+    var CHARGE_RADIUS = 18;
     var PIXELS_PER_METER = 200;
     var K_COULOMB = 9e9;
-    var GRAB_RADIUS = 22;
-    var PROBE_RADIUS = 8;
-    var DIPOLE_SEP = 60;            // separation between +q and -q in pixels
+    var GRAB_RADIUS = 28;
+    var PROBE_RADIUS = 10;
+    var DIPOLE_SEP = 90;            // separation between +q and -q in pixels
     var DIPOLE_CHARGE = 2;          // fixed charge magnitude in µC
 
     var qPlus  = { x: 0, y: 0 };   // +q (left of center)
@@ -965,7 +965,7 @@
 
       var NUM_LINES = 12;
       var step = 3;
-      var maxSteps = 2000;
+      var maxSteps = 400;
 
       for (var i = 0; i < NUM_LINES; i++) {
         var angle = (i / NUM_LINES) * Math.PI * 2;
@@ -1201,7 +1201,7 @@
       var pulse = 0.5 + 0.5 * Math.sin(glowPhase);
       var r = CHARGE_RADIUS;
       var isPos = (label.indexOf('+') !== -1);
-      var glowRadius = 28 + 8 * pulse;
+      var glowRadius = 34 + 10 * pulse;
       var glowAlpha = 0.2 + 0.12 * pulse;
 
       // Glow
@@ -1239,7 +1239,7 @@
 
       // Sign inside charge
       ctx.fillStyle = '#fff';
-      ctx.font = 'bold 13px "JetBrains Mono", monospace';
+      ctx.font = 'bold 16px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(isPos ? '+' : '\u2212', q.x, q.y);
