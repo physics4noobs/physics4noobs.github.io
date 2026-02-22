@@ -5248,3 +5248,122 @@ a.progress-row.mastered:hover {
     width: calc(100vw - 24px);
   }
 }
+
+/* --- PWA Install Banner --- */
+#pwa-install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#pwa-install-banner.pwa-banner-visible {
+  transform: translateY(0);
+}
+.pwa-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin: 8px;
+  background: var(--card-bg, #0a0a1a);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-radius: 16px;
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.4);
+  backdrop-filter: blur(12px);
+}
+.pwa-banner-icon img {
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.pwa-banner-text {
+  flex: 1;
+  min-width: 0;
+}
+.pwa-banner-text strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.pwa-banner-text span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+.pwa-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.pwa-banner-install {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00d4ff, #00ffaa);
+  color: #050510;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.pwa-banner-install:active {
+  transform: scale(0.96);
+}
+.pwa-banner-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+/* iOS instructions */
+.pwa-ios-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 0;
+  width: 100%;
+}
+.pwa-ios-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+.pwa-ios-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00d4ff, #00ffaa);
+  color: #050510;
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pwa-banner-close-text {
+  align-self: center;
+  margin-top: 4px;
+  padding: 8px 24px;
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
