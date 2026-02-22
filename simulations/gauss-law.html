@@ -1396,51 +1396,6 @@
         ctx.fill();
         ctx.restore();
 
-        // Ray-plane intersections with cube faces → draw penetration dots
-        var s = CUBE_SIZE;
-        // Face plane definitions: [axis, value, bound1axis, bound2axis]
-        var facePlanes = [
-          { axis: 2, val: -s, b1: 0, b2: 1, fi: 0 }, // Back: z=-s
-          { axis: 2, val:  s, b1: 0, b2: 1, fi: 1 }, // Front: z=+s
-          { axis: 1, val: -s, b1: 0, b2: 2, fi: 2 }, // Top: y=-s
-          { axis: 1, val:  s, b1: 0, b2: 2, fi: 3 }, // Bottom: y=+s
-          { axis: 0, val: -s, b1: 1, b2: 2, fi: 4 }, // Left: x=-s
-          { axis: 0, val:  s, b1: 1, b2: 2, fi: 5 }  // Right: x=+s
-        ];
-        var dir3 = [xi, yi, zi];
-        for (var fp = 0; fp < facePlanes.length; fp++) {
-          var fp_ = facePlanes[fp];
-          var dComp = dir3[fp_.axis];
-          if (Math.abs(dComp) < 1e-10) continue;
-          var t_ = (fp_.val - chargePos3D[fp_.axis]) / dComp;
-          if (t_ <= 0) continue;
-          var hit = [
-            chargePos3D[0] + xi * t_,
-            chargePos3D[1] + yi * t_,
-            chargePos3D[2] + zi * t_
-          ];
-          // Check bounds
-          if (hit[fp_.b1] < -s - 0.5 || hit[fp_.b1] > s + 0.5) continue;
-          if (hit[fp_.b2] < -s - 0.5 || hit[fp_.b2] > s + 0.5) continue;
-          // Project hit point
-          var rotHit = rotatePoint(hit, rotX, rotY);
-          var projHit = project(rotHit);
-          var isAdj = isAdjacentFace(fp_.fi, MODE);
-          ctx.save();
-          ctx.beginPath();
-          if (isAdj) {
-            ctx.arc(projHit.x, projHit.y, 2, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(150,150,150,0.5)';
-          } else {
-            ctx.arc(projHit.x, projHit.y, 3, 0, Math.PI * 2);
-            ctx.fillStyle = '#ffcc00';
-            ctx.shadowColor = '#ffcc00';
-            ctx.shadowBlur = 6;
-          }
-          ctx.fill();
-          ctx.shadowBlur = 0;
-          ctx.restore();
-        }
       }
     }
 
