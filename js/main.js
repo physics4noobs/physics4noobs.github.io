@@ -210,6 +210,7 @@ function typeWriter(element, text, speed = 50) {
 // --- Counter Animation ---
 function animateCounters() {
   document.querySelectorAll('.stat-num').forEach(counter => {
+    if (counter.hasAttribute('data-nocount')) return;
     const target = parseInt(counter.dataset.count || counter.textContent);
     const suffix = counter.dataset.suffix || '';
     let current = 0;
@@ -323,6 +324,79 @@ function initChapterSidebar() {
   detail.classList.add('chd-layout');
 }
 
+// --- Testimonial Carousel ---
+function initTestiCarousel() {
+  var carousel = document.querySelector('.testi-carousel');
+  if (!carousel) return;
+
+  var track = carousel.querySelector('.testi-track');
+  var cards = track.querySelectorAll('.testimonial-card');
+  var dotsContainer = carousel.querySelector('.testi-dots');
+  var counter = document.getElementById('testi-counter');
+  var prevBtn = document.getElementById('testi-prev');
+  var nextBtn = document.getElementById('testi-next');
+  var current = 0;
+  var total = cards.length;
+  var interval;
+
+  if (!total) return;
+
+  // Build dots
+  for (var i = 0; i < total; i++) {
+    var dot = document.createElement('span');
+    dot.className = 'testi-dot' + (i === 0 ? ' active' : '');
+    dot.dataset.index = i;
+    dot.addEventListener('click', function () {
+      goTo(parseInt(this.dataset.index));
+      resetAuto();
+    });
+    dotsContainer.appendChild(dot);
+  }
+
+  function goTo(index) {
+    current = ((index % total) + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    var dots = dotsContainer.querySelectorAll('.testi-dot');
+    dots.forEach(function (d, j) { d.classList.toggle('active', j === current); });
+    if (counter) counter.textContent = (current + 1) + ' / ' + total;
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function resetAuto() {
+    clearInterval(interval);
+    interval = setInterval(next, 7000);
+  }
+
+  // Arrow buttons
+  if (prevBtn) prevBtn.addEventListener('click', function () { prev(); resetAuto(); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { next(); resetAuto(); });
+
+  // Touch/swipe support
+  var startX = 0;
+  track.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', function (e) {
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) next();
+      else prev();
+      resetAuto();
+    }
+  });
+
+  // Keyboard support
+  carousel.setAttribute('tabindex', '0');
+  carousel.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { next(); resetAuto(); }
+    if (e.key === 'ArrowLeft') { prev(); resetAuto(); }
+  });
+
+  // Initialize
+  goTo(0);
+  interval = setInterval(next, 7000);
+}
+
 // --- Initialize Everything ---
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -331,4 +405,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   animateCounters();
   initChapterSidebar();
+  initTestiCarousel();
 });

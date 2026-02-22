@@ -96,6 +96,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script defer src="js/firebase-config.js"></script>
   <script defer src="js/auth.js"></script>
+  <script defer src="js/ranking.js"></script>
 </head>
 <body>
 
@@ -189,15 +190,18 @@
 
         <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
           <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
-          <span class="user-name" id="auth-user-name"></span>
+          <span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span>
           <div class="dropdown">
+            <div class="dropdown-rank" id="dropdown-rank-display">
+              <span class="rank-tier" id="dropdown-rank-tier"></span>
+              <div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div>
+            </div>
             <a href="progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
             <div class="dropdown-divider"></div>
             <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
           </div>
         </div>
 
-        <a href="#contact" class="nav-cta">Contact Me</a>
       </div>
 
       <button class="nav-toggle" aria-label="Menu">
@@ -310,212 +314,128 @@
     </div>
   </section>
 
-  <!-- About Preview -->
-  <section class="section" id="about-preview">
+  <!-- Resources -->
+  <section class="section" id="resources">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-tag">About the Educator</div>
-        <h2 class="section-title">The Mind Behind <span class="text-gradient">Physics for Noobs</span></h2>
-        <p class="section-subtitle">A decade of passion for physics education, from IIT Guwahati to Bengaluru's top academies.</p>
+        <div class="section-tag">Everything You Need</div>
+        <h2 class="section-title">Your Complete <span class="text-gradient">Physics Toolkit</span></h2>
+        <p class="section-subtitle">From theory to practice &mdash; every tool designed to take you from confused to confident.</p>
       </div>
 
-      <div class="about-preview reveal">
-        <div class="about-image-wrapper">
-          <div class="about-image">&#128104;&#8205;&#127891;</div>
-          <div class="about-stats">
-            <div class="stat-box">
-              <div class="stat-num" data-count="10" data-suffix="+">0</div>
-              <div class="stat-label">Years Exp.</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num" data-count="120" data-suffix="+">0</div>
-              <div class="stat-label">Students</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num" data-count="96" data-suffix="%">0</div>
-              <div class="stat-label">CBSE Score</div>
-            </div>
+      <div class="resource-grid reveal">
+        <a href="chapters.html" class="resource-card resource-chapters">
+          <div class="resource-icon-wrap">
+            <div class="resource-icon">&#128218;</div>
+            <div class="resource-glow"></div>
           </div>
-        </div>
-
-        <div class="about-content">
-          <h3>Sankaracharya Dutta</h3>
-          <p>
-            An IIT Guwahati graduate (B.Tech Civil Engineering) who discovered his true calling
-            in teaching Physics. With a unique ability to transform complex mathematical physics
-            into visual spectacles of energy and attention capture, Shankar Sir has been shaping
-            JEE and NEET aspirants since 2015.
-          </p>
-          <p>
-            From freelance teaching in Guwahati at UrbanPro to leading the Whitefield branch of
-            Centum Academy in Bengaluru, his journey reflects a deep commitment to fostering
-            a collaborative and high-achieving educational community.
-          </p>
-
-          <div class="about-tags">
-            <span class="about-tag">JEE Main & Advanced</span>
-            <span class="about-tag">NEET Physics</span>
-            <span class="about-tag">IIT Guwahati</span>
-            <span class="about-tag">Board Work Expert</span>
-            <span class="about-tag">Digital Content</span>
-            <span class="about-tag">Simulations</span>
-          </div>
-
-          <a href="about.html" class="btn btn-primary">Read Full Story &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- What I Offer -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">Resources</div>
-        <h2 class="section-title">Everything You Need to <span class="text-gradient">Ace Physics</span></h2>
-      </div>
-
-      <div class="grid-3 reveal">
-        <a href="chapters.html" class="card">
-          <div class="card-icon">&#128218;</div>
-          <h3>Chapters</h3>
-          <p>Complete chapter-wise breakdown for Grade XI and XII with key concepts, formulas, and problem-solving strategies.</p>
-        </a>
-        <a href="simulations.html" class="card">
-          <div class="card-icon">&#9881;</div>
-          <h3>Simulations</h3>
-          <p>Interactive physics simulations covering all chapters. Visualize projectile motion, electric fields, waves, and more.</p>
+          <div class="resource-badge">19 Chapters</div>
+          <h3>Study Chapters</h3>
+          <p class="resource-desc">Deep-dive into every topic from Grade XI and XII. Each chapter is packed with clear theory, beautifully typeset formulas, solved examples, and key-concept sidebars. Start from Kinematics and work your way through to Modern Physics &mdash; at your own pace.</p>
+          <ul class="resource-features">
+            <li>Grade XI &amp; XII fully covered</li>
+            <li>LaTeX-rendered formulas</li>
+            <li>Concept sidebars &amp; solved examples</li>
+          </ul>
+          <span class="resource-cta">Start Learning &rarr;</span>
         </a>
 
-        <a href="#contact" class="card">
-          <div class="card-icon">&#128172;</div>
-          <h3>Doubt Sessions</h3>
-          <p>Regular doubt-clearing sessions on Discord with separate channels for tests, submissions, and subject-wise notes.</p>
+        <a href="simulations.html" class="resource-card resource-sims">
+          <div class="resource-icon-wrap">
+            <div class="resource-icon">&#9889;</div>
+            <div class="resource-glow"></div>
+          </div>
+          <div class="resource-badge">56+ Simulations</div>
+          <h3>Interactive Simulations</h3>
+          <p class="resource-desc">This is where physics comes alive. Drag sliders, tweak parameters, and watch real-time visualizations of projectile motion, electric fields, wave interference, and more. Every simulation has hidden achievements &mdash; can you unlock them all?</p>
+          <ul class="resource-features">
+            <li>Real-time interactive physics</li>
+            <li>147 hidden achievements to discover</li>
+            <li>Built with D3, Three.js &amp; Matter.js</li>
+          </ul>
+          <span class="resource-cta">Explore Sims &rarr;</span>
+        </a>
+
+        <a href="tests.html" class="resource-card resource-tests">
+          <div class="resource-icon-wrap">
+            <div class="resource-icon">&#128203;</div>
+            <div class="resource-glow"></div>
+          </div>
+          <div class="resource-badge">16 Tests</div>
+          <h3>Practice Tests</h3>
+          <p class="resource-desc">Put your knowledge to the test with chapter-wise assessments designed for JEE &amp; NEET prep. Each test gives you instant scoring, detailed feedback, and performance analytics so you know exactly where to improve.</p>
+          <ul class="resource-features">
+            <li>Chapter-wise &amp; topic-wise format</li>
+            <li>Instant scoring &amp; analytics</li>
+            <li>JEE &amp; NEET aligned questions</li>
+          </ul>
+          <span class="resource-cta">Take a Test &rarr;</span>
+        </a>
+
+        <a href="flashcards.html" class="resource-card resource-cards">
+          <div class="resource-icon-wrap">
+            <div class="resource-icon">&#127183;</div>
+            <div class="resource-glow"></div>
+          </div>
+          <div class="resource-badge">Quick Revision</div>
+          <h3>Flashcards</h3>
+          <p class="resource-desc">The night before the exam? We've got you. Rapid-fire flashcards cover every formula, tricky concept, and common pitfall. Our spaced-repetition algorithm ensures you remember what matters most, right when you need it.</p>
+          <ul class="resource-features">
+            <li>Spaced repetition learning</li>
+            <li>Formulas, concepts &amp; pitfalls</li>
+            <li>Perfect for last-minute revision</li>
+          </ul>
+          <span class="resource-cta">Start Revising &rarr;</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section class="section">
+  <!-- Sign In CTA -->
+  <section class="section signin-cta-section" id="signin-cta">
     <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">Testimonials</div>
-        <h2 class="section-title">What People <span class="text-gradient">Say</span></h2>
-      </div>
-
-      <div class="grid-3 reveal">
-        <div class="testimonial-card">
-          <div class="quote-mark">&ldquo;</div>
-          <p class="quote-text">
-            Sankaracharya Dutta teaches physics with full energy and enthusiasm. His passion towards
-            teaching reflects in his work. An IIT Guwahati graduate, he has taught students for
-            Advanced placements. Some of his students got admitted into top universities.
-          </p>
-          <div class="quote-author">Mr. Himanshu Ranjan</div>
-          <div class="quote-role">Faculty at Allen</div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="quote-mark">&ldquo;</div>
-          <p class="quote-text">
-            Shankar sir has this unique ability to pick up the otherwise bland study of mathematical
-            physics, and create a spectacle of energy and attention capture in the classroom. His
-            use of animations, graphs, and diagrams provides a dopamine shot of visual stimulus.
-          </p>
-          <div class="quote-author">Mr. Subrahmanyam Chivukula</div>
-          <div class="quote-role">Faculty at Allen</div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="quote-mark">&ldquo;</div>
-          <p class="quote-text">
-            I was in a very bad situation, struggling to do well in Physics. But Sankar sir helped
-            me fall in love with this subject. He builds up to a concept, starts from the very
-            basics, and pushes you to think harder. Not only was he a teacher but a mentor and friend.
-          </p>
-          <div class="quote-author">Miss Pratiksha Mahanta</div>
-          <div class="quote-role">Student, Dundee Medical College, Scotland</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="section contact-section" id="contact">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-tag">Get in Touch</div>
-        <h2 class="section-title">Let's <span class="text-gradient">Connect</span></h2>
-        <p class="section-subtitle">Ready to master Physics? Reach out for classes, doubt sessions, or collaborations.</p>
-      </div>
-
-      <div class="contact-grid reveal">
-        <div class="contact-card">
-          <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 24px; letter-spacing: 1px;">
-            Contact Information
-          </h3>
-
-          <div class="contact-item">
-            <div class="ci-icon">&#128222;</div>
-            <div class="ci-info">
-              <h4>Phone</h4>
-              <p><a href="tel:+917896878299">+91 78968 78299</a></p>
+      <div class="signin-cta reveal">
+        <div class="signin-cta-content">
+          <div class="signin-cta-icon">&#128274;</div>
+          <h2>Unlock the Full Experience</h2>
+          <p>Sign in with Google to track your progress across chapters, save simulation achievements, climb the ranking ladder from <strong>Bronze</strong> to <strong>Master</strong>, and never lose your place. Your journey is saved in the cloud &mdash; pick up right where you left off, on any device.</p>
+          <div class="signin-cta-perks">
+            <div class="signin-perk">
+              <span class="perk-icon">&#128200;</span>
+              <div>
+                <strong>Progress Tracking</strong>
+                <span>Every chapter read, test taken, and simulation explored &mdash; saved automatically.</span>
+              </div>
+            </div>
+            <div class="signin-perk">
+              <span class="perk-icon">&#127942;</span>
+              <div>
+                <strong>Achievements &amp; Ranks</strong>
+                <span>Discover 147 hidden achievements. Rise through Bronze, Silver, Gold, Platinum, Diamond, and Master leagues.</span>
+              </div>
+            </div>
+            <div class="signin-perk">
+              <span class="perk-icon">&#9729;&#65039;</span>
+              <div>
+                <strong>Cloud Sync</strong>
+                <span>Your data lives in the cloud. Switch devices, clear your browser &mdash; nothing is lost.</span>
+              </div>
             </div>
           </div>
-
-          <div class="contact-item">
-            <div class="ci-icon">&#9993;</div>
-            <div class="ci-info">
-              <h4>Email</h4>
-              <p><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="ci-icon">&#128205;</div>
-            <div class="ci-info">
-              <h4>Location</h4>
-              <p>Whitefield, Bengaluru</p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="ci-icon">&#127891;</div>
-            <div class="ci-info">
-              <h4>Teaching</h4>
-              <p>Physics &mdash; JEE (Main & Advanced) &amp; NEET</p>
-            </div>
-          </div>
+          <button class="signin-cta-btn" id="cta-login-btn">
+            <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Sign in with Google
+          </button>
+          <p class="signin-cta-note">Free forever. No spam. Just physics.</p>
         </div>
-
-        <div>
-          <div class="card" style="margin-bottom: 20px;">
-            <div class="card-icon">&#128640;</div>
-            <h3>Join My Classes</h3>
-            <p>
-              I teach on Discord with separate text channels for tests, doubts, submissions,
-              and subject-wise notes. You may opt to prepare specifically for Class 12 boards
-              or competitive exams. Reach out on phone or email to get started.
-            </p>
-          </div>
-
-          <div class="card" style="margin-bottom: 20px;">
-            <div class="card-icon">&#127912;</div>
-            <h3>Content &amp; Collaboration</h3>
-            <p>
-              Expert in Photoshop and After Effects for subject-related content creation.
-              Open to collaborations for educational content, social media, and academic events.
-            </p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">&#128101;</div>
-            <h3>References</h3>
-            <p>
-              <strong>Vivek Aggarwal</strong> &mdash; Math Faculty, Centum Academy<br>
-              <strong>Pikai Sarkar</strong> &mdash; Chemistry Faculty, Founder CEO, Crack-it
-            </p>
+        <div class="signin-cta-visual">
+          <div class="rank-showcase">
+            <div class="rank-card rank-card-bronze"><span>&#129353;</span> Bronze</div>
+            <div class="rank-card rank-card-silver"><span>&#129352;</span> Silver</div>
+            <div class="rank-card rank-card-gold"><span>&#129351;</span> Gold</div>
+            <div class="rank-card rank-card-platinum"><span>&#128160;</span> Platinum</div>
+            <div class="rank-card rank-card-diamond"><span>&#128142;</span> Diamond</div>
+            <div class="rank-card rank-card-master"><span>&#128081;</span> Master</div>
           </div>
         </div>
       </div>
@@ -588,5 +508,21 @@
 
   <script src="js/main.js"></script>
   <script src="js/onboarding.js"></script>
+  <script>
+    // Wire CTA sign-in button + hide CTA section when logged in
+    document.addEventListener('DOMContentLoaded', function() {
+      var ctaBtn = document.getElementById('cta-login-btn');
+      var ctaSection = document.getElementById('signin-cta');
+      if (ctaBtn && typeof firebase !== 'undefined' && firebase.auth) {
+        ctaBtn.addEventListener('click', function() {
+          firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+            .catch(function(e) { console.error('Auth error:', e.message); });
+        });
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user && ctaSection) ctaSection.style.display = 'none';
+        });
+      }
+    });
+  </script>
 </body>
 </html>

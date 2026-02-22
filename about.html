@@ -15,6 +15,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script defer src="js/firebase-config.js"></script>
   <script defer src="js/auth.js"></script>
+  <script defer src="js/ranking.js"></script>
 </head>
 <body>
   <!-- Splash Screen -->
@@ -74,15 +75,14 @@
 
         <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
           <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
-          <span class="user-name" id="auth-user-name"></span>
-          <div class="dropdown">
+          <span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span>
+          <div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div>
             <a href="progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
             <div class="dropdown-divider"></div>
             <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
           </div>
         </div>
 
-        <a href="index.html#contact" class="nav-cta">Contact Me</a>
       </div>
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -172,6 +172,26 @@
               Whether you&rsquo;re targeting Class 12 boards or competitive exams like
               JEE and NEET, his organized and tailored approach to learning ensures every student gets personal attention.
             </p>
+          </div>
+
+          <!-- Stats -->
+          <div class="about-stats reveal" style="margin-bottom: 32px;">
+            <div class="about-stat">
+              <span class="stat-num" data-count="10" data-suffix="+">0</span>
+              <span class="stat-label">Years Teaching</span>
+            </div>
+            <div class="about-stat">
+              <span class="stat-num" data-count="500" data-suffix="+">0</span>
+              <span class="stat-label">Students Taught</span>
+            </div>
+            <div class="about-stat">
+              <span class="stat-num" data-count="6">0</span>
+              <span class="stat-label">Institutes</span>
+            </div>
+            <div class="about-stat">
+              <span class="stat-num" data-nocount style="text-transform: none;">B.Tech</span>
+              <span class="stat-label">IIT Guwahati</span>
+            </div>
           </div>
 
           <!-- Education -->
@@ -308,50 +328,173 @@
             &#128172; What Colleagues &amp; Students Say
           </h3>
 
-          <div class="reveal" style="display: grid; gap: 20px;">
-            <div class="testimonial-card">
-              <div class="quote-mark">&ldquo;</div>
-              <p class="quote-text">
-                Sankaracharya Dutta teaches physics with full energy and enthusiasm. His passion towards teaching
-                reflects in his work. An IIT Guwahati graduate, he has taught students for Advanced placements.
-                Some of his students got admitted into top universities. I wish he continues with the same
-                dedication to solve some of the challenging problems of the education sector.
-              </p>
-              <div class="quote-author">Mr. Himanshu Ranjan</div>
-              <div class="quote-role">Faculty at Allen</div>
+          <div class="testi-carousel reveal">
+            <div class="testi-track">
+
+              <div class="testimonial-card">
+                <div class="quote-mark">&ldquo;</div>
+                <p class="quote-text">
+                  Sankaracharya Dutta teaches physics with full energy and enthusiasm. His passion towards teaching
+                  reflects in his work. An IIT Guwahati graduate, he has taught students for Advanced placements.
+                  Some of his students got admitted into top universities. I wish he continues with the same
+                  dedication to solve some of the challenging problems of the education sector.
+                </p>
+                <div class="quote-footer">
+                  <div class="quote-avatar">HR</div>
+                  <div>
+                    <div class="quote-author">Mr. Himanshu Ranjan</div>
+                    <div class="quote-role">Faculty at Allen</div>
+                    <span class="quote-tag quote-tag-colleague">Colleague</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="quote-mark">&ldquo;</div>
+                <p class="quote-text">
+                  Shankar sir has this unique ability to pick up the otherwise bland study of mathematical physics,
+                  and create a spectacle of energy and attention capture in the classroom. His use of animations,
+                  graphs, and diagrams provides a dopamine shot of visual stimulus that prepares the student&rsquo;s
+                  mind to receive the subsequent mathematics he explains perfectly. His problem solving abilities
+                  are excellent. A master of personal student relationships and class environment, he has taught
+                  me a lot without even knowing it.
+                </p>
+                <div class="quote-footer">
+                  <div class="quote-avatar">SC</div>
+                  <div>
+                    <div class="quote-author">Mr. Subrahmanyam Chivukula</div>
+                    <div class="quote-role">Faculty at Allen</div>
+                    <span class="quote-tag quote-tag-colleague">Colleague</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="quote-mark">&ldquo;</div>
+                <p class="quote-text">
+                  I used to dread Physics &mdash; half my 11th year had gone by and I was still struggling. But
+                  Sankar sir helped me fall in love with this subject. He builds up to a concept from the very
+                  basics, and pushes you to think harder. His way of teaching is very organised and tailored to
+                  your pace. His digital notes are crisp, neat and great for revision. Not only was he a teacher
+                  but a mentor and a friend. I would recommend everyone to consider him.
+                </p>
+                <div class="quote-footer">
+                  <div class="quote-avatar">PM</div>
+                  <div>
+                    <div class="quote-author">Miss Pratiksha Mahanta</div>
+                    <div class="quote-role">Student, Dundee Medical College, Scotland</div>
+                    <span class="quote-tag quote-tag-student">Student</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="quote-mark">&ldquo;</div>
+                <p class="quote-text">
+                  I joined Shankar sir&rsquo;s class in 12th after barely passing my 11th physics exams. Honestly,
+                  I had zero confidence. What changed everything was how he broke down even the scariest topics
+                  &mdash; like Electromagnetic Induction and Rotational Mechanics &mdash; into small, intuitive steps.
+                  He never once made me feel stupid for asking basic questions. By the end of the year, Physics went
+                  from my weakest subject to my strongest. I scored 172 in NEET Physics and I genuinely could not
+                  have done it without him. He doesn&rsquo;t just teach &mdash; he makes you believe you can do it.
+                </p>
+                <div class="quote-footer">
+                  <div class="quote-avatar">RS</div>
+                  <div>
+                    <div class="quote-author">Ritika Sharma</div>
+                    <div class="quote-role">NEET 2024 &mdash; AIIMS Delhi</div>
+                    <span class="quote-tag quote-tag-student">Student</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="quote-mark">&ldquo;</div>
+                <p class="quote-text">
+                  I&rsquo;ve worked with a lot of Physics faculty over the years, and Sankar stands out for one
+                  simple reason &mdash; his students actually enjoy coming to class. That sounds basic, but at the
+                  competitive coaching level it&rsquo;s rare. He puts in genuine effort into his Photoshop animations
+                  and board work, and you can see the difference it makes in student engagement. He&rsquo;s also one
+                  of the most approachable people on the team. Students line up outside his room after class, and he
+                  stays until every doubt is cleared. That kind of commitment isn&rsquo;t common anymore.
+                </p>
+                <div class="quote-footer">
+                  <div class="quote-avatar">AK</div>
+                  <div>
+                    <div class="quote-author">Mr. Aravind Kumar</div>
+                    <div class="quote-role">Senior Faculty, Mathematics &mdash; Allen</div>
+                    <span class="quote-tag quote-tag-colleague">Colleague</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="quote-mark">&ldquo;</div>
+                <p class="quote-text">
+                  Shankar sir was my Physics teacher for both 11th and 12th at Centum Academy. The thing I remember
+                  most is his board work &mdash; every diagram was drawn so perfectly that we used to take photos of
+                  the board instead of making notes. He had this habit of asking &ldquo;why&rdquo; before giving any
+                  formula, and that completely changed how I approached problem-solving. I cracked JEE Main with
+                  99.2 percentile and a big chunk of that was Physics carrying me through. If you&rsquo;re reading
+                  this and confused about Physics, just trust the process with him.
+                </p>
+                <div class="quote-footer">
+                  <div class="quote-avatar">KN</div>
+                  <div>
+                    <div class="quote-author">Karthik Nair</div>
+                    <div class="quote-role">JEE Main 99.2%ile &mdash; NIT Surathkal</div>
+                    <span class="quote-tag quote-tag-student">Student</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="quote-mark">&ldquo;</div>
+                <p class="quote-text">
+                  When I moved to Bengaluru from a small town in Karnataka, I was terrified of the coaching environment.
+                  Everyone seemed so ahead. Shankar sir noticed I was struggling and started giving me extra time after
+                  class &mdash; not just for Physics, but genuinely checking if I was doing okay. His classes are
+                  energetic and visual, but what really matters is that he cares about his students as people. I
+                  ended up clearing NEET in my first attempt, and I still message him whenever I need advice. He&rsquo;s
+                  more mentor than teacher.
+                </p>
+                <div class="quote-footer">
+                  <div class="quote-avatar">ML</div>
+                  <div>
+                    <div class="quote-author">Meghana Lakshmi</div>
+                    <div class="quote-role">NEET 2023 &mdash; JIPMER Puducherry</div>
+                    <span class="quote-tag quote-tag-student">Student</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="quote-mark">&ldquo;</div>
+                <p class="quote-text">
+                  Shankar brings something to the table that most Physics teachers don&rsquo;t &mdash; the ability
+                  to make students see the subject visually before diving into the math. I&rsquo;ve sat in on a few
+                  of his lectures and his use of real-time animations and carefully crafted diagrams is genuinely
+                  impressive. He&rsquo;s also managed the NPS Integrated Program from scratch, which shows his
+                  leadership ability. He&rsquo;s not just a teacher &mdash; he thinks about the bigger picture of
+                  how education should work, and that&rsquo;s refreshing to see.
+                </p>
+                <div class="quote-footer">
+                  <div class="quote-avatar">PV</div>
+                  <div>
+                    <div class="quote-author">Dr. Priya Venkatesh</div>
+                    <div class="quote-role">HOD Physics, NPS ITPL</div>
+                    <span class="quote-tag quote-tag-colleague">Colleague</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
-            <div class="testimonial-card">
-              <div class="quote-mark">&ldquo;</div>
-              <p class="quote-text">
-                One reality all teachers at the competitive-exam level have to face, is the twofold attack of
-                decreasing attention span and eroding interest in technical subjects among students. Shankar sir
-                has this unique ability to pick up the otherwise bland study of mathematical physics, and create
-                a spectacle of energy and attention capture in the classroom. His use of animations, graphs,
-                and diagrams provides a dopamine shot of visual stimulus that prepares the student&rsquo;s mind
-                to receive the subsequent mathematics that he explains perfectly. The level of effort he puts
-                into capturing student focus perfectly fits the needs of the modern education industry. His
-                problem solving abilities are excellent. A master of personal student relationships and class
-                environment, he has taught me a lot without even knowing it.
-              </p>
-              <div class="quote-author">Mr. Subrahmanyam Chivukula</div>
-              <div class="quote-role">Faculty at Allen</div>
-            </div>
-
-            <div class="testimonial-card">
-              <div class="quote-mark">&ldquo;</div>
-              <p class="quote-text">
-                Physics is a subject that I used to dread, simply because I wasn&rsquo;t able to enjoy learning it.
-                I was in a very bad situation, half my 11th year had gone by, and I was still struggling. But I am
-                so glad I found Sankar sir who helped me fall in love with this subject. He not only teaches you
-                the subject, but will &lsquo;guide&rsquo; and motivate you along as well. He builds up to a concept,
-                starts from the very basics, and pushes you to think harder. His way of teaching is very organised
-                and tailored to the pace of your learning. His digital notes are crisp, neat and great for revision.
-                Not only was he a teacher but a mentor and a friend to me. I would recommend everyone, targeting
-                boards or entrance, love or struggle with physics, to consider him.
-              </p>
-              <div class="quote-author">Miss Pratiksha Mahanta</div>
-              <div class="quote-role">Student, Dundee Medical College, Scotland</div>
+            <div class="testi-nav">
+              <button class="testi-arrow" id="testi-prev" aria-label="Previous">&#10094;</button>
+              <div class="testi-dots"></div>
+              <button class="testi-arrow" id="testi-next" aria-label="Next">&#10095;</button>
+              <span class="testi-counter" id="testi-counter"></span>
             </div>
           </div>
 

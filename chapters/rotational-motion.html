@@ -16,6 +16,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script defer src="../js/firebase-config.js"></script>
   <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
 </head>
@@ -72,15 +73,14 @@
 
         <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
           <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
-          <span class="user-name" id="auth-user-name"></span>
-          <div class="dropdown">
+          <span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span>
+          <div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div>
             <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
             <div class="dropdown-divider"></div>
             <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
           </div>
         </div>
 
-        <a href="../index.html#contact" class="nav-cta">Contact Me</a>
       </div>
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
