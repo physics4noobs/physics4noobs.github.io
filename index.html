@@ -4,6 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Physics for Noobs | Physics JEE & NEET</title>
+  <meta name="description" content="Interactive physics simulations, visual explanations, and chapter-wise mastery for JEE & NEET — from Kinematics to Modern Physics.">
+
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://physics4noobs.github.io">
+  <meta property="og:title" content="Physics for Noobs">
+  <meta property="og:description" content="Interactive simulations, visual explanations, and chapter-wise mastery for JEE & NEET.">
+  <meta property="og:image" content="https://physics4noobs.github.io/images/og-logo.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Physics for Noobs">
+  <meta name="twitter:description" content="Interactive simulations, visual explanations, and chapter-wise mastery for JEE & NEET.">
+  <meta name="twitter:image" content="https://physics4noobs.github.io/images/og-logo.svg">
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <style>
     /* Splash screen — self-contained, zero dependencies */
@@ -48,7 +65,7 @@
     @keyframes glowGrow{from{width:14px;height:8px;opacity:.25}to{width:32px;height:18px;opacity:.7;filter:blur(6px) brightness(1.6)}}
 
     /* Ascent */
-    .splash-content.ascending{transition:top 1s cubic-bezier(.4,0,.15,1)}
+    .splash-content.ascending{transition:top .7s cubic-bezier(.4,0,.15,1)}
 
     /* Text reveal — gradient sweeps across the whole sentence */
     .splash-content.text-visible .splash-text-group{opacity:1}
@@ -64,7 +81,7 @@
 
     @keyframes splashIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     @keyframes textFill{to{background-position:left}}
-    @keyframes splashZoom{from{transform:scale(1)}to{transform:scale(1.15)}}
+    @keyframes splashZoom{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-50%) scale(1.15)}}
 
     /* Light theme */
     [data-theme="light"] .splash-trail{filter:blur(2px) brightness(.85)}
@@ -214,35 +231,34 @@
         trail.style.top='auto';
       });
 
-      // Phase 1 (t=400): Flame intensifies
-      setTimeout(function(){sc.classList.add('intensify');},400);
+      // Phase 1 (t=200): Flame intensifies
+      setTimeout(function(){sc.classList.add('intensify');},200);
 
-      // Phase 2 (t=900): Ascent — fly to viewport center
+      // Phase 2 (t=500): Ascent — fly to viewport center (0.7s)
       setTimeout(function(){
         var targetY=(vh/2)-40;
         sc.classList.add('ascending');
         sc.style.top=targetY+'px';
-        // Grow trail from bottom to rocket position
         var trailH=vh-targetY-40;
         trail.classList.add('growing');
         trail.style.height=trailH+'px';
-      },900);
+      },500);
 
-      // Phase 3 (t=1600): Trail starts fading
-      setTimeout(function(){trail.classList.add('fading');},1600);
+      // Phase 3 (t=1000): Trail fades
+      setTimeout(function(){trail.classList.add('fading');},1000);
 
-      // Phase 4 (t=2000): Text appears — rocket has arrived at center
+      // Phase 4 (t=1200): Text appears — gradient fill (1.2s + 0.2s delay)
       setTimeout(function(){
         sc.classList.add('text-visible');
         trail.style.display='none';
-      },2000);
+      },1200);
 
-      // Phase 5 (t=3500): Zoom in after gradient fill completes
-      setTimeout(function(){sc.classList.add('zoom-in');},3500);
+      // Phase 5 (t=2600): Zoom in after gradient fill completes
+      setTimeout(function(){sc.classList.add('zoom-in');},2600);
 
-      // Phase 6 (t=4600): Fade out splash to reveal page
-      setTimeout(function(){s.classList.add('fade-out');},4600);
-      setTimeout(function(){s.style.display='none';},5300);
+      // Phase 6 (t=3600): Fade out splash
+      setTimeout(function(){s.classList.add('fade-out');},3600);
+      setTimeout(function(){s.style.display='none';},4300);
     })();
   </script>
 
