@@ -3925,6 +3925,108 @@ ul { list-style: none; }
 }
 
 /* ============================================
+   AUTH GATE — Full-page login prompt
+   ============================================ */
+.auth-gate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+  padding: 80px 24px;
+}
+
+.auth-gate-inner {
+  max-width: 520px;
+  text-align: center;
+}
+
+.auth-gate-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.auth-gate h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.auth-gate p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.auth-gate-perks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.auth-gate-perk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+
+.auth-gate-perk span {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.auth-gate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  color: #fff;
+  background: linear-gradient(135deg, #4285F4, #34A853);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(66, 133, 244, 0.3);
+}
+
+.auth-gate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(66, 133, 244, 0.45);
+}
+
+.auth-gate-btn .google-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(10);
+}
+
+.auth-gate-note {
+  font-size: 0.72rem !important;
+  color: var(--text-muted) !important;
+  margin-top: 16px;
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 640px) {
+  .auth-gate-perks {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
    AUTH UI (Google Login)
    ============================================ */
 .auth-btn {
