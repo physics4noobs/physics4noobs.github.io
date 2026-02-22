@@ -325,17 +325,6 @@ function initChapterSidebar() {
 
 // --- Initialize Everything ---
 document.addEventListener('DOMContentLoaded', () => {
-  // Particles — delay init if splash is playing
-  const canvas = document.getElementById('particles-canvas');
-  if (canvas) {
-    const splashEl = document.getElementById('splash');
-    if (splashEl && splashEl.style.display !== 'none') {
-      setTimeout(() => new ParticleSystem(canvas), 2800);
-    } else {
-      new ParticleSystem(canvas);
-    }
-  }
-
   initNavbar();
   initScrollReveal();
   initGradeTabs();
