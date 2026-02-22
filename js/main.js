@@ -148,17 +148,34 @@ function initScrollReveal() {
 
 // --- Grade Tabs ---
 function initGradeTabs() {
-  document.querySelectorAll('.grade-tab').forEach(tab => {
+  const tabs = document.querySelectorAll('.grade-tab');
+  if (!tabs.length) return;
+
+  tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const target = tab.dataset.grade;
 
-      document.querySelectorAll('.grade-tab').forEach(t => t.classList.remove('active'));
+      // Save preference: extract 'xi' or 'xii' from data-grade
+      const grade = target.indexOf('-xii-') !== -1 ? 'xii' : 'xi';
+      localStorage.setItem('ae-grade-pref', grade);
+
+      tabs.forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.grade-content').forEach(c => c.classList.remove('active'));
 
       tab.classList.add('active');
       document.getElementById(target)?.classList.add('active');
     });
   });
+
+  // Restore saved preference (click the matching tab so page-specific listeners fire too)
+  const saved = localStorage.getItem('ae-grade-pref');
+  if (saved) {
+    const pattern = '-' + saved + '-';
+    const match = Array.from(tabs).find(t => t.dataset.grade && t.dataset.grade.indexOf(pattern) !== -1);
+    if (match && !match.classList.contains('active')) {
+      match.click();
+    }
+  }
 }
 
 // --- Smooth scroll for anchor links ---

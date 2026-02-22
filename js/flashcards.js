@@ -523,6 +523,19 @@
       chapterSelector.appendChild(section);
     });
 
+    // Auto-select first chapter from preferred grade
+    var savedGrade = localStorage.getItem('ae-grade-pref');
+    if (savedGrade) {
+      var gradeLabel = savedGrade === 'xii' ? 'Grade XII' : 'Grade XI';
+      for (var gi = 0; gi < chapterGroups.length; gi++) {
+        if (chapterGroups[gi].label === gradeLabel) {
+          var firstKey = Object.keys(chapterGroups[gi].chapters)[0];
+          if (firstKey) loadChapter(firstKey);
+          break;
+        }
+      }
+    }
+
     // Card flip on click
     cardContainer.addEventListener('click', function () {
       flipCard();
