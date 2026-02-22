@@ -878,8 +878,8 @@
     var NUM_FIELD_LINES = 32;
     var EPSILON_0 = 8.854e-12;
 
-    var rotX = -0.45;
-    var rotY = 0.65;
+    var rotX = 0;
+    var rotY = 0;
     var dragging = false;
     var lastMouseX = 0, lastMouseY = 0;
     var rotVelX = 0, rotVelY = 0;
@@ -1167,8 +1167,8 @@
       chargeFrom = [0, 0, 0];
       chargeTo = [0, 0, 0];
       chargeAnimT = 1;
-      rotX = -0.45;
-      rotY = 0.65;
+      rotX = 0;
+      rotY = 0;
       rotVelX = 0;
       rotVelY = 0;
       ghostProgress = 0;
@@ -1776,7 +1776,7 @@
     document.getElementById('camDown').addEventListener('click', function() { rotX += CAM_STEP; rotVelX = rotVelY = 0; });
     document.getElementById('camLeft').addEventListener('click', function() { rotY -= CAM_STEP; rotVelX = rotVelY = 0; });
     document.getElementById('camRight').addEventListener('click', function() { rotY += CAM_STEP; rotVelX = rotVelY = 0; });
-    document.getElementById('camStab').addEventListener('click', function() { rotX = -0.45; rotY = 0.65; rotVelX = rotVelY = 0; });
+    document.getElementById('camStab').addEventListener('click', function() { rotX = 0; rotY = 0; rotVelX = rotVelY = 0; });
 
     // === KEYBOARD SHORTCUTS ===
     window.addEventListener('keydown', function(e) {
@@ -1787,7 +1787,7 @@
         case 'ArrowDown': rotX += CAM_STEP; rotVelX = rotVelY = 0; e.preventDefault(); break;
         case 'ArrowLeft': rotY -= CAM_STEP; rotVelX = rotVelY = 0; e.preventDefault(); break;
         case 'ArrowRight': rotY += CAM_STEP; rotVelX = rotVelY = 0; e.preventDefault(); break;
-        case 'r': case 'R': rotX = -0.45; rotY = 0.65; rotVelX = rotVelY = 0; break;
+        case 'r': case 'R': rotX = 0; rotY = 0; rotVelX = rotVelY = 0; break;
       }
     });
 
