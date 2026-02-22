@@ -53,6 +53,7 @@
     /* Text reveal — gradient sweeps across the whole sentence */
     .splash-content.text-visible .splash-text-group{opacity:1}
     .splash-content.text-visible .splash-logo{animation:textFill 1.2s ease-in-out 0.2s forwards}
+    .splash-content.zoom-in{animation:splashZoom .8s cubic-bezier(.25,.46,.45,.94) forwards}
     /* Make brand-accent transparent so it participates in the gradient sweep */
     .splash-logo .brand-accent{-webkit-text-fill-color:transparent!important;color:transparent!important}
 
@@ -63,6 +64,7 @@
 
     @keyframes splashIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     @keyframes textFill{to{background-position:left}}
+    @keyframes splashZoom{from{transform:scale(1)}to{transform:scale(1.15)}}
 
     /* Light theme */
     [data-theme="light"] .splash-trail{filter:blur(2px) brightness(.85)}
@@ -235,9 +237,12 @@
         trail.style.display='none';
       },2000);
 
-      // Phase 5 (t=4400): Fade out splash to reveal page
-      setTimeout(function(){s.classList.add('fade-out');},4400);
-      setTimeout(function(){s.style.display='none';},5100);
+      // Phase 5 (t=3500): Zoom in after gradient fill completes
+      setTimeout(function(){sc.classList.add('zoom-in');},3500);
+
+      // Phase 6 (t=4600): Fade out splash to reveal page
+      setTimeout(function(){s.classList.add('fade-out');},4600);
+      setTimeout(function(){s.style.display='none';},5300);
     })();
   </script>
 
