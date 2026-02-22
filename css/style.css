@@ -228,14 +228,6 @@ ul { list-style: none; }
   100%  { opacity: 0; }
 }
 
-/* --- Particle Canvas --- */
-#particles-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
 /* --- Navigation --- */
 .navbar {
   position: fixed;

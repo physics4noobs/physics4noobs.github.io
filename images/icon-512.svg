@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#050510"/>
+  <circle cx="60" cy="50" r="2.5" fill="rgba(0,212,255,0.5)"/>
+  <circle cx="440" cy="70" r="2" fill="rgba(0,255,170,0.4)"/>
+  <circle cx="80" cy="440" r="2" fill="rgba(0,212,255,0.4)"/>
+  <circle cx="420" cy="450" r="2.5" fill="rgba(0,255,170,0.3)"/>
+  <circle cx="256" cy="55" r="1.5" fill="rgba(0,212,255,0.3)"/>
+  <!-- Rocket -->
+  <g transform="translate(206,100)">
+    <polygon points="50,0 36,30 64,30" fill="#00d4ff"/>
+    <rect x="36" y="28" width="28" height="80" rx="6" fill="url(#rb)"/>
+    <circle cx="50" cy="66" r="10" fill="url(#rw)"/>
+    <polygon points="36,88 16,126 36,114" fill="#00ffaa"/>
+    <polygon points="64,88 84,126 64,114" fill="#00ffaa"/>
+    <ellipse cx="50" cy="118" rx="12" ry="22" fill="url(#rf)"/>
+  </g>
+  <text x="256" y="310" font-family="'Space Grotesk','Segoe UI',sans-serif" font-size="72" font-weight="700" fill="#00d4ff" text-anchor="middle" letter-spacing="3">4N</text>
+  <text x="256" y="380" font-family="'Inter','Segoe UI',sans-serif" font-size="32" fill="rgba(255,255,255,0.7)" text-anchor="middle" letter-spacing="2">Physics</text>
+  <text x="256" y="420" font-family="'Inter','Segoe UI',sans-serif" font-size="32" fill="#00ffaa" text-anchor="middle" letter-spacing="2">for Noobs</text>
+  <text x="256" y="465" font-family="'Inter','Segoe UI',sans-serif" font-size="14" fill="rgba(255,255,255,0.3)" text-anchor="middle" letter-spacing="5">LEARN. PLAY. MASTER.</text>
+  <defs>
+    <linearGradient id="rb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#008cb3"/>
+    </linearGradient>
+    <radialGradient id="rw" cx="0.35" cy="0.35">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.9)"/>
+      <stop offset="60%" stop-color="rgba(0,212,255,0.6)"/>
+      <stop offset="100%" stop-color="rgba(0,100,140,0.8)"/>
+    </radialGradient>
+    <radialGradient id="rf" cx="0.5" cy="0">
+      <stop offset="0%" stop-color="#ffcc00"/>
+      <stop offset="40%" stop-color="#ff6600"/>
+      <stop offset="100%" stop-color="rgba(255,50,0,0)"/>
+    </radialGradient>
+  </defs>
+</svg>
