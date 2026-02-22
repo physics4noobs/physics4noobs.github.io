@@ -2650,6 +2650,11 @@ ul { list-style: none; }
   margin-bottom: 80px;
 }
 
+/* Prevent grid children from overflowing their column */
+.about-hero > * {
+  min-width: 0;
+}
+
 .profile-card {
   background: var(--bg-card);
   border-radius: var(--radius-xl);
