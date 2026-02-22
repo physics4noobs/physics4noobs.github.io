@@ -1,5 +1,5 @@
 /* ============================================
-   AXOMIYA ENGINEER - Achievement Config
+   PHYSICS FOR NOOBS - Achievement Config
    Declarative achievement definitions for all
    49 simulations (3 per sim = 147 total).
    Must load BEFORE achievements.js

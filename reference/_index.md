@@ -1,4 +1,4 @@
-# Axomiya Engineer - Physics Reference Index
+# Physics for Noobs - Physics Reference Index
 
 ## Source Material
 VMC Physics Class 11 & 12 JEE (Modules + Workbooks + Solutions)

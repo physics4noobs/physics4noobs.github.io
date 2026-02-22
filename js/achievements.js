@@ -1,5 +1,5 @@
 /* ============================================
-   AXOMIYA ENGINEER - Achievement Engine
+   PHYSICS FOR NOOBS - Achievement Engine
    Reads from SIM_ACHIEVEMENTS_CONFIG (declarative)
    or legacy SIM_ACHIEVEMENTS, syncs with Firestore,
    renders side panel & centered pop overlay.

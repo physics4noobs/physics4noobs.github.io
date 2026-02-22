@@ -1,5 +1,5 @@
 /* ============================================
-   AXOMIYA ENGINEER - Firebase Configuration
+   PHYSICS FOR NOOBS - Firebase Configuration
 
    SETUP: Replace the placeholder values below with
    your Firebase project config from:

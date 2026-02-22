@@ -1,5 +1,5 @@
 /* ============================================
-   AXOMIYA ENGINEER - Google Auth
+   PHYSICS FOR NOOBS - Google Auth
    ============================================ */
 (function() {
   document.addEventListener('DOMContentLoaded', function() {

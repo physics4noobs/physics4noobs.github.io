@@ -1,5 +1,5 @@
 /* ============================================
-   AXOMIYA ENGINEER - Simulation Tracker
+   PHYSICS FOR NOOBS - Simulation Tracker
    Tracks visits & time spent to Firestore
    Only loaded on simulation pages
    ============================================ */

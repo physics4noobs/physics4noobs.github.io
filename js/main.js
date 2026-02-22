@@ -1,5 +1,5 @@
 /* ============================================
-   AXOMIYA ENGINEER - Main JavaScript
+   PHYSICS FOR NOOBS - Main JavaScript
    ============================================ */
 
 // --- Particle Background ---

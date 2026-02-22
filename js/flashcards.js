@@ -1,5 +1,5 @@
 /* ============================================
-   AXOMIYA ENGINEER - Flashcard System
+   PHYSICS FOR NOOBS - Flashcard System
    SM-2 Spaced Repetition + KaTeX Rendering
    localStorage + Firebase Sync
    ============================================ */

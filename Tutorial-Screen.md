@@ -1,6 +1,6 @@
 # Tutorial Screen — Implementation Guide
 
-A reusable first-visit tutorial overlay for Axomiya Engineer simulations. Shows labeled hints with curved arrows pointing to key UI controls, dismissed on click, and remembered via `localStorage` so it only appears once.
+A reusable first-visit tutorial overlay for Physics for Noobs simulations. Shows labeled hints with curved arrows pointing to key UI controls, dismissed on click, and remembered via `localStorage` so it only appears once.
 
 ---
 
@@ -428,7 +428,7 @@ Working implementation: `simulations/boat-river.html`
 
 # Simulation Page Design System — Full Reference
 
-This section documents the complete design system used across Axomiya Engineer simulation pages. Use this as a blueprint when building any new simulation from scratch.
+This section documents the complete design system used across Physics for Noobs simulation pages. Use this as a blueprint when building any new simulation from scratch.
 
 ---
 
@@ -454,7 +454,7 @@ Every simulation page is a single self-contained HTML file inside `/simulations/
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Simulation Title | Axomiya Engineer</title>
+  <title>Your Simulation Title | Physics for Noobs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">

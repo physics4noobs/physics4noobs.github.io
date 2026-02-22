@@ -1,5 +1,5 @@
 /* ============================================
-   AXOMIYA ENGINEER - Theme Toggle
+   PHYSICS FOR NOOBS - Theme Toggle
    Loaded in <head> to prevent flash of wrong theme
    ============================================ */
 (function() {
