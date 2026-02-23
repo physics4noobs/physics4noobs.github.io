@@ -4127,8 +4127,8 @@ ul { list-style: none; }
 /* Wind force arrow — horizontal, pointing left */
 .wind-arrow {
   position: absolute;
-  top: 22%;
-  right: 2%;
+  top: 50%;
+  right: 12%;
   display: flex;
   flex-direction: row;
   align-items: center;
