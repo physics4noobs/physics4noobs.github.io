@@ -3764,12 +3764,120 @@ ul { list-style: none; }
 [data-theme="light"] .torii-visual {
   display: block;
   position: relative;
-  width: 380px;
-  height: 400px;
+  width: 420px;
+  height: 420px;
+  overflow: hidden;
 }
 [data-theme="light"] .physics-orb {
   display: none;
 }
+
+/* Sunrise glow behind gate */
+.torii-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 80px;
+  width: 260px;
+  height: 260px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(214,48,49,0.12) 0%, rgba(214,48,49,0.04) 40%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+}
+
+/* Distant birds */
+.torii-bird {
+  position: absolute;
+  width: 14px;
+  height: 4px;
+  opacity: 0.25;
+}
+.torii-bird::before,
+.torii-bird::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 7px;
+  height: 3px;
+  border-top: 1.5px solid #1a1a1a;
+  border-radius: 50% 50% 0 0;
+}
+.torii-bird::before { left: 0; transform-origin: right center; animation: birdFlap 0.8s ease-in-out infinite; }
+.torii-bird::after  { right: 0; transform-origin: left center; animation: birdFlap 0.8s ease-in-out 0.1s infinite; }
+@keyframes birdFlap {
+  0%, 100% { transform: rotate(-15deg); }
+  50% { transform: rotate(15deg); }
+}
+.bird1 {
+  top: 35px; left: 15%;
+  animation: birdDrift 18s linear infinite;
+}
+.bird2 {
+  top: 55px; left: 30%;
+  width: 11px; height: 3px;
+  opacity: 0.15;
+  animation: birdDrift 22s linear 5s infinite;
+}
+@keyframes birdDrift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(300px); opacity: 0; }
+}
+
+/* Sakura tree branch */
+.sakura-branch {
+  position: absolute;
+  top: 20px;
+  right: -10px;
+  width: 180px;
+  height: 120px;
+  z-index: 3;
+}
+.branch-limb {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 160px;
+  height: 6px;
+  background: linear-gradient(90deg, #5c3a24, #7a4e35);
+  border-radius: 3px;
+  transform: rotate(-8deg);
+  transform-origin: right center;
+}
+.branch-twig {
+  position: absolute;
+  height: 3px;
+  background: #6b4430;
+  border-radius: 2px;
+}
+.twig1 {
+  top: 38px; right: 60px;
+  width: 35px;
+  transform: rotate(-35deg);
+  transform-origin: right center;
+}
+.twig2 {
+  top: 55px; right: 100px;
+  width: 28px;
+  transform: rotate(20deg);
+  transform-origin: right center;
+}
+
+/* Blossom clusters on branch */
+.sakura-cluster {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f8a4b8 20%, #f0758e 50%, rgba(240,117,142,0.3) 80%, transparent 100%);
+  box-shadow: 0 0 6px rgba(248,164,184,0.4);
+}
+.cl1 { width: 22px; height: 22px; top: 30px; right: 50px; }
+.cl2 { width: 18px; height: 18px; top: 24px; right: 72px; }
+.cl3 { width: 26px; height: 26px; top: 36px; right: 28px; }
+.cl4 { width: 16px; height: 16px; top: 44px; right: 95px; }
+.cl5 { width: 20px; height: 20px; top: 18px; right: 38px; }
 
 /* Torii Gate Structure */
 .torii-gate {
@@ -3779,6 +3887,7 @@ ul { list-style: none; }
   transform: translateX(-50%);
   width: 200px;
   height: 260px;
+  z-index: 2;
 }
 .torii-kasagi {
   position: absolute;
@@ -3786,119 +3895,185 @@ ul { list-style: none; }
   left: -20px;
   width: 240px;
   height: 18px;
-  background: #d63031;
+  background: linear-gradient(180deg, #e74c3c, #d63031 50%, #c0392b);
   border-radius: 3px 3px 0 0;
-  box-shadow: 0 2px 8px rgba(214,48,49,0.2);
+  box-shadow: 0 3px 12px rgba(214,48,49,0.25);
 }
 .torii-kasagi::before {
   content: '';
   position: absolute;
-  top: -8px;
-  left: -8px;
-  right: -8px;
-  height: 12px;
-  background: #d63031;
-  border-radius: 4px 4px 0 0;
-  box-shadow: 0 -2px 6px rgba(214,48,49,0.15);
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  height: 14px;
+  background: linear-gradient(180deg, #e74c3c, #d63031);
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 -2px 8px rgba(214,48,49,0.2);
+}
+/* Kasagi end caps (curved upward) */
+.torii-kasagi::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -14px;
+  right: -14px;
+  height: 8px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
 }
 .torii-shimaki {
   position: absolute;
-  top: 22px;
+  top: 24px;
   left: -10px;
   width: 220px;
   height: 10px;
-  background: #c0392b;
+  background: linear-gradient(180deg, #c0392b, #a93226);
   border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 .torii-nuki {
   position: absolute;
-  top: 70px;
+  top: 72px;
   left: 10px;
   width: 180px;
   height: 10px;
-  background: #d63031;
+  background: linear-gradient(180deg, #d63031, #c0392b);
   border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
 }
 .torii-pillar {
   position: absolute;
   top: 18px;
-  width: 18px;
+  width: 20px;
   height: 242px;
-  background: linear-gradient(90deg, #c0392b, #d63031 40%, #e74c3c 60%, #d63031);
+  background: linear-gradient(90deg, #b02a2a, #d63031 30%, #e74c3c 50%, #d63031 70%, #b02a2a);
+  border-radius: 2px;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+}
+.torii-pillar-l { left: 18px; }
+.torii-pillar-r { right: 18px; }
+/* Pillar base stones */
+.torii-pillar::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: -4px;
+  width: 28px;
+  height: 8px;
+  background: linear-gradient(180deg, #9e9e9e, #bdbdbd);
   border-radius: 2px;
 }
-.torii-pillar-l { left: 20px; }
-.torii-pillar-r { right: 20px; }
+
+/* Mist / fog at base */
+.torii-mist {
+  position: absolute;
+  bottom: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(254,254,254,0.7) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.mist1 {
+  left: 5%;
+  width: 60%;
+  animation: mistDrift 8s ease-in-out infinite;
+}
+.mist2 {
+  right: 5%;
+  width: 50%;
+  animation: mistDrift 10s ease-in-out 3s infinite;
+  opacity: 0.6;
+}
+@keyframes mistDrift {
+  0%, 100% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(15px); opacity: 0.8; }
+}
 
 .torii-ground {
   position: absolute;
-  bottom: 38px;
-  left: 10%;
-  width: 80%;
+  bottom: 34px;
+  left: 5%;
+  width: 90%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(26,26,26,0.15), transparent);
+  background: linear-gradient(90deg, transparent, rgba(26,26,26,0.12) 20%, rgba(26,26,26,0.12) 80%, transparent);
+  z-index: 1;
 }
 
-/* Sakura Petals */
+/* Sakura Petals — realistic flutter */
 .sakura-petal {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: radial-gradient(ellipse, #f8a4b8 0%, #f0758e 50%, transparent 70%);
-  border-radius: 50% 0 50% 0;
   opacity: 0;
   pointer-events: none;
+  z-index: 4;
+}
+/* Flat petals */
+.sakura-petal:nth-child(odd) {
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(ellipse, #f8a4b8 0%, #f0758e 60%, transparent 80%);
+  border-radius: 50% 0 50% 0;
+}
+/* Curled petals */
+.sakura-petal:nth-child(even) {
+  width: 8px;
+  height: 12px;
+  background: linear-gradient(135deg, #f8a4b8 30%, #e8687e 70%);
+  border-radius: 50% 50% 50% 0;
+  box-shadow: inset -1px 1px 2px rgba(255,255,255,0.5);
 }
 
-@keyframes petalFall {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) rotate(0deg) scale(0.6);
-  }
-  8% { opacity: 0.9; }
-  50% {
-    transform: translate(40px, 160px) rotate(180deg) scale(1);
-  }
-  85% { opacity: 0.8; }
-  95% {
-    opacity: 0.6;
-    transform: translate(60px, 330px) rotate(340deg) scale(0.8);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(65px, 350px) rotate(360deg) scale(0.5);
-  }
+/* 4 unique petal fall paths with wobble */
+@keyframes petalA {
+  0%   { opacity: 0; transform: translate(0,0) rotate(0deg) scale(0.5); }
+  6%   { opacity: 0.9; }
+  25%  { transform: translate(20px, 90px) rotate(90deg) rotateY(60deg) scale(1); }
+  50%  { transform: translate(-10px, 190px) rotate(200deg) rotateY(-30deg) scale(0.9); }
+  75%  { transform: translate(35px, 280px) rotate(290deg) rotateY(50deg) scale(0.85); }
+  90%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translate(25px, 360px) rotate(380deg) rotateY(0deg) scale(0.5); }
 }
-@keyframes petalFall2 {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) rotate(0deg) scale(0.7);
-  }
-  8% { opacity: 0.85; }
-  50% {
-    transform: translate(-30px, 170px) rotate(-160deg) scale(1);
-  }
-  85% { opacity: 0.7; }
-  95% {
-    opacity: 0.5;
-    transform: translate(-20px, 340px) rotate(-330deg) scale(0.7);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-15px, 355px) rotate(-360deg) scale(0.4);
-  }
+@keyframes petalB {
+  0%   { opacity: 0; transform: translate(0,0) rotate(0deg) scale(0.6); }
+  6%   { opacity: 0.85; }
+  25%  { transform: translate(-25px, 100px) rotate(-80deg) rotateX(40deg) scale(1); }
+  50%  { transform: translate(15px, 200px) rotate(-190deg) rotateX(-20deg) scale(0.95); }
+  75%  { transform: translate(-15px, 290px) rotate(-300deg) rotateX(30deg) scale(0.8); }
+  90%  { opacity: 0.6; }
+  100% { opacity: 0; transform: translate(-5px, 365px) rotate(-380deg) rotateX(0deg) scale(0.4); }
+}
+@keyframes petalC {
+  0%   { opacity: 0; transform: translate(0,0) rotate(20deg) scale(0.5); }
+  6%   { opacity: 0.9; }
+  30%  { transform: translate(30px, 110px) rotate(130deg) rotateY(-50deg) scale(1.1); }
+  55%  { transform: translate(-20px, 210px) rotate(220deg) rotateY(40deg) scale(0.9); }
+  80%  { transform: translate(10px, 310px) rotate(330deg) rotateY(-20deg) scale(0.7); }
+  92%  { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(15px, 370px) rotate(400deg) scale(0.3); }
+}
+@keyframes petalD {
+  0%   { opacity: 0; transform: translate(0,0) rotate(-10deg) scale(0.7); }
+  6%   { opacity: 0.8; }
+  20%  { transform: translate(-15px, 80px) rotate(-100deg) rotateX(50deg) scale(1); }
+  45%  { transform: translate(25px, 180px) rotate(-210deg) rotateX(-40deg) scale(1); }
+  70%  { transform: translate(-30px, 270px) rotate(-320deg) rotateX(30deg) scale(0.8); }
+  88%  { opacity: 0.6; }
+  100% { opacity: 0; transform: translate(-10px, 355px) rotate(-400deg) scale(0.4); }
 }
 
-.sp1  { top: -10px; left: 30%;  width: 11px; height: 11px; animation: petalFall 6s ease-in-out 0.5s infinite; }
-.sp2  { top: -5px;  left: 55%;  width: 9px;  height: 9px;  animation: petalFall2 7s ease-in-out 1.2s infinite; }
-.sp3  { top: -15px; left: 20%;  width: 12px; height: 12px; animation: petalFall 5.5s ease-in-out 2s infinite; }
-.sp4  { top: -8px;  left: 70%;  width: 8px;  height: 8px;  animation: petalFall2 6.5s ease-in-out 0.8s infinite; }
-.sp5  { top: -12px; left: 42%;  width: 10px; height: 10px; animation: petalFall 7.5s ease-in-out 3s infinite; }
-.sp6  { top: -6px;  left: 80%;  width: 9px;  height: 9px;  animation: petalFall2 5.8s ease-in-out 1.8s infinite; }
-.sp7  { top: -10px; left: 15%;  width: 11px; height: 11px; animation: petalFall 6.2s ease-in-out 4s infinite; }
-.sp8  { top: -14px; left: 60%;  width: 8px;  height: 8px;  animation: petalFall2 6.8s ease-in-out 2.5s infinite; }
-.sp9  { top: -8px;  left: 35%;  width: 10px; height: 10px; animation: petalFall 5.2s ease-in-out 3.5s infinite; }
-.sp10 { top: -11px; left: 75%;  width: 12px; height: 12px; animation: petalFall2 7.2s ease-in-out 0.3s infinite; }
+/* Petals originate from branch area (top-right) */
+.sp1  { top: 40px; right: 50px;  width: 11px; height: 11px; animation: petalA 6.5s ease-in-out 0.5s infinite; }
+.sp2  { top: 30px; right: 70px;  width: 8px;  height: 12px; animation: petalB 7.2s ease-in-out 1.5s infinite; }
+.sp3  { top: 45px; right: 30px;  width: 12px; height: 12px; animation: petalC 5.8s ease-in-out 2.2s infinite; }
+.sp4  { top: 35px; right: 90px;  width: 8px;  height: 10px; animation: petalD 6.8s ease-in-out 0.8s infinite; }
+.sp5  { top: 50px; right: 55px;  width: 10px; height: 10px; animation: petalA 7.5s ease-in-out 3.2s infinite; }
+.sp6  { top: 25px; right: 40px;  width: 9px;  height: 13px; animation: petalB 6.2s ease-in-out 2.0s infinite; }
+.sp7  { top: 42px; right: 80px;  width: 11px; height: 11px; animation: petalC 6.0s ease-in-out 4.0s infinite; }
+.sp8  { top: 38px; right: 60px;  width: 7px;  height: 10px; animation: petalD 7.0s ease-in-out 1.0s infinite; }
+.sp9  { top: 48px; right: 45px;  width: 10px; height: 10px; animation: petalA 5.5s ease-in-out 3.8s infinite; }
+.sp10 { top: 28px; right: 35px;  width: 9px;  height: 12px; animation: petalB 6.6s ease-in-out 0.3s infinite; }
+.sp11 { top: 55px; right: 75px;  width: 11px; height: 11px; animation: petalC 7.8s ease-in-out 2.8s infinite; }
+.sp12 { top: 33px; right: 50px;  width: 8px;  height: 11px; animation: petalD 5.2s ease-in-out 4.5s infinite; }
 
 /* Physics equations that bloom from petal landings */
 .torii-eq {
@@ -3906,55 +4081,57 @@ ul { list-style: none; }
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 500;
-  color: rgba(26, 26, 26, 0.5);
+  color: rgba(26, 26, 26, 0.45);
   opacity: 0;
   pointer-events: none;
   white-space: nowrap;
+  z-index: 1;
 }
 
 @keyframes eqBloom {
   0% {
     opacity: 0;
-    transform: translateY(0) scale(0.5);
-    filter: blur(2px);
+    transform: translateY(0) scale(0.4);
+    filter: blur(3px);
   }
-  20% {
-    opacity: 0.7;
-    transform: translateY(-8px) scale(1);
+  15% {
+    opacity: 0.65;
+    transform: translateY(-6px) scale(1);
     filter: blur(0);
   }
-  80% {
-    opacity: 0.5;
-    transform: translateY(-14px) scale(1);
+  70% {
+    opacity: 0.4;
+    transform: translateY(-16px) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(-22px) scale(0.9);
+    transform: translateY(-28px) scale(0.85);
+    filter: blur(1px);
   }
 }
 
-.eq1 { bottom: 42px; left: 8%;   animation: eqBloom 3s ease-out 3.2s infinite; }
-.eq2 { bottom: 42px; left: 72%;  animation: eqBloom 3s ease-out 4.8s infinite; }
-.eq3 { bottom: 42px; left: 28%;  animation: eqBloom 3s ease-out 6.5s infinite; }
-.eq4 { bottom: 42px; left: 55%;  animation: eqBloom 3s ease-out 2.0s infinite; }
-.eq5 { bottom: 42px; left: 40%;  animation: eqBloom 3s ease-out 8.2s infinite; }
-.eq6 { bottom: 42px; left: 15%;  animation: eqBloom 3s ease-out 5.5s infinite; }
+.eq1 { bottom: 36px; left: 5%;   animation: eqBloom 3.5s ease-out 3.2s infinite; }
+.eq2 { bottom: 36px; left: 68%;  animation: eqBloom 3.5s ease-out 5.0s infinite; }
+.eq3 { bottom: 36px; left: 25%;  animation: eqBloom 3.5s ease-out 7.0s infinite; }
+.eq4 { bottom: 36px; left: 50%;  animation: eqBloom 3.5s ease-out 2.0s infinite; }
+.eq5 { bottom: 36px; left: 38%;  animation: eqBloom 3.5s ease-out 8.5s infinite; }
+.eq6 { bottom: 36px; left: 12%;  animation: eqBloom 3.5s ease-out 5.8s infinite; }
 
 /* Responsive */
 @media (max-width: 768px) {
   [data-theme="light"] .torii-visual {
-    width: 300px;
-    height: 340px;
+    width: 320px;
+    height: 360px;
   }
-  .torii-gate {
-    width: 160px;
-    height: 210px;
-  }
+  .torii-gate { width: 160px; height: 210px; }
   .torii-kasagi { width: 200px; left: -20px; }
   .torii-kasagi::before { left: -6px; right: -6px; }
   .torii-shimaki { width: 180px; left: -10px; }
   .torii-nuki { width: 140px; left: 10px; }
-  .torii-pillar { width: 14px; height: 195px; }
+  .torii-pillar { width: 16px; height: 195px; }
+  .sakura-branch { width: 140px; height: 90px; right: -5px; top: 15px; }
+  .branch-limb { width: 120px; }
+  .torii-glow { width: 200px; height: 200px; }
 }
 
 /* ============================================
