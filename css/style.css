@@ -1306,7 +1306,7 @@ ul { list-style: none; }
 
 /* --- Simulation Cards --- */
 .sim-card {
-  background: var(--bg-card);
+  background: transparent;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -3342,6 +3342,12 @@ ul { list-style: none; }
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 28px;
+}
+.sim-card .sim-info {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
 }
 
 .sim-info h2 {
