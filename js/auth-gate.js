@@ -13,6 +13,9 @@
   'use strict';
 
   document.addEventListener('DOMContentLoaded', function() {
+    // Bypass auth gate when offline — no way to authenticate anyway
+    if (!navigator.onLine) return;
+
     var gated = document.querySelector('[data-auth-required]');
     var redirect = document.body.getAttribute('data-auth-redirect');
 
