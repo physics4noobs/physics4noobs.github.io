@@ -13,8 +13,12 @@
   'use strict';
 
   document.addEventListener('DOMContentLoaded', function() {
-    // Bypass auth gate when offline — no way to authenticate anyway
-    if (!navigator.onLine) return;
+    // Bypass auth gate offline only if user has previously logged in on this device
+    if (!navigator.onLine) {
+      try {
+        if (localStorage.getItem('ae-auth-verified')) return;
+      } catch(e) {}
+    }
 
     var gated = document.querySelector('[data-auth-required]');
     var redirect = document.body.getAttribute('data-auth-redirect');
@@ -58,9 +62,11 @@
         if (user) {
           prompt.style.display = 'none';
           gated.style.display = '';
+          try { localStorage.setItem('ae-auth-verified', '1'); } catch(e) {}
         } else {
           prompt.style.display = '';
           gated.style.display = 'none';
+          try { localStorage.removeItem('ae-auth-verified'); } catch(e) {}
         }
       });
       return;
