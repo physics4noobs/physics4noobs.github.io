@@ -1457,13 +1457,13 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
       id: 'kaleidoscope', title: 'Kaleidoscope',
       description: 'Set mirror angle to 60\u00B0 to create 5 images',
       icon: '\uD83D\uDD2E',
-      check: { type: 'slider', id: 'angleSlider', op: 'eq', value: 60 }
+      check: { type: 'global', name: '_achKaleidoscope', op: 'eq', value: true }
     },
     {
       id: 'infinite_reflections', title: 'Infinite Reflections',
       description: 'Set mirror angle to minimum (10\u00B0) for maximum images',
       icon: '\u267E\uFE0F',
-      check: { type: 'slider', id: 'angleSlider', op: 'eq', value: 10 }
+      check: { type: 'global', name: '_achInfiniteReflections', op: 'eq', value: true }
     },
     {
       id: 'symmetric_explorer', title: 'Symmetry Matters',

@@ -148,7 +148,7 @@
     .canvas-wrap {
       flex: 1;
       overflow: hidden;
-      background: var(--bg-secondary);
+      background: var(--bg-card);
     }
 
     .canvas-wrap canvas {
@@ -211,6 +211,79 @@
       border-color: rgba(255, 90, 146, 0.3);
       color: #ff5a92;
     }
+    [data-theme="light"] .mode-btn.symmetric {
+      background: rgba(22, 160, 133, 0.1);
+      border-color: rgba(22, 160, 133, 0.35);
+      color: #0e6655;
+    }
+    [data-theme="light"] .mode-btn.asymmetric {
+      background: rgba(169, 50, 38, 0.08);
+      border-color: rgba(169, 50, 38, 0.3);
+      color: #922b21;
+    }
+    /* Side Data Panel */
+    .side-data {
+      width: 260px;
+      min-width: 220px;
+      background: var(--bg-card);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-data h3 {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .data-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+    }
+
+    .data-label {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .data-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .data-value.highlight {
+      font-size: 1.1rem;
+      color: #00d4ff;
+    }
+
+    [data-theme="light"] .data-value.highlight {
+      color: #0078c8;
+    }
+
+    .data-value.sym { color: #00ffaa; }
+    .data-value.asym { color: #ff5a92; }
+    [data-theme="light"] .data-value.sym { color: #16a085; }
+    [data-theme="light"] .data-value.asym { color: #c0392b; }
 
     /* Equations */
     .equations-section {
@@ -353,6 +426,17 @@
       min-height: 0;
     }
 
+    #simArea:fullscreen .canvas-wrap canvas,
+    #simArea:-webkit-full-screen .canvas-wrap canvas {
+      height: 100% !important;
+    }
+
+    #simArea:fullscreen .side-data,
+    #simArea:-webkit-full-screen .side-data {
+      width: 200px;
+      min-width: 180px;
+    }
+
     #simArea:fullscreen .controls-bar,
     #simArea:-webkit-full-screen .controls-bar {
       border-radius: 0;
@@ -360,6 +444,7 @@
 
     @media (max-width: 900px) {
       .sim-main-row { flex-direction: column; }
+      .side-data { width: 100%; min-width: unset; }
     }
     @media (max-width: 768px) {
       .sim-wrapper { padding: 70px 12px 24px; }
@@ -460,12 +545,45 @@
       <div class="canvas-wrap">
         <canvas id="simCanvas"></canvas>
       </div>
+      <div class="side-data">
+        <h3>Data Table</h3>
+        <div class="data-grid">
+          <div class="data-row">
+            <span class="data-label">Mirror Angle (&theta;)</span>
+            <span class="data-value" id="dtAngle">90&deg;</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">n = 360/&theta;</span>
+            <span class="data-value" id="dtN">4</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">n type</span>
+            <span class="data-value" id="dtType">Even</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Placement</span>
+            <span class="data-value" id="dtPlacement">Symmetric</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Formula</span>
+            <span class="data-value" id="dtFormula">n &minus; 1</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Images</span>
+            <span class="data-value highlight" id="dtCount">3</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Object at &alpha;</span>
+            <span class="data-value" id="dtAlpha">45.0&deg;</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="controls-bar">
       <div class="control-group">
         <label>Angle:</label>
-        <input type="range" id="angleSlider" min="10" max="180" value="90" step="1">
+        <input type="range" id="angleSlider" min="0" max="14" value="10" step="1">
         <span class="angle-display" id="angleLabel">90&deg;</span>
       </div>
       <button class="sim-btn mode-btn symmetric" id="modeBtn">Symmetric</button>
@@ -559,25 +677,33 @@
     function updateThemeColors() {
       var isLight = document.documentElement.getAttribute('data-theme') === 'light';
       tc = {
-        bg: isLight ? '#e8eaf0' : '#080818',
-        bgCenter: isLight ? '#f0f2f8' : '#0a0a24',
-        mirror: isLight ? 'rgba(60, 60, 80, 0.85)' : 'rgba(200, 200, 220, 0.8)',
-        mirrorGlow: isLight ? 'rgba(60, 60, 120, 0.15)' : 'rgba(200, 200, 255, 0.12)',
-        object: isLight ? '#d63031' : '#ff5a92',
-        objectGlow: isLight ? 'rgba(214, 48, 49, 0.25)' : 'rgba(255, 90, 146, 0.3)',
-        image: isLight ? '#0078c8' : '#00d4ff',
-        imageGlow: isLight ? 'rgba(0, 120, 200, 0.2)' : 'rgba(0, 212, 255, 0.2)',
-        arc: isLight ? 'rgba(100, 50, 200, 0.35)' : 'rgba(124, 58, 237, 0.5)',
-        bisector: isLight ? 'rgba(0, 180, 120, 0.3)' : 'rgba(0, 255, 170, 0.3)',
-        grid: isLight ? 'rgba(0,120,200,0.05)' : 'rgba(0,212,255,0.04)',
-        text: isLight ? '#333' : '#e0e0e8',
-        textMuted: isLight ? '#888' : '#6b6b85',
-        vertex: isLight ? 'rgba(100, 50, 200, 0.6)' : 'rgba(124, 58, 237, 0.8)',
-        hintBg: isLight ? 'rgba(240,242,248,0.9)' : 'rgba(10,10,30,0.88)'
+        bg: isLight ? '#f5f5f3' : '#0d0d26',
+        bgCenter: isLight ? '#f9f9f7' : '#0f0f28',
+        mirror: isLight ? 'rgba(30, 30, 55, 0.9)' : 'rgba(210, 215, 230, 0.85)',
+        mirrorBright: isLight ? 'rgba(60, 60, 120, 0.5)' : 'rgba(240, 240, 255, 0.45)',
+        mirrorGlow: isLight ? 'rgba(40, 40, 100, 0.2)' : 'rgba(200, 200, 255, 0.12)',
+        object: isLight ? '#c0392b' : '#ff6b9d',
+        objectGlow: isLight ? 'rgba(192, 57, 43, 0.35)' : 'rgba(255, 107, 157, 0.35)',
+        flame: isLight ? '#d35400' : '#ffb347',
+        flameInner: isLight ? '#e67e22' : '#ffe066',
+        image: isLight ? '#0059a3' : '#5ce0ff',
+        imageGlow: isLight ? 'rgba(0, 89, 163, 0.25)' : 'rgba(92, 224, 255, 0.2)',
+        imageFlame: isLight ? '#2e86c1' : '#8ae0ff',
+        arc: isLight ? 'rgba(80, 30, 180, 0.7)' : 'rgba(180, 140, 255, 0.75)',
+        bisector: isLight ? 'rgba(0, 130, 80, 0.5)' : 'rgba(0, 255, 170, 0.35)',
+        bisectorBright: isLight ? 'rgba(0, 160, 100, 0.8)' : 'rgba(0, 255, 170, 0.8)',
+        grid: isLight ? 'rgba(0,60,120,0.08)' : 'rgba(100,140,200,0.06)',
+        text: isLight ? '#1a1a2e' : '#e8e8f0',
+        textMuted: isLight ? '#555' : '#9090a8',
+        vertex: isLight ? 'rgba(80, 30, 180, 0.8)' : 'rgba(180, 140, 255, 0.85)',
+        hintBg: isLight ? 'rgba(240,242,248,0.95)' : 'rgba(16,16,38,0.92)',
+        symColor: isLight ? '#0e6655' : '#3dffc0',
+        asymColor: isLight ? '#a93226' : '#ff6b9d',
+        circle: isLight ? '#000000' : '#ffffff'
       };
     }
     updateThemeColors();
-    new MutationObserver(function() { updateThemeColors(); draw(); })
+    new MutationObserver(function() { updateThemeColors(); })
       .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     // === CANVAS SETUP ===
@@ -589,7 +715,14 @@
     function resizeCanvas() {
       var wrap = canvas.parentElement;
       var w = wrap.clientWidth;
-      var h = Math.max(400, Math.min(w * 0.65, 620));
+      var h;
+      // In fullscreen, fill available height; otherwise cap at 620
+      var isFS = document.fullscreenElement || document.webkitFullscreenElement;
+      if (isFS) {
+        h = wrap.clientHeight || Math.max(400, w * 0.65);
+      } else {
+        h = Math.max(400, Math.min(w * 0.65, 620));
+      }
       canvasW = w;
       canvasH = h;
       canvas.width = w * dpr;
@@ -597,68 +730,35 @@
       canvas.style.width = w + 'px';
       canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      draw();
     }
 
     // === STATE ===
-    var mirrorAngleDeg = 90;    // angle between mirrors in degrees
-    var objAlphaDeg = 30;       // object angle measured from Mirror 1 (degrees), must be 0 < alpha < theta
-    var objDist = 0.55;         // fraction of mirror length (0.15 .. 0.85)
+    var mirrorAngleDeg = 90;
+    var targetAngleDeg = 90;      // [2] animated transitions target
+    var objAlphaDeg = 45;
+    var objDist = 0.75;
     var isSymmetric = true;
     var dragging = false;
-    var mirrorLen;               // computed in draw
+    var mirrorLen;
+    var glowPhase = 0;            // [4] shimmer animation
+    var nearBisector = false;      // [9] snap guide state
+    var zoomScale = 1;             // [8] pinch zoom
+    var panX = 0, panY = 0;
+    var pinching = false;
+    var pinchStartDist = 0;
+    var pinchStartScale = 1;
+    var lastTapTime = 0;
 
     // Achievement tracking
     var _achSymmetryExplored = false;
+    var _achKaleidoscope = false;
+    var _achInfiniteReflections = false;
     var _achSeenSymmetric = false;
     var _achSeenAsymmetric = false;
 
     // ================================================================
     //  PHYSICS — Two Plane Mirrors at Angle theta
     // ================================================================
-    //
-    //  Setup (all angles measured CCW from positive x-axis on canvas):
-    //    Mirror M1 lies along angle 0 (positive x from vertex)
-    //    Mirror M2 lies along angle +theta (CCW from M1)
-    //    Object is between them at angle alpha (0 < alpha < theta)
-    //    All images lie on a circle of the same radius r from vertex.
-    //
-    //  Reflection rules:
-    //    Reflect across M1 (angle=0):     phi  -->  -phi
-    //    Reflect across M2 (angle=theta): phi  -->  2*theta - phi
-    //
-    //  Image generation — two alternating chains:
-    //
-    //  Chain A (first reflect in M1, then M2, then M1, ...):
-    //    A1 = -alpha
-    //    A2 = 2*theta - A1 = 2*theta + alpha
-    //    A3 = -A2         = -(2*theta + alpha)
-    //    A4 = 2*theta-A3  = 4*theta + alpha
-    //    ...
-    //    General: A_{2k-1} = -(2*(k-1)*theta + alpha)   k=1,2,3,...
-    //             A_{2k}   = 2*k*theta + alpha           k=1,2,3,...
-    //
-    //  Chain B (first reflect in M2, then M1, then M2, ...):
-    //    B1 = 2*theta - alpha
-    //    B2 = -B1          = alpha - 2*theta
-    //    B3 = 2*theta-B2   = 4*theta - alpha
-    //    B4 = -B3          = alpha - 4*theta
-    //    ...
-    //    General: B_{2k-1} = 2*k*theta - alpha           k=1,2,3,...
-    //             B_{2k}   = alpha - 2*k*theta            k=1,2,3,...
-    //
-    //  Visibility: An image at angle phi is visible if, when normalized
-    //  to [0, 2*pi), it does NOT fall strictly inside the wedge (0, theta).
-    //  Images exactly ON a mirror (phi mod 2pi == 0 or == theta) are
-    //  formed on the mirror surface and are typically not counted.
-    //
-    //  Image count formula (when n = 360/theta is integer):
-    //    n even:              images = n - 1
-    //    n odd, symmetric:    images = n - 1  (last pair coincides)
-    //    n odd, asymmetric:   images = n
-    //  When 360/theta is NOT integer: images ~ floor(360/theta)
-    // ================================================================
-
     function mod2pi(a) {
       var TWO_PI = 2 * Math.PI;
       var r = a % TWO_PI;
@@ -667,9 +767,7 @@
     }
 
     function isInsideWedge(phi, theta) {
-      // Returns true if phi (already mod 2pi) is strictly inside (0, theta)
-      // with a small epsilon tolerance
-      var eps = 0.003; // ~0.17 degrees
+      var eps = 0.003;
       return phi > eps && phi < theta - eps;
     }
 
@@ -681,172 +779,197 @@
     function getImageAngles() {
       var theta = mirrorAngleDeg * Math.PI / 180;
       var alpha = objAlphaDeg * Math.PI / 180;
-
-      if (theta < 0.01) return []; // nearly zero angle, skip
-
+      if (theta < 0.01) return [];
       var allImages = [];
-      var maxK = Math.ceil(360 / mirrorAngleDeg) + 2; // generous upper bound
+      var maxK = Math.ceil(360 / mirrorAngleDeg) + 2;
 
-      // Chain A
       for (var k = 1; k <= maxK; k++) {
-        // A_{2k-1} = -(2*(k-1)*theta + alpha)
         var a_odd = -(2 * (k - 1) * theta + alpha);
         var a_odd_norm = mod2pi(a_odd);
-        if (!isInsideWedge(a_odd_norm, theta) && !isOnMirror(a_odd_norm, theta)) {
+        if (!isInsideWedge(a_odd_norm, theta) && !isOnMirror(a_odd_norm, theta))
           allImages.push({ angle: a_odd_norm, order: 2 * k - 1, chain: 'A' });
-        }
-
-        // A_{2k} = 2*k*theta + alpha
         var a_even = 2 * k * theta + alpha;
         var a_even_norm = mod2pi(a_even);
-        if (!isInsideWedge(a_even_norm, theta) && !isOnMirror(a_even_norm, theta)) {
+        if (!isInsideWedge(a_even_norm, theta) && !isOnMirror(a_even_norm, theta))
           allImages.push({ angle: a_even_norm, order: 2 * k, chain: 'A' });
-        }
       }
-
-      // Chain B
       for (var k = 1; k <= maxK; k++) {
-        // B_{2k-1} = 2*k*theta - alpha
         var b_odd = 2 * k * theta - alpha;
         var b_odd_norm = mod2pi(b_odd);
-        if (!isInsideWedge(b_odd_norm, theta) && !isOnMirror(b_odd_norm, theta)) {
+        if (!isInsideWedge(b_odd_norm, theta) && !isOnMirror(b_odd_norm, theta))
           allImages.push({ angle: b_odd_norm, order: 2 * k - 1, chain: 'B' });
-        }
-
-        // B_{2k} = alpha - 2*k*theta
         var b_even = alpha - 2 * k * theta;
         var b_even_norm = mod2pi(b_even);
-        if (!isInsideWedge(b_even_norm, theta) && !isOnMirror(b_even_norm, theta)) {
+        if (!isInsideWedge(b_even_norm, theta) && !isOnMirror(b_even_norm, theta))
           allImages.push({ angle: b_even_norm, order: 2 * k, chain: 'B' });
-        }
       }
 
-      // Remove duplicates — two images at nearly the same normalized angle
       var unique = [];
       for (var i = 0; i < allImages.length; i++) {
         var isDup = false;
         for (var j = 0; j < unique.length; j++) {
           var diff = Math.abs(allImages[i].angle - unique[j].angle);
-          // Also check wrap-around near 0/2pi
           if (diff < 0.01 || Math.abs(diff - 2 * Math.PI) < 0.01) {
-            // Keep the one with lower order (brighter)
-            if (allImages[i].order < unique[j].order) {
-              unique[j] = allImages[i];
-            }
-            isDup = true;
-            break;
+            if (allImages[i].order < unique[j].order) unique[j] = allImages[i];
+            isDup = true; break;
           }
         }
         if (!isDup) unique.push(allImages[i]);
       }
-
-      // Sort by order for rendering (lower order = brighter)
       unique.sort(function(a, b) { return a.order - b.order; });
-
       return unique;
     }
 
     function getImageCount() {
-      // Theoretical count using the formula
       var theta = mirrorAngleDeg;
       if (theta <= 0) return { n: Infinity, count: Infinity, isInt: false };
       var n = 360 / theta;
       var isInt = Math.abs(n - Math.round(n)) < 0.01;
       var nInt = Math.round(n);
       var count;
+      if (!isInt) { count = Math.floor(n); }
+      else if (nInt % 2 === 0) { count = nInt - 1; }
+      else { count = isSymmetric ? nInt - 1 : nInt; }
+      return { n: n, nInt: isInt ? nInt : n, count: count, isInt: isInt, isEven: isInt && nInt % 2 === 0 };
+    }
 
-      if (!isInt) {
-        // Non-integer n: number of images = integer part of 360/theta
-        count = Math.floor(n);
-      } else if (nInt % 2 === 0) {
-        count = nInt - 1;
+    // [5] Build reflection chain label for an image
+    function getChainLabel(img) {
+      var parts = [];
+      var first = img.chain === 'A' ? '\u2081' : '\u2082'; // subscript 1 or 2
+      var second = img.chain === 'A' ? '\u2082' : '\u2081';
+      for (var i = 0; i < img.order; i++) {
+        parts.push('M' + (i % 2 === 0 ? first : second));
+      }
+      return parts.join('');
+    }
+
+    // === DATA TABLE UPDATE ===
+    var dtAngle = document.getElementById('dtAngle');
+    var dtN = document.getElementById('dtN');
+    var dtType = document.getElementById('dtType');
+    var dtPlacement = document.getElementById('dtPlacement');
+    var dtFormula = document.getElementById('dtFormula');
+    var dtCount = document.getElementById('dtCount');
+    var dtAlpha = document.getElementById('dtAlpha');
+
+    function updateDataTable(info, imageCount) {
+      dtAngle.textContent = Math.round(mirrorAngleDeg) + '\u00B0';
+
+      var nVal = 360 / mirrorAngleDeg;
+      dtN.textContent = info.isInt ? String(Math.round(nVal)) : nVal.toFixed(2);
+
+      if (!info.isInt) {
+        dtType.textContent = 'Non-integer';
+      } else if (info.isEven) {
+        dtType.textContent = 'Even';
       } else {
-        count = isSymmetric ? nInt - 1 : nInt;
+        dtType.textContent = 'Odd';
       }
 
-      return { n: n, nInt: isInt ? nInt : n, count: count, isInt: isInt, isEven: isInt && nInt % 2 === 0 };
+      dtPlacement.textContent = isSymmetric ? 'Symmetric' : 'Asymmetric';
+      dtPlacement.className = 'data-value ' + (isSymmetric ? 'sym' : 'asym');
+
+      if (!info.isInt) {
+        dtFormula.textContent = '\u230An\u230B';
+      } else if (info.isEven) {
+        dtFormula.textContent = 'n \u2212 1';
+      } else if (isSymmetric) {
+        dtFormula.textContent = 'n \u2212 1';
+      } else {
+        dtFormula.textContent = 'n';
+      }
+
+      dtCount.textContent = imageCount > 50 ? '50+' : String(imageCount);
+      dtAlpha.textContent = objAlphaDeg.toFixed(1) + '\u00B0';
     }
 
     // === DRAWING ===
     function draw() {
       if (!canvasW) return;
+      ctx.save();
       ctx.clearRect(0, 0, canvasW, canvasH);
 
-      // Background
+      // Background (always drawn without zoom transform)
       var grad = ctx.createRadialGradient(canvasW * 0.5, canvasH * 0.5, 0, canvasW * 0.5, canvasH * 0.5, canvasW * 0.6);
       grad.addColorStop(0, tc.bgCenter);
       grad.addColorStop(1, tc.bg);
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvasW, canvasH);
 
-      // Grid
+      // Grid (without zoom)
       ctx.strokeStyle = tc.grid;
       ctx.lineWidth = 0.5;
       var gridSize = 40;
-      for (var x = gridSize; x < canvasW; x += gridSize) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvasH); ctx.stroke();
+      for (var gx = gridSize; gx < canvasW; gx += gridSize) {
+        ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, canvasH); ctx.stroke();
       }
-      for (var y = gridSize; y < canvasH; y += gridSize) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvasW, y); ctx.stroke();
+      for (var gy = gridSize; gy < canvasH; gy += gridSize) {
+        ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(canvasW, gy); ctx.stroke();
       }
 
-      // === Vertex at center of canvas ===
+      // [8] Apply zoom transform for all simulation content
+      var cx = canvasW * 0.5, cy = canvasH * 0.5;
+      ctx.translate(cx + panX, cy + panY);
+      ctx.scale(zoomScale, zoomScale);
+      ctx.translate(-cx, -cy);
+
       var vx = canvasW * 0.5;
       var vy = canvasH * 0.5;
       var thetaRad = mirrorAngleDeg * Math.PI / 180;
+      mirrorLen = Math.min(canvasW * 0.45, canvasH * 0.45);
 
-      // Mirror length — fit within canvas
-      mirrorLen = Math.min(canvasW * 0.42, canvasH * 0.42);
-
-      // The mirrors open upward from the vertex:
-      //   M1 goes in direction angle 0 (right)
-      //   M2 goes in direction angle +theta (CCW = upward-right for theta<180)
-      // On canvas, +y is down, so angle +theta in math = -theta on canvas
-      // We'll draw using canvas angles: M1 at 0, M2 at -thetaRad (upward)
-
-      // Draw faint circle showing image radius
+      // [1] Full circle outline — shows all images lie on this circle
       var objR = objDist * mirrorLen;
       ctx.save();
-      ctx.strokeStyle = tc.grid;
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 8]);
+      ctx.strokeStyle = tc.circle;
+      ctx.globalAlpha = 0.25;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 8]);
       ctx.beginPath();
       ctx.arc(vx, vy, objR, 0, Math.PI * 2);
       ctx.stroke();
       ctx.setLineDash([]);
+      // Label the circle
+      ctx.globalAlpha = 0.4;
+      ctx.fillStyle = tc.circle;
+      ctx.font = '500 0.72rem "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      // Place label at bottom of circle, avoiding mirror wedge
+      var circLabelAngle = Math.PI * 0.5 + thetaRad * 0.5; // below, offset from wedge
+      ctx.fillText('image circle', vx + Math.cos(circLabelAngle) * (objR + 16), vy + Math.sin(circLabelAngle) * (objR + 16));
       ctx.restore();
 
-      // Draw angle arc between mirrors
+      // Angle arc
       ctx.strokeStyle = tc.arc;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
-      // Arc from M1 (angle 0 on canvas) to M2 (angle -thetaRad on canvas)
-      // Canvas arc goes CW for negative angles
       ctx.arc(vx, vy, 45, -thetaRad, 0);
       ctx.stroke();
 
       // Angle label
       ctx.fillStyle = tc.arc;
-      ctx.font = '600 ' + (canvasW < 500 ? '0.7rem' : '0.85rem') + ' "JetBrains Mono", monospace';
+      ctx.font = '600 ' + (canvasW < 500 ? '0.8rem' : '0.95rem') + ' "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      var labelAngle = -thetaRad / 2; // midpoint of the arc
+      var labelAngle = -thetaRad / 2;
       ctx.fillText(mirrorAngleDeg + '\u00B0', vx + Math.cos(labelAngle) * 62, vy + Math.sin(labelAngle) * 62);
 
-      // Draw mirrors
-      // M1: from vertex going right (angle 0)
-      drawMirror(vx, vy, 0, mirrorLen, -1);  // hashes below (positive y direction)
-      // M2: from vertex going at angle -thetaRad on canvas (upward)
-      drawMirror(vx, vy, -thetaRad, mirrorLen, 1); // hashes on the other side
+      // [4] Draw mirrors with shimmer
+      drawMirror(vx, vy, 0, mirrorLen, -1);
+      drawMirror(vx, vy, -thetaRad, mirrorLen, 1);
 
-      // Draw bisector (dashed) when n is odd and integer
+      // Bisector line when n is odd
       var info = getImageCount();
+      var bisCanvasAngle = -thetaRad / 2;
       if (info.isInt && !info.isEven) {
         ctx.save();
-        ctx.strokeStyle = tc.bisector;
-        ctx.lineWidth = 1;
-        ctx.setLineDash([6, 6]);
-        var bisCanvasAngle = -thetaRad / 2;
+        // [9] Snap-to-bisector guide — brighter when near bisector
+        var bisAlpha = nearBisector ? (0.5 + 0.3 * Math.sin(glowPhase * 3)) : 1;
+        ctx.strokeStyle = nearBisector ? tc.bisectorBright : tc.bisector;
+        ctx.lineWidth = nearBisector ? 2 : 1;
+        ctx.setLineDash(nearBisector ? [3, 3] : [6, 6]);
         ctx.beginPath();
         ctx.moveTo(vx, vy);
         ctx.lineTo(vx + Math.cos(bisCanvasAngle) * mirrorLen * 0.85, vy + Math.sin(bisCanvasAngle) * mirrorLen * 0.85);
@@ -854,48 +977,53 @@
         ctx.setLineDash([]);
         ctx.restore();
 
-        // Label
-        ctx.fillStyle = tc.bisector;
-        ctx.font = '500 0.68rem "Andika", sans-serif';
+        ctx.fillStyle = nearBisector ? tc.bisectorBright : tc.bisector;
+        ctx.font = '500 0.78rem "Andika", sans-serif';
         ctx.textAlign = 'center';
-        var blx = vx + Math.cos(bisCanvasAngle) * (mirrorLen * 0.9);
-        var bly = vy + Math.sin(bisCanvasAngle) * (mirrorLen * 0.9);
+        var blx = vx + Math.cos(bisCanvasAngle) * (mirrorLen * 0.92);
+        var bly = vy + Math.sin(bisCanvasAngle) * (mirrorLen * 0.92);
         ctx.fillText('bisector', blx, bly);
       }
 
-      // Draw vertex
+      // Vertex
       ctx.beginPath();
-      ctx.arc(vx, vy, 5, 0, Math.PI * 2);
+      ctx.arc(vx, vy, 6, 0, Math.PI * 2);
       ctx.fillStyle = tc.vertex;
       ctx.fill();
 
-      // Object position on canvas
-      // Object is at angle alpha from M1, between the mirrors
-      // On canvas: the "between mirrors" wedge goes from angle 0 to -thetaRad
-      // So object at alpha maps to canvas angle -alphaRad
+      // Object position
       var alphaRad = objAlphaDeg * Math.PI / 180;
       var objCanvasAngle = -alphaRad;
       var ox = vx + Math.cos(objCanvasAngle) * objR;
       var oy = vy + Math.sin(objCanvasAngle) * objR;
 
-      // Draw images
+      // Compute images
       var images = getImageAngles();
+
+      // Draw images
       for (var i = 0; i < images.length; i++) {
         var img = images[i];
-        // img.angle is in math coordinates [0, 2pi)
-        // Convert to canvas: canvas_angle = -img.angle (negate because canvas y is flipped)
         var canvasAngle = -img.angle;
         var ix = vx + Math.cos(canvasAngle) * objR;
         var iy = vy + Math.sin(canvasAngle) * objR;
         var fade = Math.max(0.2, 1 - (img.order - 1) * 0.12);
-        drawArrowObject(ix, iy, tc.image, fade, false);
+        drawCandle(ix, iy, tc.image, tc.imageFlame, fade, true); // [3] laterally inverted
 
-        // Label images I1, I2, ...
-        if (images.length <= 20) {
+        // [5] Image labels with reflection chain
+        if (images.length <= 12) {
+          ctx.save();
+          ctx.globalAlpha = fade * 0.8;
+          ctx.fillStyle = tc.image;
+          ctx.font = '600 0.68rem "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(getChainLabel(img), ix, iy + 24);
+          ctx.globalAlpha = 1;
+          ctx.restore();
+        } else if (images.length <= 20) {
           ctx.save();
           ctx.globalAlpha = fade * 0.7;
           ctx.fillStyle = tc.image;
-          ctx.font = '600 0.6rem "JetBrains Mono", monospace';
+          ctx.font = '600 0.68rem "JetBrains Mono", monospace';
           ctx.textAlign = 'center';
           ctx.fillText('I' + (i + 1), ix, iy + 22);
           ctx.globalAlpha = 1;
@@ -903,71 +1031,87 @@
         }
       }
 
-      // Draw object (on top)
-      drawArrowObject(ox, oy, tc.object, 1, true);
+      // Draw object (on top) — [3] candle shape
+      drawCandle(ox, oy, tc.object, tc.flame, 1, false);
 
-      // Draw label for object
+      // Object label
       ctx.fillStyle = tc.object;
-      ctx.font = '700 0.75rem "Andika", sans-serif';
+      ctx.font = '700 0.88rem "Andika", sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Object', ox, oy - 28);
+      ctx.fillText('Object', ox, oy - 42);
 
-      // Image count overlay (top-right)
-      var displayCount = images.length;
-      var countStr = displayCount > 50 ? '50+' : String(displayCount);
+      // [9] Snap tooltip
+      if (nearBisector && !isSymmetric && info.isInt && !info.isEven) {
+        var tipX = ox, tipY = oy - 46;
+        ctx.save();
+        ctx.globalAlpha = 0.7 + 0.3 * Math.sin(glowPhase * 3);
+        ctx.fillStyle = tc.hintBg;
+        var tw = 90, th = 18;
+        ctx.beginPath();
+        ctx.roundRect(tipX - tw / 2, tipY - th / 2, tw, th, 6);
+        ctx.fill();
+        ctx.fillStyle = tc.symColor;
+        ctx.font = '600 0.72rem "Andika", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Near bisector', tipX, tipY);
+        ctx.globalAlpha = 1;
+        ctx.restore();
+      }
 
-      ctx.fillStyle = tc.hintBg;
-      var boxW = 156, boxH = 56, boxX = canvasW - boxW - 14, boxY = 14;
-      ctx.beginPath();
-      ctx.roundRect(boxX, boxY, boxW, boxH, 8);
-      ctx.fill();
-      ctx.strokeStyle = tc.arc;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.roundRect(boxX, boxY, boxW, boxH, 8);
-      ctx.stroke();
+      // Restore from zoom transform before drawing HUD
+      ctx.restore();
 
-      ctx.fillStyle = tc.textMuted;
-      ctx.font = '500 0.72rem "Andika", sans-serif';
-      ctx.textAlign = 'right';
-      ctx.fillText('Images formed:', boxX + boxW - 10, boxY + 20);
-      ctx.fillStyle = tc.image;
-      ctx.font = '800 1.3rem "JetBrains Mono", monospace';
-      ctx.fillText(countStr, boxX + boxW - 10, boxY + 44);
-
-      // Formula overlay (top-left)
-      ctx.fillStyle = tc.hintBg;
-      var fboxW = 130, fboxH = 34, fboxX = 14, fboxY = 14;
-      ctx.beginPath();
-      ctx.roundRect(fboxX, fboxY, fboxW, fboxH, 8);
-      ctx.fill();
-      ctx.strokeStyle = tc.arc;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.roundRect(fboxX, fboxY, fboxW, fboxH, 8);
-      ctx.stroke();
-      ctx.fillStyle = tc.textMuted;
-      ctx.font = '500 0.72rem "JetBrains Mono", monospace';
-      ctx.textAlign = 'left';
-      var nDisp = info.isInt ? String(Math.round(info.n)) : info.n.toFixed(1);
-      ctx.fillText('n = 360/' + mirrorAngleDeg + ' = ' + nDisp, fboxX + 8, fboxY + 22);
-
+      // Update the HTML data table
+      updateDataTable(info, images.length);
     }
 
+    // [4] Mirror with gradient shimmer
     function drawMirror(vx, vy, canvasAngle, len, hashSide) {
       var ex = vx + Math.cos(canvasAngle) * len;
       var ey = vy + Math.sin(canvasAngle) * len;
+      var perpAngle = canvasAngle + Math.PI / 2;
+      var px = Math.cos(perpAngle);
+      var py = Math.sin(perpAngle);
 
       ctx.save();
-      // Glow
-      ctx.strokeStyle = tc.mirrorGlow;
-      ctx.lineWidth = 8;
+
+      // Dotted extension behind the vertex (opposite direction)
+      var extLen = len;
+      var bx = vx - Math.cos(canvasAngle) * extLen;
+      var by = vy - Math.sin(canvasAngle) * extLen;
+      ctx.save();
+      ctx.strokeStyle = tc.mirror;
+      ctx.lineWidth = 1.5;
+      ctx.globalAlpha = 0.3;
+      ctx.setLineDash([4, 6]);
       ctx.beginPath();
       ctx.moveTo(vx, vy);
-      ctx.lineTo(ex, ey);
+      ctx.lineTo(bx, by);
       ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
 
-      // Mirror line
+      // Shimmer gradient strip (perpendicular to mirror)
+      for (var d = 0; d < len; d += 2) {
+        var mx = vx + Math.cos(canvasAngle) * d;
+        var my = vy + Math.sin(canvasAngle) * d;
+        var shimmer = 0.3 + 0.7 * Math.pow(Math.sin(d / len * Math.PI), 0.5);
+        var pulse = 0.08 * Math.sin(glowPhase * 2 + d * 0.05);
+        var alpha = (shimmer + pulse) * 0.6;
+
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = tc.mirrorBright;
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(mx - px * 3, my - py * 3);
+        ctx.lineTo(mx + px * 3, my + py * 3);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // Core mirror line
       ctx.strokeStyle = tc.mirror;
       ctx.lineWidth = 3;
       ctx.beginPath();
@@ -975,30 +1119,31 @@
       ctx.lineTo(ex, ey);
       ctx.stroke();
 
-      // Hash marks on the non-reflecting side
+      // Hash marks
       var hashLen = 8;
       var hashGap = 14;
-      var perpAngle = canvasAngle + hashSide * Math.PI / 2;
+      var hashPerp = canvasAngle + hashSide * Math.PI / 2;
       ctx.strokeStyle = tc.mirror;
       ctx.lineWidth = 1;
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = 0.45;
       for (var d = hashGap; d < len - 5; d += hashGap) {
         var hx = vx + Math.cos(canvasAngle) * d;
         var hy = vy + Math.sin(canvasAngle) * d;
         ctx.beginPath();
         ctx.moveTo(hx, hy);
-        ctx.lineTo(hx + Math.cos(perpAngle) * hashLen, hy + Math.sin(perpAngle) * hashLen);
+        ctx.lineTo(hx + Math.cos(hashPerp) * hashLen, hy + Math.sin(hashPerp) * hashLen);
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
       ctx.restore();
     }
 
-    function drawArrowObject(x, y, color, alpha, isObject) {
+    // [3] Candle object — body + flame + base, with lateral inversion for images
+    function drawCandle(x, y, bodyColor, flameColor, alpha, isImage) {
       ctx.save();
       ctx.globalAlpha = alpha;
 
-      if (isObject) {
+      if (!isImage) {
         ctx.shadowColor = tc.objectGlow;
         ctx.shadowBlur = 14;
       } else {
@@ -1006,26 +1151,54 @@
         ctx.shadowBlur = 10;
       }
 
-      // Upward arrow (candle-like object marker)
-      var h = 18;
-      var w = 5;
+      // Lateral inversion for images
+      if (isImage) {
+        ctx.translate(x, y);
+        ctx.scale(-1, 1);
+        ctx.translate(-x, -y);
+      }
 
-      ctx.fillStyle = color;
+      var bw = 6, bh = 16; // body width/height
+
+      // Base platform
+      ctx.fillStyle = bodyColor;
+      ctx.fillRect(x - bw - 2, y, (bw + 2) * 2, 2);
+
+      // Candle body (rounded rect)
       ctx.beginPath();
-      ctx.moveTo(x, y - h);              // tip
-      ctx.lineTo(x - w, y - h + 7);      // left shoulder
-      ctx.lineTo(x - w * 0.5, y - h + 7);
-      ctx.lineTo(x - w * 0.5, y);        // bottom left
-      ctx.lineTo(x + w * 0.5, y);        // bottom right
-      ctx.lineTo(x + w * 0.5, y - h + 7);
-      ctx.lineTo(x + w, y - h + 7);      // right shoulder
-      ctx.closePath();
+      ctx.roundRect(x - bw / 2, y - bh, bw, bh, 1.5);
+      ctx.fillStyle = bodyColor;
       ctx.fill();
 
-      // Base line
-      ctx.fillRect(x - w, y, w * 2, 2);
+      // Wick
+      ctx.strokeStyle = bodyColor;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, y - bh);
+      ctx.lineTo(x, y - bh - 4);
+      ctx.stroke();
 
+      // Flame — teardrop
       ctx.shadowBlur = 0;
+      var flameH = 10, flameW = 4;
+      var fy = y - bh - 4;
+      // Outer flame
+      ctx.beginPath();
+      ctx.moveTo(x, fy - flameH);
+      ctx.bezierCurveTo(x - flameW, fy - flameH * 0.4, x - flameW * 0.8, fy, x, fy);
+      ctx.bezierCurveTo(x + flameW * 0.8, fy, x + flameW, fy - flameH * 0.4, x, fy - flameH);
+      ctx.fillStyle = flameColor;
+      ctx.fill();
+      // Inner flame (brighter)
+      ctx.beginPath();
+      var ifw = flameW * 0.5, ifh = flameH * 0.6;
+      ctx.moveTo(x, fy - ifh);
+      ctx.bezierCurveTo(x - ifw, fy - ifh * 0.3, x - ifw * 0.8, fy - 1, x, fy - 1);
+      ctx.bezierCurveTo(x + ifw * 0.8, fy - 1, x + ifw, fy - ifh * 0.3, x, fy - ifh);
+      ctx.fillStyle = tc.flameInner;
+      ctx.globalAlpha = alpha * 0.8;
+      ctx.fill();
+
       ctx.globalAlpha = 1;
       ctx.restore();
     }
@@ -1035,10 +1208,21 @@
       var rect = canvas.getBoundingClientRect();
       var clientX = e.touches ? e.touches[0].clientX : e.clientX;
       var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      // Account for zoom transform
+      var rawX = clientX - rect.left;
+      var rawY = clientY - rect.top;
+      var cx = canvasW * 0.5, cy = canvasH * 0.5;
       return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
+        x: (rawX - cx - panX) / zoomScale + cx,
+        y: (rawY - cy - panY) / zoomScale + cy
       };
+    }
+
+    function getRawMousePos(e) {
+      var rect = canvas.getBoundingClientRect();
+      var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
     }
 
     function getObjectXY() {
@@ -1051,6 +1235,30 @@
     }
 
     function startDrag(e) {
+      // [8] Check for pinch zoom (2 fingers)
+      if (e.touches && e.touches.length === 2) {
+        pinching = true;
+        dragging = false;
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        pinchStartDist = Math.sqrt(dx * dx + dy * dy);
+        pinchStartScale = zoomScale;
+        e.preventDefault();
+        return;
+      }
+
+      // [8] Double-tap to reset zoom
+      if (e.touches && e.touches.length === 1) {
+        var now = Date.now();
+        if (now - lastTapTime < 300 && zoomScale > 1.01) {
+          zoomScale = 1; panX = 0; panY = 0;
+          lastTapTime = 0;
+          e.preventDefault();
+          return;
+        }
+        lastTapTime = now;
+      }
+
       var pos = getMousePos(e);
       var obj = getObjectXY();
       var dx = pos.x - obj.x;
@@ -1062,6 +1270,16 @@
     }
 
     function onDrag(e) {
+      // [8] Pinch zoom handling
+      if (pinching && e.touches && e.touches.length === 2) {
+        e.preventDefault();
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        zoomScale = Math.max(1, Math.min(3, pinchStartScale * (dist / pinchStartDist)));
+        return;
+      }
+
       var pos = getMousePos(e);
 
       if (!dragging) {
@@ -1080,13 +1298,9 @@
 
       var dx = pos.x - vx;
       var dy = pos.y - vy;
-
-      // Canvas angle from vertex to mouse
       var canvasAngle = Math.atan2(dy, dx);
-      // Convert to math angle (alpha from M1): alpha = -canvasAngle
       var alpha = -canvasAngle;
 
-      // Clamp alpha to be strictly between 0 and theta (with margin)
       var marginDeg = Math.min(3, mirrorAngleDeg * 0.1);
       var marginRad = marginDeg * Math.PI / 180;
 
@@ -1095,20 +1309,30 @@
       } else {
         if (alpha < marginRad) alpha = marginRad;
         if (alpha > thetaRad - marginRad) alpha = thetaRad - marginRad;
+
+        // [9] Snap-to-bisector detection
+        var bisAngle = thetaRad / 2;
+        var distToBis = Math.abs(alpha - bisAngle) * 180 / Math.PI;
+        nearBisector = distToBis < 3;
+        if (distToBis < 1) {
+          alpha = bisAngle; // actual snap
+        }
       }
 
       objAlphaDeg = alpha * 180 / Math.PI;
 
-      // Update distance from vertex
       var dist = Math.sqrt(dx * dx + dy * dy);
       objDist = Math.max(0.15, Math.min(0.85, dist / mirrorLen));
-
-      draw();
     }
 
-    function endDrag() {
+    function endDrag(e) {
+      if (pinching) {
+        pinching = false;
+        return;
+      }
       if (dragging) {
         dragging = false;
+        nearBisector = false;
         canvas.style.cursor = 'default';
       }
     }
@@ -1122,39 +1346,27 @@
     canvas.addEventListener('touchend', endDrag);
 
     // === CONTROLS ===
+    var VALID_ANGLES = [10, 12, 15, 18, 20, 24, 30, 36, 40, 45, 60, 72, 90, 120, 180];
     var angleSlider = document.getElementById('angleSlider');
     var angleLabel = document.getElementById('angleLabel');
     var modeBtn = document.getElementById('modeBtn');
 
     angleSlider.addEventListener('input', function() {
-      mirrorAngleDeg = parseInt(this.value);
-      angleLabel.innerHTML = mirrorAngleDeg + '&deg;';
-
-      // Re-clamp object angle to stay inside the new wedge
-      var thetaRad = mirrorAngleDeg * Math.PI / 180;
-      if (isSymmetric) {
-        objAlphaDeg = mirrorAngleDeg / 2;
-      } else {
-        var margin = Math.min(3, mirrorAngleDeg * 0.1);
-        if (objAlphaDeg < margin) objAlphaDeg = margin;
-        if (objAlphaDeg > mirrorAngleDeg - margin) objAlphaDeg = mirrorAngleDeg - margin;
-      }
-      draw();
+      targetAngleDeg = VALID_ANGLES[parseInt(this.value)]; // [2] animate to target
+      angleLabel.innerHTML = targetAngleDeg + '&deg;';
+      if (targetAngleDeg === 60) _achKaleidoscope = true;
+      if (targetAngleDeg === 10) _achInfiniteReflections = true;
     });
 
     modeBtn.addEventListener('click', function() {
       isSymmetric = !isSymmetric;
-
-      // Track for achievements
       if (isSymmetric) _achSeenSymmetric = true;
       else _achSeenAsymmetric = true;
 
       if (_achSeenSymmetric && _achSeenAsymmetric) {
         var n = 360 / mirrorAngleDeg;
         var isInt = Math.abs(n - Math.round(n)) < 0.01;
-        if (isInt && Math.round(n) % 2 === 1) {
-          _achSymmetryExplored = true;
-        }
+        if (isInt && Math.round(n) % 2 === 1) _achSymmetryExplored = true;
       }
 
       if (isSymmetric) {
@@ -1164,24 +1376,23 @@
       } else {
         this.textContent = 'Asymmetric';
         this.className = 'sim-btn mode-btn asymmetric';
-        // Place object off-bisector
         objAlphaDeg = mirrorAngleDeg / 3;
         if (objAlphaDeg < 3) objAlphaDeg = 3;
       }
-      draw();
     });
 
     // Reset
     function resetSim() {
+      targetAngleDeg = 90;
       mirrorAngleDeg = 90;
       objAlphaDeg = 45;
-      objDist = 0.55;
+      objDist = 0.75;
       isSymmetric = true;
-      angleSlider.value = 90;
+      zoomScale = 1; panX = 0; panY = 0;
+      angleSlider.value = 12;
       angleLabel.innerHTML = '90&deg;';
       modeBtn.textContent = 'Symmetric';
       modeBtn.className = 'sim-btn mode-btn symmetric';
-      draw();
     }
 
     document.getElementById('resetBtn').addEventListener('click', resetSim);
@@ -1193,32 +1404,52 @@
       if (area.requestFullscreen) area.requestFullscreen();
       else if (area.webkitRequestFullscreen) area.webkitRequestFullscreen();
     });
-
-    document.addEventListener('fullscreenchange', function() {
-      setTimeout(resizeCanvas, 100);
-    });
+    document.addEventListener('fullscreenchange', function() { setTimeout(resizeCanvas, 100); setTimeout(resizeCanvas, 300); });
+    document.addEventListener('webkitfullscreenchange', function() { setTimeout(resizeCanvas, 100); setTimeout(resizeCanvas, 300); });
 
     // Tutorial
     var helpBtn = document.getElementById('helpBtn');
     var tutorial = document.getElementById('simTutorial');
     var tutShown = sessionStorage.getItem('ae-mirror-tut');
-
-    if (!tutShown && window.innerWidth > 900) {
-      tutorial.style.display = '';
-    }
-
+    if (!tutShown && window.innerWidth > 900) tutorial.style.display = '';
     helpBtn.addEventListener('click', function() {
       tutorial.style.display = tutorial.style.display === 'none' ? '' : 'none';
     });
-
     tutorial.querySelector('.tut-dismiss').addEventListener('click', function() {
       tutorial.style.display = 'none';
       sessionStorage.setItem('ae-mirror-tut', '1');
     });
 
+    // [2] Main animation loop — handles smooth angle transitions + shimmer
+    function animationLoop() {
+      glowPhase += 0.02;
+      if (glowPhase > Math.PI * 2) glowPhase -= Math.PI * 2;
+
+      // Animate toward target angle
+      var diff = targetAngleDeg - mirrorAngleDeg;
+      if (Math.abs(diff) > 0.3) {
+        mirrorAngleDeg += diff * 0.15;
+        // Re-clamp object
+        if (isSymmetric) {
+          objAlphaDeg = mirrorAngleDeg / 2;
+        } else {
+          var margin = Math.min(3, mirrorAngleDeg * 0.1);
+          if (objAlphaDeg < margin) objAlphaDeg = margin;
+          if (objAlphaDeg > mirrorAngleDeg - margin) objAlphaDeg = mirrorAngleDeg - margin;
+        }
+      } else if (Math.abs(diff) > 0.01) {
+        mirrorAngleDeg = targetAngleDeg;
+        if (isSymmetric) objAlphaDeg = mirrorAngleDeg / 2;
+      }
+
+      draw();
+      requestAnimationFrame(animationLoop);
+    }
+
     // Init
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
+    requestAnimationFrame(animationLoop);
 
     // Service worker
     if ('serviceWorker' in navigator) {
