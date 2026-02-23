@@ -4224,7 +4224,7 @@ ul { list-style: none; }
 /* Trajectory equation — fixed at bottom of torii gate */
 .trajectory-eq {
   position: absolute;
-  bottom: 8px;
+  bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
