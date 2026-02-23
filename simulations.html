@@ -25,11 +25,17 @@
       display: flex; flex-direction: column;
       padding: 24px 24px 20px; overflow: visible;
       position: relative;
+      text-decoration: none; color: inherit;
       opacity: 0; transform: translateY(20px);
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       min-height: 320px;
     }
     .carousel-track .sim-card.revealed {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    /* Fallback for main.js .visible class */
+    .carousel-track .sim-card.visible {
       opacity: 1; transform: translateY(0);
       transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
@@ -1274,6 +1280,25 @@
         var track = this.closest('.carousel-row').querySelector('.carousel-track');
         var amount = 276;
         track.scrollBy({ left: this.classList.contains('carousel-prev') ? -amount : amount, behavior: 'smooth' });
+      });
+    });
+
+    /* Staggered reveal animation for sim cards */
+    function revealCards(container) {
+      var cards = container.querySelectorAll('.sim-card.reveal:not(.revealed)');
+      cards.forEach(function(card, i) {
+        setTimeout(function() { card.classList.add('revealed'); }, i * 80);
+      });
+    }
+    /* Reveal cards in the active tab */
+    revealCards(document.querySelector('.grade-content.active'));
+
+    /* Re-reveal when switching tabs */
+    document.querySelectorAll('.grade-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var id = tab.dataset.grade;
+        var panel = document.getElementById(id);
+        if (panel) setTimeout(function() { revealCards(panel); }, 50);
       });
     });
   </script>
