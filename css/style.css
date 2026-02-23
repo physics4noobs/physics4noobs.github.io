@@ -4124,6 +4124,50 @@ ul { list-style: none; }
   50% { transform: translateY(8px); opacity: 1; }
 }
 
+/* Wind force arrow — horizontal, pointing left */
+.wind-arrow {
+  position: absolute;
+  top: 22%;
+  right: 2%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  pointer-events: none;
+  z-index: 5;
+  animation: windBounce 2s ease-in-out infinite;
+}
+.wind-line {
+  width: 28px;
+  height: 1.5px;
+  background: #1a1a1a;
+  position: relative;
+}
+.wind-line::after {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 6px solid #1a1a1a;
+}
+.wind-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-left: 5px;
+  white-space: nowrap;
+}
+.wind-label sub {
+  font-size: 0.55rem;
+}
+@keyframes windBounce {
+  0%, 100% { transform: translateX(0); opacity: 0.8; }
+  50% { transform: translateX(-8px); opacity: 1; }
+}
+
 /* Physics equations that bloom on petal landing */
 .torii-eq {
   position: absolute;
