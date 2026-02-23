@@ -324,17 +324,40 @@
           <!-- Distant birds -->
           <div class="torii-bird bird1"></div>
           <div class="torii-bird bird2"></div>
-          <!-- Sakura tree branch -->
-          <div class="sakura-branch">
-            <div class="branch-limb"></div>
-            <div class="branch-twig twig1"></div>
-            <div class="branch-twig twig2"></div>
-            <div class="sakura-cluster cl1"></div>
-            <div class="sakura-cluster cl2"></div>
-            <div class="sakura-cluster cl3"></div>
-            <div class="sakura-cluster cl4"></div>
-            <div class="sakura-cluster cl5"></div>
-          </div>
+          <!-- Sakura tree branch (SVG) -->
+          <svg class="sakura-branch" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Main branch — organic curve -->
+            <path d="M200 65 Q170 60 140 55 Q110 48 80 52 Q55 56 35 48" stroke="#6b4430" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <!-- Sub-branches -->
+            <path d="M130 53 Q118 38 105 28" stroke="#7a5038" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <path d="M90 51 Q82 62 70 72" stroke="#7a5038" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+            <path d="M60 50 Q50 38 38 30" stroke="#7a5038" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <!-- Blossom clusters — groups of petals -->
+            <g class="blossom-group">
+              <!-- Cluster at branch tip -->
+              <circle cx="35" cy="45" r="9" fill="#f5a0b5" opacity="0.7"/>
+              <circle cx="30" cy="40" r="7" fill="#f8b4c4" opacity="0.8"/>
+              <circle cx="40" cy="39" r="6" fill="#f0859e" opacity="0.6"/>
+              <circle cx="33" cy="48" r="5" fill="#fcc5d2" opacity="0.7"/>
+              <!-- Cluster on upper sub-branch -->
+              <circle cx="105" cy="25" r="8" fill="#f5a0b5" opacity="0.7"/>
+              <circle cx="100" cy="20" r="6" fill="#f8b4c4" opacity="0.8"/>
+              <circle cx="110" cy="20" r="5" fill="#f0859e" opacity="0.6"/>
+              <circle cx="103" cy="30" r="5" fill="#fcc5d2" opacity="0.65"/>
+              <!-- Cluster on lower sub-branch -->
+              <circle cx="70" cy="72" r="7" fill="#f5a0b5" opacity="0.65"/>
+              <circle cx="65" cy="68" r="6" fill="#f8b4c4" opacity="0.75"/>
+              <circle cx="74" cy="76" r="5" fill="#f0859e" opacity="0.6"/>
+              <!-- Cluster on small twig -->
+              <circle cx="38" cy="27" r="7" fill="#f5a0b5" opacity="0.7"/>
+              <circle cx="33" cy="24" r="5" fill="#fcc5d2" opacity="0.8"/>
+              <circle cx="42" cy="24" r="5" fill="#f0859e" opacity="0.55"/>
+              <!-- Scattered singles along branch -->
+              <circle cx="150" cy="56" r="5" fill="#f8b4c4" opacity="0.5"/>
+              <circle cx="120" cy="48" r="4" fill="#f5a0b5" opacity="0.45"/>
+              <circle cx="80" cy="48" r="5" fill="#fcc5d2" opacity="0.5"/>
+            </g>
+          </svg>
           <!-- Torii Gate -->
           <div class="torii-gate">
             <div class="torii-kasagi"></div>
