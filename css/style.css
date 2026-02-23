@@ -4301,6 +4301,45 @@ ul { list-style: none; }
   100% { opacity: 0.85; transform: translateX(-50%) translateY(0); }
 }
 
+/* Gravitation equation — bottom of solar system */
+.gravity-eq {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0;
+  animation: gravFadeIn 1s ease-out 1s forwards;
+}
+.gravity-title {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.gravity-formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.gravity-formula sub {
+  font-size: 0.55rem;
+}
+@keyframes gravFadeIn {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(5px); }
+  100% { opacity: 0.85; transform: translateX(-50%) translateY(0); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   [data-theme="light"] .torii-visual {
