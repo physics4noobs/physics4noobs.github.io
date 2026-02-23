@@ -16,159 +16,305 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <script src="js/theme.js"></script>
   <style>
-    /* Projectile thumbnail hover animation */
-    .projectile-thumb .proj-arc { transition: stroke-dashoffset 0s; }
-    .projectile-thumb .proj-dot { transition: none; }
-    .sim-card:hover .proj-arc {
-      animation: projDraw 1.2s ease-out forwards;
+    /* ====== Sim Cards — Mon crest style (matches chapter cards) ====== */
+    .carousel-track .sim-card {
+      flex: 0 0 260px; scroll-snap-align: start;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      display: flex; flex-direction: column;
+      padding: 24px 24px 20px; overflow: visible;
+      position: relative;
+      opacity: 0; transform: translateY(20px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      min-height: 320px;
     }
-    .sim-card:hover .proj-dot {
-      animation: projMove 1.2s ease-out forwards;
+    .carousel-track .sim-card.revealed {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
-    @keyframes projDraw {
-      0%   { stroke-dashoffset: 260; }
-      100% { stroke-dashoffset: 0; }
+    .carousel-track .sim-card:hover { transform: translateY(-4px); }
+
+    /* Mon crest watermark — base */
+    .carousel-track .sim-card::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px; height: 90px;
+      background-size: contain; background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.1; pointer-events: none; z-index: 0;
+      transition: opacity 0.4s ease;
     }
-    @keyframes projMove {
-      0%   { cx: 20;  cy: 100; opacity: 1; }
-      15%  { cx: 45;  cy: 45;  opacity: 1; }
-      30%  { cx: 70;  cy: 22;  opacity: 1; }
-      50%  { cx: 110; cy: 20;  opacity: 1; }
-      70%  { cx: 145; cy: 40;  opacity: 1; }
-      85%  { cx: 165; cy: 70;  opacity: 1; }
-      100% { cx: 180; cy: 100; opacity: 0; }
+    .carousel-track .sim-card:hover::before { opacity: 0.18; }
+
+    /* Sim badge */
+    .sim-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem; font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 2px; text-transform: uppercase;
+      position: relative; z-index: 1;
     }
-    /* Reset animation when not hovering */
-    .sim-card:not(:hover) .proj-arc {
-      stroke-dashoffset: 260;
+    /* Sim title */
+    .sim-info { position: relative; z-index: 1; margin-top: 8px; }
+    .chp-page .sim-info h3 {
+      font-family: var(--font-display); font-size: 1.3rem; font-weight: 800;
+      line-height: 1.25; margin: 0; color: var(--text-primary);
     }
-    .sim-card:not(:hover) .proj-dot {
-      cx: 20; cy: 100; opacity: 1;
+    /* Tags + CTA */
+    .sim-bottom {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 12px;
+      margin-top: auto; padding-top: 20px;
+    }
+    .sim-tags {
+      display: flex; flex-wrap: nowrap; gap: 6px; overflow: hidden;
+    }
+    .sim-tags span {
+      font-size: 0.6rem; font-family: 'JetBrains Mono', monospace;
+      padding: 4px 10px; border-radius: 4px;
+      background: var(--border-subtle); color: var(--text-muted);
+      letter-spacing: 0.5px;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+    .sim-card:hover .sim-tags span { color: var(--text-secondary, var(--text-muted)); }
+    .sim-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-body); font-size: 0.78rem; font-weight: 700;
+      color: var(--color-primary); letter-spacing: 0.3px;
+      transition: gap 0.3s ease;
+    }
+    .sim-card:hover .sim-cta { gap: 10px; }
+
+    /* Carousel track padding for hover lift */
+    .carousel-track { padding: 12px 0 16px; }
+
+    /* === Mon crests per sim group (light theme = red) === */
+    /* Kinematics — mitsudomoe */
+    .sim-card[href*="kinematics"]::before,
+    .sim-card[href*="vector-addition"]::before,
+    .sim-card[href*="boat-river"]::before,
+    .sim-card[href*="graphical-analysis"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 50 A15 15 0 0 1 50 20 A25 25 0 0 1 50 50Z' fill='%23d63031'/%3E%3Cpath d='M50 50 A15 15 0 0 1 76 65 A25 25 0 0 1 50 50Z' fill='%23d63031'/%3E%3Cpath d='M50 50 A15 15 0 0 1 24 65 A25 25 0 0 1 50 50Z' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* Newton's Laws — force arrows */
+    .sim-card[href*="newtons"]::before,
+    .sim-card[href*="friction"]::before,
+    .sim-card[href*="pulley"]::before,
+    .sim-card[href*="wire-ring"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='50' y1='50' x2='50' y2='15' stroke='%23d63031' stroke-width='2'/%3E%3Cpolygon points='50,10 45,20 55,20' fill='%23d63031'/%3E%3Cline x1='50' y1='50' x2='80' y2='67' stroke='%23d63031' stroke-width='2'/%3E%3Cpolygon points='85,70 75,72 78,62' fill='%23d63031'/%3E%3Cline x1='50' y1='50' x2='20' y2='67' stroke='%23d63031' stroke-width='2'/%3E%3Cpolygon points='15,70 25,72 22,62' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* Work Power Energy — interlocking rings */
+    .sim-card[href*="work-power"]::before,
+    .sim-card[href*="work-done"]::before,
+    .sim-card[href*="collisions"]::before,
+    .sim-card[href*="conservation-momentum"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='38' cy='45' r='16' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Ccircle cx='62' cy='45' r='16' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Ccircle cx='50' cy='62' r='16' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    /* Rotational Motion — pinwheel */
+    .sim-card[href*="rotational"]::before,
+    .sim-card[href*="center-of-mass"]::before,
+    .sim-card[href*="goat-vs-boat"]::before,
+    .sim-card[href*="inclined-plane"]::before,
+    .sim-card[href*="atwood"]::before,
+    .sim-card[href*="angular-momentum"]::before,
+    .sim-card[href*="rolling"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 50 Q50 25 30 25 Q50 25 50 50' fill='%23d63031'/%3E%3Cpath d='M50 50 Q75 50 75 30 Q75 50 50 50' fill='%23d63031'/%3E%3Cpath d='M50 50 Q50 75 70 75 Q50 75 50 50' fill='%23d63031'/%3E%3Cpath d='M50 50 Q25 50 25 70 Q25 50 50 50' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* Gravitation — concentric orbits */
+    .sim-card[href*="gravitation"]::before,
+    .sim-card[href*="gravity-"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%23d63031'/%3E%3Cellipse cx='50' cy='50' rx='18' ry='12' fill='none' stroke='%23d63031' stroke-width='1.5' transform='rotate(-20 50 50)'/%3E%3Cellipse cx='50' cy='50' rx='30' ry='20' fill='none' stroke='%23d63031' stroke-width='1.5' transform='rotate(-20 50 50)'/%3E%3C/svg%3E");
+    }
+    /* Mechanical Properties — hexagonal lattice */
+    .sim-card[href*="hookes"]::before,
+    .sim-card[href*="modulus"]::before,
+    .sim-card[href*="poissons"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpolygon points='50,22 68,33 68,53 50,64 32,53 32,33' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cline x1='50' y1='22' x2='50' y2='64' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='32' y1='33' x2='68' y2='53' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='68' y1='33' x2='32' y2='53' stroke='%23d63031' stroke-width='1.2'/%3E%3C/svg%3E");
+    }
+    /* Fluid Mechanics — ripple waves */
+    .sim-card[href*="fluid"]::before,
+    .sim-card[href*="manometer"]::before,
+    .sim-card[href*="hydrostatic"]::before,
+    .sim-card[href*="pascals"]::before,
+    .sim-card[href*="continuity"]::before,
+    .sim-card[href*="venturimeter"]::before,
+    .sim-card[href*="magnus"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M20 45 Q35 38 50 45 Q65 52 80 45' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M20 55 Q35 48 50 55 Q65 62 80 55' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M20 65 Q35 58 50 65 Q65 72 80 65' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    /* Thermodynamics — flame */
+    .sim-card[href*="thermodynamics"]::before,
+    .sim-card[href*="calorimetry"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 75 Q35 60 40 45 Q42 35 50 25 Q58 35 60 45 Q65 60 50 75Z' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M50 75 Q43 65 47 55 Q48 48 50 40 Q52 48 53 55 Q57 65 50 75Z' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* SHM — pendulum arc */
+    .sim-card[href*="shm"]::before,
+    .sim-card[href*="pendulum"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='50' y1='20' x2='35' y2='65' stroke='%23d63031' stroke-width='1.5' stroke-dasharray='4 3'/%3E%3Cline x1='50' y1='20' x2='50' y2='68' stroke='%23d63031' stroke-width='1.5' stroke-dasharray='4 3'/%3E%3Cline x1='50' y1='20' x2='65' y2='65' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='65' cy='65' r='5' fill='%23d63031'/%3E%3Cpath d='M32 68 Q50 78 68 68' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3C/svg%3E");
+    }
+    /* Waves — seigaiha */
+    .sim-card[href*="waves.html"]::before,
+    .sim-card[href*="beats"]::before,
+    .sim-card[href*="doppler"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q85 65 95 50' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M15 40 Q25 25 35 40 Q45 55 55 40 Q65 25 75 40' fill='none' stroke='%23d63031' stroke-width='1.2'/%3E%3Cpath d='M25 60 Q35 45 45 60 Q55 75 65 60 Q75 45 85 60' fill='none' stroke='%23d63031' stroke-width='1.2'/%3E%3C/svg%3E");
+    }
+    /* Electrostatics — radial field */
+    .sim-card[href*="electrostatics"]::before,
+    .sim-card[href*="coulombs"]::before,
+    .sim-card[href*="electrostatic-potential"]::before,
+    .sim-card[href*="electric-dipole"]::before,
+    .sim-card[href*="equilibrium"]::before,
+    .sim-card[href*="electric-flux"]::before,
+    .sim-card[href*="gauss"]::before,
+    .sim-card[href*="capacitor"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23d63031'/%3E%3Cline x1='50' y1='44' x2='50' y2='18' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='50' y1='56' x2='50' y2='82' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='44' y1='50' x2='18' y2='50' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='56' y1='50' x2='82' y2='50' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='46' y1='46' x2='27' y2='27' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='54' y1='46' x2='73' y2='27' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='54' y1='54' x2='73' y2='73' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='46' y1='54' x2='27' y2='73' stroke='%23d63031' stroke-width='1.2'/%3E%3C/svg%3E");
+    }
+    /* Current Electricity — circuit loop */
+    .sim-card[href*="current-electricity"]::before,
+    .sim-card[href*="kirchhoff"]::before,
+    .sim-card[href*="wheatstone"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Crect x='25' y='30' width='50' height='40' rx='4' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cline x1='25' y1='50' x2='35' y2='50' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M35 50 L40 38 L45 62 L50 38 L55 62 L60 38 L65 50' fill='none' stroke='%23d63031' stroke-width='1.8'/%3E%3Cline x1='65' y1='50' x2='75' y2='50' stroke='%23d63031' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    /* Magnetism — infinity loop */
+    .sim-card[href*="magnetism"]::before,
+    .sim-card[href*="biot-savart"]::before,
+    .sim-card[href*="galvanometer"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 50 C50 30 25 25 25 50 C25 75 50 70 50 50 C50 30 75 25 75 50 C75 75 50 70 50 50Z' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* EMI — spiral coil */
+    .sim-card[href*="emi"]::before,
+    .sim-card[href*="ac-generator"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 50 C50 44 56 38 62 38 C68 38 74 44 74 50 C74 56 68 62 62 62 C50 62 38 56 38 44 C38 32 50 26 62 26 C74 26 82 38 82 50 C82 62 74 74 58 74' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    /* AC Circuits — sine wave */
+    .sim-card[href*="ac-circuits"]::before,
+    .sim-card[href*="transformer"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='15' y1='50' x2='85' y2='50' stroke='%23d63031' stroke-width='1' stroke-dasharray='3 3'/%3E%3Cpath d='M15 50 Q28 20 40 50 Q52 80 65 50 Q78 20 85 50' fill='none' stroke='%23d63031' stroke-width='2.5'/%3E%3C/svg%3E");
+    }
+    /* EM Waves — radiating arcs */
+    .sim-card[href*="em-waves"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%23d63031'/%3E%3Cpath d='M38 38 A17 17 0 0 1 62 38' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M30 30 A28 28 0 0 1 70 30' fill='none' stroke='%23d63031' stroke-width='1.8'/%3E%3Cpath d='M22 22 A40 40 0 0 1 78 22' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M38 62 A17 17 0 0 0 62 62' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M30 70 A28 28 0 0 0 70 70' fill='none' stroke='%23d63031' stroke-width='1.8'/%3E%3Cpath d='M22 78 A40 40 0 0 0 78 78' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3C/svg%3E");
+    }
+    /* Ray Optics — prism */
+    .sim-card[href*="ray-optics"]::before,
+    .sim-card[href*="prism"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpolygon points='50,25 75,70 25,70' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cline x1='15' y1='48' x2='42' y2='48' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='58' y1='52' x2='85' y2='42' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='58' y1='55' x2='85' y2='52' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='58' y1='58' x2='85' y2='62' stroke='%23d63031' stroke-width='1'/%3E%3C/svg%3E");
+    }
+    /* Wave Optics — interference */
+    .sim-card[href*="wave-optics"]::before,
+    .sim-card[href*="single-slit"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='42' cy='42' r='10' fill='none' stroke='%23d63031' stroke-width='1.2'/%3E%3Ccircle cx='42' cy='42' r='20' fill='none' stroke='%23d63031' stroke-width='1'/%3E%3Ccircle cx='42' cy='42' r='30' fill='none' stroke='%23d63031' stroke-width='0.8'/%3E%3Ccircle cx='58' cy='58' r='10' fill='none' stroke='%23d63031' stroke-width='1.2'/%3E%3Ccircle cx='58' cy='58' r='20' fill='none' stroke='%23d63031' stroke-width='1'/%3E%3Ccircle cx='58' cy='58' r='30' fill='none' stroke='%23d63031' stroke-width='0.8'/%3E%3C/svg%3E");
+    }
+    /* Modern Physics — Bohr atom */
+    .sim-card[href*="modern-physics"]::before,
+    .sim-card[href*="bohr"]::before,
+    .sim-card[href*="radioactive"]::before,
+    .sim-card[href*="nuclear"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23d63031'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%23d63031' stroke-width='1.5' transform='rotate(60 50 50)'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%23d63031' stroke-width='1.5' transform='rotate(120 50 50)'/%3E%3C/svg%3E");
     }
 
-    /* Vector Addition thumbnail hover animation */
-    .vec-thumb .vec-a, .vec-thumb .vec-b, .vec-thumb .vec-r {
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+    /* --- Light theme — LED red borders --- */
+    [data-theme="light"] .carousel-track .sim-card {
+      background: #fff;
+      border: 2px solid rgba(214,48,49,0.5);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
     }
-    .sim-card:hover .vec-a {
-      animation: vecDraw 0.5s ease-out forwards;
+    [data-theme="light"] .carousel-track .sim-card:hover {
+      border-color: #d63031;
+      box-shadow: 0 0 10px rgba(214,48,49,0.6), 0 0 30px rgba(214,48,49,0.35), 0 0 60px rgba(214,48,49,0.15);
     }
-    .sim-card:hover .vec-b {
-      animation: vecDraw 0.5s ease-out 0.3s forwards;
-    }
-    .sim-card:hover .vec-r {
-      animation: vecDraw 0.6s ease-out 0.7s forwards;
-    }
-    .sim-card:hover .vec-dash1, .sim-card:hover .vec-dash2 {
-      animation: vecDash 0.4s ease-out 0.6s forwards;
-    }
-    .vec-thumb .vec-dash1, .vec-thumb .vec-dash2 { opacity: 0; }
-    @keyframes vecDraw {
-      0%   { stroke-dashoffset: 120; }
-      100% { stroke-dashoffset: 0; }
-    }
-    @keyframes vecDash {
-      0%   { opacity: 0; }
-      100% { opacity: 0.5; }
-    }
-    .sim-card:not(:hover) .vec-a,
-    .sim-card:not(:hover) .vec-b,
-    .sim-card:not(:hover) .vec-r {
-      stroke-dashoffset: 120;
-    }
-    .sim-card:not(:hover) .vec-dash1,
-    .sim-card:not(:hover) .vec-dash2 { opacity: 0; }
-
-    /* Boat River thumbnail hover animation */
-    .boat-thumb .boat-path {
-      stroke-dasharray: 140;
-      stroke-dashoffset: 140;
-    }
-    .boat-thumb .boat-icon {
-      transition: none;
-    }
-    .boat-thumb .wave1, .boat-thumb .wave2, .boat-thumb .wave3 {
-      animation: waveFlow 2s linear infinite;
-    }
-    .boat-thumb .wave2 { animation-delay: -0.6s; }
-    .boat-thumb .wave3 { animation-delay: -1.2s; }
-    @keyframes waveFlow {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(20px); }
-    }
-    .sim-card:hover .boat-path {
-      animation: boatDraw 1.4s ease-out forwards;
-    }
-    .sim-card:hover .boat-icon {
-      animation: boatMove 1.4s ease-out forwards;
-    }
-    @keyframes boatDraw {
-      0%   { stroke-dashoffset: 140; }
-      100% { stroke-dashoffset: 0; }
-    }
-    @keyframes boatMove {
-      0%   { transform: translate(0, 0); }
-      25%  { transform: translate(15px, -25px); }
-      50%  { transform: translate(30px, -50px); }
-      75%  { transform: translate(45px, -70px); }
-      100% { transform: translate(55px, -85px); }
-    }
-    .sim-card:not(:hover) .boat-path {
-      stroke-dashoffset: 140;
-    }
-    .sim-card:not(:hover) .boat-icon {
-      transform: translate(0, 0);
-    }
-    /* Photoelectric effect thumbnail hover animation */
-    .sim-card:hover .pe-photon {
-      animation: pePhoton 1s ease-in forwards;
-    }
-    .sim-card:hover .pe-electron {
-      animation: peElectron 1s ease-out 0.5s forwards;
-    }
-    @keyframes pePhoton {
-      0%   { cx: 20;  opacity: 1; }
-      60%  { cx: 75;  opacity: 1; }
-      70%  { cx: 78;  opacity: 0.5; }
-      100% { cx: 78;  opacity: 0; }
-    }
-    @keyframes peElectron {
-      0%   { cx: 85;  opacity: 0; }
-      20%  { cx: 95;  opacity: 1; }
-      100% { cx: 155; opacity: 1; }
-    }
-    .sim-card:not(:hover) .pe-photon {
-      cx: 20; opacity: 1;
-    }
-    .sim-card:not(:hover) .pe-electron {
-      cx: 85; opacity: 0;
+    [data-theme="light"] .sim-tags span { background: rgba(0,0,0,0.04); }
+    [data-theme="light"] .sim-card:hover .sim-tags span {
+      background: rgba(214,48,49,0.06); color: rgba(214,48,49,0.8);
     }
 
-    /* Graphical Analysis thumbnail hover animation */
-    .graph-thumb .graph-parabola,
-    .graph-thumb .graph-line,
-    .graph-thumb .graph-flat {
-      stroke-dasharray: 160;
-      stroke-dashoffset: 160;
+    /* --- Dark theme — cyan borders + glow --- */
+    [data-theme="dark"] .carousel-track .sim-card,
+    :root:not([data-theme="light"]) .carousel-track .sim-card {
+      border: 2px solid rgba(0,212,255,0.3);
     }
-    .sim-card:hover .graph-parabola {
-      animation: graphDraw 0.6s ease-out forwards;
+    [data-theme="dark"] .carousel-track .sim-card:hover,
+    :root:not([data-theme="light"]) .carousel-track .sim-card:hover {
+      border-color: #00d4ff;
+      box-shadow: 0 0 10px rgba(0,212,255,0.6), 0 0 30px rgba(0,212,255,0.35), 0 0 60px rgba(0,212,255,0.15);
     }
-    .sim-card:hover .graph-line {
-      animation: graphDraw 0.5s ease-out 0.3s forwards;
+    [data-theme="dark"] .sim-card:hover .sim-tags span,
+    :root:not([data-theme="light"]) .sim-card:hover .sim-tags span {
+      background: rgba(0,212,255,0.08); color: rgba(0,212,255,0.8);
     }
-    .sim-card:hover .graph-flat {
-      animation: graphDraw 0.4s ease-out 0.6s forwards;
-    }
-    @keyframes graphDraw {
-      0%   { stroke-dashoffset: 160; }
-      100% { stroke-dashoffset: 0; }
-    }
-    .sim-card:not(:hover) .graph-parabola,
-    .sim-card:not(:hover) .graph-line,
-    .sim-card:not(:hover) .graph-flat {
-      stroke-dashoffset: 160;
+
+    /* === Dark theme cyan Mon overrides === */
+    [data-theme="dark"] .sim-card[href*="kinematics"]::before, :root:not([data-theme="light"]) .sim-card[href*="kinematics"]::before,
+    [data-theme="dark"] .sim-card[href*="vector-addition"]::before, :root:not([data-theme="light"]) .sim-card[href*="vector-addition"]::before,
+    [data-theme="dark"] .sim-card[href*="boat-river"]::before, :root:not([data-theme="light"]) .sim-card[href*="boat-river"]::before,
+    [data-theme="dark"] .sim-card[href*="graphical-analysis"]::before, :root:not([data-theme="light"]) .sim-card[href*="graphical-analysis"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 50 A15 15 0 0 1 50 20 A25 25 0 0 1 50 50Z' fill='%2300d4ff'/%3E%3Cpath d='M50 50 A15 15 0 0 1 76 65 A25 25 0 0 1 50 50Z' fill='%2300d4ff'/%3E%3Cpath d='M50 50 A15 15 0 0 1 24 65 A25 25 0 0 1 50 50Z' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="newtons"]::before, :root:not([data-theme="light"]) .sim-card[href*="newtons"]::before,
+    [data-theme="dark"] .sim-card[href*="friction"]::before, :root:not([data-theme="light"]) .sim-card[href*="friction"]::before,
+    [data-theme="dark"] .sim-card[href*="pulley"]::before, :root:not([data-theme="light"]) .sim-card[href*="pulley"]::before,
+    [data-theme="dark"] .sim-card[href*="wire-ring"]::before, :root:not([data-theme="light"]) .sim-card[href*="wire-ring"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='50' y1='50' x2='50' y2='15' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpolygon points='50,10 45,20 55,20' fill='%2300d4ff'/%3E%3Cline x1='50' y1='50' x2='80' y2='67' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpolygon points='85,70 75,72 78,62' fill='%2300d4ff'/%3E%3Cline x1='50' y1='50' x2='20' y2='67' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpolygon points='15,70 25,72 22,62' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="work-power"]::before, :root:not([data-theme="light"]) .sim-card[href*="work-power"]::before,
+    [data-theme="dark"] .sim-card[href*="work-done"]::before, :root:not([data-theme="light"]) .sim-card[href*="work-done"]::before,
+    [data-theme="dark"] .sim-card[href*="collisions"]::before, :root:not([data-theme="light"]) .sim-card[href*="collisions"]::before,
+    [data-theme="dark"] .sim-card[href*="conservation-momentum"]::before, :root:not([data-theme="light"]) .sim-card[href*="conservation-momentum"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='38' cy='45' r='16' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Ccircle cx='62' cy='45' r='16' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Ccircle cx='50' cy='62' r='16' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="rotational"]::before, :root:not([data-theme="light"]) .sim-card[href*="rotational"]::before,
+    [data-theme="dark"] .sim-card[href*="center-of-mass"]::before, :root:not([data-theme="light"]) .sim-card[href*="center-of-mass"]::before,
+    [data-theme="dark"] .sim-card[href*="goat-vs-boat"]::before, :root:not([data-theme="light"]) .sim-card[href*="goat-vs-boat"]::before,
+    [data-theme="dark"] .sim-card[href*="inclined-plane"]::before, :root:not([data-theme="light"]) .sim-card[href*="inclined-plane"]::before,
+    [data-theme="dark"] .sim-card[href*="atwood"]::before, :root:not([data-theme="light"]) .sim-card[href*="atwood"]::before,
+    [data-theme="dark"] .sim-card[href*="angular-momentum"]::before, :root:not([data-theme="light"]) .sim-card[href*="angular-momentum"]::before,
+    [data-theme="dark"] .sim-card[href*="rolling"]::before, :root:not([data-theme="light"]) .sim-card[href*="rolling"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 50 Q50 25 30 25 Q50 25 50 50' fill='%2300d4ff'/%3E%3Cpath d='M50 50 Q75 50 75 30 Q75 50 50 50' fill='%2300d4ff'/%3E%3Cpath d='M50 50 Q50 75 70 75 Q50 75 50 50' fill='%2300d4ff'/%3E%3Cpath d='M50 50 Q25 50 25 70 Q25 50 50 50' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="gravitation"]::before, :root:not([data-theme="light"]) .sim-card[href*="gravitation"]::before,
+    [data-theme="dark"] .sim-card[href*="gravity-"]::before, :root:not([data-theme="light"]) .sim-card[href*="gravity-"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%2300d4ff'/%3E%3Cellipse cx='50' cy='50' rx='18' ry='12' fill='none' stroke='%2300d4ff' stroke-width='1.5' transform='rotate(-20 50 50)'/%3E%3Cellipse cx='50' cy='50' rx='30' ry='20' fill='none' stroke='%2300d4ff' stroke-width='1.5' transform='rotate(-20 50 50)'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="hookes"]::before, :root:not([data-theme="light"]) .sim-card[href*="hookes"]::before,
+    [data-theme="dark"] .sim-card[href*="modulus"]::before, :root:not([data-theme="light"]) .sim-card[href*="modulus"]::before,
+    [data-theme="dark"] .sim-card[href*="poissons"]::before, :root:not([data-theme="light"]) .sim-card[href*="poissons"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpolygon points='50,22 68,33 68,53 50,64 32,53 32,33' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cline x1='50' y1='22' x2='50' y2='64' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='32' y1='33' x2='68' y2='53' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='68' y1='33' x2='32' y2='53' stroke='%2300d4ff' stroke-width='1.2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="fluid"]::before, :root:not([data-theme="light"]) .sim-card[href*="fluid"]::before,
+    [data-theme="dark"] .sim-card[href*="manometer"]::before, :root:not([data-theme="light"]) .sim-card[href*="manometer"]::before,
+    [data-theme="dark"] .sim-card[href*="hydrostatic"]::before, :root:not([data-theme="light"]) .sim-card[href*="hydrostatic"]::before,
+    [data-theme="dark"] .sim-card[href*="pascals"]::before, :root:not([data-theme="light"]) .sim-card[href*="pascals"]::before,
+    [data-theme="dark"] .sim-card[href*="continuity"]::before, :root:not([data-theme="light"]) .sim-card[href*="continuity"]::before,
+    [data-theme="dark"] .sim-card[href*="venturimeter"]::before, :root:not([data-theme="light"]) .sim-card[href*="venturimeter"]::before,
+    [data-theme="dark"] .sim-card[href*="magnus"]::before, :root:not([data-theme="light"]) .sim-card[href*="magnus"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M20 45 Q35 38 50 45 Q65 52 80 45' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M20 55 Q35 48 50 55 Q65 62 80 55' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M20 65 Q35 58 50 65 Q65 72 80 65' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="thermodynamics"]::before, :root:not([data-theme="light"]) .sim-card[href*="thermodynamics"]::before,
+    [data-theme="dark"] .sim-card[href*="calorimetry"]::before, :root:not([data-theme="light"]) .sim-card[href*="calorimetry"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 75 Q35 60 40 45 Q42 35 50 25 Q58 35 60 45 Q65 60 50 75Z' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M50 75 Q43 65 47 55 Q48 48 50 40 Q52 48 53 55 Q57 65 50 75Z' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="shm"]::before, :root:not([data-theme="light"]) .sim-card[href*="shm"]::before,
+    [data-theme="dark"] .sim-card[href*="pendulum"]::before, :root:not([data-theme="light"]) .sim-card[href*="pendulum"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='50' y1='20' x2='35' y2='65' stroke='%2300d4ff' stroke-width='1.5' stroke-dasharray='4 3'/%3E%3Cline x1='50' y1='20' x2='50' y2='68' stroke='%2300d4ff' stroke-width='1.5' stroke-dasharray='4 3'/%3E%3Cline x1='50' y1='20' x2='65' y2='65' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='65' cy='65' r='5' fill='%2300d4ff'/%3E%3Cpath d='M32 68 Q50 78 68 68' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="waves.html"]::before, :root:not([data-theme="light"]) .sim-card[href*="waves.html"]::before,
+    [data-theme="dark"] .sim-card[href*="beats"]::before, :root:not([data-theme="light"]) .sim-card[href*="beats"]::before,
+    [data-theme="dark"] .sim-card[href*="doppler"]::before, :root:not([data-theme="light"]) .sim-card[href*="doppler"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q85 65 95 50' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M15 40 Q25 25 35 40 Q45 55 55 40 Q65 25 75 40' fill='none' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cpath d='M25 60 Q35 45 45 60 Q55 75 65 60 Q75 45 85 60' fill='none' stroke='%2300d4ff' stroke-width='1.2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="electrostatics"]::before, :root:not([data-theme="light"]) .sim-card[href*="electrostatics"]::before,
+    [data-theme="dark"] .sim-card[href*="coulombs"]::before, :root:not([data-theme="light"]) .sim-card[href*="coulombs"]::before,
+    [data-theme="dark"] .sim-card[href*="electrostatic-potential"]::before, :root:not([data-theme="light"]) .sim-card[href*="electrostatic-potential"]::before,
+    [data-theme="dark"] .sim-card[href*="electric-dipole"]::before, :root:not([data-theme="light"]) .sim-card[href*="electric-dipole"]::before,
+    [data-theme="dark"] .sim-card[href*="equilibrium"]::before, :root:not([data-theme="light"]) .sim-card[href*="equilibrium"]::before,
+    [data-theme="dark"] .sim-card[href*="electric-flux"]::before, :root:not([data-theme="light"]) .sim-card[href*="electric-flux"]::before,
+    [data-theme="dark"] .sim-card[href*="gauss"]::before, :root:not([data-theme="light"]) .sim-card[href*="gauss"]::before,
+    [data-theme="dark"] .sim-card[href*="capacitor"]::before, :root:not([data-theme="light"]) .sim-card[href*="capacitor"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%2300d4ff'/%3E%3Cline x1='50' y1='44' x2='50' y2='18' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='50' y1='56' x2='50' y2='82' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='44' y1='50' x2='18' y2='50' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='56' y1='50' x2='82' y2='50' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='46' y1='46' x2='27' y2='27' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='54' y1='46' x2='73' y2='27' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='54' y1='54' x2='73' y2='73' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='46' y1='54' x2='27' y2='73' stroke='%2300d4ff' stroke-width='1.2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="current-electricity"]::before, :root:not([data-theme="light"]) .sim-card[href*="current-electricity"]::before,
+    [data-theme="dark"] .sim-card[href*="kirchhoff"]::before, :root:not([data-theme="light"]) .sim-card[href*="kirchhoff"]::before,
+    [data-theme="dark"] .sim-card[href*="wheatstone"]::before, :root:not([data-theme="light"]) .sim-card[href*="wheatstone"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Crect x='25' y='30' width='50' height='40' rx='4' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cline x1='25' y1='50' x2='35' y2='50' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M35 50 L40 38 L45 62 L50 38 L55 62 L60 38 L65 50' fill='none' stroke='%2300d4ff' stroke-width='1.8'/%3E%3Cline x1='65' y1='50' x2='75' y2='50' stroke='%2300d4ff' stroke-width='2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="magnetism"]::before, :root:not([data-theme="light"]) .sim-card[href*="magnetism"]::before,
+    [data-theme="dark"] .sim-card[href*="biot-savart"]::before, :root:not([data-theme="light"]) .sim-card[href*="biot-savart"]::before,
+    [data-theme="dark"] .sim-card[href*="galvanometer"]::before, :root:not([data-theme="light"]) .sim-card[href*="galvanometer"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 50 C50 30 25 25 25 50 C25 75 50 70 50 50 C50 30 75 25 75 50 C75 75 50 70 50 50Z' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="emi"]::before, :root:not([data-theme="light"]) .sim-card[href*="emi"]::before,
+    [data-theme="dark"] .sim-card[href*="ac-generator"]::before, :root:not([data-theme="light"]) .sim-card[href*="ac-generator"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 50 C50 44 56 38 62 38 C68 38 74 44 74 50 C74 56 68 62 62 62 C50 62 38 56 38 44 C38 32 50 26 62 26 C74 26 82 38 82 50 C82 62 74 74 58 74' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="ac-circuits"]::before, :root:not([data-theme="light"]) .sim-card[href*="ac-circuits"]::before,
+    [data-theme="dark"] .sim-card[href*="transformer"]::before, :root:not([data-theme="light"]) .sim-card[href*="transformer"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='15' y1='50' x2='85' y2='50' stroke='%2300d4ff' stroke-width='1' stroke-dasharray='3 3'/%3E%3Cpath d='M15 50 Q28 20 40 50 Q52 80 65 50 Q78 20 85 50' fill='none' stroke='%2300d4ff' stroke-width='2.5'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="em-waves"]::before, :root:not([data-theme="light"]) .sim-card[href*="em-waves"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%2300d4ff'/%3E%3Cpath d='M38 38 A17 17 0 0 1 62 38' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M30 30 A28 28 0 0 1 70 30' fill='none' stroke='%2300d4ff' stroke-width='1.8'/%3E%3Cpath d='M22 22 A40 40 0 0 1 78 22' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M38 62 A17 17 0 0 0 62 62' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M30 70 A28 28 0 0 0 70 70' fill='none' stroke='%2300d4ff' stroke-width='1.8'/%3E%3Cpath d='M22 78 A40 40 0 0 0 78 78' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="ray-optics"]::before, :root:not([data-theme="light"]) .sim-card[href*="ray-optics"]::before,
+    [data-theme="dark"] .sim-card[href*="prism"]::before, :root:not([data-theme="light"]) .sim-card[href*="prism"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpolygon points='50,25 75,70 25,70' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cline x1='15' y1='48' x2='42' y2='48' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='58' y1='52' x2='85' y2='42' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='58' y1='55' x2='85' y2='52' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='58' y1='58' x2='85' y2='62' stroke='%2300d4ff' stroke-width='1'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="wave-optics"]::before, :root:not([data-theme="light"]) .sim-card[href*="wave-optics"]::before,
+    [data-theme="dark"] .sim-card[href*="single-slit"]::before, :root:not([data-theme="light"]) .sim-card[href*="single-slit"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='42' cy='42' r='10' fill='none' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Ccircle cx='42' cy='42' r='20' fill='none' stroke='%2300d4ff' stroke-width='1'/%3E%3Ccircle cx='42' cy='42' r='30' fill='none' stroke='%2300d4ff' stroke-width='0.8'/%3E%3Ccircle cx='58' cy='58' r='10' fill='none' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Ccircle cx='58' cy='58' r='20' fill='none' stroke='%2300d4ff' stroke-width='1'/%3E%3Ccircle cx='58' cy='58' r='30' fill='none' stroke='%2300d4ff' stroke-width='0.8'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .sim-card[href*="modern-physics"]::before, :root:not([data-theme="light"]) .sim-card[href*="modern-physics"]::before,
+    [data-theme="dark"] .sim-card[href*="bohr"]::before, :root:not([data-theme="light"]) .sim-card[href*="bohr"]::before,
+    [data-theme="dark"] .sim-card[href*="radioactive"]::before, :root:not([data-theme="light"]) .sim-card[href*="radioactive"]::before,
+    [data-theme="dark"] .sim-card[href*="nuclear"]::before, :root:not([data-theme="light"]) .sim-card[href*="nuclear"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%2300d4ff'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%2300d4ff' stroke-width='1.5' transform='rotate(60 50 50)'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%2300d4ff' stroke-width='1.5' transform='rotate(120 50 50)'/%3E%3C/svg%3E"); }
+
+    @media (max-width: 768px) {
+      .carousel-track .sim-card { flex: 0 0 200px; min-height: 280px; }
+      .chp-page .sim-info h3 { font-size: 0.82rem; }
+      .sim-tags span { font-size: 0.55rem; padding: 2px 5px; }
     }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -287,96 +433,35 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/kinematics.html" class="sim-card reveal">
-                <div class="sim-preview projectile-thumb" style="background: #111;">
-                  <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
-                    <line x1="20" y1="100" x2="185" y2="100" stroke="#333" stroke-width="1"/>
-                    <path d="M20,100 Q60,15 110,20 Q155,25 180,100" fill="none" stroke="#333" stroke-width="1.5" stroke-dasharray="4,3"/>
-                    <path class="proj-arc" d="M20,100 Q60,15 110,20 Q155,25 180,100" fill="none" stroke="#4A9EFF" stroke-width="2" stroke-dasharray="260" stroke-dashoffset="260"/>
-                    <circle class="proj-dot" cx="20" cy="100" r="4" fill="#4A9EFF"/>
-                  </svg>
-                </div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Kinematics</div>
-                  <div class="sim-title">Projectile Motion</div>
-                  <div class="sim-desc">Launch projectiles at different angles. Compare ranges, heights, and trajectories with persistent color-coded trails.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Projectile Motion</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Trajectory</span><span>Range</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/vector-addition.html" class="sim-card reveal">
-                <div class="sim-preview vec-thumb" style="background: #111;">
-                  <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
-                    <!-- Vector A (cyan) -->
-                    <line class="vec-a" x1="30" y1="90" x2="120" y2="40" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round"/>
-                    <polygon points="120,40 110,46 112,52" fill="#00d4ff" opacity="0"/>
-                    <text x="65" y="55" fill="#00d4ff" font-size="11" font-weight="bold" opacity="0.7">A</text>
-                    <!-- Vector B (purple) -->
-                    <line class="vec-b" x1="30" y1="90" x2="100" y2="90" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
-                    <polygon points="100,90 92,84 92,96" fill="#7c3aed" opacity="0"/>
-                    <text x="62" y="105" fill="#7c3aed" font-size="11" font-weight="bold" opacity="0.7">B</text>
-                    <!-- Parallelogram dashes -->
-                    <line class="vec-dash1" x1="120" y1="40" x2="185" y2="40" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
-                    <line class="vec-dash2" x1="100" y1="90" x2="185" y2="40" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
-                    <!-- Resultant R (green) -->
-                    <line class="vec-r" x1="30" y1="90" x2="185" y2="40" stroke="#00ffaa" stroke-width="2.5" stroke-linecap="round"/>
-                    <polygon points="185,40 175,46 177,34" fill="#00ffaa" opacity="0"/>
-                    <text x="115" y="56" fill="#00ffaa" font-size="11" font-weight="bold" opacity="0.7">R</text>
-                  </svg>
-                </div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Kinematics</div>
-                  <div class="sim-title">Vector Addition</div>
-                  <div class="sim-desc">Two draggable vectors with parallelogram law. See the resultant magnitude and direction.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Vector Addition</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Parallelogram</span><span>Resultant</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/boat-river.html" class="sim-card reveal">
-                <div class="sim-preview boat-thumb" style="background: #0a1220; overflow:hidden;">
-                  <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
-                    <!-- Banks -->
-                    <rect x="0" y="0" width="200" height="18" fill="rgba(0,255,170,0.08)"/>
-                    <rect x="0" y="102" width="200" height="18" fill="rgba(0,255,170,0.08)"/>
-                    <line x1="0" y1="18" x2="200" y2="18" stroke="rgba(0,255,170,0.4)" stroke-width="1.5"/>
-                    <line x1="0" y1="102" x2="200" y2="102" stroke="rgba(0,255,170,0.4)" stroke-width="1.5"/>
-                    <!-- River waves -->
-                    <path class="wave1" d="M-20,40 Q0,35 20,40 Q40,45 60,40 Q80,35 100,40 Q120,45 140,40 Q160,35 180,40 Q200,45 220,40" fill="none" stroke="rgba(80,180,255,0.12)" stroke-width="1"/>
-                    <path class="wave2" d="M-20,60 Q0,55 20,60 Q40,65 60,60 Q80,55 100,60 Q120,65 140,60 Q160,55 180,60 Q200,65 220,60" fill="none" stroke="rgba(80,180,255,0.15)" stroke-width="1.5"/>
-                    <path class="wave3" d="M-20,80 Q0,75 20,80 Q40,85 60,80 Q80,75 100,80 Q120,85 140,80 Q160,75 180,80 Q200,85 220,80" fill="none" stroke="rgba(80,180,255,0.1)" stroke-width="1"/>
-                    <!-- Current arrow -->
-                    <line x1="140" y1="50" x2="180" y2="50" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
-                    <polygon points="180,50 174,46 174,54" fill="#00d4ff" opacity="0.4"/>
-                    <!-- Boat path (diagonal crossing) -->
-                    <path class="boat-path" d="M60,100 Q75,70 90,50 Q105,30 120,18" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-dasharray="4,3"/>
-                    <!-- Boat icon -->
-                    <g class="boat-icon">
-                      <path d="M55,100 L65,96 L65,104 Z" fill="#e8e0d0"/>
-                      <rect x="56" y="97" width="6" height="6" rx="1" fill="#c8b898"/>
-                      <line x1="59" y1="97" x2="59" y2="90" stroke="#ddd" stroke-width="0.8"/>
-                      <polygon points="59,90 63,92 59,93" fill="#ff4444"/>
-                    </g>
-                  </svg>
-                </div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Kinematics</div>
-                  <div class="sim-title">Boat Crossing a River</div>
-                  <div class="sim-desc">Navigate a boat across a river current. Explore minimum time vs shortest path strategies.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Boat Crossing a River</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Relative Vel</span><span>Min Time</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/graphical-analysis.html" class="sim-card reveal">
-                <div class="sim-preview graph-thumb" style="background: #111;">
-                  <svg viewBox="0 0 200 120" style="width:140px; height:84px; position:relative; z-index:1;">
-                    <line x1="25" y1="100" x2="185" y2="100" stroke="#333" stroke-width="1"/>
-                    <line x1="25" y1="10" x2="25" y2="100" stroke="#333" stroke-width="1"/>
-                    <path class="graph-parabola" d="M30,95 Q60,90 90,60 Q120,30 160,15" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round"/>
-                    <path class="graph-line" d="M30,95 L160,25" fill="none" stroke="#b44aff" stroke-width="2.5" stroke-linecap="round"/>
-                    <path class="graph-flat" d="M30,50 L160,50" fill="none" stroke="#4aff8b" stroke-width="2.5" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Kinematics</div>
-                  <div class="sim-title">Graphical Analysis of Motion</div>
-                  <div class="sim-desc">Pick a motion type and see x-t, v-t, and a-t graphs update together. Understand slope and area relationships.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Graphical Analysis</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>s-t Graph</span><span>v-t Graph</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
 
@@ -398,39 +483,35 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/newtons-laws.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2818);"><span style="position: relative; z-index: 1;">&#9878;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Newton's Laws</div>
-                  <div class="sim-title">Friction Simulation</div>
-                  <div class="sim-desc">Apply force to objects and see F=ma in action. Explore friction, normal force, and net force.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Friction Simulation</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>F=ma</span><span>Net Force</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/static-kinetic-friction.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a2818);"><span style="position: relative; z-index: 1;">&#128230;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Newton's Laws</div>
-                  <div class="sim-title">Static &amp; Kinetic Friction</div>
-                  <div class="sim-desc">Increase applied force and watch the friction graph transition from static to kinetic.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Static &amp; Kinetic Friction</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>&mu;s vs &mu;k</span><span>Threshold</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/pulley-wire-constraint.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a1628);"><span style="position: relative; z-index: 1;">&#9881;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Newton's Laws</div>
-                  <div class="sim-title">Pulley &amp; Wire Constraint</div>
-                  <div class="sim-desc">Two masses over a pulley. See constraint acceleration and tension in real-time.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Pulley &amp; Wire</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Tension</span><span>Constraint</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/wire-ring-constraint.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #1a0a28);"><span style="position: relative; z-index: 1;">&#11044;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Newton's Laws</div>
-                  <div class="sim-title">Bead on a Wire</div>
-                  <div class="sim-desc">A bead constrained to a circular wire. Explore normal force and constraint motion.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Bead on a Wire</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Normal Force</span><span>Circular</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -451,39 +532,35 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/work-power-energy.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#9889;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Work, Power &amp; Energy</div>
-                  <div class="sim-title">Conservation of Energy</div>
-                  <div class="sim-desc">Ball on a roller coaster. See kinetic and potential energy transform in real-time.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Conservation of Energy</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>KE &harr; PE</span><span>Coaster</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/work-done.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #281a0a);"><span style="position: relative; z-index: 1;">&#128170;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Work, Power &amp; Energy</div>
-                  <div class="sim-title">Work Done by a Force</div>
-                  <div class="sim-desc">Block on a surface with force at an angle. Visualize W = Fd cos(&theta;).</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Work Done by a Force</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>W=Fd cos&theta;</span><span>Angle</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/collisions.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #280a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#128165;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Work, Power &amp; Energy</div>
-                  <div class="sim-title">Collisions</div>
-                  <div class="sim-desc">Elastic vs inelastic collisions. See momentum bars and energy before/after impact.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Collisions</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Elastic</span><span>Momentum</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/conservation-momentum.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #1a0a28);"><span style="position: relative; z-index: 1;">&#8596;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Work, Power &amp; Energy</div>
-                  <div class="sim-title">Conservation of Momentum</div>
-                  <div class="sim-desc">Two carts collide. Watch momentum conserve as velocities exchange.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Conservation of Momentum</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>p&#8321;+p&#8322;</span><span>Exchange</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -504,66 +581,59 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/rotational-motion.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2818);"><span style="position: relative; z-index: 1;">&#128260;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
-                  <div class="sim-title">Moment of Inertia vs Torque</div>
-                  <div class="sim-desc">Spinning wheel. Control torque and observe angular velocity and moment of inertia.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Moment of Inertia</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>&tau;=I&alpha;</span><span>Angular</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/center-of-mass.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2818);"><span style="position: relative; z-index: 1;">&#9678;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
-                  <div class="sim-title">Finding Center of Mass</div>
-                  <div class="sim-desc">Place point masses on a plane. Watch the center of mass marker update live.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Center of Mass</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>COM</span><span>Point Mass</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/goat-vs-boat.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #281a0a);"><span style="position: relative; z-index: 1;">&#128674;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
-                  <div class="sim-title">Goat vs Boat</div>
-                  <div class="sim-desc">Person walks on a boat. COM stays fixed while the boat moves opposite.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Goat vs Boat</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>COM Fixed</span><span>Reaction</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/inclined-plane-race.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #1a0a28);"><span style="position: relative; z-index: 1;">&#127947;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
-                  <div class="sim-title">Inclined Plane Race</div>
-                  <div class="sim-desc">Sphere, cylinder, ring, and hollow sphere race down a ramp. Who wins?</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Inclined Plane Race</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Rolling</span><span>I/mR&sup2;</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/atwood-machine.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #280a1a);"><span style="position: relative; z-index: 1;">&#9877;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
-                  <div class="sim-title">Atwood Machine</div>
-                  <div class="sim-desc">Two blocks, a pulley with mass, friction, and torque. Classic constraint problem.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Atwood Machine</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Pulley Mass</span><span>Torque</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/angular-momentum.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2828);"><span style="position: relative; z-index: 1;">&#128675;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
-                  <div class="sim-title">Angular Momentum</div>
-                  <div class="sim-desc">Ice skater effect: change the radius and watch angular velocity change to conserve L.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Angular Momentum</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>L=I&omega;</span><span>Conservation</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/rolling-vs-rotation.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #0a1628);"><span style="position: relative; z-index: 1;">&#9899;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Rotational Motion</div>
-                  <div class="sim-title">Rolling vs Rotation</div>
-                  <div class="sim-desc">Side-by-side comparison of pure rotation vs rolling without slipping.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Rolling vs Rotation</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Pure Roll</span><span>Slip</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -584,32 +654,27 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/gravitation.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#127759;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Gravitation</div>
-                  <div class="sim-title">Universal Law of Gravitation</div>
-                  <div class="sim-desc">Two masses attract. See force arrows scale with F = GMm/r&sup2;.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Universal Gravitation</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>F=GMm/r&sup2;</span><span>Inverse Sq</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/gravity-variation.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #281a0a);"><span style="position: relative; z-index: 1;">&#128200;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Gravitation</div>
-                  <div class="sim-title">Variation of Gravity</div>
-                  <div class="sim-desc">How does g change from Earth's center through the surface to outer space?</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Variation of Gravity</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>g vs Depth</span><span>Altitude</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
-              <a href="simulations/gravity-equilibrium.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a1a0a, #0a1628);">
-                  <span style="position: relative; z-index: 1;">&#128752;</span>
-                </div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Gravitation</div>
-                  <div class="sim-title">Gravitational Equilibrium</div>
-                  <div class="sim-desc">Drag a satellite between two planets to discover where gravitational forces balance.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+              <a href="simulations/equilibrium.html" class="sim-card reveal">
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Equilibrium Finder</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Null Point</span><span>Stability</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -630,30 +695,27 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/hookes-law.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #0a1628);"><span style="position: relative; z-index: 1;">&#128204;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Mech. Properties</div>
-                  <div class="sim-title">Hooke's Law</div>
-                  <div class="sim-desc">Spring with a load. See extension vs force graph and measure the spring constant.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Hooke's Law</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>F=kx</span><span>Spring</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/modulus-elasticity.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #281a0a);"><span style="position: relative; z-index: 1;">&#128200;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Mech. Properties</div>
-                  <div class="sim-title">Modulus of Elasticity</div>
-                  <div class="sim-desc">Compare stress-strain curves for steel, rubber, glass, and copper.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Modulus of Elasticity</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Stress-Strain</span><span>Young's</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/poissons-ratio.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2828);"><span style="position: relative; z-index: 1;">&#9645;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Mech. Properties</div>
-                  <div class="sim-title">Poisson's Ratio</div>
-                  <div class="sim-desc">Stretch a block and see lateral contraction. Compare steel, rubber, cork, auxetic materials.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Poisson's Ratio</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Lateral</span><span>Contraction</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -674,66 +736,59 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/fluid-dynamics.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2828);"><span style="position: relative; z-index: 1;">&#127754;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
-                  <div class="sim-title">Bernoulli's Principle</div>
-                  <div class="sim-desc">Fluid flow through pipes of varying cross-sections. See Bernoulli's principle in action.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Bernoulli's Principle</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Pressure</span><span>Velocity</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/manometer.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2818);"><span style="position: relative; z-index: 1;">&#9774;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
-                  <div class="sim-title">Manometer</div>
-                  <div class="sim-desc">U-tube manometer with mercury, water, or oil. Measure gas pressure from height difference.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Manometer</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>U-tube</span><span>Height &Delta;</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/hydrostatic-paradox.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #0a1628);"><span style="position: relative; z-index: 1;">&#127754;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
-                  <div class="sim-title">Hydrostatic Paradox</div>
-                  <div class="sim-desc">Three differently shaped containers, same fluid height, same pressure at the bottom!</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Hydrostatic Paradox</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Shape</span><span>Pressure</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/pascals-law.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#128296;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
-                  <div class="sim-title">Pascal's Law</div>
-                  <div class="sim-desc">Hydraulic press: small force on small piston lifts heavy load on large piston.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Pascal's Law</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Hydraulic</span><span>Force</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/continuity-equation.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#128167;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
-                  <div class="sim-title">Continuity Equation</div>
-                  <div class="sim-desc">Pipe narrows, velocity increases. Visualize A&#8321;v&#8321; = A&#8322;v&#8322; with animated flow.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Continuity Equation</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>A&#8321;v&#8321;=A&#8322;v&#8322;</span><span>Flow</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/venturimeter.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #1a0a28);"><span style="position: relative; z-index: 1;">&#128295;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
-                  <div class="sim-title">Venturimeter</div>
-                  <div class="sim-desc">Narrowing tube with pressure gauges. Measure flow rate from pressure difference.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Venturimeter</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Flow Rate</span><span>&Delta;P</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/magnus-effect.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #280a1a, #0a1628);"><span style="position: relative; z-index: 1;">&#9917;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Fluid Mechanics</div>
-                  <div class="sim-title">Magnus Effect</div>
-                  <div class="sim-desc">Spinning ball curves through air. See airflow and pressure asymmetry.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Magnus Effect</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Spin</span><span>Curve</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -754,21 +809,19 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/thermodynamics.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #280a0a, #281a0a);"><span style="position: relative; z-index: 1;">&#128293;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Thermodynamics</div>
-                  <div class="sim-title">PV Diagrams &amp; Gas Laws</div>
-                  <div class="sim-desc">Interactive PV diagram with isothermal, adiabatic, and isobaric processes.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>PV Diagrams &amp; Gas Laws</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Isothermal</span><span>Adiabatic</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/calorimetry.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #280a0a);"><span style="position: relative; z-index: 1;">&#127777;&#65039;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Thermodynamics</div>
-                  <div class="sim-title">Calorimetry</div>
-                  <div class="sim-desc">Mix hot and cold substances. Calculate equilibrium temperature with Q = mc&Delta;T.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Calorimetry</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Q=mc&Delta;T</span><span>Mixing</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -789,21 +842,19 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/shm-waves.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#12336;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; SHM</div>
-                  <div class="sim-title">Spring-Mass Oscillator</div>
-                  <div class="sim-desc">Two spring-mass oscillators with independent amplitude, angular frequency, and phase controls.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Spring-Mass Oscillator</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>&omega;</span><span>Amplitude</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/pendulum.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a1628);"><span style="position: relative; z-index: 1;">&#128344;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; SHM</div>
-                  <div class="sim-title">Simple Pendulum</div>
-                  <div class="sim-desc">Adjust length and gravity. Measure period T = 2&pi;&radic;(L/g) with energy visualization.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Simple Pendulum</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>T=2&pi;&radic;(L/g)</span><span>Period</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -824,30 +875,27 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/waves.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2828);"><span style="position: relative; z-index: 1;">&#127754;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Waves</div>
-                  <div class="sim-title">Waves &amp; Standing Waves</div>
-                  <div class="sim-desc">Transverse waves, superposition, and standing wave formation. Nodes and antinodes.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Standing Waves</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Nodes</span><span>Superposition</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/beats.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #280a1a);"><span style="position: relative; z-index: 1;">&#127925;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Waves</div>
-                  <div class="sim-title">Beats</div>
-                  <div class="sim-desc">Two close frequencies create a beat pattern. See f_beat = |f&#8321; &minus; f&#8322;|.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Beats</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>f&#8321;&minus;f&#8322;</span><span>Amplitude</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/doppler-effect.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #1a0a28);"><span style="position: relative; z-index: 1;">&#128680;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XI &bull; Waves</div>
-                  <div class="sim-title">Doppler Effect</div>
-                  <div class="sim-desc">Moving source compresses wavefronts ahead and stretches them behind. See frequency shift.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Doppler Effect</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Frequency</span><span>Source Vel</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
             </div>
@@ -873,39 +921,35 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/electrostatics.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #281a0a);"><span style="position: relative; z-index: 1;">&#9889;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Electrostatics</div>
-                  <div class="sim-title">Electric Field Lines</div>
-                  <div class="sim-desc">Place point charges and visualize electric field lines and equipotential surfaces in real-time.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Electric Field Lines</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Field Lines</span><span>Equipotential</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/coulombs-law.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #281a0a);"><span style="position: relative; z-index: 1;">&#128171;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Electrostatics</div>
-                  <div class="sim-title">Coulomb's Law</div>
-                  <div class="sim-desc">Drag two charges and see the force between them change with distance. Verify the inverse-square law.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Coulomb's Law</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>kq&#8321;q&#8322;/r&sup2;</span><span>Inverse Sq</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/electrostatic-potential.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a280a, #0a1628);"><span style="position: relative; z-index: 1;">&#9889;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Electrostatics</div>
-                  <div class="sim-title">Electrostatic Potential</div>
-                  <div class="sim-desc">Explore how electric potential varies with distance from a source charge. See potential decrease along the electric field direction.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Electrostatic Potential</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>V=kq/r</span><span>Distance</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/electric-dipole.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #280a1a, #0a1a28);"><span style="position: relative; z-index: 1;">&#9883;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Electrostatics</div>
-                  <div class="sim-title">Electric Dipole</div>
-                  <div class="sim-desc">Explore the electric field and potential around a dipole. Toggle between field and potential views.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Electric Dipole</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>+q &minus;q</span><span>Moment</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/equilibrium.html" class="sim-card reveal">
@@ -918,30 +962,27 @@
                 </div>
               </a>
               <a href="simulations/electric-flux.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1a28, #1a280a);"><span style="position: relative; z-index: 1;">&#128306;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Electrostatics</div>
-                  <div class="sim-title">Electric Flux</div>
-                  <div class="sim-desc">Visualize electric flux through a surface. Rotate the area vector and count field lines passing through.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Electric Flux</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>&Phi;=EA cos&theta;</span><span>Surface</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/gauss-law.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a281a);"><span style="position: relative; z-index: 1;">&#128230;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Electrostatics</div>
-                  <div class="sim-title">Gauss's Law</div>
-                  <div class="sim-desc">Explore Gauss's Law with a 3D cube. Place a charge at the center, corner, or edge to see how flux distributes.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Gauss's Law</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>&Phi;=q/&epsilon;&#8320;</span><span>Symmetry</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/capacitor.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #0a1628);"><span style="position: relative; z-index: 1;">&#128267;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Electrostatics</div>
-                  <div class="sim-title">Parallel Plate Capacitor</div>
-                  <div class="sim-desc">Adjust plate area, separation, and dielectric to see capacitance, charge, and energy storage change.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Parallel Plate Capacitor</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>C=&epsilon;A/d</span><span>Dielectric</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
             </div>
@@ -962,30 +1003,27 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/current-electricity.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #0a1628);"><span style="position: relative; z-index: 1;">&#128268;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Current Electricity</div>
-                  <div class="sim-title">Ohm's Law &amp; Circuits</div>
-                  <div class="sim-desc">Build circuits with resistors, batteries, and switches. See current flow and voltage drops live.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Ohm's Law &amp; Circuits</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>V=IR</span><span>Circuit</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/kirchhoffs-laws.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #0a2818);"><span style="position: relative; z-index: 1;">&#128256;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Current Electricity</div>
-                  <div class="sim-title">Kirchhoff's Laws</div>
-                  <div class="sim-desc">Multi-loop circuits with KVL and KCL applied visually. See how currents split and voltages add up.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Kirchhoff's Laws</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>KVL</span><span>KCL</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
               <a href="simulations/wheatstone-bridge.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2818);"><span style="position: relative; z-index: 1;">&#9878;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Current Electricity</div>
-                  <div class="sim-title">Wheatstone Bridge</div>
-                  <div class="sim-desc">Balance the bridge by adjusting resistances. See galvanometer deflection and null condition.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Wheatstone Bridge</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Balance</span><span>Null Point</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
             </div>
@@ -1006,30 +1044,27 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/magnetism.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a1628);"><span style="position: relative; z-index: 1;">&#129522;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Magnetism</div>
-                  <div class="sim-title">Lorentz Force &amp; Cyclotron</div>
-                  <div class="sim-desc">Watch charged particles curve in magnetic fields. Explore the Lorentz force and cyclotron motion.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Lorentz Force &amp; Cyclotron</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>F=qvB</span><span>Cyclotron</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/biot-savart.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#127744;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Magnetism</div>
-                  <div class="sim-title">Biot-Savart Law</div>
-                  <div class="sim-desc">Visualize the magnetic field around a current-carrying wire, loop, and solenoid.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Biot-Savart Law</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>dB</span><span>Wire Field</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
               <a href="simulations/galvanometer.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #1a0a28);"><span style="position: relative; z-index: 1;">&#128376;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Magnetism</div>
-                  <div class="sim-title">Moving Coil Galvanometer</div>
-                  <div class="sim-desc">See how torque on a current loop produces deflection. Convert to ammeter and voltmeter.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Moving Coil Galvanometer</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Torque</span><span>Deflection</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
             </div>
@@ -1050,39 +1085,35 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/emi.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #1a0a28);"><span style="position: relative; z-index: 1;">&#9851;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; EMI</div>
-                  <div class="sim-title">Faraday's Law</div>
-                  <div class="sim-desc">Move a magnet through a coil and see induced EMF. Explore Faraday's law and Lenz's law.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Faraday's Law</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>emf=&minus;d&Phi;/dt</span><span>Lenz</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/ac-generator.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a2828);"><span style="position: relative; z-index: 1;">&#9881;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; EMI</div>
-                  <div class="sim-title">AC Generator</div>
-                  <div class="sim-desc">Rotate a coil in a magnetic field and watch sinusoidal EMF being generated. Adjust speed and turns.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>AC Generator</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Sinusoidal</span><span>Rotation</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
               <a href="simulations/ac-circuits.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a2818);"><span style="position: relative; z-index: 1;">&#12336;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; AC Circuits</div>
-                  <div class="sim-title">RLC Circuit &amp; Phasors</div>
-                  <div class="sim-desc">Visualize AC waveforms, phasor diagrams, and resonance in RLC circuits with adjustable parameters.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>RLC Circuit &amp; Phasors</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Resonance</span><span>Phasor</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/transformer.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #281a0a);"><span style="position: relative; z-index: 1;">&#128281;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; AC Circuits</div>
-                  <div class="sim-title">Transformer</div>
-                  <div class="sim-desc">Adjust primary/secondary turns and see voltage step-up/step-down. Explore efficiency and power.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Transformer</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Turns Ratio</span><span>Step-up</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
             </div>
@@ -1103,48 +1134,43 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/em-waves.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #280a1a);"><span style="position: relative; z-index: 1;">&#128225;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; EM Waves</div>
-                  <div class="sim-title">EM Wave Propagation</div>
-                  <div class="sim-desc">See E and B fields oscillating perpendicular to each other. Explore the EM spectrum interactively.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>EM Wave Propagation</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>E&perp;B</span><span>Spectrum</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/ray-optics.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #281a0a);"><span style="position: relative; z-index: 1;">&#128269;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Ray Optics</div>
-                  <div class="sim-title">Lens &amp; Mirror Ray Tracing</div>
-                  <div class="sim-desc">Interactive lens and mirror ray tracing. Place objects and see image formation with ray diagrams.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Lens &amp; Mirror</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Ray Diagram</span><span>Image</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/prism-dispersion.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #281a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#128142;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Ray Optics</div>
-                  <div class="sim-title">Prism &amp; Dispersion</div>
-                  <div class="sim-desc">Pass white light through a prism. See dispersion into VIBGYOR and find the angle of minimum deviation.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Prism &amp; Dispersion</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>VIBGYOR</span><span>Deviation</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
               <a href="simulations/wave-optics.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #0a2828);"><span style="position: relative; z-index: 1;">&#127752;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Wave Optics</div>
-                  <div class="sim-title">Young's Double Slit (YDSE)</div>
-                  <div class="sim-desc">Adjust slit width, spacing, and wavelength to see interference fringes. Measure fringe width.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Young's Double Slit</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Interference</span><span>Fringe</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/single-slit-diffraction.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2828, #280a1a);"><span style="position: relative; z-index: 1;">&#127774;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Wave Optics</div>
-                  <div class="sim-title">Single Slit Diffraction</div>
-                  <div class="sim-desc">See diffraction pattern from a single slit. Adjust slit width and wavelength to observe central maxima.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Single Slit Diffraction</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Central Max</span><span>Diffraction</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
             </div>
@@ -1165,39 +1191,35 @@
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
               <a href="simulations/modern-physics.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #1a0a28, #280a0a);"><span style="position: relative; z-index: 1;">&#128161;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Modern Physics</div>
-                  <div class="sim-title">Photoelectric Effect</div>
-                  <div class="sim-desc">Vary wavelength, intensity, and voltage to observe electron emission, stopping potential, and V-I curves.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Photoelectric Effect</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>hf=&phi;+KE</span><span>Threshold</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/bohr-model.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a1628, #1a0a28);"><span style="position: relative; z-index: 1;">&#9883;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Modern Physics</div>
-                  <div class="sim-title">Bohr's Hydrogen Atom</div>
-                  <div class="sim-desc">Visualize electron orbits, energy levels, and spectral transitions. See Lyman, Balmer, Paschen series.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Bohr's Hydrogen Atom</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Energy Level</span><span>Spectra</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
               <a href="simulations/radioactive-decay.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #280a0a, #0a1628);"><span style="position: relative; z-index: 1;">&#9762;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Modern Physics</div>
-                  <div class="sim-title">Radioactive Decay</div>
-                  <div class="sim-desc">Watch nuclei decay over time. Plot N vs t, verify half-life, and compare &alpha;, &beta;, &gamma; decay modes.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Radioactive Decay</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Half-life</span><span>Decay</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
               <a href="simulations/nuclear-binding.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #280a0a);"><span style="position: relative; z-index: 1;">&#128165;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Modern Physics</div>
-                  <div class="sim-title">Nuclear Binding Energy</div>
-                  <div class="sim-desc">Explore the binding energy curve. See why iron is most stable and understand fission vs fusion.</div>
-                  <div class="sim-link">Coming Soon &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Nuclear Binding Energy</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>BE/A</span><span>Stability</span></div>
+                  <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
             </div>

@@ -58,111 +58,238 @@
     .chp-track {
       display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
       scroll-snap-type: x mandatory; -ms-overflow-style: none; scrollbar-width: none;
-      padding-bottom: 4px;
+      padding: 12px 0 16px;
     }
     .chp-track::-webkit-scrollbar { display: none; }
 
-    /* Cards */
+    /* ====== Cards — Mon crest style ====== */
     .chp-track .ch-card {
-      flex: 0 0 300px; scroll-snap-align: start;
+      flex: 0 0 260px; scroll-snap-align: start;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
+      border-radius: 16px;
       display: flex; flex-direction: column;
-      padding: 0; overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      padding: 24px 24px 20px; overflow: visible;
       position: relative;
       opacity: 0; transform: translateY(20px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      min-height: 320px;
     }
     .chp-track .ch-card.revealed {
       opacity: 1; transform: translateY(0);
       transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
+    .chp-track .ch-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Mon crest watermark — base */
     .chp-track .ch-card::before {
       content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, #7c3aed, #00d4ff);
-      opacity: 0; transition: opacity 0.25s ease;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px; height: 90px;
+      background-size: contain; background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.1;
+      pointer-events: none; z-index: 0;
+      transition: opacity 0.4s ease;
     }
-    .chp-track .ch-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
-      border-color: rgba(124, 58, 237, 0.35);
+    .chp-track .ch-card:hover::before {
+      opacity: 0.18;
     }
-    .chp-track .ch-card:hover::before { opacity: 1; }
 
-    /* Thumbnail area */
-    .ch-thumb {
-      height: 140px; display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .ch-thumb::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 50%, var(--bg-card));
-    }
-    .ch-emoji {
-      font-size: 3.2rem; position: relative; z-index: 1;
-      transition: transform 0.3s ease;
-    }
-    .ch-card:hover .ch-emoji { transform: scale(1.15); }
+    /* === Mon crests per chapter (light theme = red) === */
 
-    /* Chapter number badge */
+    /* 01 Kinematics — mitsudomoe (swirling motion) */
+    .ch-card[href*="kinematics"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 50 A15 15 0 0 1 50 20 A25 25 0 0 1 50 50Z' fill='%23d63031'/%3E%3Cpath d='M50 50 A15 15 0 0 1 76 65 A25 25 0 0 1 50 50Z' fill='%23d63031'/%3E%3Cpath d='M50 50 A15 15 0 0 1 24 65 A25 25 0 0 1 50 50Z' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* 02 Newton's Laws — three arrows radiating (forces) */
+    .ch-card[href*="newtons"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='50' y1='50' x2='50' y2='15' stroke='%23d63031' stroke-width='2'/%3E%3Cpolygon points='50,10 45,20 55,20' fill='%23d63031'/%3E%3Cline x1='50' y1='50' x2='80' y2='67' stroke='%23d63031' stroke-width='2'/%3E%3Cpolygon points='85,70 75,72 78,62' fill='%23d63031'/%3E%3Cline x1='50' y1='50' x2='20' y2='67' stroke='%23d63031' stroke-width='2'/%3E%3Cpolygon points='15,70 25,72 22,62' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* 03 Work Power Energy — interlocking rings */
+    .ch-card[href*="work-power"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='38' cy='45' r='16' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Ccircle cx='62' cy='45' r='16' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Ccircle cx='50' cy='62' r='16' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    /* 04 Rotational Motion — pinwheel */
+    .ch-card[href*="rotational"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 50 Q50 25 30 25 Q50 25 50 50' fill='%23d63031'/%3E%3Cpath d='M50 50 Q75 50 75 30 Q75 50 50 50' fill='%23d63031'/%3E%3Cpath d='M50 50 Q50 75 70 75 Q50 75 50 50' fill='%23d63031'/%3E%3Cpath d='M50 50 Q25 50 25 70 Q25 50 50 50' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* 05 Gravitation — concentric orbits */
+    .ch-card[href*="gravitation"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%23d63031'/%3E%3Cellipse cx='50' cy='50' rx='18' ry='12' fill='none' stroke='%23d63031' stroke-width='1.5' transform='rotate(-20 50 50)'/%3E%3Cellipse cx='50' cy='50' rx='30' ry='20' fill='none' stroke='%23d63031' stroke-width='1.5' transform='rotate(-20 50 50)'/%3E%3C/svg%3E");
+    }
+    /* 06 Mechanical Properties — hexagonal lattice */
+    .ch-card[href*="mechanical"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpolygon points='50,22 68,33 68,53 50,64 32,53 32,33' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cline x1='50' y1='22' x2='50' y2='64' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='32' y1='33' x2='68' y2='53' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='68' y1='33' x2='32' y2='53' stroke='%23d63031' stroke-width='1.2'/%3E%3C/svg%3E");
+    }
+    /* 07 Fluid Mechanics — ripple waves */
+    .ch-card[href*="fluid"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M20 45 Q35 38 50 45 Q65 52 80 45' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M20 55 Q35 48 50 55 Q65 62 80 55' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M20 65 Q35 58 50 65 Q65 72 80 65' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    /* 08 Thermodynamics — rising flame */
+    .ch-card[href*="thermodynamics"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 75 Q35 60 40 45 Q42 35 50 25 Q58 35 60 45 Q65 60 50 75Z' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M50 75 Q43 65 47 55 Q48 48 50 40 Q52 48 53 55 Q57 65 50 75Z' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* 09 SHM — pendulum arc */
+    .ch-card[href*="shm"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='50' y1='20' x2='35' y2='65' stroke='%23d63031' stroke-width='1.5' stroke-dasharray='4 3'/%3E%3Cline x1='50' y1='20' x2='50' y2='68' stroke='%23d63031' stroke-width='1.5' stroke-dasharray='4 3'/%3E%3Cline x1='50' y1='20' x2='65' y2='65' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='65' cy='65' r='5' fill='%23d63031'/%3E%3Cpath d='M32 68 Q50 78 68 68' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3C/svg%3E");
+    }
+    /* 10 Waves — seigaiha wave pattern */
+    .ch-card[href*="waves.html"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q85 65 95 50' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M15 40 Q25 25 35 40 Q45 55 55 40 Q65 25 75 40' fill='none' stroke='%23d63031' stroke-width='1.2'/%3E%3Cpath d='M25 60 Q35 45 45 60 Q55 75 65 60 Q75 45 85 60' fill='none' stroke='%23d63031' stroke-width='1.2'/%3E%3C/svg%3E");
+    }
+    /* XII-01 Electrostatics — radial field lines */
+    .ch-card[href*="electrostatics"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23d63031'/%3E%3Cline x1='50' y1='44' x2='50' y2='18' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='50' y1='56' x2='50' y2='82' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='44' y1='50' x2='18' y2='50' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='56' y1='50' x2='82' y2='50' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='46' y1='46' x2='27' y2='27' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='54' y1='46' x2='73' y2='27' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='54' y1='54' x2='73' y2='73' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='46' y1='54' x2='27' y2='73' stroke='%23d63031' stroke-width='1.2'/%3E%3C/svg%3E");
+    }
+    /* XII-02 Current Electricity — circuit loop */
+    .ch-card[href*="current-electricity"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Crect x='25' y='30' width='50' height='40' rx='4' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cline x1='25' y1='50' x2='35' y2='50' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M35 50 L40 38 L45 62 L50 38 L55 62 L60 38 L65 50' fill='none' stroke='%23d63031' stroke-width='1.8'/%3E%3Cline x1='65' y1='50' x2='75' y2='50' stroke='%23d63031' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    /* XII-03 Magnetism — magnetic field (infinity loop) */
+    .ch-card[href*="magnetism"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 50 C50 30 25 25 25 50 C25 75 50 70 50 50 C50 30 75 25 75 50 C75 75 50 70 50 50Z' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%23d63031'/%3E%3C/svg%3E");
+    }
+    /* XII-04 EMI — spiral coil */
+    .ch-card[href*="emi"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M50 50 C50 44 56 38 62 38 C68 38 74 44 74 50 C74 56 68 62 62 62 C50 62 38 56 38 44 C38 32 50 26 62 26 C74 26 82 38 82 50 C82 62 74 74 58 74' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    /* XII-05 AC — sine wave */
+    .ch-card[href*="ac-circuits"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='15' y1='50' x2='85' y2='50' stroke='%23d63031' stroke-width='1' stroke-dasharray='3 3'/%3E%3Cpath d='M15 50 Q28 20 40 50 Q52 80 65 50 Q78 20 85 50' fill='none' stroke='%23d63031' stroke-width='2.5'/%3E%3C/svg%3E");
+    }
+    /* XII-06 EM Waves — radiating arcs */
+    .ch-card[href*="em-waves"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%23d63031'/%3E%3Cpath d='M38 38 A17 17 0 0 1 62 38' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M30 30 A28 28 0 0 1 70 30' fill='none' stroke='%23d63031' stroke-width='1.8'/%3E%3Cpath d='M22 22 A40 40 0 0 1 78 22' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M38 62 A17 17 0 0 0 62 62' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cpath d='M30 70 A28 28 0 0 0 70 70' fill='none' stroke='%23d63031' stroke-width='1.8'/%3E%3Cpath d='M22 78 A40 40 0 0 0 78 78' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3C/svg%3E");
+    }
+    /* XII-07 Ray Optics — prism with ray */
+    .ch-card[href*="ray-optics"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpolygon points='50,25 75,70 25,70' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Cline x1='15' y1='48' x2='42' y2='48' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='58' y1='52' x2='85' y2='42' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='58' y1='55' x2='85' y2='52' stroke='%23d63031' stroke-width='1.2'/%3E%3Cline x1='58' y1='58' x2='85' y2='62' stroke='%23d63031' stroke-width='1'/%3E%3C/svg%3E");
+    }
+    /* XII-08 Wave Optics — double slit interference */
+    .ch-card[href*="wave-optics"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='42' cy='42' r='10' fill='none' stroke='%23d63031' stroke-width='1.2'/%3E%3Ccircle cx='42' cy='42' r='20' fill='none' stroke='%23d63031' stroke-width='1'/%3E%3Ccircle cx='42' cy='42' r='30' fill='none' stroke='%23d63031' stroke-width='0.8'/%3E%3Ccircle cx='58' cy='58' r='10' fill='none' stroke='%23d63031' stroke-width='1.2'/%3E%3Ccircle cx='58' cy='58' r='20' fill='none' stroke='%23d63031' stroke-width='1'/%3E%3Ccircle cx='58' cy='58' r='30' fill='none' stroke='%23d63031' stroke-width='0.8'/%3E%3C/svg%3E");
+    }
+    /* XII-09 Modern Physics — Bohr atom */
+    .ch-card[href*="modern-physics"]::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23d63031'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%23d63031' stroke-width='1.5' transform='rotate(60 50 50)'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%23d63031' stroke-width='1.5' transform='rotate(120 50 50)'/%3E%3C/svg%3E");
+    }
+
+    /* Chapter number */
     .ch-badge {
-      position: absolute; top: 8px; left: 10px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem; font-weight: 700;
-      color: rgba(255,255,255,0.5);
-      background: rgba(255,255,255,0.06);
-      padding: 2px 6px; border-radius: 4px;
-      letter-spacing: 1px; z-index: 2;
+      font-size: 0.6rem; font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 2px; text-transform: uppercase;
+      position: relative; z-index: 1;
     }
 
-    /* Info section */
-    .ch-info { padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    /* Chapter title */
+    .ch-info {
+      position: relative; z-index: 1;
+      margin-top: 8px;
+    }
     .chp-page .ch-info h3 {
-      font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
-      line-height: 1.3; margin: 0;
+      font-family: var(--font-display); font-size: 1.3rem; font-weight: 800;
+      line-height: 1.25; margin: 0;
       color: var(--text-primary);
     }
 
-    /* Topic tags — visible on hover */
-    .ch-tags {
-      display: flex; flex-wrap: wrap; gap: 4px;
-      max-height: 0; overflow: hidden; opacity: 0;
-      transition: max-height 0.3s ease, opacity 0.3s ease;
+    /* Tags as stepping stones */
+    .ch-bottom {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 12px;
+      margin-top: auto; padding-top: 20px;
     }
-    .ch-card:hover .ch-tags { max-height: 40px; opacity: 1; }
+    .ch-tags {
+      display: flex; flex-wrap: nowrap; gap: 6px; overflow: hidden;
+    }
     .ch-tags span {
       font-size: 0.6rem; font-family: 'JetBrains Mono', monospace;
-      padding: 2px 6px; border-radius: 3px;
-      background: rgba(124,58,237,0.1); color: rgba(124,58,237,0.8);
-      letter-spacing: 0.3px;
+      padding: 4px 10px; border-radius: 4px;
+      background: var(--border-subtle); color: var(--text-muted);
+      letter-spacing: 0.5px;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+    .ch-card:hover .ch-tags span {
+      color: var(--text-secondary, var(--text-muted));
     }
 
-    /* Meta row: sections count + CTA */
-    .ch-meta-row {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: auto; padding-top: 4px;
-    }
-    .ch-sections {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem; color: var(--text-muted);
-    }
+    /* CTA */
     .ch-cta {
-      font-size: 0.75rem; font-weight: 600; color: #7c3aed;
-      transition: color 0.2s ease;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-body); font-size: 0.78rem; font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 0.3px;
+      transition: gap 0.3s ease;
     }
-    .ch-card:hover .ch-cta { color: #00d4ff; }
+    .ch-card:hover .ch-cta { gap: 10px; }
+
+    /* --- Light theme — LED red borders --- */
+    [data-theme="light"] .chp-track .ch-card {
+      background: #fff;
+      border: 2px solid rgba(214,48,49,0.5);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .chp-track .ch-card:hover {
+      border-color: #d63031;
+      box-shadow: 0 0 10px rgba(214,48,49,0.6), 0 0 30px rgba(214,48,49,0.35), 0 0 60px rgba(214,48,49,0.15);
+    }
+    [data-theme="light"] .ch-tags span {
+      background: rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .ch-card:hover .ch-tags span {
+      background: rgba(214,48,49,0.06); color: rgba(214,48,49,0.8);
+    }
+
+    /* === Dark theme — same physics mons in cyan + glow === */
+    [data-theme="dark"] .chp-track .ch-card,
+    :root:not([data-theme="light"]) .chp-track .ch-card {
+      border: 2px solid rgba(0,212,255,0.3);
+    }
+    [data-theme="dark"] .chp-track .ch-card:hover,
+    :root:not([data-theme="light"]) .chp-track .ch-card:hover {
+      border-color: #00d4ff;
+      box-shadow: 0 0 10px rgba(0,212,255,0.6), 0 0 30px rgba(0,212,255,0.35), 0 0 60px rgba(0,212,255,0.15);
+    }
+    [data-theme="dark"] .ch-card:hover .ch-tags span,
+    :root:not([data-theme="light"]) .ch-card:hover .ch-tags span {
+      background: rgba(0,212,255,0.08); color: rgba(0,212,255,0.8);
+    }
+    /* Cyan mon overrides */
+    [data-theme="dark"] .ch-card[href*="kinematics"]::before, :root:not([data-theme="light"]) .ch-card[href*="kinematics"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 50 A15 15 0 0 1 50 20 A25 25 0 0 1 50 50Z' fill='%2300d4ff'/%3E%3Cpath d='M50 50 A15 15 0 0 1 76 65 A25 25 0 0 1 50 50Z' fill='%2300d4ff'/%3E%3Cpath d='M50 50 A15 15 0 0 1 24 65 A25 25 0 0 1 50 50Z' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="newtons"]::before, :root:not([data-theme="light"]) .ch-card[href*="newtons"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='50' y1='50' x2='50' y2='15' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpolygon points='50,10 45,20 55,20' fill='%2300d4ff'/%3E%3Cline x1='50' y1='50' x2='80' y2='67' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpolygon points='85,70 75,72 78,62' fill='%2300d4ff'/%3E%3Cline x1='50' y1='50' x2='20' y2='67' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpolygon points='15,70 25,72 22,62' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="work-power"]::before, :root:not([data-theme="light"]) .ch-card[href*="work-power"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='38' cy='45' r='16' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Ccircle cx='62' cy='45' r='16' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Ccircle cx='50' cy='62' r='16' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="rotational"]::before, :root:not([data-theme="light"]) .ch-card[href*="rotational"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 50 Q50 25 30 25 Q50 25 50 50' fill='%2300d4ff'/%3E%3Cpath d='M50 50 Q75 50 75 30 Q75 50 50 50' fill='%2300d4ff'/%3E%3Cpath d='M50 50 Q50 75 70 75 Q50 75 50 50' fill='%2300d4ff'/%3E%3Cpath d='M50 50 Q25 50 25 70 Q25 50 50 50' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="gravitation"]::before, :root:not([data-theme="light"]) .ch-card[href*="gravitation"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='5' fill='%2300d4ff'/%3E%3Cellipse cx='50' cy='50' rx='18' ry='12' fill='none' stroke='%2300d4ff' stroke-width='1.5' transform='rotate(-20 50 50)'/%3E%3Cellipse cx='50' cy='50' rx='30' ry='20' fill='none' stroke='%2300d4ff' stroke-width='1.5' transform='rotate(-20 50 50)'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="mechanical"]::before, :root:not([data-theme="light"]) .ch-card[href*="mechanical"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpolygon points='50,22 68,33 68,53 50,64 32,53 32,33' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cline x1='50' y1='22' x2='50' y2='64' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='32' y1='33' x2='68' y2='53' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='68' y1='33' x2='32' y2='53' stroke='%2300d4ff' stroke-width='1.2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="fluid"]::before, :root:not([data-theme="light"]) .ch-card[href*="fluid"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M20 45 Q35 38 50 45 Q65 52 80 45' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M20 55 Q35 48 50 55 Q65 62 80 55' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M20 65 Q35 58 50 65 Q65 72 80 65' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="thermodynamics"]::before, :root:not([data-theme="light"]) .ch-card[href*="thermodynamics"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 75 Q35 60 40 45 Q42 35 50 25 Q58 35 60 45 Q65 60 50 75Z' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M50 75 Q43 65 47 55 Q48 48 50 40 Q52 48 53 55 Q57 65 50 75Z' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="shm"]::before, :root:not([data-theme="light"]) .ch-card[href*="shm"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='50' y1='20' x2='35' y2='65' stroke='%2300d4ff' stroke-width='1.5' stroke-dasharray='4 3'/%3E%3Cline x1='50' y1='20' x2='50' y2='68' stroke='%2300d4ff' stroke-width='1.5' stroke-dasharray='4 3'/%3E%3Cline x1='50' y1='20' x2='65' y2='65' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='65' cy='65' r='5' fill='%2300d4ff'/%3E%3Cpath d='M32 68 Q50 78 68 68' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="waves.html"]::before, :root:not([data-theme="light"]) .ch-card[href*="waves.html"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M15 50 Q25 35 35 50 Q45 65 55 50 Q65 35 75 50 Q85 65 95 50' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M15 40 Q25 25 35 40 Q45 55 55 40 Q65 25 75 40' fill='none' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cpath d='M25 60 Q35 45 45 60 Q55 75 65 60 Q75 45 85 60' fill='none' stroke='%2300d4ff' stroke-width='1.2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="electrostatics"]::before, :root:not([data-theme="light"]) .ch-card[href*="electrostatics"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%2300d4ff'/%3E%3Cline x1='50' y1='44' x2='50' y2='18' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='50' y1='56' x2='50' y2='82' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='44' y1='50' x2='18' y2='50' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='56' y1='50' x2='82' y2='50' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='46' y1='46' x2='27' y2='27' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='54' y1='46' x2='73' y2='27' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='54' y1='54' x2='73' y2='73' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='46' y1='54' x2='27' y2='73' stroke='%2300d4ff' stroke-width='1.2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="current-electricity"]::before, :root:not([data-theme="light"]) .ch-card[href*="current-electricity"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Crect x='25' y='30' width='50' height='40' rx='4' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cline x1='25' y1='50' x2='35' y2='50' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M35 50 L40 38 L45 62 L50 38 L55 62 L60 38 L65 50' fill='none' stroke='%2300d4ff' stroke-width='1.8'/%3E%3Cline x1='65' y1='50' x2='75' y2='50' stroke='%2300d4ff' stroke-width='2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="magnetism"]::before, :root:not([data-theme="light"]) .ch-card[href*="magnetism"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 50 C50 30 25 25 25 50 C25 75 50 70 50 50 C50 30 75 25 75 50 C75 75 50 70 50 50Z' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%2300d4ff'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="emi"]::before, :root:not([data-theme="light"]) .ch-card[href*="emi"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M50 50 C50 44 56 38 62 38 C68 38 74 44 74 50 C74 56 68 62 62 62 C50 62 38 56 38 44 C38 32 50 26 62 26 C74 26 82 38 82 50 C82 62 74 74 58 74' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="ac-circuits"]::before, :root:not([data-theme="light"]) .ch-card[href*="ac-circuits"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='15' y1='50' x2='85' y2='50' stroke='%2300d4ff' stroke-width='1' stroke-dasharray='3 3'/%3E%3Cpath d='M15 50 Q28 20 40 50 Q52 80 65 50 Q78 20 85 50' fill='none' stroke='%2300d4ff' stroke-width='2.5'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="em-waves"]::before, :root:not([data-theme="light"]) .ch-card[href*="em-waves"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%2300d4ff'/%3E%3Cpath d='M38 38 A17 17 0 0 1 62 38' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M30 30 A28 28 0 0 1 70 30' fill='none' stroke='%2300d4ff' stroke-width='1.8'/%3E%3Cpath d='M22 22 A40 40 0 0 1 78 22' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpath d='M38 62 A17 17 0 0 0 62 62' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cpath d='M30 70 A28 28 0 0 0 70 70' fill='none' stroke='%2300d4ff' stroke-width='1.8'/%3E%3Cpath d='M22 78 A40 40 0 0 0 78 78' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="ray-optics"]::before, :root:not([data-theme="light"]) .ch-card[href*="ray-optics"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cpolygon points='50,25 75,70 25,70' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Cline x1='15' y1='48' x2='42' y2='48' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='58' y1='52' x2='85' y2='42' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cline x1='58' y1='55' x2='85' y2='52' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Cline x1='58' y1='58' x2='85' y2='62' stroke='%2300d4ff' stroke-width='1'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="wave-optics"]::before, :root:not([data-theme="light"]) .ch-card[href*="wave-optics"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='42' cy='42' r='10' fill='none' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Ccircle cx='42' cy='42' r='20' fill='none' stroke='%2300d4ff' stroke-width='1'/%3E%3Ccircle cx='42' cy='42' r='30' fill='none' stroke='%2300d4ff' stroke-width='0.8'/%3E%3Ccircle cx='58' cy='58' r='10' fill='none' stroke='%2300d4ff' stroke-width='1.2'/%3E%3Ccircle cx='58' cy='58' r='20' fill='none' stroke='%2300d4ff' stroke-width='1'/%3E%3Ccircle cx='58' cy='58' r='30' fill='none' stroke='%2300d4ff' stroke-width='0.8'/%3E%3C/svg%3E"); }
+    [data-theme="dark"] .ch-card[href*="modern-physics"]::before, :root:not([data-theme="light"]) .ch-card[href*="modern-physics"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%2300d4ff'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%2300d4ff' stroke-width='1.5'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%2300d4ff' stroke-width='1.5' transform='rotate(60 50 50)'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='14' fill='none' stroke='%2300d4ff' stroke-width='1.5' transform='rotate(120 50 50)'/%3E%3C/svg%3E"); }
+
 
     @media (max-width: 768px) {
-      .chp-track .ch-card { flex: 0 0 180px; }
-      .ch-thumb { height: 90px; }
-      .ch-emoji { font-size: 2.2rem; }
+      .chp-track .ch-card { flex: 0 0 200px; }
+      .ch-emoji { font-size: 2.4rem; }
       .chp-row-arrows { display: none; }
       .chp-row-title { font-size: 0.9rem; }
-      .chp-page .ch-info h3 { font-size: 0.85rem; }
-      .ch-tags { display: none; }
+      .chp-page .ch-info h3 { font-size: 0.82rem; }
+      .ch-info { padding: 10px; }
+      .ch-bottom { padding: 8px 10px; gap: 6px; }
+      .ch-tags span { font-size: 0.55rem; padding: 2px 5px; }
     }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -276,43 +403,45 @@
       <div class="chp-track-wrap">
         <div class="chp-track">
           <a class="ch-card reveal" href="chapters/kinematics.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#0a2818)"><span class="ch-badge">01</span><span class="ch-emoji">&#128640;</span></div>
+            <span class="ch-badge">Chapter 01</span>
             <div class="ch-info">
               <h3>Kinematics</h3>
-              <div class="ch-tags"><span>Projectiles</span><span>Vectors</span><span>Circular</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">12 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            </div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Vectors</span><span>Motion</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/newtons-laws.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#1a0a28,#0a1628)"><span class="ch-badge">02</span><span class="ch-emoji">&#9878;</span></div>
-            <div class="ch-info">
-              <h3>Newton's Laws</h3>
-              <div class="ch-tags"><span>F = ma</span><span>Friction</span><span>FBD</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">8 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 02</span>
+            <div class="ch-info"><h3>Newton's Laws</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>F = ma</span><span>FBD</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/work-power-energy.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#281a0a,#0a1628)"><span class="ch-badge">03</span><span class="ch-emoji">&#9889;</span></div>
-            <div class="ch-info">
-              <h3>Work, Power &amp; Energy</h3>
-              <div class="ch-tags"><span>Conservation</span><span>Collisions</span><span>COM</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">10 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 03</span>
+            <div class="ch-info"><h3>Work, Power &amp; Energy</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Energy</span><span>COM</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/rotational-motion.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2828,#1a0a28)"><span class="ch-badge">04</span><span class="ch-emoji">&#128260;</span></div>
-            <div class="ch-info">
-              <h3>Rotational Motion</h3>
-              <div class="ch-tags"><span>Torque</span><span>MOI</span><span>Rolling</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">16 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 04</span>
+            <div class="ch-info"><h3>Rotational Motion</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Torque</span><span>MOI</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/gravitation.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#281a0a)"><span class="ch-badge">05</span><span class="ch-emoji">&#127759;</span></div>
-            <div class="ch-info">
-              <h3>Gravitation</h3>
-              <div class="ch-tags"><span>Orbits</span><span>Kepler</span><span>Escape v</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">7 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 05</span>
+            <div class="ch-info"><h3>Gravitation</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Orbits</span><span>Kepler</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
         </div>
@@ -333,43 +462,43 @@
       <div class="chp-track-wrap">
         <div class="chp-track">
           <a class="ch-card reveal" href="chapters/mechanical-properties.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2818,#0a1628)"><span class="ch-badge">06</span><span class="ch-emoji">&#128204;</span></div>
-            <div class="ch-info">
-              <h3>Mechanical Properties</h3>
-              <div class="ch-tags"><span>Stress</span><span>Strain</span><span>Elasticity</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">11 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 06</span>
+            <div class="ch-info"><h3>Mechanical Properties</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Stress</span><span>Strain</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/fluid-mechanics.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#0a2828)"><span class="ch-badge">07</span><span class="ch-emoji">&#127754;</span></div>
-            <div class="ch-info">
-              <h3>Fluid Mechanics</h3>
-              <div class="ch-tags"><span>Bernoulli</span><span>Buoyancy</span><span>Viscosity</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">19 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 07</span>
+            <div class="ch-info"><h3>Fluid Mechanics</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Bernoulli</span><span>Pascal</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/thermodynamics.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#280a0a,#281a0a)"><span class="ch-badge">08</span><span class="ch-emoji">&#128293;</span></div>
-            <div class="ch-info">
-              <h3>KTG &amp; Thermodynamics</h3>
-              <div class="ch-tags"><span>Gas Laws</span><span>Carnot</span><span>Entropy</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">10 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 08</span>
+            <div class="ch-info"><h3>KTG &amp; Thermodynamics</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Carnot</span><span>Entropy</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/shm.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#1a0a28,#0a1628)"><span class="ch-badge">09</span><span class="ch-emoji">&#128344;</span></div>
-            <div class="ch-info">
-              <h3>Simple Harmonic Motion</h3>
-              <div class="ch-tags"><span>Oscillations</span><span>Pendulum</span><span>Springs</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">12 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 09</span>
+            <div class="ch-info"><h3>Simple Harmonic Motion</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Pendulum</span><span>Springs</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/waves.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2828,#281a0a)"><span class="ch-badge">10</span><span class="ch-emoji">&#127925;</span></div>
-            <div class="ch-info">
-              <h3>Waves</h3>
-              <div class="ch-tags"><span>Standing</span><span>Doppler</span><span>Beats</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">10 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 10</span>
+            <div class="ch-info"><h3>Waves</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Doppler</span><span>Beats</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
         </div>
@@ -394,51 +523,51 @@
       <div class="chp-track-wrap">
         <div class="chp-track">
           <a class="ch-card reveal" href="chapters/electrostatics.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#281a0a)"><span class="ch-badge">01</span><span class="ch-emoji">&#9889;</span></div>
-            <div class="ch-info">
-              <h3>Electrostatics &amp; Capacitance</h3>
-              <div class="ch-tags"><span>Coulomb</span><span>Gauss</span><span>Capacitors</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">18 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 01</span>
+            <div class="ch-info"><h3>Electrostatics &amp; Capacitance</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Coulomb</span><span>Gauss</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/current-electricity.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2818,#0a1628)"><span class="ch-badge">02</span><span class="ch-emoji">&#128268;</span></div>
-            <div class="ch-info">
-              <h3>Current Electricity</h3>
-              <div class="ch-tags"><span>Ohm's Law</span><span>Kirchhoff</span><span>Circuits</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">12 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 02</span>
+            <div class="ch-info"><h3>Current Electricity</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Ohm</span><span>Kirchhoff</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/magnetism.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#1a0a28,#0a1628)"><span class="ch-badge">03</span><span class="ch-emoji">&#129522;</span></div>
-            <div class="ch-info">
-              <h3>Moving Charges &amp; Magnetism</h3>
-              <div class="ch-tags"><span>Lorentz</span><span>Biot-Savart</span><span>Ampere</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">13 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 03</span>
+            <div class="ch-info"><h3>Moving Charges &amp; Magnetism</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Lorentz</span><span>Ampere</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/emi.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2828,#1a0a28)"><span class="ch-badge">04</span><span class="ch-emoji">&#9851;</span></div>
-            <div class="ch-info">
-              <h3>Electromagnetic Induction</h3>
-              <div class="ch-tags"><span>Faraday</span><span>Lenz</span><span>Inductance</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">15 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 04</span>
+            <div class="ch-info"><h3>Electromagnetic Induction</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Faraday</span><span>Lenz</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/ac-circuits.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#281a0a,#0a2818)"><span class="ch-badge">05</span><span class="ch-emoji">&#12336;</span></div>
-            <div class="ch-info">
-              <h3>Alternating Current</h3>
-              <div class="ch-tags"><span>Phasors</span><span>Resonance</span><span>RLC</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">12 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 05</span>
+            <div class="ch-info"><h3>Alternating Current</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Phasors</span><span>RLC</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/em-waves.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a1628,#280a1a)"><span class="ch-badge">06</span><span class="ch-emoji">&#128225;</span></div>
-            <div class="ch-info">
-              <h3>Electromagnetic Waves</h3>
+            <span class="ch-badge">Chapter 06</span>
+            <div class="ch-info"><h3>Electromagnetic Waves</h3></div>
+            <div class="ch-bottom">
               <div class="ch-tags"><span>EM Spectrum</span><span>Maxwell</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">15 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
         </div>
@@ -459,27 +588,27 @@
       <div class="chp-track-wrap">
         <div class="chp-track">
           <a class="ch-card reveal" href="chapters/ray-optics.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#0a2818,#281a0a)"><span class="ch-badge">07</span><span class="ch-emoji">&#128269;</span></div>
-            <div class="ch-info">
-              <h3>Ray Optics</h3>
-              <div class="ch-tags"><span>Mirrors</span><span>Lenses</span><span>Prisms</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">17 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 07</span>
+            <div class="ch-info"><h3>Ray Optics</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Mirrors</span><span>Lenses</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/wave-optics.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#1a0a28,#0a2828)"><span class="ch-badge">08</span><span class="ch-emoji">&#127752;</span></div>
-            <div class="ch-info">
-              <h3>Wave Optics</h3>
-              <div class="ch-tags"><span>YDSE</span><span>Diffraction</span><span>Polarization</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">14 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 08</span>
+            <div class="ch-info"><h3>Wave Optics</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>YDSE</span><span>Diffraction</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
           <a class="ch-card reveal" href="chapters/modern-physics.html">
-            <div class="ch-thumb" style="background:linear-gradient(135deg,#280a0a,#0a1628)"><span class="ch-badge">09</span><span class="ch-emoji">&#9883;</span></div>
-            <div class="ch-info">
-              <h3>Modern Physics</h3>
-              <div class="ch-tags"><span>Photoelectric</span><span>Bohr</span><span>Nuclear</span></div>
-              <div class="ch-meta-row"><span class="ch-sections">18 sections</span><span class="ch-cta">Read Chapter &rarr;</span></div>
+            <span class="ch-badge">Chapter 09</span>
+            <div class="ch-info"><h3>Modern Physics</h3></div>
+            <div class="ch-bottom">
+              <div class="ch-tags"><span>Bohr</span><span>Nuclear</span></div>
+              <span class="ch-cta">Read Theory &rarr;</span>
             </div>
           </a>
         </div>
