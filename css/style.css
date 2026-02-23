@@ -3930,27 +3930,28 @@ ul { list-style: none; }
 }
 
 /* Mist / fog at base */
-/* Wind streaks — thin lines drifting right to left */
+/* Wind streaks — visible lines sweeping right to left */
 .wind-streak {
   position: absolute;
-  height: 1px;
-  background: linear-gradient(to left, rgba(26,26,26,0.12), transparent);
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to left, rgba(26,26,26,0.25), rgba(26,26,26,0.08), transparent);
   pointer-events: none;
   z-index: 3;
   opacity: 0;
-  animation: windBlow 3s ease-in-out infinite;
+  animation: windBlow 2.5s ease-out infinite;
 }
-.ws1 { top: 22%; right: -10%; width: 80px; animation-delay: 0s; }
-.ws2 { top: 35%; right: -5%;  width: 60px; animation-delay: 0.8s; }
-.ws3 { top: 48%; right: -8%;  width: 70px; animation-delay: 1.6s; }
-.ws4 { top: 30%; right: -3%;  width: 50px; animation-delay: 2.4s; }
-.ws5 { top: 55%; right: -6%;  width: 65px; animation-delay: 0.4s; }
+.ws1 { top: 20%; right: 0; width: 120px; animation-delay: 0s; }
+.ws2 { top: 36%; right: 0; width: 90px;  animation-delay: 0.7s; }
+.ws3 { top: 50%; right: 0; width: 100px; animation-delay: 1.4s; }
+.ws4 { top: 28%; right: 0; width: 70px;  animation-delay: 2.0s; }
+.ws5 { top: 58%; right: 0; width: 85px;  animation-delay: 0.3s; }
 
 @keyframes windBlow {
-  0%   { opacity: 0; transform: translateX(0); }
-  15%  { opacity: 0.4; }
-  50%  { opacity: 0.2; }
-  100% { opacity: 0; transform: translateX(-350px); }
+  0%   { opacity: 0; transform: translateX(20px); }
+  10%  { opacity: 0.6; }
+  40%  { opacity: 0.35; }
+  100% { opacity: 0; transform: translateX(-380px); }
 }
 
 .torii-mist {
