@@ -867,6 +867,35 @@ ul { list-style: none; }
   50% { box-shadow: 0 0 30px rgba(255,170,0,.7), 0 0 60px rgba(255,140,0,.4), 0 0 120px rgba(255,100,0,.2); }
 }
 
+/* Sun radiation rays — shoot outward one at a time */
+.sol-ray {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.5px;
+  height: 35px;
+  background: linear-gradient(to bottom, rgba(255, 200, 50, 0.8), transparent);
+  transform-origin: top center;
+  opacity: 0;
+  pointer-events: none;
+}
+.ray1 { transform: rotate(0deg); animation: rayShoot 4s ease-out 0s infinite; }
+.ray2 { transform: rotate(45deg); animation: rayShoot 4s ease-out 0.5s infinite; }
+.ray3 { transform: rotate(90deg); animation: rayShoot 4s ease-out 1s infinite; }
+.ray4 { transform: rotate(135deg); animation: rayShoot 4s ease-out 1.5s infinite; }
+.ray5 { transform: rotate(180deg); animation: rayShoot 4s ease-out 2s infinite; }
+.ray6 { transform: rotate(225deg); animation: rayShoot 4s ease-out 2.5s infinite; }
+.ray7 { transform: rotate(270deg); animation: rayShoot 4s ease-out 3s infinite; }
+.ray8 { transform: rotate(315deg); animation: rayShoot 4s ease-out 3.5s infinite; }
+
+@keyframes rayShoot {
+  0%   { opacity: 0; height: 10px; }
+  10%  { opacity: 0.8; }
+  30%  { opacity: 0.5; height: 40px; }
+  60%  { opacity: 0; height: 50px; }
+  100% { opacity: 0; height: 50px; }
+}
+
 /* Orbit paths — colored glow matching each planet */
 .sol-orbit {
   position: absolute;
