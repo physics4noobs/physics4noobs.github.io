@@ -4326,13 +4326,12 @@ ul { list-style: none; }
   background-clip: text;
   margin-bottom: 4px;
 }
-[data-theme="light"] .splash-logo {
-  background: linear-gradient(90deg, #d63031 0%, #1a1a1a 50%, #b0b0b0 50.1%);
-  background-size: 200% 100%;
-  background-position: right;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Splash screen uses dark style regardless of theme */
+[data-theme="light"] .splash-screen {
+  background: #050510;
+}
+[data-theme="light"] .splash-tagline {
+  color: #6b6b85;
 }
 .splash-tagline {
   font-family: var(--font-body, system-ui, sans-serif);
