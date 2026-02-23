@@ -875,7 +875,7 @@ ul { list-style: none; }
   width: 30px;
   height: 10px;
   margin-top: -5px;
-  margin-left: 20px;
+  margin-left: -15px;
   pointer-events: none;
   z-index: 6;
   opacity: 0;
@@ -885,9 +885,9 @@ ul { list-style: none; }
 @keyframes waveTravel {
   0%   { opacity: 0; transform: rotate(-45deg) translate(0, 0); }
   5%   { opacity: 0.9; transform: rotate(-45deg) translate(10px, 0); }
-  60%  { opacity: 0.8; transform: rotate(-45deg) translate(155px, 0); }
-  65%  { opacity: 0; transform: rotate(-45deg) translate(155px, 0); }
-  100% { opacity: 0; transform: rotate(-45deg) translate(155px, 0); }
+  60%  { opacity: 0.8; transform: rotate(-45deg) translate(175px, 0); }
+  65%  { opacity: 0; transform: rotate(-45deg) translate(175px, 0); }
+  100% { opacity: 0; transform: rotate(-45deg) translate(175px, 0); }
 }
 
 /* Equation that appears where wave disappears (northeast) */
@@ -895,8 +895,8 @@ ul { list-style: none; }
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: 120px;
-  margin-top: -130px;
+  margin-left: 100px;
+  margin-top: -140px;
   transform: translate(-50%, -50%) scale(0.5);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
