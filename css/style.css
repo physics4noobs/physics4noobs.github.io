@@ -3765,8 +3765,8 @@ ul { list-style: none; }
   display: block;
   position: relative;
   width: 420px;
-  height: 420px;
-  overflow: hidden;
+  height: 460px;
+  overflow: visible;
 }
 [data-theme="light"] .physics-orb {
   display: none;
@@ -4224,7 +4224,7 @@ ul { list-style: none; }
 /* Trajectory equation — fixed at bottom of torii gate */
 .trajectory-eq {
   position: absolute;
-  bottom: 2px;
+  bottom: -6px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -4261,7 +4261,7 @@ ul { list-style: none; }
 @media (max-width: 768px) {
   [data-theme="light"] .torii-visual {
     width: 320px;
-    height: 360px;
+    height: 400px;
   }
   .torii-gate { width: 160px; height: 210px; }
   .torii-kasagi { width: 200px; left: -20px; }
