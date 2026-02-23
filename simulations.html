@@ -19,7 +19,7 @@
     /* ====== Sim Cards — Mon crest style (matches chapter cards) ====== */
     .carousel-track .sim-card {
       flex: 0 0 260px; scroll-snap-align: start;
-      background: var(--bg-card);
+      background: transparent;
       border: 1px solid var(--border-subtle);
       border-radius: 16px;
       display: flex; flex-direction: column;
@@ -46,10 +46,10 @@
       content: '';
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 90px; height: 90px;
+      width: 110px; height: 110px;
       background-size: contain; background-repeat: no-repeat;
       background-position: center;
-      opacity: 0.1; pointer-events: none; z-index: 0;
+      opacity: 0.12; pointer-events: none; z-index: 0;
       transition: opacity 0.4s ease;
     }
     .carousel-track .sim-card:hover::before { opacity: 0.18; }
@@ -166,7 +166,7 @@
 
     /* --- Light theme — LED red borders --- */
     [data-theme="light"] .carousel-track .sim-card {
-      background: #fff;
+      background: transparent;
       border: 2px solid rgba(214,48,49,0.5);
       box-shadow: 0 1px 8px rgba(0,0,0,0.04);
     }
