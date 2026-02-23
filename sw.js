@@ -8,15 +8,21 @@
    - Everything else → Network-first with cache fallback
    ============================================ */
 
-var CACHE_NAME = 'p4n-v1';
+var CACHE_NAME = 'p4n-v2';
 
 // Core app shell to pre-cache on install
 var APP_SHELL = [
   '/',
   '/index.html',
+  '/flashcards.html',
+  '/simulations.html',
+  '/progress.html',
+  '/about.html',
   '/css/style.css',
   '/js/main.js',
   '/js/theme.js',
+  '/js/flashcards.js',
+  '/js/auth-gate.js',
   '/images/icon-192.svg',
   '/images/icon-512.svg'
 ];
