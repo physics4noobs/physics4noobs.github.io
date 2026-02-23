@@ -4069,18 +4069,18 @@ ul { list-style: none; }
 }
 
 /* Petals originate from branch area (top-right) */
-.sp1  { top: 40px; right: 50px;  width: 11px; height: 11px; animation: petalA 6.5s ease-in-out 0.5s infinite; }
-.sp2  { top: 30px; right: 70px;  width: 8px;  height: 12px; animation: petalB 7.2s ease-in-out 1.5s infinite; }
-.sp3  { top: 45px; right: 30px;  width: 12px; height: 12px; animation: petalC 5.8s ease-in-out 2.2s infinite; }
-.sp4  { top: 35px; right: 90px;  width: 8px;  height: 10px; animation: petalD 6.8s ease-in-out 0.8s infinite; }
-.sp5  { top: 50px; right: 55px;  width: 10px; height: 10px; animation: petalA 7.5s ease-in-out 3.2s infinite; }
-.sp6  { top: 25px; right: 40px;  width: 9px;  height: 13px; animation: petalB 6.2s ease-in-out 2.0s infinite; }
-.sp7  { top: 42px; right: 80px;  width: 11px; height: 11px; animation: petalC 6.0s ease-in-out 4.0s infinite; }
-.sp8  { top: 38px; right: 60px;  width: 7px;  height: 10px; animation: petalD 7.0s ease-in-out 1.0s infinite; }
-.sp9  { top: 48px; right: 45px;  width: 10px; height: 10px; animation: petalA 5.5s ease-in-out 3.8s infinite; }
-.sp10 { top: 28px; right: 35px;  width: 9px;  height: 12px; animation: petalB 6.6s ease-in-out 0.3s infinite; }
-.sp11 { top: 55px; right: 75px;  width: 11px; height: 11px; animation: petalC 7.8s ease-in-out 2.8s infinite; }
-.sp12 { top: 33px; right: 50px;  width: 8px;  height: 11px; animation: petalD 5.2s ease-in-out 4.5s infinite; }
+.sp1  { top: 80px;  right: 50px;  width: 11px; height: 11px; animation: petalA 6.5s ease-in-out 0.5s infinite; }
+.sp2  { top: 70px;  right: 70px;  width: 8px;  height: 12px; animation: petalB 7.2s ease-in-out 1.5s infinite; }
+.sp3  { top: 85px;  right: 30px;  width: 12px; height: 12px; animation: petalC 5.8s ease-in-out 2.2s infinite; }
+.sp4  { top: 75px;  right: 90px;  width: 8px;  height: 10px; animation: petalD 6.8s ease-in-out 0.8s infinite; }
+.sp5  { top: 90px;  right: 55px;  width: 10px; height: 10px; animation: petalA 7.5s ease-in-out 3.2s infinite; }
+.sp6  { top: 65px;  right: 40px;  width: 9px;  height: 13px; animation: petalB 6.2s ease-in-out 2.0s infinite; }
+.sp7  { top: 82px;  right: 80px;  width: 11px; height: 11px; animation: petalC 6.0s ease-in-out 4.0s infinite; }
+.sp8  { top: 78px;  right: 60px;  width: 7px;  height: 10px; animation: petalD 7.0s ease-in-out 1.0s infinite; }
+.sp9  { top: 88px;  right: 45px;  width: 10px; height: 10px; animation: petalA 5.5s ease-in-out 3.8s infinite; }
+.sp10 { top: 68px;  right: 35px;  width: 9px;  height: 12px; animation: petalB 6.6s ease-in-out 0.3s infinite; }
+.sp11 { top: 95px;  right: 75px;  width: 11px; height: 11px; animation: petalC 7.8s ease-in-out 2.8s infinite; }
+.sp12 { top: 73px;  right: 50px;  width: 8px;  height: 11px; animation: petalD 5.2s ease-in-out 4.5s infinite; }
 
 /* mg force arrows — follow select petals */
 .mg-arrow {
