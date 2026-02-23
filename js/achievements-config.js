@@ -1449,5 +1449,27 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
       icon: '\uD83D\uDD00',
       check: { type: 'global', name: '_achGaussEdge', op: 'eq', value: true }
     }
+  ],
+
+  /* ── Mirror Angle (Mirrors and Images) ── */
+  'mirror-angle': [
+    {
+      id: 'kaleidoscope', title: 'Kaleidoscope',
+      description: 'Set mirror angle to 60\u00B0 to create 5 images',
+      icon: '\uD83D\uDD2E',
+      check: { type: 'slider', id: 'angleSlider', op: 'eq', value: 60 }
+    },
+    {
+      id: 'infinite_reflections', title: 'Infinite Reflections',
+      description: 'Set mirror angle to minimum (10\u00B0) for maximum images',
+      icon: '\u267E\uFE0F',
+      check: { type: 'slider', id: 'angleSlider', op: 'eq', value: 10 }
+    },
+    {
+      id: 'symmetric_explorer', title: 'Symmetry Matters',
+      description: 'Compare symmetric vs asymmetric placement with n odd',
+      icon: '\u2696\uFE0F',
+      check: { type: 'global', name: '_achSymmetryExplored', op: 'eq', value: true }
+    }
   ]
 };
