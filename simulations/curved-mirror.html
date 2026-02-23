@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curved Mirror Ray Diagrams | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/achievements.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+  <script defer src="../js/sim-tracker.js"></script>
+  <script defer src="../js/achievements-config.js"></script>
+  <script defer src="../js/achievements.js"></script>
+</head>
+<body data-auth-redirect="../simulations.html">
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+<div class="bg-grid"></div>
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link active">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <style>
+    .bg-grid { display: none !important; }
+
+    .sim-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .sim-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .sim-btn {
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .sim-btn:hover {
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .sim-btn.primary {
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .sim-btn.primary:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .sim-main-row {
+      display: flex;
+      gap: 1px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+    }
+
+    /* Controls */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 3.5vw, 40px);
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-group label {
+      font-family: var(--font-body);
+      font-size: clamp(0.85rem, 1vw, 1.05rem);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .control-group input[type="range"] {
+      width: 140px;
+      accent-color: var(--color-primary);
+    }
+
+    .val-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      min-width: 48px;
+      text-align: right;
+    }
+
+    .mode-btn {
+      min-width: 100px;
+      font-size: 0.82rem !important;
+      transition: var(--transition-fast);
+    }
+    .mode-btn.concave {
+      background: rgba(92, 224, 255, 0.12);
+      border-color: rgba(92, 224, 255, 0.3);
+      color: #5ce0ff;
+    }
+    .mode-btn.convex {
+      background: rgba(255, 170, 80, 0.12);
+      border-color: rgba(255, 170, 80, 0.3);
+      color: #ffaa50;
+    }
+    [data-theme="light"] .mode-btn.concave {
+      background: rgba(0, 89, 163, 0.1);
+      border-color: rgba(0, 89, 163, 0.35);
+      color: #0059a3;
+    }
+    [data-theme="light"] .mode-btn.convex {
+      background: rgba(180, 100, 20, 0.08);
+      border-color: rgba(180, 100, 20, 0.3);
+      color: #a06010;
+    }
+
+    /* Side Data Panel */
+    .side-data {
+      width: 260px;
+      min-width: 220px;
+      background: var(--bg-card);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-data h3 {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .data-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+    }
+
+    .data-label {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .data-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .data-value.highlight {
+      font-size: 1.1rem;
+      color: #00d4ff;
+    }
+
+    [data-theme="light"] .data-value.highlight {
+      color: #0078c8;
+    }
+
+    .data-value.real { color: #69db7c; }
+    .data-value.virtual { color: #ffaa50; }
+    [data-theme="light"] .data-value.real { color: #1e8449; }
+    [data-theme="light"] .data-value.virtual { color: #b45309; }
+
+    /* Equations */
+    .equations-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+
+    .equations-section h3 {
+      font-family: var(--font-display);
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .equations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+    }
+
+    .equation-item {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: var(--text-primary);
+      padding: 8px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .equation-item .eq-label {
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Q&A */
+    .qa-section {
+      margin-top: 32px;
+    }
+
+    .qa-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .qa-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .qa-item:hover {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    .qa-q {
+      padding: 16px 24px;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+
+    .qa-q:hover {
+      background: var(--bg-glass-hover);
+    }
+
+    .qa-q::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      transition: transform 0.2s;
+      font-weight: 300;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: '\2212';
+    }
+
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 500px;
+    }
+
+    .qa-a-inner {
+      padding: 0 24px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(0.92rem, 1vw, 1.08rem);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Fullscreen */
+    #simArea {
+      background: var(--bg-primary);
+      position: relative;
+    }
+
+    #simArea:fullscreen,
+    #simArea:-webkit-full-screen {
+      background: var(--bg-primary);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #simArea:fullscreen .sim-main-row,
+    #simArea:-webkit-full-screen .sim-main-row {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap,
+    #simArea:-webkit-full-screen .canvas-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    #simArea:fullscreen .canvas-wrap canvas,
+    #simArea:-webkit-full-screen .canvas-wrap canvas {
+      height: 100% !important;
+    }
+
+    #simArea:fullscreen .side-data,
+    #simArea:-webkit-full-screen .side-data {
+      width: 200px;
+      min-width: 180px;
+    }
+
+    #simArea:fullscreen .controls-bar,
+    #simArea:-webkit-full-screen .controls-bar {
+      border-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sim-main-row { flex-direction: column; }
+      .side-data { width: 100%; min-width: unset; }
+    }
+    @media (max-width: 768px) {
+      .sim-wrapper { padding: 70px 12px 24px; }
+      .sim-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .controls-bar { gap: 12px; padding: 12px; }
+    }
+
+    /* Equation live-linking */
+    .eq-var {
+      transition: color 0.3s, text-shadow 0.3s;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+    .eq-var.active {
+      color: var(--color-primary);
+      text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+    .data-value {
+      transition: color 0.3s;
+    }
+    .data-value.flash {
+      color: #fff !important;
+    }
+    [data-theme="light"] .data-value.flash {
+      color: #7c3aed !important;
+    }
+
+    /* === Mirror Summary Table === */
+    .mirror-summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+      font-family: 'Andika', sans-serif;
+      margin-top: 12px;
+    }
+    .mirror-summary-table th,
+    .mirror-summary-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .mirror-summary-table th {
+      background: rgba(124,58,237,0.15);
+      color: var(--color-primary, #a78bfa);
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+    .mirror-summary-table td {
+      color: var(--text-secondary, #c4c4d4);
+    }
+    .mirror-summary-table tbody tr:nth-child(even) {
+      background: rgba(255,255,255,0.02);
+    }
+    .mirror-summary-table tbody tr:hover {
+      background: rgba(124,58,237,0.06);
+    }
+    [data-theme="light"] .mirror-summary-table th {
+      background: rgba(124,58,237,0.1);
+    }
+    [data-theme="light"] .mirror-summary-table th,
+    [data-theme="light"] .mirror-summary-table td {
+      border-color: rgba(0,0,0,0.08);
+    }
+    [data-theme="light"] .mirror-summary-table tbody tr:nth-child(even) {
+      background: rgba(0,0,0,0.02);
+    }
+    [data-theme="light"] .mirror-summary-table tbody tr:hover {
+      background: rgba(124,58,237,0.05);
+    }
+
+    /* === Tutorial Overlay === */
+    .sim-tutorial {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+    }
+
+    .tut-hint {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .tut-arrows-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tut-label {
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.92);
+      color: #1a1a2e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .tut-dismiss {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 32px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tut-dismiss:hover {
+      background: #e8e0f8;
+      transform: translateX(-50%) scale(1.04);
+    }
+
+    @media (max-width: 900px) {
+      .sim-tutorial { display: none !important; }
+      #helpBtn { display: none; }
+    }
+  </style>
+
+  <div class="sim-wrapper">
+    <div id="simArea">
+    <div class="sim-header">
+      <h1>Curved Mirror Ray Diagrams</h1>
+      <div style="display:flex;gap:8px;">
+        <button class="sim-btn" id="resetBtn">Reset</button>
+        <button class="sim-btn" id="fullscreenBtn">Full Screen</button>
+        <button class="sim-btn" id="helpBtn">? Help</button>
+      </div>
+    </div>
+
+    <div class="sim-main-row">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div class="side-data">
+        <h3>Data Table</h3>
+        <div class="data-grid">
+          <div class="data-row">
+            <span class="data-label">Mirror Type</span>
+            <span class="data-value" id="dtMirrorType">Concave</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Object dist (u)</span>
+            <span class="data-value" id="dtU">&minus;35.0 cm</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Focal length (f)</span>
+            <span class="data-value" id="dtF">&minus;20.0 cm</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Image dist (v)</span>
+            <span class="data-value" id="dtV">&minus;46.7 cm</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Magnification (m)</span>
+            <span class="data-value highlight" id="dtM">&minus;1.33</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Image Nature</span>
+            <span class="data-value real" id="dtNature">Real, Inverted</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Object height (h)</span>
+            <span class="data-value" id="dtObjH">4.0 cm</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Image Size</span>
+            <span class="data-value" id="dtSize">Same size</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="control-group">
+        <label>Object Distance:</label>
+        <input type="range" id="objSlider" min="50" max="500" value="350" step="1">
+        <span class="val-display" id="objLabel">350</span>
+      </div>
+      <div class="control-group">
+        <label>Object Height:</label>
+        <input type="range" id="heightSlider" min="15" max="120" value="40" step="1">
+        <span class="val-display" id="heightLabel">40</span>
+      </div>
+      <button class="sim-btn mode-btn concave" id="modeBtn">Concave</button>
+      <span style="width:1px;height:24px;background:var(--border-subtle);"></span>
+      <button class="sim-btn" id="resetBtn2">&#8635; Reset</button>
+      <span style="font-size: clamp(0.72rem, 0.85vw, 0.82rem); color: var(--text-muted); margin-left: auto;">Drag object &bull; Up/down = resize</span>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div class="sim-tutorial" id="simTutorial" style="display:none;">
+      <svg class="tut-arrows-svg" id="tutArrowsSvg"></svg>
+      <div class="tut-hint" id="tutHint1" style="top:22%;left:50%;transform:translateX(-50%);">
+        <div class="tut-label">A curved mirror reflects light &mdash; toggle between concave and convex</div>
+      </div>
+      <div class="tut-hint" id="tutHint2" style="top:55%;left:45%;transform:translateX(-50%);">
+        <div class="tut-label">Drag the object along the axis to see how the image changes</div>
+      </div>
+      <div class="tut-hint" id="tutHint3" style="bottom:8%;left:30%;transform:translateX(-50%);">
+        <div class="tut-label">Two principal rays show exactly where the image forms</div>
+      </div>
+      <button class="tut-dismiss">Got it, let's start!</button>
+    </div>
+
+    </div><!-- end #simArea -->
+
+    <div class="equations-section">
+      <h3>Key Formulas</h3>
+      <div class="equations-grid">
+        <div class="equation-item">
+          <span class="eq-label">Mirror Formula</span>
+          1/<span class="eq-var" id="eqV">v</span> + 1/<span class="eq-var" id="eqU">u</span> = 1/<span class="eq-var" id="eqF">f</span>
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Magnification</span>
+          <span class="eq-var" id="eqM">m</span> = &minus;v/u = h'/h
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Focal Length</span>
+          f = R/2
+        </div>
+        <div class="equation-item">
+          <span class="eq-label">Sign Convention</span>
+          Left of P = negative
+        </div>
+      </div>
+    </div>
+
+    <div class="equations-section" style="margin-top: 24px;">
+      <h3>Concave Mirror — Image Summary Table</h3>
+      <div style="overflow-x: auto;">
+        <table class="mirror-summary-table">
+          <thead>
+            <tr>
+              <th>Object Position</th>
+              <th>Image Position</th>
+              <th>Type of Image</th>
+              <th>Size</th>
+              <th>Orientation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>At infinity</td>
+              <td>At F</td>
+              <td>Real</td>
+              <td>Highly diminished (point)</td>
+              <td>Inverted</td>
+            </tr>
+            <tr>
+              <td>Beyond C</td>
+              <td>Between F and C</td>
+              <td>Real</td>
+              <td>Diminished</td>
+              <td>Inverted</td>
+            </tr>
+            <tr>
+              <td>At C</td>
+              <td>At C</td>
+              <td>Real</td>
+              <td>Same size</td>
+              <td>Inverted</td>
+            </tr>
+            <tr>
+              <td>Between C and F</td>
+              <td>Beyond C</td>
+              <td>Real</td>
+              <td>Magnified</td>
+              <td>Inverted</td>
+            </tr>
+            <tr>
+              <td>At F</td>
+              <td>At infinity</td>
+              <td>&mdash;</td>
+              <td>Highly magnified</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td>Between F and P</td>
+              <td>Behind the mirror</td>
+              <td>Virtual</td>
+              <td>Magnified</td>
+              <td>Erect</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 style="margin-top: 28px;">Convex Mirror — Image Summary</h3>
+      <div style="overflow-x: auto;">
+        <table class="mirror-summary-table">
+          <thead>
+            <tr>
+              <th>Object Position</th>
+              <th>Image Position</th>
+              <th>Type of Image</th>
+              <th>Size</th>
+              <th>Orientation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Anywhere in front</td>
+              <td>Between P and F (behind mirror)</td>
+              <td>Virtual</td>
+              <td>Diminished</td>
+              <td>Erect</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <h2>Test Your Understanding</h2>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How does a concave mirror form a real image?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          A concave mirror converges parallel rays to the <strong>focal point F</strong>. When an object is placed beyond F, the reflected rays actually meet on the same side as the object, forming a <strong>real, inverted image</strong>. The further the object is from the mirror (beyond C), the smaller and closer to F the image becomes. Between C and F, the image is magnified and beyond C.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">Why does a convex mirror always form virtual images?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          A convex mirror <strong>diverges</strong> all incoming rays. The reflected rays never actually meet in front of the mirror &mdash; they only <em>appear</em> to originate from a point behind the mirror. This means the image is always <strong>virtual, erect, and diminished</strong>, regardless of where the object is placed. This property makes convex mirrors ideal for rear-view mirrors and security mirrors.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What happens when the object is at the focal point of a concave mirror?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          When the object is placed exactly at F, the reflected rays become <strong>parallel to the principal axis</strong> &mdash; they never converge. Mathematically, 1/v = 1/f &minus; 1/u = 0, so v &rarr; &infin;. The image is said to form <strong>&ldquo;at infinity.&rdquo;</strong> This is the principle behind searchlights and car headlights: a bulb at F produces a parallel beam.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">How is magnification related to image nature?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          Magnification m = &minus;v/u. When <strong>m is negative</strong>, the image is <strong>inverted</strong> (real). When <strong>m is positive</strong>, the image is <strong>erect</strong> (virtual). |m| &gt; 1 means the image is <strong>magnified</strong>, |m| &lt; 1 means <strong>diminished</strong>, and |m| = 1 means the image is the <strong>same size</strong> as the object.
+        </div></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="this.parentElement.classList.toggle('open')">What is the difference between focal length and radius of curvature?</div>
+        <div class="qa-a"><div class="qa-a-inner">
+          The <strong>radius of curvature R</strong> is the radius of the sphere of which the mirror is a part. The <strong>focal length f = R/2</strong> &mdash; the focal point is exactly midway between the pole P and the centre of curvature C. For concave mirrors, both f and R are measured on the reflecting side. For convex mirrors, C and F lie behind the mirror.
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === THEME COLORS ===
+    var tc = {};
+    function updateThemeColors() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      tc = {
+        bg: isLight ? '#f5f5f3' : '#0d0d26',
+        bgCenter: isLight ? '#f9f9f7' : '#0f0f28',
+        mirror: isLight ? 'rgba(30, 30, 55, 0.9)' : 'rgba(210, 215, 230, 0.85)',
+        mirrorBright: isLight ? 'rgba(60, 60, 120, 0.5)' : 'rgba(240, 240, 255, 0.45)',
+        object: isLight ? '#c0392b' : '#ff6b9d',
+        objectGlow: isLight ? 'rgba(192, 57, 43, 0.35)' : 'rgba(255, 107, 157, 0.35)',
+        flame: isLight ? '#d35400' : '#ffb347',
+        flameInner: isLight ? '#e67e22' : '#ffe066',
+        image: isLight ? '#0059a3' : '#5ce0ff',
+        imageGlow: isLight ? 'rgba(0, 89, 163, 0.25)' : 'rgba(92, 224, 255, 0.2)',
+        imageFlame: isLight ? '#2e86c1' : '#8ae0ff',
+        grid: isLight ? 'rgba(0,60,120,0.08)' : 'rgba(100,140,200,0.06)',
+        text: isLight ? '#1a1a2e' : '#e8e8f0',
+        textMuted: isLight ? '#555' : '#9090a8',
+        axis: isLight ? 'rgba(30,30,55,0.5)' : 'rgba(200,200,230,0.4)',
+        pointP: isLight ? '#7c3aed' : '#b08cff',
+        pointF: isLight ? '#0e6655' : '#69db7c',
+        pointC: isLight ? '#b45309' : '#ffaa50',
+        rayParallel: isLight ? '#0078c8' : '#5ce0ff',
+        rayFocal: isLight ? '#1e8449' : '#69db7c',
+        realImage: isLight ? '#0059a3' : '#5ce0ff',
+        virtualImage: isLight ? '#b45309' : '#ffaa50',
+        zoneText: isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.1)'
+      };
+    }
+    updateThemeColors();
+    new MutationObserver(function() { updateThemeColors(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // === CANVAS SETUP ===
+    var canvas = document.getElementById('simCanvas');
+    var ctx = canvas.getContext('2d');
+    var canvasW, canvasH;
+    var dpr = window.devicePixelRatio || 1;
+
+    function resizeCanvas() {
+      var wrap = canvas.parentElement;
+      var w = wrap.clientWidth;
+      var h;
+      var isFS = document.fullscreenElement || document.webkitFullscreenElement;
+      if (isFS) {
+        h = wrap.clientHeight || Math.max(400, w * 0.55);
+      } else {
+        h = Math.max(400, Math.min(w * 0.55, 620));
+      }
+      canvasW = w;
+      canvasH = h;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // === STATE ===
+    var isConcave = true;
+    var objDistPx = 350;
+    var targetObjDist = 350;
+    var focalLenPx = 200; // Fixed focal length
+    var objHeight = 40;
+    var targetObjHeight = 40;
+    var glowPhase = 0;
+    var dragging = false;
+    var zoomScale = 1;
+    var panX = 0, panY = 0;
+    var pinching = false;
+    var pinchStartDist = 0;
+    var pinchStartScale = 1;
+    var lastTapTime = 0;
+
+    // Visual upgrade state
+    var flickerPhase = 0;
+    var virtualPulsePhase = 0;
+    var currentZone = '';
+    var zoneFlashAlpha = 0;
+    var zoneFlashName = '';
+    var zoneFlashColor = '';
+    var snapLabel = '';
+    var snapLabelAlpha = 0;
+    var eqHighlightTimer = null;
+
+    // Last-drawn ray endpoints (set by drawTwoRays, used for particles + pulse)
+    var lastRay1 = null; // {ix0,iy0, ix1,iy1, rx0,ry0, rx1,ry1}
+    var lastRay2 = null;
+
+    // Achievement tracking
+    var _achAllCases = false;
+    var _achVirtualDiscovery = false;
+    var _achMirrorMaster = false;
+    var _achVisitedZones = {};
+    var _achSeenConvex = false;
+
+    // ================================================================
+    //  PHYSICS — Curved Mirror (New Cartesian Sign Convention)
+    //
+    //  Canvas layout:
+    //    Object is on the LEFT, mirror on the RIGHT
+    //    Pole P is the mirror vertex (rightward)
+    //    Distances LEFT of P are NEGATIVE
+    //
+    //  Sign convention:
+    //    u = -objDistPx  (always negative — object is left of P)
+    //    Concave: f = -focalLenPx  (F is left of P, on reflecting side)
+    //    Convex:  f = +focalLenPx  (F is right of P, behind mirror)
+    //    Mirror formula: 1/v + 1/u = 1/f  =>  v = uf/(u-f)
+    //    Magnification: m = -v/u
+    //
+    //  Canvas coordinates:
+    //    poleX is the x-position of pole P on canvas
+    //    fX = poleX + f   (for concave: left of poleX)
+    //    cX = poleX + 2f  (for concave: left of poleX)
+    //    objX = poleX + u (left of poleX)
+    //    imgX = poleX + v (left if real, right if virtual)
+    // ================================================================
+
+    function computeImage() {
+      var u = -objDistPx;
+      var f = isConcave ? -focalLenPx : focalLenPx;
+      var R = 2 * f;
+
+      var denom = u - f;
+      var v, m, isAtFocus = false;
+      if (Math.abs(denom) < 1) {
+        v = -999999;
+        m = 999;
+        isAtFocus = true;
+      } else {
+        v = (u * f) / denom;
+        m = -v / u;
+      }
+
+      // Clamp extreme values near focus to prevent canvas overflow
+      var isNearFocus = Math.abs(v) > 5000 || Math.abs(m) > 50;
+      if (isNearFocus && !isAtFocus) {
+        isAtFocus = true;
+      }
+
+      var isReal = v < 0;
+      var isInverted = m < 0;
+      var imageH = m * objHeight;
+      // Clamp image height for drawing sanity
+      imageH = Math.max(-500, Math.min(500, imageH));
+
+      var absM = Math.abs(m);
+      var sizeDesc;
+      if (isAtFocus) sizeDesc = 'At infinity';
+      else if (absM > 1.02) sizeDesc = 'Magnified';
+      else if (absM < 0.98) sizeDesc = 'Diminished';
+      else sizeDesc = 'Same size';
+
+      var posCase = '';
+      if (isConcave) {
+        var uAbs = objDistPx;
+        var fAbs = focalLenPx;
+        var rAbs = 2 * focalLenPx;
+        if (uAbs > rAbs + 2) posCase = 'Beyond C';
+        else if (Math.abs(uAbs - rAbs) <= 2) posCase = 'At C';
+        else if (uAbs > fAbs + 2 && uAbs < rAbs - 2) posCase = 'Between C & F';
+        else if (Math.abs(uAbs - fAbs) <= 2) posCase = 'At F';
+        else posCase = 'Between F & P';
+      } else {
+        posCase = 'Any position';
+      }
+
+      return {
+        u: u, f: f, R: R, v: v, m: m,
+        isReal: isReal, isInverted: isInverted,
+        imageH: imageH, sizeDesc: sizeDesc,
+        isAtFocus: isAtFocus, posCase: posCase
+      };
+    }
+
+    // === DATA TABLE ===
+    var dtMirrorType = document.getElementById('dtMirrorType');
+    var dtU = document.getElementById('dtU');
+    var dtF = document.getElementById('dtF');
+    var dtV = document.getElementById('dtV');
+    var dtM = document.getElementById('dtM');
+    var dtNature = document.getElementById('dtNature');
+    var dtObjH = document.getElementById('dtObjH');
+    var dtSize = document.getElementById('dtSize');
+
+    function updateDataTable(img) {
+      dtMirrorType.textContent = isConcave ? 'Concave' : 'Convex';
+      dtU.textContent = (img.u / 10).toFixed(1) + ' cm';
+      dtF.textContent = (img.f / 10).toFixed(1) + ' cm';
+      if (img.isAtFocus) {
+        dtV.textContent = '\u221E';
+        dtM.textContent = '\u221E';
+      } else {
+        dtV.textContent = (img.v / 10).toFixed(1) + ' cm';
+        dtM.textContent = img.m.toFixed(2);
+      }
+      if (img.isAtFocus) {
+        dtNature.textContent = 'At Infinity';
+        dtNature.className = 'data-value';
+      } else if (img.isReal) {
+        dtNature.textContent = 'Real, Inverted';
+        dtNature.className = 'data-value real';
+      } else {
+        dtNature.textContent = 'Virtual, Erect';
+        dtNature.className = 'data-value virtual';
+      }
+      dtObjH.textContent = (objHeight / 10).toFixed(1) + ' cm';
+      dtSize.textContent = img.sizeDesc;
+    }
+
+    // ================================================================
+    //  DRAWING
+    // ================================================================
+    function draw() {
+      if (!canvasW) return;
+      ctx.save();
+      ctx.clearRect(0, 0, canvasW, canvasH);
+
+      // Background
+      var grad = ctx.createRadialGradient(canvasW * 0.5, canvasH * 0.5, 0, canvasW * 0.5, canvasH * 0.5, canvasW * 0.6);
+      grad.addColorStop(0, tc.bgCenter);
+      grad.addColorStop(1, tc.bg);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      // Grid
+      ctx.strokeStyle = tc.grid;
+      ctx.lineWidth = 0.5;
+      var gridSize = 40;
+      for (var gx = gridSize; gx < canvasW; gx += gridSize) {
+        ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, canvasH); ctx.stroke();
+      }
+      for (var gy = gridSize; gy < canvasH; gy += gridSize) {
+        ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(canvasW, gy); ctx.stroke();
+      }
+
+      // Zoom transform
+      var cxZ = canvasW * 0.5, cyZ = canvasH * 0.5;
+      ctx.translate(cxZ + panX, cyZ + panY);
+      ctx.scale(zoomScale, zoomScale);
+      ctx.translate(-cxZ, -cyZ);
+
+      // Layout — pole at 65% to reduce empty space on right
+      var axisY = canvasH * 0.5;
+      var poleX = canvasW * 0.65;
+      var mirrorHalfH = canvasH * 0.42;
+      var img = computeImage();
+
+      // Canvas positions of key points
+      var fX = poleX + img.f;
+      var cX = poleX + img.R;
+      var objX = poleX + img.u;
+      var objTopY = axisY - objHeight;
+
+      // Image position
+      var imgX = null, imgTopY = null;
+      if (!img.isAtFocus) {
+        imgX = poleX + img.v;
+        imgTopY = axisY - img.imageH;
+      }
+
+      // === Principal Axis ===
+      ctx.strokeStyle = tc.axis;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(20, axisY);
+      ctx.lineTo(canvasW - 20, axisY);
+      ctx.stroke();
+      // Arrow tips
+      ctx.fillStyle = tc.axis;
+      ctx.beginPath();
+      ctx.moveTo(canvasW - 20, axisY); ctx.lineTo(canvasW - 28, axisY - 4); ctx.lineTo(canvasW - 28, axisY + 4); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(20, axisY); ctx.lineTo(28, axisY - 4); ctx.lineTo(28, axisY + 4); ctx.fill();
+
+      // === Zone Labels (concave only) ===
+      if (isConcave) {
+        ctx.save();
+        ctx.fillStyle = tc.zoneText;
+        ctx.font = '600 0.72rem "Andika", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        var zY = axisY + mirrorHalfH * 0.65;
+        if (cX > 60) ctx.fillText('Beyond C', Math.max(40, (20 + cX) / 2), zY);
+        if (Math.abs(cX - fX) > 40) ctx.fillText('C \u2013 F', (cX + fX) / 2, zY);
+        if (Math.abs(poleX - fX) > 40) ctx.fillText('F \u2013 P', (fX + poleX) / 2, zY);
+        ctx.restore();
+      }
+
+      // === Mirror Arc (cosmetic) ===
+      drawMirrorArc(poleX, axisY, mirrorHalfH);
+
+      // === Dashed vertical guide lines at F and C ===
+      ctx.save();
+      ctx.setLineDash([4, 6]);
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = 0.3;
+      ctx.strokeStyle = tc.pointF;
+      ctx.beginPath(); ctx.moveTo(fX, axisY - mirrorHalfH * 0.55); ctx.lineTo(fX, axisY + mirrorHalfH * 0.55); ctx.stroke();
+      ctx.strokeStyle = tc.pointC;
+      ctx.beginPath(); ctx.moveTo(cX, axisY - mirrorHalfH * 0.55); ctx.lineTo(cX, axisY + mirrorHalfH * 0.55); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+      ctx.restore();
+
+      // === Key Points: F, C ===
+      drawAxisPoint(fX, axisY, 'F', tc.pointF);
+      drawAxisPoint(cX, axisY, 'C', tc.pointC);
+
+      // === TWO PRINCIPAL RAYS ===
+      // Using thin-mirror approximation: all reflections occur at x = poleX
+      drawTwoRays(poleX, axisY, objX, objTopY, fX, cX, img);
+
+      // === Image candle ===
+      if (!img.isAtFocus && imgX !== null) {
+        var imgInBounds = imgX > -500 && imgX < canvasW + 500;
+        if (imgInBounds) {
+          var clampImgX = Math.max(-100, Math.min(canvasW + 100, imgX));
+          var clampImgH = Math.max(-200, Math.min(200, img.imageH));
+          drawCandle(clampImgX, axisY, clampImgH, img.isReal ? 'real' : 'virtual');
+          ctx.save();
+          ctx.fillStyle = img.isReal ? tc.realImage : tc.virtualImage;
+          ctx.font = '700 0.82rem "Andika", sans-serif';
+          ctx.textAlign = 'center';
+          var iLblY = img.isInverted ? (axisY - clampImgH + 16) : (axisY - clampImgH - 16);
+          ctx.fillText('Image', clampImgX, iLblY);
+          ctx.restore();
+        }
+      }
+
+      // "Image at infinity" indicator
+      if (img.isAtFocus) {
+        ctx.save();
+        ctx.fillStyle = tc.rayParallel;
+        ctx.font = '600 0.85rem "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('Image at \u221E', 40, axisY - mirrorHalfH * 0.45);
+        ctx.restore();
+      }
+
+      // === Zone highlight flash ===
+      if (zoneFlashAlpha > 0.01) {
+        drawZoneFlash(poleX, axisY, fX, cX, mirrorHalfH);
+      }
+
+      // === Pole marker (on the mirror arc, drawn on top) ===
+      var poleSurfX = arcSurfaceX(axisY, poleX, axisY) || poleX;
+      ctx.save();
+      ctx.fillStyle = tc.pointP;
+      ctx.beginPath();
+      ctx.arc(poleSurfX, axisY, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = tc.pointP;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(poleSurfX, axisY, 9, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.font = '700 0.85rem "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('P', poleSurfX, axisY + 26);
+      ctx.restore();
+
+      // === Object candle (on top) ===
+      drawCandle(objX, axisY, objHeight, 'object');
+      ctx.fillStyle = tc.object;
+      ctx.font = '700 0.88rem "Andika", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Object', objX, axisY - objHeight - 14);
+
+      // === Snap label ===
+      if (snapLabelAlpha > 0.02) {
+        ctx.save();
+        ctx.globalAlpha = snapLabelAlpha;
+        ctx.fillStyle = '#fff';
+        ctx.shadowColor = 'rgba(124,58,237,0.6)';
+        ctx.shadowBlur = 10;
+        ctx.font = '700 0.85rem "Andika", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(snapLabel, objX, axisY - objHeight - 36);
+        ctx.restore();
+      }
+
+      // === Achievement tracking ===
+      if (isConcave && img.posCase) _achVisitedZones[img.posCase] = true;
+      var allZones = ['Beyond C', 'At C', 'Between C & F', 'At F', 'Between F & P'];
+      _achAllCases = allZones.every(function(z) { return _achVisitedZones[z]; });
+      if (!img.isAtFocus && !img.isReal) _achVirtualDiscovery = true;
+      if (_achSeenConvex && _achVisitedZones['Beyond C']) _achMirrorMaster = true;
+
+      // === Zone change detection ===
+      var newZone = img.posCase || '';
+      if (newZone !== currentZone && newZone) {
+        zoneFlashAlpha = 0.8;
+        zoneFlashName = newZone;
+        var zoneColors = { 'Beyond C': '#5ce0ff', 'At C': '#ffaa50', 'Between C & F': '#69db7c', 'At F': '#ff6b9d', 'Between F & P': '#b08cff', 'Any position': '#ffaa50' };
+        zoneFlashColor = zoneColors[newZone] || '#fff';
+        currentZone = newZone;
+      }
+
+      ctx.restore();
+      updateDataTable(img);
+    }
+
+    // ================================================================
+    //  TWO PRINCIPAL RAYS — Hybrid approach
+    //
+    //  Rays visually hit the curved mirror ARC surface (not a flat plane).
+    //  Reflected directions follow textbook paraxial rules:
+    //    - Parallel ray reflects through F
+    //    - Focal ray reflects horizontal (parallel to axis)
+    //  Image position from mirror formula (paraxial approximation).
+    //
+    //  arcSurfaceX(hitY) returns the x-coord of the mirror arc at height hitY.
+    //  If hitY is outside the arc extent, returns null (ray misses mirror).
+    // ================================================================
+
+    function arcSurfaceX(hitY, poleX, axisY) {
+      var R_draw = 2 * focalLenPx;
+      if (R_draw < canvasH * 0.42 * 1.2) R_draw = canvasH * 0.42 * 1.2;
+      var arcCX = isConcave ? (poleX - R_draw) : (poleX + R_draw);
+      var dy = hitY - axisY;
+      var disc = R_draw * R_draw - dy * dy;
+      if (disc < 0) return null;
+      return isConcave ? (arcCX + Math.sqrt(disc)) : (arcCX - Math.sqrt(disc));
+    }
+
+    function drawTwoRays(poleX, axisY, objX, objTopY, fX, cX, img) {
+      ctx.save();
+      ctx.lineWidth = 2.2;
+
+      // ==================== RAY 1: PARALLEL RAY ====================
+      ctx.strokeStyle = tc.rayParallel;
+
+      // Hit point: horizontal ray at y = objTopY hits the arc
+      var hit1X = arcSurfaceX(objTopY, poleX, axisY);
+      if (!hit1X) hit1X = poleX; // fallback
+      var hit1Y = objTopY;
+
+      // Incident: horizontal from object to arc surface
+      ctx.beginPath();
+      ctx.moveTo(objX, hit1Y);
+      ctx.lineTo(hit1X, hit1Y);
+      ctx.stroke();
+      drawMidArrow(objX, hit1Y, hit1X, hit1Y, tc.rayParallel);
+
+      if (isConcave) {
+        // Reflected: from hit point through F, extended to left edge
+        var r1dx = fX - hit1X;
+        var r1dy = axisY - hit1Y;
+        if (Math.abs(r1dx) > 0.1) {
+          var t1 = (20 - hit1X) / r1dx;
+          var r1endY = hit1Y + t1 * r1dy;
+          ctx.beginPath();
+          ctx.moveTo(hit1X, hit1Y);
+          ctx.lineTo(20, r1endY);
+          ctx.stroke();
+          drawMidArrow(hit1X, hit1Y, 20, r1endY, tc.rayParallel);
+        }
+      } else {
+        // Convex: diverges as if from F behind mirror
+        var r1dx = hit1X - fX;
+        var r1dy = hit1Y - axisY;
+        var r1len = Math.sqrt(r1dx * r1dx + r1dy * r1dy);
+        if (r1len > 0.1) {
+          r1dx /= r1len; r1dy /= r1len;
+          var t1 = (20 - hit1X) / r1dx;
+          ctx.beginPath();
+          ctx.moveTo(hit1X, hit1Y);
+          ctx.lineTo(20, hit1Y + r1dy * t1);
+          ctx.stroke();
+          drawMidArrow(hit1X, hit1Y, 20, hit1Y + r1dy * t1, tc.rayParallel);
+        }
+        // Dashed extension to F behind mirror
+        ctx.save();
+        ctx.setLineDash([4, 5]);
+        ctx.globalAlpha = 0.4;
+        ctx.beginPath();
+        ctx.moveTo(hit1X, hit1Y);
+        ctx.lineTo(fX, axisY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.globalAlpha = 1;
+        ctx.restore();
+      }
+
+      // Label
+      ctx.save();
+      ctx.fillStyle = tc.rayParallel;
+      ctx.font = '500 0.68rem "Andika", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Parallel ray', (objX + hit1X) / 2, hit1Y - 10);
+      ctx.restore();
+
+      // ==================== RAY 2: FOCAL RAY ====================
+      ctx.strokeStyle = tc.rayFocal;
+
+      // The focal ray line passes through (objX, objTopY) and (fX, axisY).
+      // Compute where this line hits x = poleX (thin-mirror y-coordinate),
+      // then find the arc surface at that y.
+      var fLineDx = fX - objX;
+      var fLineDy = axisY - objTopY;
+      var r2hitY = null;
+      var hit2X = null;
+      var focalRayDrawn = false;
+
+      if (Math.abs(fLineDx) > 0.5 && !(isConcave && Math.abs(objDistPx - focalLenPx) <= 2)) {
+        var tMirror = (poleX - objX) / fLineDx;
+        r2hitY = objTopY + tMirror * fLineDy;
+        hit2X = arcSurfaceX(r2hitY, poleX, axisY);
+      }
+
+      if (hit2X !== null && r2hitY !== null) {
+        focalRayDrawn = true;
+
+        if (isConcave) {
+          // Incident: from object to arc hit point
+          ctx.beginPath();
+          ctx.moveTo(objX, objTopY);
+          ctx.lineTo(hit2X, r2hitY);
+          ctx.stroke();
+          drawMidArrow(objX, objTopY, hit2X, r2hitY, tc.rayFocal);
+
+          // Reflected: horizontal from hit point going left
+          ctx.beginPath();
+          ctx.moveTo(hit2X, r2hitY);
+          ctx.lineTo(20, r2hitY);
+          ctx.stroke();
+          drawMidArrow(hit2X, r2hitY, 20, r2hitY, tc.rayFocal);
+
+          // For objects between F and P: dashed extension back through F
+          if (objDistPx < focalLenPx) {
+            ctx.save();
+            ctx.setLineDash([4, 5]);
+            ctx.globalAlpha = 0.35;
+            ctx.beginPath();
+            ctx.moveTo(objX, objTopY);
+            ctx.lineTo(fX, axisY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.globalAlpha = 1;
+            ctx.restore();
+          }
+        } else {
+          // Convex: incident from object toward mirror (line aimed at F behind)
+          ctx.beginPath();
+          ctx.moveTo(objX, objTopY);
+          ctx.lineTo(hit2X, r2hitY);
+          ctx.stroke();
+          drawMidArrow(objX, objTopY, hit2X, r2hitY, tc.rayFocal);
+
+          // Reflected: horizontal from hit point going left
+          ctx.beginPath();
+          ctx.moveTo(hit2X, r2hitY);
+          ctx.lineTo(20, r2hitY);
+          ctx.stroke();
+          drawMidArrow(hit2X, r2hitY, 20, r2hitY, tc.rayFocal);
+
+          // Dashed extension behind mirror to F
+          ctx.save();
+          ctx.setLineDash([4, 5]);
+          ctx.globalAlpha = 0.4;
+          ctx.beginPath();
+          ctx.moveTo(hit2X, r2hitY);
+          ctx.lineTo(fX, axisY);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.globalAlpha = 1;
+          ctx.restore();
+        }
+
+        // Label
+        ctx.save();
+        ctx.fillStyle = tc.rayFocal;
+        ctx.font = '500 0.68rem "Andika", sans-serif';
+        ctx.textAlign = 'center';
+        var r2midX = (objX + hit2X) / 2;
+        var r2midY = (objTopY + r2hitY) / 2;
+        ctx.fillText('Focal ray', r2midX, r2midY + 14);
+        ctx.restore();
+      }
+
+      // ==================== VIRTUAL IMAGE: dashed extensions ====================
+      if (!img.isAtFocus && !img.isReal) {
+        var vImgX = poleX + img.v;
+        var vImgH = Math.max(-200, Math.min(200, img.imageH));
+        var vImgTopY = axisY - vImgH;
+        if (vImgX > poleX - 50 && vImgX < canvasW + 300) {
+          var clampVX = Math.min(canvasW + 50, vImgX);
+          ctx.save();
+          ctx.setLineDash([3, 4]);
+          ctx.globalAlpha = 0.35;
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = tc.rayParallel;
+          ctx.beginPath();
+          ctx.moveTo(hit1X, hit1Y);
+          ctx.lineTo(clampVX, vImgTopY);
+          ctx.stroke();
+          if (focalRayDrawn && hit2X !== null) {
+            ctx.strokeStyle = tc.rayFocal;
+            ctx.beginPath();
+            ctx.moveTo(hit2X, r2hitY);
+            ctx.lineTo(clampVX, vImgTopY);
+            ctx.stroke();
+          }
+          ctx.setLineDash([]);
+          ctx.globalAlpha = 1;
+          ctx.restore();
+        }
+      }
+
+      // Store ray endpoints for pulse animation + particle spawning
+      // Ray 1: incident (objX,hit1Y)→(hit1X,hit1Y), reflected (hit1X,hit1Y)→(r1endX,r1endY)
+      lastRay1 = { ix: objX, iy: hit1Y, hx: hit1X, hy: hit1Y, rx: 20, ry: hit1Y };
+      if (isConcave) {
+        var _r1dx = fX - hit1X, _r1dy = axisY - hit1Y;
+        if (Math.abs(_r1dx) > 0.1) {
+          var _t1 = (20 - hit1X) / _r1dx;
+          lastRay1.ry = hit1Y + _t1 * _r1dy;
+        }
+      } else {
+        var _r1dx2 = hit1X - fX, _r1dy2 = hit1Y - axisY;
+        var _r1l = Math.sqrt(_r1dx2*_r1dx2 + _r1dy2*_r1dy2);
+        if (_r1l > 0.1) { var _t12 = (20 - hit1X) / (_r1dx2/_r1l); lastRay1.ry = hit1Y + (_r1dy2/_r1l) * _t12; }
+      }
+
+      if (focalRayDrawn && hit2X !== null) {
+        lastRay2 = { ix: objX, iy: objTopY, hx: hit2X, hy: r2hitY, rx: 20, ry: r2hitY };
+      } else {
+        lastRay2 = null;
+      }
+
+      ctx.restore();
+    }
+
+    // === Zone Highlight Flash ===
+    function drawZoneFlash(poleX, axisY, fX, cX, mirrorHalfH) {
+      var x1, x2;
+      if (zoneFlashName === 'Beyond C') { x1 = 20; x2 = cX; }
+      else if (zoneFlashName === 'At C') { x1 = cX - 15; x2 = cX + 15; }
+      else if (zoneFlashName === 'Between C & F') { x1 = cX; x2 = fX; }
+      else if (zoneFlashName === 'At F') { x1 = fX - 15; x2 = fX + 15; }
+      else if (zoneFlashName === 'Between F & P') { x1 = fX; x2 = poleX; }
+      else { x1 = 20; x2 = poleX; }
+
+      ctx.save();
+      ctx.globalAlpha = zoneFlashAlpha * 0.12;
+      ctx.fillStyle = zoneFlashColor;
+      ctx.fillRect(x1, axisY - mirrorHalfH * 0.5, x2 - x1, mirrorHalfH);
+      ctx.globalAlpha = zoneFlashAlpha;
+      ctx.fillStyle = zoneFlashColor;
+      ctx.font = '700 0.9rem "Andika", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(zoneFlashName, (x1 + x2) / 2, axisY + mirrorHalfH * 0.35);
+      ctx.restore();
+    }
+
+    // === Draw midpoint arrow ===
+    function drawMidArrow(x1, y1, x2, y2, color) {
+      var mx = (x1 + x2) / 2;
+      var my = (y1 + y2) / 2;
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+      var len = Math.sqrt(dx * dx + dy * dy);
+      if (len < 10) return;
+      dx /= len; dy /= len;
+      var sz = 6;
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(mx + dx * sz, my + dy * sz);
+      ctx.lineTo(mx - dx * sz * 0.5 - dy * sz * 0.6, my - dy * sz * 0.5 + dx * sz * 0.6);
+      ctx.lineTo(mx - dx * sz * 0.5 + dy * sz * 0.6, my - dy * sz * 0.5 - dx * sz * 0.6);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // === Mirror Arc — R_draw = 2f (physically correct radius of curvature) ===
+    function drawMirrorArc(poleX, axisY, halfH) {
+      var R_draw = 2 * focalLenPx;
+      if (R_draw < halfH * 1.2) R_draw = halfH * 1.2;
+
+      var arcAngle = Math.asin(Math.min(0.95, halfH / R_draw));
+      var arcCX, startA, endA;
+
+      if (isConcave) {
+        arcCX = poleX - R_draw;
+        startA = -arcAngle;
+        endA = arcAngle;
+      } else {
+        arcCX = poleX + R_draw;
+        startA = Math.PI - arcAngle;
+        endA = Math.PI + arcAngle;
+      }
+
+      // Shimmer strips
+      var steps = 60;
+      for (var i = 0; i <= steps; i++) {
+        var t = i / steps;
+        var a = startA + (endA - startA) * t;
+        var mx = arcCX + R_draw * Math.cos(a);
+        var my = axisY + R_draw * Math.sin(a);
+        var shimmer = 0.3 + 0.7 * Math.pow(Math.sin(t * Math.PI), 0.5);
+        var pulse = 0.08 * Math.sin(glowPhase * 2 + i * 0.15);
+        var alpha = (shimmer + pulse) * 0.5;
+        var nx = Math.cos(a), ny = Math.sin(a);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = tc.mirrorBright;
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(mx - nx * 4, my - ny * 4);
+        ctx.lineTo(mx + nx * 4, my + ny * 4);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.save();
+      ctx.strokeStyle = tc.mirror;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(arcCX, axisY, R_draw, startA, endA);
+      ctx.stroke();
+
+      // Hash marks
+      var hashSteps = 16;
+      ctx.strokeStyle = tc.mirror;
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = 0.4;
+      for (var i = 1; i < hashSteps; i++) {
+        var t = i / hashSteps;
+        var a = startA + (endA - startA) * t;
+        var hx = arcCX + R_draw * Math.cos(a);
+        var hy = axisY + R_draw * Math.sin(a);
+        var nx = Math.cos(a), ny = Math.sin(a);
+        var dir = isConcave ? 1 : -1;
+        ctx.beginPath();
+        ctx.moveTo(hx, hy);
+        ctx.lineTo(hx + nx * 8 * dir, hy + ny * 8 * dir);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    // === Axis Point (P, F, C) ===
+    function drawAxisPoint(x, y, label, color) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x, y - 8); ctx.lineTo(x, y + 8); ctx.stroke();
+      ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill();
+      ctx.font = '700 0.82rem "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, x, y + 22);
+    }
+
+    // === Candle Object ===
+    // type: 'object' | 'real' | 'virtual'
+    // Flame tip exactly reaches baseY - |height| (where rays originate)
+    function drawCandle(x, baseY, height, type) {
+      ctx.save();
+      var H = Math.abs(height);
+      if (H < 10) H = 10;
+      var inverted = height < 0;
+
+      var bodyColor, flameColor, alpha;
+      if (type === 'object') {
+        bodyColor = tc.object; flameColor = tc.flame; alpha = 1;
+        ctx.shadowColor = tc.objectGlow; ctx.shadowBlur = 14;
+      } else if (type === 'real') {
+        bodyColor = tc.realImage; flameColor = tc.imageFlame; alpha = 0.85;
+        ctx.shadowColor = tc.imageGlow; ctx.shadowBlur = 10;
+      } else {
+        bodyColor = tc.virtualImage; flameColor = tc.virtualImage;
+        alpha = 0.3 + 0.15 * Math.sin(virtualPulsePhase);
+        ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0;
+      }
+      ctx.globalAlpha = alpha;
+
+      if (inverted) {
+        ctx.translate(x, baseY);
+        ctx.scale(1, -1);
+        ctx.translate(-x, -baseY);
+      }
+
+      // Proportional layout: body 50%, wick 8%, flame 42% of total H
+      var bodyH = H * 0.50;
+      var wickH = H * 0.08;
+      var baseFlameH = H * 0.42;
+      var bw = Math.max(4, Math.min(12, H * 0.15));
+
+      // Base platform
+      ctx.fillStyle = bodyColor;
+      ctx.fillRect(x - bw - 2, baseY, (bw + 2) * 2, 2);
+
+      // Candle body
+      if (type === 'virtual') {
+        ctx.setLineDash([5, 4]);
+        ctx.strokeStyle = bodyColor;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x - bw / 2, baseY - bodyH, bw, bodyH);
+        ctx.setLineDash([]);
+      } else {
+        ctx.beginPath();
+        ctx.roundRect(x - bw / 2, baseY - bodyH, bw, bodyH, 1.5);
+        ctx.fillStyle = bodyColor;
+        ctx.fill();
+      }
+
+      // Wick
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = bodyColor;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, baseY - bodyH);
+      ctx.lineTo(x, baseY - bodyH - wickH);
+      ctx.stroke();
+
+      // Flame — teardrop with flicker
+      var flameH = baseFlameH + 1.5 * Math.sin(flickerPhase * 3.7);
+      var flameW = Math.max(2, bw * 0.7 + 0.8 * Math.sin(flickerPhase * 2.3));
+      var fy = baseY - bodyH - wickH; // flame base
+
+      // Outer flame — tip at fy - flameH = baseY - H
+      ctx.beginPath();
+      ctx.moveTo(x, fy - flameH);
+      ctx.bezierCurveTo(x - flameW, fy - flameH * 0.4, x - flameW * 0.8, fy, x, fy);
+      ctx.bezierCurveTo(x + flameW * 0.8, fy, x + flameW, fy - flameH * 0.4, x, fy - flameH);
+      ctx.fillStyle = flameColor;
+      ctx.fill();
+
+      // Inner flame
+      if (type !== 'virtual') {
+        ctx.beginPath();
+        var ifw = flameW * 0.5, ifh = flameH * 0.6;
+        ctx.moveTo(x, fy - ifh);
+        ctx.bezierCurveTo(x - ifw, fy - ifh * 0.3, x - ifw * 0.8, fy - 1, x, fy - 1);
+        ctx.bezierCurveTo(x + ifw * 0.8, fy - 1, x + ifw, fy - ifh * 0.3, x, fy - ifh);
+        ctx.fillStyle = tc.flameInner;
+        ctx.globalAlpha = alpha * 0.8;
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    // === INTERACTION ===
+    function getMousePos(e) {
+      var rect = canvas.getBoundingClientRect();
+      var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      var rawX = clientX - rect.left, rawY = clientY - rect.top;
+      var cx = canvasW * 0.5, cy = canvasH * 0.5;
+      return { x: (rawX - cx - panX) / zoomScale + cx, y: (rawY - cy - panY) / zoomScale + cy };
+    }
+
+    function getPoleX() { return canvasW * 0.65; }
+
+    function getObjectScreenPos() {
+      return { x: getPoleX() - objDistPx, y: canvasH * 0.5 - objHeight };
+    }
+
+    function startDrag(e) {
+      if (e.touches && e.touches.length === 2) {
+        pinching = true; dragging = false;
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        pinchStartDist = Math.sqrt(dx * dx + dy * dy);
+        pinchStartScale = zoomScale;
+        e.preventDefault(); return;
+      }
+      if (e.touches && e.touches.length === 1) {
+        var now = Date.now();
+        if (now - lastTapTime < 300 && zoomScale > 1.01) {
+          zoomScale = 1; panX = 0; panY = 0; lastTapTime = 0; e.preventDefault(); return;
+        }
+        lastTapTime = now;
+      }
+      var pos = getMousePos(e);
+      var obj = getObjectScreenPos();
+      // Hit test: anywhere along the object arrow column
+      var objBaseX = getPoleX() - objDistPx;
+      var axisY = canvasH * 0.5;
+      if (Math.abs(pos.x - objBaseX) < 30 && pos.y < axisY + 10 && pos.y > axisY - objHeight - 30) {
+        dragging = true; e.preventDefault();
+      }
+    }
+
+    function onDrag(e) {
+      if (pinching && e.touches && e.touches.length === 2) {
+        e.preventDefault();
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        zoomScale = Math.max(1, Math.min(3, pinchStartScale * (Math.sqrt(dx * dx + dy * dy) / pinchStartDist)));
+        return;
+      }
+      var pos = getMousePos(e);
+      if (!dragging) {
+        var objBaseX = getPoleX() - objDistPx;
+        var axisY = canvasH * 0.5;
+        canvas.style.cursor = (Math.abs(pos.x - objBaseX) < 30 && pos.y < axisY + 10 && pos.y > axisY - objHeight - 30) ? 'grab' : 'default';
+        return;
+      }
+      e.preventDefault();
+      canvas.style.cursor = 'grabbing';
+      var poleX = getPoleX();
+      var axisY = canvasH * 0.5;
+
+      // Horizontal drag: object distance with snap points
+      var newDist = Math.max(50, Math.min(500, poleX - pos.x));
+      // Snap to F or C if within 12px
+      if (isConcave) {
+        if (Math.abs(newDist - focalLenPx) < 12) {
+          newDist = focalLenPx;
+          if (snapLabel !== "You're at the Focus!") { snapLabel = "You're at the Focus!"; snapLabelAlpha = 1; }
+        } else if (Math.abs(newDist - 2 * focalLenPx) < 12) {
+          newDist = 2 * focalLenPx;
+          if (snapLabel !== 'Centre of Curvature!') { snapLabel = 'Centre of Curvature!'; snapLabelAlpha = 1; }
+        }
+      }
+      targetObjDist = newDist;
+      objDistPx = newDist;
+      objSlider.value = Math.round(newDist);
+      objLabel.textContent = Math.round(newDist);
+      highlightEq('eqU');
+
+      // Vertical drag: object height (distance above axis)
+      var newHeight = Math.max(15, Math.min(120, axisY - pos.y));
+      targetObjHeight = newHeight;
+      objHeight = newHeight;
+      heightSlider.value = Math.round(newHeight);
+      heightLabel.textContent = Math.round(newHeight);
+    }
+
+    function endDrag(e) {
+      if (pinching) { pinching = false; return; }
+      if (dragging) { dragging = false; canvas.style.cursor = 'default'; }
+    }
+
+    canvas.addEventListener('mousedown', startDrag);
+    canvas.addEventListener('mousemove', onDrag);
+    canvas.addEventListener('mouseup', endDrag);
+    canvas.addEventListener('mouseleave', endDrag);
+    canvas.addEventListener('touchstart', startDrag, { passive: false });
+    canvas.addEventListener('touchmove', onDrag, { passive: false });
+    canvas.addEventListener('touchend', endDrag);
+
+    // === CONTROLS ===
+    var objSlider = document.getElementById('objSlider');
+    var objLabel = document.getElementById('objLabel');
+    var heightSlider = document.getElementById('heightSlider');
+    var heightLabel = document.getElementById('heightLabel');
+    var modeBtn = document.getElementById('modeBtn');
+
+    objSlider.addEventListener('input', function() {
+      targetObjDist = parseInt(this.value);
+      objLabel.textContent = this.value;
+      highlightEq('eqU');
+    });
+    heightSlider.addEventListener('input', function() {
+      targetObjHeight = parseInt(this.value);
+      heightLabel.textContent = this.value;
+    });
+    modeBtn.addEventListener('click', function() {
+      isConcave = !isConcave;
+      this.textContent = isConcave ? 'Concave' : 'Convex';
+      this.className = 'sim-btn mode-btn ' + (isConcave ? 'concave' : 'convex');
+      if (!isConcave) _achSeenConvex = true;
+      if (_achSeenConvex && _achVisitedZones['Beyond C']) _achMirrorMaster = true;
+    });
+
+    function resetSim() {
+      isConcave = true;
+      targetObjDist = 350; objDistPx = 350;
+      targetObjHeight = 40; objHeight = 40;
+      zoomScale = 1; panX = 0; panY = 0;
+      objSlider.value = 350; objLabel.textContent = '350';
+      heightSlider.value = 40; heightLabel.textContent = '40';
+      modeBtn.textContent = 'Concave';
+      modeBtn.className = 'sim-btn mode-btn concave';
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', resetSim);
+    document.getElementById('resetBtn2').addEventListener('click', resetSim);
+
+    // Fullscreen
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      var area = document.getElementById('simArea');
+      if (area.requestFullscreen) area.requestFullscreen();
+      else if (area.webkitRequestFullscreen) area.webkitRequestFullscreen();
+    });
+    document.addEventListener('fullscreenchange', function() { setTimeout(resizeCanvas, 100); setTimeout(resizeCanvas, 300); });
+    document.addEventListener('webkitfullscreenchange', function() { setTimeout(resizeCanvas, 100); setTimeout(resizeCanvas, 300); });
+
+    // Tutorial
+    var helpBtn = document.getElementById('helpBtn');
+    var tutorial = document.getElementById('simTutorial');
+    var tutShown = sessionStorage.getItem('ae-curved-mirror-tut');
+    if (!tutShown && window.innerWidth > 900) tutorial.style.display = '';
+    helpBtn.addEventListener('click', function() {
+      tutorial.style.display = tutorial.style.display === 'none' ? '' : 'none';
+    });
+    tutorial.querySelector('.tut-dismiss').addEventListener('click', function() {
+      tutorial.style.display = 'none';
+      sessionStorage.setItem('ae-curved-mirror-tut', '1');
+    });
+
+    // === Equation live-linking ===
+    function highlightEq(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('active');
+      clearTimeout(eqHighlightTimer);
+      eqHighlightTimer = setTimeout(function() {
+        var all = document.querySelectorAll('.eq-var.active');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+      }, 600);
+    }
+
+    // === ANIMATION LOOP ===
+    function animationLoop() {
+      glowPhase += 0.02;
+      if (glowPhase > Math.PI * 2) glowPhase -= Math.PI * 2;
+      flickerPhase += 0.07;
+      virtualPulsePhase += 0.04;
+
+      // Decay visual effects
+      if (zoneFlashAlpha > 0.01) zoneFlashAlpha *= 0.97;
+      else zoneFlashAlpha = 0;
+      if (snapLabelAlpha > 0.01) snapLabelAlpha *= 0.975;
+      else snapLabelAlpha = 0;
+
+      var dObj = targetObjDist - objDistPx;
+      if (Math.abs(dObj) > 0.5) objDistPx += dObj * 0.15;
+      else if (Math.abs(dObj) > 0.01) objDistPx = targetObjDist;
+
+      var dH = targetObjHeight - objHeight;
+      if (Math.abs(dH) > 0.5) objHeight += dH * 0.15;
+      else if (Math.abs(dH) > 0.01) objHeight = targetObjHeight;
+
+      draw();
+      requestAnimationFrame(animationLoop);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    requestAnimationFrame(animationLoop);
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../sw.js');
+    }
+  </script>
+  <script src="../js/main.js"></script>
+  <script src="../js/auth-gate.js"></script>
+  <script src="../js/pwa-install.js"></script>
+</body>
+</html>

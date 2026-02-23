@@ -1471,5 +1471,27 @@ window.SIM_ACHIEVEMENTS_CONFIG = {
       icon: '\u2696\uFE0F',
       check: { type: 'global', name: '_achSymmetryExplored', op: 'eq', value: true }
     }
+  ],
+
+  /* ── Curved Mirror (Ray Diagrams) ── */
+  'curved-mirror': [
+    {
+      id: 'all_cases', title: 'Ray Diagram Scholar',
+      description: 'Visit all 5 image cases for a concave mirror',
+      icon: '\uD83C\uDF93',
+      check: { type: 'global', name: '_achAllCases', op: 'eq', value: true }
+    },
+    {
+      id: 'virtual_discovery', title: 'Behind the Mirror',
+      description: 'Discover a virtual image',
+      icon: '\uD83D\uDC7B',
+      check: { type: 'global', name: '_achVirtualDiscovery', op: 'eq', value: true }
+    },
+    {
+      id: 'mirror_master', title: 'Mirror Master',
+      description: 'Explore both concave and convex mirrors thoroughly',
+      icon: '\uD83E\uDE9E',
+      check: { type: 'global', name: '_achMirrorMaster', op: 'eq', value: true }
+    }
   ]
 };
