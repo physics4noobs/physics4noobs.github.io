@@ -867,7 +867,7 @@ ul { list-style: none; }
   50% { box-shadow: 0 0 30px rgba(255,170,0,.7), 0 0 60px rgba(255,140,0,.4), 0 0 120px rgba(255,100,0,.2); }
 }
 
-/* Photon wave — travels right from sun, dissolves into equation */
+/* Photon wave — travels northeast from sun, dissolves into equation */
 .sol-wave {
   position: absolute;
   top: 50%;
@@ -883,20 +883,21 @@ ul { list-style: none; }
   animation: waveTravel 8s ease-in-out infinite;
 }
 @keyframes waveTravel {
-  0%   { opacity: 0; transform: translateX(0); }
-  5%   { opacity: 0.9; }
-  60%  { opacity: 0.8; transform: translateX(155px); }
-  65%  { opacity: 0; transform: translateX(155px); }
-  100% { opacity: 0; transform: translateX(155px); }
+  0%   { opacity: 0; transform: rotate(-45deg) translate(0, 0); }
+  5%   { opacity: 0.9; transform: rotate(-45deg) translate(10px, 0); }
+  60%  { opacity: 0.8; transform: rotate(-45deg) translate(155px, 0); }
+  65%  { opacity: 0; transform: rotate(-45deg) translate(155px, 0); }
+  100% { opacity: 0; transform: rotate(-45deg) translate(155px, 0); }
 }
 
-/* Equation that appears when wave arrives at right edge */
+/* Equation that appears where wave disappears (northeast) */
 .sol-eq {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: 175px;
-  transform: translateY(-50%);
+  margin-left: 120px;
+  margin-top: -130px;
+  transform: translate(-50%, -50%) scale(0.5);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 700;
@@ -910,12 +911,12 @@ ul { list-style: none; }
   animation: eqAppear 8s ease-in-out infinite;
 }
 @keyframes eqAppear {
-  0%   { opacity: 0; transform: translateY(-50%) scale(0.5); }
-  63%  { opacity: 0; transform: translateY(-50%) scale(0.5); }
-  70%  { opacity: 0.9; transform: translateY(-50%) scale(1.1); }
-  82%  { opacity: 0.85; transform: translateY(-50%) scale(1); }
-  95%  { opacity: 0.7; transform: translateY(-50%) scale(1); }
-  100% { opacity: 0; transform: translateY(-50%) scale(0.9); }
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  63%  { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  70%  { opacity: 0.9; transform: translate(-50%, -50%) scale(1.1); }
+  82%  { opacity: 0.85; transform: translate(-50%, -50%) scale(1); }
+  95%  { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
 }
 
 /* Orbit paths — colored glow matching each planet */
