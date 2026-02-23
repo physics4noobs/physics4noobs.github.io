@@ -978,18 +978,21 @@ ul { list-style: none; }
 
 
 
-/* Centripetal force arrow on Saturn — always points toward Sun */
-.fc-arrow {
+/* Centripetal force arrow on Saturn — fixed to planet, points toward Sun */
+.fc-anchor {
   position: absolute;
-  top: 8px;
+  top: -7px;
   left: 50%;
   transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 6;
+}
+.fc-arrow {
   display: flex;
   flex-direction: column;
   align-items: center;
   pointer-events: none;
-  z-index: 6;
-  animation: ringCounterSpin 24s linear infinite reverse;
+  margin-top: 18px;
 }
 .fc-line {
   width: 1.5px;
