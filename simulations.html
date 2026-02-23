@@ -74,17 +74,6 @@
       display: flex; flex-direction: column; gap: 12px;
       margin-top: auto; padding-top: 12px;
     }
-    .sim-tags {
-      display: flex; flex-wrap: nowrap; gap: 6px; overflow: hidden;
-    }
-    .sim-tags span {
-      font-size: 0.6rem; font-family: 'JetBrains Mono', monospace;
-      padding: 4px 10px; border-radius: 4px;
-      background: var(--border-subtle); color: var(--text-muted);
-      letter-spacing: 0.5px;
-      transition: background 0.25s ease, color 0.25s ease;
-    }
-    .sim-card:hover .sim-tags span { color: var(--text-secondary, var(--text-muted)); }
     .sim-cta {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--font-body); font-size: 0.78rem; font-weight: 700;
@@ -174,10 +163,6 @@
       border-color: #d63031;
       box-shadow: 0 0 10px rgba(214,48,49,0.6), 0 0 30px rgba(214,48,49,0.35), 0 0 60px rgba(214,48,49,0.15);
     }
-    [data-theme="light"] .sim-tags span { background: rgba(0,0,0,0.04); }
-    [data-theme="light"] .sim-card:hover .sim-tags span {
-      background: rgba(214,48,49,0.06); color: rgba(214,48,49,0.8);
-    }
 
     /* --- Dark theme — cyan borders + glow --- */
     [data-theme="dark"] .carousel-track .sim-card,
@@ -188,10 +173,6 @@
     :root:not([data-theme="light"]) .carousel-track .sim-card:hover {
       border-color: #00d4ff;
       box-shadow: 0 0 10px rgba(0,212,255,0.6), 0 0 30px rgba(0,212,255,0.35), 0 0 60px rgba(0,212,255,0.15);
-    }
-    [data-theme="dark"] .sim-card:hover .sim-tags span,
-    :root:not([data-theme="light"]) .sim-card:hover .sim-tags span {
-      background: rgba(0,212,255,0.08); color: rgba(0,212,255,0.8);
     }
 
         /* === Dark theme cyan Mon overrides === */
@@ -294,7 +275,7 @@
     @media (max-width: 768px) {
       .carousel-track .sim-card { flex: 0 0 200px; min-height: 280px; }
       .chp-page .sim-info h3 { font-size: 0.82rem; }
-      .sim-tags span { font-size: 0.55rem; padding: 2px 5px; }
+
     }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -416,7 +397,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Projectile Motion</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Trajectory</span><span>Range</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -424,7 +404,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Vector Addition</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Parallelogram</span><span>Resultant</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -432,7 +411,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Boat Crossing a River</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Relative Vel</span><span>Min Time</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -440,7 +418,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Graphical Analysis</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>s-t Graph</span><span>v-t Graph</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -466,7 +443,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Friction Simulation</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>F=ma</span><span>Net Force</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -474,7 +450,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Static &amp; Kinetic Friction</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>&mu;s vs &mu;k</span><span>Threshold</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -482,7 +457,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Pulley &amp; Wire</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Tension</span><span>Constraint</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -490,7 +464,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Bead on a Wire</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Normal Force</span><span>Circular</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -515,7 +488,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Conservation of Energy</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>KE &harr; PE</span><span>Coaster</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -523,7 +495,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Work Done by a Force</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>W=Fd cos&theta;</span><span>Angle</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -531,7 +502,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Collisions</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Elastic</span><span>Momentum</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -539,7 +509,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Conservation of Momentum</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>p&#8321;+p&#8322;</span><span>Exchange</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -564,7 +533,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Moment of Inertia</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>&tau;=I&alpha;</span><span>Angular</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -572,7 +540,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Center of Mass</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>COM</span><span>Point Mass</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -580,7 +547,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Goat vs Boat</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>COM Fixed</span><span>Reaction</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -588,7 +554,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Inclined Plane Race</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Rolling</span><span>I/mR&sup2;</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -596,7 +561,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Atwood Machine</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Pulley Mass</span><span>Torque</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -604,7 +568,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Angular Momentum</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>L=I&omega;</span><span>Conservation</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -612,7 +575,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Rolling vs Rotation</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Pure Roll</span><span>Slip</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -637,7 +599,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Universal Gravitation</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>F=GMm/r&sup2;</span><span>Inverse Sq</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -645,7 +606,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Variation of Gravity</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>g vs Depth</span><span>Altitude</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -653,7 +613,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Equilibrium Finder</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Null Point</span><span>Stability</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -678,7 +637,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Hooke's Law</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>F=kx</span><span>Spring</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -686,7 +644,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Modulus of Elasticity</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Stress-Strain</span><span>Young's</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -694,7 +651,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Poisson's Ratio</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Lateral</span><span>Contraction</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -719,7 +675,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Bernoulli's Principle</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Pressure</span><span>Velocity</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -727,7 +682,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Manometer</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>U-tube</span><span>Height &Delta;</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -735,7 +689,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Hydrostatic Paradox</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Shape</span><span>Pressure</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -743,7 +696,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Pascal's Law</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Hydraulic</span><span>Force</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -751,7 +703,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Continuity Equation</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>A&#8321;v&#8321;=A&#8322;v&#8322;</span><span>Flow</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -759,7 +710,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Venturimeter</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Flow Rate</span><span>&Delta;P</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -767,7 +717,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Magnus Effect</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Spin</span><span>Curve</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -792,7 +741,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>PV Diagrams &amp; Gas Laws</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Isothermal</span><span>Adiabatic</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -800,7 +748,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Calorimetry</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Q=mc&Delta;T</span><span>Mixing</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -825,7 +772,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Spring-Mass Oscillator</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>&omega;</span><span>Amplitude</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -833,7 +779,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Simple Pendulum</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>T=2&pi;&radic;(L/g)</span><span>Period</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -858,7 +803,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Standing Waves</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Nodes</span><span>Superposition</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -866,7 +810,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Beats</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>f&#8321;&minus;f&#8322;</span><span>Amplitude</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -874,7 +817,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Doppler Effect</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Frequency</span><span>Source Vel</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -904,7 +846,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Electric Field Lines</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Field Lines</span><span>Equipotential</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -912,7 +853,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Coulomb's Law</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>kq&#8321;q&#8322;/r&sup2;</span><span>Inverse Sq</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -920,7 +860,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Electrostatic Potential</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>V=kq/r</span><span>Distance</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -928,7 +867,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Electric Dipole</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>+q &minus;q</span><span>Moment</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -936,7 +874,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Equilibrium Position Finder</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Null Point</span><span>Coulomb</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -944,7 +881,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Electric Flux</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>&Phi;=EA cos&theta;</span><span>Surface</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -952,7 +888,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Gauss's Law</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>&Phi;=q/&epsilon;&#8320;</span><span>Symmetry</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -960,7 +895,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Parallel Plate Capacitor</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>C=&epsilon;A/d</span><span>Dielectric</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -985,7 +919,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Ohm's Law &amp; Circuits</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>V=IR</span><span>Circuit</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -993,7 +926,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Kirchhoff's Laws</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>KVL</span><span>KCL</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1001,7 +933,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Wheatstone Bridge</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Balance</span><span>Null Point</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1026,7 +957,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Lorentz Force &amp; Cyclotron</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>F=qvB</span><span>Cyclotron</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -1034,7 +964,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Biot-Savart Law</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>dB</span><span>Wire Field</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1042,7 +971,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Moving Coil Galvanometer</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Torque</span><span>Deflection</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1067,7 +995,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Faraday's Law</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>emf=&minus;d&Phi;/dt</span><span>Lenz</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -1075,7 +1002,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>AC Generator</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Sinusoidal</span><span>Rotation</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1083,7 +1009,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>RLC Circuit &amp; Phasors</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Resonance</span><span>Phasor</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -1091,7 +1016,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Transformer</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Turns Ratio</span><span>Step-up</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1116,7 +1040,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>EM Wave Propagation</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>E&perp;B</span><span>Spectrum</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -1124,7 +1047,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Lens &amp; Mirror</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Ray Diagram</span><span>Image</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -1132,7 +1054,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Prism &amp; Dispersion</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>VIBGYOR</span><span>Deviation</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1140,7 +1061,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Young's Double Slit</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Interference</span><span>Fringe</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -1148,7 +1068,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Single Slit Diffraction</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Central Max</span><span>Diffraction</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1173,7 +1092,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Photoelectric Effect</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>hf=&phi;+KE</span><span>Threshold</span></div>
                   <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
@@ -1181,7 +1099,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Bohr's Hydrogen Atom</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Energy Level</span><span>Spectra</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1189,7 +1106,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Radioactive Decay</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>Half-life</span><span>Decay</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
@@ -1197,7 +1113,6 @@
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Nuclear Binding Energy</h3></div>
                 <div class="sim-bottom">
-                  <div class="sim-tags"><span>BE/A</span><span>Stability</span></div>
                   <span class="sim-cta">Coming Soon &rarr;</span>
                 </div>
               </a>
