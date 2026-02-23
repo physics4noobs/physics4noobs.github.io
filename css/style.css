@@ -3757,63 +3757,204 @@ ul { list-style: none; }
   background: rgba(214, 48, 49, 0.12);
 }
 
-/* --- Ink Brush Hero (Light Theme Only) --- */
-.ink-brush-visual {
+/* --- Torii Gate + Sakura Hero (Light Theme Only) --- */
+.torii-visual {
   display: none;
 }
-[data-theme="light"] .ink-brush-visual {
+[data-theme="light"] .torii-visual {
   display: block;
-  width: 400px;
+  position: relative;
+  width: 380px;
   height: 400px;
 }
 [data-theme="light"] .physics-orb {
   display: none;
 }
-.ink-svg {
-  width: 100%;
-  height: 100%;
+
+/* Torii Gate Structure */
+.torii-gate {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 260px;
+}
+.torii-kasagi {
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 240px;
+  height: 18px;
+  background: #d63031;
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 2px 8px rgba(214,48,49,0.2);
+}
+.torii-kasagi::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  height: 12px;
+  background: #d63031;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 -2px 6px rgba(214,48,49,0.15);
+}
+.torii-shimaki {
+  position: absolute;
+  top: 22px;
+  left: -10px;
+  width: 220px;
+  height: 10px;
+  background: #c0392b;
+  border-radius: 2px;
+}
+.torii-nuki {
+  position: absolute;
+  top: 70px;
+  left: 10px;
+  width: 180px;
+  height: 10px;
+  background: #d63031;
+  border-radius: 2px;
+}
+.torii-pillar {
+  position: absolute;
+  top: 18px;
+  width: 18px;
+  height: 242px;
+  background: linear-gradient(90deg, #c0392b, #d63031 40%, #e74c3c 60%, #d63031);
+  border-radius: 2px;
+}
+.torii-pillar-l { left: 20px; }
+.torii-pillar-r { right: 20px; }
+
+.torii-ground {
+  position: absolute;
+  bottom: 38px;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(26,26,26,0.15), transparent);
 }
 
-/* Brush stroke drawing animation */
-.ink-stroke {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-}
-.ink-s1 { animation: inkDraw 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both; }
-.ink-s2 { animation: inkDraw 0.5s cubic-bezier(0.4, 0, 0.2, 1) 1.2s both; }
-.ink-s3 { animation: inkDraw 1.0s cubic-bezier(0.4, 0, 0.2, 1) 1.5s both; }
-.ink-s4 { animation: inkDraw 1.2s cubic-bezier(0.4, 0, 0.2, 1) 2.5s both; }
-.ink-s5 { animation: inkDraw 0.5s cubic-bezier(0.4, 0, 0.2, 1) 3.4s both; }
-.ink-s6 { animation: inkDraw 1.0s cubic-bezier(0.4, 0, 0.2, 1) 3.7s both; }
-.ink-s7 { animation: inkDraw 1.5s cubic-bezier(0.4, 0, 0.2, 1) 4.8s both; }
-.ink-s8 { animation: inkDraw 0.8s cubic-bezier(0.4, 0, 0.2, 1) 6.0s both; }
-.ink-s9 { animation: inkDraw 0.6s cubic-bezier(0.4, 0, 0.2, 1) 6.6s both; }
-
-@keyframes inkDraw {
-  to { stroke-dashoffset: 0; }
-}
-@keyframes inkFadeIn {
-  from { opacity: 0; transform: scale(0.5); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* Red seal stamp */
-.ink-seal {
+/* Sakura Petals */
+.sakura-petal {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(ellipse, #f8a4b8 0%, #f0758e 50%, transparent 70%);
+  border-radius: 50% 0 50% 0;
   opacity: 0;
-  animation: sealStamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 7.2s both;
+  pointer-events: none;
 }
-@keyframes sealStamp {
-  0% { opacity: 0; transform: translate(320px, 260px) scale(1.8) rotate(-8deg); }
-  60% { opacity: 1; transform: translate(320px, 260px) scale(0.95) rotate(2deg); }
-  100% { opacity: 1; transform: translate(320px, 260px) scale(1) rotate(0deg); }
+
+@keyframes petalFall {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg) scale(0.6);
+  }
+  8% { opacity: 0.9; }
+  50% {
+    transform: translate(40px, 160px) rotate(180deg) scale(1);
+  }
+  85% { opacity: 0.8; }
+  95% {
+    opacity: 0.6;
+    transform: translate(60px, 330px) rotate(340deg) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(65px, 350px) rotate(360deg) scale(0.5);
+  }
 }
+@keyframes petalFall2 {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg) scale(0.7);
+  }
+  8% { opacity: 0.85; }
+  50% {
+    transform: translate(-30px, 170px) rotate(-160deg) scale(1);
+  }
+  85% { opacity: 0.7; }
+  95% {
+    opacity: 0.5;
+    transform: translate(-20px, 340px) rotate(-330deg) scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-15px, 355px) rotate(-360deg) scale(0.4);
+  }
+}
+
+.sp1  { top: -10px; left: 30%;  width: 11px; height: 11px; animation: petalFall 6s ease-in-out 0.5s infinite; }
+.sp2  { top: -5px;  left: 55%;  width: 9px;  height: 9px;  animation: petalFall2 7s ease-in-out 1.2s infinite; }
+.sp3  { top: -15px; left: 20%;  width: 12px; height: 12px; animation: petalFall 5.5s ease-in-out 2s infinite; }
+.sp4  { top: -8px;  left: 70%;  width: 8px;  height: 8px;  animation: petalFall2 6.5s ease-in-out 0.8s infinite; }
+.sp5  { top: -12px; left: 42%;  width: 10px; height: 10px; animation: petalFall 7.5s ease-in-out 3s infinite; }
+.sp6  { top: -6px;  left: 80%;  width: 9px;  height: 9px;  animation: petalFall2 5.8s ease-in-out 1.8s infinite; }
+.sp7  { top: -10px; left: 15%;  width: 11px; height: 11px; animation: petalFall 6.2s ease-in-out 4s infinite; }
+.sp8  { top: -14px; left: 60%;  width: 8px;  height: 8px;  animation: petalFall2 6.8s ease-in-out 2.5s infinite; }
+.sp9  { top: -8px;  left: 35%;  width: 10px; height: 10px; animation: petalFall 5.2s ease-in-out 3.5s infinite; }
+.sp10 { top: -11px; left: 75%;  width: 12px; height: 12px; animation: petalFall2 7.2s ease-in-out 0.3s infinite; }
+
+/* Physics equations that bloom from petal landings */
+.torii-eq {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(26, 26, 26, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+@keyframes eqBloom {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+    filter: blur(2px);
+  }
+  20% {
+    opacity: 0.7;
+    transform: translateY(-8px) scale(1);
+    filter: blur(0);
+  }
+  80% {
+    opacity: 0.5;
+    transform: translateY(-14px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-22px) scale(0.9);
+  }
+}
+
+.eq1 { bottom: 42px; left: 8%;   animation: eqBloom 3s ease-out 3.2s infinite; }
+.eq2 { bottom: 42px; left: 72%;  animation: eqBloom 3s ease-out 4.8s infinite; }
+.eq3 { bottom: 42px; left: 28%;  animation: eqBloom 3s ease-out 6.5s infinite; }
+.eq4 { bottom: 42px; left: 55%;  animation: eqBloom 3s ease-out 2.0s infinite; }
+.eq5 { bottom: 42px; left: 40%;  animation: eqBloom 3s ease-out 8.2s infinite; }
+.eq6 { bottom: 42px; left: 15%;  animation: eqBloom 3s ease-out 5.5s infinite; }
 
 /* Responsive */
 @media (max-width: 768px) {
-  [data-theme="light"] .ink-brush-visual {
-    width: 320px;
-    height: 320px;
+  [data-theme="light"] .torii-visual {
+    width: 300px;
+    height: 340px;
   }
+  .torii-gate {
+    width: 160px;
+    height: 210px;
+  }
+  .torii-kasagi { width: 200px; left: -20px; }
+  .torii-kasagi::before { left: -6px; right: -6px; }
+  .torii-shimaki { width: 180px; left: -10px; }
+  .torii-nuki { width: 140px; left: 10px; }
+  .torii-pillar { width: 14px; height: 195px; }
 }
 
 /* ============================================
