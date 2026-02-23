@@ -4040,13 +4040,62 @@ ul { list-style: none; }
 .sp11 { top: 55px; right: 75px;  width: 11px; height: 11px; animation: petalC 7.8s ease-in-out 2.8s infinite; }
 .sp12 { top: 33px; right: 50px;  width: 8px;  height: 11px; animation: petalD 5.2s ease-in-out 4.5s infinite; }
 
-/* Physics equations that bloom from petal landings */
+/* mg force arrows — follow select petals */
+.mg-arrow {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.mg-line {
+  width: 1.5px;
+  height: 18px;
+  background: #1a1a1a;
+  position: relative;
+}
+.mg-line::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #1a1a1a;
+}
+.mg-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  font-style: italic;
+  color: #1a1a1a;
+  margin-top: 2px;
+}
+
+/* mg arrows follow petals A, B, C with matching timing */
+.mg1 {
+  top: 40px; right: 38px;
+  animation: petalA 6.5s ease-in-out 0.5s infinite;
+}
+.mg2 {
+  top: 30px; right: 58px;
+  animation: petalB 7.2s ease-in-out 1.5s infinite;
+}
+.mg3 {
+  top: 45px; right: 18px;
+  animation: petalC 5.8s ease-in-out 2.2s infinite;
+}
+
+/* Physics equations that bloom on petal landing */
 .torii-eq {
   position: absolute;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: rgba(26, 26, 26, 0.45);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(26, 26, 26, 0.75);
   opacity: 0;
   pointer-events: none;
   white-space: nowrap;
@@ -4056,31 +4105,42 @@ ul { list-style: none; }
 @keyframes eqBloom {
   0% {
     opacity: 0;
-    transform: translateY(0) scale(0.4);
-    filter: blur(3px);
+    transform: translateY(0) scale(0.5);
   }
-  15% {
-    opacity: 0.65;
-    transform: translateY(-6px) scale(1);
-    filter: blur(0);
+  12% {
+    opacity: 0.85;
+    transform: translateY(-6px) scale(1.05);
   }
-  70% {
-    opacity: 0.4;
-    transform: translateY(-16px) scale(1);
+  30% {
+    opacity: 0.8;
+    transform: translateY(-10px) scale(1);
+  }
+  80% {
+    opacity: 0.5;
+    transform: translateY(-20px) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(-28px) scale(0.85);
-    filter: blur(1px);
+    transform: translateY(-30px) scale(0.9);
   }
 }
 
-.eq1 { bottom: 36px; left: 5%;   animation: eqBloom 3.5s ease-out 3.2s infinite; }
-.eq2 { bottom: 36px; left: 68%;  animation: eqBloom 3.5s ease-out 5.0s infinite; }
-.eq3 { bottom: 36px; left: 25%;  animation: eqBloom 3.5s ease-out 7.0s infinite; }
-.eq4 { bottom: 36px; left: 50%;  animation: eqBloom 3.5s ease-out 2.0s infinite; }
-.eq5 { bottom: 36px; left: 38%;  animation: eqBloom 3.5s ease-out 8.5s infinite; }
-.eq6 { bottom: 36px; left: 12%;  animation: eqBloom 3.5s ease-out 5.8s infinite; }
+/*
+  Equation timing synced to petal landings:
+  eq1 ↔ sp1 (petalA 6.5s delay 0.5s) → lands at 0.5+6.5=7.0s, repeats every 6.5s
+  eq2 ↔ sp2 (petalB 7.2s delay 1.5s) → lands at 1.5+7.2=8.7s, repeats every 7.2s
+  eq3 ↔ sp3 (petalC 5.8s delay 2.2s) → lands at 2.2+5.8=8.0s, repeats every 5.8s
+  eq4 ↔ sp4 (petalD 6.8s delay 0.8s) → lands at 0.8+6.8=7.6s, repeats every 6.8s
+  eq5 ↔ sp6 (petalB 6.2s delay 2.0s) → lands at 2.0+6.2=8.2s, repeats every 6.2s
+  eq6 ↔ sp7 (petalC 6.0s delay 4.0s) → lands at 4.0+6.0=10.0s, repeats every 6.0s
+  Equation duration is 3s, so delay = petal_land_time - 0.1s (bloom starts just before touch)
+*/
+.eq1 { bottom: 36px; left: 8%;   animation: eqBloom 3s ease-out 6.9s  6.5s both; }
+.eq2 { bottom: 36px; left: 65%;  animation: eqBloom 3s ease-out 8.6s  7.2s both; }
+.eq3 { bottom: 36px; left: 28%;  animation: eqBloom 3s ease-out 7.9s  5.8s both; }
+.eq4 { bottom: 36px; left: 48%;  animation: eqBloom 3s ease-out 7.5s  6.8s both; }
+.eq5 { bottom: 36px; left: 38%;  animation: eqBloom 3s ease-out 8.1s  6.2s both; }
+.eq6 { bottom: 36px; left: 15%;  animation: eqBloom 3s ease-out 9.9s  6.0s both; }
 
 /* Responsive */
 @media (max-width: 768px) {
