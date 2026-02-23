@@ -885,16 +885,17 @@ ul { list-style: none; }
 @keyframes waveTravel {
   0%   { opacity: 0; transform: translateX(0); }
   5%   { opacity: 0.9; }
-  60%  { opacity: 0.7; transform: translateX(190px); }
-  70%  { opacity: 0; transform: translateX(215px); }
-  100% { opacity: 0; transform: translateX(215px); }
+  60%  { opacity: 0.8; transform: translateX(155px); }
+  65%  { opacity: 0; transform: translateX(155px); }
+  100% { opacity: 0; transform: translateX(155px); }
 }
 
 /* Equation that appears when wave arrives at right edge */
 .sol-eq {
   position: absolute;
   top: 50%;
-  right: -10px;
+  left: 50%;
+  margin-left: 175px;
   transform: translateY(-50%);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
@@ -910,8 +911,8 @@ ul { list-style: none; }
 }
 @keyframes eqAppear {
   0%   { opacity: 0; transform: translateY(-50%) scale(0.5); }
-  68%  { opacity: 0; transform: translateY(-50%) scale(0.5); }
-  75%  { opacity: 0.9; transform: translateY(-50%) scale(1.1); }
+  63%  { opacity: 0; transform: translateY(-50%) scale(0.5); }
+  70%  { opacity: 0.9; transform: translateY(-50%) scale(1.1); }
   82%  { opacity: 0.85; transform: translateY(-50%) scale(1); }
   95%  { opacity: 0.7; transform: translateY(-50%) scale(1); }
   100% { opacity: 0; transform: translateY(-50%) scale(0.9); }
