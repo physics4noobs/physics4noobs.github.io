@@ -18,17 +18,17 @@
   <style>
     /* ====== Sim Cards — Mon crest style (matches chapter cards) ====== */
     .carousel-track .sim-card {
-      flex: 0 0 260px; scroll-snap-align: start;
+      flex: 0 0 200px; scroll-snap-align: start;
       background: transparent;
       border: 1px solid var(--border-subtle);
-      border-radius: 16px;
+      border-radius: 14px;
       display: flex; flex-direction: column;
-      padding: 24px 24px 20px; overflow: visible;
+      padding: 18px 18px 16px; overflow: visible;
       position: relative;
       text-decoration: none; color: inherit;
       opacity: 0; transform: translateY(20px);
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      min-height: 320px;
+      min-height: 180px;
     }
     .carousel-track .sim-card.revealed {
       opacity: 1; transform: translateY(0);
@@ -46,7 +46,7 @@
       content: '';
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 110px; height: 110px;
+      width: 80px; height: 80px;
       background-size: contain; background-repeat: no-repeat;
       background-position: center;
       opacity: 0.12; pointer-events: none; z-index: 0;
@@ -65,14 +65,14 @@
     /* Sim title */
     .sim-info { position: relative; z-index: 1; margin-top: 8px; }
     .chp-page .sim-info h3 {
-      font-family: var(--font-display); font-size: 1.3rem; font-weight: 800;
+      font-family: var(--font-display); font-size: 1.05rem; font-weight: 800;
       line-height: 1.25; margin: 0; color: var(--text-primary);
     }
     /* Tags + CTA */
     .sim-bottom {
       position: relative; z-index: 1;
       display: flex; flex-direction: column; gap: 12px;
-      margin-top: auto; padding-top: 20px;
+      margin-top: auto; padding-top: 12px;
     }
     .sim-tags {
       display: flex; flex-wrap: nowrap; gap: 6px; overflow: hidden;
@@ -933,12 +933,11 @@
                 </div>
               </a>
               <a href="simulations/equilibrium.html" class="sim-card reveal">
-                <div class="sim-preview" style="background: linear-gradient(135deg, #0a2818, #1a280a);"><span style="position: relative; z-index: 1;">&#9878;</span></div>
-                <div class="sim-body">
-                  <div class="sim-grade">Grade XII &bull; Electrostatics</div>
-                  <div class="sim-title">Equilibrium Position Finder</div>
-                  <div class="sim-desc">Drag a test charge among fixed charges to discover stable and unstable equilibrium positions under Coulomb forces.</div>
-                  <div class="sim-link">Launch Simulation &rarr;</div>
+                <span class="sim-badge">Simulation</span>
+                <div class="sim-info"><h3>Equilibrium Position Finder</h3></div>
+                <div class="sim-bottom">
+                  <div class="sim-tags"><span>Null Point</span><span>Coulomb</span></div>
+                  <span class="sim-cta">Launch Sim &rarr;</span>
                 </div>
               </a>
               <a href="simulations/electric-flux.html" class="sim-card reveal">
