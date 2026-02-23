@@ -4221,6 +4221,42 @@ ul { list-style: none; }
 .eq5 { bottom: 36px; left: 38%;  animation: eqBloom 3s ease-out 8.1s  6.2s both; }
 .eq6 { bottom: 36px; left: 15%;  animation: eqBloom 3s ease-out 9.9s  6.0s both; }
 
+/* Trajectory equation — fixed at bottom of torii gate */
+.trajectory-eq {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0;
+  animation: trajFadeIn 2s ease-out 3s forwards;
+}
+.trajectory-title {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: rgba(26,26,26,0.5);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.trajectory-formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+@keyframes trajFadeIn {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(5px); }
+  100% { opacity: 0.85; transform: translateX(-50%) translateY(0); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   [data-theme="light"] .torii-visual {
