@@ -6,14 +6,16 @@
    - Android Chrome (intercepts beforeinstallprompt)
    - iOS Safari (shows manual instructions)
 
-   The banner appears once per session after a
-   3-second delay. Dismissed banners don't reappear
-   for 7 days.
+   The banner only appears after the user has
+   logged in at least 3 times. Dismissed banners
+   don't reappear for 7 days.
    ============================================ */
 (function() {
   'use strict';
 
   var DISMISS_KEY = 'ae-pwa-dismiss';
+  var LOGIN_COUNT_KEY = 'ae-login-count';
+  var MIN_LOGINS = 3;
   var DISMISS_DAYS = 7;
   var DELAY_MS = 3000;
 
@@ -45,6 +47,24 @@
     e.preventDefault();
     deferredPrompt = e;
   });
+
+  // Track login count and only show banner after MIN_LOGINS
+  function trackLoginAndShow() {
+    if (typeof firebase === 'undefined' || !firebase.auth) return;
+    var counted = false;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user && !counted) {
+        counted = true;
+        try {
+          var count = parseInt(localStorage.getItem(LOGIN_COUNT_KEY) || '0') + 1;
+          localStorage.setItem(LOGIN_COUNT_KEY, count.toString());
+          if (count >= MIN_LOGINS) {
+            setTimeout(createBanner, DELAY_MS);
+          }
+        } catch(e) {}
+      }
+    });
+  }
 
   // Build the banner
   function createBanner() {
@@ -127,12 +147,12 @@
     }, 400);
   }
 
-  // Show after delay
+  // Wait for auth to track logins, then show if threshold met
   if (document.readyState === 'complete') {
-    setTimeout(createBanner, DELAY_MS);
+    trackLoginAndShow();
   } else {
     window.addEventListener('load', function() {
-      setTimeout(createBanner, DELAY_MS);
+      trackLoginAndShow();
     });
   }
 })();
