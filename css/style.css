@@ -4043,50 +4043,43 @@ ul { list-style: none; }
 /* mg force arrows — follow select petals */
 .mg-arrow {
   position: absolute;
+  top: 32%;
+  right: 22%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: 0;
   pointer-events: none;
   z-index: 5;
+  animation: mgBounce 2s ease-in-out infinite;
+}
+.mg-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #1a1a1a;
+  margin-bottom: 3px;
+  letter-spacing: 0.02em;
 }
 .mg-line {
   width: 1.5px;
-  height: 18px;
+  height: 28px;
   background: #1a1a1a;
   position: relative;
 }
 .mg-line::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: -5px;
   left: 50%;
   transform: translateX(-50%);
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 5px solid #1a1a1a;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #1a1a1a;
 }
-.mg-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  font-weight: 600;
-  font-style: italic;
-  color: #1a1a1a;
-  margin-top: 2px;
-}
-
-/* mg arrows follow petals A, B, C with matching timing */
-.mg1 {
-  top: 40px; right: 38px;
-  animation: petalA 6.5s ease-in-out 0.5s infinite;
-}
-.mg2 {
-  top: 30px; right: 58px;
-  animation: petalB 7.2s ease-in-out 1.5s infinite;
-}
-.mg3 {
-  top: 45px; right: 18px;
-  animation: petalC 5.8s ease-in-out 2.2s infinite;
+@keyframes mgBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.8; }
+  50% { transform: translateY(8px); opacity: 1; }
 }
 
 /* Physics equations that bloom on petal landing */
