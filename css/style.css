@@ -4053,10 +4053,10 @@ ul { list-style: none; }
   animation: mgBounce 2s ease-in-out infinite;
 }
 .mg-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
   font-weight: 700;
-  font-style: italic;
+  font-style: normal;
   color: #1a1a1a;
   margin-bottom: 3px;
   letter-spacing: 0.02em;
