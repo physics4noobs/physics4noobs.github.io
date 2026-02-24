@@ -4473,17 +4473,17 @@ ul { list-style: none; }
 /* Responsive */
 @media (max-width: 768px) {
   [data-theme="light"] .torii-visual {
-    width: 320px;
-    height: 400px;
+    width: 200px;
+    height: 250px;
   }
-  .torii-gate { width: 160px; height: 210px; }
-  .torii-kasagi { width: 200px; left: -20px; }
-  .torii-kasagi::before { left: -6px; right: -6px; }
-  .torii-shimaki { width: 180px; left: -10px; }
-  .torii-nuki { width: 140px; left: 10px; }
-  .torii-pillar { width: 16px; height: 195px; }
-  .sakura-branch { width: 160px; height: 105px; right: -10px; top: 10px; }
-  .torii-glow { width: 200px; height: 200px; }
+  .torii-gate { width: 100px; height: 135px; }
+  .torii-kasagi { width: 130px; left: -15px; }
+  .torii-kasagi::before { left: -4px; right: -4px; }
+  .torii-shimaki { width: 115px; left: -8px; }
+  .torii-nuki { width: 90px; left: 5px; }
+  .torii-pillar { width: 10px; height: 125px; }
+  .sakura-branch { width: 100px; height: 65px; right: -6px; top: 6px; }
+  .torii-glow { width: 130px; height: 130px; }
 }
 
 /* ============================================
