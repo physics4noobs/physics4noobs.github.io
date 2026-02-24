@@ -236,15 +236,20 @@ ul { list-style: none; }
   right: 0;
   z-index: 1000;
   padding: 0 2rem;
+  background: rgba(8, 8, 24, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   transition: var(--transition-smooth);
 }
 
 .navbar.scrolled {
-  background: rgba(5, 5, 16, 0.92);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--border-subtle);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  background: rgba(5, 5, 16, 0.97);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .nav-container {
@@ -269,8 +274,62 @@ ul { list-style: none; }
 }
 
 .nav-logo .logo-icon {
-  display: none;
+  width: 36px;
+  height: 36px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
 }
+
+/* Pendulum Logo */
+.logo-pendulum {
+  width: 36px;
+  height: 36px;
+  position: relative;
+}
+.pendulum-pivot {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: #ffffff;
+  z-index: 2;
+}
+.pendulum-arm {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 0;
+  transform-origin: 0 0;
+  animation: pendulumSwing 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+}
+.pendulum-string {
+  width: 1.5px;
+  height: 20px;
+  background: #ffffff;
+  margin-left: -0.75px;
+}
+.pendulum-bob {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-primary, #00d4ff);
+  margin-left: -5.75px;
+}
+@keyframes pendulumSwing {
+  0%   { transform: rotate(-30deg); }
+  100% { transform: rotate(30deg); }
+}
+
+/* Light theme pendulum */
+[data-theme="light"] .pendulum-pivot { background: #1a1a1a; }
+[data-theme="light"] .pendulum-string { background: #1a1a1a; }
+[data-theme="light"] .pendulum-bob { background: #d63031; }
 
 /* Rocket Logo
    Geometry: 42x42 container
@@ -528,6 +587,14 @@ ul { list-style: none; }
 .brand-accent {
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
+}
+.brand-initial {
+  color: var(--color-primary, #00d4ff);
+  -webkit-text-fill-color: var(--color-primary, #00d4ff);
+}
+[data-theme="light"] .brand-initial {
+  color: #d63031;
+  -webkit-text-fill-color: #d63031;
 }
 
 .nav-logo .logo-text .brand-tag {
@@ -2411,6 +2478,7 @@ ul { list-style: none; }
   font-size: 0.9rem;
   color: var(--text-primary);
   line-height: 1.85;
+  margin-left: 48px;
 }
 
 .footer-col h4 {
@@ -3701,9 +3769,17 @@ ul { list-style: none; }
   background: var(--bg-primary);
 }
 
+[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+}
 [data-theme="light"] .navbar.scrolled {
-  background: rgba(254, 254, 254, 0.95);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 [data-theme="light"] .bg-grid {
@@ -3723,12 +3799,24 @@ ul { list-style: none; }
 [data-theme="light"] .footer-col a:hover {
   color: #d63031;
 }
-[data-theme="light"] .footer .brand-name {
-  color: #fff;
-}
-[data-theme="light"] .footer .brand-accent {
+[data-theme="light"] .footer .nav-logo .logo-text .brand-name {
   color: #fff;
   -webkit-text-fill-color: #fff;
+}
+[data-theme="light"] .footer .nav-logo .logo-text .brand-name .brand-accent {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+[data-theme="light"] .footer .brand-initial {
+  color: #d63031;
+  -webkit-text-fill-color: #d63031;
+}
+[data-theme="light"] .footer .pendulum-pivot,
+[data-theme="light"] .footer .pendulum-string {
+  background: #ffffff;
+}
+[data-theme="light"] .footer .pendulum-bob {
+  background: #d63031;
 }
 [data-theme="light"] .footer .brand-tag {
   color: rgba(255, 255, 255, 0.4);
@@ -4405,191 +4493,7 @@ ul { list-style: none; }
 /* ============================================
    SPLASH SCREEN
    ============================================ */
-.splash-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: var(--bg-primary, #050510);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
-.splash-screen.fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Content wrapper — row layout to match navbar logo */
-.splash-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 24px;
-}
-
-/* Text group — stacks vertically to the right of pendulum */
-.splash-text-group {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Splash rocket — same 42px base as navbar, scaled up */
-.splash-rocket {
-  width: 42px;
-  height: 42px;
-  position: relative;
-  flex-shrink: 0;
-  transform: scale(1.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
-}
-.splash-rocket .sp-nose {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-bottom: 8px solid #00d4ff;
-  filter: drop-shadow(0 -2px 4px rgba(0,212,255,.3));
-  z-index: 2;
-}
-.splash-rocket .sp-nose::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  background: radial-gradient(circle, rgba(0,212,255,.6), transparent 70%);
-  border-radius: 50%;
-  animation: noseGlow 2s ease-in-out infinite;
-}
-.splash-rocket .sp-body {
-  position: absolute;
-  width: 14px;
-  height: 24px;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #00d4ff 0%, rgba(180,240,255,.9) 15%, rgba(0,180,220,.9) 30%, rgba(0,140,180,.8) 100%);
-  border-radius: 5px 5px 2px 2px;
-  box-shadow: 0 0 8px rgba(0,212,255,.3), inset 2px 0 6px rgba(255,255,255,.3), inset -1px 0 2px rgba(0,0,0,.15);
-  z-index: 1;
-}
-.splash-rocket .sp-window {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.9), rgba(0,212,255,.6) 60%, rgba(0,100,140,.8));
-  border-radius: 50%;
-  box-shadow: 0 0 4px rgba(0,212,255,.4);
-  z-index: 3;
-}
-.splash-rocket .sp-fin-l {
-  position: absolute;
-  top: 22px;
-  left: 6px;
-  width: 8px;
-  height: 12px;
-  background: rgba(0,255,170,.85);
-  clip-path: polygon(100% 0%, 100% 60%, 0% 100%);
-}
-.splash-rocket .sp-fin-r {
-  position: absolute;
-  top: 22px;
-  right: 6px;
-  width: 8px;
-  height: 12px;
-  background: rgba(0,255,170,.85);
-  clip-path: polygon(0% 0%, 0% 60%, 100% 100%);
-}
-.splash-rocket .sp-flame {
-  position: absolute;
-  top: 29px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 8px;
-  height: 10px;
-  background: radial-gradient(ellipse at 50% 0%, #ffcc00 0%, #ff6600 40%, rgba(255,50,0,.6) 70%, transparent 100%);
-  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
-  animation: rocketFlame 0.3s ease-in-out infinite alternate;
-  filter: blur(0.5px);
-}
-.splash-rocket .sp-glow {
-  position: absolute;
-  top: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 8px;
-  background: radial-gradient(ellipse, rgba(255,140,0,.25), transparent 70%);
-  filter: blur(3px);
-  animation: rocketFlame 0.3s ease-in-out infinite alternate-reverse;
-}
-
-.splash-logo {
-  font-family: 'Yatra One', cursive;
-  font-size: 1.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  background: linear-gradient(90deg, #00d4ff 0%, #00ffaa 50%, #2a2a3a 50.1%);
-  background-size: 200% 100%;
-  background-position: right;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 4px;
-}
-/* Splash screen uses dark style regardless of theme */
-[data-theme="light"] .splash-screen {
-  background: #050510;
-}
-[data-theme="light"] .splash-tagline {
-  color: #6b6b85;
-}
-.splash-tagline {
-  font-family: var(--font-body, system-ui, sans-serif);
-  font-size: 0.7rem;
-  letter-spacing: 3px;
-  color: var(--text-muted, #6b6b85);
-  text-transform: uppercase;
-  opacity: 0;
-}
-
-/* Text animations triggered when splash-content text becomes visible */
-.splash-content.text-visible .splash-logo {
-  animation: splashIn 0.5s ease-out 0s both, textFill 1.2s ease-in-out 0.2s forwards;
-}
-.splash-content.text-visible .splash-tagline {
-  animation: splashIn 0.5s ease-out 0.15s both;
-}
-/* Brand accent inherits gradient clip in splash so the sweep covers the full sentence */
-.splash-logo .brand-accent {
-  -webkit-text-fill-color: transparent !important;
-  color: transparent !important;
-}
-
-@keyframes splashIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-
-@keyframes textFill {
-  to { background-position: left; }
-}
+/* All splash styles are inline in index.html for zero-dependency loading */
 
 /* ============================================
    PREMIUM GATE — Upgrade prompt for paid content
