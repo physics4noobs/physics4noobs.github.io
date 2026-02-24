@@ -8,7 +8,7 @@
    - Everything else → Network-first with cache fallback
    ============================================ */
 
-var CACHE_NAME = 'p4n-v9';
+var CACHE_NAME = 'p4n-v10';
 
 // Core app shell to pre-cache on install
 var APP_SHELL = [
