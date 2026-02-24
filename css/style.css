@@ -3572,7 +3572,8 @@ ul { list-style: none; }
 
 @media (max-width: 768px) {
   .nav-links { display: none; }
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: flex; order: -1; }
+  .nav-logo { order: 0; }
 
   .nav-links.active {
     display: flex;
@@ -3591,6 +3592,36 @@ ul { list-style: none; }
 
   .nav-links.active .nav-item { width: 100%; }
   .nav-links.active .nav-link { width: 100%; padding: 12px 16px; }
+
+  /* Theme toggle + Auth button on same row */
+  .nav-links.active .theme-toggle,
+  .nav-links.active .auth-btn,
+  .nav-links.active .user-menu {
+    width: auto;
+  }
+  .nav-links.active .theme-toggle { order: 90; margin-left: 0; margin-right: 8px; }
+  .nav-links.active .auth-btn { order: 91; }
+  .nav-links.active .user-menu { order: 91; }
+
+  .nav-links.active::after {
+    content: '';
+    display: flex;
+    order: 89;
+    width: 100%;
+    height: 0;
+    border-top: 1px solid var(--border-subtle);
+    margin: 8px 0;
+  }
+
+  /* Wrap theme toggle + auth into a row */
+  .nav-links.active {
+    flex-wrap: wrap;
+  }
+  .nav-links.active .theme-toggle,
+  .nav-links.active .auth-btn,
+  .nav-links.active .user-menu {
+    flex: 0 0 auto;
+  }
 
   .nav-links.active .dropdown {
     position: static;
