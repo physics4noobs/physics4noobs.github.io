@@ -15,7 +15,7 @@
 
     function updateIcon() {
       var current = document.documentElement.getAttribute('data-theme');
-      btn.textContent = current === 'dark' ? '\u263E' : '\u2600';
+      btn.textContent = current === 'dark' ? 'Light' : 'Dark';
       btn.setAttribute('aria-label', current === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
     }
 
