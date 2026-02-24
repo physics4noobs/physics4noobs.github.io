@@ -20,6 +20,14 @@ function initNavbar() {
       toggle.classList.toggle('open');
     });
 
+    // Close menu when tapping outside
+    document.addEventListener('click', (e) => {
+      if (links.classList.contains('active') && !links.contains(e.target) && !toggle.contains(e.target)) {
+        links.classList.remove('active');
+        toggle.classList.remove('open');
+      }
+    });
+
     // Mobile dropdown toggle
     document.querySelectorAll('.nav-item').forEach(item => {
       const link = item.querySelector('.nav-link');
