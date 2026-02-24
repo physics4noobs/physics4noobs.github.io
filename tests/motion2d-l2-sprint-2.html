@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motion in 2D L2 Sprint 2 | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Motion in 2D Level 2 &mdash; Sprint Test 2</h1>
+      <div class="test-meta">Grade XI &bull; 10 Questions &bull; 30 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">30:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">A projectile is aimed at a mark on a horizontal plane through the point of projection and falls 6 m short when its elevation is 30&deg; but overshoots the mark by 9 m when its elevation is 45&deg;. The angle of elevation of projectile to hit the target on the horizontal plane is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> sin<sup>&minus;1</sup>[(3&radic;3 + 4)/5]</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> cos<sup>&minus;1</sup>[(3&radic;3 + 4)/5]</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> (1/2)cos<sup>&minus;1</sup>[(3&radic;3 + 4)/10]</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> (1/2)sin<sup>&minus;1</sup>[(3&radic;3 + 4)/10]</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Let the target distance be R. Range formula: R = u&sup2;sin2&theta;/g. At 30&deg;: u&sup2;sin60&deg;/g = R &minus; 6, so u&sup2;&radic;3/(2g) = R &minus; 6. At 45&deg;: u&sup2;sin90&deg;/g = R + 9, so u&sup2;/g = R + 9. Dividing: &radic;3/2 = (R &minus; 6)/(R + 9). Solving: R&radic;3 + 9&radic;3 = 2R &minus; 12, R(2 &minus; &radic;3) = 9&radic;3 + 12, R = (9&radic;3 + 12)/(2 &minus; &radic;3). Then u&sup2;/g = R + 9. For the required angle &theta;: sin2&theta; = Rg/u&sup2; = R/(R+9) = (3&radic;3 + 4)/10. So &theta; = (1/2)sin<sup>&minus;1</sup>[(3&radic;3 + 4)/10].</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">If the vertical retardation produced by air resistance of projectile is constant and equal to one-tenth of acceleration due to gravity: (g = 10 m/s&sup2;). The time to reach maximum height:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Increases by 9 percent</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Decreases by 9 percent</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Increases by 11 percent</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Decreases by 11 percent</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Without air resistance: effective upward deceleration = g = 10 m/s&sup2;. Time to max height t<sub>1</sub> = u<sub>y</sub>/g. With air resistance adding a retardation of g/10: effective deceleration = g + g/10 = 11g/10. New time t<sub>2</sub> = u<sub>y</sub>/(11g/10) = 10u<sub>y</sub>/(11g) = (10/11)t<sub>1</sub>. Change = (t<sub>1</sub> &minus; t<sub>2</sub>)/t<sub>1</sub> = 1/11 &asymp; 9.09%. Time decreases by approximately 9 percent.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">The horizontal range and maximum height attained by a projectile are R and H respectively. If a constant horizontal acceleration a = g/4 is imparted to the projectile due to wind, then its horizontal range and maximum height will be:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> (R + H), H/2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> (R + H/2), 2H</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> (R + 2H), H</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> (R + H), H</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The vertical motion is unchanged, so maximum height remains H. Time of flight T = 2u sin&theta;/g is also unchanged. The horizontal displacement gets an extra contribution from the wind acceleration: &Delta;x = (1/2)(g/4)T&sup2; = (g/8)(2u sin&theta;/g)&sup2; = u&sup2;sin&sup2;&theta;/(2g) = 2H &middot; (1/2) = H. So new horizontal range = R + H, and height = H.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">A body of mass m thrown horizontally with velocity v, from the top of tower of height h touches the level ground at distance of 250 metre from the foot of the tower. A body of mass 2m thrown horizontally with velocity v/2 from the top of tower of height 4h will touch the level ground at a distance x from the foot of tower. The value of x is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 250 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 500 m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 125 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 250&radic;2 m</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Horizontal range for projectile thrown horizontally: x = v&radic;(2h/g). Mass is irrelevant. Case 1: x<sub>1</sub> = v&radic;(2h/g) = 250 m. Case 2: x<sub>2</sub> = (v/2)&radic;(2&middot;4h/g) = (v/2) &middot; 2&radic;(2h/g) = v&radic;(2h/g) = 250 m. So x = 250 m.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">An airplane, diving at an angle of 53.0&deg; with the vertical releases a projectile at an altitude of 730 m. The projectile hits the ground 5.00 s after being released. What is the speed of the aircraft?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 282 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 202 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 182 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 102 ms<sup>&minus;1</sup></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The plane dives at 53&deg; with vertical, so angle with horizontal = 37&deg;. Let speed = u. Vertical component (downward) = u cos53&deg; = 0.6u. Horizontal component = u sin53&deg; = 0.8u. Vertical displacement: 730 = 0.6u &middot; 5 + (1/2)(10)(25). 730 = 3u + 125. 3u = 605. u = 201.67 &asymp; 202 ms<sup>&minus;1</sup>.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">A particle is projected with a certain velocity at an angle &alpha; above the horizontal from the foot of an inclined plane of inclination 30&deg;. If the particle strikes the plane normally then &alpha; is equal to:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 30&deg; + tan<sup>&minus;1</sup>(&radic;3/2)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 45&deg;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 60&deg;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 30&deg; + tan<sup>&minus;1</sup>(2&radic;3)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For the projectile to strike the inclined plane normally, the velocity at the point of impact must be perpendicular to the plane (i.e., directed along the normal to the incline, which is at 30&deg; + 90&deg; from horizontal = making angle 60&deg; below the incline direction). At impact, horizontal velocity component v<sub>x</sub> = u cos&alpha; (unchanged) and vertical component v<sub>y</sub> = u sin&alpha; &minus; gT (downward). For normal impact on a 30&deg; incline: tan(30&deg;) = v<sub>x</sub>/v<sub>y</sub> at impact (v<sub>x</sub>/v<sub>y</sub> = tan30&deg; = 1/&radic;3). Working through the geometry gives &alpha; = 30&deg; + tan<sup>&minus;1</sup>(&radic;3/2).</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">For a particle moving along circular path, the radial acceleration a<sub>r</sub> is proportional to time t. If a<sub>t</sub> is the tangential acceleration, then which of the following will be independent of time t?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> a<sub>t</sub></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> a<sub>r</sub> &middot; a<sub>t</sub></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> a<sub>r</sub>/a<sub>t</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> a<sub>r</sub>(a<sub>t</sub>)<sup>2</sup></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> a<sub>r</sub> = v&sup2;/r &prop; t, so v&sup2; &prop; t, meaning v &prop; t<sup>1/2</sup>. Tangential acceleration a<sub>t</sub> = dv/dt &prop; t<sup>&minus;1/2</sup>. So a<sub>t</sub> &prop; t<sup>&minus;1/2</sup> (not constant). a<sub>r</sub> &middot; a<sub>t</sub> &prop; t &middot; t<sup>&minus;1/2</sup> = t<sup>1/2</sup> (not constant). a<sub>r</sub>/a<sub>t</sub> &prop; t/t<sup>&minus;1/2</sup> = t<sup>3/2</sup> (not constant). a<sub>r</sub>(a<sub>t</sub>)<sup>2</sup> &prop; t &middot; t<sup>&minus;1</sup> = t<sup>0</sup> = constant. So D is independent of time.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">A very broad elevator is going up vertically with a constant acceleration of 2 m/s&sup2;. At the instant when its velocity is 4 m/s a ball is projected from the floor of the lift with a speed of 4 m/s relative to the floor at an elevation of 30&deg;. The time taken by the ball to return to the floor is: (g = 10 m/s&sup2;)</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 0.5 s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 0.33 s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 0.25 s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1 s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In the non-inertial frame of the elevator, a pseudo-force acts downward giving effective g&prime; = g + a = 10 + 2 = 12 m/s&sup2;. The ball is projected at 4 m/s at 30&deg; relative to the floor. Vertical component (relative to lift) = 4 sin30&deg; = 2 m/s. Time to return to floor: T = 2u<sub>y</sub>/g&prime; = 2(2)/12 = 4/12 = 1/3 &asymp; 0.33 s.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">A ball is projected from a high tower with speed 20 m/s at an angle 30&deg; with horizontal x-axis. The x-coordinate of the ball at the instant when the velocity of the ball becomes perpendicular to the velocity of projection will be (take point of projection as origin):</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 40&radic;3 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 40 m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 20&radic;3 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 20 m</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Initial velocity: u<sub>x</sub> = 20cos30&deg; = 10&radic;3 m/s, u<sub>y</sub> = 20sin30&deg; = 10 m/s. When velocity is perpendicular to initial velocity, their dot product = 0. v<sub>x</sub>u<sub>x</sub> + v<sub>y</sub>u<sub>y</sub> = 0. Since v<sub>x</sub> = u<sub>x</sub> = 10&radic;3: (10&radic;3)(10&radic;3) + v<sub>y</sub>(10) = 0. 300 + 10v<sub>y</sub> = 0, v<sub>y</sub> = &minus;30 m/s. Time: v<sub>y</sub> = u<sub>y</sub> &minus; gt &Rightarrow; &minus;30 = 10 &minus; 10t &Rightarrow; t = 4 s. x = u<sub>x</sub>t = 10&radic;3 &times; 4 = 40&radic;3 m.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">With what minimum speed must a particle be projected from origin so that it is able to pass through a given point (30 m, 40 m)? (g = 10 m/s&sup2;)</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 60 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 30 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 50 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 40 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The trajectory equation is y = x tan&theta; &minus; gx&sup2;/(2u&sup2;cos&sup2;&theta;) = x tan&theta; &minus; gx&sup2;(1 + tan&sup2;&theta;)/(2u&sup2;). For the point (30, 40): 40 = 30T &minus; (10 &middot; 900)(1 + T&sup2;)/(2u&sup2;) where T = tan&theta;. 40 = 30T &minus; 4500(1 + T&sup2;)/u&sup2;. For minimum u, differentiate with respect to T and set to zero: dT/du = 0. This gives the condition. Rearranging: u&sup2; = 4500(1 + T&sup2;)/(30T &minus; 40). Minimising: d/dT[(1 + T&sup2;)/(30T &minus; 40)] = 0 gives T = (1 + &radic;(1 + (30/40)&sup2; &hellip;)). Solving the standard minimum-speed formula u<sub>min</sub>&sup2; = g(y + &radic;(x&sup2; + y&sup2;)) = 10(40 + &radic;(900 + 1600)) = 10(40 + 50) = 900. So u<sub>min</sub> = 30 m/s.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    // --- Timer: 30-minute countdown ---
+    var totalSeconds = 30 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    // --- Option selection ---
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    // --- Submit test ---
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        // Highlight the correct option
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        // Disable hover effects
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      // Display score
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      // Update submit button
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

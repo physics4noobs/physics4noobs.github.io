@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematics L2 Sprint 2 | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Kinematics Level 2 &mdash; Sprint Test 2</h1>
+      <div class="test-meta">Grade XI &bull; 10 Questions &bull; 30 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">30:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">A body is allowed to fall from a height of 100 m. If the time taken for the first 50 m is t<sub>1</sub> and for the remaining 50 m is t<sub>2</sub>. Which of these is correct regarding t<sub>1</sub> and t<sub>2</sub>?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> t<sub>1</sub> = t<sub>2</sub></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> t<sub>1</sub> &gt; t<sub>2</sub></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> t<sub>1</sub> &lt; t<sub>2</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Depends upon the mass</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The body accelerates as it falls. It is slower during the first 50 m and faster during the second 50 m. So it takes more time for the first 50 m: t<sub>1</sub> &gt; t<sub>2</sub>.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">In the previous question, the ratio of t<sub>1</sub> and t<sub>2</sub> is nearly:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 5 : 2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 3 : 1</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 3 : 2</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 5 : 3</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For first 50 m: 50 = &frac12;(10)t<sub>1</sub><sup>2</sup>, so t<sub>1</sub> = &radic;10. For total 100 m: 100 = &frac12;(10)t<sup>2</sup>, so t = &radic;20 = 2&radic;5. Then t<sub>2</sub> = 2&radic;5 &minus; &radic;10 = &radic;10(&radic;2 &minus; 1). Therefore t<sub>1</sub>/t<sub>2</sub> = &radic;10 / [&radic;10(&radic;2 &minus; 1)] = 1/(&radic;2 &minus; 1) = (&radic;2 + 1) &approx; 2.414 &approx; 5/2.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">Acceleration of a particle has a value &lsquo;a&rsquo; for a time t. It is followed immediately by a retardation of magnitude &lsquo;a&rsquo; for time t/2. Consider this as one cycle. Initial velocity of particle was zero. The displacement of the particle after n such cycles in succession is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> n(3n + 4)at<sup>2</sup>/8</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> n(n + 1)at<sup>2</sup>/2</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> (n<sup>2</sup> + n + 1)at<sup>2</sup>/4</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> nat<sup>2</sup></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In one cycle &mdash; Phase 1 (time t, acceleration a): v<sub>1</sub> = at, s<sub>1</sub> = &frac12;at<sup>2</sup>. Phase 2 (time t/2, retardation a): v<sub>2</sub> = at &minus; a(t/2) = at/2, s<sub>2</sub> = at(t/2) &minus; &frac12;a(t/2)<sup>2</sup> = at<sup>2</sup>/2 &minus; at<sup>2</sup>/8 = 3at<sup>2</sup>/8. The net displacement per cycle increases as the initial velocity at the start of each cycle grows. After careful summation over n cycles, the total displacement = n(3n + 4)at<sup>2</sup>/8.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">A particle starts from rest and traverses a distance &ell; with uniform acceleration, then moves uniformly over a further distance 2&ell; and finally comes to rest after moving a further distance 3&ell; under uniform retardation. Assuming entire motion to be rectilinear motion, the ratio of average speed over the journey to the maximum speed on its way is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1/5</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2/5</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 3/5</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 4/5</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Let max speed = v. Phase 1: &ell; = v&middot;t<sub>1</sub>/2 &rarr; t<sub>1</sub> = 2&ell;/v. Phase 2: 2&ell; = v&middot;t<sub>2</sub> &rarr; t<sub>2</sub> = 2&ell;/v. Phase 3: 3&ell; = v&middot;t<sub>3</sub>/2 &rarr; t<sub>3</sub> = 6&ell;/v. Total time = 10&ell;/v. Total distance = 6&ell;. Average speed = 6&ell; / (10&ell;/v) = 3v/5. Ratio = 3/5.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">A particle of mass m initially at rest is acted upon by a unidirectional force F = F<sub>0</sub>cos(&pi;t/2). The distance travelled by the particle when it stops first in the subsequent motion is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2F<sub>0</sub>/(m&pi;)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 4F<sub>0</sub>/(&pi;<sup>2</sup>m)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 8F<sub>0</sub>/(m&pi;<sup>2</sup>)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2F<sub>0</sub>/(&pi;<sup>2</sup>m)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> a = (F<sub>0</sub>/m)cos(&pi;t/2). Integrating: v = (2F<sub>0</sub>/m&pi;)sin(&pi;t/2). The particle stops again when sin(&pi;t/2) = 0, i.e., &pi;t/2 = &pi; &rarr; t = 2. Distance x = &int;<sub>0</sub><sup>2</sup> (2F<sub>0</sub>/m&pi;)sin(&pi;t/2) dt = (2F<sub>0</sub>/m&pi;)[&minus;2/&pi; &middot; cos(&pi;t/2)]<sub>0</sub><sup>2</sup> = (4F<sub>0</sub>/m&pi;<sup>2</sup>)[cos(0) &minus; cos(&pi;)] = (4F<sub>0</sub>/m&pi;<sup>2</sup>)(1 + 1) = 8F<sub>0</sub>/(m&pi;<sup>2</sup>).</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">Starting from rest a particle moves in a straight line with acceleration a = {2 + |t &minus; 2|} m/s<sup>2</sup>. Velocity of particle at the end of 4 s will be:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 16 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 20 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 8 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 12 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For 0 &le; t &le; 2: a = 2 + (2 &minus; t) = 4 &minus; t. For 2 &le; t &le; 4: a = 2 + (t &minus; 2) = t. Therefore v = &int;<sub>0</sub><sup>2</sup>(4 &minus; t) dt + &int;<sub>2</sub><sup>4</sup> t dt = [4t &minus; t<sup>2</sup>/2]<sub>0</sub><sup>2</sup> + [t<sup>2</sup>/2]<sub>2</sub><sup>4</sup> = (8 &minus; 2) + (8 &minus; 2) = 6 + 6 = 12 m/s.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">The displacement x of a particle varies with time t as x = ae<sup>&minus;&alpha;t</sup> + be<sup>&beta;t</sup>, where a, b, &alpha; and &beta; are positive constants. The velocity of the particle will:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Go on decreasing with time</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Be independent of &alpha; and &beta;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Drop to zero when &alpha; = &beta;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Go on increasing with time</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> v = dx/dt = &minus;a&alpha;e<sup>&minus;&alpha;t</sup> + b&beta;e<sup>&beta;t</sup>. As t &rarr; &infin;, the first term &rarr; 0 and the second term &rarr; &infin;. The e<sup>&beta;t</sup> term dominates, so the velocity keeps increasing without bound.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">A point moves in a straight line so that its displacement x at time t is given by x<sup>2</sup> = 1 + t<sup>2</sup>. Its acceleration at any time t is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> t/x<sup>3</sup></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &minus;t/x<sup>3</sup></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1/x &minus; t<sup>2</sup>/x<sup>3</sup></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1/x &minus; 1/x<sup>2</sup></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Given x<sup>2</sup> = 1 + t<sup>2</sup>. Differentiating: 2x &middot; v = 2t &rarr; v = t/x. Differentiating again using the quotient rule: a = dv/dt = (x &minus; t &middot; dx/dt)/x<sup>2</sup> = (x &minus; t &middot; t/x)/x<sup>2</sup> = (x<sup>2</sup> &minus; t<sup>2</sup>)/x<sup>3</sup>. Since x<sup>2</sup> &minus; t<sup>2</sup> = 1, we get a = 1/x<sup>3</sup>. Note that 1/x &minus; t<sup>2</sup>/x<sup>3</sup> = (x<sup>2</sup> &minus; t<sup>2</sup>)/x<sup>3</sup> = 1/x<sup>3</sup>, confirming option C.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">A car starts from rest with an acceleration of 6 m/s<sup>2</sup> which decreases to zero linearly in 10 seconds, after which the car continues at a constant speed. Find the time required for the car to travel 400 m from the start.</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 16.67 s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 25.6 s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 10.56 s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 9.56 s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> a = 6(1 &minus; t/10) for 0 &le; t &le; 10. Integrating: v = 6t &minus; 3t<sup>2</sup>/10. At t = 10: v = 60 &minus; 30 = 30 m/s. Distance in first 10 s: s = [3t<sup>2</sup> &minus; t<sup>3</sup>/10]<sub>0</sub><sup>10</sup> = 300 &minus; 100 = 200 m. Remaining distance = 400 &minus; 200 = 200 m at constant 30 m/s: t = 200/30 &approx; 6.67 s. Total time = 10 + 6.67 = 16.67 s.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">A ball of weight W is thrown upward with a velocity v. If air exerts an average resisting force F, the velocity with which it returns back to the thrower is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> v&radic;(W/(W + F))</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> v&radic;(W/(W &minus; F))</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> v&radic;((W &minus; F)/(W + F))</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> v&radic;((W + F)/W)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Going up, net retarding force = W + F (weight and air resistance both oppose motion), so (W + F)h = &frac12;mv<sup>2</sup>. Coming down, net force = W &minus; F (weight drives motion, air resistance opposes), so (W &minus; F)h = &frac12;mv&prime;<sup>2</sup>. Dividing: v&prime;<sup>2</sup>/v<sup>2</sup> = (W &minus; F)/(W + F). Therefore v&prime; = v&radic;((W &minus; F)/(W + F)).</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    // --- Timer: 30-minute countdown ---
+    var totalSeconds = 30 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    // --- Option selection ---
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    // --- Submit test ---
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        // Highlight the correct option
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        // Disable hover effects
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      // Display score
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      // Update submit button
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

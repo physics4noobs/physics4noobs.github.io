@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motion in 2D L1 Sprint 3 | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Motion in 2D Level 1 &mdash; Sprint Test 3</h1>
+      <div class="test-meta">Grade XI &bull; 10 Questions &bull; 30 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">30:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">In previous question (body projected with v&#8407; = (3&icirc; + 4&#309;) ms<sup>&minus;1</sup>, g = 10 ms<sup>&minus;2</sup>), the time of flight of the body is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 0.8 s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 1.0 s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 4.0 s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 8.0 s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The vertical component of velocity is u<sub>y</sub> = 4 ms<sup>&minus;1</sup>. Time of flight T = 2u<sub>y</sub>/g = 2 &times; 4/10 = 0.8 s.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">A body is projected with a velocity u at an angle &theta; with the horizontal. The velocity of the body will become perpendicular to the velocity of projection after a time t given by:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2u sin&theta;/g</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> u sin&theta;/g</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2u/(g sin&theta;)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> u/(g sin&theta;)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Initial velocity components: u<sub>x</sub> = u cos&theta;, u<sub>y</sub> = u sin&theta;. For the velocity to be perpendicular to the initial velocity, their dot product must be zero. At time t, v<sub>x</sub> = u cos&theta;, v<sub>y</sub> = u sin&theta; &minus; gt. Perpendicularity condition: u cos&theta; &middot; u cos&theta; + u sin&theta;(u sin&theta; &minus; gt) = 0 &rArr; u&sup2; &minus; u sin&theta; &middot; gt = 0 &rArr; t = u/(g sin&theta;).</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">A body is projected with velocity u such that its horizontal range and maximum vertical height are same. The maximum height is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 8u&sup2;/17g</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> u&sup2;/2g</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 16u&sup2;/7g</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 4u&sup2;/3g</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Range R = u&sup2; sin2&theta;/g and H = u&sup2; sin&sup2;&theta;/(2g). Setting R = H: u&sup2; sin2&theta;/g = u&sup2; sin&sup2;&theta;/(2g) &rArr; 2 sin2&theta; = sin&sup2;&theta; &rArr; 4 sin&theta; cos&theta; = sin&sup2;&theta; &rArr; tan&theta; = 4. So sin&theta; = 4/&radic;17, cos&theta; = 1/&radic;17. H = u&sup2; sin&sup2;&theta;/(2g) = u&sup2;(16/17)/(2g) = 8u&sup2;/17g.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">Average velocity of a particle in projectile motion between its starting point and the highest point of its trajectory is: (projectile speed = u, angle of projection from horizontal = &theta;)</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> u cos&theta;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> (u/2)&radic;(1 + 3cos&sup2;&theta;)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> (u/2)&radic;(2 + cos&sup2;&theta;)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> (u/2)&radic;(1 + cos&sup2;&theta;)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Time to reach highest point = u sin&theta;/g. Horizontal displacement = u cos&theta; &middot; (u sin&theta;/g) = u&sup2; sin&theta; cos&theta;/g. Vertical displacement = H = u&sup2; sin&sup2;&theta;/(2g). Average velocity = displacement/time. x-component = u cos&theta;, y-component = (u&sup2; sin&sup2;&theta;/2g)/(u sin&theta;/g) = u sin&theta;/2. |v<sub>avg</sub>| = &radic;[(u cos&theta;)&sup2; + (u sin&theta;/2)&sup2;] = (u/2)&radic;(4cos&sup2;&theta; + sin&sup2;&theta;) = (u/2)&radic;(1 + 3cos&sup2;&theta;).</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">In a projectile motion the velocity:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> is always perpendicular to the acceleration</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> is never perpendicular to the acceleration</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> is perpendicular to the acceleration for one instant only</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> is perpendicular to the acceleration for two instants</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The acceleration in projectile motion is always vertically downward (g). The velocity has both horizontal and vertical components. The velocity is perpendicular to g (i.e., purely horizontal) only at the highest point of the trajectory &mdash; exactly one instant during the flight.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">Statement-I: Two particles of different mass are projected with same velocity and angle of projection. The maximum height attained by both the particles will be the same.<br>Statement-II: The acceleration due to gravity is independent of particle mass.</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Statement-I is True, Statement-II is True &amp; Statement-II is a correct explanation for Statement-I</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Statement-I is True, Statement-II is True &amp; Statement-II is NOT a correct explanation for Statement-I</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Statement-I is True, Statement-II is False</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Statement-I is False, Statement-II is True</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> H = u&sup2; sin&sup2;&theta;/(2g). The maximum height depends only on u, &theta;, and g &mdash; not on mass. Since g is independent of mass (Statement-II), both particles reach the same height (Statement-I). Statement-II directly explains Statement-I.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">The horizontal and vertical displacements x and y of a projectile at a given time t are given by x = 6t metre and y = 8t &minus; 5t&sup2; metre. The range of the projectile in metre is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 9.6</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 10.6</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 19.2</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 38.4</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> From x = 6t: u<sub>x</sub> = 6 m/s. From y = 8t &minus; 5t&sup2;: u<sub>y</sub> = 8 m/s, g = 10 m/s&sup2;. Time of flight T = 2u<sub>y</sub>/g = 2 &times; 8/10 = 1.6 s. Range R = u<sub>x</sub> &times; T = 6 &times; 1.6 = 9.6 m.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">The equation of a projectile is y = &radic;3 x &minus; gx&sup2;/2. The angle of projection with horizontal is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &pi;/6</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &pi;/3</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &pi;/2</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> zero</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The standard trajectory equation is y = x tan&theta; &minus; gx&sup2;/(2u&sup2;cos&sup2;&theta;). Comparing with y = &radic;3 x &minus; gx&sup2;/2, we get tan&theta; = &radic;3, so &theta; = 60&deg; = &pi;/3.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">A boy throws a ball upwards with velocity v at an angle &theta; with the horizontal and immediately starts running with constant velocity. How fast must he run to catch the ball?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> v cos&theta;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> v sin&theta;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> v tan&theta;</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> v/2</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> To catch the ball, the boy must run with the same horizontal velocity as the ball throughout its flight. The horizontal component of the ball&apos;s velocity is v cos&theta; (constant, since there is no horizontal acceleration). Therefore the boy must run at v cos&theta;.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">Two bullets are fired simultaneously, horizontally but with different speeds from the same horizontal plane. Which bullet will hit the ground first?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> the faster one</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> the slower one</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> both will reach simultaneously</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> depends on the masses</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Both bullets are fired horizontally from the same height. The vertical motion is governed solely by gravity (h = &frac12;gt&sup2;), which is independent of horizontal speed. Since both start at the same height with zero vertical velocity, both hit the ground at the same time.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    // --- Timer: 30-minute countdown ---
+    var totalSeconds = 30 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    // --- Option selection ---
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    // --- Submit test ---
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        // Highlight the correct option
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        // Disable hover effects
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      // Display score
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      // Update submit button
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematics L1 Sprint 2 | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Kinematics Level 1 &mdash; Sprint Test 2</h1>
+      <div class="test-meta">Grade XI &bull; 10 Questions &bull; 30 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">30:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">A car at rest accelerates uniformly to a speed of 144 km/h in 20 s. The distance covered in 20 s is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 20 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 400 m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1440 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2880 m</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> 144 km/h = 40 m/s. a = 40/20 = 2 m/s&sup2;. s = &frac12;at&sup2; = &frac12; &times; 2 &times; 400 = 400 m.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">A particle moving with a uniform acceleration travels 24 m and 64 m in the first two consecutive intervals of 4 sec each. Its initial velocity is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1 m/sec</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 10 m/sec</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 5 m/sec</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2 m/sec</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For first 4 s: 24 = 4u + 8a &hellip;(i). For first 8 s: 88 = 8u + 32a &hellip;(ii). From (i): u = (24 &minus; 8a)/4 = 6 &minus; 2a. Substituting into (ii): 88 = 8(6 &minus; 2a) + 32a = 48 + 16a. So a = 40/16 = 2.5 m/s&sup2;, u = 1 m/s.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">A particle travels 10 m in first 5 sec and 10 m in next 3 sec. Assuming constant acceleration what is the distance travelled in next 2 sec?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 8.3 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 9.3 m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 10.3 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> None of above</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Using s = ut + &frac12;at&sup2;: 10 = 5u + 12.5a and 20 = 8u + 32a. Solving: a = 20/39 m/s&sup2;, u = 70/39 m/s. Distance in 10 s = 10u + 50a = 700/39 + 1000/39 = 1700/39. Distance in next 2 s = 1700/39 &minus; 20 &approx; 8.3 m.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">A body starts from rest and accelerates uniformly. What is the ratio of the distance travelled by the body during the 4th second and the 3rd second?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 7/5</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 5/7</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 7/3</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 3/7</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Distance in n-th second = u + a(2n &minus; 1)/2. With u = 0: s<sub>n</sub> = a(2n &minus; 1)/2. s<sub>4</sub>/s<sub>3</sub> = (2 &times; 4 &minus; 1)/(2 &times; 3 &minus; 1) = 7/5.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">From the top of a tower, a stone is thrown up and it reaches the ground in time t<sub>1</sub>. A second stone is thrown down with the same speed and it reaches the ground in time t<sub>2</sub>. A third stone is released from rest and it reaches the ground in time t<sub>3</sub>. The correct relation between t<sub>1</sub>, t<sub>2</sub> and t<sub>3</sub> is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> t<sub>3</sub> = &frac12;(t<sub>1</sub> + t<sub>2</sub>)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> t<sub>3</sub> = &radic;(t<sub>1</sub>t<sub>2</sub>)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1/t<sub>3</sub> = 1/t<sub>2</sub> &minus; 1/t<sub>1</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> t<sub>3</sub><sup>2</sup> = t<sub>1</sub><sup>2</sup> &minus; t<sub>2</sub><sup>2</sup></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Let height = h, initial speed = u. For stone thrown up: h = &minus;ut<sub>1</sub> + &frac12;gt<sub>1</sub><sup>2</sup>. For stone thrown down: h = ut<sub>2</sub> + &frac12;gt<sub>2</sub><sup>2</sup>. For stone at rest: h = &frac12;gt<sub>3</sub><sup>2</sup>. Adding the first two equations and simplifying alongside the third gives t<sub>3</sub><sup>2</sup> = t<sub>1</sub> &middot; t<sub>2</sub>, i.e., t<sub>3</sub> = &radic;(t<sub>1</sub>t<sub>2</sub>).</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">A ball is dropped on the floor from a height of 10 m. It rebounds to a height of 2.5 m. If the ball is in contact with the floor for 0.01 sec, the average acceleration during contact is: (g = 9.8 m/s&sup2;)</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2100 m/sec&sup2; downwards</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2100 m/sec&sup2; upwards</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1400 m/sec&sup2; upwards</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 700 m/sec&sup2; downwards</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Speed before impact: v<sub>1</sub> = &radic;(2 &times; 9.8 &times; 10) = 14 m/s (downward). Speed after: v<sub>2</sub> = &radic;(2 &times; 9.8 &times; 2.5) = 7 m/s (upward). Taking upward as positive: &Delta;v = 7 &minus; (&minus;14) = 21 m/s. a = 21/0.01 = 2100 m/s&sup2; upwards.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">A body falls freely from rest. It covers as much distance in the last second of its fall as it covers in the first three seconds. The body has fallen for a time of:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 3 s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 5 s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 7 s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 9 s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Distance in first 3 s = &frac12;g(3&sup2;) = 4.5g. Distance in n-th second = &frac12;g(2n &minus; 1). Setting equal: &frac12;g(2n &minus; 1) = 4.5g &rarr; 2n &minus; 1 = 9 &rarr; n = 5 s.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">Water in a well is at a depth h. A ball is released from ground so that it falls into the well. The speed of sound in air is c. The time after which sound of splash is heard is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &radic;(2h/g) + 2h/c</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &radic;(2h/g) + h/c</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &radic;(2h/g) + h/2c</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &radic;(h/g) + h/c</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Time for ball to fall depth h: t<sub>1</sub> = &radic;(2h/g). Time for sound to travel back up: t<sub>2</sub> = h/c. Total time = &radic;(2h/g) + h/c.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">A ball is projected upwards from the foot of a tower. It crosses the top of the tower twice at an interval of 6 s and reaches the ground after 12 s from the start. The height of the tower is: (g = 10 m/s&sup2;)</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 120 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 135 m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 175 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 80 m</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Total time = 12 s, so u = g &times; 12/2 = 60 m/s. The ball crosses the tower top at time t and (12 &minus; t), with the interval between them being 6 s. So (12 &minus; t) &minus; t = 6, giving t = 3 s. Height = 60 &times; 3 &minus; &frac12; &times; 10 &times; 9 = 180 &minus; 45 = 135 m.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">A body is thrown vertically up with a velocity u. It passes three points A, B and C in its upward journey with velocities u/2, u/3 and u/4 respectively. The ratio of the separations between points A and B and between B and C i.e., AB/BC is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 10/7</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 20/7</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Using v&sup2; = u&sup2; &minus; 2gs, heights above ground: h<sub>A</sub> = u&sup2;(1 &minus; 1/4)/(2g) = 3u&sup2;/(8g), h<sub>B</sub> = u&sup2;(1 &minus; 1/9)/(2g) = 4u&sup2;/(9g), h<sub>C</sub> = u&sup2;(1 &minus; 1/16)/(2g) = 15u&sup2;/(32g). AB = h<sub>B</sub> &minus; h<sub>A</sub> = 4u&sup2;/(9g) &minus; 3u&sup2;/(8g) = (32 &minus; 27)u&sup2;/(72g) = 5u&sup2;/(72g). BC = h<sub>C</sub> &minus; h<sub>B</sub> = 15u&sup2;/(32g) &minus; 4u&sup2;/(9g) = (135 &minus; 128)u&sup2;/(288g) = 7u&sup2;/(288g). AB/BC = (5/72)/(7/288) = 5 &times; 288/(72 &times; 7) = 1440/504 = 20/7.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    // --- Timer: 30-minute countdown ---
+    var totalSeconds = 30 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    // --- Option selection ---
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    // --- Submit test ---
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        // Highlight the correct option
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        // Disable hover effects
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      // Display score
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      // Update submit button
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

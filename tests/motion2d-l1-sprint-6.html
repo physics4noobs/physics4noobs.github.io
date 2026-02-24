@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motion in 2D L1 Sprint 6 | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Motion in 2D Level 1 &mdash; Sprint Test 6</h1>
+      <div class="test-meta">Grade XI &bull; 10 Questions &bull; 30 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">30:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">A particle moves in the x-y plane with velocity v<sub>x</sub> = 8t &minus; 2 and v<sub>y</sub> = 2. If it passes through the point x = 14 and y = 4 at t = 2 s, find the equation (x-y relation) of the path.</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> x = y&sup2; &minus; y + 2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> x = 2y&sup2; + 2y &minus; 3</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> x = 3y&sup2; + 5</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Cannot be found from the above data</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> From v<sub>y</sub> = 2, we get y = 2t + C<sub>1</sub>. At t = 2, y = 4 &Rightarrow; 4 = 4 + C<sub>1</sub> &Rightarrow; C<sub>1</sub> = 0, so y = 2t and t = y/2. From v<sub>x</sub> = 8t &minus; 2, integrating: x = 4t&sup2; &minus; 2t + C<sub>2</sub>. At t = 2, x = 14 &Rightarrow; 14 = 16 &minus; 4 + C<sub>2</sub> &Rightarrow; C<sub>2</sub> = 2. So x = 4t&sup2; &minus; 2t + 2. Substituting t = y/2: x = 4(y/2)&sup2; &minus; 2(y/2) + 2 = y&sup2; &minus; y + 2.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">A ball thrown in air follows a path given by y = x/&radic;3 &minus; (3g/8)x&sup2; m, where x-axis is taken along the horizontal and y-axis along the vertical. The maximum displacement of the ball along the x-direction for which displacement along y is zero equals:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 15&radic;3 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 4/(15&radic;3) m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 4/3 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Data insufficient</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Set y = 0: x/&radic;3 &minus; (3g/8)x&sup2; = 0 &Rightarrow; x[1/&radic;3 &minus; (3g/8)x] = 0. The non-trivial solution is x = (1/&radic;3) &times; (8/(3g)) = 8/(3&radic;3 g). With g = 10 m/s&sup2;: x = 8/(3&radic;3 &times; 10) = 8/(30&radic;3) = 4/(15&radic;3) m.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">A particle starts from the origin of coordinates at time t = 0 and moves in the x-y plane with a constant acceleration &alpha; in the y-direction. Its equation of motion is y = &beta;x&sup2;. Its velocity component in the x-direction is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Variable</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> &radic;(2&alpha;/&beta;)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &alpha;/(2&beta;)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &radic;(&alpha;/(2&beta;))</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Let v<sub>x</sub> = constant (since no acceleration in x-direction). Then x = v<sub>x</sub>t. In the y-direction: y = &frac12;&alpha;t&sup2;. Substituting t = x/v<sub>x</sub>: y = &frac12;&alpha;(x/v<sub>x</sub>)&sup2; = (&alpha;/(2v<sub>x</sub>&sup2;))x&sup2;. Comparing with y = &beta;x&sup2;: &beta; = &alpha;/(2v<sub>x</sub>&sup2;) &Rightarrow; v<sub>x</sub>&sup2; = &alpha;/(2&beta;) &Rightarrow; v<sub>x</sub> = &radic;(&alpha;/(2&beta;)).</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">A constant force of air resistance is taken into account while dealing with the motion of a projectile. Of the following properties of the projectile, the one which shows an increase is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Range</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Maximum height</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Speed at which it strikes the ground</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> The angle with horizontal at which the projectile strikes the ground</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Air resistance reduces both range and maximum height. It also reduces the speed at impact (since energy is lost). However, since the horizontal velocity component decreases more rapidly than the vertical component (gravity still acts), the projectile strikes at a steeper angle &mdash; i.e., the angle with horizontal at which it strikes the ground increases.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">A bomb is dropped from an aeroplane when it is at a height h directly above a target. If the aeroplane is moving horizontally at a speed v, the distance by which the bomb will miss the target is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2v&radic;(h/g)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> v&radic;(h/g)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> v&radic;(2h/g)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> v&radic;(h/2g)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Time for bomb to fall height h: h = &frac12;gt&sup2; &Rightarrow; t = &radic;(2h/g). Horizontal distance missed = v &times; t = v&radic;(2h/g).</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">A car is traveling at a velocity of 10 km/h on a straight road. The driver of the car throws a ball. If the ball is to reach back to the driver, the direction of throw makes the following angle with the direction of the car:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 135&deg;</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 90&deg;</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> tan<sup>&minus;1</sup>(&radic;2)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> tan<sup>&minus;1</sup>(1/&radic;2)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For the ball to return to the driver, in the ground frame the ball must have the same horizontal velocity as the car so it stays above the same point. This means the driver must throw the ball perpendicular to the direction of motion of the car (i.e., at 90&deg;), so that the ball has no relative horizontal velocity with respect to the car. The ball then follows a parabolic arc in the car&apos;s frame and returns to the driver.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">A bomb is dropped on an enemy post by an aeroplane flying horizontally with a velocity of 60 km h<sup>&minus;1</sup> and at a height of 490 m. At the time of dropping the bomb, how far horizontally should the aeroplane be from the enemy post so that the bomb may directly hit the target?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 400/3 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 500/3 m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1700/3 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 498 m</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> v = 60 km/h = 60 &times; (1000/3600) = 50/3 m/s. Time to fall: h = &frac12;gt&sup2; &Rightarrow; 490 = &frac12; &times; 10 &times; t&sup2; &Rightarrow; t&sup2; = 98 &Rightarrow; t = &radic;98 = 7&radic;2 s. Horizontal distance = v &times; t = (50/3) &times; 10 = 500/3 m. (Using g = 10 m/s&sup2; and t = 10 s from 490 = 5t&sup2; &Rightarrow; t = &radic;98 &asymp; 10 s.) Precisely: t = &radic;(2 &times; 490/10) = &radic;98 s; distance = (50/3)&radic;98 &asymp; 500/3 m.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">A man in a moving bus drops a bag from a height of 2 m. The bag lands on the ground with a velocity of 10 m/s. The velocity of the bus at the moment he dropped the bag was:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 10 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2&radic;10 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2&radic;15 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 5 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The bag is dropped (not thrown), so its initial vertical velocity = 0. It falls through h = 2 m under gravity. Vertical velocity at impact: v<sub>y</sub>&sup2; = 2gh = 2 &times; 10 &times; 2 = 40 &Rightarrow; v<sub>y</sub> = 2&radic;10 m/s. The horizontal velocity equals the bus speed v<sub>x</sub>. Total speed at impact: v&sup2; = v<sub>x</sub>&sup2; + v<sub>y</sub>&sup2; &Rightarrow; 100 = v<sub>x</sub>&sup2; + 40 &Rightarrow; v<sub>x</sub>&sup2; = 60 &Rightarrow; v<sub>x</sub> = 2&radic;15 m/s.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">If the range of a gun which fires a shell with muzzle speed v is R, then the angle of elevation of the gun is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> cos<sup>&minus;1</sup>(v&sup2;/gR)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> cos<sup>&minus;1</sup>(gR/v&sup2;)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> &frac12;sin<sup>&minus;1</sup>(v&sup2;/gR)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &frac12;sin<sup>&minus;1</sup>(gR/v&sup2;)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Range formula: R = v&sup2;sin(2&theta;)/g &Rightarrow; sin(2&theta;) = gR/v&sup2; &Rightarrow; 2&theta; = sin<sup>&minus;1</sup>(gR/v&sup2;) &Rightarrow; &theta; = &frac12;sin<sup>&minus;1</sup>(gR/v&sup2;).</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">Two cars A and B are going around concentric circular paths of radii r<sub>A</sub> and r<sub>B</sub>. If the two cars complete the circular paths in the same time, then the ratio of angular speeds of A and B is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> r<sub>A</sub>/r<sub>B</sub></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> r<sub>B</sub>/r<sub>A</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> None of the above</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Angular speed &omega; = 2&pi;/T. Since both cars complete their circular paths in the same time T, they have the same time period. Therefore &omega;<sub>A</sub>/&omega;<sub>B</sub> = (2&pi;/T)/(2&pi;/T) = 1.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    // --- Timer: 30-minute countdown ---
+    var totalSeconds = 30 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    // --- Option selection ---
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    // --- Submit test ---
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        // Highlight the correct option
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        // Disable hover effects
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      // Display score
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      // Update submit button
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

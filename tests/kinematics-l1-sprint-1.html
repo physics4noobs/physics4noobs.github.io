@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematics L1 Sprint 1 | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Kinematics Level 1 &mdash; Sprint Test 1</h1>
+      <div class="test-meta">Grade XI &bull; 10 Questions &bull; 30 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">30:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">A particle had a speed of 18 m/s at a certain time, and 2.5 s later its speed was 30 m/s in the opposite direction. The average acceleration of the particle in the duration is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 19.2 m/s&sup2; in the direction of initial velocity</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 19.2 m/s&sup2; in the direction opposite to the initial velocity</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 4.8 m/s&sup2; in the direction of initial velocity</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 4.8 m/s&sup2; in the direction opposite to the initial velocity</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Taking initial direction as positive: u = +18 m/s, v = &minus;30 m/s. a = (v &minus; u)/t = (&minus;30 &minus; 18)/2.5 = &minus;48/2.5 = &minus;19.2 m/s&sup2;. Negative sign means opposite to initial velocity.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">A particle starts moving from the point (1, 2, 3) under velocity 1î + 2ĵ + 3k̂ for two seconds. After that it moves under velocity 1î &minus; 2ĵ + 3k̂ for the next two seconds. What is the coordinate of the final point?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> (5, 2, 5)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> (5, 2, 15)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> (1, 2, 15)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> None of these</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Displacement in first 2 s = 2(1î + 2ĵ + 3k̂) = (2, 4, 6). Position after 2 s = (1+2, 2+4, 3+6) = (3, 6, 9). Displacement in next 2 s = 2(1î &minus; 2ĵ + 3k̂) = (2, &minus;4, 6). Final position = (3+2, 6&minus;4, 9+6) = (5, 2, 15).</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">A person travelling on a straight line moves with a uniform velocity v<sub>1</sub> for some time and with uniform velocity v<sub>2</sub> for the next equal time. The average velocity v is given by:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> v = (v<sub>1</sub> + v<sub>2</sub>)/2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> v = &radic;(v<sub>1</sub>v<sub>2</sub>)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2/v = 1/v<sub>1</sub> + 1/v<sub>2</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1/v = 1/v<sub>1</sub> + 1/v<sub>2</sub></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For equal time intervals, average velocity = (v<sub>1</sub>t + v<sub>2</sub>t)/(2t) = (v<sub>1</sub> + v<sub>2</sub>)/2.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">A particle travelling on a straight line moves with a uniform velocity v<sub>1</sub> for a distance x and with a uniform velocity v<sub>2</sub> for the next equal distance. The average velocity v is given by:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> v = (v<sub>1</sub> + v<sub>2</sub>)/2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> v = &radic;(v<sub>1</sub>v<sub>2</sub>)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2/v = 1/v<sub>1</sub> + 1/v<sub>2</sub></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 1/v = 1/v<sub>1</sub> + 1/v<sub>2</sub></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> For equal distances, total time = x/v<sub>1</sub> + x/v<sub>2</sub>. Average velocity = 2x/(x/v<sub>1</sub> + x/v<sub>2</sub>) = 2v<sub>1</sub>v<sub>2</sub>/(v<sub>1</sub> + v<sub>2</sub>). This is the harmonic mean: 2/v = 1/v<sub>1</sub> + 1/v<sub>2</sub>.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">If a car covers 2/5 of the total distance with v<sub>1</sub> speed and 3/5 distance with v<sub>2</sub> then average speed is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &frac12;&radic;(v<sub>1</sub>v<sub>2</sub>)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> (v<sub>1</sub> + v<sub>2</sub>)/2</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2v<sub>1</sub>v<sub>2</sub>/(v<sub>1</sub> + v<sub>2</sub>)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 5v<sub>1</sub>v<sub>2</sub>/(3v<sub>1</sub> + 2v<sub>2</sub>)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Let total distance = d. Time = (2d/5)/v<sub>1</sub> + (3d/5)/v<sub>2</sub>. Average speed = d / [(2d/5v<sub>1</sub>) + (3d/5v<sub>2</sub>)] = 5v<sub>1</sub>v<sub>2</sub>/(3v<sub>1</sub> + 2v<sub>2</sub>).</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">Which of the following statements is wrong?</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> If speed of a particle changes, its velocity must change</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> If velocity of a particle doesn't change, its speed must remain constant</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> If speed of a particle doesn't change, its velocity must remain constant</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> If velocity of a particle changes, its speed may or may not change</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> C is wrong. In uniform circular motion, speed is constant but velocity keeps changing direction.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">Mark the correct statement:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> The magnitude of the velocity of a particle is equal to its speed</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> The magnitude of average velocity in an interval is equal to its average speed in that interval</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> It is possible to have a situation in which the speed of a particle is always zero but the average speed is not zero</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> It is possible to have a situation in which the speed of the particle is never zero but the average speed in an interval is zero</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> A is correct &mdash; instantaneous speed equals the magnitude of instantaneous velocity. B is false (round trip example). C is impossible. D is impossible since average speed &ge; 0 and equals zero only if distance = 0.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">A 210 meter long train is moving due North at a speed of 25 m/s. A small bird is flying due South a little above the train with speed 5 m/s. The time taken by the bird to cross the train is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 6 s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 7 s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 9 s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 10 s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Relative speed = 25 + 5 = 30 m/s (opposite directions). Time = 210/30 = 7 s.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">A 120 m long train is moving in a straight line path with speed 20 m/s. Another train moving with 30 m/s in the opposite direction and 130 m long crosses the first train completely in a time:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 6 s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 36 s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 38 s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 5 s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Relative speed = 20 + 30 = 50 m/s. Total distance = 120 + 130 = 250 m. Time = 250/50 = 5 s.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">Two particles A and B get 4 m closer each second while travelling in opposite directions. They get 0.4 m closer every second while travelling in the same direction. The speeds of A and B are respectively:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2.2 ms<sup>&minus;1</sup> and 0.4 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2.2 ms<sup>&minus;1</sup> and 1.8 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 4 ms<sup>&minus;1</sup> and 0.4 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> None of the above</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> When opposite directions: v<sub>A</sub> + v<sub>B</sub> = 4. When same direction: v<sub>A</sub> &minus; v<sub>B</sub> = 0.4. Solving: v<sub>A</sub> = 2.2 m/s, v<sub>B</sub> = 1.8 m/s.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    // --- Timer: 30-minute countdown ---
+    var totalSeconds = 30 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    // --- Option selection ---
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    // --- Submit test ---
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        // Highlight the correct option
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        // Disable hover effects
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      // Display score
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      // Update submit button
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

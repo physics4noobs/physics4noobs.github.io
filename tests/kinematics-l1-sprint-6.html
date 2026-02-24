@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematics L1 Sprint 6 | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Kinematics Level 1 &mdash; Sprint Test 6</h1>
+      <div class="test-meta">Grade XI &bull; 10 Questions &bull; 30 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">30:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">A man is 45 m behind a bus when the bus starts accelerating from rest with acceleration 2.5 m/s&sup2;. With what minimum velocity should the man start running to catch the bus? Assume the man runs at constant velocity.</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 12 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 14 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 15 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 16 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Bus position: x<sub>bus</sub> = &frac12;(2.5)t&sup2; = 1.25t&sup2;. Man position: x<sub>man</sub> = vt &minus; 45. To just catch: x<sub>man</sub> = x<sub>bus</sub> and they touch (tangent condition). So vt &minus; 45 = 1.25t&sup2; and v = 2.5t (from tangency). From the second equation: t = v/2.5. Substituting: v(v/2.5) &minus; 45 = 1.25(v/2.5)&sup2;. &rArr; v&sup2;/2.5 &minus; 45 = v&sup2;/5. &rArr; v&sup2;(1/2.5 &minus; 1/5) = 45. &rArr; v&sup2;(1/5) = 45. &rArr; v&sup2; = 225. &rArr; v = 15 m/s.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">Two cars A and B are travelling in the same direction with velocities v<sub>1</sub> and v<sub>2</sub> (v<sub>1</sub> &gt; v<sub>2</sub>). When car A is at a distance d behind car B, the driver of car A applies the brake producing a uniform retardation a. There will be no collision when:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> d &lt; (v<sub>1</sub> &minus; v<sub>2</sub>)&sup2; / (2a)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> d &lt; (v<sub>1</sub>&sup2; &minus; v<sub>2</sub>&sup2;) / (2a)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> d &gt; (v<sub>1</sub> &minus; v<sub>2</sub>)&sup2; / (2a)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> d &gt; (v<sub>1</sub>&sup2; &minus; v<sub>2</sub>&sup2;) / (2a)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In the reference frame of B, the relative velocity of A is (v<sub>1</sub> &minus; v<sub>2</sub>) and the relative deceleration is a. A stops relative to B after covering distance s = (v<sub>1</sub> &minus; v<sub>2</sub>)&sup2; / (2a). No collision occurs when the initial separation d is greater than this stopping distance, i.e., d &gt; (v<sub>1</sub> &minus; v<sub>2</sub>)&sup2; / (2a).</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">Two objects are moving along the same straight line. They cross a point A with accelerations a and 2a, and velocities 2u and u respectively, at time t = 0. The distance moved by the object when one overtakes the other is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 6u&sup2;/a</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2u&sup2;/a</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 4u&sup2;/a</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 8u&sup2;/a</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Position of object 1: x<sub>1</sub> = 2ut + &frac12;at&sup2;. Position of object 2: x<sub>2</sub> = ut + &frac12;(2a)t&sup2; = ut + at&sup2;. When x<sub>1</sub> = x<sub>2</sub>: 2ut + &frac12;at&sup2; = ut + at&sup2;. &rArr; ut = &frac12;at&sup2;. &rArr; t = 2u/a. Distance covered by object 1: x<sub>1</sub> = 2u(2u/a) + &frac12;a(2u/a)&sup2; = 4u&sup2;/a + 2u&sup2;/a = 6u&sup2;/a.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 4</div>
+      <div class="q-text">P, Q and R are three balloons ascending with velocities u, 4u and 8u respectively. If stones of the same mass are dropped from each when they are at the same height, then the time taken to fall to the ground is least for the stone from balloon:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> P</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Q</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> R</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Three stones take equal time</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> All stones are released from the same height. When released, they have upward velocities u, 4u, and 8u respectively (inherited from their balloons). The stone with the largest upward initial velocity (from R) rises highest before falling, thereby taking the most time to reach the ground. The stone from P has the least upward initial velocity and therefore reaches the ground first.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="D">
+      <div class="q-num">Question 5</div>
+      <div class="q-text">Two identical balls are shot upward one after another at an interval of 2 s along the same vertical line with the same initial velocity of 40 m/s. The balls collide n seconds after the first ball is shot. What is the value of n? (g = 10 m/s&sup2;)</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 3</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 4</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 5</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Position of ball 1 at time t: y<sub>1</sub> = 40t &minus; 5t&sup2;. Position of ball 2 launched at t = 2 s: y<sub>2</sub> = 40(t &minus; 2) &minus; 5(t &minus; 2)&sup2;. Setting y<sub>1</sub> = y<sub>2</sub>: 40t &minus; 5t&sup2; = 40t &minus; 80 &minus; 5(t&sup2; &minus; 4t + 4). &rArr; 0 = &minus;80 &minus; 5(&minus;4t + 4). &rArr; 0 = &minus;80 + 20t &minus; 20. &rArr; 20t = 100. &rArr; t = 5 s.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 6</div>
+      <div class="q-text">Two balls are dropped to the ground from different heights. One ball is dropped 2 s after the other but they both strike the ground at the same time. If the first ball takes 5 s to reach the ground, then the difference in initial heights is: (g = 10 ms&sup2;)</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 20 m</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 80 m</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 170 m</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 40 m</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> First ball takes 5 s: h<sub>1</sub> = &frac12;(10)(5)&sup2; = 125 m. Second ball is dropped 2 s later and lands at the same time, so it takes 3 s: h<sub>2</sub> = &frac12;(10)(3)&sup2; = 45 m. Difference = 125 &minus; 45 = 80 m.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 7</div>
+      <div class="q-text">Two bodies begin to fall freely from the same height but the second falls T seconds after the first. The time (after which the first body begins to fall) when the distance between the bodies equals L is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> T/2</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> T/2 + L/(gT)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> L/(gT)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> T + 2L/(gT)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Position of body 1 at time t: y<sub>1</sub> = &frac12;gt&sup2;. Position of body 2 (starts at T): y<sub>2</sub> = &frac12;g(t &minus; T)&sup2; (for t &gt; T). Distance = y<sub>1</sub> &minus; y<sub>2</sub> = &frac12;g[t&sup2; &minus; (t &minus; T)&sup2;] = &frac12;g(2tT &minus; T&sup2;) = gT(t &minus; T/2). Setting equal to L: gT(t &minus; T/2) = L. &rArr; t = T/2 + L/(gT).</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 8</div>
+      <div class="q-text">A bird flies between two trains approaching each other with constant speed of 10 m/s each. Trains are initially 1 km apart. The bird starts from the first train and as it arrives in front of the other train it turns and continues the same process. The average velocity of the bird till it is sandwiched between the trains is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 0</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 10 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 20 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Depends on velocity of bird</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> The trains approach each other at a combined speed of 20 m/s and are 1000 m apart, so they meet after t = 1000/20 = 50 s. Each train travels 500 m in this time. The meeting point is the midpoint of the initial 1 km gap. The bird starts from train 1 and ends up sandwiched at the meeting point, which is 500 m from the bird&rsquo;s starting position. Average velocity = displacement/time = 500/50 = 10 m/s.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 9</div>
+      <div class="q-text">Statement-1: Distance and displacement are different physical quantities. Statement-2: Distance and displacement have the same dimension.</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Statement-1 is true, Statement-2 is true; Statement-2 is a correct explanation for Statement-1</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Statement-1 is true, Statement-2 is true; Statement-2 is not a correct explanation for Statement-1</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Statement-1 is true, Statement-2 is false</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Statement-1 is false, Statement-2 is true</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Both statements are true. Distance is a scalar quantity while displacement is a vector quantity &mdash; they are indeed different physical quantities. Both have the dimension [L]. However, the fact that they share the same dimension does not explain why they are different quantities (one is scalar, the other is vector). Therefore Statement-2 does not correctly explain Statement-1.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 10</div>
+      <div class="q-text">Statement-1: An object can possess acceleration even at a time when it has uniform speed. Statement-2: It is possible when the direction of motion keeps changing.</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Statement-1 is true, Statement-2 is true; Statement-2 is a correct explanation for Statement-1</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> Statement-1 is true, Statement-2 is true; Statement-2 is not a correct explanation for Statement-1</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> Statement-1 is true, Statement-2 is false</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Statement-1 is false, Statement-2 is true</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In uniform circular motion, the speed is constant but the direction of motion continuously changes. Since velocity (a vector) is changing even though its magnitude (speed) is constant, there is a net acceleration (centripetal acceleration). Statement-2 correctly and directly explains why Statement-1 is true.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    // --- Timer: 30-minute countdown ---
+    var totalSeconds = 30 * 60;
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+
+    // --- Option selection ---
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+      });
+    });
+
+    // --- Submit test ---
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      var cards = document.querySelectorAll('.q-card');
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var selected = card.querySelector('.q-opt.selected');
+        card.classList.add('answered');
+
+        // Highlight the correct option
+        var opts = card.querySelectorAll('.q-opt');
+        opts.forEach(function(o) {
+          if (o.getAttribute('data-key') === correctKey) {
+            o.classList.add('correct');
+          }
+        });
+
+        if (selected) {
+          var selectedKey = selected.getAttribute('data-key');
+          if (selectedKey === correctKey) {
+            correct++;
+          } else {
+            selected.classList.add('wrong');
+          }
+        }
+
+        // Disable hover effects
+        opts.forEach(function(o) {
+          o.style.cursor = 'default';
+        });
+      });
+
+      // Display score
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      // Update submit button
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>
