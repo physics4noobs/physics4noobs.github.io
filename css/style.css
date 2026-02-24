@@ -4763,7 +4763,17 @@ ul { list-style: none; }
   filter: brightness(10);
 }
 
-/* Mobile: theme toggle + auth btn on one line */
+/* Mobile auth action buttons — hidden on desktop */
+.mobile-auth-action {
+  display: none;
+}
+
+/* Hide rank badge in navbar */
+.user-rank-badge {
+  display: none;
+}
+
+/* Mobile: theme toggle + auth buttons on one line */
 @media (max-width: 768px) {
   .nav-links.active .theme-toggle {
     flex: 0 0 auto;
@@ -4776,6 +4786,29 @@ ul { list-style: none; }
   }
   .nav-links.active .user-menu {
     flex: 0 0 auto;
+  }
+  .nav-links.active .mobile-auth-action {
+    display: inline-flex;
+    align-items: center;
+    order: 92;
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: var(--font-body);
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-subtle);
+    margin-left: 4px;
+  }
+  .nav-links.active .mobile-signout-btn {
+    order: 93;
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.08);
+    border-color: rgba(255, 107, 107, 0.15);
   }
 }
 

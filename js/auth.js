@@ -15,6 +15,8 @@
     var userAvatar = document.getElementById('auth-user-avatar');
     var userName = document.getElementById('auth-user-name');
     var logoutBtn = document.getElementById('auth-logout-btn');
+    var mobileProgressBtn = document.getElementById('mobile-progress-btn');
+    var mobileSignoutBtn = document.getElementById('mobile-signout-btn');
 
     if (!loginBtn || !userMenu) return;
 
@@ -34,6 +36,9 @@
         if (userAvatar) userAvatar.src = user.photoURL || '';
         if (userName) userName.textContent = user.displayName || 'User';
 
+        if (mobileProgressBtn) mobileProgressBtn.style.display = '';
+        if (mobileSignoutBtn) mobileSignoutBtn.style.display = '';
+
         // Save theme preference to Firestore
         if (firebase.firestore) {
           var db = firebase.firestore();
@@ -43,6 +48,8 @@
       } else {
         loginBtn.style.display = 'flex';
         userMenu.style.display = 'none';
+        if (mobileProgressBtn) mobileProgressBtn.style.display = 'none';
+        if (mobileSignoutBtn) mobileSignoutBtn.style.display = 'none';
       }
     });
 
@@ -70,6 +77,11 @@
 
     if (logoutBtn) {
       logoutBtn.addEventListener('click', function() {
+        auth.signOut();
+      });
+    }
+    if (mobileSignoutBtn) {
+      mobileSignoutBtn.addEventListener('click', function() {
         auth.signOut();
       });
     }
