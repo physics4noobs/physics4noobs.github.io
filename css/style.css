@@ -4763,6 +4763,22 @@ ul { list-style: none; }
   filter: brightness(10);
 }
 
+/* Mobile: theme toggle + auth btn on one line */
+@media (max-width: 768px) {
+  .nav-links.active .theme-toggle {
+    flex: 0 0 auto;
+    margin-left: 0;
+    margin-right: 8px;
+  }
+  .nav-links.active .auth-btn {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+  }
+  .nav-links.active .user-menu {
+    flex: 0 0 auto;
+  }
+}
+
 .user-menu {
   display: flex;
   align-items: center;
