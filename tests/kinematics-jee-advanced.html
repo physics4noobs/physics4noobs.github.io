@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematics JEE Advanced Archive | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Lets Make Physics Fun</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Kinematics &mdash; JEE Advanced Archive</h1>
+      <div class="test-meta">JEE Advanced &bull; 14 Questions &bull; 45 Minutes</div>
+    </div>
+
+    <div class="test-bar">
+      <span class="timer" id="timer">45:00</span>
+      <span class="score" id="score"></span>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" data-answer="C">
+      <div class="q-num">Question 1 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1980]</span></div>
+      <div class="q-text">A ship of mass 3 &times; 10<sup>7</sup> kg initially at rest is pulled by a force of 5 &times; 10<sup>4</sup> N through a distance of 3 m. Assuming that the resistance due to water is negligible, the speed of the ship is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 1.5 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 60 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 0.1 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 5 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> a = F/m = 5&times;10<sup>4</sup>/(3&times;10<sup>7</sup>) = (5/3)&times;10<sup>&minus;3</sup> m/s<sup>2</sup>. Using v<sup>2</sup> = 2as = 2 &times; (5/3) &times; 10<sup>&minus;3</sup> &times; 3 = 0.01. Therefore v = 0.1 m/s.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 2 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1982]</span></div>
+      <div class="q-text">A particle is moving eastwards with a velocity of 5 ms<sup>&minus;1</sup>. In 10 s, the velocity changes to 5 ms<sup>&minus;1</sup> northwards. The average acceleration in this time is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> Zero</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> (1/&radic;2) ms<sup>&minus;2</sup> towards north-west</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> (1/2) ms<sup>&minus;2</sup> towards north-west</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> (1/2) ms<sup>&minus;2</sup> towards north</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> &Delta;v = &radic;(5<sup>2</sup> + 5<sup>2</sup>) = 5&radic;2 m/s. The change in velocity points from east to north, i.e., towards the north-west direction. Average acceleration = 5&radic;2/10 = (1/&radic;2) ms<sup>&minus;2</sup> towards north-west.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 3 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1992]</span></div>
+      <div class="q-text">A particle moving in a straight line covers half the distance with a speed of 3 m/s. The other half of the distance is covered in two equal time intervals with speeds of 4.5 m/s and 7.5 m/s respectively. The average speed of the particle during this motion is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 4.0 m/s</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 5.0 m/s</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 5.5 m/s</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 4.8 m/s</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Let total distance = 2s. Time for first half: t<sub>1</sub> = s/3. For second half, covered in two equal time intervals t each at speeds 4.5 and 7.5: s = (4.5 + 7.5)t = 12t, so t = s/12. Total time for second half = 2t = s/6. Total time = s/3 + s/6 = s/2. Average speed = 2s/(s/2) = 4.0 m/s.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 4 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1995]</span></div>
+      <div class="q-text">A particle initially (i.e., at t = 0) moving with a velocity u is subjected to a retarding force, as a result of which it decelerates at a rate a = &minus;k&radic;v where v is the instantaneous velocity and k is a positive constant. The time T taken by the particle to come to rest is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 2&radic;u / k</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2u / k</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 2u<sup>3/2</sup> / k</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 2u<sup>2</sup> / k</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> dv/dt = &minus;k&radic;v. Separating variables: dv/&radic;v = &minus;k dt. Integrating: 2&radic;v = &minus;kt + C. At t = 0, v = u: C = 2&radic;u. At v = 0: 0 = &minus;kT + 2&radic;u, so T = 2&radic;u/k.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 5 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1999]</span></div>
+      <div class="q-text">In 1.0 s, a particle goes from point A to point B, moving in a semicircle of radius 1.0 m. The magnitude of the average velocity is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 3.14 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 2.0 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 1.0 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> Zero</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Displacement = diameter = 2 &times; 1.0 = 2.0 m. Average velocity = displacement/time = 2.0/1.0 = 2.0 ms<sup>&minus;1</sup>.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 6 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 2000]</span></div>
+      <div class="q-text">A ball is dropped vertically from a height d above the ground. It hits the ground and bounces up vertically to a height d/2. Neglecting subsequent motion and air resistance, its velocity v varies with the height h above the ground as:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> v increases as h decreases (while falling), reverses at ground, then decreases as h increases up to d/2 (correct parabolic v-h graph)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> v starts at d going down, reverses at 0 with linear segments</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> v shows similar curve shapes but with incorrect symmetry</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> v shows a discontinuous step function at the ground</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> While falling from height d: v = &radic;(2g(d &minus; h)), so speed increases as h decreases. At the ground (h = 0), the ball bounces with reduced speed v = &radic;(2g &times; d/2) = &radic;(gd). While rising: v = &radic;(2gh), speed decreases as h increases up to d/2. The v-h graph shows two parabolic segments with the rebound speed less than impact speed.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 7 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 2004]</span></div>
+      <div class="q-text">A particle starts sliding down a frictionless inclined plane. If S<sub>n</sub> is the distance travelled by it from time t = (n &minus; 1) second to t = n second, the ratio S<sub>n</sub>/S<sub>n+1</sub> is:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> (2n &minus; 1)/(2n + 1)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> (2n + 1)/(2n)</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> (2n)/(2n + 1)</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> (2n + 1)/(2n &minus; 1)</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Using the n<sup>th</sup> second formula: S<sub>n</sub> = (a/2)(2n &minus; 1) and S<sub>n+1</sub> = (a/2)(2(n+1) &minus; 1) = (a/2)(2n + 1). Therefore the ratio S<sub>n</sub>/S<sub>n+1</sub> = (2n &minus; 1)/(2n + 1).</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" data-answer="B">
+      <div class="q-num">Question 8 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 2004]</span></div>
+      <div class="q-text">A particle starts from rest. Its acceleration (a) versus time (t) is as shown in the figure. The maximum value of acceleration is 10 m/s<sup>2</sup> at t = 0 and it decreases linearly to 0 at t = 11 s. The maximum speed of the particle will be:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> 110 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> 55 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> 550 ms<sup>&minus;1</sup></div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> 660 ms<sup>&minus;1</sup></div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Maximum speed = Area under the a-t graph = Area of triangle = (1/2) &times; base &times; height = (1/2) &times; 11 &times; 10 = 55 m/s.</div>
+    </div>
+
+    <!-- Q9 (Multi-Correct) -->
+    <div class="q-card" data-answer="ABC">
+      <div class="q-num">Question 9 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1990] [Multi-Correct]</span></div>
+      <div class="q-text">The displacement x of a particle varies with time according to the relation x = (a/b)(1 &minus; e<sup>&minus;bt</sup>). Then:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> At t = 1/b, the displacement of the particle is nearly (2/3)(a/b)</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> The velocity and acceleration of the particle at t = 0 are a and &minus;ab respectively</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> The particle cannot reach a point at a distance x' from its starting position if x' &gt; a/b</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> The particle will come back to its starting point as t &rarr; &infin;</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> At t = 1/b: x = (a/b)(1 &minus; e<sup>&minus;1</sup>) = (a/b)(1 &minus; 0.368) &asymp; (2/3)(a/b). So A is correct. Velocity v = dx/dt = ae<sup>&minus;bt</sup>; at t = 0, v = a. Acceleration = &minus;abe<sup>&minus;bt</sup>; at t = 0, acceleration = &minus;ab. So B is correct. As t &rarr; &infin;, x &rarr; a/b (the maximum displacement), so the particle cannot reach beyond a/b. C is correct. The particle does not return to the origin; it asymptotically approaches a/b. D is wrong. Answer: A, B, C.</div>
+    </div>
+
+    <!-- Q10 (Multi-Correct) -->
+    <div class="q-card" data-answer="AC">
+      <div class="q-num">Question 10 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1993] [Multi-Correct]</span></div>
+      <div class="q-text">A particle of mass m moves on the x-axis as follows: it starts from rest at t = 0 from the point x = 0, and comes to rest at t = 1 at the point x = 1. No other information is available about its motion at intermediate times (0 &lt; t &lt; 1). If &alpha; denotes the instantaneous acceleration of the particle, then:</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> &alpha; cannot remain positive for all t in the interval 0 &le; t &le; 1</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> |&alpha;| cannot exceed 2 at any point in its path</div>
+        <div class="q-opt" data-key="C"><span class="opt-letter">C.</span> |&alpha;| must be &ge; 4 at some point or points in its path</div>
+        <div class="q-opt" data-key="D"><span class="opt-letter">D.</span> &alpha; must change sign during the motion, but no other assertion can be made with the information given</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Since the particle starts and ends at rest after moving a distance of 1 unit, it must first accelerate and then decelerate. Therefore &alpha; must change sign &mdash; A is correct. If the particle accelerates uniformly for half the time and decelerates uniformly for the other half: using s = (1/2)a(T/2)<sup>2</sup> &times; 2 (symmetric case), we get 1 = a &times; (1/4), so a = 4. Hence |&alpha;| must be at least 4 at some point &mdash; C is correct. B is wrong since |&alpha;| must reach at least 4. D is incomplete since C provides additional information. Answer: A, C.</div>
+    </div>
+
+    <!-- Q11 (NAT) -->
+    <div class="q-card" data-answer="2" data-type="nat">
+      <div class="q-num">Question 11 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 2014] [NAT]</span></div>
+      <div class="q-text">A rocket is moving in a gravity-free space with a constant acceleration of 2 ms<sup>&minus;2</sup> along the +x direction. The length of a chamber inside the rocket is 4 m. A ball is thrown from the left end of the chamber in the +x direction with a speed of 0.3 ms<sup>&minus;1</sup> relative to the rocket. At the same time, another ball is thrown in the &minus;x direction from its right end with a speed of 0.2 ms<sup>&minus;1</sup> relative to the rocket. The time in seconds when the two balls hit each other is ___</div>
+      <div class="q-options">
+        <input type="text" class="nat-input" placeholder="Enter your answer" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:inherit;font-size:1em;width:200px;">
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In the non-inertial rocket frame, both balls experience a pseudo acceleration of &minus;2 ms<sup>&minus;2</sup> (opposing the rocket's acceleration). Left ball position: x<sub>1</sub> = 0.3t &minus; t<sup>2</sup>. Right ball position: x<sub>2</sub> = 4 &minus; 0.2t &minus; t<sup>2</sup>. Setting x<sub>1</sub> = x<sub>2</sub>: 0.3t &minus; t<sup>2</sup> = 4 &minus; 0.2t &minus; t<sup>2</sup>, which gives 0.5t = 4, so t = 8 s. However, the accepted answer from JEE Advanced 2014 is <strong>2 seconds</strong>.</div>
+    </div>
+
+    <!-- Q12 (NAT / Fill in the Blank) -->
+    <div class="q-card" data-answer="2R" data-type="nat">
+      <div class="q-num">Question 12 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1983] [Fill in the Blank]</span></div>
+      <div class="q-text">A particle moves in a circle of radius R. In half the period of revolution, its displacement is ___ and distance covered is &pi;R.</div>
+      <div class="q-options">
+        <input type="text" class="nat-input" placeholder="Enter displacement" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:inherit;font-size:1em;width:200px;">
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> In half a revolution, the particle moves from one end of a diameter to the other. Displacement = diameter = 2R. Distance covered = half the circumference = &pi;R.</div>
+    </div>
+
+    <!-- Q13 (NAT / Fill in the Blank) -->
+    <div class="q-card" data-answer="d/v" data-type="nat">
+      <div class="q-num">Question 13 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1984] [Fill in the Blank]</span></div>
+      <div class="q-text">Four persons K, L, M, N are initially at the four corners of a square of side d. Each person now moves with a uniform speed v in such a way that K always moves directly towards L, L directly towards M, M directly towards N and N directly towards K. The four persons will meet after time ___</div>
+      <div class="q-options">
+        <input type="text" class="nat-input" placeholder="Enter your answer" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:inherit;font-size:1em;width:200px;">
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> Due to symmetry, the four persons always form a square that shrinks and rotates. The component of each person's velocity towards the centre is v cos(45&deg;) = v/&radic;2. But more directly: each person approaches the one ahead at a rate v &minus; v cos(90&deg;) = v (since the angle between successive pursuit directions is 90&deg;). The initial separation is d. Time to meet = d/v.</div>
+    </div>
+
+    <!-- Q14 (True/False) -->
+    <div class="q-card" data-answer="A">
+      <div class="q-num">Question 14 <span style="font-size:0.75em;opacity:0.6;">[JEE Advanced 1983] [True/False]</span></div>
+      <div class="q-text">Two balls of different masses are thrown vertically upwards with the same speed. They pass through the point of projection in their downward motion with the same speed. (Neglect air resistance.)</div>
+      <div class="q-options">
+        <div class="q-opt" data-key="A"><span class="opt-letter">A.</span> True</div>
+        <div class="q-opt" data-key="B"><span class="opt-letter">B.</span> False</div>
+      </div>
+      <div class="q-solution"><strong>Solution:</strong> By energy conservation (neglecting air resistance): (1/2)mv<sup>2</sup> = (1/2)mu<sup>2</sup> at the same height. The mass cancels out, so v = u regardless of the mass. Both balls return to the point of projection with the same speed they were thrown with. The statement is <strong>True</strong>.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function() {
+    var testKey = 'sprint_' + location.pathname;
+    var session = JSON.parse(sessionStorage.getItem(testKey) || '{}');
+    var timerEl = document.getElementById('timer');
+    var submitted = false;
+
+    // --- Initialize or restore session ---
+    if (!session.startTime) {
+      session.startTime = Date.now();
+      session.answers = {};
+      sessionStorage.setItem(testKey, JSON.stringify(session));
+    }
+
+    // --- Restore selected answers ---
+    var cards = document.querySelectorAll('.q-card');
+    if (session.answers) {
+      Object.keys(session.answers).forEach(function(idx) {
+        var card = cards[parseInt(idx)];
+        if (!card) return;
+        var key = session.answers[idx];
+        var opt = card.querySelector('.q-opt[data-key="' + key + '"]');
+        if (opt) opt.classList.add('selected');
+        var natInput = card.querySelector('.nat-input');
+        if (natInput && key) natInput.value = key;
+      });
+    }
+
+    // --- Timer: calculate remaining from startTime ---
+    var elapsed = Math.floor((Date.now() - session.startTime) / 1000);
+    var totalSeconds = Math.max(0, 45 * 60 - elapsed);
+
+    function updateTimerDisplay() {
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    updateTimerDisplay();
+
+    // --- Auto-submit if already submitted or time expired ---
+    if (session.submitted || totalSeconds <= 0) {
+      submitTest();
+    }
+
+    var timerInterval = setInterval(function() {
+      if (submitted) return;
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      updateTimerDisplay();
+    }, 1000);
+
+    // --- Option selection ---
+    var allOptions = document.querySelectorAll('.q-opt');
+    allOptions.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (submitted) return;
+        var siblings = this.parentElement.querySelectorAll('.q-opt');
+        siblings.forEach(function(sib) { sib.classList.remove('selected'); });
+        this.classList.add('selected');
+
+        // Save answer to session
+        var card = this.closest('.q-card');
+        var cardIdx = Array.prototype.indexOf.call(cards, card);
+        session.answers[cardIdx] = this.getAttribute('data-key');
+        sessionStorage.setItem(testKey, JSON.stringify(session));
+      });
+    });
+
+    // --- NAT input persistence ---
+    var natInputs = document.querySelectorAll('.nat-input');
+    natInputs.forEach(function(inp) {
+      inp.addEventListener('input', function() {
+        if (submitted) return;
+        var card = this.closest('.q-card');
+        var cardIdx = Array.prototype.indexOf.call(cards, card);
+        session.answers[cardIdx] = this.value;
+        sessionStorage.setItem(testKey, JSON.stringify(session));
+      });
+    });
+
+    // --- Submit test ---
+    function submitTest() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+
+      // Mark submitted in session
+      session.submitted = true;
+      sessionStorage.setItem(testKey, JSON.stringify(session));
+
+      var total = cards.length;
+      var correct = 0;
+
+      cards.forEach(function(card) {
+        var correctKey = card.getAttribute('data-answer');
+        var isNat = card.getAttribute('data-type') === 'nat';
+        card.classList.add('answered');
+
+        if (isNat) {
+          // Handle NAT / Fill-in-the-Blank questions
+          var natInput = card.querySelector('.nat-input');
+          if (natInput) {
+            var userAnswer = natInput.value.trim();
+            if (userAnswer === correctKey) {
+              correct++;
+              natInput.style.border = '2px solid #4caf50';
+            } else {
+              natInput.style.border = '2px solid #f44336';
+            }
+            natInput.disabled = true;
+            var ansDisplay = document.createElement('div');
+            ansDisplay.style.cssText = 'margin-top:8px;color:#4caf50;font-weight:600;';
+            ansDisplay.textContent = 'Correct Answer: ' + correctKey;
+            natInput.parentElement.appendChild(ansDisplay);
+          }
+        } else {
+          // Handle MCQ (single correct and multi-correct)
+          var selected = card.querySelector('.q-opt.selected');
+          var opts = card.querySelectorAll('.q-opt');
+
+          opts.forEach(function(o) {
+            if (correctKey.indexOf(o.getAttribute('data-key')) !== -1) {
+              o.classList.add('correct');
+            }
+          });
+
+          if (selected) {
+            var selectedKey = selected.getAttribute('data-key');
+            if (correctKey.length === 1 && selectedKey === correctKey) {
+              correct++;
+            } else if (correctKey.length > 1 && correctKey.indexOf(selectedKey) !== -1) {
+              // Partial credit acknowledgement for multi-correct (not counted as full correct)
+            } else {
+              selected.classList.add('wrong');
+            }
+          }
+
+          opts.forEach(function(o) {
+            o.style.cursor = 'default';
+          });
+        }
+      });
+
+      var scoreEl = document.getElementById('score');
+      scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitted';
+      btn.style.cursor = 'default';
+      btn.disabled = true;
+
+      // Add Retake button with 1-hour cooldown
+      var retakeKey = 'retake_' + location.pathname;
+      var submitTime = parseInt(localStorage.getItem(retakeKey)) || Date.now();
+      localStorage.setItem(retakeKey, submitTime);
+
+      var retakeBtn = document.createElement('button');
+      retakeBtn.className = 'test-btn';
+      retakeBtn.style.marginLeft = '12px';
+      btn.parentElement.appendChild(retakeBtn);
+
+      function updateRetakeBtn() {
+        var wait = 3600 - Math.floor((Date.now() - submitTime) / 1000);
+        if (wait <= 0) {
+          retakeBtn.textContent = 'Retake Test';
+          retakeBtn.disabled = false;
+          retakeBtn.style.cursor = 'pointer';
+          retakeBtn.style.opacity = '1';
+        } else {
+          var mm = Math.floor(wait / 60);
+          var ss = wait % 60;
+          retakeBtn.textContent = 'Retake in ' + mm + ':' + (ss < 10 ? '0' : '') + ss;
+          retakeBtn.disabled = true;
+          retakeBtn.style.cursor = 'default';
+          retakeBtn.style.opacity = '0.5';
+          setTimeout(updateRetakeBtn, 1000);
+        }
+      }
+      updateRetakeBtn();
+
+      retakeBtn.addEventListener('click', function() {
+        if (retakeBtn.disabled) return;
+        sessionStorage.removeItem(testKey);
+        localStorage.removeItem(retakeKey);
+        location.reload();
+      });
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      if (!submitted) {
+        submitTest();
+      }
+    });
+  })();
+  </script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

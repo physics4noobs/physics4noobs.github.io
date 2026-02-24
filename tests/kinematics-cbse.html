@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematics — CBSE Level 0 Practice | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Lets Make Physics Fun</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Test Content -->
+  <div class="test-wrapper">
+
+    <div class="test-header">
+      <h1>Kinematics &mdash; CBSE Level 0 Practice</h1>
+      <div class="test-meta">CBSE Pattern &bull; 27 Questions &bull; 3 Hours &bull; 70 Marks</div>
+    </div>
+
+    <div class="test-bar"><span>Maximum Marks: 70</span></div>
+
+    <!-- VSA: Very Short Answer Type (1 Mark each) — Q1-5 -->
+
+    <!-- Q1 -->
+    <div class="q-card">
+      <div class="q-num">Question 1 <span style="font-size:0.75em;opacity:0.6;">[VSA - 1 Mark]</span></div>
+      <div class="q-text">Explain how can a body be simultaneously at rest and in motion?</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> For a passenger in a moving train, a body in the train is at rest while for a person standing outside the train the same body is in motion.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card">
+      <div class="q-num">Question 2 <span style="font-size:0.75em;opacity:0.6;">[VSA - 1 Mark]</span></div>
+      <div class="q-text">The instantaneous speed is always equal to the magnitude of instantaneous velocity. Why?</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> For a small interval of time the magnitude of displacement is equal to length of the path.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card">
+      <div class="q-num">Question 3 <span style="font-size:0.75em;opacity:0.6;">[VSA - 1 Mark]</span></div>
+      <div class="q-text">Under what condition is the average velocity equal to the instantaneous velocity?</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> Both are equal when the body is moving with uniform velocity.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card">
+      <div class="q-num">Question 4 <span style="font-size:0.75em;opacity:0.6;">[VSA - 1 Mark]</span></div>
+      <div class="q-text">Can a body have zero velocity and finite acceleration?</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> A body projected vertically upwards has zero velocity at the highest point but acceleration due to gravity is present.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card">
+      <div class="q-num">Question 5 <span style="font-size:0.75em;opacity:0.6;">[VSA - 1 Mark]</span></div>
+      <div class="q-text">Can the direction of the velocity of a body change when its acceleration is constant?</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> Yes when the body is thrown upwards.</div>
+    </div>
+
+    <!-- SA-I: Short Answer Type I (2 Marks each) — Q6-12 -->
+
+    <!-- Q6 -->
+    <div class="q-card">
+      <div class="q-num">Question 6 <span style="font-size:0.75em;opacity:0.6;">[SA-I - 2 Marks]</span></div>
+      <div class="q-text">A particle travels half the distance with a speed v<sub>0</sub>. The remaining part of the distance was covered with speed v<sub>1</sub> for half the time, and with speed v<sub>2</sub> for the other half of the time. Find the average speed of the particle averaged over the whole time of motion.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> Let S = Total distance. t<sub>1</sub> = S/(2v<sub>0</sub>). For remaining S/2: S/2 = (v<sub>1</sub> + v<sub>2</sub>)t, so 2t = S/(v<sub>1</sub> + v<sub>2</sub>). Average speed = S/(t<sub>1</sub> + 2t) = 2v<sub>0</sub>(v<sub>1</sub> + v<sub>2</sub>)/(v<sub>1</sub> + v<sub>2</sub> + 2v<sub>0</sub>).</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card">
+      <div class="q-num">Question 7 <span style="font-size:0.75em;opacity:0.6;">[SA-I - 2 Marks]</span></div>
+      <div class="q-text">A man starts from his home at 8.00 am to his office. He walks with a speed of 2 ms<sup>&minus;1</sup> on a road upto his office 3.0 km away from his home. He stays in the office upto 4.00 pm and returns to his home by bus which moves non-stop with a speed of 10 ms<sup>&minus;1</sup>. Calculate (i) the time taken by man to reach his office (ii) time taken by man to reach his home. Also plot distance-time graph of his motion.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) t = 3000/2 = 1500 s = 25 min. He reaches at 8:25 am. (ii) Return: t = 3000/10 = 300 s = 5 min. He reaches home at 4:05 pm.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card">
+      <div class="q-num">Question 8 <span style="font-size:0.75em;opacity:0.6;">[SA-I - 2 Marks]</span></div>
+      <div class="q-text">A particle is moving along x-axis. The position of the particle at any instant is given by x = a + bt<sup>2</sup> where, a = 6 m and b = 3.5 ms<sup>&minus;2</sup>, t is measured in second. Find (i) the velocity of the particle at t = 0 s and t = 3 s. (ii) the average velocity between t = 3 s and t = 6 s.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> x = 6 + 3.5t<sup>2</sup>. v = dx/dt = 7t. (i) At t = 0: v = 0 ms<sup>&minus;1</sup>. At t = 3: v = 21.0 ms<sup>&minus;1</sup>. (ii) Average velocity = [x(6) &minus; x(3)]/(6 &minus; 3) = [(6 + 126) &minus; (6 + 31.5)]/3 = 94.5/3 = 31.5 ms<sup>&minus;1</sup>.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card">
+      <div class="q-num">Question 9 <span style="font-size:0.75em;opacity:0.6;">[SA-I - 2 Marks]</span></div>
+      <div class="q-text">Chandigarh and Ambala are connected with a regular bus service. A bus leaving in either direction every T minutes. A boy cycling with a speed of 10 km h<sup>&minus;1</sup> from Chandigarh to Ambala notices that a bus crosses him after every 15 minutes towards Ambala and after every 5 minutes towards Chandigarh. Calculate the time T and the speed of the buses. Assume that speed of buses is constant.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> Let speed of buses = v km/h. Relative speed towards Ambala = (v &minus; 10). Relative speed towards Chandigarh = (v + 10). Distance between buses = vT. From 15 min: vT/(v &minus; 10) = 15/60 = 1/4. So 4vT = v &minus; 10 ... (1). From 5 min: vT/(v + 10) = 5/60 = 1/12. So 12vT = v + 10 ... (2). Dividing: (v &minus; 10)/(v + 10) = 1/3. So v = 20 km/h. T = 10/(80) h = 7.5 minutes.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card">
+      <div class="q-num">Question 10 <span style="font-size:0.75em;opacity:0.6;">[SA-I - 2 Marks]</span></div>
+      <div class="q-text">A ball is thrown upwards with a velocity of 29.4 ms<sup>&minus;1</sup> in the absence of air resistance. (i) Mention the direction of the acceleration during the upward motion of the ball. (ii) What are the velocity and acceleration of the ball at the highest point? (iii) How much high the ball goes up? (iv) Find the time taken by the ball to reach the ground. Take g = 9.8 ms<sup>&minus;2</sup>.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) Downward (opposite to motion). (ii) v = 0, a = 9.8 ms<sup>&minus;2</sup> downward. (iii) h = u<sup>2</sup>/(2g) = (29.4)<sup>2</sup>/(2 &times; 9.8) = 44.1 m. (iv) t up = 29.4/9.8 = 3 s. Total time = 6 s.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card">
+      <div class="q-num">Question 11 <span style="font-size:0.75em;opacity:0.6;">[SA-I - 2 Marks]</span></div>
+      <div class="q-text">Drops of water from the roof of a house 6 m high fall at regular intervals. The first drop reaches the ground at an instant of time when third drop leaves the roof. Find the height of the second drop at that instant.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> Let t = time between drops. First drop: 6 = (1/2)g(2t)<sup>2</sup> = 2gt<sup>2</sup>. So gt<sup>2</sup> = 3 ... (1). Second drop has fallen for time t: h<sub>2</sub> = (1/2)gt<sup>2</sup> = 3/2 = 1.5 m from roof. Height from ground = 6 &minus; 1.5 = 4.5 m.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card">
+      <div class="q-num">Question 12 <span style="font-size:0.75em;opacity:0.6;">[SA-I - 2 Marks]</span></div>
+      <div class="q-text">Find the ratio of the distances travelled by a freely falling body in first, second and third second of its fall.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> Using S<sub>nth</sub> = u + (g/2)(2n &minus; 1). h<sub>1</sub> = 4.9 m, h<sub>2</sub> = 3 &times; 4.9 m, h<sub>3</sub> = 5 &times; 4.9 m. Ratio h<sub>1</sub> : h<sub>2</sub> : h<sub>3</sub> = 1 : 3 : 5.</div>
+    </div>
+
+    <!-- SA-II: Short Answer Type II (3 Marks each) — Q13-24 -->
+
+    <!-- Q13 -->
+    <div class="q-card">
+      <div class="q-num">Question 13 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">Acceleration of a particle is given by a = 3t<sup>2</sup> + 2t + 1, where t is time. Find (i) its velocity at time t assuming velocity to be 10 m/s at t = 0. (ii) its position at time t assuming that the particle is at origin at t = 0. (iii) What is the average speed of the particle in the duration t = 0 to t = 1 s? (iv) What is the average acceleration of the particle in the duration t = 0 to t = 1 s?</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) v = t<sup>3</sup> + t<sup>2</sup> + t + 10. (ii) x = t<sup>4</sup>/4 + t<sup>3</sup>/3 + t<sup>2</sup>/2 + 10t. (iii) v<sub>avg</sub> = x(1)/1 = (1/4 + 1/3 + 1/2 + 10) = 133/12 m/s. (iv) a<sub>avg</sub> = [v(1) &minus; v(0)]/1 = (13 &minus; 10)/1 = 3 m/s<sup>2</sup>.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card">
+      <div class="q-num">Question 14 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">Acceleration of a particle is given by a = 2x, where x is the position of the particle. Find (i) Its velocity at position x. Given that v = 10 m/s when x = 0. (ii) Minimum speed that the particle can attain.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) v dv/dx = 2x. Integrating: v<sup>2</sup> = 2x<sup>2</sup> + 100. So v = &radic;(2x<sup>2</sup> + 100). (ii) v<sub>min</sub> = 10 m/s (when x = 0).</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card">
+      <div class="q-num">Question 15 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">Acceleration of a particle is given by a = 1/v, where v is the velocity. Find (i) Velocity of particle at time t, given that v = 10 m/s at t = 0. (ii) Velocity of particle when its position is x, given that speed is 3 m/s at x = 0.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) v dv = dt. v<sup>2</sup>/2 = t + 50. v = &radic;(2t + 100). (ii) v<sup>2</sup> dv = dx. v<sup>3</sup>/3 = x + 9. v = (3x + 27)<sup>1/3</sup>.</div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card">
+      <div class="q-num">Question 16 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">Acceleration of a particle is increasing linearly with time. Its acceleration is 10 m/s<sup>2</sup> at t = 0 and 20 m/s<sup>2</sup> at t = 5 s. Also, its speed is 5 m/s at t = 0 and its position is x = &minus;100 m at t = 0. Find at time t its acceleration, velocity and position.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> a = mt + c. At t = 0: c = 10. m = (20 &minus; 10)/5 = 2. So a = 2t + 10. v = t<sup>2</sup> + 10t + 5. x = t<sup>3</sup>/3 + 5t<sup>2</sup> + 5t &minus; 100.</div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card">
+      <div class="q-num">Question 17 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">Draw the acceleration-time graphs for the given velocity-time graphs of a particle moving along x-axis. (4 graphs: (i) constant positive v, (ii) v increases then decreases, (iii) v oscillates, (iv) v increases then levels off)</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) a = 0 (horizontal line at zero). (ii) First positive constant a, then negative constant a. (iii) Alternating positive and negative a. (iv) Positive decreasing a approaching zero.</div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q-card">
+      <div class="q-num">Question 18 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">The position-time (x-t) graphs for two children A and B returning from their school O to their homes P and Q respectively are shown. Choose the correct entries: (i) (A) lives closer to the school than (B). (ii) (A) starts from the school earlier than (B). (iii) (B) walks faster than (A). (iv) A and B reach home at the same time. (v) (B) overtakes (A) on the road once.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) A lives closer (OP &lt; OQ). (ii) A starts earlier. (iii) B walks faster (steeper slope). (iv) Same time. (v) B overtakes A once.</div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q-card">
+      <div class="q-num">Question 19 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">Two balls of different masses are thrown vertically upward with same initial velocity. Height attained by them are h<sub>1</sub> and h<sub>2</sub> respectively. What is h<sub>1</sub>/h<sub>2</sub>?</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> h<sub>1</sub>/h<sub>2</sub> = 1/1 = 1, because the height attained by the projectile does not depend on the masses.</div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="q-card">
+      <div class="q-num">Question 20 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">The velocity time relation of a particle is given by v = (3t<sup>2</sup> &minus; 2t &minus; 1) m/s. Calculate the position and acceleration of the particle when velocity of the particle is zero. Given the initial position of the particle is 5 m.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> v = 3t<sup>2</sup> &minus; 2t &minus; 1 = 0 &rarr; 3t<sup>2</sup> &minus; 3t + t &minus; 1 = 0 &rarr; t = 1 s (taking positive value). x = t<sup>3</sup> &minus; t<sup>2</sup> &minus; t + 5. At t = 1: x = 1 &minus; 1 &minus; 1 + 5 = 4 m. a = 6t &minus; 2. At t = 1: a = 4 m/s<sup>2</sup>.</div>
+    </div>
+
+    <!-- Q21 -->
+    <div class="q-card">
+      <div class="q-num">Question 21 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">A ball is thrown vertically upwards with a velocity of 20 m/s from the top of a building of height 40 m. (i) How high the ball reaches? (ii) How long will it take to reach the ground? (iii) What is the speed at which it strikes the ground?</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) S = u<sup>2</sup>/(2g) = 400/20 = 20 m from top of tower. (ii) &minus;40 = 20t &minus; 5t<sup>2</sup> &rarr; t<sup>2</sup> &minus; 4t &minus; 8 = 0 &rarr; t = 2 + 2&radic;3 &asymp; 5.46 s. (iii) V<sup>2</sup> = 400 + 800 = 1200 &rarr; V = 20&radic;3 &asymp; 34.6 m/s.</div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="q-card">
+      <div class="q-num">Question 22 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">The displacement of a particle moving along x-axis is given by x = 18t + 5t<sup>2</sup>. Calculate (i) The instantaneous velocity at t = 2 s. (ii) Average velocity between t = 2 s and t = 3 s. (iii) Instantaneous acceleration.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> v = dx/dt = 18 + 10t. (i) v(2) = 18 + 20 = 38 m/s. (ii) Avg vel = [x(3) &minus; x(2)]/(3 &minus; 2) = [(54 + 45) &minus; (36 + 20)]/1 = 43 m/s. (iii) a = dv/dt = 10 m/s<sup>2</sup>.</div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="q-card">
+      <div class="q-num">Question 23 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">Draw velocity &minus; time graph of uniformly accelerated motion in one dimension. From the velocity &minus; time graph of uniform accelerated motion, deduce the equations of motion in distance and time.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> The v-t graph is a straight line with slope = a. Area under graph = displacement. From graph: v = u + at. s = area = (1/2)(u + v)t = ut + (1/2)at<sup>2</sup>. Also s = (v<sup>2</sup> &minus; u<sup>2</sup>)/(2a).</div>
+    </div>
+
+    <!-- Q24 -->
+    <div class="q-card">
+      <div class="q-num">Question 24 <span style="font-size:0.75em;opacity:0.6;">[SA-II - 3 Marks]</span></div>
+      <div class="q-text">Suppose you are a judge and the case under your consideration is: "Whether a car driver was exceeding a speed limit of 40 km/h before he made an emergency stop, the length of the skid marks on the road was 3 m? You may assume the maximum deceleration to be 10 m/s<sup>2</sup>."</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> v<sup>2</sup> = u<sup>2</sup> &minus; 2as. 0 = u<sup>2</sup> &minus; 2(10)(3). u<sup>2</sup> = 60. u = &radic;60 &asymp; 7.75 m/s = 27.9 km/h. Speed limit was not exceeded.</div>
+    </div>
+
+    <!-- LA: Long Answer Type (5 Marks each) — Q25-27 -->
+
+    <!-- Q25 -->
+    <div class="q-card">
+      <div class="q-num">Question 25 <span style="font-size:0.75em;opacity:0.6;">[LA - 5 Marks]</span></div>
+      <div class="q-text">A drunkard walking in a narrow lane takes 5 steps forward and 3 steps backward, followed again by 5 steps forward and 3 steps backward and so on. Each step is 1 m long and requires 1 s. Plot the x-t graph of his motion. Determine graphically and otherwise, how long the drunkard takes to fall in a pit 13 m away from the start.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> Pattern: 5 forward (5m), 3 backward (3m) = net 2m per 8 steps (8s). Average velocity = 2m/8s = 0.25 m/s. After 4 cycles (32s): 8m. Then 5 more steps forward: 13m at t = 37s. Time = 37 s.</div>
+    </div>
+
+    <!-- Q26 -->
+    <div class="q-card">
+      <div class="q-num">Question 26 <span style="font-size:0.75em;opacity:0.6;">[LA - 5 Marks]</span></div>
+      <div class="q-text">Draw the v-t graphs for the given a-t graphs for a particle moving in one dimension. (6 sub-parts with different a-t graph shapes and initial velocity conditions)</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> (i) Constant a, V = 10 m/s at t = 0: straight line from 10. (ii) Positive decreasing a, V = 10 at t = 0: curve upward from 10 with decreasing slope. (iii) Negative constant a, V = &minus;10 at t = 0: straight line going more negative. (iv) Negative constant a, V = 10 at t = 0: straight line going down from 10. (v) Positive increasing a, V = 10 at t = 0: curve upward with increasing slope. (vi) a increasing from zero, V = 10 at t = 0: curve with slope = 0 at t = 0 (since a = 0 there).</div>
+    </div>
+
+    <!-- Q27 -->
+    <div class="q-card">
+      <div class="q-num">Question 27 <span style="font-size:0.75em;opacity:0.6;">[LA - 5 Marks]</span></div>
+      <div class="q-text">A man is standing on top of a building 100 m high. He throws two balls vertically, one at t = 0 and other after a time interval (less than 2 seconds). The latter ball is thrown at a velocity of half of the first. The vertical gap between first and second ball is +15 m at t = 2 s. The gap is found to remain constant. Calculate the velocity with which the balls were thrown and the exact time interval between their throw.</div>
+      <button class="test-btn" style="margin-top:12px;font-size:0.85em;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">Show Solution</button>
+      <div class="q-solution" style="display:none"><strong>Solution:</strong> Let v<sub>1</sub> = 2v, v<sub>2</sub> = v. Since gap remains constant, relative velocity = 0 at t = 2s. v<sub>1</sub> &minus; g(2) = v<sub>2</sub> &minus; g(2 &minus; t<sub>2</sub>). 2v &minus; 2g = v &minus; g(2 &minus; t<sub>2</sub>). v = gt<sub>2</sub>. Also: gap = (2v)(2) &minus; (1/2)g(4) &minus; [v(2 &minus; t<sub>2</sub>) &minus; (1/2)g(2 &minus; t<sub>2</sub>)<sup>2</sup>] = 15. Solving: v<sub>1</sub> = 20 m/s, v<sub>2</sub> = 10 m/s, t<sub>2</sub> = 1 s.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-rocket">
+  <div class="rocket-nose"></div>
+  <div class="rocket-body"></div>
+  <div class="rocket-window"></div>
+  <div class="rocket-mark">4N</div>
+            <div class="rocket-fin-l"></div>
+  <div class="rocket-fin-r"></div>
+  <div class="rocket-flame"></div>
+  <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-star"></div>
+            <div class="rocket-glow"></div>
+<div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+            <div class="rocket-exhaust"></div>
+          </div></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

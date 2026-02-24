@@ -6,7 +6,7 @@
   <title>Kinematics L2 Sprint 2 | Physics for Noobs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Delius&family=Nova+Square&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="manifest" href="../manifest.json">
   <meta name="theme-color" content="#050510">
@@ -24,7 +24,7 @@
 </head>
 <body>
   <!-- Splash Screen -->
-  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Learn. Play. Master.</div></div>
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo">Physics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Lets Make Physics Fun</div></div>
   <div class="bg-grid"></div>
 
   <!-- Navigation -->
@@ -47,7 +47,7 @@
             <div class="rocket-exhaust"></div>
             <div class="rocket-exhaust"></div>
           </div></div>
-        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+        <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
       </a>
       <div class="nav-links">
         <div class="nav-item">
@@ -249,7 +249,7 @@
             <div class="rocket-exhaust"></div>
             <div class="rocket-exhaust"></div>
           </div></div>
-          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LEARN. PLAY. MASTER.</span></div>
+          <div class="logo-text"><span class="brand-name">Physics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">LETS MAKE PHYSICS FUN</span></div>
         </a>
         <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
       </div>
@@ -267,10 +267,46 @@
 
   <script>
   (function() {
-    // --- Timer: 30-minute countdown ---
-    var totalSeconds = 30 * 60;
+    var testKey = 'sprint_' + location.pathname;
+    var session = JSON.parse(sessionStorage.getItem(testKey) || '{}');
     var timerEl = document.getElementById('timer');
     var submitted = false;
+
+    // --- Initialize or restore session ---
+    if (!session.startTime) {
+      session.startTime = Date.now();
+      session.answers = {};
+      sessionStorage.setItem(testKey, JSON.stringify(session));
+    }
+
+    // --- Restore selected answers ---
+    var cards = document.querySelectorAll('.q-card');
+    if (session.answers) {
+      Object.keys(session.answers).forEach(function(idx) {
+        var card = cards[parseInt(idx)];
+        if (!card) return;
+        var key = session.answers[idx];
+        var opt = card.querySelector('.q-opt[data-key="' + key + '"]');
+        if (opt) opt.classList.add('selected');
+      });
+    }
+
+    // --- Timer: calculate remaining from startTime ---
+    var elapsed = Math.floor((Date.now() - session.startTime) / 1000);
+    var totalSeconds = Math.max(0, 30 * 60 - elapsed);
+
+    function updateTimerDisplay() {
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    updateTimerDisplay();
+
+    // --- Auto-submit if already submitted or time expired ---
+    if (session.submitted || totalSeconds <= 0) {
+      submitTest();
+    }
+
     var timerInterval = setInterval(function() {
       if (submitted) return;
       totalSeconds--;
@@ -279,9 +315,7 @@
         clearInterval(timerInterval);
         submitTest();
       }
-      var m = Math.floor(totalSeconds / 60);
-      var s = totalSeconds % 60;
-      timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+      updateTimerDisplay();
     }, 1000);
 
     // --- Option selection ---
@@ -292,6 +326,12 @@
         var siblings = this.parentElement.querySelectorAll('.q-opt');
         siblings.forEach(function(sib) { sib.classList.remove('selected'); });
         this.classList.add('selected');
+
+        // Save answer to session
+        var card = this.closest('.q-card');
+        var cardIdx = Array.prototype.indexOf.call(cards, card);
+        session.answers[cardIdx] = this.getAttribute('data-key');
+        sessionStorage.setItem(testKey, JSON.stringify(session));
       });
     });
 
@@ -301,7 +341,10 @@
       submitted = true;
       clearInterval(timerInterval);
 
-      var cards = document.querySelectorAll('.q-card');
+      // Mark submitted in session
+      session.submitted = true;
+      sessionStorage.setItem(testKey, JSON.stringify(session));
+
       var total = cards.length;
       var correct = 0;
 
@@ -310,7 +353,6 @@
         var selected = card.querySelector('.q-opt.selected');
         card.classList.add('answered');
 
-        // Highlight the correct option
         var opts = card.querySelectorAll('.q-opt');
         opts.forEach(function(o) {
           if (o.getAttribute('data-key') === correctKey) {
@@ -327,21 +369,54 @@
           }
         }
 
-        // Disable hover effects
         opts.forEach(function(o) {
           o.style.cursor = 'default';
         });
       });
 
-      // Display score
       var scoreEl = document.getElementById('score');
       scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
 
-      // Update submit button
       var btn = document.getElementById('submit-btn');
       btn.textContent = 'Submitted';
       btn.style.cursor = 'default';
       btn.disabled = true;
+
+      // Add Retake button with 1-hour cooldown
+      var retakeKey = 'retake_' + location.pathname;
+      var submitTime = parseInt(localStorage.getItem(retakeKey)) || Date.now();
+      localStorage.setItem(retakeKey, submitTime);
+
+      var retakeBtn = document.createElement('button');
+      retakeBtn.className = 'test-btn';
+      retakeBtn.style.marginLeft = '12px';
+      btn.parentElement.appendChild(retakeBtn);
+
+      function updateRetakeBtn() {
+        var wait = 3600 - Math.floor((Date.now() - submitTime) / 1000);
+        if (wait <= 0) {
+          retakeBtn.textContent = 'Retake Test';
+          retakeBtn.disabled = false;
+          retakeBtn.style.cursor = 'pointer';
+          retakeBtn.style.opacity = '1';
+        } else {
+          var mm = Math.floor(wait / 60);
+          var ss = wait % 60;
+          retakeBtn.textContent = 'Retake in ' + mm + ':' + (ss < 10 ? '0' : '') + ss;
+          retakeBtn.disabled = true;
+          retakeBtn.style.cursor = 'default';
+          retakeBtn.style.opacity = '0.5';
+          setTimeout(updateRetakeBtn, 1000);
+        }
+      }
+      updateRetakeBtn();
+
+      retakeBtn.addEventListener('click', function() {
+        if (retakeBtn.disabled) return;
+        sessionStorage.removeItem(testKey);
+        localStorage.removeItem(retakeKey);
+        location.reload();
+      });
     }
 
     document.getElementById('submit-btn').addEventListener('click', function() {

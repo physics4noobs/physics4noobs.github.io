@@ -3,7 +3,10 @@
    ============================================ */
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
-    if (typeof firebase === 'undefined' || !firebase.auth) return;
+    if (typeof firebase === 'undefined' || !firebase.auth) {
+      console.warn('Firebase SDK not loaded — auth disabled');
+      return;
+    }
 
     var auth = firebase.auth();
     var provider = new firebase.auth.GoogleAuthProvider();
@@ -14,6 +17,15 @@
     var logoutBtn = document.getElementById('auth-logout-btn');
 
     if (!loginBtn || !userMenu) return;
+
+    // Handle redirect result (for mobile / popup-blocked fallback)
+    auth.getRedirectResult().then(function(result) {
+      // Redirect sign-in succeeded — onAuthStateChanged will handle UI
+    }).catch(function(err) {
+      if (err.code !== 'auth/credential-already-in-use') {
+        console.error('Redirect auth error:', err.code, err.message);
+      }
+    });
 
     auth.onAuthStateChanged(function(user) {
       if (user) {
@@ -35,8 +47,24 @@
     });
 
     loginBtn.addEventListener('click', function() {
-      auth.signInWithPopup(provider).catch(function(err) {
-        console.error('Auth error:', err.message);
+      loginBtn.disabled = true;
+      loginBtn.style.opacity = '0.6';
+
+      auth.signInWithPopup(provider).then(function() {
+        loginBtn.disabled = false;
+        loginBtn.style.opacity = '';
+      }).catch(function(err) {
+        loginBtn.disabled = false;
+        loginBtn.style.opacity = '';
+        console.error('Auth error:', err.code, err.message);
+
+        // Popup blocked or unavailable — fall back to redirect
+        if (err.code === 'auth/popup-blocked' ||
+            err.code === 'auth/popup-closed-by-user' ||
+            err.code === 'auth/cancelled-popup-request' ||
+            err.code === 'auth/operation-not-supported-in-this-environment') {
+          auth.signInWithRedirect(provider);
+        }
       });
     });
 
