@@ -13,23 +13,23 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="apple-touch-icon" href="images/icon-192.svg">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
   <script src="js/theme.js"></script>
   <style>
+    /* Test card system */
     .test-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 32px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
     }
     .test-card {
-      background: var(--card-bg, rgba(255,255,255,0.04));
-      border: 1px solid var(--border, rgba(255,255,255,0.08));
+      background: var(--bg-card, rgba(15,15,40,0.85));
+      border: 1px solid var(--border-subtle, rgba(255,255,255,0.06));
       border-radius: 16px;
-      padding: 28px 24px;
+      padding: 24px 22px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       position: relative;
       overflow: hidden;
@@ -37,9 +37,7 @@
     .test-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 3px;
       background: linear-gradient(90deg, #7c3aed, #00d4ff);
       opacity: 0;
@@ -50,45 +48,145 @@
       box-shadow: 0 12px 40px rgba(0,0,0,0.3);
       border-color: rgba(124, 58, 237, 0.3);
     }
-    .test-card:hover::before {
-      opacity: 1;
-    }
+    .test-card:hover::before { opacity: 1; }
+    .tc-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .tc-grade {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: var(--text-muted, #888);
+      color: var(--text-muted, #6b6b85);
       font-weight: 600;
     }
     .tc-title {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      color: var(--text, #fff);
+      color: var(--text-primary, #e0e0e8);
       line-height: 1.3;
     }
     .tc-info {
-      font-size: 0.82rem;
-      color: var(--text-muted, #999);
+      font-size: 0.78rem;
+      color: var(--text-muted, #6b6b85);
       display: flex;
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
     }
-    .tc-info span {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
+    .tc-info span { display: inline-flex; align-items: center; gap: 4px; }
     .tc-link {
       margin-top: auto;
-      padding-top: 12px;
-      font-size: 0.85rem;
+      padding-top: 8px;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #7c3aed;
       transition: color 0.2s ease;
     }
-    .test-card:hover .tc-link {
-      color: #00d4ff;
+    .test-card:hover .tc-link { color: #00d4ff; }
+
+    /* Level badges */
+    .level-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .level-l1 { background: rgba(0,212,255,0.12); color: #00d4ff; border: 1px solid rgba(0,212,255,0.25); }
+    .level-l2 { background: rgba(124,58,237,0.12); color: #a78bfa; border: 1px solid rgba(124,58,237,0.25); }
+    .level-l3 { background: rgba(255,107,53,0.12); color: #ff6b35; border: 1px solid rgba(255,107,53,0.25); }
+
+    /* Sprint chapter accordion */
+    .sprint-chapter { margin-bottom: 12px; }
+    .sprint-chapter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 22px;
+      cursor: pointer;
+      background: var(--bg-card, rgba(15,15,40,0.85));
+      border: 1px solid var(--border-subtle, rgba(255,255,255,0.06));
+      border-radius: var(--radius-md, 12px);
+      transition: 0.2s ease;
+      user-select: none;
+    }
+    .sprint-chapter-header:hover { border-color: rgba(0,212,255,0.15); background: rgba(0,212,255,0.03); }
+    .sprint-chapter-header h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+    }
+    .sprint-chapter-header .ch-count {
+      font-size: 0.72rem;
+      color: var(--text-muted, #6b6b85);
+      font-weight: 500;
+    }
+    .sprint-chapter-header .toggle-icon {
+      font-size: 0.8rem;
+      transition: 0.25s ease;
+      color: var(--text-muted, #6b6b85);
+    }
+    .sprint-chapter.active .sprint-chapter-header { border-color: rgba(0,212,255,0.2); }
+    .sprint-chapter.active .toggle-icon { transform: rotate(180deg); color: var(--color-primary, #00d4ff); }
+    .sprint-chapter-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .sprint-chapter.active .sprint-chapter-body { max-height: 2000px; }
+    .sprint-chapter-body .test-grid { padding: 16px 4px 8px; }
+
+    /* Sub-tabs (nested inside Chapter Tests) */
+    .sub-tabs-container { margin-top: 8px; }
+    .sub-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      background: var(--bg-card, rgba(15,15,40,0.85));
+      border: 1px solid var(--border-subtle, rgba(255,255,255,0.06));
+      border-radius: var(--radius-sm, 8px);
+      padding: 4px;
+      width: fit-content;
+    }
+    .sub-tab {
+      padding: 8px 22px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary, #e0e0e8);
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: 0.2s ease;
+    }
+    .sub-tab.active {
+      background: linear-gradient(135deg, var(--color-primary, #00d4ff), var(--color-secondary, #7c3aed));
+      color: white;
+      box-shadow: 0 2px 10px rgba(0,212,255,0.2);
+    }
+    .sub-tab:hover:not(.active) { background: rgba(255,255,255,0.03); }
+    .sub-content { display: none; }
+    .sub-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+    /* Category intro text */
+    .cat-intro {
+      margin-bottom: 28px;
+      font-size: 0.88rem;
+      color: var(--text-secondary, #a0a0b8);
+      line-height: 1.7;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .test-grid { grid-template-columns: 1fr; }
+      .grade-tabs { overflow-x: auto; width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .grade-tab { padding: 8px 16px; font-size: 0.78rem; }
     }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -175,238 +273,306 @@
   <!-- Page Header -->
   <div class="page-header">
     <h1>Physics <span class="text-gradient">Practice Tests</span></h1>
-    <p>DTS-based chapter-wise tests designed to strengthen your problem-solving skills. Timed assessments with detailed solutions for every question.</p>
+    <p>Sprint tests, chapter assessments, CBSE papers &amp; JEE archives &mdash; all in one place. Track your progress and level up.</p>
   </div>
 
   <!-- Test Listings -->
   <section class="section" style="padding-top: 0;">
     <div class="container">
 
+      <!-- ==================== CATEGORY TABS ==================== -->
       <div class="grade-tabs">
-        <button class="grade-tab active" data-grade="grade-xi-tests">Grade XI</button>
-        <button class="grade-tab" data-grade="grade-xii-tests">Grade XII</button>
+        <button class="grade-tab active" data-grade="cat-xi-sprint">Sprint Tests</button>
+        <button class="grade-tab" data-grade="cat-xi-chapter">Chapter Tests</button>
+        <button class="grade-tab" data-grade="cat-xi-cbse">CBSE Papers</button>
+        <button class="grade-tab" data-grade="cat-xi-jee">JEE Archives</button>
       </div>
 
-      <!-- ==================== GRADE XI TESTS ==================== -->
-      <div class="grade-content active" id="grade-xi-tests">
-        <div class="test-grid">
+      <!-- ==================== SPRINT TESTS ==================== -->
+      <div class="grade-content active" id="cat-xi-sprint">
+        <p class="cat-intro">Gamified 30-minute sprint tests with 10 MCQs each. Sorted by difficulty level. Scoring: +4 correct, &minus;1 wrong, 0 unanswered.</p>
 
-          <!-- 1. Kinematics -->
-          <a href="tests/kinematics.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 1</div>
-            <div class="tc-title">Kinematics</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
+        <!-- Kinematics (open by default) -->
+        <div class="sprint-chapter active">
+          <div class="sprint-chapter-header">
+            <h3><span class="ch-num">01</span> Kinematics</h3>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <span class="ch-count">8 tests</span>
+              <span class="toggle-icon">&#9660;</span>
             </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 2. Newton's Laws of Motion -->
-          <a href="tests/newtons-laws.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 2</div>
-            <div class="tc-title">Newton's Laws of Motion</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
+          </div>
+          <div class="sprint-chapter-body">
+            <div class="test-grid">
+              <a href="tests/kinematics-l1-sprint-1.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 1</span></div>
+                <div class="tc-title">Sprint 1 &mdash; Kinematic Quantities</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/kinematics-l1-sprint-2.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 2</span></div>
+                <div class="tc-title">Sprint 2 &mdash; UAM &amp; Gravity</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/kinematics-l1-sprint-3.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 2-3</span></div>
+                <div class="tc-title">Sprint 3 &mdash; UAM &amp; Graphs</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/kinematics-l1-sprint-4.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 4</span></div>
+                <div class="tc-title">Sprint 4 &mdash; Non-Uniform Acceleration</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/kinematics-l1-sprint-5.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 4-5</span></div>
+                <div class="tc-title">Sprint 5 &mdash; Variable Acceleration</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/kinematics-l1-sprint-6.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 5</span></div>
+                <div class="tc-title">Sprint 6 &mdash; Relative Motion</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/kinematics-l2-sprint-1.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l2">L2</span><span class="tc-grade">DTS 6-7</span></div>
+                <div class="tc-title">Sprint 1 &mdash; Advanced Kinematics</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/kinematics-l2-sprint-2.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l2">L2</span><span class="tc-grade">DTS 7-10</span></div>
+                <div class="tc-title">Sprint 2 &mdash; Advanced Mixed</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
             </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
+          </div>
+        </div>
 
-          <!-- 3. Work, Power & Energy -->
-          <a href="tests/work-power-energy.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 3</div>
-            <div class="tc-title">Work, Power &amp; Energy</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
+        <!-- Motion in 2D -->
+        <div class="sprint-chapter">
+          <div class="sprint-chapter-header">
+            <h3><span class="ch-num">02</span> Motion in 2D</h3>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <span class="ch-count">8 tests</span>
+              <span class="toggle-icon">&#9660;</span>
             </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 4. Rotational Motion -->
-          <a href="tests/rotational-motion.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 4</div>
-            <div class="tc-title">Rotational Motion</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
+          </div>
+          <div class="sprint-chapter-body">
+            <div class="test-grid">
+              <a href="tests/motion2d-l1-sprint-1.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 1</span></div>
+                <div class="tc-title">Sprint 1 &mdash; General 2D &amp; Projectile</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/motion2d-l1-sprint-2.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 1-2</span></div>
+                <div class="tc-title">Sprint 2 &mdash; Projectile Formulas</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/motion2d-l1-sprint-3.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 2-3</span></div>
+                <div class="tc-title">Sprint 3 &mdash; Projectile Advanced</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/motion2d-l1-sprint-4.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 3-4</span></div>
+                <div class="tc-title">Sprint 4 &mdash; Height Projectile &amp; Circular</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/motion2d-l1-sprint-5.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 4</span></div>
+                <div class="tc-title">Sprint 5 &mdash; Circular Motion</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/motion2d-l1-sprint-6.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l1">L1</span><span class="tc-grade">DTS 5</span></div>
+                <div class="tc-title">Sprint 6 &mdash; Mixed Topics</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/motion2d-l2-sprint-1.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l2">L2</span><span class="tc-grade">DTS 6-7</span></div>
+                <div class="tc-title">Sprint 1 &mdash; Advanced Projectile</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/motion2d-l2-sprint-2.html" class="test-card reveal">
+                <div class="tc-top"><span class="level-badge level-l2">L2</span><span class="tc-grade">DTS 7-10</span></div>
+                <div class="tc-title">Sprint 2 &mdash; Advanced Mixed</div>
+                <div class="tc-info"><span>&#128221; 10 Qs</span><span>&#9201; 30 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
             </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
+          </div>
+        </div>
 
-          <!-- 5. Gravitation -->
-          <a href="tests/gravitation.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 5</div>
-            <div class="tc-title">Gravitation</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
+      </div>
+
+      <!-- ==================== CHAPTER TESTS ==================== -->
+      <div class="grade-content" id="cat-xi-chapter">
+        <p class="cat-intro">Full-length chapter tests with 15 questions and 90-minute time limit. Covers all major topics per chapter.</p>
+
+        <div class="sub-tabs-container">
+          <div class="sub-tabs">
+            <button class="sub-tab active" data-target="chp-grade-xi">Grade XI</button>
+            <button class="sub-tab" data-target="chp-grade-xii">Grade XII</button>
+          </div>
+
+          <!-- Grade XI Chapter Tests -->
+          <div class="sub-content active" id="chp-grade-xi">
+            <div class="test-grid">
+              <a href="tests/kinematics.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 1</div>
+                <div class="tc-title">Kinematics</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/newtons-laws.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 2</div>
+                <div class="tc-title">Newton's Laws of Motion</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/work-power-energy.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 3</div>
+                <div class="tc-title">Work, Power &amp; Energy</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/rotational-motion.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 4</div>
+                <div class="tc-title">Rotational Motion</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/gravitation.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 5</div>
+                <div class="tc-title">Gravitation</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/mechanical-properties.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 6</div>
+                <div class="tc-title">Mechanical Properties</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/fluid-mechanics.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 7</div>
+                <div class="tc-title">Fluid Mechanics</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/thermodynamics.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 8</div>
+                <div class="tc-title">Heat &amp; Thermodynamics</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/shm.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 9</div>
+                <div class="tc-title">Simple Harmonic Motion</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/waves.html" class="test-card reveal">
+                <div class="tc-grade">Grade XI &bull; Chapter 10</div>
+                <div class="tc-title">Waves</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
             </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
+          </div>
 
-          <!-- 6. Mechanical Properties -->
-          <a href="tests/mechanical-properties.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 6</div>
-            <div class="tc-title">Mechanical Properties</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
+          <!-- Grade XII Chapter Tests -->
+          <div class="sub-content" id="chp-grade-xii">
+            <div class="test-grid">
+              <a href="tests/electrostatics.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 1</div>
+                <div class="tc-title">Electrostatics &amp; Capacitance</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/current-electricity.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 2</div>
+                <div class="tc-title">Current Electricity</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/magnetism.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 3</div>
+                <div class="tc-title">Moving Charges &amp; Magnetism</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/emi.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 4</div>
+                <div class="tc-title">Electromagnetic Induction</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/ac-circuits.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 5</div>
+                <div class="tc-title">Alternating Current</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/em-waves.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 6</div>
+                <div class="tc-title">Electromagnetic Waves</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/ray-optics.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 7</div>
+                <div class="tc-title">Ray Optics</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/wave-optics.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 8</div>
+                <div class="tc-title">Wave Optics</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
+              <a href="tests/modern-physics.html" class="test-card reveal">
+                <div class="tc-grade">Grade XII &bull; Chapter 9</div>
+                <div class="tc-title">Modern Physics</div>
+                <div class="tc-info"><span>&#128221; 15 Questions</span><span>&#9201; 90 min</span></div>
+                <div class="tc-link">Start Test &rarr;</div>
+              </a>
             </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 7. Fluid Mechanics -->
-          <a href="tests/fluid-mechanics.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 7</div>
-            <div class="tc-title">Fluid Mechanics</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 8. Heat & Thermodynamics -->
-          <a href="tests/thermodynamics.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 8</div>
-            <div class="tc-title">Heat &amp; Thermodynamics</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 9. Simple Harmonic Motion -->
-          <a href="tests/shm.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 9</div>
-            <div class="tc-title">Simple Harmonic Motion</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 10. Waves -->
-          <a href="tests/waves.html" class="test-card reveal">
-            <div class="tc-grade">Grade XI &bull; Chapter 10</div>
-            <div class="tc-title">Waves</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
+          </div>
         </div>
       </div>
 
-      <!-- ==================== GRADE XII TESTS ==================== -->
-      <div class="grade-content" id="grade-xii-tests">
-        <div class="test-grid">
+      <!-- ==================== CBSE PAPERS ==================== -->
+      <div class="grade-content" id="cat-xi-cbse">
+        <div class="progress-coming-soon">
+          <span>&#128218;</span>
+          <p>CBSE Practice Papers coming soon</p>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;">Subjective questions &mdash; VSA, SA &amp; LA format with worked solutions</p>
+        </div>
+      </div>
 
-          <!-- 1. Electrostatics & Capacitance -->
-          <a href="tests/electrostatics.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 1</div>
-            <div class="tc-title">Electrostatics &amp; Capacitance</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 2. Current Electricity -->
-          <a href="tests/current-electricity.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 2</div>
-            <div class="tc-title">Current Electricity</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 3. Moving Charges & Magnetism -->
-          <a href="tests/magnetism.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 3</div>
-            <div class="tc-title">Moving Charges &amp; Magnetism</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 4. Electromagnetic Induction -->
-          <a href="tests/emi.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 4</div>
-            <div class="tc-title">Electromagnetic Induction</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 5. Alternating Current -->
-          <a href="tests/ac-circuits.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 5</div>
-            <div class="tc-title">Alternating Current</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 6. Electromagnetic Waves -->
-          <a href="tests/em-waves.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 6</div>
-            <div class="tc-title">Electromagnetic Waves</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 7. Ray Optics -->
-          <a href="tests/ray-optics.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 7</div>
-            <div class="tc-title">Ray Optics</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 8. Wave Optics -->
-          <a href="tests/wave-optics.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 8</div>
-            <div class="tc-title">Wave Optics</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
-          <!-- 9. Modern Physics -->
-          <a href="tests/modern-physics.html" class="test-card reveal">
-            <div class="tc-grade">Grade XII &bull; Chapter 9</div>
-            <div class="tc-title">Modern Physics</div>
-            <div class="tc-info">
-              <span>&#128221; 15 Questions</span>
-              <span>&#9201; 90 min</span>
-            </div>
-            <div class="tc-link">Start Test &rarr;</div>
-          </a>
-
+      <!-- ==================== JEE ARCHIVES ==================== -->
+      <div class="grade-content" id="cat-xi-jee">
+        <div class="progress-coming-soon">
+          <span>&#127942;</span>
+          <p>JEE Archives coming soon</p>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;">JEE Main &amp; Advanced past questions &mdash; verbatim with full solutions</p>
         </div>
       </div>
 
@@ -449,6 +615,26 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // Sprint chapter accordion toggle
+    document.querySelectorAll('.sprint-chapter-header').forEach(function(header) {
+      header.addEventListener('click', function() {
+        header.closest('.sprint-chapter').classList.toggle('active');
+      });
+    });
+
+    // Sub-tab switching (nested Grade XI/XII inside Chapter Tests)
+    document.querySelectorAll('.sub-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var container = tab.closest('.sub-tabs-container');
+        container.querySelectorAll('.sub-tab').forEach(function(t) { t.classList.remove('active'); });
+        container.querySelectorAll('.sub-content').forEach(function(c) { c.classList.remove('active'); });
+        tab.classList.add('active');
+        var target = container.querySelector('#' + tab.dataset.target);
+        if (target) target.classList.add('active');
+      });
+    });
+  </script>
 <script src="js/pwa-install.js"></script>
 <script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
 </body>

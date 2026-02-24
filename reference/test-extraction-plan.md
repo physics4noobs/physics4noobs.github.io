@@ -301,6 +301,7 @@ For every batch:
 - [ ] Cross-check every transcribed answer against the answer key
 - [ ] Generate test HTML using the standard template
 - [ ] Verify `data-answer` attributes match answer key
+- [ ] **Verify NO `&sup2;`, `&sup3;`, `&frac` entities** — must use `<sup>`/`<sub>` tags only
 - [ ] Test the HTML file in browser (timer works, scoring works, solutions show)
 - [ ] Add to tests.html listing page
 
@@ -419,7 +420,14 @@ tests/kinematics-jee-advanced.html   (Phase 5)
 
 2. **Prompt size matters** — Agents that received shorter, more focused prompts (just their 10 questions + template path) completed faster than those with extra context. Keep agent prompts lean.
 
-3. **Question text transcription accuracy** — Math symbols need HTML entities (`&pi;`, `&radic;`, `<sup>`, `<sub>`). Include explicit instructions in agent prompts about this to avoid plain-text math.
+3. **CRITICAL: Never use `&sup2;`, `&sup3;`, `&frac12;` etc. HTML entities for superscripts/subscripts** — These render as inline Unicode characters (², ³, ½) that depend on font support and do NOT get visually raised/lowered in many fonts. Always use proper `<sup>` and `<sub>` tags instead:
+   - `m/s<sup>2</sup>` NOT `m/s&sup2;`
+   - `t<sup>3</sup>` NOT `t&sup3;`
+   - `<sup>1</sup>/<sub>2</sub>` NOT `&frac12;`
+   - `<sup>1</sup>/<sub>6</sub>` NOT `&frac16;`
+   - Other HTML entities that ARE fine to use: `&theta;`, `&alpha;`, `&pi;`, `&radic;`, `&minus;`, `&deg;`, `&times;`, `&rarr;` (these are symbol replacements, not layout)
+   - **Fractions must use bracket notation**: `(1/2)g` not `<sup>1</sup>/<sub>2</sub>g` — the tiny raised/lowered numerals are unreadable at small font sizes. Always write fractions as `(1/2)`, `(1/3)`, `(3/4)` etc.
+   - **Add this as an explicit rule in every agent prompt** to prevent re-occurrence.
 
 4. **Batch DTS reading by level** — For future chapters, read DTS 1-5 together (Level 1) and DTS 6-10 together (Level 2) rather than sequentially. This groups similar difficulty questions.
 
@@ -429,6 +437,8 @@ tests/kinematics-jee-advanced.html   (Phase 5)
 
 7. **Verify files after generation** — Always glob for created files and spot-check the first few lines (title, timer value, question count) before marking a batch complete.
 
+8. **CRITICAL: `.q-opt` must NOT use `display: flex`** — The option divs (`.q-opt`) must NOT be flex containers. When `display: flex` is set on an element, every `<sub>` and `<sup>` tag inside becomes a separate flex item with `gap` spacing between them, causing `a<sub>1</sub>a<sub>2</sub>` to render as `a  1  a  2` with huge gaps. Additionally, `vertical-align: sub/super` is completely ignored in flex context. The fix: `.q-opt` should use default `display: block` so all inline elements (`<sub>`, `<sup>`) render naturally. The `.opt-letter` span gets `display: inline-block; margin-right: 6px;` for spacing instead of flex `gap`.
+
 ### Recommended Workflow for Remaining Chapters
 
 ```
@@ -437,8 +447,11 @@ tests/kinematics-jee-advanced.html   (Phase 5)
 3. Classify every question: text-only vs diagram, single vs multi, MCQ vs NAT
 4. Build question list for each sprint test (10 Qs per test)
 5. Launch parallel sonnet agents (one per test file)
+   - MUST include in each agent prompt: "Use <sup>/<sub> tags for all
+     superscripts/subscripts. NEVER use &sup2; &sup3; &frac12; etc."
 6. Verify all files created + spot-check content
-7. Log results in this file
+7. Run grep to confirm zero &sup2;/&sup3;/&frac entities in generated files
+8. Log results in this file
 ```
 
 ---

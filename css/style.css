@@ -1935,9 +1935,6 @@ ul { list-style: none; }
 }
 
 .q-card .q-opt {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
   padding: 10px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-subtle);
@@ -1971,11 +1968,14 @@ ul { list-style: none; }
 }
 
 .q-card .q-opt .opt-letter {
+  display: inline-block;
   font-family: var(--font-display);
   font-weight: 700;
   min-width: 22px;
+  margin-right: 6px;
   color: var(--text-muted);
 }
+
 
 .q-card .q-solution {
   margin-top: 12px;
