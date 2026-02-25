@@ -128,6 +128,36 @@
       color: var(--color-primary);
     }
 
+    /* Live badge for cards with real Canva URLs */
+    .slide-card.live .slide-status::before {
+      content: '\2713';
+      display: inline-block;
+      margin-right: 5px;
+      color: #00d4ff;
+      font-weight: 700;
+    }
+    .slide-card.live .slide-status {
+      color: #00d4ff;
+    }
+    [data-theme="light"] .slide-card.live .slide-status::before {
+      color: #d63031;
+    }
+    [data-theme="light"] .slide-card.live .slide-status {
+      color: #d63031;
+    }
+
+    /* Dim cards that aren't live yet */
+    .slide-card.coming-soon {
+      opacity: 0.5;
+      cursor: default;
+    }
+    .slide-card.coming-soon.revealed {
+      opacity: 0.5;
+    }
+    .slide-card.coming-soon:hover {
+      transform: translateY(0);
+    }
+
     /* --- Light theme card borders --- */
     [data-theme="light"] .slide-card {
       background: #fff;
@@ -421,7 +451,7 @@
               <span class="slide-status">Tap to view slides</span>
             </div>
           </div>
-          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Thermodynamics">
+          <div class="slide-card reveal" data-slide-url="https://www.canva.com/design/DAGXCtK-K28/AhdmmK7My7HbY3FjVTDO5w/view?embed" data-slide-title="Thermodynamics">
             <span class="ch-badge">Chapter 08</span>
             <div class="ch-info"><h3>Thermodynamics</h3></div>
             <div class="ch-bottom">
@@ -455,7 +485,7 @@
       <div class="chp-row-header">
         <div class="chp-row-accent xii-1"></div>
         <div class="chp-row-title">Grade XII &mdash; Book 1</div>
-        <div class="chp-row-count">6 chapters</div>
+        <div class="chp-row-count">7 chapters</div>
         <div class="chp-row-arrows">
           <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
           <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
@@ -463,14 +493,21 @@
       </div>
       <div class="chp-track-wrap">
         <div class="chp-track">
-          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Electrostatics">
-            <span class="ch-badge">Chapter 01</span>
-            <div class="ch-info"><h3>Electrostatics</h3></div>
+          <div class="slide-card reveal" data-slide-url="https://www.canva.com/design/DAGitT5kUHE/6ObO9AgZLcXxIkiTWQfmNA/view?embed" data-slide-title="Electrostatics Part 1">
+            <span class="ch-badge">Chapter 01a</span>
+            <div class="ch-info"><h3>Electrostatics Part 1</h3></div>
             <div class="ch-bottom">
               <span class="slide-status">Tap to view slides</span>
             </div>
           </div>
-          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Current Electricity">
+          <div class="slide-card reveal" data-slide-url="https://www.canva.com/design/DAGjDcmbJF0/ODh5FowPoqsl38npI4tUOw/view?embed" data-slide-title="Electrostatics Part 2">
+            <span class="ch-badge">Chapter 01b</span>
+            <div class="ch-info"><h3>Electrostatics Part 2</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="https://www.canva.com/design/DAG9O9nm73M/6kCeOYKV7U8z8cm75IQ3aQ/view?embed" data-slide-title="Current Electricity">
             <span class="ch-badge">Chapter 02</span>
             <div class="ch-info"><h3>Current Electricity</h3></div>
             <div class="ch-bottom">
@@ -522,7 +559,7 @@
       </div>
       <div class="chp-track-wrap">
         <div class="chp-track">
-          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Ray Optics">
+          <div class="slide-card reveal" data-slide-url="https://www.canva.com/design/DAG-CWJMcFU/qv2RJ6_Qs_mREK98iVsxUQ/view?embed" data-slide-title="Ray Optics">
             <span class="ch-badge">Chapter 07</span>
             <div class="ch-info"><h3>Ray Optics</h3></div>
             <div class="ch-bottom">
@@ -574,6 +611,18 @@
       });
     });
 
+    /* Mark live vs coming-soon cards */
+    document.querySelectorAll('.slide-card').forEach(function(card) {
+      var url = card.getAttribute('data-slide-url');
+      if (url && url !== 'CANVA_URL_PLACEHOLDER') {
+        card.classList.add('live');
+        card.querySelector('.slide-status').textContent = 'Slides ready';
+      } else {
+        card.classList.add('coming-soon');
+        card.querySelector('.slide-status').textContent = 'Coming soon';
+      }
+    });
+
     /* Staggered reveal animation for slide cards */
     function revealCards(container) {
       var cards = container.querySelectorAll('.slide-card.reveal:not(.revealed)');
@@ -605,6 +654,7 @@
       /* Click a slide card to open the viewer */
       document.querySelectorAll('.slide-card').forEach(function(card) {
         card.addEventListener('click', function() {
+          if (card.classList.contains('coming-soon')) return;
           var url = card.getAttribute('data-slide-url');
           var title = card.getAttribute('data-slide-title');
 
