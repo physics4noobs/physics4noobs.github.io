@@ -69,6 +69,9 @@ html {
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) var(--bg-primary);
 }
+@media (min-width: 769px) {
+  html { scroll-snap-type: y proximity; }
+}
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -747,11 +750,12 @@ ul { list-style: none; }
 /* --- Hero Section --- */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
-  padding: 120px 2rem 80px;
+  padding: 120px 2rem 40px;
   overflow: clip;
+  scroll-snap-align: start;
 }
 
 .hero::before {
@@ -1244,8 +1248,9 @@ ul { list-style: none; }
 
 /* --- Section Styles --- */
 .section {
-  padding: 70px 2rem;
+  padding: 50px 2rem;
   position: relative;
+  scroll-snap-align: start;
 }
 
 .section-header {
@@ -2475,6 +2480,7 @@ ul { list-style: none; }
   border-top: 1px solid var(--border-subtle);
   padding: 60px 2rem 30px;
   background: rgba(5, 5, 16, 0.95);
+  scroll-snap-align: start;
 }
 
 .footer-grid {
