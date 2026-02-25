@@ -340,6 +340,11 @@ ul { list-style: none; }
 [data-theme="light"] .pendulum-bob {
   background: #d63031;
   box-shadow: 0 0 8px rgba(214, 48, 49, 0.5), 0 0 16px rgba(214, 48, 49, 0.25);
+  animation-name: bobGlowLight;
+}
+@keyframes bobGlowLight {
+  0%   { box-shadow: 0 0 8px rgba(214, 48, 49, 0.5), 0 0 16px rgba(214, 48, 49, 0.25); }
+  100% { box-shadow: 0 0 12px rgba(214, 48, 49, 0.7), 0 0 24px rgba(214, 48, 49, 0.35); }
 }
 
 /* Rocket Logo
