@@ -208,7 +208,14 @@
   <script>
     (function(){
       var s=document.getElementById('splash');
-      if(sessionStorage.getItem('ae-splash')){s.style.display='none';return;}
+      var navArm=document.querySelector('.pendulum-arm');
+      var swingAnim='pendulumSwing 2s cubic-bezier(0.4,0,0.6,1) infinite alternate';
+
+      if(sessionStorage.getItem('ae-splash')){
+        s.style.display='none';
+        if(navArm) navArm.style.animation=swingAnim;
+        return;
+      }
       sessionStorage.setItem('ae-splash','1');
 
       var pend=document.getElementById('splash-pendulum');
@@ -222,10 +229,12 @@
         text.classList.add('visible');
       },900);
 
-      // Phase 3 (t=2800): Sync navbar pendulum phase, then fade out splash
+      // Phase 3 (t=2800): Start navbar pendulum in sync, then fade out splash
       setTimeout(function(){
-        var navArm=document.querySelector('.pendulum-arm');
-        if(navArm){navArm.style.animationDelay='-'+(2800-900)+'ms';}
+        if(navArm){
+          navArm.style.animation=swingAnim;
+          navArm.style.animationDelay='-'+(2800-900)+'ms';
+        }
         s.classList.add('fade-out');
       },2800);
       setTimeout(function(){s.style.display='none';},3400);

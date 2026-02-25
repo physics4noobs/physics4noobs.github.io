@@ -7,6 +7,14 @@ function initNavbar() {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
 
+  // Start pendulum animation (skip if splash is handling it)
+  const splash = document.getElementById('splash');
+  const splashActive = splash && splash.style.display !== 'none';
+  const navArm = document.querySelector('.pendulum-arm');
+  if (navArm && !splashActive) {
+    navArm.style.animation = 'pendulumSwing 2s cubic-bezier(0.4,0,0.6,1) infinite alternate';
+  }
+
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 50);
   });
