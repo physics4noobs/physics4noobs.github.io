@@ -12,7 +12,7 @@ function initNavbar() {
   const splashActive = splash && splash.style.display !== 'none';
   const navArm = document.querySelector('.pendulum-arm');
   if (navArm && !splashActive) {
-    navArm.style.animation = 'pendulumSwing 2s cubic-bezier(0.4,0,0.6,1) infinite alternate';
+    navArm.style.animation = 'pendulumSwing 2s cubic-bezier(0.4,0,0.6,1) -1s infinite alternate';
   }
 
   window.addEventListener('scroll', () => {
