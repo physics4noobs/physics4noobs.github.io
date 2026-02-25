@@ -222,8 +222,12 @@
         text.classList.add('visible');
       },900);
 
-      // Phase 3 (t=2800): Fade out splash
-      setTimeout(function(){s.classList.add('fade-out');},2800);
+      // Phase 3 (t=2800): Sync navbar pendulum phase, then fade out splash
+      setTimeout(function(){
+        var navArm=document.querySelector('.pendulum-arm');
+        if(navArm){navArm.style.animationDelay='-'+(2800-900)+'ms';}
+        s.classList.add('fade-out');
+      },2800);
       setTimeout(function(){s.style.display='none';},3400);
     })();
   </script>

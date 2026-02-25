@@ -306,7 +306,7 @@ ul { list-style: none; }
   left: 50%;
   width: 0;
   transform-origin: 0 0;
-  animation: pendulumSwing 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  animation: pendulumSwing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
 }
 .pendulum-string {
   width: 1.5px;
@@ -322,8 +322,8 @@ ul { list-style: none; }
   margin-left: -5.75px;
 }
 @keyframes pendulumSwing {
-  0%   { transform: rotate(-30deg); }
-  100% { transform: rotate(30deg); }
+  0%   { transform: rotate(-25deg); }
+  100% { transform: rotate(25deg); }
 }
 
 /* Light theme pendulum */
