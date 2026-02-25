@@ -298,6 +298,7 @@ ul { list-style: none; }
   margin-left: -2px;
   border-radius: 50%;
   background: #ffffff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
   z-index: 2;
 }
 .pendulum-arm {
@@ -313,6 +314,7 @@ ul { list-style: none; }
   height: 20px;
   background: #ffffff;
   margin-left: -0.75px;
+  box-shadow: 0 0 4px rgba(0, 212, 255, 0.3);
 }
 .pendulum-bob {
   width: 10px;
@@ -320,6 +322,12 @@ ul { list-style: none; }
   border-radius: 50%;
   background: var(--color-primary, #00d4ff);
   margin-left: -5.75px;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.6), 0 0 16px rgba(0, 212, 255, 0.3);
+  animation: bobGlow 2s ease-in-out infinite alternate;
+}
+@keyframes bobGlow {
+  0%   { box-shadow: 0 0 8px rgba(0, 212, 255, 0.6), 0 0 16px rgba(0, 212, 255, 0.3); }
+  100% { box-shadow: 0 0 12px rgba(0, 212, 255, 0.8), 0 0 24px rgba(0, 212, 255, 0.4); }
 }
 @keyframes pendulumSwing {
   0%   { transform: rotate(-25deg); }
@@ -327,9 +335,12 @@ ul { list-style: none; }
 }
 
 /* Light theme pendulum */
-[data-theme="light"] .pendulum-pivot { background: #1a1a1a; }
-[data-theme="light"] .pendulum-string { background: #1a1a1a; }
-[data-theme="light"] .pendulum-bob { background: #d63031; }
+[data-theme="light"] .pendulum-pivot { background: #1a1a1a; box-shadow: 0 0 6px rgba(0, 0, 0, 0.2); }
+[data-theme="light"] .pendulum-string { background: #1a1a1a; box-shadow: 0 0 4px rgba(214, 48, 49, 0.2); }
+[data-theme="light"] .pendulum-bob {
+  background: #d63031;
+  box-shadow: 0 0 8px rgba(214, 48, 49, 0.5), 0 0 16px rgba(214, 48, 49, 0.25);
+}
 
 /* Rocket Logo
    Geometry: 42x42 container
