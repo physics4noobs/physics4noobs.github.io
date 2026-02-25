@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture Slides | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="js/theme.js"></script>
+  <style>
+    /* --- Slides Page Styles --- */
+
+    /* Row */
+    .chp-row { margin-bottom: 36px; }
+    .chp-row-header {
+      display: flex; align-items: center; padding: 0 0 12px; gap: 12px;
+    }
+    .chp-row-accent { width: 3px; height: 20px; border-radius: 2px; flex-shrink: 0; }
+    .chp-row-accent.xi-1 { background: var(--color-primary); }
+    .chp-row-accent.xi-2 { background: var(--color-secondary); }
+    .chp-row-accent.xii-1 { background: var(--color-accent); }
+    .chp-row-accent.xii-2 { background: var(--color-warning, #ff6b35); }
+    .chp-row-title {
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+      color: var(--text-primary); flex: 1;
+    }
+    .chp-row-count {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted);
+    }
+    .chp-row-arrows { display: flex; gap: 6px; }
+    .chp-row-arrow {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 1px solid var(--border-subtle); background: var(--bg-card);
+      color: var(--text-secondary); font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition-fast); line-height: 1;
+    }
+    .chp-row-arrow:hover {
+      border-color: rgba(0,212,255,0.3); background: var(--bg-glass-hover); color: var(--color-primary);
+    }
+
+    /* Track */
+    .chp-track-wrap { position: relative; }
+    .chp-track-wrap::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 48px; height: calc(100% - 4px);
+      background: linear-gradient(90deg, transparent, var(--bg-primary));
+      pointer-events: none; z-index: 1;
+    }
+    .chp-track {
+      display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
+      scroll-snap-type: x mandatory; -ms-overflow-style: none; scrollbar-width: none;
+      padding: 12px 0 16px;
+    }
+    .chp-track::-webkit-scrollbar { display: none; }
+
+    /* ====== Slide Cards ====== */
+    .slide-card {
+      flex: 0 0 260px; scroll-snap-align: start;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      display: flex; flex-direction: column;
+      padding: 24px 24px 20px; overflow: visible;
+      position: relative;
+      cursor: pointer;
+      opacity: 0; transform: translateY(20px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      min-height: 200px;
+      user-select: none;
+    }
+    .slide-card.revealed {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .slide-card:hover {
+      transform: translateY(-4px);
+    }
+    .slide-card.active {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 10px rgba(0,212,255,0.4), 0 0 30px rgba(0,212,255,0.2);
+    }
+
+    /* Chapter number */
+    .ch-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem; font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 2px; text-transform: uppercase;
+      position: relative; z-index: 1;
+    }
+
+    /* Chapter title */
+    .ch-info {
+      position: relative; z-index: 1;
+      margin-top: 8px;
+    }
+    .slides-page .ch-info h3 {
+      font-family: var(--font-display); font-size: 1.3rem; font-weight: 800;
+      line-height: 1.25; margin: 0;
+      color: var(--text-primary);
+    }
+
+    /* Bottom area */
+    .ch-bottom {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 12px;
+      margin-top: auto; padding-top: 20px;
+    }
+
+    /* Slide status text */
+    .slide-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      transition: color 0.3s ease;
+    }
+    .slide-card:hover .slide-status {
+      color: var(--color-primary);
+    }
+
+    /* --- Light theme card borders --- */
+    [data-theme="light"] .slide-card {
+      background: #fff;
+      border: 2px solid rgba(214,48,49,0.5);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .slide-card:hover {
+      border-color: #d63031;
+      box-shadow: 0 0 10px rgba(214,48,49,0.6), 0 0 30px rgba(214,48,49,0.35), 0 0 60px rgba(214,48,49,0.15);
+    }
+    [data-theme="light"] .slide-card.active {
+      border-color: #d63031;
+      box-shadow: 0 0 10px rgba(214,48,49,0.6), 0 0 30px rgba(214,48,49,0.35);
+    }
+
+    /* --- Dark theme card borders --- */
+    [data-theme="dark"] .slide-card,
+    :root:not([data-theme="light"]) .slide-card {
+      border: 2px solid rgba(0,212,255,0.3);
+    }
+    [data-theme="dark"] .slide-card:hover,
+    :root:not([data-theme="light"]) .slide-card:hover {
+      border-color: #00d4ff;
+      box-shadow: 0 0 10px rgba(0,212,255,0.6), 0 0 30px rgba(0,212,255,0.35), 0 0 60px rgba(0,212,255,0.15);
+    }
+
+    /* ====== Slide Viewer ====== */
+    .slide-viewer {
+      width: 100%;
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      animation: slideViewerIn 0.4s ease;
+    }
+    @keyframes slideViewerIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-viewer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 16px;
+    }
+    .slide-viewer-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      flex: 1;
+    }
+    .slide-viewer-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .slide-fullscreen-btn,
+    .slide-close-btn {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-fast);
+      line-height: 1;
+    }
+    .slide-fullscreen-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: var(--bg-glass-hover);
+    }
+    .slide-close-btn:hover {
+      border-color: #ff4757;
+      color: #ff4757;
+      background: rgba(255,71,87,0.08);
+    }
+
+    /* Responsive 16:9 embed container */
+    .slides-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+    .slides-embed iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* Light theme viewer */
+    [data-theme="light"] .slide-viewer {
+      background: #fff;
+      border-color: rgba(214,48,49,0.3);
+    }
+    [data-theme="light"] .slide-fullscreen-btn,
+    [data-theme="light"] .slide-close-btn {
+      background: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .slide-card { flex: 0 0 200px; min-height: 160px; }
+      .chp-row-arrows { display: none; }
+      .chp-row-title { font-size: 0.9rem; }
+      .slides-page .ch-info h3 { font-size: 0.82rem; }
+      .ch-info { padding: 10px; }
+      .ch-bottom { padding: 8px 10px; gap: 6px; }
+      .slide-viewer { padding: 16px; margin: 20px auto; }
+      .slide-viewer-header h3 { font-size: 1rem; }
+      .slide-fullscreen-btn,
+      .slide-close-btn { width: 34px; height: 34px; font-size: 1rem; }
+    }
+  </style>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="js/firebase-config.js"></script>
+  <script defer src="js/auth.js"></script>
+  <script defer src="js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Free Therapy For Physics Trauma</div></div>
+<div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-string"></div><div class="pendulum-bob"></div></div></div></div>
+        <div class="logo-text"><span class="brand-name"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">FREE THERAPY FOR PHYSICS TRAUMA</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="#" class="nav-link active">Chapters</a><div class="dropdown"><a href="chapters.html"><div class="dd-icon">&#128214;</div> Theory</a><a href="slides.html"><div class="dd-icon">&#127916;</div> Slides</a></div></div>
+        <div class="nav-item">
+          <a href="simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="tests.html" class="nav-link">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+
+        <a href="progress.html" class="mobile-auth-action" id="mobile-progress-btn" style="display:none;">Progress</a>
+        <button class="mobile-auth-action mobile-signout-btn" id="mobile-signout-btn" style="display:none;">Sign Out</button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span>
+          <div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div>
+            <a href="progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Slides Content -->
+  <div class="slides-page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1><span class="brand-initial">L</span>ecture <span class="text-gradient">Slides</span></h1>
+      <p>Chapter-wise animated presentations &mdash; tap a chapter to view slides.</p>
+    </div>
+
+    <div class="grade-tabs">
+      <button class="grade-tab active" data-grade="grade-xi-slides">Grade XI</button>
+      <button class="grade-tab" data-grade="grade-xii-slides">Grade XII</button>
+    </div>
+
+    <div class="grade-content active" id="grade-xi-slides">
+
+    <!-- Row 1: Grade XI Book 1 -->
+    <div class="chp-row">
+      <div class="chp-row-header">
+        <div class="chp-row-accent xi-1"></div>
+        <div class="chp-row-title">Grade XI &mdash; Book 1</div>
+        <div class="chp-row-count">5 chapters</div>
+        <div class="chp-row-arrows">
+          <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
+          <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="chp-track-wrap">
+        <div class="chp-track">
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Kinematics">
+            <span class="ch-badge">Chapter 01</span>
+            <div class="ch-info"><h3>Kinematics</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Newton's Laws">
+            <span class="ch-badge">Chapter 02</span>
+            <div class="ch-info"><h3>Newton's Laws</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Work, Power &amp; Energy">
+            <span class="ch-badge">Chapter 03</span>
+            <div class="ch-info"><h3>Work, Power &amp; Energy</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Rotational Motion">
+            <span class="ch-badge">Chapter 04</span>
+            <div class="ch-info"><h3>Rotational Motion</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Gravitation">
+            <span class="ch-badge">Chapter 05</span>
+            <div class="ch-info"><h3>Gravitation</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Grade XI Book 2 -->
+    <div class="chp-row">
+      <div class="chp-row-header">
+        <div class="chp-row-accent xi-2"></div>
+        <div class="chp-row-title">Grade XI &mdash; Book 2</div>
+        <div class="chp-row-count">5 chapters</div>
+        <div class="chp-row-arrows">
+          <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
+          <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="chp-track-wrap">
+        <div class="chp-track">
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Mechanical Properties">
+            <span class="ch-badge">Chapter 06</span>
+            <div class="ch-info"><h3>Mechanical Properties</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Fluid Mechanics">
+            <span class="ch-badge">Chapter 07</span>
+            <div class="ch-info"><h3>Fluid Mechanics</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Thermodynamics">
+            <span class="ch-badge">Chapter 08</span>
+            <div class="ch-info"><h3>Thermodynamics</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Simple Harmonic Motion">
+            <span class="ch-badge">Chapter 09</span>
+            <div class="ch-info"><h3>Simple Harmonic Motion</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Waves">
+            <span class="ch-badge">Chapter 10</span>
+            <div class="ch-info"><h3>Waves</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- end grade-xi-slides -->
+
+    <div class="grade-content" id="grade-xii-slides">
+
+    <!-- Row 3: Grade XII Book 1 -->
+    <div class="chp-row">
+      <div class="chp-row-header">
+        <div class="chp-row-accent xii-1"></div>
+        <div class="chp-row-title">Grade XII &mdash; Book 1</div>
+        <div class="chp-row-count">6 chapters</div>
+        <div class="chp-row-arrows">
+          <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
+          <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="chp-track-wrap">
+        <div class="chp-track">
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Electrostatics">
+            <span class="ch-badge">Chapter 01</span>
+            <div class="ch-info"><h3>Electrostatics</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Current Electricity">
+            <span class="ch-badge">Chapter 02</span>
+            <div class="ch-info"><h3>Current Electricity</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Magnetism">
+            <span class="ch-badge">Chapter 03</span>
+            <div class="ch-info"><h3>Magnetism</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Electromagnetic Induction">
+            <span class="ch-badge">Chapter 04</span>
+            <div class="ch-info"><h3>Electromagnetic Induction</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="AC Circuits">
+            <span class="ch-badge">Chapter 05</span>
+            <div class="ch-info"><h3>AC Circuits</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Electromagnetic Waves">
+            <span class="ch-badge">Chapter 06</span>
+            <div class="ch-info"><h3>Electromagnetic Waves</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4: Grade XII Book 2 -->
+    <div class="chp-row">
+      <div class="chp-row-header">
+        <div class="chp-row-accent xii-2"></div>
+        <div class="chp-row-title">Grade XII &mdash; Book 2</div>
+        <div class="chp-row-count">3 chapters</div>
+        <div class="chp-row-arrows">
+          <button class="chp-row-arrow" data-dir="-1">&lsaquo;</button>
+          <button class="chp-row-arrow" data-dir="1">&rsaquo;</button>
+        </div>
+      </div>
+      <div class="chp-track-wrap">
+        <div class="chp-track">
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Ray Optics">
+            <span class="ch-badge">Chapter 07</span>
+            <div class="ch-info"><h3>Ray Optics</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Wave Optics">
+            <span class="ch-badge">Chapter 08</span>
+            <div class="ch-info"><h3>Wave Optics</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+          <div class="slide-card reveal" data-slide-url="CANVA_URL_PLACEHOLDER" data-slide-title="Modern Physics">
+            <span class="ch-badge">Chapter 09</span>
+            <div class="ch-info"><h3>Modern Physics</h3></div>
+            <div class="ch-bottom">
+              <span class="slide-status">Tap to view slides</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- end grade-xii-slides -->
+
+    <!-- Slide Viewer -->
+    <div class="slide-viewer" id="slide-viewer" style="display:none;">
+      <div class="slide-viewer-header">
+        <h3 id="slide-viewer-title"></h3>
+        <div class="slide-viewer-actions">
+          <button class="slide-fullscreen-btn" id="slide-fullscreen-btn" title="Fullscreen">&#x26F6;</button>
+          <button class="slide-close-btn" id="slide-close-btn">&times;</button>
+        </div>
+      </div>
+      <div class="slides-embed" id="slide-embed-container">
+        <iframe id="slide-iframe" src="" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* Arrow scroll */
+    document.querySelectorAll('.chp-row-arrow').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var track = btn.closest('.chp-row').querySelector('.chp-track');
+        if (track) track.scrollBy({ left: parseInt(btn.dataset.dir) * 316, behavior: 'smooth' });
+      });
+    });
+
+    /* Staggered reveal animation for slide cards */
+    function revealCards(container) {
+      var cards = container.querySelectorAll('.slide-card.reveal:not(.revealed)');
+      cards.forEach(function(card, i) {
+        setTimeout(function() { card.classList.add('revealed'); }, i * 80);
+      });
+    }
+    /* Reveal cards in the active tab */
+    revealCards(document.querySelector('.grade-content.active'));
+
+    /* Re-reveal when switching tabs */
+    document.querySelectorAll('.grade-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var id = tab.dataset.grade;
+        var panel = document.getElementById(id);
+        if (panel) setTimeout(function() { revealCards(panel); }, 50);
+      });
+    });
+
+    /* Slide viewer logic */
+    (function() {
+      var viewer = document.getElementById('slide-viewer');
+      var viewerTitle = document.getElementById('slide-viewer-title');
+      var iframe = document.getElementById('slide-iframe');
+      var closeBtn = document.getElementById('slide-close-btn');
+      var fullscreenBtn = document.getElementById('slide-fullscreen-btn');
+      var activeCard = null;
+
+      /* Click a slide card to open the viewer */
+      document.querySelectorAll('.slide-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+          var url = card.getAttribute('data-slide-url');
+          var title = card.getAttribute('data-slide-title');
+
+          /* If clicking the same card, close the viewer */
+          if (activeCard === card && viewer.style.display !== 'none') {
+            closeViewer();
+            return;
+          }
+
+          /* Remove active state from previous card */
+          if (activeCard) activeCard.classList.remove('active');
+
+          /* Set active card */
+          activeCard = card;
+          card.classList.add('active');
+
+          /* Update viewer */
+          viewerTitle.textContent = title;
+          iframe.src = url;
+          viewer.style.display = 'block';
+
+          /* Scroll to viewer */
+          setTimeout(function() {
+            viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        });
+      });
+
+      /* Close the viewer */
+      function closeViewer() {
+        viewer.style.display = 'none';
+        iframe.src = '';
+        viewerTitle.textContent = '';
+        if (activeCard) {
+          activeCard.classList.remove('active');
+          activeCard = null;
+        }
+      }
+
+      closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeViewer();
+      });
+
+      /* Fullscreen button */
+      fullscreenBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var embedContainer = document.getElementById('slide-embed-container');
+        if (iframe.requestFullscreen) {
+          iframe.requestFullscreen();
+        } else if (iframe.webkitRequestFullscreen) {
+          iframe.webkitRequestFullscreen();
+        } else if (iframe.msRequestFullscreen) {
+          iframe.msRequestFullscreen();
+        } else if (embedContainer.requestFullscreen) {
+          embedContainer.requestFullscreen();
+        } else if (embedContainer.webkitRequestFullscreen) {
+          embedContainer.webkitRequestFullscreen();
+        }
+      });
+    })();
+  </script>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-string"></div><div class="pendulum-bob"></div></div></div></div>
+          <div class="logo-text"><span class="brand-name"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">FREE THERAPY FOR PHYSICS TRAUMA</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="chapters.html">Chapters</a>
+        <a href="simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs &mdash; Sankaracharya Dutta. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+<script src="js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

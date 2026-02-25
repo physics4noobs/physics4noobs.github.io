@@ -69,9 +69,6 @@ html {
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) var(--bg-primary);
 }
-@media (min-width: 769px) {
-  html { scroll-snap-type: y proximity; }
-}
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -755,7 +752,7 @@ ul { list-style: none; }
   align-items: center;
   padding: 120px 2rem 40px;
   overflow: clip;
-  scroll-snap-align: start;
+
 }
 
 .hero::before {
@@ -1250,7 +1247,7 @@ ul { list-style: none; }
 .section {
   padding: 50px 2rem;
   position: relative;
-  scroll-snap-align: start;
+
 }
 
 .section-header {
@@ -1567,7 +1564,7 @@ ul { list-style: none; }
 
 .carousel-track .sim-card {
   flex: 0 0 260px;
-  scroll-snap-align: start;
+
 }
 
 @media (max-width: 768px) {
@@ -2530,7 +2527,7 @@ ul { list-style: none; }
   border-top: 1px solid var(--border-subtle);
   padding: 60px 2rem 30px;
   background: rgba(5, 5, 16, 0.95);
-  scroll-snap-align: start;
+
 }
 
 .footer-grid {
