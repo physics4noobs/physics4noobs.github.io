@@ -37,62 +37,49 @@
     .splash-screen.fade-out{opacity:0;pointer-events:none}
     [data-theme="light"] .splash-screen{background:#f5f5fa}
 
-    /* Centered pendulum + text wrapper */
+    /* Pendulum + text row */
     .splash-content{display:flex;flex-direction:row;align-items:center;gap:20px;z-index:10001}
 
-    /* Splash pendulum — larger version of logo pendulum */
+    /* Splash pendulum — matches navbar logo pendulum, starts swinging immediately */
     .splash-pendulum{width:60px;height:100px;position:relative;flex-shrink:0}
     .splash-pendulum .sp-pivot{position:absolute;top:0;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#fff;z-index:2}
-    .splash-pendulum .sp-arm{position:absolute;top:6px;left:50%;width:0;transform-origin:0 0;transform:rotate(0deg)}
+    .splash-pendulum .sp-arm{position:absolute;top:6px;left:50%;width:0;transform-origin:0 0;animation:splashSwing 2s cubic-bezier(.4,0,.6,1) infinite alternate}
     .splash-pendulum .sp-string{width:2px;height:55px;margin-left:-1px;background:#fff}
     .splash-pendulum .sp-bob{width:20px;height:20px;margin-left:-11px;border-radius:50%;background:#00d4ff;box-shadow:0 0 16px rgba(0,212,255,.4)}
+    @keyframes splashSwing{0%{transform:rotate(-25deg)}100%{transform:rotate(25deg)}}
 
-    /* Light theme splash colors */
     [data-theme="light"] .splash-pendulum .sp-pivot{background:#1a1a1a}
     [data-theme="light"] .splash-pendulum .sp-string{background:#1a1a1a}
     [data-theme="light"] .splash-pendulum .sp-bob{background:#d63031;box-shadow:0 0 16px rgba(214,48,49,.3)}
 
-    /* Phase 1: Bob drops from top with string extending */
-    .splash-pendulum .sp-arm{animation:bobDrop .8s cubic-bezier(.22,.61,.36,1) forwards}
-    @keyframes bobDrop{
-      0%{transform:rotate(0deg);opacity:0}
-      10%{opacity:1}
-      100%{transform:rotate(0deg)}
-    }
-    .splash-pendulum .sp-string{animation:stringExtend .8s cubic-bezier(.22,.61,.36,1) forwards}
-    @keyframes stringExtend{
-      0%{height:0}
-      100%{height:55px}
-    }
-    .splash-pendulum .sp-bob{animation:bobBounce .8s cubic-bezier(.22,.61,.36,1) forwards}
-    @keyframes bobBounce{
-      0%{transform:translateY(-60px);opacity:0}
-      15%{opacity:1}
-      65%{transform:translateY(8px)}
-      80%{transform:translateY(-4px)}
-      90%{transform:translateY(2px)}
-      100%{transform:translateY(0)}
-    }
+    /* Splash text group — matches logo: white text, cyan P, white "for Noobs" */
+    .splash-text-group{display:flex;flex-direction:column;gap:6px}
 
-    /* Phase 2: Pendulum swings after landing */
-    .splash-pendulum.swinging .sp-arm{animation:splashSwing 2s cubic-bezier(.4,0,.6,1) infinite alternate}
-    @keyframes splashSwing{
-      0%{transform:rotate(-25deg)}
-      100%{transform:rotate(25deg)}
-    }
+    /* Title with gradient wipe — single wipe across entire text after "P" */
+    .splash-logo{font-family:'Yatra One',cursive;font-size:2rem;font-weight:700;white-space:nowrap}
+    .splash-logo .brand-initial{color:#00d4ff;-webkit-text-fill-color:#00d4ff}
+    .splash-logo .brand-rest{color:rgba(255,255,255,.15);background:linear-gradient(90deg,#fff 50%,rgba(255,255,255,.15) 50%);background-size:200% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .splash-logo.wipe .brand-rest{animation:gradientWipe 2s cubic-bezier(.4,0,.2,1) forwards}
+    @keyframes gradientWipe{0%{background-position:100% 0}100%{background-position:0% 0}}
 
-    /* Splash text */
-    .splash-text-group{display:flex;flex-direction:column;opacity:0;transform:translateX(10px);transition:opacity .5s ease,transform .5s ease}
-    .splash-text-group.visible{opacity:1;transform:translateX(0)}
-    .splash-logo{font-family:'Yatra One',cursive;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:4px}
-    .splash-logo .brand-initial{color:#00d4ff}
-    .splash-logo .brand-accent{color:rgba(255,255,255,.7)}
-    .splash-tagline{font-family:'Jost',system-ui,sans-serif;font-size:.7rem;letter-spacing:3px;color:#6b6b85;text-transform:uppercase}
+    [data-theme="light"] .splash-logo .brand-initial{color:#d63031;-webkit-text-fill-color:#d63031}
+    [data-theme="light"] .splash-logo .brand-rest{color:rgba(26,26,26,.1);background:linear-gradient(90deg,#1a1a1a 50%,rgba(26,26,26,.1) 50%);background-size:200% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 
-    [data-theme="light"] .splash-logo{color:#1a1a1a}
-    [data-theme="light"] .splash-logo .brand-initial{color:#d63031}
-    [data-theme="light"] .splash-logo .brand-accent{color:rgba(26,26,26,.6)}
+    /* Splash tagline */
+    .splash-tagline{font-family:'Jost',system-ui,sans-serif;font-size:.7rem;letter-spacing:3px;color:#6b6b85;text-transform:uppercase;opacity:0;transition:opacity .5s ease}
+    .splash-tagline.visible{opacity:1}
     [data-theme="light"] .splash-tagline{color:#9a9a9a}
+
+    @media(max-width:600px){
+      .splash-content{gap:14px}
+      .splash-pendulum{width:40px;height:70px}
+      .splash-pendulum .sp-arm{top:4px}
+      .splash-pendulum .sp-pivot{width:4px;height:4px;margin-left:-2px}
+      .splash-pendulum .sp-string{height:38px}
+      .splash-pendulum .sp-bob{width:14px;height:14px;margin-left:-8px}
+      .splash-logo{font-size:1.4rem}
+      .splash-tagline{font-size:.55rem;letter-spacing:2px}
+    }
   </style>
   <script src="js/theme.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,17 +97,17 @@
 
   <!-- Splash Screen -->
   <div class="splash-screen" id="splash">
-    <div class="splash-content" id="splash-content">
-      <div class="splash-pendulum" id="splash-pendulum">
+    <div class="splash-content">
+      <div class="splash-pendulum">
         <div class="sp-pivot"></div>
         <div class="sp-arm">
           <div class="sp-string"></div>
           <div class="sp-bob"></div>
         </div>
       </div>
-      <div class="splash-text-group" id="splash-text">
-        <div class="splash-logo"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></div>
-        <div class="splash-tagline">Free Therapy For Physics Trauma</div>
+      <div class="splash-text-group">
+        <div class="splash-logo" id="splash-logo"><span class="brand-initial">P</span><span class="brand-rest">hysics for Noobs</span></div>
+        <div class="splash-tagline" id="splash-tagline">Free Therapy For Physics Trauma</div>
       </div>
     </div>
   </div>
@@ -218,26 +205,27 @@
       }
       sessionStorage.setItem('ae-splash','1');
 
-      var pend=document.getElementById('splash-pendulum');
-      var text=document.getElementById('splash-text');
+      var logo=document.getElementById('splash-logo');
+      var tagline=document.getElementById('splash-tagline');
 
-      // Phase 1 (t=0): Bob drops & bounces (handled by CSS animation, 0.8s)
-
-      // Phase 2 (t=900): Start swinging + show text
+      // Phase 1 (t=300): Start gradient wipe on logo text (2s duration)
       setTimeout(function(){
-        pend.classList.add('swinging');
-        text.classList.add('visible');
-      },900);
+        logo.classList.add('wipe');
+      },300);
 
-      // Phase 3 (t=2800): Fade out splash, then start navbar pendulum after
+      // Phase 2 (t=1600): Show tagline after wipe is mostly done
+      setTimeout(function(){
+        tagline.classList.add('visible');
+      },1600);
+
+      // Phase 3 (t=3200): Fade out splash
       setTimeout(function(){
         s.classList.add('fade-out');
-      },2800);
+      },3200);
       setTimeout(function(){
         s.style.display='none';
-        // Start navbar pendulum only after splash is fully gone
         if(navArm) navArm.style.animation=swingAnim;
-      },3400);
+      },3800);
     })();
   </script>
 
