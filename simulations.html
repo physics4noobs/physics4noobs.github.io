@@ -85,6 +85,25 @@
     /* Carousel track padding for hover lift */
     .carousel-track { padding: 12px 0 16px; }
 
+    /* Coming soon disabled cards */
+    .carousel-track .sim-card.coming-soon {
+      opacity: 0.45;
+      cursor: default;
+      pointer-events: none;
+    }
+    .carousel-track .sim-card.coming-soon.revealed,
+    .carousel-track .sim-card.coming-soon.visible {
+      opacity: 0.45;
+    }
+    .carousel-track .sim-card.coming-soon:hover {
+      transform: translateY(0);
+      box-shadow: none;
+      border-color: var(--border-subtle);
+    }
+    .carousel-track .sim-card.coming-soon .sim-cta {
+      color: var(--text-muted);
+    }
+
     /* === Unique Mon crests per simulation (light theme = red) === */
     .sim-card[href*="kinematics"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cpath d='M20 75 Q50 10 80 75' fill='none' stroke='%23d63031' stroke-width='2'/%3E%3Ccircle cx='80' cy='75' r='4' fill='%23d63031'/%3E%3Cline x1='20' y1='78' x2='85' y2='78' stroke='%23d63031' stroke-width='1'/%3E%3C/svg%3E"); }
     .sim-card[href*="vector-addition"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23d63031' stroke-width='1.5'/%3E%3Cline x1='25' y1='70' x2='75' y2='70' stroke='%23d63031' stroke-width='2'/%3E%3Cpolygon points='75,70 68,65 68,75' fill='%23d63031'/%3E%3Cline x1='25' y1='70' x2='60' y2='30' stroke='%23d63031' stroke-width='2'/%3E%3Cpolygon points='60,30 52,35 57,42' fill='%23d63031'/%3E%3Cline x1='75' y1='70' x2='60' y2='30' stroke='%23d63031' stroke-width='1' stroke-dasharray='3 3'/%3E%3C/svg%3E"); }
@@ -399,34 +418,34 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/newtons-laws.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Friction Simulation</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/static-kinetic-friction.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Static &amp; Kinetic Friction</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/pulley-wire-constraint.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Pulley &amp; Wire</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/wire-ring-constraint.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Bead on a Wire</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -444,34 +463,34 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/work-power-energy.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Conservation of Energy</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/work-done.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Work Done by a Force</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/collisions.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Collisions</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/conservation-momentum.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Conservation of Momentum</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -489,55 +508,55 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/rotational-motion.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Moment of Inertia</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/center-of-mass.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Center of Mass</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/goat-vs-boat.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Goat vs Boat</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/inclined-plane-race.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Inclined Plane Race</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/atwood-machine.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Atwood Machine</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/angular-momentum.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Angular Momentum</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/rolling-vs-rotation.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Rolling vs Rotation</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -593,27 +612,27 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/hookes-law.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Hooke's Law</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/modulus-elasticity.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Modulus of Elasticity</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/poissons-ratio.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Poisson's Ratio</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -631,55 +650,55 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/fluid-dynamics.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Bernoulli's Principle</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/manometer.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Manometer</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/hydrostatic-paradox.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Hydrostatic Paradox</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/pascals-law.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Pascal's Law</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/continuity-equation.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Continuity Equation</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/venturimeter.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Venturimeter</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/magnus-effect.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Magnus Effect</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -697,20 +716,20 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/thermodynamics.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>PV Diagrams &amp; Gas Laws</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/calorimetry.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Calorimetry</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -728,20 +747,20 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/shm-waves.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Spring-Mass Oscillator</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/pendulum.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Simple Pendulum</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -759,27 +778,27 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/waves.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Standing Waves</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/beats.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Beats</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/doppler-effect.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Doppler Effect</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -875,27 +894,27 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/current-electricity.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Ohm's Law &amp; Circuits</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/kirchhoffs-laws.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Kirchhoff's Laws</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Coming Soon &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/wheatstone-bridge.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Wheatstone Bridge</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Coming Soon &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -913,27 +932,27 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/magnetism.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Lorentz Force &amp; Cyclotron</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/biot-savart.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Biot-Savart Law</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Coming Soon &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/galvanometer.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Moving Coil Galvanometer</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Coming Soon &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -951,34 +970,34 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/emi.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Faraday's Law</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/ac-generator.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>AC Generator</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Coming Soon &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/ac-circuits.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>RLC Circuit &amp; Phasors</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
-              <a href="simulations/transformer.html" class="sim-card reveal">
+              </div>
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>Transformer</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Coming Soon &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -996,13 +1015,13 @@
           </div>
           <div class="carousel-track-wrapper">
             <div class="carousel-track">
-              <a href="simulations/em-waves.html" class="sim-card reveal">
+              <div class="sim-card reveal coming-soon">
                 <span class="sim-badge">Simulation</span>
                 <div class="sim-info"><h3>EM Wave Propagation</h3></div>
                 <div class="sim-bottom">
-                  <span class="sim-cta">Launch Sim &rarr;</span>
+                  <span class="sim-cta">Coming Soon</span>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>

@@ -642,7 +642,7 @@
     var driftVx = 0, driftVy = 0;
     var DAMPING = 0.94;
     var DT = 0.06;
-    var EQUILIBRIUM_THRESHOLD = 3.0;
+    var EQUILIBRIUM_THRESHOLD = 1.2;
     var PLANET_RADIUS = 36;
     var SAT_RADIUS = 10;
     var GRAB_RADIUS = 22;
@@ -1668,15 +1668,15 @@
             if (cd < 500) { nearPlanet = true; break; }
           }
           if (nearPlanet) {
-            // Much stronger progressive damping for gravity
-            // At edge (ratio≈1): factor ≈ 0.85 (gentle braking)
-            // At equilibrium (ratio≈0): factor ≈ 0.3 (very heavy)
+            // Progressive damping near equilibrium
+            // At edge (ratio≈1): factor ≈ 0.88 (gentle braking)
+            // At equilibrium (ratio≈0): factor ≈ 0.55 (moderate)
             var ratio = fMag / STICKY_THRESHOLD;
-            var stickyDamp = 0.3 + 0.55 * ratio;
+            var stickyDamp = 0.55 + 0.33 * ratio;
             driftVx *= stickyDamp;
             driftVy *= stickyDamp;
             // Snap to rest when very close to equilibrium
-            if (fMag < EQUILIBRIUM_THRESHOLD && Math.abs(driftVx) < 0.15 && Math.abs(driftVy) < 0.15) {
+            if (fMag < EQUILIBRIUM_THRESHOLD * 0.5 && Math.abs(driftVx) < 0.08 && Math.abs(driftVy) < 0.08) {
               driftVx = 0;
               driftVy = 0;
             }
