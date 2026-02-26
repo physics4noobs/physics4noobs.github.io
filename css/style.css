@@ -307,7 +307,7 @@ ul { list-style: none; }
   left: 50%;
   width: 0;
   transform-origin: 0 0;
-  animation: none;
+  animation: pendulumSwing 2s cubic-bezier(0.4, 0, 0.6, 1) -1s infinite alternate;
 }
 .pendulum-string {
   width: 1.5px;
