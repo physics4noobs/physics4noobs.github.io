@@ -972,8 +972,8 @@
       ctx.fillText(mirrorAngleDeg + '\u00B0', vx + Math.cos(labelAngle) * 62, vy + Math.sin(labelAngle) * 62);
 
       // [4] Draw mirrors with shimmer
-      drawMirror(vx, vy, 0, mirrorLen, -1);
-      drawMirror(vx, vy, -thetaRad, mirrorLen, 1);
+      drawMirror(vx, vy, 0, mirrorLen, 1);
+      drawMirror(vx, vy, -thetaRad, mirrorLen, -1);
 
       // Bisector line when n is odd
       var info = getImageCount();
