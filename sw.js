@@ -8,7 +8,7 @@
    - Everything else → Network-first with cache fallback
    ============================================ */
 
-var CACHE_NAME = 'p4n-v32';
+var CACHE_NAME = 'p4n-v33';
 
 // Core app shell to pre-cache on install
 var APP_SHELL = [
@@ -18,6 +18,8 @@ var APP_SHELL = [
   '/simulations.html',
   '/progress.html',
   '/about.html',
+  '/tests.html',
+  '/tests/ray-optics-dts.html',
   '/css/style.css',
   '/js/main.js',
   '/js/theme.js',
