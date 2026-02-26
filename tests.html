@@ -16,27 +16,48 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
   <script src="js/theme.js"></script>
   <style>
-    .coming-soon-container {
-      text-align: center;
-      padding: 80px 20px 120px;
-    }
-    .coming-soon-icon {
-      font-size: 4rem;
-      margin-bottom: 24px;
-      opacity: 0.7;
-    }
-    .coming-soon-container h2 {
-      font-size: 1.6rem;
+    .tests-section-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
       font-weight: 700;
-      color: var(--text-primary, #e0e0e8);
-      margin-bottom: 12px;
+      color: var(--text-primary);
+      margin-bottom: 6px;
     }
-    .coming-soon-container p {
-      font-size: 0.95rem;
-      color: var(--text-muted, #6b6b85);
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.7;
+    .tests-section-sub {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .tests-chapter-group {
+      margin-bottom: 40px;
+    }
+    .test-card .tc-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .tc-badge.badge-dts {
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--color-primary);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+    }
+    .tc-badge.badge-sprint {
+      background: rgba(0, 255, 170, 0.1);
+      color: var(--color-accent);
+      border: 1px solid rgba(0, 255, 170, 0.2);
+    }
+    .tc-badge.badge-jee {
+      background: rgba(124, 58, 237, 0.1);
+      color: #a78bfa;
+      border: 1px solid rgba(124, 58, 237, 0.2);
     }
   </style>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -116,11 +137,150 @@
 
   <section class="section" style="padding-top: 0;">
     <div class="container">
-      <div class="coming-soon-container">
-        <div class="coming-soon-icon">&#128679;</div>
-        <h2>Coming Soon</h2>
-        <p>We're building something awesome. Sprint tests, CBSE papers &amp; JEE archives are on the way. Stay tuned!</p>
+
+      <!-- Ray Optics -->
+      <div class="tests-chapter-group">
+        <h2 class="tests-section-title">Ray Optics</h2>
+        <div class="tests-section-sub">Grade XII &bull; 15 DTS Sheets &bull; 165+ Questions</div>
+        <div class="test-grid">
+          <a href="tests/ray-optics-dts.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-dts">PDF Viewer</span>
+            <div class="tc-grade">Grade XII</div>
+            <div class="tc-title">Ray Optics &mdash; Full DTS Practice</div>
+            <div class="tc-info">15 DTS sheets &bull; Level 1 + Level 2 &bull; JEE Archives &bull; 90 min each</div>
+            <div class="tc-link">Start Practice &#8594;</div>
+          </a>
+        </div>
       </div>
+
+      <!-- Kinematics -->
+      <div class="tests-chapter-group">
+        <h2 class="tests-section-title">Kinematics</h2>
+        <div class="tests-section-sub">Grade XI &bull; Sprint Tests</div>
+        <div class="test-grid">
+          <a href="tests/kinematics-l1-sprint-1.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 1</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/kinematics-l1-sprint-2.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 2</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/kinematics-l1-sprint-3.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 3</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/kinematics-l1-sprint-4.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 4</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/kinematics-l1-sprint-5.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 5</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/kinematics-l1-sprint-6.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 6</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/kinematics-l2-sprint-1.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 2 &mdash; Sprint 1</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/kinematics-l2-sprint-2.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 2 &mdash; Sprint 2</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Motion 2D -->
+      <div class="tests-chapter-group">
+        <h2 class="tests-section-title">Motion in 2D</h2>
+        <div class="tests-section-sub">Grade XI &bull; Sprint Tests</div>
+        <div class="test-grid">
+          <a href="tests/motion2d-l1-sprint-1.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 1</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/motion2d-l1-sprint-2.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 2</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/motion2d-l1-sprint-3.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 3</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/motion2d-l1-sprint-4.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 4</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/motion2d-l1-sprint-5.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 5</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/motion2d-l1-sprint-6.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 1 &mdash; Sprint 6</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/motion2d-l2-sprint-1.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 2 &mdash; Sprint 1</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+          <a href="tests/motion2d-l2-sprint-2.html" class="test-card" style="text-decoration:none;">
+            <span class="tc-badge badge-sprint">Sprint</span>
+            <div class="tc-grade">Grade XI</div>
+            <div class="tc-title">Level 2 &mdash; Sprint 2</div>
+            <div class="tc-info">10 MCQs &bull; 30 min &bull; JEE Scoring</div>
+            <div class="tc-link">Start Test &#8594;</div>
+          </a>
+        </div>
+      </div>
+
     </div>
   </section>
 
