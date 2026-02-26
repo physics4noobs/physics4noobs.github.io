@@ -63,7 +63,7 @@
         <p class="subtitle">Grade XI - Gravitation</p>
 
         <div class="sim-canvas-wrapper">
-            <canvas id="simCanvas" width="850" height="450"></canvas>
+            <canvas id="simCanvas"></canvas>
 
             <div class="sim-controls">
                 <div class="control-group">
@@ -93,11 +93,27 @@
     <script>
         const canvas = document.getElementById('simCanvas');
         const ctx = canvas.getContext('2d');
+        let canvasW, canvasH;
+        const dpr = window.devicePixelRatio || 1;
+        const REF_W = 850, REF_H = 450;
 
         const g0 = 9.8;
         let rRatio = 1.0;
 
         const positionSlider = document.getElementById('position');
+
+        function resizeCanvas() {
+            var rect = canvas.getBoundingClientRect();
+            var w = rect.width;
+            var h = Math.max(300, Math.min(w * (REF_H / REF_W), 500));
+            canvasW = w;
+            canvasH = h;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            canvas.style.height = h + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            draw();
+        }
 
         positionSlider.oninput = function() {
             rRatio = parseFloat(this.value);
@@ -129,7 +145,7 @@
             document.getElementById('statLocation').textContent = getLocation(rRatio);
         }
 
-        function drawEarth(centerX, centerY, earthRadius) {
+        function drawEarth(centerX, centerY, earthRadius, S) {
             const coreRadius = earthRadius * 0.35;
             const mantleRadius = earthRadius * 0.85;
 
@@ -164,24 +180,16 @@
             ctx.stroke();
 
             ctx.fillStyle = '#00d4ff';
-            ctx.font = '10px JetBrains Mono, monospace';
-            ctx.fillText('Core', centerX - 15, centerY);
-            ctx.fillText('Mantle', centerX + coreRadius + 5, centerY);
-            ctx.fillText('Crust', centerX + mantleRadius + 5, centerY);
+            ctx.font = Math.max(8, 10 * S) + 'px JetBrains Mono, monospace';
+            ctx.fillText('Core', centerX - 15 * S, centerY);
+            ctx.fillText('Mantle', centerX + coreRadius + 5 * S, centerY);
+            ctx.fillText('Crust', centerX + mantleRadius + 5 * S, centerY);
         }
 
-        function drawCurrentPosition(centerX, centerY, earthRadius) {
-            let pointX, pointY;
-
-            if (rRatio <= 1) {
-                const actualR = rRatio * earthRadius;
-                pointX = centerX + actualR;
-                pointY = centerY;
-            } else {
-                const actualR = rRatio * earthRadius;
-                pointX = centerX + actualR;
-                pointY = centerY;
-            }
+        function drawCurrentPosition(centerX, centerY, earthRadius, S) {
+            const actualR = rRatio * earthRadius;
+            const pointX = centerX + actualR;
+            const pointY = centerY;
 
             ctx.strokeStyle = '#ff2d75';
             ctx.lineWidth = 2;
@@ -194,7 +202,7 @@
 
             ctx.fillStyle = '#ff2d75';
             ctx.beginPath();
-            ctx.arc(pointX, pointY, 6, 0, Math.PI * 2);
+            ctx.arc(pointX, pointY, 6 * S, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.strokeStyle = '#ff2d75';
@@ -202,18 +210,18 @@
             ctx.stroke();
 
             ctx.fillStyle = '#ff2d75';
-            ctx.font = '12px JetBrains Mono, monospace';
-            ctx.fillText('r/R = ' + rRatio.toFixed(2), pointX + 10, pointY - 10);
+            ctx.font = Math.max(9, 12 * S) + 'px JetBrains Mono, monospace';
+            ctx.fillText('r/R = ' + rRatio.toFixed(2), pointX + 10 * S, pointY - 10 * S);
         }
 
-        function drawGraph(graphX, graphY, graphW, graphH) {
+        function drawGraph(graphX, graphY, graphW, graphH, S) {
             ctx.strokeStyle = 'rgba(0,212,255,0.5)';
             ctx.lineWidth = 2;
             ctx.strokeRect(graphX, graphY, graphW, graphH);
 
             ctx.fillStyle = '#00d4ff';
-            ctx.font = '12px JetBrains Mono, monospace';
-            ctx.fillText('g vs r/R', graphX + graphW/2 - 30, graphY - 10);
+            ctx.font = Math.max(9, 12 * S) + 'px JetBrains Mono, monospace';
+            ctx.fillText('g vs r/R', graphX + graphW/2 - 30 * S, graphY - 10 * S);
 
             ctx.strokeStyle = 'rgba(255,255,255,0.2)';
             ctx.lineWidth = 1;
@@ -223,14 +231,14 @@
             ctx.stroke();
 
             ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            ctx.font = '10px JetBrains Mono, monospace';
-            ctx.fillText('0', graphX - 10, graphY + graphH + 15);
-            ctx.fillText('R', graphX + graphW/3 - 5, graphY + graphH + 15);
-            ctx.fillText('2R', graphX + 2*graphW/3 - 10, graphY + graphH + 15);
-            ctx.fillText('3R', graphX + graphW - 10, graphY + graphH + 15);
+            ctx.font = Math.max(8, 10 * S) + 'px JetBrains Mono, monospace';
+            ctx.fillText('0', graphX - 10 * S, graphY + graphH + 15 * S);
+            ctx.fillText('R', graphX + graphW/3 - 5 * S, graphY + graphH + 15 * S);
+            ctx.fillText('2R', graphX + 2*graphW/3 - 10 * S, graphY + graphH + 15 * S);
+            ctx.fillText('3R', graphX + graphW - 10 * S, graphY + graphH + 15 * S);
 
-            ctx.fillText('0', graphX - 25, graphY + graphH);
-            ctx.fillText('g₀', graphX - 25, graphY + 15);
+            ctx.fillText('0', graphX - 25 * S, graphY + graphH);
+            ctx.fillText('g₀', graphX - 25 * S, graphY + 15 * S);
 
             ctx.strokeStyle = '#00ffaa';
             ctx.lineWidth = 3;
@@ -239,7 +247,7 @@
                 const ratio = (i / (graphW/3));
                 const g = g0 * ratio;
                 const plotX = graphX + i;
-                const plotY = graphY + graphH - (g / g0) * (graphH - 20);
+                const plotY = graphY + graphH - (g / g0) * (graphH - 20 * S);
 
                 if (i === 0) {
                     ctx.moveTo(plotX, plotY);
@@ -256,7 +264,7 @@
                 const ratio = 1 + (i / (graphW/3)) * 2;
                 const g = g0 / (ratio * ratio);
                 const plotX = graphX + graphW/3 + i;
-                const plotY = graphY + graphH - (g / g0) * (graphH - 20);
+                const plotY = graphY + graphH - (g / g0) * (graphH - 20 * S);
 
                 if (i === 0) {
                     ctx.moveTo(plotX, plotY);
@@ -273,11 +281,11 @@
             } else {
                 currentX = graphX + graphW/3 + ((rRatio - 1) / 2) * (2*graphW/3);
             }
-            const currentY = graphY + graphH - (currentG / g0) * (graphH - 20);
+            const currentY = graphY + graphH - (currentG / g0) * (graphH - 20 * S);
 
             ctx.fillStyle = '#ff2d75';
             ctx.beginPath();
-            ctx.arc(currentX, currentY, 5, 0, Math.PI * 2);
+            ctx.arc(currentX, currentY, 5 * S, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.strokeStyle = '#ff2d75';
@@ -286,34 +294,38 @@
         }
 
         function draw() {
+            if (!canvasW) return;
+            const S = canvasW / REF_W;
+
             ctx.fillStyle = '#080818';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(0, 0, canvasW, canvasH);
 
-            const earthCenterX = 200;
-            const earthCenterY = canvas.height / 2;
-            const earthRadius = 120;
+            const earthCenterX = 200 * S;
+            const earthCenterY = canvasH / 2;
+            const earthRadius = 120 * S;
 
-            drawEarth(earthCenterX, earthCenterY, earthRadius);
-            drawCurrentPosition(earthCenterX, earthCenterY, earthRadius);
+            drawEarth(earthCenterX, earthCenterY, earthRadius, S);
+            drawCurrentPosition(earthCenterX, earthCenterY, earthRadius, S);
 
-            const graphX = 480;
-            const graphY = 80;
-            const graphW = 330;
-            const graphH = 280;
-            drawGraph(graphX, graphY, graphW, graphH);
+            const graphX = 480 * S;
+            const graphY = 80 * S;
+            const graphW = 330 * S;
+            const graphH = 280 * S;
+            drawGraph(graphX, graphY, graphW, graphH, S);
 
             ctx.strokeStyle = 'rgba(0,212,255,0.3)';
             ctx.lineWidth = 2;
             ctx.setLineDash([10, 10]);
             ctx.beginPath();
-            ctx.moveTo(450, 0);
-            ctx.lineTo(450, canvas.height);
+            ctx.moveTo(450 * S, 0);
+            ctx.lineTo(450 * S, canvasH);
             ctx.stroke();
             ctx.setLineDash([]);
         }
 
         updateStats();
-        draw();
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
     </script>
 
     <script src="../js/main.js"></script>

@@ -60,7 +60,7 @@
     <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Ray Optics</p>
 
     <div class="sim-canvas-wrapper">
-      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <canvas id="simCanvas"></canvas>
       <div class="sim-controls">
         <label>Object Distance: <input type="range" id="objDist" min="60" max="350" value="200"> <span id="odVal">200</span></label>
         <label>Focal Length: <input type="range" id="focal" min="40" max="180" value="100"> <span id="fVal">100</span></label>
@@ -80,6 +80,24 @@
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
     let isConvex = true;
+    let canvasW, canvasH;
+    const dpr = window.devicePixelRatio || 1;
+
+    // Reference dimensions — all coordinates scale relative to this
+    const REF_W = 850, REF_H = 450;
+
+    function resizeCanvas() {
+      var rect = canvas.getBoundingClientRect();
+      var w = rect.width;
+      var h = Math.max(300, Math.min(w * (REF_H / REF_W), 500));
+      canvasW = w;
+      canvasH = h;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
 
     const odSlider = document.getElementById('objDist');
     const fSlider = document.getElementById('focal');
@@ -94,13 +112,16 @@
     function resetSim() { odSlider.value = 200; fSlider.value = 100; isConvex = true; document.getElementById('lensBtn').textContent = 'Convex Lens'; document.getElementById('odVal').textContent = '200'; document.getElementById('fVal').textContent = '100'; draw(); }
 
     function draw() {
-      const W = canvas.width, H = canvas.height;
+      if (!canvasW) return;
+      const S = canvasW / REF_W; // scale factor
+      const W = canvasW, H = canvasH;
       const lensX = W / 2, axisY = H / 2;
-      const u = -parseInt(odSlider.value); // negative (object on left)
-      const f = isConvex ? parseInt(fSlider.value) : -parseInt(fSlider.value);
-      const objH = 60; // object height in px
+      const u = -parseInt(odSlider.value) * S; // negative (object on left)
+      const fRaw = parseInt(fSlider.value);
+      const f = (isConvex ? fRaw : -fRaw) * S;
+      const objH = 60 * S;
 
-      // 1/v - 1/u = 1/f => 1/v = 1/f + 1/u => v = uf/(u+f)
+      // 1/v - 1/u = 1/f => v = uf/(u+f)
       const v = (u * f) / (u + f);
       const m = v / u;
       const imgH = m * objH;
@@ -110,8 +131,9 @@
 
       // Grid
       ctx.strokeStyle = 'rgba(0,212,255,0.03)';
-      for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-      for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      const gridStep = 40 * S;
+      for (let x = 0; x < W; x += gridStep) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += gridStep) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
 
       // Principal axis
       ctx.strokeStyle = 'rgba(255,255,255,0.15)';
@@ -119,32 +141,34 @@
       ctx.beginPath(); ctx.moveTo(0, axisY); ctx.lineTo(W, axisY); ctx.stroke();
 
       // Lens
+      const lensHalf = 150 * S;
+      const lensBulge = 20 * S;
+      const lensConcBulge = 15 * S;
       ctx.strokeStyle = 'rgba(0,212,255,0.6)';
       ctx.lineWidth = 3;
       ctx.beginPath();
       if (isConvex) {
-        ctx.moveTo(lensX, axisY - 150);
-        ctx.quadraticCurveTo(lensX + 20, axisY, lensX, axisY + 150);
+        ctx.moveTo(lensX, axisY - lensHalf);
+        ctx.quadraticCurveTo(lensX + lensBulge, axisY, lensX, axisY + lensHalf);
         ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(lensX, axisY - 150);
-        ctx.quadraticCurveTo(lensX - 20, axisY, lensX, axisY + 150);
+        ctx.moveTo(lensX, axisY - lensHalf);
+        ctx.quadraticCurveTo(lensX - lensBulge, axisY, lensX, axisY + lensHalf);
       } else {
-        ctx.moveTo(lensX, axisY - 150);
-        ctx.quadraticCurveTo(lensX - 15, axisY, lensX, axisY + 150);
+        ctx.moveTo(lensX, axisY - lensHalf);
+        ctx.quadraticCurveTo(lensX - lensConcBulge, axisY, lensX, axisY + lensHalf);
         ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(lensX, axisY - 150);
-        ctx.quadraticCurveTo(lensX + 15, axisY, lensX, axisY + 150);
+        ctx.moveTo(lensX, axisY - lensHalf);
+        ctx.quadraticCurveTo(lensX + lensConcBulge, axisY, lensX, axisY + lensHalf);
       }
       ctx.stroke();
 
       // Arrows on lens
+      const arrOff = 8 * S, arrIn = 10 * S;
       ctx.fillStyle = '#00d4ff';
-      // Top arrow
-      ctx.beginPath(); ctx.moveTo(lensX, axisY - 150); ctx.lineTo(lensX - 8, axisY - 140); ctx.lineTo(lensX + 8, axisY - 140); ctx.closePath(); ctx.fill();
-      // Bottom arrow
-      ctx.beginPath(); ctx.moveTo(lensX, axisY + 150); ctx.lineTo(lensX - 8, axisY + 140); ctx.lineTo(lensX + 8, axisY + 140); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(lensX, axisY - lensHalf); ctx.lineTo(lensX - arrOff, axisY - lensHalf + arrIn); ctx.lineTo(lensX + arrOff, axisY - lensHalf + arrIn); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(lensX, axisY + lensHalf); ctx.lineTo(lensX - arrOff, axisY + lensHalf - arrIn); ctx.lineTo(lensX + arrOff, axisY + lensHalf - arrIn); ctx.closePath(); ctx.fill();
 
       // F and 2F marks
       const fPx = Math.abs(f);
@@ -154,62 +178,57 @@
         { x: lensX - 2 * fPx, label: '2F' },
         { x: lensX + 2 * fPx, label: "2F'" }
       ];
+      const fontSize = Math.max(9, 11 * S);
       markings.forEach(mk => {
         if (mk.x > 10 && mk.x < W - 10) {
           ctx.fillStyle = '#7c3aed';
-          ctx.beginPath(); ctx.arc(mk.x, axisY, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(mk.x, axisY, 4 * S, 0, Math.PI * 2); ctx.fill();
           ctx.fillStyle = '#a0a0b8';
-          ctx.font = '11px JetBrains Mono';
+          ctx.font = fontSize + 'px JetBrains Mono';
           ctx.textAlign = 'center';
-          ctx.fillText(mk.label, mk.x, axisY + 18);
+          ctx.fillText(mk.label, mk.x, axisY + 18 * S);
         }
       });
 
       // Object (arrow on left of lens)
       const objX = lensX + u; // u is negative so this puts it left
+      const arrowTip = 6 * S, arrowLen = 12 * S;
       ctx.strokeStyle = '#ff2d75';
       ctx.lineWidth = 3;
       ctx.beginPath(); ctx.moveTo(objX, axisY); ctx.lineTo(objX, axisY - objH); ctx.stroke();
-      // Arrowhead
       ctx.fillStyle = '#ff2d75';
-      ctx.beginPath(); ctx.moveTo(objX, axisY - objH); ctx.lineTo(objX - 6, axisY - objH + 12); ctx.lineTo(objX + 6, axisY - objH + 12); ctx.closePath(); ctx.fill();
-      ctx.font = '11px JetBrains Mono'; ctx.textAlign = 'center';
-      ctx.fillText('Object', objX, axisY + 30);
+      ctx.beginPath(); ctx.moveTo(objX, axisY - objH); ctx.lineTo(objX - arrowTip, axisY - objH + arrowLen); ctx.lineTo(objX + arrowTip, axisY - objH + arrowLen); ctx.closePath(); ctx.fill();
+      ctx.font = fontSize + 'px JetBrains Mono'; ctx.textAlign = 'center';
+      ctx.fillText('Object', objX, axisY + 30 * S);
 
       // Image
       const imgX = lensX + v;
       const imgTop = axisY - imgH;
 
-      if (imgX > 10 && imgX < W - 10 && Math.abs(imgH) < 300) {
-        // Draw image arrow
+      if (imgX > 10 && imgX < W - 10 && Math.abs(imgH) < 300 * S) {
         const isVirtual = (isConvex && Math.abs(u) < Math.abs(f)) || !isConvex;
         ctx.strokeStyle = isVirtual ? 'rgba(0,255,170,0.5)' : '#00ffaa';
         ctx.lineWidth = 3;
         if (isVirtual) ctx.setLineDash([6, 4]);
         ctx.beginPath(); ctx.moveTo(imgX, axisY); ctx.lineTo(imgX, imgTop); ctx.stroke();
         ctx.setLineDash([]);
-        // Arrowhead
         ctx.fillStyle = isVirtual ? 'rgba(0,255,170,0.5)' : '#00ffaa';
         const dir = imgH > 0 ? 1 : -1;
-        ctx.beginPath(); ctx.moveTo(imgX, imgTop); ctx.lineTo(imgX - 6, imgTop + dir * 12); ctx.lineTo(imgX + 6, imgTop + dir * 12); ctx.closePath(); ctx.fill();
-        ctx.font = '11px JetBrains Mono'; ctx.textAlign = 'center';
+        ctx.beginPath(); ctx.moveTo(imgX, imgTop); ctx.lineTo(imgX - arrowTip, imgTop + dir * arrowLen); ctx.lineTo(imgX + arrowTip, imgTop + dir * arrowLen); ctx.closePath(); ctx.fill();
+        ctx.font = fontSize + 'px JetBrains Mono'; ctx.textAlign = 'center';
         ctx.fillStyle = '#00ffaa';
-        ctx.fillText(isVirtual ? 'Virtual Image' : 'Real Image', imgX, axisY + 30);
+        ctx.fillText(isVirtual ? 'Virtual Image' : 'Real Image', imgX, axisY + 30 * S);
 
-        // Ray 1: Parallel to axis then through F' (or appear from F' for concave)
+        // Ray 1: Parallel to axis then through F'
         ctx.lineWidth = 1.5;
-        // Parallel ray from object tip to lens
         ctx.strokeStyle = 'rgba(0,212,255,0.5)';
         ctx.beginPath(); ctx.moveTo(objX, axisY - objH); ctx.lineTo(lensX, axisY - objH); ctx.stroke();
-        // From lens to image tip (through F')
         ctx.beginPath(); ctx.moveTo(lensX, axisY - objH); ctx.lineTo(imgX, imgTop); ctx.stroke();
         if (isVirtual) {
-          // Extend ray behind lens (virtual)
           ctx.setLineDash([4, 4]);
           ctx.strokeStyle = 'rgba(0,212,255,0.25)';
-          const ext = lensX + (lensX - imgX);
           ctx.beginPath(); ctx.moveTo(lensX, axisY - objH);
-          ctx.lineTo(lensX + 300, axisY - objH + (imgTop - (axisY - objH)) / (imgX - lensX) * 300);
+          ctx.lineTo(lensX + 300 * S, axisY - objH + (imgTop - (axisY - objH)) / (imgX - lensX) * 300 * S);
           ctx.stroke();
           ctx.setLineDash([]);
         }
@@ -225,36 +244,43 @@
           const slope = ((axisY - objH) - axisY) / (objX - fPoint);
           const yAtLens = axisY + slope * (lensX - fPoint);
           ctx.beginPath(); ctx.moveTo(objX, axisY - objH); ctx.lineTo(lensX, yAtLens); ctx.stroke();
-          // Then parallel
           ctx.beginPath(); ctx.moveTo(lensX, yAtLens); ctx.lineTo(imgX, yAtLens); ctx.stroke();
         }
       }
 
-      // Stats
+      // Stats box
+      const boxW = 220 * S, boxH = 130 * S;
+      const statFont = Math.max(9, 12 * S);
       ctx.fillStyle = 'rgba(10,10,30,0.88)';
-      ctx.fillRect(10, 10, 220, 130);
+      ctx.fillRect(10, 10, boxW, boxH);
       ctx.strokeStyle = 'rgba(0,212,255,0.2)';
-      ctx.strokeRect(10, 10, 220, 130);
+      ctx.strokeRect(10, 10, boxW, boxH);
       ctx.fillStyle = '#00d4ff';
-      ctx.font = '12px JetBrains Mono';
+      ctx.font = statFont + 'px JetBrains Mono';
       ctx.textAlign = 'left';
-      ctx.fillText('Lens: ' + (isConvex ? 'Convex' : 'Concave'), 20, 32);
-      ctx.fillText('u = ' + u.toFixed(0) + ' px', 20, 50);
-      ctx.fillText('f = ' + f.toFixed(0) + ' px', 20, 68);
-      ctx.fillText('v = ' + v.toFixed(1) + ' px', 20, 86);
-      ctx.fillText('m = ' + m.toFixed(2), 20, 104);
+      // Display unscaled values for physics accuracy
+      const uRaw = -parseInt(odSlider.value);
+      const fDispRaw = isConvex ? parseInt(fSlider.value) : -parseInt(fSlider.value);
+      const vRaw = (uRaw * fDispRaw) / (uRaw + fDispRaw);
+      const lineH = 18 * S;
+      ctx.fillText('Lens: ' + (isConvex ? 'Convex' : 'Concave'), 20 * S, 22 + lineH * 0);
+      ctx.fillText('u = ' + uRaw.toFixed(0) + ' px', 20 * S, 22 + lineH * 1);
+      ctx.fillText('f = ' + fDispRaw.toFixed(0) + ' px', 20 * S, 22 + lineH * 2);
+      ctx.fillText('v = ' + vRaw.toFixed(1) + ' px', 20 * S, 22 + lineH * 3);
+      ctx.fillText('m = ' + m.toFixed(2), 20 * S, 22 + lineH * 4);
       const nature = v > 0 ? 'Real, ' : 'Virtual, ';
       const orient = imgH < 0 ? 'Inverted' : 'Erect';
       ctx.fillStyle = '#00ffaa';
-      ctx.fillText('Image: ' + nature + orient, 20, 128);
+      ctx.fillText('Image: ' + nature + orient, 20 * S, 22 + lineH * 5);
 
       ctx.fillStyle = '#a0a0b8';
-      ctx.font = '10px JetBrains Mono';
+      ctx.font = Math.max(8, 10 * S) + 'px JetBrains Mono';
       ctx.textAlign = 'center';
-      ctx.fillText('O', lensX, axisY + 30);
+      ctx.fillText('O', lensX, axisY + 30 * S);
     }
 
-    draw();
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
   </script>
   <script src="../js/main.js"></script>
   <script src="../js/auth-gate.js"></script>

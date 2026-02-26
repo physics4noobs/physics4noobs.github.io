@@ -4227,7 +4227,14 @@ ul { list-style: none; }
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-toggle { display: flex; order: -1; }
-  .nav-logo { order: 0; }
+  .nav-logo { order: 0; margin-right: auto; }
+  .nav-logo .logo-text .brand-name {
+    font-size: clamp(0.85rem, 3.5vw, 1.35rem);
+    white-space: nowrap;
+  }
+  .nav-logo .logo-text .brand-tag {
+    font-size: clamp(0.4rem, 1.5vw, 0.65rem);
+  }
 
   .nav-links.active {
     display: flex;
@@ -5129,25 +5136,12 @@ ul { list-style: none; }
 /* Responsive */
 @media (max-width: 768px) {
   [data-theme="light"] .torii-visual {
-    width: 160px;
-    height: 200px;
+    width: 420px;
+    height: 460px;
+    transform: scale(0.5);
+    transform-origin: top center;
+    margin: 0 auto -230px;
   }
-  .torii-gate { width: 80px; height: 108px; bottom: 32px; }
-  .torii-kasagi { width: 104px; height: 14px; left: -12px; }
-  .torii-kasagi::before { left: -3px; right: -3px; height: 6px; top: -6px; }
-  .torii-kasagi::after { height: 3px; }
-  .torii-shimaki { width: 92px; height: 6px; left: -6px; top: 20px; }
-  .torii-nuki { width: 72px; height: 6px; left: 4px; top: 36px; }
-  .torii-pillar { width: 8px; height: 100px; }
-  .torii-pillar-l { left: 14px; }
-  .torii-pillar-r { right: 14px; }
-  .torii-pillar::after { width: 14px; height: 5px; }
-  .sakura-branch { width: 80px; height: 52px; right: -5px; top: 5px; }
-  .torii-glow { width: 100px; height: 100px; }
-  .torii-ground { bottom: 28px; }
-  .torii-mist { bottom: 24px; height: 20px; }
-  .sakura-petal:nth-child(odd) { width: 7px; height: 7px; }
-  .sakura-petal:nth-child(even) { width: 6px; height: 9px; }
   .torii-eq { font-size: 0.6rem; }
 }
 

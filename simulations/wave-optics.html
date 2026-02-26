@@ -60,7 +60,7 @@
     <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Wave Optics</p>
 
     <div class="sim-canvas-wrapper">
-      <canvas id="simCanvas" width="850" height="450"></canvas>
+      <canvas id="simCanvas"></canvas>
       <div class="sim-controls">
         <label>Slit Separation (d): <input type="range" id="slitSep" min="10" max="80" value="40"> <span id="dVal">40</span></label>
         <label>Wavelength (&lambda;): <input type="range" id="waveLen" min="380" max="700" value="550"> <span id="lVal">550</span> nm</label>
@@ -80,13 +80,28 @@
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
     let phase = 0, animId;
+    let canvasW, canvasH;
+    const dpr = window.devicePixelRatio || 1;
+    const REF_W = 850, REF_H = 450;
+
+    function resizeCanvas() {
+      var rect = canvas.getBoundingClientRect();
+      var w = rect.width;
+      var h = Math.max(300, Math.min(w * (REF_H / REF_W), 500));
+      canvasW = w;
+      canvasH = h;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
 
     const dSlider = document.getElementById('slitSep');
     const lSlider = document.getElementById('waveLen');
     const DSlider = document.getElementById('screenDist');
-    dSlider.oninput = () => { document.getElementById('dVal').textContent = dSlider.value; draw(); };
-    lSlider.oninput = () => { document.getElementById('lVal').textContent = lSlider.value; draw(); };
-    DSlider.oninput = () => { document.getElementById('DVal').textContent = DSlider.value; draw(); };
+    dSlider.oninput = () => { document.getElementById('dVal').textContent = dSlider.value; };
+    lSlider.oninput = () => { document.getElementById('lVal').textContent = lSlider.value; };
+    DSlider.oninput = () => { document.getElementById('DVal').textContent = DSlider.value; };
 
     function wavelengthToColor(wl) {
       let r = 0, g = 0, b = 0;
@@ -100,10 +115,12 @@
     }
 
     function draw() {
-      const d = parseInt(dSlider.value);
+      if (!canvasW) return;
+      const S = canvasW / REF_W;
+      const d = parseInt(dSlider.value) * S;
       const lambda = parseInt(lSlider.value);
-      const D = parseInt(DSlider.value);
-      const W = canvas.width, H = canvas.height;
+      const D = parseInt(DSlider.value) * S;
+      const W = canvasW, H = canvasH;
       const color = wavelengthToColor(lambda);
 
       ctx.fillStyle = '#080818';
@@ -111,10 +128,11 @@
 
       // Grid
       ctx.strokeStyle = 'rgba(0,212,255,0.03)';
-      for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-      for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      const gridStep = 40 * S;
+      for (let x = 0; x < W; x += gridStep) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += gridStep) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
 
-      const slitX = 150;
+      const slitX = 150 * S;
       const screenX = slitX + D;
       const midY = H / 2;
       const slit1Y = midY - d / 2;
@@ -122,39 +140,37 @@
 
       // Barrier with slits
       ctx.fillStyle = 'rgba(255,255,255,0.12)';
-      ctx.fillRect(slitX - 3, 0, 6, slit1Y - 4);
-      ctx.fillRect(slitX - 3, slit1Y + 4, 6, d - 8);
-      ctx.fillRect(slitX - 3, slit2Y + 4, 6, H - slit2Y - 4);
+      ctx.fillRect(slitX - 3 * S, 0, 6 * S, slit1Y - 4 * S);
+      ctx.fillRect(slitX - 3 * S, slit1Y + 4 * S, 6 * S, d - 8 * S);
+      ctx.fillRect(slitX - 3 * S, slit2Y + 4 * S, 6 * S, H - slit2Y - 4 * S);
 
       // Slit glow
       ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.8)`;
-      ctx.fillRect(slitX - 1, slit1Y - 4, 2, 8);
-      ctx.fillRect(slitX - 1, slit2Y - 4, 2, 8);
+      ctx.fillRect(slitX - 1 * S, slit1Y - 4 * S, 2 * S, 8 * S);
+      ctx.fillRect(slitX - 1 * S, slit2Y - 4 * S, 2 * S, 8 * S);
 
       // Incoming light (plane waves from left)
       ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.15)`;
       ctx.lineWidth = 1;
-      for (let x = 10; x < slitX - 10; x += 20) {
-        const offset = (phase * 10 + x) % 20;
+      for (let x = 10 * S; x < slitX - 10 * S; x += 20 * S) {
+        const offset = (phase * 10 + x) % (20 * S);
         ctx.beginPath();
-        ctx.moveTo(x + offset, 30);
-        ctx.lineTo(x + offset, H - 30);
+        ctx.moveTo(x + offset, 30 * S);
+        ctx.lineTo(x + offset, H - 30 * S);
         ctx.stroke();
       }
 
       // Circular wavefronts from each slit
-      const maxR = D + 50;
-      for (let r = 10; r < maxR; r += 15) {
-        const rr = r + (phase * 5) % 15;
+      const maxR = D + 50 * S;
+      for (let r = 10 * S; r < maxR; r += 15 * S) {
+        const rr = r + (phase * 5) % (15 * S);
         if (rr > maxR) continue;
         const alpha = Math.max(0, 0.12 * (1 - rr / maxR));
         ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
         ctx.lineWidth = 1;
-        // Slit 1
         ctx.beginPath();
         ctx.arc(slitX, slit1Y, rr, -Math.PI / 3, Math.PI / 3);
         ctx.stroke();
-        // Slit 2
         ctx.beginPath();
         ctx.arc(slitX, slit2Y, rr, -Math.PI / 3, Math.PI / 3);
         ctx.stroke();
@@ -162,24 +178,25 @@
 
       // Screen
       ctx.fillStyle = 'rgba(255,255,255,0.06)';
-      ctx.fillRect(screenX, 0, 4, H);
+      ctx.fillRect(screenX, 0, 4 * S, H);
 
       // Interference pattern on screen
-      const fringeWidth = (lambda / 100) * D / d;
-      const patternW = 80;
+      const dRaw = parseInt(dSlider.value);
+      const DRaw = parseInt(DSlider.value);
+      const fringeWidth = (lambda / 100) * DRaw / dRaw;
+      const patternW = 80 * S;
 
       for (let y = 0; y < H; y++) {
         const dy = y - midY;
-        // Path difference
         const r1 = Math.sqrt(D * D + (dy - d / 2) * (dy - d / 2));
         const r2 = Math.sqrt(D * D + (dy + d / 2) * (dy + d / 2));
         const pathDiff = r2 - r1;
-        const phaseDiff = (2 * Math.PI * pathDiff) / (lambda / 80);
+        const phaseDiff = (2 * Math.PI * pathDiff) / (lambda / 80 * S);
         const intensity = Math.cos(phaseDiff / 2);
         const I = intensity * intensity;
 
         ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${I * 0.9})`;
-        ctx.fillRect(screenX + 8, y, patternW * I, 1);
+        ctx.fillRect(screenX + 8 * S, y, patternW * I, 1);
       }
 
       // Intensity graph outline
@@ -191,46 +208,50 @@
         const r1 = Math.sqrt(D * D + (dy - d / 2) * (dy - d / 2));
         const r2 = Math.sqrt(D * D + (dy + d / 2) * (dy + d / 2));
         const pathDiff = r2 - r1;
-        const phaseDiff = (2 * Math.PI * pathDiff) / (lambda / 80);
+        const phaseDiff = (2 * Math.PI * pathDiff) / (lambda / 80 * S);
         const I = Math.pow(Math.cos(phaseDiff / 2), 2);
-        const x = screenX + 8 + patternW * I;
+        const x = screenX + 8 * S + patternW * I;
         if (y === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
       ctx.stroke();
 
       // Labels
+      const fontSize = Math.max(9, 11 * S);
       ctx.fillStyle = '#a0a0b8';
-      ctx.font = '11px JetBrains Mono';
+      ctx.font = fontSize + 'px JetBrains Mono';
       ctx.textAlign = 'center';
-      ctx.fillText('S₁', slitX, slit1Y - 14);
-      ctx.fillText('S₂', slitX, slit2Y + 22);
-      ctx.fillText('Screen', screenX + 44, 20);
+      ctx.fillText('S\u2081', slitX, slit1Y - 14 * S);
+      ctx.fillText('S\u2082', slitX, slit2Y + 22 * S);
+      ctx.fillText('Screen', screenX + 44 * S, 20 * S);
 
       // Stats
+      const boxW = 200 * S, boxH = 110 * S;
+      const statFont = Math.max(9, 12 * S);
       ctx.fillStyle = 'rgba(10,10,30,0.88)';
-      ctx.fillRect(10, 10, 200, 110);
+      ctx.fillRect(10, 10, boxW, boxH);
       ctx.strokeStyle = 'rgba(0,212,255,0.2)';
-      ctx.strokeRect(10, 10, 200, 110);
+      ctx.strokeRect(10, 10, boxW, boxH);
       ctx.fillStyle = '#00d4ff';
-      ctx.font = '12px JetBrains Mono';
+      ctx.font = statFont + 'px JetBrains Mono';
       ctx.textAlign = 'left';
-      ctx.fillText('d = ' + d + ' units', 20, 32);
-      ctx.fillText('λ = ' + lambda + ' nm', 20, 50);
-      ctx.fillText('D = ' + D + ' units', 20, 68);
-      ctx.fillText('β = λD/d = ' + fringeWidth.toFixed(1), 20, 86);
+      const lineH = 18 * S;
+      ctx.fillText('d = ' + dRaw + ' units', 20 * S, 22 + lineH * 0);
+      ctx.fillText('\u03BB = ' + lambda + ' nm', 20 * S, 22 + lineH * 1);
+      ctx.fillText('D = ' + DRaw + ' units', 20 * S, 22 + lineH * 2);
+      ctx.fillText('\u03B2 = \u03BBD/d = ' + fringeWidth.toFixed(1), 20 * S, 22 + lineH * 3);
       // Color swatch
       ctx.fillStyle = `rgb(${color.r}, ${color.g}, ${color.b})`;
-      ctx.fillRect(20, 96, 60, 14);
+      ctx.fillRect(20 * S, 22 + lineH * 3.8, 60 * S, 14 * S);
       ctx.fillStyle = '#a0a0b8';
-      ctx.font = '10px JetBrains Mono';
-      ctx.fillText('color', 100, 108);
+      ctx.font = Math.max(8, 10 * S) + 'px JetBrains Mono';
+      ctx.fillText('color', 20 * S + 70 * S, 22 + lineH * 3.8 + 10 * S);
 
       // Central max marker
       ctx.fillStyle = '#ffffff';
-      ctx.font = '10px JetBrains Mono';
+      ctx.font = Math.max(8, 10 * S) + 'px JetBrains Mono';
       ctx.textAlign = 'left';
-      ctx.fillText('n=0', screenX + patternW + 14, midY + 4);
+      ctx.fillText('n=0', screenX + patternW + 14 * S, midY + 4 * S);
 
       phase += 0.02;
       animId = requestAnimationFrame(draw);
@@ -244,6 +265,8 @@
       phase = 0;
     }
 
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
     draw();
   </script>
   <script src="../js/main.js"></script>
