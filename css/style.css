@@ -5135,6 +5135,7 @@ ul { list-style: none; }
 
 /* Responsive */
 @media (max-width: 768px) {
+  .hero-visual { overflow: hidden; }
   [data-theme="light"] .torii-visual {
     width: 420px;
     height: 460px;
