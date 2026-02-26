@@ -764,6 +764,18 @@
       return phi < eps || Math.abs(phi - theta) < eps || Math.abs(phi - 2 * Math.PI) < eps;
     }
 
+    // A source at angle phi is in front of Mirror 1 (along angle 0)
+    // if it's on the reflective side (upper half-plane, toward wedge)
+    function canReflectInM1(phi) {
+      return Math.sin(phi) > -0.001;
+    }
+
+    // A source at angle phi is in front of Mirror 2 (along angle theta)
+    // if it's on the reflective side (toward wedge / Mirror 1 side)
+    function canReflectInM2(phi, theta) {
+      return Math.sin(phi - theta) < 0.001;
+    }
+
     function getImageAngles() {
       var theta = mirrorAngleDeg * Math.PI / 180;
       var alpha = objAlphaDeg * Math.PI / 180;
@@ -771,25 +783,40 @@
       var allImages = [];
       var maxK = Math.ceil(360 / mirrorAngleDeg) + 2;
 
+      // Chain A: alternates Mirror 1 → Mirror 2 → Mirror 1 → ...
+      var srcA = alpha;
       for (var k = 1; k <= maxK; k++) {
-        var a_odd = -(2 * (k - 1) * theta + alpha);
-        var a_odd_norm = mod2pi(a_odd);
-        if (!isInsideWedge(a_odd_norm, theta) && !isOnMirror(a_odd_norm, theta))
-          allImages.push({ angle: a_odd_norm, order: 2 * k - 1, chain: 'A' });
-        var a_even = 2 * k * theta + alpha;
-        var a_even_norm = mod2pi(a_even);
-        if (!isInsideWedge(a_even_norm, theta) && !isOnMirror(a_even_norm, theta))
-          allImages.push({ angle: a_even_norm, order: 2 * k, chain: 'A' });
+        // Odd step: reflect source in Mirror 1
+        if (!canReflectInM1(srcA)) break;
+        var a_odd = mod2pi(-(2 * (k - 1) * theta + alpha));
+        if (!isInsideWedge(a_odd, theta) && !isOnMirror(a_odd, theta))
+          allImages.push({ angle: a_odd, order: 2 * k - 1, chain: 'A' });
+
+        // Even step: reflect odd image in Mirror 2
+        if (!canReflectInM2(a_odd, theta)) break;
+        var a_even = mod2pi(2 * k * theta + alpha);
+        if (!isInsideWedge(a_even, theta) && !isOnMirror(a_even, theta))
+          allImages.push({ angle: a_even, order: 2 * k, chain: 'A' });
+
+        srcA = a_even;
       }
+
+      // Chain B: alternates Mirror 2 → Mirror 1 → Mirror 2 → ...
+      var srcB = alpha;
       for (var k = 1; k <= maxK; k++) {
-        var b_odd = 2 * k * theta - alpha;
-        var b_odd_norm = mod2pi(b_odd);
-        if (!isInsideWedge(b_odd_norm, theta) && !isOnMirror(b_odd_norm, theta))
-          allImages.push({ angle: b_odd_norm, order: 2 * k - 1, chain: 'B' });
-        var b_even = alpha - 2 * k * theta;
-        var b_even_norm = mod2pi(b_even);
-        if (!isInsideWedge(b_even_norm, theta) && !isOnMirror(b_even_norm, theta))
-          allImages.push({ angle: b_even_norm, order: 2 * k, chain: 'B' });
+        // Odd step: reflect source in Mirror 2
+        if (!canReflectInM2(srcB, theta)) break;
+        var b_odd = mod2pi(2 * k * theta - alpha);
+        if (!isInsideWedge(b_odd, theta) && !isOnMirror(b_odd, theta))
+          allImages.push({ angle: b_odd, order: 2 * k - 1, chain: 'B' });
+
+        // Even step: reflect odd image in Mirror 1
+        if (!canReflectInM1(b_odd)) break;
+        var b_even = mod2pi(alpha - 2 * k * theta);
+        if (!isInsideWedge(b_even, theta) && !isOnMirror(b_even, theta))
+          allImages.push({ angle: b_even, order: 2 * k, chain: 'B' });
+
+        srcB = b_even;
       }
 
       var unique = [];
