@@ -55,15 +55,15 @@
     })();
   </script>
 
-  <div class="sim-page-container">
+  <div class="sim-page-container" style="max-width: 1200px;">
     <h1 style="font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0 8px;">&#128269; Lens Ray Tracing</h1>
     <p style="color: var(--text-secondary); margin-bottom: 24px;">Grade XII &bull; Ray Optics</p>
 
     <div class="sim-canvas-wrapper">
       <canvas id="simCanvas"></canvas>
       <div class="sim-controls">
-        <label>Object Distance: <input type="range" id="objDist" min="60" max="350" value="200"> <span id="odVal">200</span></label>
-        <label>Focal Length: <input type="range" id="focal" min="40" max="180" value="100"> <span id="fVal">100</span></label>
+        <label>Object Distance: <input type="range" id="objDist" min="60" max="500" value="200"> <span id="odVal">200</span></label>
+        <label>Focal Length: <input type="range" id="focal" min="40" max="250" value="100"> <span id="fVal">100</span></label>
         <button onclick="toggleLens()" id="lensBtn">Convex Lens</button>
         <button onclick="resetSim()">&#8635; Reset</button>
       </div>
@@ -89,7 +89,7 @@
     function resizeCanvas() {
       var wrap = document.querySelector('.sim-canvas-wrapper');
       var w = wrap.clientWidth;
-      var h = Math.max(300, Math.min(w * (REF_H / REF_W), 500));
+      var h = Math.max(350, Math.min(w * 0.56, 650));
       canvasW = w;
       canvasH = h;
       canvas.width = w * dpr;
