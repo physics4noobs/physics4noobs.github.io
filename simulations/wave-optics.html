@@ -85,13 +85,14 @@
     const REF_W = 850, REF_H = 450;
 
     function resizeCanvas() {
-      var rect = canvas.getBoundingClientRect();
-      var w = rect.width;
+      var wrap = document.querySelector('.sim-canvas-wrapper');
+      var w = wrap.clientWidth;
       var h = Math.max(300, Math.min(w * (REF_H / REF_W), 500));
       canvasW = w;
       canvasH = h;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
       canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
