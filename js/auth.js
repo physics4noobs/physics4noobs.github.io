@@ -20,6 +20,8 @@
 
     if (!loginBtn || !userMenu) return;
 
+    var profileFormShown = false; // Guard: only show profile form once per page load
+
     // Handle redirect result (for mobile / popup-blocked fallback)
     auth.getRedirectResult().then(function(result) {
       // Redirect sign-in succeeded — onAuthStateChanged will handle UI
@@ -51,12 +53,24 @@
           }, { merge: true });
 
           // Check if profile is complete (studentName exists)
-          db.collection('users').doc(user.uid).get().then(function(doc) {
-            var data = doc.exists ? doc.data() : {};
-            if (!data.studentName) {
-              showProfileForm(db, user.uid);
-            }
-          });
+          if (!profileFormShown) {
+            db.collection('users').doc(user.uid).get({ source: 'server' }).then(function(doc) {
+              var data = doc.exists ? doc.data() : {};
+              if (!data.studentName && !profileFormShown) {
+                profileFormShown = true;
+                showProfileForm(db, user.uid);
+              }
+            }).catch(function() {
+              // Offline fallback: try cache
+              db.collection('users').doc(user.uid).get().then(function(doc) {
+                var data = doc.exists ? doc.data() : {};
+                if (!data.studentName && !profileFormShown) {
+                  profileFormShown = true;
+                  showProfileForm(db, user.uid);
+                }
+              });
+            });
+          }
         }
       } else {
         loginBtn.style.display = 'flex';
@@ -102,6 +116,9 @@
 
   // --- Profile Form (first sign-in) ---
   function showProfileForm(db, uid) {
+    // Prevent duplicate forms
+    if (document.querySelector('.profile-overlay')) return;
+
     // Load CSS if not already loaded
     if (!document.querySelector('link[href*="profile-form.css"]')) {
       var link = document.createElement('link');
