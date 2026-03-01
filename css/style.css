@@ -1998,7 +1998,7 @@ ul { list-style: none; }
   align-items: center;
   justify-content: space-between;
   padding: 14px 20px;
-  background: rgba(15, 15, 40, 0.9);
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
@@ -2259,16 +2259,16 @@ ul { list-style: none; }
 }
 
 .dts-chip:hover {
-  border-color: rgba(0, 212, 255, 0.3);
-  background: rgba(0, 212, 255, 0.04);
+  border-color: var(--border-glow);
+  background: var(--bg-glass-hover);
   transform: translateY(-2px);
 }
 
 .dts-chip.active {
   border-color: var(--color-primary);
-  background: rgba(0, 212, 255, 0.1);
+  background: var(--bg-glass-hover);
   color: var(--color-primary);
-  box-shadow: 0 0 14px rgba(0, 212, 255, 0.2);
+  box-shadow: var(--glow-primary);
 }
 
 .dts-chip.active .chip-topic {
