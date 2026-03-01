@@ -84,30 +84,22 @@
       loginBtn.disabled = true;
       loginBtn.style.opacity = '0.6';
 
-      // Use redirect on Safari/mobile (more reliable), popup on others
-      var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      // Always try popup first (works on Safari + Chrome + Firefox)
+      // Redirect fails on Safari due to ITP blocking cross-domain cookies
+      auth.signInWithPopup(provider).then(function() {
+        loginBtn.disabled = false;
+        loginBtn.style.opacity = '';
+      }).catch(function(err) {
+        loginBtn.disabled = false;
+        loginBtn.style.opacity = '';
+        console.error('Auth error:', err.code, err.message);
 
-      if (isSafari || isMobile) {
-        auth.signInWithRedirect(provider);
-      } else {
-        auth.signInWithPopup(provider).then(function() {
-          loginBtn.disabled = false;
-          loginBtn.style.opacity = '';
-        }).catch(function(err) {
-          loginBtn.disabled = false;
-          loginBtn.style.opacity = '';
-          console.error('Auth error:', err.code, err.message);
-
-          // Popup blocked or unavailable — fall back to redirect
-          if (err.code === 'auth/popup-blocked' ||
-              err.code === 'auth/popup-closed-by-user' ||
-              err.code === 'auth/cancelled-popup-request' ||
-              err.code === 'auth/operation-not-supported-in-this-environment') {
-            auth.signInWithRedirect(provider);
-          }
-        });
-      }
+        // Popup blocked — fall back to redirect (last resort)
+        if (err.code === 'auth/popup-blocked' ||
+            err.code === 'auth/operation-not-supported-in-this-environment') {
+          auth.signInWithRedirect(provider);
+        }
+      });
     });
 
     if (logoutBtn) {
