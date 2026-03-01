@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ray Optics DTS Test | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <!-- Test Content -->
+  <div class="test-wrapper dts-test">
+
+    <!-- Test Bar -->
+    <div class="test-bar">
+      <a href="ray-optics-dts.html" class="test-btn" id="back-btn" style="text-decoration:none;">&larr; Back</a>
+      <div class="timer" id="timer">90:00</div>
+      <div class="dts-progress" id="progress">0 / 15 answered</div>
+      <div class="score" id="score"></div>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+      <button class="test-btn fullscreen-btn" id="fullscreen-btn" title="Fullscreen (F)">&#x26F6; Fullscreen</button>
+    </div>
+
+    <!-- Main Content: PDF Viewer + Answer Grid -->
+    <div class="dts-layout">
+      <!-- Question Images Viewer -->
+      <div class="dts-pdf-panel">
+        <div class="dts-pdf-toolbar">
+          <button class="pdf-nav-btn" id="pdf-prev" title="Previous page">&#9664;</button>
+          <span class="pdf-page-info" id="pdf-page-info">Page 1 / 3</span>
+          <button class="pdf-nav-btn" id="pdf-next" title="Next page">&#9654;</button>
+          <div class="dts-zoom-controls">
+            <button class="pdf-zoom-btn" id="zoom-out" title="Zoom out">&minus;</button>
+            <span class="pdf-zoom-level" id="zoom-level">100%</span>
+            <button class="pdf-zoom-btn" id="zoom-in" title="Zoom in">+</button>
+            <button class="pdf-fit-btn" id="zoom-fit" title="Fit to width">Fit</button>
+          </div>
+          <a class="pdf-download-btn" id="download-btn" href="../pdfs/ray-optics/questions.pdf" download title="Download PDF">&#8681; PDF</a>
+        </div>
+        <div class="dts-pdf-container" id="pdf-container">
+          <div class="dts-img-wrapper" id="img-wrapper">
+            <!-- Images injected by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Answer Grid -->
+      <div class="dts-answer-panel">
+        <div class="dts-answer-header">
+          <h3>Answer Sheet</h3>
+          <div class="dts-answer-legend">
+            <span class="legend-item"><span class="legend-dot legend-unanswered"></span>Unanswered</span>
+            <span class="legend-item"><span class="legend-dot legend-answered"></span>Answered</span>
+          </div>
+        </div>
+        <div class="dts-answer-grid" id="answer-grid">
+          <!-- Populated by JS -->
+        </div>
+        <div class="dts-answer-footer">
+          <div class="dts-scoring-info">
+            <span>+4 Correct</span>
+            <span>&minus;1 Wrong</span>
+            <span>0 Unanswered</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Panel (hidden until submit) -->
+    <div class="dts-results" id="results-panel" style="display:none;">
+      <div class="dts-results-header">
+        <h2 id="results-title">Results</h2>
+        <div class="dts-results-score" id="results-score"></div>
+      </div>
+      <div class="dts-results-stats">
+        <div class="stat-card stat-correct">
+          <div class="stat-num" id="stat-correct">0</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat-card stat-wrong">
+          <div class="stat-num" id="stat-wrong">0</div>
+          <div class="stat-label">Wrong</div>
+        </div>
+        <div class="stat-card stat-unanswered">
+          <div class="stat-num" id="stat-unanswered">0</div>
+          <div class="stat-label">Unanswered</div>
+        </div>
+        <div class="stat-card stat-time">
+          <div class="stat-num" id="stat-time">--:--</div>
+          <div class="stat-label">Time Taken</div>
+        </div>
+      </div>
+      <div class="dts-results-breakdown" id="results-breakdown">
+      </div>
+      <div class="dts-results-actions">
+        <button class="test-btn" id="view-solutions-btn">View Solutions PDF</button>
+        <button class="test-btn" id="retake-btn">Retake Test</button>
+        <a href="ray-optics-dts.html" class="test-btn" style="text-decoration:none;">Back to DTS List</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Fullscreen Prompt (shown if auto-fullscreen blocked by browser) -->
+  <div class="dts-fs-prompt" id="fs-prompt" style="display:none;">
+    <div class="dts-fs-prompt-card">
+      <p>Click below to enter fullscreen for a distraction-free test experience.</p>
+      <button class="test-btn" id="fs-prompt-btn">Enter Fullscreen</button>
+      <button class="dts-fs-skip" id="fs-skip-btn">Continue without fullscreen</button>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  // ============================================================
+  //  RAY OPTICS DTS DATA
+  // ============================================================
+  var SHEETS = [
+    // --- LEVEL 1 ---
+    {
+      name: 'DTS 1', level: 1, topic: 'Reflection from Plane Surface',
+      startPage: 4, endPage: 6, qStart: 1, qEnd: 15, type: 'mcq', duration: 90,
+      answers: {1:'A',2:'D',3:'D',4:'B',5:'B',6:'A',7:'A',8:'C',9:'B',10:'C',11:'D',12:'A',13:'B',14:'C',15:'D'}
+    },
+    {
+      name: 'DTS 2', level: 1, topic: 'Reflection from Spherical Surface',
+      startPage: 7, endPage: 8, qStart: 16, qEnd: 30, type: 'mcq', duration: 90,
+      answers: {16:'A',17:'C',18:'B',19:'B',20:'A',21:'A',22:'B',23:'B',24:'C',25:'C',26:'A',27:'A',28:'B',29:'C',30:'A'}
+    },
+    {
+      name: 'DTS 3', level: 1, topic: 'Refraction at Plane Surface, TIR',
+      startPage: 9, endPage: 11, qStart: 31, qEnd: 45, type: 'mcq', duration: 90,
+      answers: {31:'A',32:'B',33:'A',34:'A',35:'C',36:'A',37:'D',38:'B',39:'B',40:'B',41:'C',42:'B',43:'A',44:'D',45:'B'}
+    },
+    {
+      name: 'DTS 4', level: 1, topic: 'Refraction through a Prism',
+      startPage: 12, endPage: 13, qStart: 46, qEnd: 60, type: 'mcq', duration: 90,
+      answers: {46:'C',47:'B',48:'B',49:'A',50:'B',51:'B',52:'D',53:'A',54:'C',55:'B',56:'D',57:'D',58:'C',59:'D',60:'C'}
+    },
+    {
+      name: 'DTS 5', level: 1, topic: 'Refraction at Spherical Surface, Lenses',
+      startPage: 14, endPage: 15, qStart: 61, qEnd: 75, type: 'mcq', duration: 90,
+      answers: {61:'A',62:'C',63:'D',64:'A',65:'A',66:'B',67:'C',68:'D',69:'A',70:'C',71:'C',72:'B',73:'D',74:'B',75:'A'}
+    },
+    {
+      name: 'DTS 6', level: 1, topic: 'Combination of Lenses/Mirrors, Cutting',
+      startPage: 16, endPage: 18, qStart: 76, qEnd: 90, type: 'mcq', duration: 90,
+      answers: {76:'B',77:'D',78:'C',79:'D',80:'A',81:'A',82:'A',83:'D',84:'C',85:'B',86:'B',87:'C',88:'D',89:'A',90:'B'}
+    },
+    {
+      name: 'DTS 7', level: 1, topic: 'Mixed (Numerical)',
+      startPage: 19, endPage: 20, qStart: 91, qEnd: 105, type: 'nat', duration: 90,
+      answers: {91:'4',92:'40',93:'6.67',94:'224',95:'37.5',96:'2',97:'4',98:'40',99:'120',100:'75',101:'41.67',102:'60',103:'55',104:'15',105:'4'}
+    },
+    // --- LEVEL 2 ---
+    {
+      name: 'DTS 8', level: 2, topic: 'Reflection from Plane Surface',
+      startPage: 21, endPage: 22, qStart: 106, qEnd: 115, type: 'mcq', duration: 90,
+      answers: {106:'D',107:'D',108:'D',109:'B',110:'A',111:'A',112:'A',113:'C',114:'ABCD',115:'ACD'}
+    },
+    {
+      name: 'DTS 9', level: 2, topic: 'Reflection from Spherical Surface',
+      startPage: 23, endPage: 24, qStart: 116, qEnd: 125, type: 'mcq', duration: 90,
+      answers: {116:'B',117:'C',118:'C',119:'C',120:'A',121:'D',122:'AC',123:'BC',124:'AB',125:'80'}
+    },
+    {
+      name: 'DTS 10', level: 2, topic: 'Refraction at Plane Surface, TIR',
+      startPage: 25, endPage: 26, qStart: 126, qEnd: 135, type: 'mcq', duration: 90,
+      answers: {126:'D',127:'C',128:'D',129:'B',130:'B',131:'B',132:'B',133:'AC',134:'AB',135:'3'}
+    },
+    {
+      name: 'DTS 11', level: 2, topic: 'Refraction through a Prism',
+      startPage: 27, endPage: 28, qStart: 136, qEnd: 146, type: 'mcq', duration: 90,
+      answers: {136:'A',137:'B',138:'D',139:'A',140:'C',141:'ABC',142:'BCD',143:'AC',144:'24',145:'A>PS;B>QR;C>QS;D>PS',146:'A'}
+    },
+    {
+      name: 'DTS 12', level: 2, topic: 'Refraction at Spherical Surface, Lenses',
+      startPage: 29, endPage: 30, qStart: 146, qEnd: 157, type: 'mcq', duration: 90,
+      answers: {146:'A',147:'C',148:'D',149:'D',150:'D',151:'A',152:'B',153:'BCD',154:'BD',155:'A>PR;B>QS;C>QS;D>PR',156:'A',157:'C'}
+    },
+    {
+      name: 'DTS 13', level: 2, topic: 'Combination of Lenses/Mirrors, Cutting',
+      startPage: 31, endPage: 32, qStart: 156, qEnd: 165, type: 'mcq', duration: 90,
+      answers: {156:'C',157:'C',158:'C',159:'A',160:'A',161:'C',162:'A',163:'C',164:'5',165:'A>P;B>Q;C>P;D>R'}
+    },
+    // --- JEE ARCHIVE ---
+    {
+      name: 'JEE Main', level: 3, topic: 'JEE Main Archive (2002-2020)',
+      startPage: 33, endPage: 42, qStart: 1, qEnd: 63, type: 'mcq', duration: 180,
+      answers: {1:'C',2:'B',3:'D',4:'A',5:'D',6:'D',7:'D',8:'A',9:'C',10:'D',11:'B',12:'B',13:'D',14:'D',15:'B',16:'B',17:'D',18:'B',19:'A',20:'D',21:'B',22:'A',23:'D',24:'B',25:'A',26:'B',27:'B',28:'D',29:'A',30:'B',31:'B',32:'B',33:'A',34:'D',35:'C',36:'B',37:'A',38:'C',39:'C',40:'C',41:'B',42:'D',43:'C',44:'C',45:'A',46:'D',47:'B',48:'A',49:'B',50:'90.00',51:'158',52:'1',53:'476',54:'C',55:'5',56:'D',57:'A',58:'B',59:'A',60:'60',61:'D',62:'C',63:'C'}
+    },
+    {
+      name: 'JEE Advanced', level: 3, topic: 'JEE Advanced Archive (1981-2019)',
+      startPage: 43, endPage: 58, qStart: 1, qEnd: 60, type: 'mcq', duration: 180,
+      answers: {1:'A',2:'A',3:'A',4:'D',5:'A',6:'C',7:'C',8:'C',9:'D',10:'C',11:'B',12:'D',13:'A',14:'B',15:'A',16:'D',17:'B',18:'A',19:'D',20:'D',21:'C',22:'B',23:'B',24:'C',25:'B',26:'D',27:'A',28:'B',29:'C',30:'A',31:'C',32:'B',33:'B',34:'C',35:'B',36:'A',37:'B',38:'C',39:'B',40:'C',41:'B',42:'A',43:'C',44:'C',45:'B',46:'D',47:'A',48:'D',49:'BD',50:'BC',51:'CD',52:'ABC',53:'AC',54:'AD',55:'ACD',56:'ACD',57:'ABD',58:'AC',59:'C',60:'C'}
+    }
+  ];
+
+  // ============================================================
+  //  GET SHEET INDEX FROM URL
+  // ============================================================
+  var params = new URLSearchParams(window.location.search);
+  var sheetIdx = parseInt(params.get('sheet')) || 0;
+  if (sheetIdx < 0 || sheetIdx >= SHEETS.length) sheetIdx = 0;
+
+  // Update page title
+  document.title = SHEETS[sheetIdx].name + ' — Ray Optics DTS | Physics for Noobs';
+
+  // ============================================================
+  //  STATE
+  // ============================================================
+  var currentSheet = sheetIdx;
+  var currentPage = 1;
+  var submitted = false;
+  var timerInterval = null;
+  var session = {};
+  var viewingSolutions = false;
+
+  // ============================================================
+  //  SESSION MANAGEMENT
+  // ============================================================
+  function getSessionKey() {
+    return 'dts_ray_optics_' + currentSheet;
+  }
+
+  function loadSession() {
+    session = JSON.parse(localStorage.getItem(getSessionKey()) || '{}');
+    if (!session.startTime) {
+      session.startTime = Date.now();
+      session.answers = {};
+      session.submitted = false;
+      saveSession();
+    }
+    submitted = session.submitted || false;
+  }
+
+  function saveSession() {
+    localStorage.setItem(getSessionKey(), JSON.stringify(session));
+  }
+
+  // ============================================================
+  //  IMAGE RENDERING
+  // ============================================================
+  var zoomLevel = 1;
+  var pageImages = [];
+  var currentPageIdx = 0;
+
+  function getImagePath(pageNum) {
+    var padded = String(pageNum).padStart(2, '0');
+    return viewingSolutions
+      ? '../pdfs/ray-optics/solutions-pages/s-' + padded + '.jpg'
+      : '../pdfs/ray-optics/pages/q-' + padded + '.jpg';
+  }
+
+  function loadImages(sheetIdx) {
+    var sheet = SHEETS[sheetIdx];
+    var wrapper = document.getElementById('img-wrapper');
+    wrapper.innerHTML = '';
+    viewingSolutions = false;
+    pageImages = [];
+    currentPageIdx = 0;
+    zoomLevel = 1;
+    updateZoomUI();
+
+    for (var p = sheet.startPage; p <= sheet.endPage; p++) {
+      var img = document.createElement('img');
+      img.className = 'dts-page-img';
+      img.src = getImagePath(p);
+      img.alt = sheet.name + ' - Page ' + (p - sheet.startPage + 1);
+      img.loading = (p === sheet.startPage) ? 'eager' : 'lazy';
+      pageImages.push(img);
+      wrapper.appendChild(img);
+    }
+
+    updatePageInfo();
+    updateDownloadBtn();
+    document.getElementById('pdf-container').scrollTop = 0;
+  }
+
+  function updateDownloadBtn() {
+    var btn = document.getElementById('download-btn');
+    btn.href = viewingSolutions
+      ? '../pdfs/ray-optics/solutions.pdf'
+      : '../pdfs/ray-optics/questions.pdf';
+  }
+
+  function loadSolutionImages() {
+    var wrapper = document.getElementById('img-wrapper');
+    wrapper.innerHTML = '';
+    viewingSolutions = true;
+    pageImages = [];
+    currentPageIdx = 0;
+    zoomLevel = 1;
+    updateZoomUI();
+
+    var totalSolPages = 62;
+    for (var p = 1; p <= totalSolPages; p++) {
+      var img = document.createElement('img');
+      img.className = 'dts-page-img';
+      img.src = getImagePath(p);
+      img.alt = 'Solution Page ' + p;
+      img.loading = (p <= 3) ? 'eager' : 'lazy';
+      pageImages.push(img);
+      wrapper.appendChild(img);
+    }
+
+    updatePageInfo();
+    updateDownloadBtn();
+    document.getElementById('pdf-container').scrollTop = 0;
+  }
+
+  // ============================================================
+  //  PAGE TRACKING
+  // ============================================================
+  function updatePageInfo() {
+    var total = pageImages.length;
+    var label = viewingSolutions ? 'Sol ' : 'Page ';
+    document.getElementById('pdf-page-info').textContent = label + (currentPageIdx + 1) + ' / ' + total;
+  }
+
+  function detectCurrentPage() {
+    var container = document.getElementById('pdf-container');
+    var scrollTop = container.scrollTop;
+    var best = 0;
+    for (var i = 0; i < pageImages.length; i++) {
+      if (pageImages[i].offsetTop - container.offsetTop <= scrollTop + 60) {
+        best = i;
+      }
+    }
+    if (best !== currentPageIdx) {
+      currentPageIdx = best;
+      updatePageInfo();
+    }
+  }
+
+  document.getElementById('pdf-container').addEventListener('scroll', function() {
+    detectCurrentPage();
+  });
+
+  // ============================================================
+  //  ZOOM
+  // ============================================================
+  var ZOOM_MIN = 0.5;
+  var ZOOM_MAX = 3;
+  var ZOOM_STEP = 0.25;
+
+  function setZoom(level) {
+    zoomLevel = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, level));
+    var wrapper = document.getElementById('img-wrapper');
+    wrapper.style.transform = 'scale(' + zoomLevel + ')';
+    updateZoomUI();
+  }
+
+  function updateZoomUI() {
+    document.getElementById('zoom-level').textContent = Math.round(zoomLevel * 100) + '%';
+  }
+
+  document.getElementById('zoom-in').addEventListener('click', function() {
+    setZoom(zoomLevel + ZOOM_STEP);
+  });
+
+  document.getElementById('zoom-out').addEventListener('click', function() {
+    setZoom(zoomLevel - ZOOM_STEP);
+  });
+
+  document.getElementById('zoom-fit').addEventListener('click', function() {
+    setZoom(1);
+    document.getElementById('pdf-container').scrollLeft = 0;
+  });
+
+  // Pinch-to-zoom on touch devices
+  (function() {
+    var container = document.getElementById('pdf-container');
+    var startDist = 0;
+    var startZoom = 1;
+
+    container.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        startDist = Math.hypot(dx, dy);
+        startZoom = zoomLevel;
+      }
+    }, { passive: false });
+
+    container.addEventListener('touchmove', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        var dist = Math.hypot(dx, dy);
+        var scale = dist / startDist;
+        setZoom(startZoom * scale);
+      }
+    }, { passive: false });
+
+    container.addEventListener('wheel', function(e) {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        var delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP;
+        setZoom(zoomLevel + delta);
+      }
+    }, { passive: false });
+  })();
+
+  // ============================================================
+  //  ANSWER GRID
+  // ============================================================
+  function buildAnswerGrid() {
+    var sheet = SHEETS[currentSheet];
+    var grid = document.getElementById('answer-grid');
+    grid.innerHTML = '';
+
+    var qCount = sheet.qEnd - sheet.qStart + 1;
+    for (var i = 0; i < qCount; i++) {
+      var qNum = sheet.qStart + i;
+      var row = document.createElement('div');
+      row.className = 'ans-row';
+      row.setAttribute('data-q', qNum);
+
+      var label = document.createElement('span');
+      label.className = 'ans-q-num';
+      label.textContent = 'Q' + qNum;
+      row.appendChild(label);
+
+      if (sheet.type === 'nat' || isNatQuestion(sheet, qNum)) {
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'ans-nat-input';
+        input.placeholder = 'Answer';
+        input.setAttribute('data-q', qNum);
+        if (session.answers && session.answers[qNum]) {
+          input.value = session.answers[qNum];
+        }
+        if (submitted) input.disabled = true;
+        input.addEventListener('input', function() {
+          if (submitted) return;
+          var q = this.getAttribute('data-q');
+          session.answers[q] = this.value.trim();
+          saveSession();
+          updateProgress();
+        });
+        row.appendChild(input);
+      } else {
+        var opts = ['A', 'B', 'C', 'D'];
+        opts.forEach(function(opt) {
+          var btn = document.createElement('button');
+          btn.className = 'ans-opt';
+          btn.textContent = opt;
+          btn.setAttribute('data-q', qNum);
+          btn.setAttribute('data-key', opt);
+
+          if (session.answers && session.answers[qNum] === opt) {
+            btn.classList.add('selected');
+          }
+
+          btn.addEventListener('click', function() {
+            if (submitted) return;
+            var q = this.getAttribute('data-q');
+            var key = this.getAttribute('data-key');
+            var siblings = this.parentElement.querySelectorAll('.ans-opt');
+            var wasSelected = this.classList.contains('selected');
+            siblings.forEach(function(s) { s.classList.remove('selected'); });
+
+            if (!wasSelected) {
+              this.classList.add('selected');
+              session.answers[q] = key;
+            } else {
+              delete session.answers[q];
+            }
+            saveSession();
+            updateProgress();
+          });
+
+          row.appendChild(btn);
+        });
+      }
+
+      grid.appendChild(row);
+    }
+    updateProgress();
+  }
+
+  function isNatQuestion(sheet, qNum) {
+    var ans = sheet.answers[qNum];
+    if (!ans) return false;
+    return /^\d+(\.\d+)?$/.test(ans);
+  }
+
+  function updateProgress() {
+    var sheet = SHEETS[currentSheet];
+    var total = sheet.qEnd - sheet.qStart + 1;
+    var answered = Object.keys(session.answers || {}).filter(function(k) {
+      return session.answers[k] && session.answers[k] !== '';
+    }).length;
+    document.getElementById('progress').textContent = answered + ' / ' + total + ' answered';
+  }
+
+  // ============================================================
+  //  TIMER
+  // ============================================================
+  function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
+    var sheet = SHEETS[currentSheet];
+    var elapsed = Math.floor((Date.now() - session.startTime) / 1000);
+    var totalSeconds = Math.max(0, sheet.duration * 60 - elapsed);
+
+    function update() {
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      document.getElementById('timer').textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    update();
+
+    if (submitted || totalSeconds <= 0) {
+      if (!submitted) submitTest();
+      return;
+    }
+
+    timerInterval = setInterval(function() {
+      if (submitted) { clearInterval(timerInterval); return; }
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      update();
+    }, 1000);
+  }
+
+  // ============================================================
+  //  SUBMIT & SCORING
+  // ============================================================
+  function submitTest() {
+    if (submitted) return;
+    submitted = true;
+    session.submitted = true;
+    session.endTime = Date.now();
+    saveSession();
+    if (timerInterval) clearInterval(timerInterval);
+
+    var sheet = SHEETS[currentSheet];
+    var total = sheet.qEnd - sheet.qStart + 1;
+    var correct = 0;
+    var wrong = 0;
+    var unanswered = 0;
+
+    var breakdownHTML = '';
+
+    for (var i = 0; i < total; i++) {
+      var qNum = sheet.qStart + i;
+      var correctAns = String(sheet.answers[qNum] || '');
+      var userAns = String(session.answers[qNum] || '');
+      var status = '';
+
+      if (!userAns) {
+        unanswered++;
+        status = 'unanswered';
+      } else if (userAns.toUpperCase() === correctAns.toUpperCase()) {
+        correct++;
+        status = 'correct';
+      } else {
+        wrong++;
+        status = 'wrong';
+      }
+
+      breakdownHTML += '<div class="result-row result-' + status + '">' +
+        '<span class="result-q">Q' + qNum + '</span>' +
+        '<span class="result-your">' + (userAns || '&mdash;') + '</span>' +
+        '<span class="result-correct">' + correctAns + '</span>' +
+        '<span class="result-status">' + (status === 'correct' ? '&#10003;' : status === 'wrong' ? '&#10007;' : '&mdash;') + '</span>' +
+        '</div>';
+
+      var row = document.querySelector('.ans-row[data-q="' + qNum + '"]');
+      if (row) {
+        row.classList.add('result-' + status);
+        if (sheet.type !== 'nat' && !isNatQuestion(sheet, qNum)) {
+          var correctBtn = row.querySelector('.ans-opt[data-key="' + correctAns + '"]');
+          if (correctBtn) correctBtn.classList.add('ans-correct');
+          var wrongBtn = row.querySelector('.ans-opt.selected:not(.ans-correct)');
+          if (wrongBtn) wrongBtn.classList.add('ans-wrong');
+        }
+      }
+    }
+
+    var jeeScore = (correct * 4) - (wrong * 1);
+    var maxScore = total * 4;
+
+    document.querySelectorAll('.ans-opt').forEach(function(b) { b.disabled = true; });
+    document.querySelectorAll('.ans-nat-input').forEach(function(b) { b.disabled = true; });
+
+    document.getElementById('score').textContent = 'Score: ' + jeeScore + ' / ' + maxScore;
+
+    var btn = document.getElementById('submit-btn');
+    btn.textContent = 'Submitted';
+    btn.disabled = true;
+    btn.style.cursor = 'default';
+
+    var panel = document.getElementById('results-panel');
+    panel.style.display = 'block';
+    document.getElementById('results-title').textContent = sheet.name + ' \u2014 Results';
+    document.getElementById('results-score').innerHTML = '<span class="big-score">' + jeeScore + '</span> / ' + maxScore;
+    document.getElementById('stat-correct').textContent = correct;
+    document.getElementById('stat-wrong').textContent = wrong;
+    document.getElementById('stat-unanswered').textContent = unanswered;
+
+    var timeTaken = Math.floor(((session.endTime || Date.now()) - session.startTime) / 1000);
+    var mm = Math.floor(timeTaken / 60);
+    var ss = timeTaken % 60;
+    document.getElementById('stat-time').textContent = mm + ':' + (ss < 10 ? '0' : '') + ss;
+
+    document.getElementById('results-breakdown').innerHTML =
+      '<div class="result-header-row"><span>Q#</span><span>Yours</span><span>Answer</span><span></span></div>' + breakdownHTML;
+
+    panel.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ============================================================
+  //  INIT TEST
+  // ============================================================
+  function initTest() {
+    submitted = false;
+
+    document.getElementById('score').textContent = '';
+    document.getElementById('submit-btn').textContent = 'Submit Test';
+    document.getElementById('submit-btn').disabled = false;
+    document.getElementById('submit-btn').style.cursor = 'pointer';
+    document.getElementById('results-panel').style.display = 'none';
+
+    loadSession();
+    buildAnswerGrid();
+    startTimer();
+    loadImages(currentSheet);
+
+    if (session.submitted) {
+      submitTest();
+    }
+  }
+
+  // ============================================================
+  //  PAGE NAVIGATION
+  // ============================================================
+  document.getElementById('pdf-prev').addEventListener('click', function() {
+    if (currentPageIdx > 0) {
+      currentPageIdx--;
+      pageImages[currentPageIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updatePageInfo();
+    }
+  });
+
+  document.getElementById('pdf-next').addEventListener('click', function() {
+    if (currentPageIdx < pageImages.length - 1) {
+      currentPageIdx++;
+      pageImages[currentPageIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updatePageInfo();
+    }
+  });
+
+  // ============================================================
+  //  SUBMIT BUTTON
+  // ============================================================
+  document.getElementById('submit-btn').addEventListener('click', function() {
+    if (!submitted) submitTest();
+  });
+
+  // ============================================================
+  //  SOLUTIONS & RETAKE
+  // ============================================================
+  document.getElementById('view-solutions-btn').addEventListener('click', function() {
+    loadSolutionImages();
+    document.querySelector('.dts-pdf-panel').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  var COOLDOWN_MS = 30 * 60 * 1000; // 30 minutes
+
+  document.getElementById('retake-btn').addEventListener('click', function() {
+    var data = JSON.parse(localStorage.getItem(getSessionKey()) || '{}');
+    if (data.endTime) {
+      var elapsed = Date.now() - data.endTime;
+      if (elapsed < COOLDOWN_MS) {
+        var remaining = Math.ceil((COOLDOWN_MS - elapsed) / 60000);
+        alert('Cooldown active. You can retake this test in ' + remaining + ' minutes.');
+        return;
+      }
+    }
+    localStorage.removeItem(getSessionKey());
+    initTest();
+  });
+
+  // ============================================================
+  //  FULLSCREEN
+  // ============================================================
+  var testWrapper = document.querySelector('.dts-test');
+  var fullscreenBtn = document.getElementById('fullscreen-btn');
+
+  function isFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement;
+  }
+
+  function enterFullscreen() {
+    var fn = testWrapper.requestFullscreen || testWrapper.webkitRequestFullscreen;
+    if (fn) return fn.call(testWrapper);
+    return Promise.reject();
+  }
+
+  function toggleFullscreen() {
+    if (isFullscreen()) {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    } else {
+      enterFullscreen();
+    }
+  }
+
+  fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
+
+  function onFsChange() {
+    if (isFullscreen()) {
+      fullscreenBtn.innerHTML = '&#x2716; Exit';
+    } else {
+      fullscreenBtn.innerHTML = '&#x26F6; Fullscreen';
+    }
+  }
+
+  // ============================================================
+  //  KEYBOARD NAVIGATION
+  // ============================================================
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') document.getElementById('pdf-prev').click();
+    if (e.key === 'ArrowRight') document.getElementById('pdf-next').click();
+    if (e.key === 'f' || e.key === 'F') {
+      var tag = document.activeElement.tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') toggleFullscreen();
+    }
+  });
+
+  // ============================================================
+  //  AUTO-FULLSCREEN ON LOAD
+  // ============================================================
+  initTest();
+
+  // Try auto-fullscreen; if blocked, show prompt
+  setTimeout(function() {
+    try {
+      enterFullscreen().catch(showFsPrompt);
+    } catch (e) {
+      showFsPrompt();
+    }
+  }, 600);
+
+  function showFsPrompt() {
+    var prompt = document.getElementById('fs-prompt');
+    prompt.style.display = 'flex';
+
+    document.getElementById('fs-prompt-btn').addEventListener('click', function() {
+      enterFullscreen();
+      prompt.style.display = 'none';
+    });
+
+    document.getElementById('fs-skip-btn').addEventListener('click', function() {
+      prompt.style.display = 'none';
+    });
+  }
+
+  </script>
+
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>
