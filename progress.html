@@ -112,6 +112,10 @@
       </div>
 
       <div id="progress-dashboard" style="display:none;">
+        <div id="progress-student-name" style="text-align:center;margin-bottom:12px;display:none;">
+          <span style="font-family:var(--font-display);font-size:1.1rem;color:var(--text-primary);font-weight:600;" id="progress-sname"></span>
+          <span id="progress-batch" style="font-size:0.72rem;background:rgba(0,212,255,0.1);color:var(--color-primary);padding:2px 8px;border-radius:4px;margin-left:8px;font-weight:600;display:none;"></span>
+        </div>
         <div class="summary-cards" id="summary-cards"></div>
 
         <div class="progress-tabs">
@@ -391,6 +395,20 @@
           }
           loginPrompt.style.display = 'none';
           dashboard.style.display = 'block';
+          // Show student name if available
+          db.collection('users').doc(user.uid).get().then(function(doc) {
+            var data = doc.exists ? doc.data() : {};
+            if (data.studentName) {
+              var nameWrap = document.getElementById('progress-student-name');
+              document.getElementById('progress-sname').textContent = data.studentName;
+              nameWrap.style.display = 'block';
+              if (data.batchCode) {
+                var batchEl = document.getElementById('progress-batch');
+                batchEl.textContent = data.batchCode;
+                batchEl.style.display = 'inline';
+              }
+            }
+          });
           loadProgress(user.uid);
         });
 

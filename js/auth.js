@@ -53,22 +53,17 @@
           }, { merge: true });
 
           // Check if profile is complete (studentName exists)
-          if (!profileFormShown) {
-            db.collection('users').doc(user.uid).get({ source: 'server' }).then(function(doc) {
+          // Use localStorage as fast check to avoid Firestore read on every page
+          if (!profileFormShown && !localStorage.getItem('pf-complete')) {
+            profileFormShown = true;
+            db.collection('users').doc(user.uid).get().then(function(doc) {
               var data = doc.exists ? doc.data() : {};
-              if (!data.studentName && !profileFormShown) {
-                profileFormShown = true;
+              if (data.studentName) {
+                // Profile already complete — set flag so we never check again
+                localStorage.setItem('pf-complete', '1');
+              } else {
                 showProfileForm(db, user.uid);
               }
-            }).catch(function() {
-              // Offline fallback: try cache
-              db.collection('users').doc(user.uid).get().then(function(doc) {
-                var data = doc.exists ? doc.data() : {};
-                if (!data.studentName && !profileFormShown) {
-                  profileFormShown = true;
-                  showProfileForm(db, user.uid);
-                }
-              });
             });
           }
         }
@@ -104,11 +99,13 @@
 
     if (logoutBtn) {
       logoutBtn.addEventListener('click', function() {
+        localStorage.removeItem('pf-complete');
         auth.signOut();
       });
     }
     if (mobileSignoutBtn) {
       mobileSignoutBtn.addEventListener('click', function() {
+        localStorage.removeItem('pf-complete');
         auth.signOut();
       });
     }
@@ -189,6 +186,7 @@
       if (batchCode) updateData.batchCode = batchCode;
 
       db.collection('users').doc(uid).set(updateData, { merge: true }).then(function() {
+        localStorage.setItem('pf-complete', '1');
         overlay.classList.remove('show');
         setTimeout(function() {
           overlay.remove();
