@@ -217,8 +217,8 @@
           var d = doc.data();
           var u = {
             uid: doc.id,
-            displayName: d.displayName || '',
-            email: d.email || '',
+            displayName: d.displayName || 'User-' + doc.id.slice(0, 6),
+            email: d.email || doc.id.slice(0, 8) + '…',
             photoURL: d.photoURL || '',
             simulations: [],
             flashcards: {},
