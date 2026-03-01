@@ -470,6 +470,30 @@
         collision, causing a chain reaction (avalanche).
       </p>
 
+      <h3>Diode Current Equation (Shockley Equation)</h3>
+      <p>
+        The current through a p-n junction diode as a function of applied voltage is given by:
+      </p>
+      <div class="formula-box">
+        $$I = I_0 \left[\exp\left(\frac{eV}{k_B T}\right) - 1\right]$$
+        $$I_0 = \text{reverse saturation current}$$
+        $$e = 1.6 \times 10^{-19} \text{ C}, \quad k_B = 1.38 \times 10^{-23} \text{ J/K}$$
+      </div>
+      <p>
+        <strong>Forward bias (V &gt; 0):</strong> The exponential term dominates, and current grows
+        exponentially with voltage. At room temperature (300 K), \(k_BT/e \approx 0.026\) V, so even a
+        small forward voltage produces a large current.
+      </p>
+      <p>
+        <strong>Reverse bias (V &lt; 0):</strong> The exponential term becomes negligible, and
+        \(I \approx -I_0\). The current saturates at the small reverse saturation value.
+      </p>
+      <p>
+        <strong>JEE/NEET Tip:</strong> This equation explains why the V-I curve is exponential in forward bias
+        and nearly flat in reverse bias. The thermal voltage \(k_BT/e \approx 26\) mV at 300 K is a
+        frequently used value in numericals.
+      </p>
+
       <h3>Dynamic Resistance</h3>
       <div class="formula-box">
         $$r_d = \frac{\Delta V}{\Delta I}$$
@@ -648,6 +672,36 @@
         large enough to drive the transistor into <strong>saturation</strong>, V<sub>CE</sub> &asymp; 0 and
         the transistor acts as a closed switch. This is the basis of digital electronics.
       </p>
+
+      <h3>Transistor as an Oscillator</h3>
+      <p>
+        An oscillator produces continuous, undamped electrical oscillations (AC signal) without any external
+        AC input. It converts DC energy into AC energy. The key principle is <strong>positive feedback</strong>
+        &mdash; a portion of the output signal is fed back to the input in phase, sustaining the oscillations.
+      </p>
+      <p>
+        For sustained oscillations, the circuit must satisfy <strong>Barkhausen's condition</strong>:
+      </p>
+      <div class="formula-box">
+        $$|A_V \cdot \beta_{\text{feedback}}| = 1$$
+        $$\text{Total phase shift around the loop} = 0^\circ \text{ (or } 360^\circ\text{)}$$
+      </div>
+      <p>
+        Here A<sub>V</sub> is the voltage gain of the amplifier and &beta;<sub>feedback</sub> is the
+        feedback fraction. If the loop gain is exactly 1 and the feedback is in phase, oscillations are
+        sustained at a specific frequency determined by the LC or RC components in the feedback network.
+      </p>
+      <p>
+        The frequency of oscillation for an LC oscillator is:
+      </p>
+      <div class="formula-box">
+        $$f = \frac{1}{2\pi\sqrt{LC}}$$
+      </div>
+      <p>
+        <strong>Key difference:</strong> An amplifier requires an external AC input and produces a larger
+        AC output. An oscillator needs no external AC input &mdash; it generates AC from DC using positive
+        feedback.
+      </p>
     </div>
 
     <!-- ============================== -->
@@ -726,6 +780,31 @@
         implemented using only NAND gates or only NOR gates. Questions often ask you to identify the gate
         from its truth table, or to construct one gate using others (e.g., make NOT from NAND).
       </p>
+
+      <h3>De Morgan's Theorems</h3>
+      <p>
+        De Morgan's theorems are essential tools for simplifying Boolean expressions and converting
+        between gate types. They are frequently tested in both JEE Main and NEET.
+      </p>
+      <div class="formula-box">
+        <strong>Theorem 1:</strong> \(\overline{A \cdot B} = \bar{A} + \bar{B}\)<br><br>
+        The complement of AND equals OR of the complements.<br>
+        (NAND = OR with inverted inputs)<br><br>
+        <strong>Theorem 2:</strong> \(\overline{A + B} = \bar{A} \cdot \bar{B}\)<br><br>
+        The complement of OR equals AND of the complements.<br>
+        (NOR = AND with inverted inputs)
+      </div>
+      <p>
+        <strong>Application:</strong> Using De Morgan's theorems, you can convert any Boolean expression
+        into one that uses only NAND gates or only NOR gates. This is why NAND and NOR are called
+        universal gates.
+      </p>
+      <p>
+        <strong>Example:</strong> To implement Y = A + B using only NAND gates:<br>
+        Step 1: Apply De Morgan's: \(A + B = \overline{\bar{A} \cdot \bar{B}}\)<br>
+        Step 2: This requires inverting A and B (using NAND as NOT), then NANDing the results &mdash;
+        three NAND gates total.
+      </p>
     </div>
 
     <!-- ============================== -->
@@ -750,6 +829,7 @@
 
       <h3>Diode and Rectifier</h3>
       <div class="formula-box">
+        $$I = I_0 \left[\exp\left(\frac{eV}{k_B T}\right) - 1\right]$$
         $$V_{\text{threshold}} \approx 0.7 \text{ V (Si)}, \quad 0.3 \text{ V (Ge)}$$
         $$r_d = \frac{\Delta V}{\Delta I} \quad \text{(dynamic resistance)}$$
         $$\text{Half-wave: } V_{\text{dc}} = \frac{V_0}{\pi}, \quad f_{\text{out}} = f_{\text{in}}$$
@@ -762,6 +842,18 @@
         $$\alpha = \frac{I_C}{I_E}, \quad \beta = \frac{I_C}{I_B}$$
         $$\beta = \frac{\alpha}{1 - \alpha}, \quad \alpha = \frac{\beta}{1 + \beta}$$
         $$A_V = -\beta \frac{R_C}{R_{\text{in}}}$$
+      </div>
+
+      <h3>Oscillator</h3>
+      <div class="formula-box">
+        $$\text{Barkhausen condition: } |A_V \cdot \beta_{\text{feedback}}| = 1$$
+        $$f = \frac{1}{2\pi\sqrt{LC}} \quad \text{(LC oscillator frequency)}$$
+      </div>
+
+      <h3>Logic Gates (De Morgan's Theorems)</h3>
+      <div class="formula-box">
+        $$\overline{A \cdot B} = \bar{A} + \bar{B}$$
+        $$\overline{A + B} = \bar{A} \cdot \bar{B}$$
       </div>
 
       <h3>Zener Diode (Voltage Regulator)</h3>
