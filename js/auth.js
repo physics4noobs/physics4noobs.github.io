@@ -105,12 +105,16 @@
     if (logoutBtn) {
       logoutBtn.addEventListener('click', function() {
         localStorage.removeItem('pf-complete');
+        localStorage.removeItem('pf-studentName');
+        localStorage.removeItem('pf-batchCode');
         auth.signOut();
       });
     }
     if (mobileSignoutBtn) {
       mobileSignoutBtn.addEventListener('click', function() {
         localStorage.removeItem('pf-complete');
+        localStorage.removeItem('pf-studentName');
+        localStorage.removeItem('pf-batchCode');
         auth.signOut();
       });
     }
@@ -195,6 +199,8 @@
 
       db.collection('users').doc(uid).set(updateData, { merge: true }).then(function() {
         localStorage.setItem('pf-complete', '1');
+        localStorage.setItem('pf-studentName', studentName);
+        if (batchCode) localStorage.setItem('pf-batchCode', batchCode);
         sessionStorage.setItem('pf-verified', '1');
         submitBtn.textContent = 'Saved!';
         submitBtn.style.background = 'linear-gradient(135deg, #00e676, #00c853)';

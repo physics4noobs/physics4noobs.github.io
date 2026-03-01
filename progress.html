@@ -20,7 +20,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script defer src="js/firebase-config.js"></script>
-  <script defer src="js/auth.js?v=58"></script>
+  <script defer src="js/auth.js?v=61"></script>
   <script defer src="js/ranking.js"></script>
   <script defer src="js/achievements-config.js"></script>
 </head>
@@ -395,24 +395,19 @@
           }
           loginPrompt.style.display = 'none';
           dashboard.style.display = 'block';
-          // Show student name
-          db.collection('users').doc(user.uid).get().then(function(doc) {
-            var data = doc.exists ? doc.data() : {};
-            console.log('Progress profile data:', JSON.stringify(data));
-            var name = data.studentName || data.displayName || user.displayName || '';
-            if (name) {
-              var nameWrap = document.getElementById('progress-student-name');
-              document.getElementById('progress-sname').textContent = name;
-              nameWrap.style.display = 'block';
-              if (data.batchCode) {
-                var batchEl = document.getElementById('progress-batch');
-                batchEl.textContent = data.batchCode;
-                batchEl.style.display = 'inline';
-              }
+          // Show student name (localStorage first, Firestore fallback)
+          var name = localStorage.getItem('pf-studentName') || user.displayName || '';
+          var batch = localStorage.getItem('pf-batchCode') || '';
+          if (name) {
+            var nameWrap = document.getElementById('progress-student-name');
+            document.getElementById('progress-sname').textContent = name;
+            nameWrap.style.display = 'block';
+            if (batch) {
+              var batchEl = document.getElementById('progress-batch');
+              batchEl.textContent = batch;
+              batchEl.style.display = 'inline';
             }
-          }).catch(function(err) {
-            console.error('Progress profile read error:', err);
-          });
+          }
           loadProgress(user.uid);
         });
 
