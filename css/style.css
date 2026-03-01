@@ -2194,6 +2194,34 @@ ul { list-style: none; }
 /* --- DTS PDF Test Viewer --- */
 .dts-test { max-width: 1200px; }
 
+.dts-test .test-grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.dts-test .test-card {
+  padding: 14px 16px;
+}
+
+.dts-test .test-card .tc-title {
+  font-size: 0.82rem;
+}
+
+.dts-test .test-card .tc-info {
+  font-size: 0.7rem;
+  margin-bottom: 8px;
+}
+
+.dts-test .test-card .tc-badge {
+  font-size: 0.52rem;
+  padding: 1px 6px;
+  margin-bottom: 4px;
+}
+
+.dts-test .test-card .tc-link {
+  font-size: 0.7rem;
+}
+
 .dts-selector {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
