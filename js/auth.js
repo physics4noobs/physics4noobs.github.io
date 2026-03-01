@@ -202,15 +202,23 @@
       if (batchCode) updateData.batchCode = batchCode;
 
       db.collection('users').doc(uid).set(updateData, { merge: true }).then(function() {
+        localStorage.setItem('pf-complete', '1');
+        sessionStorage.setItem('pf-verified', '1');
+        submitBtn.textContent = 'Saved!';
         overlay.classList.remove('show');
         setTimeout(function() {
           overlay.remove();
         }, 350);
       }).catch(function(err) {
         console.error('Profile save error:', err);
-        // Keep localStorage set even on error — prevents repeated popups
+        localStorage.removeItem('pf-complete');
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Continue';
+        submitBtn.textContent = 'Retry';
+        // Show error to user
+        var errDiv = document.createElement('div');
+        errDiv.style.cssText = 'color:var(--color-rose,#ff6464);font-size:0.8rem;text-align:center;margin-top:8px;';
+        errDiv.textContent = 'Save failed: ' + (err.message || err.code || 'Unknown error');
+        submitBtn.parentNode.appendChild(errDiv);
       });
     });
 
