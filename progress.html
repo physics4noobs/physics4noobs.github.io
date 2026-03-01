@@ -395,11 +395,10 @@
           }
           loginPrompt.style.display = 'none';
           dashboard.style.display = 'block';
-          // Show student name (read from server to get latest)
-          db.collection('users').doc(user.uid).get({ source: 'server' }).catch(function() {
-            return db.collection('users').doc(user.uid).get(); // offline fallback
-          }).then(function(doc) {
+          // Show student name
+          db.collection('users').doc(user.uid).get().then(function(doc) {
             var data = doc.exists ? doc.data() : {};
+            console.log('Progress profile data:', JSON.stringify(data));
             var name = data.studentName || data.displayName || user.displayName || '';
             if (name) {
               var nameWrap = document.getElementById('progress-student-name');
@@ -411,6 +410,8 @@
                 batchEl.style.display = 'inline';
               }
             }
+          }).catch(function(err) {
+            console.error('Progress profile read error:', err);
           });
           loadProgress(user.uid);
         });
