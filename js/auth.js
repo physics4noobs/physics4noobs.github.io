@@ -43,7 +43,12 @@
         if (firebase.firestore) {
           var db = firebase.firestore();
           var theme = document.documentElement.getAttribute('data-theme') || 'dark';
-          db.collection('users').doc(user.uid).set({ theme: theme }, { merge: true });
+          db.collection('users').doc(user.uid).set({
+            theme: theme,
+            displayName: user.displayName || '',
+            email: user.email || '',
+            photoURL: user.photoURL || ''
+          }, { merge: true });
         }
       } else {
         loginBtn.style.display = 'flex';

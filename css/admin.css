@@ -1,0 +1,380 @@
+/* ============================================
+   ADMIN DASHBOARD - Physics for Noobs
+   ============================================ */
+
+/* --- Gate & Denied screens --- */
+.admin-gate-inner {
+  max-width: 420px;
+  margin: 120px auto;
+  text-align: center;
+  padding: 48px 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.admin-gate-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+.admin-gate-inner h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.admin-gate-inner p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* --- Loader --- */
+.admin-loader {
+  text-align: center;
+  padding: 120px 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.admin-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-subtle);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: admin-spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes admin-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Stats Grid --- */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.admin-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  text-align: center;
+  transition: var(--transition-fast);
+}
+.admin-stat-card:hover {
+  border-color: rgba(0, 212, 255, 0.2);
+}
+.admin-stat-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+.admin-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+.admin-stat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* --- Controls (search + sort) --- */
+.admin-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.admin-search {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  outline: none;
+  transition: var(--transition-fast);
+}
+.admin-search::placeholder {
+  color: var(--text-muted);
+}
+.admin-search:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.1);
+}
+.admin-sort {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.admin-sort .pc-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 4px;
+}
+.admin-sort .pc-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.admin-sort .pc-btn:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  color: var(--text-primary);
+}
+.admin-sort .pc-btn.active {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.3);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* --- User Table --- */
+.admin-table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  padding: 10px 20px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 8px;
+}
+.admin-user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* --- User Row --- */
+.admin-user-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+.admin-user-row:hover {
+  border-color: rgba(0, 212, 255, 0.2);
+  background: var(--bg-glass-hover);
+}
+.admin-user-row.expanded {
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-bottom-color: transparent;
+}
+
+/* User cell */
+.admin-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.admin-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--border-subtle);
+}
+.admin-avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-glass);
+  border: 2px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.admin-user-info {
+  min-width: 0;
+}
+.admin-user-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.admin-user-email {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Rank badge */
+.admin-rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.admin-rank-icon {
+  font-size: 0.9rem;
+}
+
+/* Stat cells */
+.admin-cell {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+.admin-cell-muted {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+/* --- Expandable Detail --- */
+.admin-user-detail {
+  display: none;
+  padding: 16px 20px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  margin-bottom: 2px;
+}
+.admin-user-detail.open {
+  display: block;
+}
+.admin-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.admin-detail-section h4 {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.admin-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 0.82rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.admin-detail-row:last-child {
+  border-bottom: none;
+}
+.admin-detail-label {
+  color: var(--text-primary);
+}
+.admin-detail-value {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+.admin-detail-empty {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+/* --- Refresh button --- */
+.admin-refresh-btn {
+  padding: 8px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.admin-refresh-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* --- Responsive --- */
+@media (max-width: 960px) {
+  .admin-table-header {
+    display: none;
+  }
+  .admin-user-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 16px;
+  }
+  .admin-user-row > *:not(.admin-user-cell) {
+    display: flex;
+    justify-content: space-between;
+  }
+  .admin-user-row > *:not(.admin-user-cell)::before {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .admin-user-row > .admin-rank-col::before { content: 'Rank'; }
+  .admin-user-row > .admin-ach-col::before { content: 'Achievements'; }
+  .admin-user-row > .admin-time-col::before { content: 'Sim Time'; }
+  .admin-user-row > .admin-fc-col::before { content: 'Flashcards'; }
+  .admin-user-row > .admin-active-col::before { content: 'Last Active'; }
+  .admin-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .admin-sort {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 640px) {
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin-stat-value {
+    font-size: 1.4rem;
+  }
+}

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#050510">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="js/firebase-config.js"></script>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <!-- Minimal Nav -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-string"></div><div class="pendulum-bob"></div></div></div></div>
+        <div class="logo-text"><span class="brand-name"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">FREE THERAPY FOR PHYSICS TRAUMA</span></div>
+      </a>
+      <div class="nav-links">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Admin Gate: Not signed in -->
+  <div id="admin-gate" style="display:none;">
+    <div class="admin-gate-inner">
+      <div class="admin-gate-icon">&#128274;</div>
+      <h2>Admin Access Required</h2>
+      <p>This page is restricted. Sign in with the admin account to continue.</p>
+      <button class="auth-btn" id="admin-login-btn">
+        <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign in with Google
+      </button>
+    </div>
+  </div>
+
+  <!-- Access Denied: Wrong account -->
+  <div id="admin-denied" style="display:none;">
+    <div class="admin-gate-inner">
+      <div class="admin-gate-icon">&#9940;</div>
+      <h2>Access Denied</h2>
+      <p>You do not have permission to view this page.</p>
+      <button class="auth-btn" id="admin-signout-btn">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div id="admin-loading" style="display:none;">
+    <div class="admin-loader">
+      <div class="admin-spinner"></div>
+      <p>Loading dashboard data...</p>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="admin-dashboard" style="display:none;">
+    <div class="page-header">
+      <h1>Admin <span class="text-gradient">Dashboard</span></h1>
+      <p>Site-wide analytics and user progress &nbsp; <button class="admin-refresh-btn" id="admin-refresh">Refresh</button></p>
+    </div>
+
+    <section class="section" style="padding-top: 20px;">
+      <div class="container">
+
+        <!-- Stats -->
+        <div class="admin-stats-grid" id="admin-stats"></div>
+
+        <!-- Controls -->
+        <div class="admin-controls">
+          <input type="text" id="admin-search" class="admin-search" placeholder="Search users by name or email...">
+          <div class="admin-sort">
+            <span class="pc-label">Sort:</span>
+            <button class="pc-btn active" data-sort="lastActive">Last Active</button>
+            <button class="pc-btn" data-sort="achievements">Achievements</button>
+            <button class="pc-btn" data-sort="studyTime">Study Time</button>
+            <button class="pc-btn" data-sort="name">Name</button>
+          </div>
+        </div>
+
+        <!-- Table Header -->
+        <div class="admin-table-header">
+          <span>User</span>
+          <span>Rank</span>
+          <span>Achievements</span>
+          <span>Sim Time</span>
+          <span>Flashcards</span>
+          <span>Last Active</span>
+        </div>
+
+        <!-- User List -->
+        <div class="admin-user-list" id="admin-user-list"></div>
+
+      </div>
+    </section>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    var ADMIN_EMAIL = 'im666d@gmail.com';
+
+    // --- Rank tiers (from ranking.js) ---
+    var RANKS = [
+      { id: 'bronze',   label: 'Bronze',   icon: '\uD83E\uDD49', min: 0,   color: '#cd7f32' },
+      { id: 'silver',   label: 'Silver',   icon: '\uD83E\uDD48', min: 15,  color: '#c0c0c0' },
+      { id: 'gold',     label: 'Gold',     icon: '\uD83E\uDD47', min: 35,  color: '#ffd700' },
+      { id: 'platinum', label: 'Platinum', icon: '\uD83D\uDCA0', min: 65,  color: '#00d4ff' },
+      { id: 'diamond',  label: 'Diamond',  icon: '\uD83D\uDC8E', min: 100, color: '#b9f2ff' },
+      { id: 'master',   label: 'Master',   icon: '\uD83D\uDC51', min: 131, color: '#ff2d75' }
+    ];
+    function getRank(count) {
+      var rank = RANKS[0];
+      for (var i = RANKS.length - 1; i >= 0; i--) {
+        if (count >= RANKS[i].min) { rank = RANKS[i]; break; }
+      }
+      return rank;
+    }
+
+    // --- Helpers ---
+    function formatTime(seconds) {
+      if (!seconds || seconds < 1) return '0s';
+      var h = Math.floor(seconds / 3600);
+      var m = Math.floor((seconds % 3600) / 60);
+      var s = Math.floor(seconds % 60);
+      if (h > 0) return h + 'h ' + m + 'm';
+      if (m > 0) return m + 'm ' + s + 's';
+      return s + 's';
+    }
+    function formatDate(date) {
+      if (!date) return '—';
+      var now = new Date();
+      var diff = now - date;
+      if (diff < 60000) return 'Just now';
+      if (diff < 3600000) return Math.floor(diff / 60000) + 'm ago';
+      if (diff < 86400000) return Math.floor(diff / 3600000) + 'h ago';
+      if (diff < 604800000) return Math.floor(diff / 86400000) + 'd ago';
+      return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: '2-digit' });
+    }
+    function escHtml(str) {
+      var d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    // --- State ---
+    var allUsers = [];
+    var currentSort = 'lastActive';
+
+    // --- Wait for Firebase ---
+    function waitForFirebase(cb) {
+      if (typeof firebase !== 'undefined' && firebase.auth && firebase.firestore) { cb(); return; }
+      setTimeout(function() { waitForFirebase(cb); }, 100);
+    }
+
+    waitForFirebase(function() {
+      var auth = firebase.auth();
+      var db = firebase.firestore();
+      var provider = new firebase.auth.GoogleAuthProvider();
+
+      document.getElementById('admin-login-btn').addEventListener('click', function() {
+        auth.signInWithPopup(provider).catch(function(err) {
+          if (err.code === 'auth/popup-blocked') auth.signInWithRedirect(provider);
+        });
+      });
+      document.getElementById('admin-signout-btn').addEventListener('click', function() {
+        auth.signOut();
+      });
+      document.getElementById('admin-refresh').addEventListener('click', function() {
+        loadDashboard(db);
+      });
+
+      auth.onAuthStateChanged(function(user) {
+        document.getElementById('admin-gate').style.display = 'none';
+        document.getElementById('admin-denied').style.display = 'none';
+        document.getElementById('admin-dashboard').style.display = 'none';
+        document.getElementById('admin-loading').style.display = 'none';
+
+        if (!user) {
+          document.getElementById('admin-gate').style.display = 'block';
+          return;
+        }
+        if (user.email !== ADMIN_EMAIL) {
+          document.getElementById('admin-denied').style.display = 'block';
+          return;
+        }
+        document.getElementById('admin-loading').style.display = 'block';
+        loadDashboard(db);
+      });
+    });
+
+    // --- Load all user data ---
+    function loadDashboard(db) {
+      document.getElementById('admin-loading').style.display = 'block';
+      document.getElementById('admin-dashboard').style.display = 'none';
+
+      db.collection('users').get().then(function(usersSnap) {
+        var users = [];
+        var promises = [];
+
+        usersSnap.forEach(function(doc) {
+          var d = doc.data();
+          var u = {
+            uid: doc.id,
+            displayName: d.displayName || '',
+            email: d.email || '',
+            photoURL: d.photoURL || '',
+            simulations: [],
+            flashcards: {},
+            totalSimVisits: 0,
+            totalSimTime: 0,
+            totalAchievements: 0,
+            totalFlashcardsStudied: 0,
+            lastActive: null
+          };
+          users.push(u);
+
+          // Fetch simulations
+          var simP = db.collection('users').doc(doc.id).collection('simulations').get().then(function(simSnap) {
+            simSnap.forEach(function(simDoc) {
+              var s = simDoc.data();
+              var achCount = 0;
+              var ach = s.achievements || {};
+              for (var k in ach) {
+                if (ach[k] && ach[k].unlocked) achCount++;
+              }
+              u.simulations.push({
+                id: simDoc.id,
+                name: s.name || simDoc.id,
+                visitCount: s.visitCount || 0,
+                totalTimeSpent: s.totalTimeSpent || 0,
+                lastVisited: s.lastVisited ? s.lastVisited.toDate() : null,
+                achievements: achCount
+              });
+              u.totalSimVisits += (s.visitCount || 0);
+              u.totalSimTime += (s.totalTimeSpent || 0);
+              u.totalAchievements += achCount;
+              if (s.lastVisited) {
+                var dt = s.lastVisited.toDate();
+                if (!u.lastActive || dt > u.lastActive) u.lastActive = dt;
+              }
+            });
+          });
+
+          // Fetch flashcards
+          var fcP = db.collection('users').doc(doc.id).collection('flashcards').get().then(function(fcSnap) {
+            fcSnap.forEach(function(fcDoc) {
+              var fc = fcDoc.data();
+              var cards = fc.cards || {};
+              var count = Object.keys(cards).length;
+              u.flashcards[fcDoc.id] = { studied: count };
+              u.totalFlashcardsStudied += count;
+              if (fc.updatedAt) {
+                var dt = fc.updatedAt.toDate();
+                if (!u.lastActive || dt > u.lastActive) u.lastActive = dt;
+              }
+            });
+          });
+
+          promises.push(simP, fcP);
+        });
+
+        return Promise.all(promises).then(function() {
+          allUsers = users;
+          renderStats(users);
+          sortAndRenderUsers();
+          document.getElementById('admin-loading').style.display = 'none';
+          document.getElementById('admin-dashboard').style.display = 'block';
+        });
+      }).catch(function(err) {
+        console.error('Dashboard load error:', err);
+        document.getElementById('admin-loading').style.display = 'none';
+        document.getElementById('admin-dashboard').style.display = 'block';
+        document.getElementById('admin-stats').innerHTML = '<div class="admin-stat-card"><div class="admin-stat-label" style="color:var(--color-rose);">Error loading data. Check Firestore rules.</div></div>';
+      });
+    }
+
+    // --- Render Stats ---
+    function renderStats(users) {
+      var totalUsers = users.length;
+      var totalVisits = 0, totalTime = 0, totalAch = 0, totalFC = 0, active7d = 0;
+      var now = Date.now();
+      var week = 7 * 86400000;
+
+      users.forEach(function(u) {
+        totalVisits += u.totalSimVisits;
+        totalTime += u.totalSimTime;
+        totalAch += u.totalAchievements;
+        totalFC += u.totalFlashcardsStudied;
+        if (u.lastActive && (now - u.lastActive.getTime()) < week) active7d++;
+      });
+
+      document.getElementById('admin-stats').innerHTML =
+        '<div class="admin-stat-card"><div class="admin-stat-icon">&#128101;</div><div class="admin-stat-value">' + totalUsers + '</div><div class="admin-stat-label">Total Users</div></div>' +
+        '<div class="admin-stat-card"><div class="admin-stat-icon">&#128065;&#65039;</div><div class="admin-stat-value">' + totalVisits + '</div><div class="admin-stat-label">Sim Visits</div></div>' +
+        '<div class="admin-stat-card"><div class="admin-stat-icon">&#9201;&#65039;</div><div class="admin-stat-value">' + formatTime(totalTime) + '</div><div class="admin-stat-label">Study Time</div></div>' +
+        '<div class="admin-stat-card"><div class="admin-stat-icon">&#127942;</div><div class="admin-stat-value">' + totalAch + '</div><div class="admin-stat-label">Achievements</div></div>' +
+        '<div class="admin-stat-card"><div class="admin-stat-icon">&#127183;</div><div class="admin-stat-value">' + totalFC + '</div><div class="admin-stat-label">Flashcards Studied</div></div>' +
+        '<div class="admin-stat-card"><div class="admin-stat-icon">&#9889;</div><div class="admin-stat-value">' + active7d + '</div><div class="admin-stat-label">Active (7d)</div></div>';
+    }
+
+    // --- Sort & Filter ---
+    function sortAndRenderUsers() {
+      var query = (document.getElementById('admin-search').value || '').toLowerCase();
+      var filtered = allUsers.filter(function(u) {
+        if (!query) return true;
+        return (u.displayName.toLowerCase().indexOf(query) !== -1) ||
+               (u.email.toLowerCase().indexOf(query) !== -1) ||
+               (u.uid.toLowerCase().indexOf(query) !== -1);
+      });
+
+      filtered.sort(function(a, b) {
+        switch (currentSort) {
+          case 'achievements': return b.totalAchievements - a.totalAchievements;
+          case 'studyTime': return b.totalSimTime - a.totalSimTime;
+          case 'name': return (a.displayName || a.uid).localeCompare(b.displayName || b.uid);
+          default: // lastActive
+            var ta = a.lastActive ? a.lastActive.getTime() : 0;
+            var tb = b.lastActive ? b.lastActive.getTime() : 0;
+            return tb - ta;
+        }
+      });
+
+      renderUserList(filtered);
+    }
+
+    // --- Render User List ---
+    function renderUserList(users) {
+      var container = document.getElementById('admin-user-list');
+      container.innerHTML = '';
+
+      if (users.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-muted);">No users found.</div>';
+        return;
+      }
+
+      users.forEach(function(u) {
+        var rank = getRank(u.totalAchievements);
+        var avatarHtml = u.photoURL
+          ? '<img class="admin-avatar" src="' + escHtml(u.photoURL) + '" alt="" referrerpolicy="no-referrer">'
+          : '<div class="admin-avatar-placeholder">?</div>';
+
+        var row = document.createElement('div');
+        row.className = 'admin-user-row';
+        row.innerHTML =
+          '<div class="admin-user-cell">' + avatarHtml +
+            '<div class="admin-user-info">' +
+              '<div class="admin-user-name">' + escHtml(u.displayName || u.uid) + '</div>' +
+              '<div class="admin-user-email">' + escHtml(u.email || u.uid) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="admin-rank-col"><span class="admin-rank" style="color:' + rank.color + '"><span class="admin-rank-icon">' + rank.icon + '</span> ' + rank.label + '</span></div>' +
+          '<div class="admin-ach-col admin-cell">' + u.totalAchievements + '</div>' +
+          '<div class="admin-time-col admin-cell">' + formatTime(u.totalSimTime) + '</div>' +
+          '<div class="admin-fc-col admin-cell">' + u.totalFlashcardsStudied + '</div>' +
+          '<div class="admin-active-col admin-cell-muted">' + formatDate(u.lastActive) + '</div>';
+
+        // Detail panel
+        var detail = document.createElement('div');
+        detail.className = 'admin-user-detail';
+        detail.innerHTML = buildDetailHtml(u);
+
+        row.addEventListener('click', function() {
+          var isOpen = detail.classList.contains('open');
+          // Close all
+          document.querySelectorAll('.admin-user-detail.open').forEach(function(d) { d.classList.remove('open'); });
+          document.querySelectorAll('.admin-user-row.expanded').forEach(function(r) { r.classList.remove('expanded'); });
+          if (!isOpen) {
+            detail.classList.add('open');
+            row.classList.add('expanded');
+          }
+        });
+
+        container.appendChild(row);
+        container.appendChild(detail);
+      });
+    }
+
+    // --- Build detail HTML ---
+    function buildDetailHtml(u) {
+      var html = '<div class="admin-detail-grid">';
+
+      // Simulations
+      html += '<div class="admin-detail-section"><h4>Simulations</h4>';
+      if (u.simulations.length === 0) {
+        html += '<div class="admin-detail-empty">No simulation data</div>';
+      } else {
+        u.simulations.sort(function(a, b) { return b.totalTimeSpent - a.totalTimeSpent; });
+        u.simulations.forEach(function(s) {
+          html += '<div class="admin-detail-row">' +
+            '<span class="admin-detail-label">' + escHtml(s.name) + '</span>' +
+            '<span class="admin-detail-value">' + s.visitCount + ' visits &middot; ' + formatTime(s.totalTimeSpent) + ' &middot; ' + s.achievements + ' ach</span>' +
+          '</div>';
+        });
+      }
+      html += '</div>';
+
+      // Flashcards
+      html += '<div class="admin-detail-section"><h4>Flashcards</h4>';
+      var fcKeys = Object.keys(u.flashcards);
+      if (fcKeys.length === 0) {
+        html += '<div class="admin-detail-empty">No flashcard data</div>';
+      } else {
+        fcKeys.forEach(function(ch) {
+          html += '<div class="admin-detail-row">' +
+            '<span class="admin-detail-label">' + escHtml(ch) + '</span>' +
+            '<span class="admin-detail-value">' + u.flashcards[ch].studied + ' cards</span>' +
+          '</div>';
+        });
+      }
+      html += '</div>';
+
+      html += '</div>';
+      return html;
+    }
+
+    // --- Search ---
+    document.getElementById('admin-search').addEventListener('input', function() {
+      sortAndRenderUsers();
+    });
+
+    // --- Sort buttons ---
+    document.querySelectorAll('.admin-sort .pc-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.admin-sort .pc-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentSort = btn.dataset.sort;
+        sortAndRenderUsers();
+      });
+    });
+
+  })();
+  </script>
+</body>
+</html>
