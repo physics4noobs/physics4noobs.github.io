@@ -2483,17 +2483,22 @@ ul { list-style: none; }
   padding: 6px 14px !important;
 }
 
-.dts-test:fullscreen {
+.dts-test:fullscreen,
+.dts-test:-webkit-full-screen {
   background: var(--bg-primary);
   overflow-y: auto;
   padding: 20px 24px 40px;
 }
 
-.dts-test:fullscreen .dts-selector {
+.dts-test:fullscreen .dts-selector,
+.dts-test:fullscreen .test-header,
+.dts-test:-webkit-full-screen .dts-selector,
+.dts-test:-webkit-full-screen .test-header {
   display: none;
 }
 
-.dts-test:fullscreen .dts-pdf-container {
+.dts-test:fullscreen .dts-pdf-container,
+.dts-test:-webkit-full-screen .dts-pdf-container {
   max-height: calc(100vh - 160px);
 }
 

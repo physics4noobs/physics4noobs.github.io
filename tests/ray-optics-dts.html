@@ -829,23 +829,30 @@
   var testWrapper = document.querySelector('.dts-test');
   var fullscreenBtn = document.getElementById('fullscreen-btn');
 
+  function isFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement;
+  }
+
   function toggleFullscreen() {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
+    if (isFullscreen()) {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
     } else {
-      testWrapper.requestFullscreen();
+      (testWrapper.requestFullscreen || testWrapper.webkitRequestFullscreen).call(testWrapper);
     }
   }
 
   fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-  document.addEventListener('fullscreenchange', function() {
-    if (document.fullscreenElement) {
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
+
+  function onFsChange() {
+    if (isFullscreen()) {
       fullscreenBtn.innerHTML = '&#x2716; Exit';
     } else {
       fullscreenBtn.innerHTML = '&#x26F6; Fullscreen';
     }
-  });
+  }
 
   // ============================================================
   //  KEYBOARD NAVIGATION
