@@ -1,0 +1,267 @@
+[
+  {
+    "id": "sc-f-01",
+    "type": "formula",
+    "front": "Mass Action Law (Semiconductor)",
+    "back": "n_e \\cdot n_h = n_i^2\n\nn_e = electron concentration, n_h = hole concentration, n_i = intrinsic carrier concentration.\n\nValid for both intrinsic and extrinsic semiconductors in thermal equilibrium.",
+    "tags": ["semiconductor", "mass-action-law"]
+  },
+  {
+    "id": "sc-f-02",
+    "type": "formula",
+    "front": "Intrinsic Carrier Concentration",
+    "back": "n_e = n_h = n_i\n\nn_i(\\text{Si at 300 K}) \\approx 1.5 \\times 10^{16} \\text{ m}^{-3}\nn_i(\\text{Ge at 300 K}) \\approx 2.4 \\times 10^{19} \\text{ m}^{-3}",
+    "tags": ["semiconductor", "intrinsic"]
+  },
+  {
+    "id": "sc-f-03",
+    "type": "formula",
+    "front": "Conductivity of a Semiconductor",
+    "back": "\\sigma = e(n_e \\mu_e + n_h \\mu_h)\n\ne = electron charge, \\mu_e = electron mobility, \\mu_h = hole mobility\n\nResistivity: \\rho = 1/\\sigma",
+    "tags": ["semiconductor", "conductivity"]
+  },
+  {
+    "id": "sc-f-04",
+    "type": "formula",
+    "front": "Minority Carrier Concentration in n-type Semiconductor",
+    "back": "n_e \\approx N_D, \\quad n_h = \\frac{n_i^2}{N_D}\n\nN_D = donor concentration\n\nElectrons are majority carriers, holes are minority carriers.",
+    "tags": ["semiconductor", "n-type", "doping"]
+  },
+  {
+    "id": "sc-f-05",
+    "type": "formula",
+    "front": "Minority Carrier Concentration in p-type Semiconductor",
+    "back": "n_h \\approx N_A, \\quad n_e = \\frac{n_i^2}{N_A}\n\nN_A = acceptor concentration\n\nHoles are majority carriers, electrons are minority carriers.",
+    "tags": ["semiconductor", "p-type", "doping"]
+  },
+  {
+    "id": "sc-f-06",
+    "type": "formula",
+    "front": "Barrier Potential of p-n Junction",
+    "back": "V_0 \\approx 0.7 \\text{ V (Si)}\nV_0 \\approx 0.3 \\text{ V (Ge)}\n\nForward bias: effective barrier = V_0 - V\nReverse bias: effective barrier = V_0 + V",
+    "tags": ["semiconductor", "pn-junction", "barrier-potential"]
+  },
+  {
+    "id": "sc-f-07",
+    "type": "formula",
+    "front": "Diode Current Equation",
+    "back": "I = I_0 \\left[\\exp\\left(\\frac{eV}{k_BT}\\right) - 1\\right]\n\nI_0 = reverse saturation current\ne = electron charge, k_B = Boltzmann constant, T = temperature\n\nForward bias (V > 0): I grows exponentially\nReverse bias (V < 0): I \\approx -I_0",
+    "tags": ["semiconductor", "diode", "diode-equation"]
+  },
+  {
+    "id": "sc-f-08",
+    "type": "formula",
+    "front": "Dynamic Resistance of a Diode",
+    "back": "r_d = \\frac{\\Delta V}{\\Delta I}\n\nForward bias: r_d is small (few \\Omega)\nReverse bias: r_d is very large (M\\Omega)",
+    "tags": ["semiconductor", "diode", "dynamic-resistance"]
+  },
+  {
+    "id": "sc-f-09",
+    "type": "formula",
+    "front": "Half-Wave Rectifier Output",
+    "back": "V_{\\text{dc}} = \\frac{V_0}{\\pi}\n\nI_{\\text{dc}} = \\frac{I_0}{\\pi}\n\nOutput frequency = f_{\\text{input}}\n\n(If input is 50 Hz, output is 50 Hz)",
+    "tags": ["semiconductor", "rectifier", "half-wave"]
+  },
+  {
+    "id": "sc-f-10",
+    "type": "formula",
+    "front": "Full-Wave Rectifier Output",
+    "back": "V_{\\text{dc}} = \\frac{2V_0}{\\pi}\n\nI_{\\text{dc}} = \\frac{2I_0}{\\pi}\n\nOutput frequency = 2f_{\\text{input}}\n\n(If input is 50 Hz, output is 100 Hz)",
+    "tags": ["semiconductor", "rectifier", "full-wave"]
+  },
+  {
+    "id": "sc-f-11",
+    "type": "formula",
+    "front": "Transistor Current Relation (I_E = I_B + I_C)",
+    "back": "I_E = I_B + I_C\n\n\\alpha = \\frac{I_C}{I_E} \\quad (\\text{common base gain, } 0.95 \\text{ to } 0.99)\n\n\\beta = \\frac{I_C}{I_B} \\quad (\\text{common emitter gain, } 20 \\text{ to } 500)",
+    "tags": ["semiconductor", "transistor", "current-gain"]
+  },
+  {
+    "id": "sc-f-12",
+    "type": "formula",
+    "front": "Relation Between \\alpha and \\beta (Transistor)",
+    "back": "\\beta = \\frac{\\alpha}{1 - \\alpha}\n\n\\alpha = \\frac{\\beta}{1 + \\beta}\n\nExample: If \\alpha = 0.98, then \\beta = 0.98/0.02 = 49",
+    "tags": ["semiconductor", "transistor", "alpha-beta"]
+  },
+  {
+    "id": "sc-f-13",
+    "type": "formula",
+    "front": "Voltage Gain of CE Amplifier",
+    "back": "A_V = -\\beta \\frac{R_C}{R_{\\text{in}}}\n\nNegative sign: 180^\\circ phase shift between input and output.\n\nPower gain = \\beta^2 \\times \\frac{R_C}{R_{\\text{in}}}",
+    "tags": ["semiconductor", "transistor", "amplifier"]
+  },
+  {
+    "id": "sc-f-14",
+    "type": "formula",
+    "front": "Zener Diode Voltage Regulator Formulas",
+    "back": "V_{\\text{out}} = V_Z = \\text{constant}\n\nI_S = \\frac{V_{\\text{in}} - V_Z}{R_S}\n\nI_Z = I_S - I_L\n\nR_S = series resistance, I_L = load current",
+    "tags": ["semiconductor", "zener-diode", "voltage-regulator"]
+  },
+  {
+    "id": "sc-f-15",
+    "type": "formula",
+    "front": "LED Photon Energy and Wavelength",
+    "back": "E = h\\nu = \\frac{hc}{\\lambda}\n\nThe colour of LED depends on the band gap of the semiconductor.\n\nGaAs: infrared, GaAsP: red/yellow, GaP: green, GaN: blue",
+    "tags": ["semiconductor", "led", "photon-energy"]
+  },
+  {
+    "id": "sc-c-01",
+    "type": "concept",
+    "front": "What is the difference between intrinsic and extrinsic semiconductors?",
+    "back": "**Intrinsic:** Pure semiconductor with no doping. Charge carriers (electrons and holes) are produced only by thermal excitation. n_e = n_h = n_i.\n\n**Extrinsic:** Doped semiconductor with impurity atoms added to increase conductivity.\n- n-type: doped with pentavalent atoms (donors), electrons are majority carriers.\n- p-type: doped with trivalent atoms (acceptors), holes are majority carriers.",
+    "tags": ["semiconductor", "intrinsic", "extrinsic"]
+  },
+  {
+    "id": "sc-c-02",
+    "type": "concept",
+    "front": "Why is a doped semiconductor electrically neutral even though it has extra electrons (or holes)?",
+    "back": "When a pentavalent atom (like P) is added to Si, it donates one extra electron. But the phosphorus atom itself becomes a **positively ionised donor ion** fixed in the lattice.\n\nThe total positive charge (donor ions + holes) = total negative charge (electrons).\n\nSimilarly, in p-type, the trivalent acceptor atom becomes negatively ionised, balancing the extra holes.\n\nSo the crystal maintains **overall charge neutrality**.",
+    "tags": ["semiconductor", "charge-neutrality", "doping"]
+  },
+  {
+    "id": "sc-c-03",
+    "type": "concept",
+    "front": "Why can't you make a p-n junction by pressing two slabs of p-type and n-type together?",
+    "back": "Any slab, howsoever flat, will have surface roughness much larger than the inter-atomic crystal spacing (~2 to 3 Angstroms).\n\nA p-n junction requires **continuous crystal structure** at the atomic level. Without this, the junction behaves as a **discontinuity** and charge carriers cannot flow properly.\n\nIn practice, a p-n junction is made by doping different regions of the **same single crystal wafer**.",
+    "tags": ["semiconductor", "pn-junction", "fabrication"]
+  },
+  {
+    "id": "sc-c-04",
+    "type": "concept",
+    "front": "What is the depletion region in a p-n junction?",
+    "back": "The region near the junction that is **depleted of free charge carriers** (both electrons and holes).\n\nIt contains only **immobile ionised atoms** — positive donor ions on the n-side and negative acceptor ions on the p-side.\n\nThe electric field in this region is directed from n-side to p-side.\n\nWidth: typically 0.1 to 1 micrometer.\n\nWidens in **reverse bias**, narrows in **forward bias**.",
+    "tags": ["semiconductor", "depletion-region", "pn-junction"]
+  },
+  {
+    "id": "sc-c-05",
+    "type": "concept",
+    "front": "Difference between Photodiode and Solar Cell",
+    "back": "**Photodiode:**\n- Operates under **reverse bias**\n- Used as a **light detector/sensor**\n- Photocurrent is proportional to light intensity\n- Speed of response is important\n\n**Solar Cell:**\n- Operates at **zero bias** (no external battery)\n- Used as an **energy source** (converts solar to electrical energy)\n- Large junction area to capture maximum light\n- Both use photovoltaic effect but in different modes",
+    "tags": ["semiconductor", "photodiode", "solar-cell"]
+  },
+  {
+    "id": "sc-c-06",
+    "type": "concept",
+    "front": "What are universal logic gates and why?",
+    "back": "**NAND** and **NOR** are called **universal gates** because any Boolean function can be implemented using only NAND gates or only NOR gates.\n\nFor example, using only NAND gates:\n- NOT: connect both inputs of NAND together\n- AND: NAND followed by NOT (another NAND)\n- OR: NOT each input, then NAND\n\nDe Morgan's Theorems:\n- (A·B)' = A' + B'\n- (A+B)' = A'·B'",
+    "tags": ["semiconductor", "logic-gates", "universal-gates"]
+  },
+  {
+    "id": "sc-c-07",
+    "type": "concept",
+    "front": "Energy band gap order for Group IV elements (C, Si, Ge, Sn)",
+    "back": "**E_g(C) > E_g(Si) > E_g(Ge) > E_g(Sn)**\n\nC (diamond): 5.4 eV → Insulator\nSi: 1.1 eV → Semiconductor\nGe: 0.67 eV → Semiconductor\nSn: ~0 eV → Metal\n\nAs we go down the group, atomic size increases, bonding weakens, and the energy gap decreases.\n\nAll have 4 valence electrons, but their band structure differs due to different inter-atomic spacings.",
+    "tags": ["semiconductor", "energy-bands", "group-iv"]
+  },
+  {
+    "id": "sc-c-08",
+    "type": "concept",
+    "front": "Three modes of a transistor (BJT)",
+    "back": "**Active (Amplifier) Mode:**\n- E-B junction: Forward biased\n- C-B junction: Reverse biased\n- Used for amplification\n\n**Saturation (Switch ON):**\n- Both junctions: Forward biased\n- V_CE ≈ 0, transistor acts as closed switch\n\n**Cut-off (Switch OFF):**\n- Both junctions: Reverse biased\n- I_C ≈ 0, transistor acts as open switch",
+    "tags": ["semiconductor", "transistor", "modes"]
+  },
+  {
+    "id": "sc-m-01",
+    "type": "mcq",
+    "front": "In an n-type silicon, which is true?",
+    "options": [
+      "(A) Electrons are majority carriers and trivalent atoms are dopants",
+      "(B) Electrons are minority carriers and pentavalent atoms are dopants",
+      "(C) Holes are minority carriers and pentavalent atoms are dopants",
+      "(D) Holes are majority carriers and trivalent atoms are dopants"
+    ],
+    "back": "**(C)** In n-type semiconductor, pentavalent atoms (As, P, Sb) are used as dopants. They donate extra electrons, making electrons the majority carriers and holes the minority carriers.",
+    "tags": ["semiconductor", "n-type", "mcq"]
+  },
+  {
+    "id": "sc-m-02",
+    "type": "mcq",
+    "front": "The energy band gap of Si is 1.1 eV. Which of these wavelengths can excite an electron from the valence band to the conduction band?",
+    "options": [
+      "(A) 1100 nm",
+      "(B) 1500 nm",
+      "(C) 2000 nm",
+      "(D) 2500 nm"
+    ],
+    "back": "**(A)** E = hc/\\lambda. For excitation, photon energy must be ≥ E_g = 1.1 eV.\n\n\\lambda_{max} = hc/E_g = (6.63 × 10^{-34} × 3 × 10^8) / (1.1 × 1.6 × 10^{-19}) ≈ 1130 nm.\n\nOnly 1100 nm (E ≈ 1.13 eV > 1.1 eV) has enough energy. Longer wavelengths have less energy.",
+    "tags": ["semiconductor", "energy-bands", "mcq"]
+  },
+  {
+    "id": "sc-m-03",
+    "type": "mcq",
+    "front": "In half-wave rectification, if the input frequency is 50 Hz, the output frequency is:",
+    "options": [
+      "(A) 25 Hz",
+      "(B) 50 Hz",
+      "(C) 100 Hz",
+      "(D) 200 Hz"
+    ],
+    "back": "**(B)** In half-wave rectification, only one half of each cycle passes through. One pulse per input cycle → output frequency = input frequency = **50 Hz**.\n\n(Full-wave rectifier would give 100 Hz.)",
+    "tags": ["semiconductor", "rectifier", "mcq"]
+  },
+  {
+    "id": "sc-m-04",
+    "type": "mcq",
+    "front": "If \\alpha = 0.98 for a transistor, the value of \\beta is:",
+    "options": [
+      "(A) 9.8",
+      "(B) 49",
+      "(C) 98",
+      "(D) 0.98"
+    ],
+    "back": "**(B)** \\beta = \\alpha / (1 - \\alpha) = 0.98 / (1 - 0.98) = 0.98 / 0.02 = **49**",
+    "tags": ["semiconductor", "transistor", "mcq"]
+  },
+  {
+    "id": "sc-m-05",
+    "type": "mcq",
+    "front": "A pure Si crystal has 5 × 10^{28} atoms/m^3. It is doped with 1 ppm pentavalent As. If n_i = 1.5 × 10^{16} m^{-3}, the number of holes is approximately:",
+    "options": [
+      "(A) 4.5 × 10^9 m^{-3}",
+      "(B) 2.25 × 10^{10} m^{-3}",
+      "(C) 1.5 × 10^{16} m^{-3}",
+      "(D) 5 × 10^{22} m^{-3}"
+    ],
+    "back": "**(A)** N_D = 5 × 10^{28} × 10^{-6} = 5 × 10^{22} m^{-3}\n\nn_e ≈ N_D = 5 × 10^{22}\n\nn_h = n_i^2 / n_e = (1.5 × 10^{16})^2 / (5 × 10^{22}) = 2.25 × 10^{32} / 5 × 10^{22} = **4.5 × 10^{9} m^{-3}**",
+    "tags": ["semiconductor", "mass-action-law", "numerical", "mcq"]
+  },
+  {
+    "id": "sc-m-06",
+    "type": "mcq",
+    "front": "When a forward bias is applied to a p-n junction, it:",
+    "options": [
+      "(A) raises the potential barrier",
+      "(B) reduces the majority carrier current to zero",
+      "(C) lowers the potential barrier",
+      "(D) None of the above"
+    ],
+    "back": "**(C)** Forward bias opposes the built-in potential. The effective barrier becomes (V_0 - V), which is lower. This allows majority carriers to cross the junction, increasing current.",
+    "tags": ["semiconductor", "pn-junction", "forward-bias", "mcq"]
+  },
+  {
+    "id": "sc-m-07",
+    "type": "mcq",
+    "front": "Which logic gate gives output 1 only when all inputs are 0?",
+    "options": [
+      "(A) AND",
+      "(B) OR",
+      "(C) NAND",
+      "(D) NOR"
+    ],
+    "back": "**(D) NOR gate.** NOR gate output: Y = (A + B)'. It gives output 1 only when all inputs are 0.\n\nTruth table: (0,0)→1, (0,1)→0, (1,0)→0, (1,1)→0.",
+    "tags": ["semiconductor", "logic-gates", "nor", "mcq"]
+  },
+  {
+    "id": "sc-m-08",
+    "type": "mcq",
+    "front": "In a transistor, the base is made thin and lightly doped because:",
+    "options": [
+      "(A) most electrons should pass from emitter to collector",
+      "(B) to increase the base current",
+      "(C) to reduce the collector current",
+      "(D) to increase power dissipation"
+    ],
+    "back": "**(A)** The base is thin and lightly doped so that most of the charge carriers injected from the emitter pass through the base and reach the collector with minimal recombination. This gives a high current gain (\\beta).",
+    "tags": ["semiconductor", "transistor", "mcq"]
+  }
+]

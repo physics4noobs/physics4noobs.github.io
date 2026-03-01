@@ -67,7 +67,8 @@
         'ray-optics': 'Ray Optics',
         'wave-optics': 'Wave Optics',
         'em-waves': 'EM Waves',
-        'modern-physics': 'Modern Physics'
+        'modern-physics': 'Modern Physics',
+        semiconductor: 'Semiconductor Electronics'
       }
     },
     {

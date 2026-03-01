@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semiconductor Electronics | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js"></script>
+  <script defer src="../js/ranking.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Free Therapy For Physics Trauma</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-string"></div><div class="pendulum-bob"></div></div></div></div>
+        <div class="logo-text"><span class="brand-name"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">FREE THERAPY FOR PHYSICS TRAUMA</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="../chapters.html" class="nav-link active">Chapters</a></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn">
+          <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign in
+        </button>
+        <a href="progress.html" class="mobile-auth-action" id="mobile-progress-btn" style="display:none;">Progress</a>
+        <button class="mobile-auth-action mobile-signout-btn" id="mobile-signout-btn" style="display:none;">Sign Out</button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;">
+          <img class="user-avatar" id="auth-user-avatar" src="" alt="User">
+          <span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span>
+          <div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div>
+            <a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a>
+          </div>
+        </div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Chapter Content -->
+  <div class="chapter-detail">
+
+    <div class="ch-hero">
+      <h1>10 &mdash; Semiconductor Electronics</h1>
+      <div class="ch-nav">
+        <a href="#section-1">Classification of Solids</a>
+        <a href="#section-2">Energy Bands</a>
+        <a href="#section-3">Intrinsic Semiconductors</a>
+        <a href="#section-4">Extrinsic Semiconductors</a>
+        <a href="#section-5">p-n Junction</a>
+        <a href="#section-6">Semiconductor Diode</a>
+        <a href="#section-7">Rectifiers</a>
+        <a href="#section-8">Special Diodes</a>
+        <a href="#section-9">Transistors</a>
+        <a href="#section-10">Logic Gates</a>
+        <a href="#section-11">Key Formulas</a>
+        <a href="#section-slides">Slides</a>
+        <a href="#section-simulations">Simulations</a>
+        <a href="#section-jee-neet">JEE &amp; NEET Corner</a>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Classification of Solids -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-1">
+      <h2>1. Classification of Metals, Conductors &amp; Semiconductors</h2>
+      <div class="section-diagram">Fig 14.1 &mdash; Classification based on conductivity</div>
+
+      <h3>On the Basis of Conductivity</h3>
+      <p>
+        On the basis of their electrical conductivity (&sigma;) or resistivity (&rho; = 1/&sigma;),
+        solids are broadly classified into three categories. This classification forms the foundation of
+        understanding semiconductor devices.
+      </p>
+
+      <h3>(i) Metals (Conductors)</h3>
+      <p>
+        Metals possess very low resistivity (or high conductivity). They have a large number of free
+        electrons available for conduction. Examples include copper, aluminium, silver, and gold.
+      </p>
+      <div class="formula-box">
+        $$\rho \sim 10^{-2} \text{ to } 10^{-8} \; \Omega \cdot \text{m}$$
+        $$\sigma \sim 10^{2} \text{ to } 10^{8} \; \text{S m}^{-1}$$
+      </div>
+
+      <h3>(ii) Semiconductors</h3>
+      <p>
+        Semiconductors have resistivity or conductivity intermediate to metals and insulators.
+        Their conductivity can be dramatically altered by adding small amounts of impurities (doping),
+        changing temperature, or exposing them to light. Silicon (Si) and Germanium (Ge) are the most
+        commonly used elemental semiconductors. Compound semiconductors include GaAs, CdS, CdSe, and InP.
+      </p>
+      <div class="formula-box">
+        $$\rho \sim 10^{-5} \text{ to } 10^{6} \; \Omega \cdot \text{m}$$
+        $$\sigma \sim 10^{-6} \text{ to } 10^{5} \; \text{S m}^{-1}$$
+      </div>
+
+      <h3>(iii) Insulators</h3>
+      <p>
+        Insulators have high resistivity (or low conductivity). The electrons in insulators are tightly
+        bound to their atoms and cannot contribute to conduction under normal conditions. Examples include
+        rubber, glass, wood, and most plastics.
+      </p>
+      <div class="formula-box">
+        $$\rho \sim 10^{11} \text{ to } 10^{19} \; \Omega \cdot \text{m}$$
+        $$\sigma \sim 10^{-19} \text{ to } 10^{-11} \; \text{S m}^{-1}$$
+      </div>
+
+      <p>
+        <strong>Important:</strong> The distinction between metals, semiconductors and insulators is not just about
+        resistivity values. The fundamental difference lies in the behaviour of their energy bands, which we discuss next.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Energy Bands -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-2">
+      <h2>2. Energy Bands in Solids</h2>
+      <div class="section-diagram">Fig 14.2 &mdash; Energy band diagrams of metals, insulators and semiconductors</div>
+
+      <h3>Origin of Energy Bands</h3>
+      <p>
+        In an isolated atom, electrons occupy discrete energy levels. When atoms come together to form a
+        crystalline solid, the outer electron orbits overlap significantly. Due to the Pauli exclusion
+        principle, each discrete energy level splits into a band of closely spaced energy levels. The two
+        most important bands are:
+      </p>
+      <p>
+        <strong>Valence Band:</strong> The energy band that includes the energy levels of valence electrons.
+        At absolute zero, this band is completely filled with electrons.
+      </p>
+      <p>
+        <strong>Conduction Band:</strong> The energy band above the valence band. At absolute zero, this band
+        is completely empty. Electrons in this band are free to move and can contribute to electrical conduction.
+      </p>
+
+      <h3>Energy Band Gap (E<sub>g</sub>)</h3>
+      <p>
+        The gap between the top of the valence band and the bottom of the conduction band is called the
+        energy band gap (or forbidden gap). No electron can have energy in this gap. The magnitude of
+        E<sub>g</sub> determines the electrical behaviour of the material.
+      </p>
+
+      <h3>Case I: Metals (E<sub>g</sub> &asymp; 0)</h3>
+      <p>
+        In metals, either the conduction band is partially filled or the valence and conduction bands overlap.
+        This makes a large number of electrons available for conduction. No external energy is needed to push
+        electrons from the valence band to the conduction band.
+      </p>
+
+      <h3>Case II: Insulators (E<sub>g</sub> &gt; 3 eV)</h3>
+      <p>
+        In insulators, a large band gap (E<sub>g</sub> &gt; 3 eV) exists between the valence and conduction bands.
+        The conduction band is completely empty and no electrons can be excited across this wide gap by thermal
+        excitation at room temperature. Hence, no electrical conduction is possible.
+      </p>
+
+      <h3>Case III: Semiconductors (E<sub>g</sub> &lt; 3 eV)</h3>
+      <p>
+        In semiconductors, the band gap is finite but small (E<sub>g</sub> &lt; 3 eV). At absolute zero, the
+        semiconductor behaves like an insulator. But at room temperature, thermal energy is sufficient to
+        excite some electrons from the valence band to the conduction band, enabling a small amount of conduction.
+      </p>
+      <div class="formula-box">
+        $$E_g(\text{Si}) = 1.1 \text{ eV}, \quad E_g(\text{Ge}) = 0.67 \text{ eV}$$
+        $$E_g(\text{C, diamond}) = 5.4 \text{ eV (insulator)}$$
+        $$E_g(\text{Sn}) \approx 0 \text{ eV (metal)}$$
+      </div>
+      <p>
+        <strong>JEE/NEET Tip:</strong> C, Si, Ge, and Sn are all Group IV elements with 4 valence electrons.
+        The energy gap decreases as we go down the group: C &gt; Si &gt; Ge &gt; Sn. This is why carbon (diamond)
+        is an insulator, Si and Ge are semiconductors, and Sn is a metal.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Intrinsic Semiconductors -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-3">
+      <h2>3. Intrinsic Semiconductors</h2>
+      <div class="section-diagram">Fig 14.3 &mdash; Covalent bonding in Si/Ge crystal</div>
+
+      <h3>Crystal Structure</h3>
+      <p>
+        Silicon and Germanium have a diamond-like crystal structure. Each atom is surrounded by four nearest
+        neighbours, and each atom shares one of its four valence electrons with each neighbour, forming
+        covalent bonds. At low temperatures, all bonds are intact and no free electrons are available for
+        conduction.
+      </p>
+
+      <h3>Electron-Hole Pair Generation</h3>
+      <p>
+        As temperature increases, thermal energy breaks some covalent bonds, freeing electrons into the
+        conduction band. Each freed electron leaves behind a vacancy called a <strong>hole</strong>. This hole
+        behaves as an apparent free particle with effective positive charge (+q). The process of creating a
+        free electron and a hole together is called <strong>electron-hole pair (EHP) generation</strong>.
+      </p>
+
+      <h3>Intrinsic Carrier Concentration</h3>
+      <p>
+        In a pure (intrinsic) semiconductor, the number of free electrons (n<sub>e</sub>) is always equal
+        to the number of holes (n<sub>h</sub>). This common value is called the intrinsic carrier concentration (n<sub>i</sub>).
+      </p>
+      <div class="formula-box">
+        $$n_e = n_h = n_i$$
+        $$n_i(\text{Si at 300 K}) \approx 1.5 \times 10^{16} \text{ m}^{-3}$$
+        $$n_i(\text{Ge at 300 K}) \approx 2.4 \times 10^{19} \text{ m}^{-3}$$
+      </div>
+
+      <h3>Current in Intrinsic Semiconductors</h3>
+      <p>
+        In an intrinsic semiconductor, both electrons and holes contribute to current. Under an applied electric
+        field, free electrons move towards the positive terminal while holes move towards the negative terminal.
+        The total current is the sum of the electron current and the hole current.
+      </p>
+      <div class="formula-box">
+        $$I = I_e + I_h$$
+        $$\sigma = n_i e (\mu_e + \mu_h)$$
+      </div>
+      <p>
+        Here \(\mu_e\) and \(\mu_h\) are the electron and hole mobilities respectively. For silicon, \(\mu_e \approx 0.135\) m<sup>2</sup>V<sup>-1</sup>s<sup>-1</sup> and \(\mu_h \approx 0.048\) m<sup>2</sup>V<sup>-1</sup>s<sup>-1</sup>.
+      </p>
+
+      <h3>Temperature Dependence</h3>
+      <p>
+        Unlike metals, the conductivity of semiconductors <strong>increases</strong> with temperature because more
+        electron-hole pairs are generated. This is why semiconductors have a negative temperature coefficient of
+        resistance. This property makes them useful as thermistors (temperature sensors).
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Extrinsic Semiconductors -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-4">
+      <h2>4. Extrinsic Semiconductors (Doping)</h2>
+      <div class="section-diagram">Fig 14.4 &mdash; n-type and p-type doping</div>
+
+      <h3>What is Doping?</h3>
+      <p>
+        The conductivity of intrinsic semiconductors at room temperature is too low for practical applications.
+        To increase conductivity, small amounts of impurity atoms (a few parts per million) are deliberately
+        added to the pure semiconductor. This process is called <strong>doping</strong>, and the resulting
+        semiconductor is called an <strong>extrinsic</strong> or <strong>doped semiconductor</strong>.
+      </p>
+      <p>
+        There are two types of dopants for tetravalent Si or Ge:
+      </p>
+
+      <h3>(i) n-type Semiconductor (Donor Doping)</h3>
+      <p>
+        When a pentavalent impurity (valency 5) such as Arsenic (As), Antimony (Sb), or Phosphorus (P)
+        is added to Si or Ge, four of its five electrons form covalent bonds with the neighbouring Si atoms.
+        The fifth electron remains very weakly bound and is easily set free at room temperature, contributing
+        to conduction. The ionisation energy required is very small (~0.05 eV for Si, ~0.01 eV for Ge).
+      </p>
+      <p>
+        Since the pentavalent atom donates one extra electron, it is called a <strong>donor impurity</strong>.
+        In n-type semiconductors, <strong>electrons are the majority carriers</strong> and <strong>holes are the
+        minority carriers</strong>.
+      </p>
+      <div class="formula-box">
+        $$n_e \gg n_h$$
+        $$n_e \approx N_D \quad \text{(donor concentration)}$$
+      </div>
+
+      <h3>(ii) p-type Semiconductor (Acceptor Doping)</h3>
+      <p>
+        When a trivalent impurity (valency 3) such as Boron (B), Aluminium (Al), or Indium (In) is added
+        to Si or Ge, it can form covalent bonds with only three neighbouring atoms. The fourth bond has a
+        vacancy &mdash; a hole. This hole is available for conduction. The trivalent atom effectively accepts
+        an electron to complete its bonding, and is called an <strong>acceptor impurity</strong>.
+      </p>
+      <p>
+        In p-type semiconductors, <strong>holes are the majority carriers</strong> and <strong>electrons are the
+        minority carriers</strong>.
+      </p>
+      <div class="formula-box">
+        $$n_h \gg n_e$$
+        $$n_h \approx N_A \quad \text{(acceptor concentration)}$$
+      </div>
+
+      <h3>Mass Action Law</h3>
+      <p>
+        A fundamental result in semiconductor physics: the product of the number of electrons and holes in
+        a semiconductor in thermal equilibrium is constant, regardless of the amount of doping. This is known
+        as the mass action law.
+      </p>
+      <div class="formula-box">
+        $$n_e \cdot n_h = n_i^2$$
+      </div>
+      <p>
+        <strong>JEE/NEET Tip:</strong> This is a very frequently tested formula. If you know n<sub>e</sub> (or n<sub>h</sub>)
+        and n<sub>i</sub>, you can calculate the other. For example, in an n-type semiconductor:
+        \(n_h = n_i^2 / n_e \approx n_i^2 / N_D\).
+      </p>
+
+      <h3>Important Points about Doped Semiconductors</h3>
+      <p>
+        <strong>Charge neutrality:</strong> A doped semiconductor remains electrically neutral overall.
+        The additional charge carriers are balanced by the ionised dopant atoms (fixed in the lattice).
+        In n-type: fixed positive donor ions balance the extra electrons. In p-type: fixed negative acceptor
+        ions balance the extra holes.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: p-n Junction -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-5">
+      <h2>5. p-n Junction</h2>
+      <div class="section-diagram">Fig 14.5 &mdash; p-n junction formation and depletion region</div>
+
+      <h3>Formation of p-n Junction</h3>
+      <p>
+        A p-n junction is formed by joining a p-type semiconductor with an n-type semiconductor.
+        In practice, this is achieved by doping different regions of the same semiconductor wafer with
+        different impurities. You cannot simply press two separate slabs together &mdash; the junction
+        requires atomic-level continuity.
+      </p>
+
+      <h3>Diffusion and Drift</h3>
+      <p>
+        When a p-n junction is first formed, two important processes occur simultaneously:
+      </p>
+      <p>
+        <strong>Diffusion:</strong> Due to the concentration gradient, holes diffuse from p-side to n-side
+        and electrons diffuse from n-side to p-side. This diffusion creates a <strong>diffusion current</strong>
+        across the junction.
+      </p>
+      <p>
+        <strong>Drift:</strong> As electrons leave the n-side, they leave behind positively ionised donor atoms.
+        Similarly, holes leaving the p-side expose negatively ionised acceptor atoms. These fixed ions create an
+        electric field directed from n-side to p-side. This field pushes electrons back to n-side and holes back to
+        p-side, creating a <strong>drift current</strong> that opposes the diffusion current.
+      </p>
+
+      <h3>Depletion Region</h3>
+      <p>
+        The region near the junction that is depleted of free charge carriers (both electrons and holes)
+        is called the <strong>depletion region</strong> (or space-charge region). It consists of immobile
+        ionised donor and acceptor atoms. The width of the depletion region is typically 0.1 to 1 &mu;m.
+      </p>
+      <p>
+        At equilibrium, the diffusion current equals the drift current, and the net current across the junction is zero.
+      </p>
+
+      <h3>Barrier Potential (V<sub>0</sub>)</h3>
+      <p>
+        The potential difference developed across the depletion region due to the space charge is called the
+        <strong>barrier potential</strong> (or built-in potential). It prevents further net diffusion of
+        majority carriers.
+      </p>
+      <div class="formula-box">
+        $$V_0 \approx 0.7 \text{ V for Si}$$
+        $$V_0 \approx 0.3 \text{ V for Ge}$$
+      </div>
+      <p>
+        <strong>Important:</strong> The depletion region extends more into the lightly doped side. If the n-side
+        is lightly doped compared to the p-side, the depletion width on the n-side will be larger.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Semiconductor Diode -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-6">
+      <h2>6. Semiconductor Diode &amp; V-I Characteristics</h2>
+      <div class="section-diagram">Fig 14.6 &mdash; Diode symbol and V-I characteristics</div>
+
+      <h3>What is a Semiconductor Diode?</h3>
+      <p>
+        A semiconductor diode is a p-n junction with metallic contacts at both ends for applying external
+        voltage. It is a two-terminal device. The p-side terminal is called the <strong>anode</strong> and
+        the n-side terminal is called the <strong>cathode</strong>. In the circuit symbol, the arrowhead
+        points from p to n (direction of conventional current under forward bias).
+      </p>
+
+      <h3>Forward Bias</h3>
+      <p>
+        When the p-side is connected to the positive terminal and the n-side to the negative terminal of a
+        battery, the diode is said to be <strong>forward biased</strong>. The applied voltage opposes
+        the barrier potential, reducing it to (V<sub>0</sub> &minus; V). This narrows the depletion region
+        and allows majority carriers to cross the junction, producing a significant current.
+      </p>
+      <p>
+        The current first increases very slowly until the applied voltage crosses a certain value called the
+        <strong>threshold voltage</strong> (or cut-in voltage or knee voltage). Beyond this voltage, the
+        current increases exponentially.
+      </p>
+      <div class="formula-box">
+        $$V_{\text{threshold}} \approx 0.7 \text{ V (Si)}, \quad \approx 0.3 \text{ V (Ge)}$$
+        $$\text{Effective barrier} = V_0 - V$$
+      </div>
+
+      <h3>Reverse Bias</h3>
+      <p>
+        When the n-side is connected to the positive terminal and the p-side to the negative terminal, the
+        diode is <strong>reverse biased</strong>. The applied voltage adds to the barrier potential,
+        increasing it to (V<sub>0</sub> + V). The depletion region widens and the diffusion current drops
+        to nearly zero.
+      </p>
+      <p>
+        A very small current still flows due to the drift of minority carriers across the junction. This is
+        called the <strong>reverse saturation current</strong> (of the order of &mu;A). It remains nearly
+        constant regardless of the applied reverse voltage.
+      </p>
+
+      <h3>Breakdown Voltage</h3>
+      <p>
+        At very high reverse bias (V = V<sub>br</sub>), the reverse current increases sharply. This is called
+        <strong>breakdown</strong>. There are two mechanisms:
+      </p>
+      <p>
+        <strong>Zener breakdown:</strong> Occurs in heavily doped junctions with thin depletion regions
+        (V<sub>br</sub> &lt; 5V). The strong electric field directly strips electrons from covalent bonds.
+      </p>
+      <p>
+        <strong>Avalanche breakdown:</strong> Occurs in lightly doped junctions with wide depletion regions
+        (V<sub>br</sub> &gt; 5V). Minority carriers gain enough kinetic energy to knock out electrons by
+        collision, causing a chain reaction (avalanche).
+      </p>
+
+      <h3>Dynamic Resistance</h3>
+      <div class="formula-box">
+        $$r_d = \frac{\Delta V}{\Delta I}$$
+      </div>
+      <p>
+        The dynamic (or AC) resistance is the ratio of a small change in voltage to the corresponding small change in current.
+        In forward bias, r<sub>d</sub> is very small (a few ohms). In reverse bias, r<sub>d</sub> is very large (M&Omega;).
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Rectifiers -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-7">
+      <h2>7. Application of Junction Diode as a Rectifier</h2>
+      <div class="section-diagram">Fig 14.7 &mdash; Half-wave and Full-wave rectifier circuits</div>
+
+      <h3>Half-Wave Rectifier</h3>
+      <p>
+        A half-wave rectifier uses a single diode in series with a load resistor. During the positive
+        half-cycle of the AC input, the diode is forward biased and conducts. During the negative half-cycle,
+        the diode is reverse biased and does not conduct. Thus, only one half of the input AC waveform appears
+        across the load.
+      </p>
+      <div class="formula-box">
+        $$\text{Output frequency} = f_{\text{input}}$$
+        $$V_{\text{dc}} = \frac{V_0}{\pi}$$
+        $$I_{\text{dc}} = \frac{I_0}{\pi}$$
+      </div>
+
+      <h3>Full-Wave Rectifier</h3>
+      <p>
+        A full-wave rectifier uses two diodes with a centre-tap transformer (or four diodes in a bridge
+        configuration). Both halves of the AC cycle are rectified &mdash; each diode conducts during alternate
+        half-cycles. The output is a pulsating DC with twice the frequency of the input.
+      </p>
+      <div class="formula-box">
+        $$\text{Output frequency} = 2f_{\text{input}}$$
+        $$V_{\text{dc}} = \frac{2V_0}{\pi}$$
+        $$I_{\text{dc}} = \frac{2I_0}{\pi}$$
+      </div>
+
+      <h3>Filtering</h3>
+      <p>
+        The pulsating output of a rectifier is smoothed using a <strong>filter capacitor</strong> connected
+        in parallel with the load. When the rectified voltage rises, the capacitor charges. When it falls,
+        the capacitor discharges through the load, maintaining a relatively steady voltage. The larger the
+        product RC (time constant), the smoother the output.
+      </p>
+      <p>
+        <strong>JEE/NEET Tip:</strong> Half-wave rectifier output frequency = input frequency.
+        Full-wave rectifier output frequency = 2 &times; input frequency. If input is 50 Hz, half-wave output
+        is 50 Hz and full-wave output is 100 Hz. This is a very commonly asked question!
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Special Diodes -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-8">
+      <h2>8. Special Purpose Diodes</h2>
+      <div class="section-diagram">Fig 14.8 &mdash; Zener diode, LED, Photodiode, Solar cell</div>
+
+      <h3>Zener Diode</h3>
+      <p>
+        A Zener diode is a heavily doped p-n junction designed to operate in the reverse breakdown region.
+        Unlike ordinary diodes, the breakdown is not destructive &mdash; it is reversible. In the breakdown
+        region, the voltage across the Zener remains nearly constant (V<sub>Z</sub>) even as the current changes.
+        This makes it ideal as a <strong>voltage regulator</strong>.
+      </p>
+      <div class="formula-box">
+        $$V_{\text{out}} = V_Z = \text{constant (in breakdown region)}$$
+        $$I_S = \frac{V_{\text{in}} - V_Z}{R_S}$$
+        $$I_Z = I_S - I_L$$
+      </div>
+      <p>
+        Here R<sub>S</sub> is the series resistance, I<sub>S</sub> is the total current, I<sub>L</sub> is the load current, and I<sub>Z</sub> is the current through the Zener diode.
+      </p>
+
+      <h3>Light Emitting Diode (LED)</h3>
+      <p>
+        An LED is a forward-biased p-n junction that emits light when electrons recombine with holes.
+        The energy released during recombination is emitted as photons. The colour of light depends on the
+        band gap of the semiconductor material used.
+      </p>
+      <div class="formula-box">
+        $$E = h\nu = \frac{hc}{\lambda}$$
+      </div>
+      <p>
+        LEDs are made from compound semiconductors like GaAs (infrared), GaAsP (red, yellow), GaP (green),
+        and GaN/InGaN (blue, white). They have advantages over incandescent bulbs: low power consumption,
+        long life, fast switching, and monochromatic light output.
+      </p>
+
+      <h3>Photodiode</h3>
+      <p>
+        A photodiode is a p-n junction operated under <strong>reverse bias</strong>. When light of appropriate
+        frequency falls on the junction, it generates electron-hole pairs, increasing the reverse current.
+        The photocurrent is proportional to the intensity of incident light. Photodiodes are used in light
+        detection, optical communication, and as light sensors.
+      </p>
+
+      <h3>Solar Cell</h3>
+      <p>
+        A solar cell is essentially a large-area p-n junction (photodiode) that operates without external
+        bias. When sunlight falls on the junction, electron-hole pairs are generated. The built-in electric
+        field separates these carriers, creating a voltage (open-circuit voltage ~0.5&ndash;1.0 V) and
+        driving current through an external circuit. Materials used include Si, GaAs, and CdTe.
+      </p>
+      <p>
+        <strong>Important distinction:</strong> A photodiode is used in reverse bias as a detector
+        (photocurrent &propto; light intensity). A solar cell operates at zero bias as an energy source
+        (converts solar energy to electrical energy).
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 9: Transistors -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-9">
+      <h2>9. Bipolar Junction Transistor (BJT)</h2>
+      <div class="section-diagram">Fig 14.9 &mdash; npn and pnp transistor diagrams</div>
+
+      <h3>Structure</h3>
+      <p>
+        A transistor is a three-terminal device formed by sandwiching a thin layer of one type of semiconductor
+        between two layers of the other type. There are two types: <strong>npn</strong> (thin p-layer between
+        two n-layers) and <strong>pnp</strong> (thin n-layer between two p-layers). The three terminals are
+        called the <strong>Emitter (E)</strong>, <strong>Base (B)</strong>, and <strong>Collector (C)</strong>.
+      </p>
+      <p>
+        The emitter is heavily doped and emits charge carriers. The base is very thin and lightly doped.
+        The collector is moderately doped and physically larger than the emitter to collect the majority of
+        carriers passing through the base.
+      </p>
+
+      <h3>Transistor Biasing (Active Mode)</h3>
+      <p>
+        For a transistor to work as an amplifier, the emitter-base junction must be forward biased and the
+        collector-base junction must be reverse biased. In an npn transistor in active mode:
+      </p>
+      <p>
+        Electrons are injected from the emitter into the base. Since the base is thin and lightly doped,
+        most electrons (about 95&ndash;99%) diffuse through the base and are swept into the collector by the
+        reverse-biased collector junction. Only a small fraction recombine with holes in the base.
+      </p>
+      <div class="formula-box">
+        $$I_E = I_B + I_C$$
+        $$\text{Current gain (common emitter): } \beta = \frac{I_C}{I_B}$$
+        $$\text{Current gain (common base): } \alpha = \frac{I_C}{I_E}$$
+        $$\beta = \frac{\alpha}{1 - \alpha}, \quad \alpha = \frac{\beta}{1 + \beta}$$
+      </div>
+      <p>
+        Typical values: &alpha; = 0.95 to 0.99, &beta; = 20 to 500.
+      </p>
+
+      <h3>Transistor as an Amplifier (CE Configuration)</h3>
+      <p>
+        In common emitter (CE) configuration, the input signal is applied between base and emitter, and the
+        output is taken between collector and emitter. A small change in base current (&Delta;I<sub>B</sub>)
+        causes a large change in collector current (&Delta;I<sub>C</sub> = &beta; &times; &Delta;I<sub>B</sub>).
+      </p>
+      <div class="formula-box">
+        $$A_V = \frac{\Delta V_{\text{out}}}{\Delta V_{\text{in}}} = -\beta \frac{R_C}{R_{\text{in}}}$$
+        $$\text{Power gain} = \beta^2 \times \frac{R_C}{R_{\text{in}}}$$
+      </div>
+      <p>
+        The negative sign indicates a 180&deg; phase shift between input and output. CE amplifier provides
+        both current gain and voltage gain.
+      </p>
+
+      <h3>Transistor as a Switch</h3>
+      <p>
+        When the base current is zero (or below threshold), the transistor is in <strong>cut-off</strong>
+        mode: I<sub>C</sub> &asymp; 0 and the transistor acts as an open switch. When the base current is
+        large enough to drive the transistor into <strong>saturation</strong>, V<sub>CE</sub> &asymp; 0 and
+        the transistor acts as a closed switch. This is the basis of digital electronics.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 10: Logic Gates -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-10">
+      <h2>10. Logic Gates</h2>
+      <div class="section-diagram">Fig 14.10 &mdash; Logic gate symbols and truth tables</div>
+
+      <h3>Digital Electronics Basics</h3>
+      <p>
+        In digital electronics, signals have only two values: <strong>HIGH (1)</strong> and <strong>LOW (0)</strong>.
+        Logic gates are the fundamental building blocks of digital circuits. They perform Boolean operations on
+        one or more binary inputs and produce a single binary output.
+      </p>
+
+      <h3>OR Gate</h3>
+      <p>
+        Output is 1 if <strong>any</strong> input is 1. Boolean expression: Y = A + B.
+      </p>
+      <div class="formula-box">
+        A = 0, B = 0 &rarr; Y = 0<br>
+        A = 0, B = 1 &rarr; Y = 1<br>
+        A = 1, B = 0 &rarr; Y = 1<br>
+        A = 1, B = 1 &rarr; Y = 1
+      </div>
+
+      <h3>AND Gate</h3>
+      <p>
+        Output is 1 only if <strong>all</strong> inputs are 1. Boolean expression: Y = A &middot; B.
+      </p>
+      <div class="formula-box">
+        A = 0, B = 0 &rarr; Y = 0<br>
+        A = 0, B = 1 &rarr; Y = 0<br>
+        A = 1, B = 0 &rarr; Y = 0<br>
+        A = 1, B = 1 &rarr; Y = 1
+      </div>
+
+      <h3>NOT Gate (Inverter)</h3>
+      <p>
+        Output is the complement of the input. Boolean expression: Y = A&#x0304; (A bar).
+      </p>
+      <div class="formula-box">
+        A = 0 &rarr; Y = 1<br>
+        A = 1 &rarr; Y = 0
+      </div>
+
+      <h3>NAND Gate (Universal Gate)</h3>
+      <p>
+        Output is 0 only when <strong>all</strong> inputs are 1. It is the complement of AND.
+        Boolean expression: Y = <span style="text-decoration:overline">A &middot; B</span>.
+        NAND is called a <strong>universal gate</strong> because any other gate can be constructed using only NAND gates.
+      </p>
+      <div class="formula-box">
+        A = 0, B = 0 &rarr; Y = 1<br>
+        A = 0, B = 1 &rarr; Y = 1<br>
+        A = 1, B = 0 &rarr; Y = 1<br>
+        A = 1, B = 1 &rarr; Y = 0
+      </div>
+
+      <h3>NOR Gate (Universal Gate)</h3>
+      <p>
+        Output is 1 only when <strong>all</strong> inputs are 0. It is the complement of OR.
+        Boolean expression: Y = <span style="text-decoration:overline">A + B</span>.
+        NOR is also a <strong>universal gate</strong>.
+      </p>
+      <div class="formula-box">
+        A = 0, B = 0 &rarr; Y = 1<br>
+        A = 0, B = 1 &rarr; Y = 0<br>
+        A = 1, B = 0 &rarr; Y = 0<br>
+        A = 1, B = 1 &rarr; Y = 0
+      </div>
+
+      <p>
+        <strong>JEE/NEET Tip:</strong> NAND and NOR are universal gates &mdash; any Boolean function can be
+        implemented using only NAND gates or only NOR gates. Questions often ask you to identify the gate
+        from its truth table, or to construct one gate using others (e.g., make NOT from NAND).
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 11: Key Formulas -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-11">
+      <h2>11. Key Formulas at a Glance</h2>
+
+      <h3>Carrier Concentrations</h3>
+      <div class="formula-box">
+        $$n_e \cdot n_h = n_i^2 \quad \text{(Mass Action Law)}$$
+        $$\text{Intrinsic: } n_e = n_h = n_i$$
+        $$\text{n-type: } n_e \approx N_D, \quad n_h = \frac{n_i^2}{N_D}$$
+        $$\text{p-type: } n_h \approx N_A, \quad n_e = \frac{n_i^2}{N_A}$$
+      </div>
+
+      <h3>Conductivity</h3>
+      <div class="formula-box">
+        $$\sigma = e(n_e \mu_e + n_h \mu_h)$$
+        $$\rho = \frac{1}{\sigma}$$
+      </div>
+
+      <h3>Diode and Rectifier</h3>
+      <div class="formula-box">
+        $$V_{\text{threshold}} \approx 0.7 \text{ V (Si)}, \quad 0.3 \text{ V (Ge)}$$
+        $$r_d = \frac{\Delta V}{\Delta I} \quad \text{(dynamic resistance)}$$
+        $$\text{Half-wave: } V_{\text{dc}} = \frac{V_0}{\pi}, \quad f_{\text{out}} = f_{\text{in}}$$
+        $$\text{Full-wave: } V_{\text{dc}} = \frac{2V_0}{\pi}, \quad f_{\text{out}} = 2f_{\text{in}}$$
+      </div>
+
+      <h3>Transistor</h3>
+      <div class="formula-box">
+        $$I_E = I_B + I_C$$
+        $$\alpha = \frac{I_C}{I_E}, \quad \beta = \frac{I_C}{I_B}$$
+        $$\beta = \frac{\alpha}{1 - \alpha}, \quad \alpha = \frac{\beta}{1 + \beta}$$
+        $$A_V = -\beta \frac{R_C}{R_{\text{in}}}$$
+      </div>
+
+      <h3>Zener Diode (Voltage Regulator)</h3>
+      <div class="formula-box">
+        $$V_{\text{out}} = V_Z$$
+        $$I_S = \frac{V_{\text{in}} - V_Z}{R_S}, \quad I_Z = I_S - I_L$$
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION: Slides Placeholder -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-slides">
+      <h2>Slides</h2>
+      <div class="section-diagram" style="min-height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+        <span style="font-size: 2rem;">&#127916;</span>
+        <span>Slides for Semiconductor Electronics coming soon!</span>
+        <span style="font-size: 0.85rem; opacity: 0.6;">Interactive slide deck covering energy bands, p-n junctions, diodes, transistors and logic gates.</span>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION: Simulations Placeholder -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-simulations">
+      <h2>Simulations</h2>
+      <div class="section-diagram" style="min-height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;">
+        <span style="font-size: 2rem;">&#9889;</span>
+        <span>Interactive Simulations coming soon!</span>
+        <span style="font-size: 0.85rem; opacity: 0.6;">Planned simulations:</span>
+      </div>
+      <div style="padding: 16px 24px;">
+        <p><strong>1. p-n Junction Diode Simulator</strong> &mdash; Visualise forward/reverse bias, depletion region width, and V-I characteristics in real time.</p>
+        <p><strong>2. Half-Wave &amp; Full-Wave Rectifier</strong> &mdash; See input AC, diode states, and filtered DC output with adjustable capacitance.</p>
+        <p><strong>3. Transistor Amplifier (CE)</strong> &mdash; Adjust base current and see the amplified output waveform with gain calculation.</p>
+        <p><strong>4. Logic Gate Playground</strong> &mdash; Build and test circuits using AND, OR, NOT, NAND, NOR gates with live truth tables.</p>
+        <p><strong>5. Energy Band Visualiser</strong> &mdash; Compare band structures of metals, insulators, and semiconductors at different temperatures.</p>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION: JEE & NEET Corner -->
+    <!-- ============================== -->
+    <div class="theory-section" id="section-jee-neet">
+      <h2>JEE &amp; NEET Corner</h2>
+
+      <h3>Frequently Tested Topics</h3>
+      <p>
+        <strong>Note:</strong> Semiconductors have been <strong>removed from the JEE Advanced syllabus</strong>
+        (confirmed for 2025 and 2026). They remain in <strong>JEE Main only</strong> with a weightage of
+        approximately 4.8% (1&ndash;2 questions per session).
+      </p>
+      <p>
+        <strong>JEE Main:</strong> Energy band gap classification, mass action law numerical problems,
+        V-I characteristics of diode, Zener diode as voltage regulator, transistor amplifier (CE) gain calculations,
+        logic gate truth tables and combinations, rectifier output frequency.
+      </p>
+      <p>
+        <strong>NEET:</strong> Classification of conductors/semiconductors/insulators, intrinsic vs extrinsic
+        semiconductors, n-type vs p-type identification, p-n junction working, forward and reverse bias,
+        diode applications (rectifier, LED, photodiode, solar cell), basic logic gates.
+      </p>
+
+      <h3>Common Traps &amp; Tricks</h3>
+      <p>
+        <strong>1.</strong> A doped semiconductor is electrically <strong>neutral</strong>, not charged. Students often
+        confuse &ldquo;having extra electrons&rdquo; in n-type with &ldquo;being negatively charged&rdquo; &mdash; the
+        extra electrons come with positively ionised donor atoms.
+      </p>
+      <p>
+        <strong>2.</strong> In a p-n junction at equilibrium, diffusion current = drift current, NOT zero current
+        individually. The <strong>net</strong> current is zero.
+      </p>
+      <p>
+        <strong>3.</strong> You cannot make a p-n junction by pressing two slabs together. The junction requires
+        atomic-level crystal continuity.
+      </p>
+      <p>
+        <strong>4.</strong> Photodiode works in <strong>reverse bias</strong>. Solar cell works at <strong>zero bias</strong>.
+        Both use the photovoltaic effect but in different modes.
+      </p>
+      <p>
+        <strong>5.</strong> In half-wave rectification, output frequency = input frequency.
+        In full-wave rectification, output frequency = 2 &times; input frequency.
+      </p>
+      <p>
+        <strong>6.</strong> Energy gap order for Group IV: E<sub>g</sub>(C) &gt; E<sub>g</sub>(Si) &gt; E<sub>g</sub>(Ge) &gt; E<sub>g</sub>(Sn).
+      </p>
+      <p>
+        <strong>7.</strong> For a transistor in active mode: E-B junction is <strong>forward biased</strong>,
+        C-B junction is <strong>reverse biased</strong>. In saturation: both junctions forward biased.
+        In cut-off: both junctions reverse biased.
+      </p>
+
+      <h3>Important Numerical Types</h3>
+      <p>
+        <strong>Type 1:</strong> Given n<sub>i</sub> and doping concentration N<sub>D</sub> (or N<sub>A</sub>),
+        find minority carrier concentration using n<sub>e</sub> &middot; n<sub>h</sub> = n<sub>i</sub><sup>2</sup>.
+      </p>
+      <p>
+        <strong>Type 2:</strong> Transistor current relations &mdash; given &alpha; find &beta; (or vice versa),
+        or given I<sub>B</sub> and &beta; find I<sub>C</sub> and I<sub>E</sub>.
+      </p>
+      <p>
+        <strong>Type 3:</strong> Zener diode regulator &mdash; calculate series resistance current, Zener current,
+        and load current.
+      </p>
+      <p>
+        <strong>Type 4:</strong> CE amplifier voltage gain calculation given &beta;, R<sub>C</sub>, and R<sub>in</sub>.
+      </p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- Bottom Navigation Links -->
+    <!-- ============================== -->
+    <div class="ch-links">
+      <a href="modern-physics.html">&larr; Prev: Modern Physics</a>
+      <a href="../chapters.html">All Chapters &rarr;</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-string"></div><div class="pendulum-bob"></div></div></div></div>
+          <div class="logo-text"><span class="brand-name"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">FREE THERAPY FOR PHYSICS TRAUMA</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations, crystal-clear concepts, and a passion that ignites curiosity.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../chapters.html">Chapters</a><a href="../simulations.html">Simulations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+917896878299">+91 78968 78299</a>
+        <a href="mailto:im666d@gmail.com">im666d@gmail.com</a>
+        <a href="../index.html#contact">Contact Page</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../simulations.html">Simulations</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>
