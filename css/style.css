@@ -2215,7 +2215,7 @@ ul { list-style: none; }
 }
 
 .dts-level-group:nth-child(3) {
-  border-left-color: #ffd700;
+  border-left-color: var(--color-accent);
 }
 
 .dts-level-label {
