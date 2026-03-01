@@ -53,18 +53,23 @@
           }, { merge: true });
 
           // Check if profile is complete (studentName exists)
-          // Use localStorage as fast check to avoid Firestore read on every page
-          if (!profileFormShown && !localStorage.getItem('pf-complete')) {
+          if (!profileFormShown) {
             profileFormShown = true;
-            db.collection('users').doc(user.uid).get().then(function(doc) {
-              var data = doc.exists ? doc.data() : {};
-              if (data.studentName) {
-                // Profile already complete — set flag so we never check again
-                localStorage.setItem('pf-complete', '1');
-              } else {
-                showProfileForm(db, user.uid);
-              }
-            });
+            // Always verify with Firestore on first page load per session
+            if (!sessionStorage.getItem('pf-verified')) {
+              db.collection('users').doc(user.uid).get().then(function(doc) {
+                var data = doc.exists ? doc.data() : {};
+                sessionStorage.setItem('pf-verified', '1');
+                if (data.studentName) {
+                  localStorage.setItem('pf-complete', '1');
+                } else {
+                  localStorage.removeItem('pf-complete');
+                  showProfileForm(db, user.uid);
+                }
+              });
+            } else if (!localStorage.getItem('pf-complete')) {
+              showProfileForm(db, user.uid);
+            }
           }
         }
       } else {
