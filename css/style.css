@@ -2465,6 +2465,10 @@ ul { list-style: none; }
   padding: 0 20px 40px;
 }
 
+.dts-test:fullscreen .dts-selector {
+  display: none;
+}
+
 .dts-test:fullscreen .dts-pdf-container {
   max-height: calc(100vh - 160px);
 }
