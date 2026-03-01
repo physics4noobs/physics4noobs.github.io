@@ -20,7 +20,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script defer src="js/firebase-config.js"></script>
-  <script defer src="js/auth.js?v=56"></script>
+  <script defer src="js/auth.js?v=57"></script>
   <script defer src="js/ranking.js"></script>
   <script defer src="js/achievements-config.js"></script>
 </head>
@@ -395,8 +395,10 @@
           }
           loginPrompt.style.display = 'none';
           dashboard.style.display = 'block';
-          // Show student name (fallback to Google displayName)
-          db.collection('users').doc(user.uid).get().then(function(doc) {
+          // Show student name (read from server to get latest)
+          db.collection('users').doc(user.uid).get({ source: 'server' }).catch(function() {
+            return db.collection('users').doc(user.uid).get(); // offline fallback
+          }).then(function(doc) {
             var data = doc.exists ? doc.data() : {};
             var name = data.studentName || data.displayName || user.displayName || '';
             if (name) {

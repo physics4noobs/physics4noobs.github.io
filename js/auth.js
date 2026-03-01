@@ -202,26 +202,15 @@
       if (batchCode) updateData.batchCode = batchCode;
 
       db.collection('users').doc(uid).set(updateData, { merge: true }).then(function() {
-        // Verify the write actually persisted on server
-        return db.collection('users').doc(uid).get({ source: 'server' });
-      }).then(function(doc) {
-        var saved = doc.exists && doc.data().studentName;
-        if (saved) {
-          localStorage.setItem('pf-complete', '1');
-          sessionStorage.setItem('pf-verified', '1');
-          submitBtn.textContent = 'Saved!';
+        localStorage.setItem('pf-complete', '1');
+        sessionStorage.setItem('pf-verified', '1');
+        submitBtn.textContent = 'Saved!';
+        submitBtn.style.background = 'linear-gradient(135deg, #00e676, #00c853)';
+        // Let user see "Saved!" for a moment before closing
+        setTimeout(function() {
           overlay.classList.remove('show');
           setTimeout(function() { overlay.remove(); }, 350);
-        } else {
-          // Write appeared to succeed but data not on server
-          localStorage.removeItem('pf-complete');
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Retry';
-          var errDiv = document.createElement('div');
-          errDiv.style.cssText = 'color:var(--color-rose,#ff6464);font-size:0.8rem;text-align:center;margin-top:8px;';
-          errDiv.textContent = 'Data not saved. Check Firestore rules allow writing studentName.';
-          submitBtn.parentNode.appendChild(errDiv);
-        }
+        }, 800);
       }).catch(function(err) {
         console.error('Profile save error:', err);
         localStorage.removeItem('pf-complete');
