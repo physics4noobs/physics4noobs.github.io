@@ -182,17 +182,20 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Saving...';
 
+      // Set localStorage IMMEDIATELY so next page never shows form
+      localStorage.setItem('pf-complete', '1');
+
       var updateData = { studentName: studentName };
       if (batchCode) updateData.batchCode = batchCode;
 
       db.collection('users').doc(uid).set(updateData, { merge: true }).then(function() {
-        localStorage.setItem('pf-complete', '1');
         overlay.classList.remove('show');
         setTimeout(function() {
           overlay.remove();
         }, 350);
       }).catch(function(err) {
         console.error('Profile save error:', err);
+        // Keep localStorage set even on error — prevents repeated popups
         submitBtn.disabled = false;
         submitBtn.textContent = 'Continue';
       });
