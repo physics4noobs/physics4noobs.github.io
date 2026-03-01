@@ -2435,6 +2435,44 @@ ul { list-style: none; }
   color: var(--color-primary);
 }
 
+.pdf-download-btn {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.pdf-download-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.fullscreen-btn {
+  font-size: 0.72rem !important;
+  padding: 6px 14px !important;
+}
+
+.dts-test:fullscreen {
+  background: var(--bg-primary);
+  overflow-y: auto;
+  padding: 0 20px 40px;
+}
+
+.dts-test:fullscreen .dts-pdf-container {
+  max-height: calc(100vh - 160px);
+}
+
+.dts-test::backdrop {
+  background: var(--bg-primary);
+}
+
 /* Answer Panel */
 .dts-answer-panel {
   background: var(--bg-card);

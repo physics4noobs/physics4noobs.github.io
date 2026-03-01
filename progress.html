@@ -395,8 +395,8 @@
           }
           loginPrompt.style.display = 'none';
           dashboard.style.display = 'block';
-          // Show student name (localStorage first, Firestore fallback)
-          var name = localStorage.getItem('pf-studentName') || user.displayName || '';
+          // Show username (localStorage first, Firestore fallback)
+          var name = localStorage.getItem('pf-username') || user.displayName || '';
           var batch = localStorage.getItem('pf-batchCode') || '';
           if (name) {
             var nameWrap = document.getElementById('progress-student-name');

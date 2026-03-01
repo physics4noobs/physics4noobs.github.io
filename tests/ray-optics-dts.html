@@ -119,6 +119,7 @@
       <div class="dts-progress" id="progress">0 / 15 answered</div>
       <div class="score" id="score"></div>
       <button class="test-btn" id="submit-btn">Submit Test</button>
+      <button class="test-btn fullscreen-btn" id="fullscreen-btn" title="Fullscreen (F)">&#x26F6; Fullscreen</button>
     </div>
 
     <!-- Main Content: PDF Viewer + Answer Grid -->
@@ -135,6 +136,7 @@
             <button class="pdf-zoom-btn" id="zoom-in" title="Zoom in">+</button>
             <button class="pdf-fit-btn" id="zoom-fit" title="Fit to width">Fit</button>
           </div>
+          <a class="pdf-download-btn" id="download-btn" href="../pdfs/ray-optics/questions.pdf" download title="Download PDF">&#8681; PDF</a>
         </div>
         <div class="dts-pdf-container" id="pdf-container">
           <div class="dts-img-wrapper" id="img-wrapper">
@@ -380,6 +382,7 @@
     }
 
     updatePageInfo();
+    updateDownloadBtn();
     document.getElementById('pdf-container').scrollTop = 0;
 
     // Preload next sheet
@@ -387,6 +390,13 @@
       var preload = new Image();
       preload.src = getImagePath(SHEETS[sheetIdx + 1].startPage);
     }
+  }
+
+  function updateDownloadBtn() {
+    var btn = document.getElementById('download-btn');
+    btn.href = viewingSolutions
+      ? '../pdfs/ray-optics/solutions.pdf'
+      : '../pdfs/ray-optics/questions.pdf';
   }
 
   function loadSolutionImages() {
@@ -410,6 +420,7 @@
     }
 
     updatePageInfo();
+    updateDownloadBtn();
     document.getElementById('pdf-container').scrollTop = 0;
   }
 
@@ -812,11 +823,39 @@
   });
 
   // ============================================================
+  //  FULLSCREEN
+  // ============================================================
+  var testWrapper = document.querySelector('.dts-test');
+  var fullscreenBtn = document.getElementById('fullscreen-btn');
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      testWrapper.requestFullscreen();
+    }
+  }
+
+  fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+  document.addEventListener('fullscreenchange', function() {
+    if (document.fullscreenElement) {
+      fullscreenBtn.innerHTML = '&#x2716; Exit';
+    } else {
+      fullscreenBtn.innerHTML = '&#x26F6; Fullscreen';
+    }
+  });
+
+  // ============================================================
   //  KEYBOARD NAVIGATION
   // ============================================================
   document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowLeft') document.getElementById('pdf-prev').click();
     if (e.key === 'ArrowRight') document.getElementById('pdf-next').click();
+    if (e.key === 'f' || e.key === 'F') {
+      var tag = document.activeElement.tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') toggleFullscreen();
+    }
   });
 
   // ============================================================

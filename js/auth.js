@@ -52,7 +52,7 @@
             photoURL: user.photoURL || ''
           }, { merge: true });
 
-          // Check if profile is complete (studentName exists)
+          // Check if profile is complete (username exists)
           if (!profileFormShown) {
             profileFormShown = true;
             // Always verify with Firestore on first page load per session
@@ -60,7 +60,7 @@
               db.collection('users').doc(user.uid).get().then(function(doc) {
                 var data = doc.exists ? doc.data() : {};
                 sessionStorage.setItem('pf-verified', '1');
-                if (data.studentName) {
+                if (data.username) {
                   localStorage.setItem('pf-complete', '1');
                 } else {
                   localStorage.removeItem('pf-complete');
@@ -105,7 +105,7 @@
     if (logoutBtn) {
       logoutBtn.addEventListener('click', function() {
         localStorage.removeItem('pf-complete');
-        localStorage.removeItem('pf-studentName');
+        localStorage.removeItem('pf-username');
         localStorage.removeItem('pf-batchCode');
         auth.signOut();
       });
@@ -113,7 +113,7 @@
     if (mobileSignoutBtn) {
       mobileSignoutBtn.addEventListener('click', function() {
         localStorage.removeItem('pf-complete');
-        localStorage.removeItem('pf-studentName');
+        localStorage.removeItem('pf-username');
         localStorage.removeItem('pf-batchCode');
         auth.signOut();
       });
@@ -145,9 +145,9 @@
         '<h2>Complete Your Profile</h2>' +
         '<p class="profile-sub">Tell us a bit about yourself to get started.</p>' +
         '<div class="profile-field">' +
-          '<label>Your Name <span class="required">*</span></label>' +
-          '<input type="text" id="pf-name" placeholder="Enter your full name" autocomplete="name" maxlength="60">' +
-          '<div class="profile-error">Please enter your name</div>' +
+          '<label>Username <span class="required">*</span></label>' +
+          '<input type="text" id="pf-name" placeholder="Enter your username" autocomplete="username" maxlength="60">' +
+          '<div class="profile-error">Please enter a username</div>' +
         '</div>' +
         '<div class="profile-field">' +
           '<label>Batch Code <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>' +
@@ -179,10 +179,10 @@
 
     // Submit handler
     submitBtn.addEventListener('click', function() {
-      var studentName = nameInput.value.trim();
+      var username = nameInput.value.trim();
       var batchCode = batchInput.value.trim();
 
-      if (!studentName) {
+      if (!username) {
         nameInput.classList.add('error');
         nameInput.focus();
         return;
@@ -194,12 +194,12 @@
       // Set localStorage IMMEDIATELY so next page never shows form
       localStorage.setItem('pf-complete', '1');
 
-      var updateData = { studentName: studentName };
+      var updateData = { username: username };
       if (batchCode) updateData.batchCode = batchCode;
 
       db.collection('users').doc(uid).set(updateData, { merge: true }).then(function() {
         localStorage.setItem('pf-complete', '1');
-        localStorage.setItem('pf-studentName', studentName);
+        localStorage.setItem('pf-username', username);
         if (batchCode) localStorage.setItem('pf-batchCode', batchCode);
         sessionStorage.setItem('pf-verified', '1');
         submitBtn.textContent = 'Saved!';

@@ -224,8 +224,8 @@
           var d = doc.data();
           var u = {
             uid: doc.id,
-            studentName: d.studentName || '',
-            displayName: d.studentName || d.displayName || 'User-' + doc.id.slice(0, 6),
+            username: d.username || '',
+            displayName: d.username || d.displayName || 'User-' + doc.id.slice(0, 6),
             email: d.email || doc.id.slice(0, 8) + '…',
             batchCode: d.batchCode || '',
             photoURL: d.photoURL || '',
