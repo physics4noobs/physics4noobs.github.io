@@ -1971,7 +1971,7 @@ ul { list-style: none; }
 
 .test-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .test-header h1 {
@@ -2195,31 +2195,32 @@ ul { list-style: none; }
 .dts-test { max-width: 1200px; }
 
 .dts-test .test-grid {
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
 }
 
 .dts-test .test-card {
-  padding: 14px 16px;
+  padding: 10px 12px;
 }
 
 .dts-test .test-card .tc-title {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
+  margin-bottom: 2px;
 }
 
 .dts-test .test-card .tc-info {
-  font-size: 0.7rem;
-  margin-bottom: 8px;
-}
-
-.dts-test .test-card .tc-badge {
-  font-size: 0.52rem;
-  padding: 1px 6px;
+  font-size: 0.65rem;
   margin-bottom: 4px;
 }
 
+.dts-test .test-card .tc-badge {
+  font-size: 0.5rem;
+  padding: 1px 5px;
+  margin-bottom: 2px;
+}
+
 .dts-test .test-card .tc-link {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
 }
 
 .dts-selector {
