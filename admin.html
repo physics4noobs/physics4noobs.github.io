@@ -83,6 +83,12 @@
         <div class="admin-controls">
           <input type="text" id="admin-search" class="admin-search" placeholder="Search users by name or email...">
           <div class="admin-sort">
+            <span class="pc-label">Batch:</span>
+            <select id="admin-batch-filter" class="admin-search" style="flex:none;min-width:140px;padding:7px 12px;font-size:0.82rem;">
+              <option value="">All Batches</option>
+            </select>
+          </div>
+          <div class="admin-sort">
             <span class="pc-label">Sort:</span>
             <button class="pc-btn active" data-sort="lastActive">Last Active</button>
             <button class="pc-btn" data-sort="achievements">Achievements</button>
@@ -161,6 +167,7 @@
     // --- State ---
     var allUsers = [];
     var currentSort = 'lastActive';
+    var currentBatch = '';
 
     // --- Wait for Firebase ---
     function waitForFirebase(cb) {
@@ -217,8 +224,10 @@
           var d = doc.data();
           var u = {
             uid: doc.id,
-            displayName: d.displayName || 'User-' + doc.id.slice(0, 6),
+            studentName: d.studentName || '',
+            displayName: d.studentName || d.displayName || 'User-' + doc.id.slice(0, 6),
             email: d.email || doc.id.slice(0, 8) + '…',
+            batchCode: d.batchCode || '',
             photoURL: d.photoURL || '',
             simulations: [],
             flashcards: {},
@@ -278,6 +287,7 @@
         return Promise.all(promises).then(function() {
           allUsers = users;
           renderStats(users);
+          populateBatchFilter(users);
           sortAndRenderUsers();
           document.getElementById('admin-loading').style.display = 'none';
           document.getElementById('admin-dashboard').style.display = 'block';
@@ -314,10 +324,40 @@
         '<div class="admin-stat-card"><div class="admin-stat-icon">&#9889;</div><div class="admin-stat-value">' + active7d + '</div><div class="admin-stat-label">Active (7d)</div></div>';
     }
 
+    // --- Populate Batch Filter ---
+    function populateBatchFilter(users) {
+      var select = document.getElementById('admin-batch-filter');
+      var batches = {};
+      users.forEach(function(u) {
+        if (u.batchCode) batches[u.batchCode] = true;
+      });
+      var sorted = Object.keys(batches).sort();
+      select.innerHTML = '<option value="">All Batches (' + users.length + ')</option>';
+      sorted.forEach(function(b) {
+        var count = users.filter(function(u) { return u.batchCode === b; }).length;
+        var opt = document.createElement('option');
+        opt.value = b;
+        opt.textContent = b + ' (' + count + ')';
+        select.appendChild(opt);
+      });
+      // Add "No Batch" option if some users have no batch code
+      var noBatch = users.filter(function(u) { return !u.batchCode; }).length;
+      if (noBatch > 0 && sorted.length > 0) {
+        var opt = document.createElement('option');
+        opt.value = '__none__';
+        opt.textContent = 'No Batch (' + noBatch + ')';
+        select.appendChild(opt);
+      }
+    }
+
     // --- Sort & Filter ---
     function sortAndRenderUsers() {
       var query = (document.getElementById('admin-search').value || '').toLowerCase();
       var filtered = allUsers.filter(function(u) {
+        // Batch filter
+        if (currentBatch === '__none__' && u.batchCode) return false;
+        if (currentBatch && currentBatch !== '__none__' && u.batchCode !== currentBatch) return false;
+        // Search filter
         if (!query) return true;
         return (u.displayName.toLowerCase().indexOf(query) !== -1) ||
                (u.email.toLowerCase().indexOf(query) !== -1) ||
@@ -361,7 +401,7 @@
           '<div class="admin-user-cell">' + avatarHtml +
             '<div class="admin-user-info">' +
               '<div class="admin-user-name">' + escHtml(u.displayName || u.uid) + '</div>' +
-              '<div class="admin-user-email">' + escHtml(u.email || u.uid) + '</div>' +
+              '<div class="admin-user-email">' + escHtml(u.email || u.uid) + (u.batchCode ? ' <span style="background:rgba(0,212,255,0.1);color:var(--color-primary);padding:1px 6px;border-radius:4px;font-size:0.65rem;font-weight:600;margin-left:4px;">' + escHtml(u.batchCode) + '</span>' : '') + '</div>' +
             '</div>' +
           '</div>' +
           '<div class="admin-rank-col"><span class="admin-rank" style="color:' + rank.color + '"><span class="admin-rank-icon">' + rank.icon + '</span> ' + rank.label + '</span></div>' +
@@ -431,6 +471,12 @@
 
     // --- Search ---
     document.getElementById('admin-search').addEventListener('input', function() {
+      sortAndRenderUsers();
+    });
+
+    // --- Batch filter ---
+    document.getElementById('admin-batch-filter').addEventListener('change', function() {
+      currentBatch = this.value;
       sortAndRenderUsers();
     });
 
