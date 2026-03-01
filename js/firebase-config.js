@@ -23,4 +23,9 @@ var firebaseConfig = {
 
 if (typeof firebase !== 'undefined') {
   firebase.initializeApp(firebaseConfig);
+
+  // Fix Safari blocking Firestore WebChannel (CORS access control errors)
+  if (firebase.firestore) {
+    firebase.firestore().settings({ experimentalForceLongPolling: true });
+  }
 }
