@@ -63,7 +63,7 @@
               // Check Firestore — maybe they filled it on another device
               db.collection('users').doc(user.uid).get().then(function(doc) {
                 var data = doc.exists ? doc.data() : {};
-                if (data.username) {
+                if (data.username || data.studentName) {
                   localStorage.setItem('pf-complete', '1');
                   localStorage.setItem('pf-asked', '1');
                 } else {
