@@ -20,7 +20,7 @@
 
     if (!loginBtn || !userMenu) return;
 
-    var profileFormShown = false; // Guard: only show profile form once per page load
+    var profileFormShown = false;
 
     // Handle redirect result (for mobile / popup-blocked fallback)
     auth.getRedirectResult().then(function(result) {
@@ -41,7 +41,7 @@
         if (mobileProgressBtn) mobileProgressBtn.style.display = '';
         if (mobileSignoutBtn) mobileSignoutBtn.style.display = '';
 
-        // Save profile to Firestore + check for first sign-in
+        // Save basic profile to Firestore
         if (firebase.firestore) {
           var db = firebase.firestore();
           var theme = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -52,21 +52,23 @@
             photoURL: user.photoURL || ''
           }, { merge: true });
 
-          // Check if profile is complete (username exists)
+          // Show username form ONCE — only if never completed before
           if (!profileFormShown) {
             profileFormShown = true;
             if (localStorage.getItem('pf-complete')) {
-              // Already completed — skip form entirely
+              // Already completed — never show again
             } else {
-              // First time or cleared — check Firestore once
+              // Check Firestore — maybe they filled it on another device
               db.collection('users').doc(user.uid).get().then(function(doc) {
                 var data = doc.exists ? doc.data() : {};
                 if (data.username) {
+                  // Already in Firestore, just mark locally
                   localStorage.setItem('pf-complete', '1');
-                  localStorage.setItem('pf-username', data.username);
                 } else {
                   showProfileForm(db, user.uid);
                 }
+              }).catch(function() {
+                // Firestore read failed — don't show form, try next time
               });
             }
           }
@@ -83,8 +85,6 @@
       loginBtn.disabled = true;
       loginBtn.style.opacity = '0.6';
 
-      // Always try popup first (works on Safari + Chrome + Firefox)
-      // Redirect fails on Safari due to ITP blocking cross-domain cookies
       auth.signInWithPopup(provider).then(function() {
         loginBtn.disabled = false;
         loginBtn.style.opacity = '';
@@ -93,7 +93,6 @@
         loginBtn.style.opacity = '';
         console.error('Auth error:', err.code, err.message);
 
-        // Popup blocked — fall back to redirect (last resort)
         if (err.code === 'auth/popup-blocked' ||
             err.code === 'auth/operation-not-supported-in-this-environment') {
           auth.signInWithRedirect(provider);
@@ -113,16 +112,14 @@
     }
   });
 
-  // --- Profile Form (first sign-in) ---
+  // --- Profile Form (first sign-in only) ---
   function showProfileForm(db, uid) {
-    // Prevent duplicate forms
     if (document.querySelector('.profile-overlay')) return;
 
     // Load CSS if not already loaded
     if (!document.querySelector('link[href*="profile-form.css"]')) {
       var link = document.createElement('link');
       link.rel = 'stylesheet';
-      // Detect if we're in a subdirectory
       var isSubdir = window.location.pathname.indexOf('/chapters/') !== -1 ||
                      window.location.pathname.indexOf('/tests/') !== -1 ||
                      window.location.pathname.indexOf('/simulations/') !== -1;
@@ -130,7 +127,6 @@
       document.head.appendChild(link);
     }
 
-    // Build form HTML
     var overlay = document.createElement('div');
     overlay.className = 'profile-overlay';
     overlay.innerHTML =
@@ -151,7 +147,6 @@
 
     document.body.appendChild(overlay);
 
-    // Show with animation (next frame)
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
         overlay.classList.add('show');
@@ -162,15 +157,12 @@
     var batchInput = document.getElementById('pf-batch');
     var submitBtn = document.getElementById('pf-submit');
 
-    // Focus name input after animation
     setTimeout(function() { nameInput.focus(); }, 400);
 
-    // Clear error on input
     nameInput.addEventListener('input', function() {
       nameInput.classList.remove('error');
     });
 
-    // Submit handler
     submitBtn.addEventListener('click', function() {
       var username = nameInput.value.trim();
       var batchCode = batchInput.value.trim();
@@ -184,20 +176,16 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Saving...';
 
-      // Set localStorage IMMEDIATELY so next page never shows form
+      // Mark complete immediately so form never shows again
       localStorage.setItem('pf-complete', '1');
 
       var updateData = { username: username };
       if (batchCode) updateData.batchCode = batchCode;
 
+      // Save to Firestore — admin dashboard reads this later
       db.collection('users').doc(uid).set(updateData, { merge: true }).then(function() {
-        localStorage.setItem('pf-complete', '1');
-        localStorage.setItem('pf-username', username);
-        if (batchCode) localStorage.setItem('pf-batchCode', batchCode);
-        sessionStorage.setItem('pf-verified', '1');
         submitBtn.textContent = 'Saved!';
         submitBtn.style.background = 'linear-gradient(135deg, #00e676, #00c853)';
-        // Let user see "Saved!" for a moment before closing
         setTimeout(function() {
           overlay.classList.remove('show');
           setTimeout(function() { overlay.remove(); }, 350);
@@ -209,12 +197,11 @@
         submitBtn.textContent = 'Retry';
         var errDiv = document.createElement('div');
         errDiv.style.cssText = 'color:var(--color-rose,#ff6464);font-size:0.8rem;text-align:center;margin-top:8px;';
-        errDiv.textContent = 'Save failed: ' + (err.message || err.code || 'Unknown error');
+        errDiv.textContent = 'Save failed — please try again';
         submitBtn.parentNode.appendChild(errDiv);
       });
     });
 
-    // Enter key submits
     nameInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') submitBtn.click();
     });
