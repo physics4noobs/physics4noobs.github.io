@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wave Optics DTS | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/auth.js?v=61"></script>
+  <script defer src="../js/ranking.js"></script>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splash"><div class="splash-rocket"><div class="sp-nose"></div><div class="sp-body"></div><div class="sp-window"></div><div class="sp-fin-l"></div><div class="sp-fin-r"></div><div class="sp-flame"></div><div class="sp-glow"></div></div><div class="splash-logo"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></div><div class="splash-tagline">Free Therapy For Physics Trauma</div></div>
+  <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo" id="nav-logo">
+        <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-string"></div><div class="pendulum-bob"></div></div></div></div>
+        <div class="logo-text"><span class="brand-name"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">FREE THERAPY FOR PHYSICS TRAUMA</span></div>
+      </a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="../index.html" class="nav-link">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="../about.html" class="nav-link">About Me</a>
+        </div>
+        <div class="nav-item"><a href="#" class="nav-link">Chapters</a><div class="dropdown"><a href="../chapters.html"><div class="dd-icon">&#128214;</div> Theory</a><a href="../slides.html"><div class="dd-icon">&#127916;</div> Slides</a></div></div>        <div class="nav-item">
+          <a href="../simulations.html" class="nav-link">Simulations</a>
+        </div>
+        <div class="nav-item">
+          <a href="../tests.html" class="nav-link active">Tests</a>
+        </div>
+        <div class="nav-item">
+          <a href="../flashcards.html" class="nav-link">Flashcards</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="auth-btn" id="auth-login-btn"><svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign in</button>
+        <a href="progress.html" class="mobile-auth-action" id="mobile-progress-btn" style="display:none;">Progress</a>
+        <button class="mobile-auth-action mobile-signout-btn" id="mobile-signout-btn" style="display:none;">Sign Out</button>
+
+        <div class="user-menu nav-item" id="auth-user-menu" style="display:none;"><img class="user-avatar" id="auth-user-avatar" src="" alt="User"><span class="user-rank-badge rank-bronze" id="auth-rank-badge"><span class="rank-icon" id="auth-rank-icon"></span><span id="auth-rank-label"></span></span><div class="dropdown"><div class="dropdown-rank" id="dropdown-rank-display"><span class="rank-tier" id="dropdown-rank-tier"></span><div class="rank-progress-bar"><div class="rank-progress-fill" id="dropdown-rank-fill"></div></div></div><a href="../progress.html"><div class="dd-icon">&#128200;</div> My Progress</a><div class="dropdown-divider"></div><a href="#" id="auth-logout-btn"><div class="dd-icon">&#128682;</div> Sign Out</a></div></div>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <script>
+    (function(){
+      var s=document.getElementById('splash');
+      if(sessionStorage.getItem('ae-splash')){s.style.display='none';}
+      else{
+        sessionStorage.setItem('ae-splash','1');setTimeout(function(){s.classList.add('fade-out');},2200);setTimeout(function(){s.style.display='none';},2700);
+      }
+    })();
+  </script>
+
+  <!-- Listing Content -->
+  <div class="test-wrapper dts-test" style="max-width:1400px;">
+
+    <div class="test-header">
+      <div class="section-tag">Daily Test Series</div>
+      <h1>Wave Optics &mdash; DTS Practice</h1>
+      <div class="test-meta">Grade XII &bull; 7 DTS Sheets &bull; 150+ Questions &bull; JEE Style Scoring</div>
+      <div style="margin-top:12px;">
+        <a class="pdf-download-btn" href="../pdfs/wave-optics/questions.pdf" download style="font-size:0.72rem;padding:6px 14px;">&#8681; Download Full PDF</a>
+      </div>
+    </div>
+
+    <!-- Sheet Cards -->
+    <div id="sheet-list"></div>
+
+  </div>
+
+  <!-- Description Modal -->
+  <div class="dts-detail-overlay" id="detail-overlay">
+    <div class="dts-detail-card">
+      <button class="dts-detail-close" id="detail-close">&times;</button>
+      <h2 id="detail-name"></h2>
+      <p class="dts-detail-topic" id="detail-topic"></p>
+      <div class="dts-detail-info">
+        <div class="dts-detail-row"><span>Questions</span><span id="detail-questions"></span></div>
+        <div class="dts-detail-row"><span>Duration</span><span id="detail-duration"></span></div>
+        <div class="dts-detail-row"><span>Type</span><span id="detail-type"></span></div>
+        <div class="dts-detail-row"><span>Scoring</span><span>+4 / &minus;1 / 0</span></div>
+        <div class="dts-detail-row"><span>Cooldown</span><span>30 min after submit</span></div>
+      </div>
+      <div class="dts-detail-status" id="detail-status"></div>
+      <div class="dts-detail-actions">
+        <a class="test-btn dts-detail-start" id="detail-start" href="#">Start Test &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom: 16px;">
+          <div class="logo-icon"><div class="logo-pendulum"><div class="pendulum-pivot"></div><div class="pendulum-arm"><div class="pendulum-string"></div><div class="pendulum-bob"></div></div></div></div>
+          <div class="logo-text"><span class="brand-name"><span class="brand-initial">P</span>hysics <span class="brand-accent">for Noobs</span></span><span class="brand-tag">FREE THERAPY FOR PHYSICS TRAUMA</span></div>
+        </a>
+        <p>Transforming physics education through interactive simulations and crystal-clear concepts.</p>
+      </div>
+      <div class="footer-col"><h4>Resources</h4><a href="../chapters.html">Chapters</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+917896878299">+91 78968 78299</a><a href="mailto:im666d@gmail.com">im666d@gmail.com</a></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="../about.html">About</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Physics for Noobs. All rights reserved.</span>
+      <span>Built with &#9889; for Physics lovers</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  var SHEETS = [
+    { name: 'DTS 1', level: 1, topic: 'Wave Properties, Huygens Principle, Interference', qStart: 1, qEnd: 15, type: 'mcq', duration: 90 },
+    { name: 'DTS 2', level: 1, topic: "Young's Double Slit Experiment", qStart: 16, qEnd: 30, type: 'mcq', duration: 90 },
+    { name: 'DTS 3', level: 1, topic: 'Mixed (Numerical)', qStart: 31, qEnd: 45, type: 'nat', duration: 90 },
+    { name: 'DTS 4', level: 2, topic: 'Wave Properties, Huygens Principle, Interference', qStart: 46, qEnd: 55, type: 'mcq', duration: 90 },
+    { name: 'DTS 5', level: 2, topic: "Young's Double Slit Experiment", qStart: 56, qEnd: 65, type: 'mcq', duration: 90 },
+    { name: 'JEE Main', level: 3, topic: 'JEE Main Archive (2003-2020)', qStart: 1, qEnd: 41, type: 'mcq', duration: 90 },
+    { name: 'JEE Advanced', level: 3, topic: 'JEE Advanced Archive (1981-2020)', qStart: 1, qEnd: 41, type: 'mcq', duration: 90 }
+  ];
+
+  var COOLDOWN_MS = 30 * 60 * 1000; // 30 minutes
+  var levelLabels = { 1: 'Level 1', 2: 'Level 2', 3: 'JEE Archive' };
+  var levelColors = { 1: 'var(--color-primary)', 2: 'var(--color-secondary)', 3: 'var(--color-accent)' };
+
+  // Build sheet cards grouped by level
+  (function() {
+    var container = document.getElementById('sheet-list');
+    var currentLevel = 0;
+    var grid;
+
+    SHEETS.forEach(function(sheet, idx) {
+      if (sheet.level !== currentLevel) {
+        currentLevel = sheet.level;
+        var group = document.createElement('div');
+        group.style.cssText = 'margin-bottom:16px;';
+        var label = document.createElement('div');
+        label.className = 'dts-level-label';
+        label.style.cssText = 'margin-bottom:12px;padding-left:4px;border-left:3px solid ' + levelColors[currentLevel] + ';padding-left:12px;';
+        label.textContent = levelLabels[currentLevel];
+        group.appendChild(label);
+        grid = document.createElement('div');
+        grid.className = 'test-grid';
+        group.appendChild(grid);
+        container.appendChild(group);
+      }
+
+      var qCount = sheet.qEnd - sheet.qStart + 1;
+      var card = document.createElement('div');
+      card.className = 'test-card';
+      card.style.cursor = 'pointer';
+
+      // Check session status
+      var sessionData = JSON.parse(localStorage.getItem('dts_wave_optics_' + idx) || '{}');
+      var statusHTML = '';
+      if (sessionData.submitted) {
+        statusHTML = '<div style="margin-top:8px;font-size:0.68rem;color:var(--color-accent);">Completed</div>';
+      } else if (sessionData.startTime) {
+        statusHTML = '<div style="margin-top:8px;font-size:0.68rem;color:var(--color-primary);">In Progress</div>';
+      }
+
+      card.innerHTML =
+        '<span class="tc-badge ' + (sheet.type === 'nat' ? 'badge-sprint' : sheet.level === 3 ? 'badge-jee' : 'badge-dts') + '">' +
+          (sheet.type === 'nat' ? 'Numerical' : sheet.level === 3 ? 'JEE Archive' : 'MCQ') +
+        '</span>' +
+        '<div class="tc-title">' + sheet.name + '</div>' +
+        '<div class="tc-info">' + sheet.topic + '</div>' +
+        '<div class="tc-info">' + qCount + ' questions &bull; ' + sheet.duration + ' min</div>' +
+        statusHTML +
+        '<div class="tc-link">View Details &#8594;</div>';
+
+      card.addEventListener('click', function() {
+        openDetail(idx);
+      });
+
+      grid.appendChild(card);
+    });
+  })();
+
+  // Detail overlay
+  var overlay = document.getElementById('detail-overlay');
+
+  function openDetail(idx) {
+    var sheet = SHEETS[idx];
+    var qCount = sheet.qEnd - sheet.qStart + 1;
+
+    document.getElementById('detail-name').textContent = sheet.name;
+    document.getElementById('detail-topic').textContent = sheet.topic;
+    document.getElementById('detail-questions').textContent = qCount;
+    document.getElementById('detail-duration').textContent = sheet.duration + ' minutes';
+    document.getElementById('detail-type').textContent = sheet.type === 'nat' ? 'Numerical Answer' : 'Multiple Choice (MCQ)';
+
+    // Check cooldown
+    var sessionData = JSON.parse(localStorage.getItem('dts_wave_optics_' + idx) || '{}');
+    var startBtn = document.getElementById('detail-start');
+    var statusEl = document.getElementById('detail-status');
+
+    if (sessionData.submitted && sessionData.endTime) {
+      var elapsed = Date.now() - sessionData.endTime;
+      if (elapsed < COOLDOWN_MS) {
+        var remaining = Math.ceil((COOLDOWN_MS - elapsed) / 60000);
+        statusEl.innerHTML = '<span style="color:var(--color-warning);">Cooldown: ' + remaining + ' min remaining</span>';
+        startBtn.style.opacity = '0.4';
+        startBtn.style.pointerEvents = 'none';
+        startBtn.href = '#';
+      } else {
+        statusEl.innerHTML = '<span style="color:var(--color-accent);">Completed &mdash; Ready to retake</span>';
+        startBtn.style.opacity = '';
+        startBtn.style.pointerEvents = '';
+        startBtn.href = 'wave-optics-dts-test.html?sheet=' + idx;
+      }
+    } else if (sessionData.startTime && !sessionData.submitted) {
+      statusEl.innerHTML = '<span style="color:var(--color-primary);">In Progress &mdash; Timer is running</span>';
+      startBtn.style.opacity = '';
+      startBtn.style.pointerEvents = '';
+      startBtn.href = 'wave-optics-dts-test.html?sheet=' + idx;
+      startBtn.textContent = 'Resume Test \u2192';
+    } else {
+      statusEl.innerHTML = '';
+      startBtn.style.opacity = '';
+      startBtn.style.pointerEvents = '';
+      startBtn.href = 'wave-optics-dts-test.html?sheet=' + idx;
+      startBtn.textContent = 'Start Test \u2192';
+    }
+
+    overlay.classList.add('show');
+  }
+
+  document.getElementById('detail-close').addEventListener('click', function() {
+    overlay.classList.remove('show');
+  });
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) overlay.classList.remove('show');
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') overlay.classList.remove('show');
+  });
+  </script>
+
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>

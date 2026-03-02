@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wave Optics DTS Test | Physics for Noobs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Delius&family=Nova+Square&family=Yatra+One&family=Quintessential&family=Cabin+Sketch:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Andika:wght@400;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#050510">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="../images/icon-192.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128300;</text></svg>">
+  <script src="../js/theme.js"></script>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <!-- Test Content -->
+  <div class="test-wrapper dts-test">
+
+    <!-- Test Bar -->
+    <div class="test-bar">
+      <a href="wave-optics-dts.html" class="test-btn" id="back-btn" style="text-decoration:none;">&larr; Back</a>
+      <div class="timer" id="timer">90:00</div>
+      <div class="dts-progress" id="progress">0 / 15 answered</div>
+      <div class="score" id="score"></div>
+      <button class="test-btn" id="submit-btn">Submit Test</button>
+      <button class="test-btn fullscreen-btn" id="fullscreen-btn" title="Fullscreen (F)">&#x26F6; Fullscreen</button>
+    </div>
+
+    <!-- Main Content: PDF Viewer + Answer Grid -->
+    <div class="dts-layout">
+      <!-- Question Images Viewer -->
+      <div class="dts-pdf-panel">
+        <div class="dts-pdf-toolbar">
+          <button class="pdf-nav-btn" id="pdf-prev" title="Previous page">&#9664;</button>
+          <span class="pdf-page-info" id="pdf-page-info">Page 1 / 3</span>
+          <button class="pdf-nav-btn" id="pdf-next" title="Next page">&#9654;</button>
+          <div class="dts-zoom-controls">
+            <button class="pdf-zoom-btn" id="zoom-out" title="Zoom out">&minus;</button>
+            <span class="pdf-zoom-level" id="zoom-level">100%</span>
+            <button class="pdf-zoom-btn" id="zoom-in" title="Zoom in">+</button>
+            <button class="pdf-fit-btn" id="zoom-fit" title="Fit to width">Fit</button>
+          </div>
+          <a class="pdf-download-btn" id="download-btn" href="../pdfs/wave-optics/questions.pdf" download title="Download PDF">&#8681; PDF</a>
+        </div>
+        <div class="dts-pdf-container" id="pdf-container">
+          <div class="dts-img-wrapper" id="img-wrapper">
+            <!-- Images injected by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Answer Grid -->
+      <div class="dts-answer-panel">
+        <div class="dts-answer-header">
+          <h3>Answer Sheet</h3>
+          <div class="dts-answer-legend">
+            <span class="legend-item"><span class="legend-dot legend-unanswered"></span>Unanswered</span>
+            <span class="legend-item"><span class="legend-dot legend-answered"></span>Answered</span>
+          </div>
+        </div>
+        <div class="dts-answer-grid" id="answer-grid">
+          <!-- Populated by JS -->
+        </div>
+        <div class="dts-answer-footer">
+          <div class="dts-scoring-info">
+            <span>+4 Correct</span>
+            <span>&minus;1 Wrong</span>
+            <span>0 Unanswered</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Panel (hidden until submit) -->
+    <div class="dts-results" id="results-panel" style="display:none;">
+      <div class="dts-results-header">
+        <h2 id="results-title">Results</h2>
+        <div class="dts-results-score" id="results-score"></div>
+      </div>
+      <div class="dts-results-stats">
+        <div class="stat-card stat-correct">
+          <div class="stat-num" id="stat-correct">0</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat-card stat-wrong">
+          <div class="stat-num" id="stat-wrong">0</div>
+          <div class="stat-label">Wrong</div>
+        </div>
+        <div class="stat-card stat-unanswered">
+          <div class="stat-num" id="stat-unanswered">0</div>
+          <div class="stat-label">Unanswered</div>
+        </div>
+        <div class="stat-card stat-time">
+          <div class="stat-num" id="stat-time">--:--</div>
+          <div class="stat-label">Time Taken</div>
+        </div>
+      </div>
+      <div class="dts-results-breakdown" id="results-breakdown">
+      </div>
+      <div class="dts-results-actions">
+        <button class="test-btn" id="view-solutions-btn">View Solutions PDF</button>
+        <button class="test-btn" id="retake-btn">Retake Test</button>
+        <a href="wave-optics-dts.html" class="test-btn" style="text-decoration:none;">Back to DTS List</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Fullscreen Prompt (shown if auto-fullscreen blocked by browser) -->
+  <div class="dts-fs-prompt" id="fs-prompt" style="display:none;">
+    <div class="dts-fs-prompt-card">
+      <p>Click below to enter fullscreen for a distraction-free test experience.</p>
+      <button class="test-btn" id="fs-prompt-btn">Enter Fullscreen</button>
+      <button class="dts-fs-skip" id="fs-skip-btn">Continue without fullscreen</button>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  // ============================================================
+  //  WAVE OPTICS DTS DATA
+  // ============================================================
+  var SHEETS = [
+    // --- LEVEL 1 ---
+    {
+      name: 'DTS 1', level: 1, topic: 'Wave Properties, Huygens Principle, Interference',
+      startPage: 4, endPage: 5, qStart: 1, qEnd: 15, type: 'mcq', duration: 90,
+      answers: {1:'C',2:'D',3:'B',4:'C',5:'A',6:'C',7:'B',8:'C',9:'A',10:'B',11:'C',12:'B',13:'B',14:'A',15:'C'}
+    },
+    {
+      name: 'DTS 2', level: 1, topic: "Young's Double Slit Experiment",
+      startPage: 6, endPage: 7, qStart: 16, qEnd: 30, type: 'mcq', duration: 90,
+      answers: {16:'C',17:'B',18:'B',19:'B',20:'D',21:'D',22:'B',23:'D',24:'C',25:'A',26:'D',27:'D',28:'C',29:'D',30:'B'}
+    },
+    {
+      name: 'DTS 3', level: 1, topic: 'Mixed (Numerical)',
+      startPage: 8, endPage: 9, qStart: 31, qEnd: 45, type: 'nat', duration: 90,
+      answers: {31:'5',32:'10',33:'100',34:'2.5',35:'51',36:'2',37:'450',38:'1.6',39:'24',40:'500',41:'2',42:'6',43:'3',44:'7',45:'30'}
+    },
+    // --- LEVEL 2 ---
+    {
+      name: 'DTS 4', level: 2, topic: 'Wave Properties, Huygens Principle, Interference',
+      startPage: 10, endPage: 12, qStart: 46, qEnd: 55, type: 'mcq', duration: 90,
+      answers: {46:'B',47:'1',48:'B',49:'3',50:'A-q;B-p;C-p;D-p',51:'ABD',52:'AC',53:'5',54:'B',55:'7'}
+    },
+    {
+      name: 'DTS 5', level: 2, topic: "Young's Double Slit Experiment",
+      startPage: 13, endPage: 14, qStart: 56, qEnd: 65, type: 'mcq', duration: 90,
+      answers: {56:'D',57:'AB',58:'A',59:'A',60:'AC',61:'3',62:'ABCD',63:'BC',64:'D',65:'A-r;B-r;C-s;D-p'}
+    },
+    // --- JEE ARCHIVE ---
+    {
+      name: 'JEE Main', level: 3, topic: 'JEE Main Archive (2003-2020)',
+      startPage: 15, endPage: 21, qStart: 1, qEnd: 41, type: 'mcq', duration: 90,
+      answers: {1:'A',2:'B',3:'C',4:'C',5:'B',6:'D',7:'A',8:'B',9:'D',10:'C',11:'C',12:'C',13:'C',14:'A',15:'C',16:'D',17:'B',18:'B',19:'C',20:'C',21:'C',22:'C',23:'B',24:'B',25:'D',26:'C',27:'D',28:'D',29:'B',30:'C',31:'D',32:'D',33:'C',34:'C',35:'B',36:'C',37:'9',38:'C',39:'D',40:'A',41:'750'}
+    },
+    {
+      name: 'JEE Advanced', level: 3, topic: 'JEE Advanced Archive (1981-2020)',
+      startPage: 22, endPage: 29, qStart: 1, qEnd: 41, type: 'mcq', duration: 90,
+      answers: {1:'D',2:'C',3:'A',4:'A',5:'B',6:'B',7:'A',8:'B',9:'D',10:'C',11:'C',12:'A',13:'D',14:'B',15:'A',16:'BD',17:'AC',18:'ABC',19:'AB',20:'ABC',21:'BC',22:'BC',23:'A',24:'C',25:'B',26:'13.9',27:'5892',28:'9.3',29:'7e-6',30:'4.33',31:'3.5',32:'3',33:'A-p,s;B-q;C-t;D-r,s,t',34:'2e6,4000',35:'2',36:'sqrt(mu*eps)',37:'1,increase',38:'5e14,4000',39:'True',40:'False',41:'A'}
+    }
+  ];
+
+  // ============================================================
+  //  GET SHEET INDEX FROM URL
+  // ============================================================
+  var params = new URLSearchParams(window.location.search);
+  var sheetIdx = parseInt(params.get('sheet')) || 0;
+  if (sheetIdx < 0 || sheetIdx >= SHEETS.length) sheetIdx = 0;
+
+  // Update page title
+  document.title = SHEETS[sheetIdx].name + ' — Wave Optics DTS | Physics for Noobs';
+
+  // ============================================================
+  //  STATE
+  // ============================================================
+  var currentSheet = sheetIdx;
+  var currentPage = 1;
+  var submitted = false;
+  var timerInterval = null;
+  var session = {};
+  var viewingSolutions = false;
+
+  // ============================================================
+  //  SESSION MANAGEMENT
+  // ============================================================
+  function getSessionKey() {
+    return 'dts_wave_optics_' + currentSheet;
+  }
+
+  function loadSession() {
+    session = JSON.parse(localStorage.getItem(getSessionKey()) || '{}');
+    if (!session.startTime) {
+      session.startTime = Date.now();
+      session.answers = {};
+      session.submitted = false;
+      saveSession();
+    }
+    submitted = session.submitted || false;
+  }
+
+  function saveSession() {
+    localStorage.setItem(getSessionKey(), JSON.stringify(session));
+  }
+
+  // ============================================================
+  //  IMAGE RENDERING
+  // ============================================================
+  var zoomLevel = 1;
+  var pageImages = [];
+  var currentPageIdx = 0;
+
+  function getImagePath(pageNum) {
+    var padded = String(pageNum).padStart(2, '0');
+    return viewingSolutions
+      ? '../pdfs/wave-optics/solutions-pages/s-' + padded + '.jpg'
+      : '../pdfs/wave-optics/pages/q-' + padded + '.jpg';
+  }
+
+  function loadImages(sheetIdx) {
+    var sheet = SHEETS[sheetIdx];
+    var wrapper = document.getElementById('img-wrapper');
+    wrapper.innerHTML = '';
+    viewingSolutions = false;
+    pageImages = [];
+    currentPageIdx = 0;
+    zoomLevel = 1;
+    updateZoomUI();
+
+    for (var p = sheet.startPage; p <= sheet.endPage; p++) {
+      var img = document.createElement('img');
+      img.className = 'dts-page-img';
+      img.src = getImagePath(p);
+      img.alt = sheet.name + ' - Page ' + (p - sheet.startPage + 1);
+      img.loading = (p === sheet.startPage) ? 'eager' : 'lazy';
+      pageImages.push(img);
+      wrapper.appendChild(img);
+    }
+
+    updatePageInfo();
+    updateDownloadBtn();
+    document.getElementById('pdf-container').scrollTop = 0;
+  }
+
+  function updateDownloadBtn() {
+    var btn = document.getElementById('download-btn');
+    btn.href = viewingSolutions
+      ? '../pdfs/wave-optics/solutions.pdf'
+      : '../pdfs/wave-optics/questions.pdf';
+  }
+
+  function loadSolutionImages() {
+    var wrapper = document.getElementById('img-wrapper');
+    wrapper.innerHTML = '';
+    viewingSolutions = true;
+    pageImages = [];
+    currentPageIdx = 0;
+    zoomLevel = 1;
+    updateZoomUI();
+
+    var totalSolPages = 28;
+    for (var p = 1; p <= totalSolPages; p++) {
+      var img = document.createElement('img');
+      img.className = 'dts-page-img';
+      img.src = getImagePath(p);
+      img.alt = 'Solution Page ' + p;
+      img.loading = (p <= 3) ? 'eager' : 'lazy';
+      pageImages.push(img);
+      wrapper.appendChild(img);
+    }
+
+    updatePageInfo();
+    updateDownloadBtn();
+    document.getElementById('pdf-container').scrollTop = 0;
+  }
+
+  // ============================================================
+  //  PAGE TRACKING
+  // ============================================================
+  function updatePageInfo() {
+    var total = pageImages.length;
+    var label = viewingSolutions ? 'Sol ' : 'Page ';
+    document.getElementById('pdf-page-info').textContent = label + (currentPageIdx + 1) + ' / ' + total;
+  }
+
+  function detectCurrentPage() {
+    var container = document.getElementById('pdf-container');
+    var scrollTop = container.scrollTop;
+    var best = 0;
+    for (var i = 0; i < pageImages.length; i++) {
+      if (pageImages[i].offsetTop - container.offsetTop <= scrollTop + 60) {
+        best = i;
+      }
+    }
+    if (best !== currentPageIdx) {
+      currentPageIdx = best;
+      updatePageInfo();
+    }
+  }
+
+  document.getElementById('pdf-container').addEventListener('scroll', function() {
+    detectCurrentPage();
+  });
+
+  // ============================================================
+  //  ZOOM
+  // ============================================================
+  var ZOOM_MIN = 0.5;
+  var ZOOM_MAX = 3;
+  var ZOOM_STEP = 0.25;
+
+  function setZoom(level) {
+    zoomLevel = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, level));
+    var wrapper = document.getElementById('img-wrapper');
+    wrapper.style.transform = 'scale(' + zoomLevel + ')';
+    updateZoomUI();
+  }
+
+  function updateZoomUI() {
+    document.getElementById('zoom-level').textContent = Math.round(zoomLevel * 100) + '%';
+  }
+
+  document.getElementById('zoom-in').addEventListener('click', function() {
+    setZoom(zoomLevel + ZOOM_STEP);
+  });
+
+  document.getElementById('zoom-out').addEventListener('click', function() {
+    setZoom(zoomLevel - ZOOM_STEP);
+  });
+
+  document.getElementById('zoom-fit').addEventListener('click', function() {
+    setZoom(1);
+    document.getElementById('pdf-container').scrollLeft = 0;
+  });
+
+  // Pinch-to-zoom on touch devices
+  (function() {
+    var container = document.getElementById('pdf-container');
+    var startDist = 0;
+    var startZoom = 1;
+
+    container.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        startDist = Math.hypot(dx, dy);
+        startZoom = zoomLevel;
+      }
+    }, { passive: false });
+
+    container.addEventListener('touchmove', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        var dist = Math.hypot(dx, dy);
+        var scale = dist / startDist;
+        setZoom(startZoom * scale);
+      }
+    }, { passive: false });
+
+    container.addEventListener('wheel', function(e) {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        var delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP;
+        setZoom(zoomLevel + delta);
+      }
+    }, { passive: false });
+  })();
+
+  // ============================================================
+  //  ANSWER GRID
+  // ============================================================
+  function buildAnswerGrid() {
+    var sheet = SHEETS[currentSheet];
+    var grid = document.getElementById('answer-grid');
+    grid.innerHTML = '';
+
+    var qCount = sheet.qEnd - sheet.qStart + 1;
+    for (var i = 0; i < qCount; i++) {
+      var qNum = sheet.qStart + i;
+      var row = document.createElement('div');
+      row.className = 'ans-row';
+      row.setAttribute('data-q', qNum);
+
+      var label = document.createElement('span');
+      label.className = 'ans-q-num';
+      label.textContent = 'Q' + qNum;
+      row.appendChild(label);
+
+      if (sheet.type === 'nat' || isNatQuestion(sheet, qNum)) {
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'ans-nat-input';
+        input.placeholder = 'Answer';
+        input.setAttribute('data-q', qNum);
+        if (session.answers && session.answers[qNum]) {
+          input.value = session.answers[qNum];
+        }
+        if (submitted) input.disabled = true;
+        input.addEventListener('input', function() {
+          if (submitted) return;
+          var q = this.getAttribute('data-q');
+          session.answers[q] = this.value.trim();
+          saveSession();
+          updateProgress();
+        });
+        row.appendChild(input);
+      } else {
+        var opts = ['A', 'B', 'C', 'D'];
+        opts.forEach(function(opt) {
+          var btn = document.createElement('button');
+          btn.className = 'ans-opt';
+          btn.textContent = opt;
+          btn.setAttribute('data-q', qNum);
+          btn.setAttribute('data-key', opt);
+
+          if (session.answers && session.answers[qNum] === opt) {
+            btn.classList.add('selected');
+          }
+
+          btn.addEventListener('click', function() {
+            if (submitted) return;
+            var q = this.getAttribute('data-q');
+            var key = this.getAttribute('data-key');
+            var siblings = this.parentElement.querySelectorAll('.ans-opt');
+            var wasSelected = this.classList.contains('selected');
+            siblings.forEach(function(s) { s.classList.remove('selected'); });
+
+            if (!wasSelected) {
+              this.classList.add('selected');
+              session.answers[q] = key;
+            } else {
+              delete session.answers[q];
+            }
+            saveSession();
+            updateProgress();
+          });
+
+          row.appendChild(btn);
+        });
+      }
+
+      grid.appendChild(row);
+    }
+    updateProgress();
+  }
+
+  function isNatQuestion(sheet, qNum) {
+    var ans = sheet.answers[qNum];
+    if (!ans) return false;
+    return /^\d+(\.\d+)?$/.test(ans);
+  }
+
+  function updateProgress() {
+    var sheet = SHEETS[currentSheet];
+    var total = sheet.qEnd - sheet.qStart + 1;
+    var answered = Object.keys(session.answers || {}).filter(function(k) {
+      return session.answers[k] && session.answers[k] !== '';
+    }).length;
+    document.getElementById('progress').textContent = answered + ' / ' + total + ' answered';
+  }
+
+  // ============================================================
+  //  TIMER
+  // ============================================================
+  function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
+    var sheet = SHEETS[currentSheet];
+    var elapsed = Math.floor((Date.now() - session.startTime) / 1000);
+    var totalSeconds = Math.max(0, sheet.duration * 60 - elapsed);
+
+    function update() {
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      document.getElementById('timer').textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    update();
+
+    if (submitted || totalSeconds <= 0) {
+      if (!submitted) submitTest();
+      return;
+    }
+
+    timerInterval = setInterval(function() {
+      if (submitted) { clearInterval(timerInterval); return; }
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      update();
+    }, 1000);
+  }
+
+  // ============================================================
+  //  SUBMIT & SCORING
+  // ============================================================
+  function submitTest() {
+    if (submitted) return;
+    submitted = true;
+    session.submitted = true;
+    session.endTime = Date.now();
+    saveSession();
+    if (timerInterval) clearInterval(timerInterval);
+
+    var sheet = SHEETS[currentSheet];
+    var total = sheet.qEnd - sheet.qStart + 1;
+    var correct = 0;
+    var wrong = 0;
+    var unanswered = 0;
+
+    var breakdownHTML = '';
+
+    for (var i = 0; i < total; i++) {
+      var qNum = sheet.qStart + i;
+      var correctAns = String(sheet.answers[qNum] || '');
+      var userAns = String(session.answers[qNum] || '');
+      var status = '';
+
+      if (!userAns) {
+        unanswered++;
+        status = 'unanswered';
+      } else if (userAns.toUpperCase() === correctAns.toUpperCase()) {
+        correct++;
+        status = 'correct';
+      } else {
+        wrong++;
+        status = 'wrong';
+      }
+
+      breakdownHTML += '<div class="result-row result-' + status + '">' +
+        '<span class="result-q">Q' + qNum + '</span>' +
+        '<span class="result-your">' + (userAns || '&mdash;') + '</span>' +
+        '<span class="result-correct">' + correctAns + '</span>' +
+        '<span class="result-status">' + (status === 'correct' ? '&#10003;' : status === 'wrong' ? '&#10007;' : '&mdash;') + '</span>' +
+        '</div>';
+
+      var row = document.querySelector('.ans-row[data-q="' + qNum + '"]');
+      if (row) {
+        row.classList.add('result-' + status);
+        if (sheet.type !== 'nat' && !isNatQuestion(sheet, qNum)) {
+          var correctBtn = row.querySelector('.ans-opt[data-key="' + correctAns + '"]');
+          if (correctBtn) correctBtn.classList.add('ans-correct');
+          var wrongBtn = row.querySelector('.ans-opt.selected:not(.ans-correct)');
+          if (wrongBtn) wrongBtn.classList.add('ans-wrong');
+        }
+      }
+    }
+
+    var jeeScore = (correct * 4) - (wrong * 1);
+    var maxScore = total * 4;
+
+    document.querySelectorAll('.ans-opt').forEach(function(b) { b.disabled = true; });
+    document.querySelectorAll('.ans-nat-input').forEach(function(b) { b.disabled = true; });
+
+    document.getElementById('score').textContent = 'Score: ' + jeeScore + ' / ' + maxScore;
+
+    var btn = document.getElementById('submit-btn');
+    btn.textContent = 'Submitted';
+    btn.disabled = true;
+    btn.style.cursor = 'default';
+
+    var panel = document.getElementById('results-panel');
+    panel.style.display = 'block';
+    document.getElementById('results-title').textContent = sheet.name + ' \u2014 Results';
+    document.getElementById('results-score').innerHTML = '<span class="big-score">' + jeeScore + '</span> / ' + maxScore;
+    document.getElementById('stat-correct').textContent = correct;
+    document.getElementById('stat-wrong').textContent = wrong;
+    document.getElementById('stat-unanswered').textContent = unanswered;
+
+    var timeTaken = Math.floor(((session.endTime || Date.now()) - session.startTime) / 1000);
+    var mm = Math.floor(timeTaken / 60);
+    var ss = timeTaken % 60;
+    document.getElementById('stat-time').textContent = mm + ':' + (ss < 10 ? '0' : '') + ss;
+
+    document.getElementById('results-breakdown').innerHTML =
+      '<div class="result-header-row"><span>Q#</span><span>Yours</span><span>Answer</span><span></span></div>' + breakdownHTML;
+
+    panel.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ============================================================
+  //  INIT TEST
+  // ============================================================
+  function initTest() {
+    submitted = false;
+
+    document.getElementById('score').textContent = '';
+    document.getElementById('submit-btn').textContent = 'Submit Test';
+    document.getElementById('submit-btn').disabled = false;
+    document.getElementById('submit-btn').style.cursor = 'pointer';
+    document.getElementById('results-panel').style.display = 'none';
+
+    loadSession();
+    buildAnswerGrid();
+    startTimer();
+    loadImages(currentSheet);
+
+    if (session.submitted) {
+      submitTest();
+    }
+  }
+
+  // ============================================================
+  //  PAGE NAVIGATION
+  // ============================================================
+  document.getElementById('pdf-prev').addEventListener('click', function() {
+    if (currentPageIdx > 0) {
+      currentPageIdx--;
+      pageImages[currentPageIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updatePageInfo();
+    }
+  });
+
+  document.getElementById('pdf-next').addEventListener('click', function() {
+    if (currentPageIdx < pageImages.length - 1) {
+      currentPageIdx++;
+      pageImages[currentPageIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updatePageInfo();
+    }
+  });
+
+  // ============================================================
+  //  SUBMIT BUTTON
+  // ============================================================
+  document.getElementById('submit-btn').addEventListener('click', function() {
+    if (!submitted) submitTest();
+  });
+
+  // ============================================================
+  //  SOLUTIONS & RETAKE
+  // ============================================================
+  document.getElementById('view-solutions-btn').addEventListener('click', function() {
+    loadSolutionImages();
+    document.querySelector('.dts-pdf-panel').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  var COOLDOWN_MS = 30 * 60 * 1000; // 30 minutes
+
+  document.getElementById('retake-btn').addEventListener('click', function() {
+    var data = JSON.parse(localStorage.getItem(getSessionKey()) || '{}');
+    if (data.endTime) {
+      var elapsed = Date.now() - data.endTime;
+      if (elapsed < COOLDOWN_MS) {
+        var remaining = Math.ceil((COOLDOWN_MS - elapsed) / 60000);
+        alert('Cooldown active. You can retake this test in ' + remaining + ' minutes.');
+        return;
+      }
+    }
+    localStorage.removeItem(getSessionKey());
+    initTest();
+  });
+
+  // ============================================================
+  //  FULLSCREEN
+  // ============================================================
+  var testWrapper = document.querySelector('.dts-test');
+  var fullscreenBtn = document.getElementById('fullscreen-btn');
+
+  function isFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement;
+  }
+
+  function enterFullscreen() {
+    var fn = testWrapper.requestFullscreen || testWrapper.webkitRequestFullscreen;
+    if (fn) return fn.call(testWrapper);
+    return Promise.reject();
+  }
+
+  function toggleFullscreen() {
+    if (isFullscreen()) {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    } else {
+      enterFullscreen();
+    }
+  }
+
+  fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
+
+  function onFsChange() {
+    if (isFullscreen()) {
+      fullscreenBtn.innerHTML = '&#x2716; Exit';
+    } else {
+      fullscreenBtn.innerHTML = '&#x26F6; Fullscreen';
+    }
+  }
+
+  // ============================================================
+  //  KEYBOARD NAVIGATION
+  // ============================================================
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') document.getElementById('pdf-prev').click();
+    if (e.key === 'ArrowRight') document.getElementById('pdf-next').click();
+    if (e.key === 'f' || e.key === 'F') {
+      var tag = document.activeElement.tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') toggleFullscreen();
+    }
+  });
+
+  // ============================================================
+  //  AUTO-FULLSCREEN ON LOAD
+  // ============================================================
+  initTest();
+
+  // Try auto-fullscreen; if blocked, show prompt
+  setTimeout(function() {
+    try {
+      enterFullscreen().catch(showFsPrompt);
+    } catch (e) {
+      showFsPrompt();
+    }
+  }, 600);
+
+  function showFsPrompt() {
+    var prompt = document.getElementById('fs-prompt');
+    prompt.style.display = 'flex';
+
+    document.getElementById('fs-prompt-btn').addEventListener('click', function() {
+      enterFullscreen();
+      prompt.style.display = 'none';
+    });
+
+    document.getElementById('fs-skip-btn').addEventListener('click', function() {
+      prompt.style.display = 'none';
+    });
+  }
+
+  </script>
+
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js");}</script>
+</body>
+</html>
