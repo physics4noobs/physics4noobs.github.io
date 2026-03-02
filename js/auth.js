@@ -103,17 +103,11 @@
 
     if (logoutBtn) {
       logoutBtn.addEventListener('click', function() {
-        localStorage.removeItem('pf-complete');
-        localStorage.removeItem('pf-username');
-        localStorage.removeItem('pf-batchCode');
         auth.signOut();
       });
     }
     if (mobileSignoutBtn) {
       mobileSignoutBtn.addEventListener('click', function() {
-        localStorage.removeItem('pf-complete');
-        localStorage.removeItem('pf-username');
-        localStorage.removeItem('pf-batchCode');
         auth.signOut();
       });
     }
