@@ -52,23 +52,46 @@
             photoURL: user.photoURL || ''
           }, { merge: true });
 
-          // Show username form ONCE — only if never completed before
+          // Username form: show ONCE, 5 min after first-ever sign-in
+          // pf-asked = already asked or scheduled — never ask again
+          // pf-complete = form was filled successfully
           if (!profileFormShown) {
             profileFormShown = true;
-            if (localStorage.getItem('pf-complete')) {
-              // Already completed — never show again
+            if (localStorage.getItem('pf-complete') || localStorage.getItem('pf-asked')) {
+              // Already dealt with — never show again
             } else {
               // Check Firestore — maybe they filled it on another device
               db.collection('users').doc(user.uid).get().then(function(doc) {
                 var data = doc.exists ? doc.data() : {};
                 if (data.username) {
-                  // Already in Firestore, just mark locally
                   localStorage.setItem('pf-complete', '1');
+                  localStorage.setItem('pf-asked', '1');
                 } else {
-                  showProfileForm(db, user.uid);
+                  // First-ever login — schedule form after 5 minutes
+                  var firstLogin = localStorage.getItem('pf-first-login');
+                  if (!firstLogin) {
+                    localStorage.setItem('pf-first-login', Date.now().toString());
+                    firstLogin = Date.now().toString();
+                  }
+                  var elapsed = Date.now() - parseInt(firstLogin, 10);
+                  var DELAY = 5 * 60 * 1000; // 5 minutes
+                  if (elapsed >= DELAY) {
+                    // 5 min passed — show form now, mark as asked regardless of outcome
+                    localStorage.setItem('pf-asked', '1');
+                    showProfileForm(db, user.uid);
+                  } else {
+                    // Wait remaining time then show
+                    setTimeout(function() {
+                      // Re-check in case they navigated away and it got handled
+                      if (!localStorage.getItem('pf-complete') && !localStorage.getItem('pf-asked')) {
+                        localStorage.setItem('pf-asked', '1');
+                        showProfileForm(db, user.uid);
+                      }
+                    }, DELAY - elapsed);
+                  }
                 }
               }).catch(function() {
-                // Firestore read failed — don't show form, try next time
+                // Firestore read failed — skip, don't bother
               });
             }
           }
@@ -131,6 +154,7 @@
     overlay.className = 'profile-overlay';
     overlay.innerHTML =
       '<div class="profile-card">' +
+        '<button id="pf-close" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--text-secondary,#a0a0b8);font-size:1.4rem;cursor:pointer;padding:4px 8px;line-height:1;">&times;</button>' +
         '<h2>Complete Your Profile</h2>' +
         '<p class="profile-sub">Tell us a bit about yourself to get started.</p>' +
         '<div class="profile-field">' +
@@ -151,6 +175,12 @@
       requestAnimationFrame(function() {
         overlay.classList.add('show');
       });
+    });
+
+    // Close button — dismiss forever, never ask again
+    document.getElementById('pf-close').addEventListener('click', function() {
+      overlay.classList.remove('show');
+      setTimeout(function() { overlay.remove(); }, 350);
     });
 
     var nameInput = document.getElementById('pf-name');
