@@ -55,20 +55,19 @@
           // Check if profile is complete (username exists)
           if (!profileFormShown) {
             profileFormShown = true;
-            // Always verify with Firestore on first page load per session
-            if (!sessionStorage.getItem('pf-verified')) {
+            if (localStorage.getItem('pf-complete')) {
+              // Already completed — skip form entirely
+            } else {
+              // First time or cleared — check Firestore once
               db.collection('users').doc(user.uid).get().then(function(doc) {
                 var data = doc.exists ? doc.data() : {};
-                sessionStorage.setItem('pf-verified', '1');
                 if (data.username) {
                   localStorage.setItem('pf-complete', '1');
+                  localStorage.setItem('pf-username', data.username);
                 } else {
-                  localStorage.removeItem('pf-complete');
                   showProfileForm(db, user.uid);
                 }
               });
-            } else if (!localStorage.getItem('pf-complete')) {
-              showProfileForm(db, user.uid);
             }
           }
         }
